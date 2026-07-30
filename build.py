@@ -6,7 +6,7 @@ có điều-bác-bỏ, mà X hết sửa được sau 1 giờ và TG thì trôi.
 "thêm vào", không biết "claim này giờ đang đứng hay đã đổ". Web giữ bản chuẩn
 sửa tại chỗ + sổ claim; X/TG vẫn đăng đầy đủ dạng native.
 
-SÁU CỔNG, tất cả đều CHẶN build — không cái nào chỉ cảnh báo:
+BẢY CỔNG, tất cả đều CHẶN build — không cái nào chỉ cảnh báo:
   1 NGÔN NGỮ   từ đã khai tử + từ nghề repo (dùng CHUNG danh sách với
                 template/check_language.py — một chủ, không chép)
   2 CẤU TRÚC   đủ 5 phần chữ ký LAUNCH §1: claim · số kèm block · tự kiểm ·
@@ -16,7 +16,9 @@ SÁU CỔNG, tất cả đều CHẶN build — không cái nào chỉ cảnh b�
   5 MARKDOWN   cú pháp không nhận ra thì NỔ, không im lặng bỏ qua
   6 THUỘC TÍNH SỐ  toạ độ/số trong đánh dấu sinh ra phải là số hợp lệ — trình duyệt
                 bỏ qua thuộc tính sai trong im lặng, đúng loại lỗi tệ nhất
-  (+ favicon của hệ đã chốt phải TRÙNG BYTE với bản logo_final.py sinh ra)
+  7 XEM TRƯỚC  bài phải có dòng mô tả (60–200 ký tự) + ảnh xem trước tồn tại thật:
+                thiếu thì link dán ra Telegram/Discord/forum chỉ còn một dòng chữ trơn
+  (+ ảnh phục vụ phải TRÙNG BYTE với bản builder sinh ra, và phải khai builder nào)
 
 Cổng 3 và 5 là bản MÁY của một lỗi thật: bài #1 suýt đăng với một claim bị cắt
 mất falsifier, trong khi ô "[x] có falsifier?" vẫn tick vì thừa kế từ bản trước
@@ -34,6 +36,9 @@ import sys
 
 ROOT = pathlib.Path(__file__).parent
 CONTENT = ROOT / "content"
+# Tên miền dùng cho canonical · og:url · sitemap. Ba chỗ này BẮT BUỘC là URL tuyệt đối
+# (đường dẫn tương đối trong thẻ og bị mọi nơi bỏ qua trong im lặng).
+BASE = "https://blockpinned.com"
 # --out để bản mirror công khai dựng thẳng vào docs/ (GitHub Pages chỉ phục vụ
 # root hoặc /docs). Một file build duy nhất chạy được ở cả hai chỗ — chép ra bản
 # thứ hai là mở đúng cửa trôi lệch mà chú thích ngay dưới đây nói tới.
@@ -101,9 +106,29 @@ MARK_SVG = (
     "</svg>"
 )
 
+# Ảnh phục vụ: BUILDER NÀO sinh ra nó. Khai rõ vì cùng một tên file có thể tồn tại ở hai
+# chỗ với hai nội dung khác nhau — 🔴 xác 30/07: `avatar-800.png` có cả ở `out/png/` (bản
+# 27/07, trước khi chốt mark) và `out/logo/final/` (bản 29/07). Cổng trùng-byte quét "mọi
+# chỗ sinh" nên nó nổ, và nó nổ ĐÚNG: không có cách nào biết bản nào là bản thật ngoài
+# việc khai ra. Ảnh không có chủ thì không được đi ra ngoài.
+NGUON_ASSET = {
+    "favicon-16.png":  "logo/final",
+    "favicon-32.png":  "logo/final",
+    "avatar-800.png":  "logo/final",
+    "post01-card.png": "png",
+    "post02-card.png": "png",
+    "post04-card.png": "png",
+    "post05-card.png": "png",
+}
+
 # Thân bài LUÔN là Be Vietnam Pro ở cả hai hệ — đó là ràng buộc NGÔN NGỮ
 # (font dựng cho dấu tiếng Việt), không phải lựa chọn thương hiệu.
 BODY_FONT = "Be Vietnam Pro"
+
+
+# Tên các họ cổng — dùng cho dòng in ra, và là chỗ DUY NHẤT đếm chúng.
+TEN_CONG = ["ngôn ngữ", "cấu trúc", "claim", "ngôi xưng", "đánh dấu",
+            "thuộc tính số", "xem trước"]
 
 
 class LoiCong(Exception):
@@ -269,6 +294,12 @@ def cong_cau_truc(fm: dict, body: str, claims: list, o: str) -> None:
         raise LoiCong(f"thiếu ĐIỀU BÁC BỎ — không claim nào có falsifier — {o}")
     if "Không phải lời khuyên đầu tư" not in body:
         raise LoiCong(f"thiếu DISCLAIMER — {o}")
+    # 'mo_ta' là dòng hiện ra khi link được dán vào Telegram/Discord/forum, và là dòng
+    # máy tìm in dưới tiêu đề. Không có nó thì link ra ngoài chỉ còn một dòng chữ trơn —
+    # hỏng ở đúng chỗ người lạ quyết định bấm hay không, mà không lệnh nào báo lỗi.
+    md_ = fm.get("mo_ta", "").strip()
+    if not 60 <= len(md_) <= 200:
+        raise LoiCong(f"'mo_ta' phải dài 60–200 ký tự, đang {len(md_)} — {o}")
 
 
 def cong_claim(claims: list, o: str) -> None:
@@ -479,15 +510,52 @@ FONTS = ("https://fonts.googleapis.com/css2?family=Marcellus"
          "&family=IBM+Plex+Mono:wght@400;500;600&display=swap")
 
 
-def trang(tieu_de: str, than: str, t: dict, goc: str = "") -> str:
+def kich_thuoc_png(p: pathlib.Path) -> tuple:
+    """Đọc bề rộng/cao từ IHDR của PNG. Không đoán theo tên file, và nổ nếu không phải PNG.
+
+    Vì sao đọc thật: thẻ og:image:width/height mà ghi cứng thì lúc đổi ảnh sẽ thành
+    hai con số nói dối trong im lặng — mạng xã hội dựng khung theo số khai, không theo
+    ảnh, nên ảnh sẽ bị méo mà không lệnh nào hỏng.
+    """
+    b = p.read_bytes()[:24]
+    if b[:8] != b"\x89PNG\r\n\x1a\n" or b[12:16] != b"IHDR":
+        raise LoiCong(f"{p.name} không phải PNG hợp lệ — ảnh xem trước phải đọc được kích thước")
+    return int.from_bytes(b[16:20], "big"), int.from_bytes(b[20:24], "big")
+
+
+def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None) -> str:
+    # Thẻ xem trước: khi link được dán vào Telegram · Discord · forum · tin nhắn riêng,
+    # KHÔNG có bộ thẻ này thì nó hiện ra một dòng chữ trơn và không ai bấm. Ảnh dùng lại
+    # đúng card đã dựng cho bài trên kênh (2400×1350) — không dựng ảnh riêng cho web.
+    m = meta or {}
+    anh = m.get("anh") or "avatar-800.png"
+    p_anh = ROOT / "assets" / anh
+    if not p_anh.exists():
+        raise LoiCong(f"front matter 'anh: {anh}' trỏ tới assets/{anh} không tồn tại — "
+                      f"thẻ og:image sẽ trỏ vào hư không và link dán ra ngoài mất ảnh")
+    w, h = kich_thuoc_png(p_anh)
+    url = BASE + m.get("duong", "/")
+    xt = f"""<meta name="description" content="{ihtml.escape(m.get('mo_ta', ''), quote=True)}">
+<link rel="canonical" href="{url}">
+<meta property="og:site_name" content="BlockPinned">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:type" content="{m.get('loai', 'website')}">
+<meta property="og:title" content="{ihtml.escape(m.get('tieu_de_og', tieu_de), quote=True)}">
+<meta property="og:description" content="{ihtml.escape(m.get('mo_ta', ''), quote=True)}">
+<meta property="og:url" content="{url}">
+<meta property="og:image" content="{BASE}/anh/{anh}">
+<meta property="og:image:width" content="{w}">
+<meta property="og:image:height" content="{h}">
+<meta name="twitter:card" content="summary_large_image">"""
     return f"""<!doctype html><html lang="vi"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{ihtml.escape(tieu_de)}</title>
+{xt}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{FONTS}">
-<link rel="icon" type="image/png" sizes="32x32" href="{goc or '.'}/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="{goc or '.'}/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="{goc or '.'}/anh/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="{goc or '.'}/anh/favicon-16.png">
 <style>{css(t)}</style></head><body>
 <header class="dau"><div class="khung">
   <span class="mark">{MARK_SVG}</span>
@@ -581,8 +649,8 @@ def dai_trang_thai(claims: list, doc_lai: str) -> str:
 
 # ═════════════════════════════════════════════════════════════════════ BUILD
 
-def lap_favicon() -> None:
-    """Đưa favicon của hệ đã chốt vào bản dựng — kèm cổng chống trôi lệch.
+def lap_asset() -> None:
+    """Đưa ảnh phục vụ (favicon + card xem trước) vào bản dựng — kèm cổng chống trôi lệch.
 
     Bản phục vụ nằm ở `site/assets/` vì bản mirror công khai KHÔNG có `template/`
     (nó chỉ chở đúng phần đi ra). Nhưng nguồn sinh ra chúng là
@@ -591,16 +659,22 @@ def lap_favicon() -> None:
     của desk §13),
     và đó cũng đúng lý do `publish_site.py` sinh mirror thay vì chép tay.
     """
-    for ten_f in ("favicon-32.png", "favicon-16.png"):
-        cua_site = ROOT / "assets" / ten_f
-        if not cua_site.exists():
-            raise LoiCong(f"thiếu assets/{ten_f} — favicon thuộc hệ đã chốt "
-                          f"(template/out/logo/final/he.json), không phải trang trí")
-        goc_f = ROOT.parent / "template" / "out" / "logo" / "final" / ten_f
-        if goc_f.exists() and goc_f.read_bytes() != cua_site.read_bytes():
-            raise LoiCong(f"assets/{ten_f} LỆCH với bản do logo_final.py sinh ra — "
-                          f"chạy lại logo_final.py rồi chép lại, đừng sửa tay bản này")
-        (OUT / ten_f).write_bytes(cua_site.read_bytes())
+    kho = ROOT / "assets"
+    if not (kho / "favicon-32.png").exists():
+        raise LoiCong("thiếu assets/favicon-32.png — favicon thuộc hệ đã chốt "
+                      "(template/out/logo/final/he.json), không phải trang trí")
+    dich = OUT / "anh"
+    dich.mkdir(parents=True, exist_ok=True)
+    for f in sorted(kho.glob("*.png")):
+        if f.name not in NGUON_ASSET:
+            raise LoiCong(f"assets/{f.name} chưa khai builder nào sinh ra nó — thêm vào "
+                          f"NGUON_ASSET, đừng để một ảnh không có chủ đi ra ngoài")
+        g = ROOT.parent / "template" / "out" / NGUON_ASSET[f.name] / f.name
+        if g.exists() and g.read_bytes() != f.read_bytes():
+            raise LoiCong(f"assets/{f.name} LỆCH với bản do {NGUON_ASSET[f.name]}/ sinh ra — "
+                          f"chạy lại builder rồi chép lại, đừng sửa tay bản này")
+        kich_thuoc_png(f)      # nổ sớm nếu file hỏng, thay vì để mạng xã hội dựng khung sai
+        (dich / f.name).write_bytes(f.read_bytes())
 
 
 def main() -> None:
@@ -614,7 +688,7 @@ def main() -> None:
         ten = xin
     t = THEMES[ten]
     OUT.mkdir(parents=True, exist_ok=True)
-    lap_favicon()
+    lap_asset()
     bai = []
 
     for md_path in sorted(CONTENT.glob("posts/*.md"), reverse=True):
@@ -653,8 +727,12 @@ def main() -> None:
                 + render(body_md, o) + "</section>")
         d = OUT / "bai" / slug_
         d.mkdir(parents=True, exist_ok=True)
-        (d / "index.html").write_text(trang(f"{fm['title']} — BlockPinned", than, t, "../.."),
-                                      encoding="utf-8")
+        (d / "index.html").write_text(
+            trang(f"{fm['title']} — BlockPinned", than, t, "../..",
+                  meta={"mo_ta": fm["mo_ta"].strip(), "duong": f"/bai/{slug_}/",
+                        "anh": fm.get("anh"), "loai": "article",
+                        "tieu_de_og": fm["title"]}),
+            encoding="utf-8")
         # 🔴 Tóm tắt CHỈ đếm "đang đứng" là NÓI DỐI THEO CHIỀU TỰ HẠ MÌNH: bài #1 có
         # 4 claim (1 xác nhận · 1 đứng · 2 đã sửa) mà dòng cũ in "4 claim, 1 đang đứng"
         # ⇒ đọc ra như 3/4 đã đổ. Lỗi này chỉ xuất hiện khi có claim ở trạng thái thứ ba;
@@ -673,8 +751,28 @@ def main() -> None:
         for f, s, n, sg in bai)
     than_i = (f'<h1>{ihtml.escape(fm_i["tagline"])}</h1>' + render(body_i, "content/index.md")
               + f'<h2 id="bai">Bài</h2>{ds}')
-    (OUT / "index.html").write_text(trang("BlockPinned — số nào cũng truy ngược được", than_i, t),
-                                    encoding="utf-8")
+    if not 60 <= len(fm_i.get("mo_ta", "").strip()) <= 200:
+        raise LoiCong("content/index.md thiếu 'mo_ta' 60–200 ký tự — trang chủ là chỗ "
+                      "hay bị dán link nhất, để trắng là mất ở đúng cửa")
+    (OUT / "index.html").write_text(
+        trang("BlockPinned — số nào cũng truy ngược được", than_i, t,
+              meta={"mo_ta": fm_i["mo_ta"].strip(), "duong": "/", "anh": "avatar-800.png",
+                    "loai": "website", "tieu_de_og": "BlockPinned — số nào cũng truy ngược được"}),
+        encoding="utf-8")
+
+    # ── sitemap + robots: điều kiện để máy tìm THẤY trang ────────────────────────
+    # Thiếu hai file này thì site vẫn sống, chỉ là không ai tìm ra — đúng loại hỏng
+    # KHÔNG báo lỗi. lastmod lấy từ ngày bài, không lấy giờ chạy, để hai lần dựng cùng
+    # nội dung ra cùng một byte (dựng không tất định thì mọi phép so bản chép vô nghĩa).
+    ngay_moi = max(f["date"] for f, *_ in bai)
+    loc = [(BASE + "/", ngay_moi)] + [(f"{BASE}/bai/{s}/", f["date"]) for f, s, *_ in bai]
+    (OUT / "sitemap.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "".join(f"  <url><loc>{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in loc)
+        + "</urlset>\n", encoding="utf-8")
+    (OUT / "robots.txt").write_text(
+        f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap.xml\n", encoding="utf-8")
 
     # cổng 1 + 4 chạy LẠI trên HTML đã sinh: nếu khuôn tự nhét chữ cấm thì phải bắt
     for f in OUT.rglob("*.html"):
@@ -683,7 +781,10 @@ def main() -> None:
         cong_ngoi_xung(txt, str(f.relative_to(OUT)))
         cong_danh_dau(txt, str(f.relative_to(OUT)))
 
-    print(f"  ✓ index.html\n✅ {len(bai)} bài · hệ màu '{ten}' · 6/6 cổng PASS")
+    # Đếm cổng lấy từ chính danh sách, không gõ tay: bản cũ ghi cứng "6/6" và nó thành
+    # sai ngay lần thêm cổng thứ bảy — cùng họ "một con số viết ra rồi không ai đếm lại".
+    print(f"  ✓ index.html\n✅ {len(bai)} bài · hệ màu '{ten}' · "
+          f"{len(TEN_CONG)}/{len(TEN_CONG)} cổng PASS ({' · '.join(TEN_CONG)})")
 
 
 if __name__ == "__main__":

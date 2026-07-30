@@ -4,6 +4,8 @@ date: 2026-07-27
 mau: 🟢
 ghim: Robinhood chain · block #10.808.643 → #11.671.782 (trọn ngày 16/07 UTC)
 doc_lai: Cập nhật 28/07/2026 09:36 UTC — DefiLlama đã tính lại TOÀN BỘ khoảng 08→24/07. Phép đếm trực tiếp của tôi được xác nhận ở cả hai ngày ghi trước; nhận định 'cú tụt do đổi cách tính' bị chính điều bác bỏ của nó bác, và tôi rút
+mo_ta: Ngày 16/07, DefiLlama báo phí Uniswap v4 trên Robinhood chain cao hơn 3,9 lần phép đếm trực tiếp trên chain. Họ đã merge bản sửa, rồi tự tính lại đúng trong khoảng tôi ghi trước.
+anh: post01-card.png
 kenh_x: https://x.com/blockpinned/status/2081674093368365398
 ---
 

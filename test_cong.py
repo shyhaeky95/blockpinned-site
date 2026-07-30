@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ép cả 5 cổng của build.py NỔ — vì một cổng chưa từng fail thì chưa phải cổng.
+"""Ép mọi cổng của build.py NỔ — vì một cổng chưa từng fail thì chưa phải cổng.
 
 `luật bằng chứng của desk §2`: *"cấu hình nào của thế giới sẽ làm nó NỔ?
 Không có ⇒ đừng gọi nó là control. Nó là kiểm tra chính tả."*
@@ -79,6 +79,21 @@ CA = [
      lambda r: sua_md(r, lambda s: s.replace('"\n```\n\n4. **Đếm tận gốc:**',
                                              '"\n\n4. **Đếm tận gốc:**')),
      "không đóng"),
+    # ⑦ THẺ XEM TRƯỚC — thêm 30/07. Đây là cổng canh đúng chỗ người LẠ quyết định bấm
+    # hay không: thiếu mô tả thì link dán vào Telegram/Discord/forum ra một dòng chữ
+    # trơn, và thiếu ảnh thì og:image trỏ vào hư không. Cả hai đều hỏng KHÔNG báo lỗi.
+    ("⑦ XEM TRƯỚC · mất mô tả",
+     lambda r: sua_md(r, lambda s: re.sub(r"^mo_ta: .*$", "mo_ta: ngắn quá", s,
+                                          count=1, flags=re.M)),
+     "'mo_ta' phải dài 60–200"),
+    ("⑦ XEM TRƯỚC · ảnh trỏ vào file không có",
+     lambda r: sua_md(r, lambda s: re.sub(r"^anh: .*$", "anh: khong-ton-tai.png", s,
+                                          count=1, flags=re.M)),
+     "không tồn tại"),
+    ("⑦ XEM TRƯỚC · ảnh chưa khai builder nào sinh",
+     lambda r: (r / "site" / "assets" / "la-mat.png").write_bytes(
+         (r / "site" / "assets" / "favicon-16.png").read_bytes()),
+     "chưa khai builder"),
 ]
 
 

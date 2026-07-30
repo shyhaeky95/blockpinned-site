@@ -3,6 +3,8 @@ title: Uniswap bật thu phí v4 — chỉ số giảm 53% sau một đêm, và 
 date: 2026-07-28
 mau: 🟡
 ghim: Ethereum · cửa sổ 10,97 giờ ghim block hai đầu #25.624.853 → #25.628.131 (21h50 ngày 27/07 → 08h48 ngày 28/07, tức 14:50Z → 01:48Z)
+mo_ta: Một chỉ số phí v4 giảm 53% sau một đêm. Nhưng nó là SỐ DƯ còn trong hợp đồng, không phải bộ đếm cộng dồn — và cùng cửa sổ đó vẫn có 4.382,57 đô phí mới chảy vào.
+anh: post02-card.png
 kenh_x: https://x.com/blockpinned/status/2082128396382023921
 ---
 

@@ -3,6 +3,8 @@ title: Lịch unlock không phải lượng HYPE thực sự đi vào lưu hành
 date: 2026-07-29
 mau: 🟢
 ghim: KHÔNG neo được block — HyperCore trả state hiện tại · ảnh chụp 09h38–10h18 ngày 29/07/2026 · ledger khép 6.004.521 HYPE withdrawal về đúng 0
+mo_ta: Mô hình dùng 9,92 triệu HYPE mỗi tháng; ledger chính thức chỉ cho 259.866–347.176 HYPE rời bucket. Thấp hơn 29–38 lần, và sai lệch đó làm mô hình cung đổi dấu.
+anh: post04-card.png
 kenh_x: https://x.com/blockpinned/status/2082365873952604576
 ---
 

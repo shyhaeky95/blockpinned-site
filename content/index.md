@@ -1,6 +1,7 @@
 ---
 title: BlockPinned
 tagline: Số nào cũng truy ngược được
+mo_ta: Sổ gốc của mọi bài BlockPinned: từng khẳng định một dòng, ghim tại block đã đo, kèm điều gì sẽ bác bỏ nó. Claim nào sai thì ghi là sai, ngay tại chỗ, không xoá.
 ---
 
 Đây là chỗ giữ **bản chuẩn** của mọi bài tôi đăng.

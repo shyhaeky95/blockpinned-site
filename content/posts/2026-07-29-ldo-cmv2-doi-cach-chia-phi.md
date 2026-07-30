@@ -3,6 +3,8 @@ title: Lido đổi cách chia phí ở module mới — nhưng gần 5 ngày sau
 date: 2026-07-29
 mau: 🟡
 ghim: Ethereum · block #25.637.121, timestamp 29/07/2026 07:53:59 UTC
+mo_ta: Module mới của Lido đổi chia phí từ 350/650 sang 400/600 bp. Nhưng tại block 25.637.121 nó có 0 ETH reported balance, nên bảng phí mới đang có trọng số bằng 0.
+anh: post05-card.png
 kenh_x: https://x.com/blockpinned/status/2082421671152218340
 ---
 
