@@ -12,7 +12,22 @@
           "ghi": "Đăng cùng bốn lượt đo. Lượt bốn cho hai token trên CÙNG một chain đi hai hướng ngược nhau (Ethereum ETH −92%, USDC +76%) nên luận điểm 'số dư không phải bộ đếm' chứng minh được trong một chain, không cần mượn chain khác làm đối chứng.",
           "nguon": "https://x.com/blockpinned/status/2082128396382023921"
         }
-      ]
+      ],
+      "do_lai": {
+        "chain": "ethereum",
+        "to": "0x000000000004444c5dc75cB358380D2e3dE08A90",
+        "ky": "protocolFeesAccrued(address)",
+        "tham_so": [
+          "0x0000000000000000000000000000000000000000"
+        ],
+        "cong_thuc": {
+          "tu": 0,
+          "thap_phan": 18
+        },
+        "don_vi": "ETH",
+        "chu_so": 4,
+        "so_ghim": 0.0159
+      }
     },
     {
       "id": "C2",

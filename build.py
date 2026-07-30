@@ -34,6 +34,11 @@ import pathlib
 import re
 import sys
 
+# keccak thuần stdlib, nằm cạnh file này (cả kho gốc và mirror công khai).
+# Nó TỰ KIỂM 5 vector lúc import và chết ngay nếu sai — selector sai thì gọi
+# sang hàm khác và trả về số trông như số liệu.
+import keccak
+
 ROOT = pathlib.Path(__file__).parent
 CONTENT = ROOT / "content"
 # Tên miền dùng cho canonical · og:url · sitemap. Ba chỗ này BẮT BUỘC là URL tuyệt đối
@@ -128,7 +133,10 @@ BODY_FONT = "Be Vietnam Pro"
 
 # Tên các họ cổng — dùng cho dòng in ra, và là chỗ DUY NHẤT đếm chúng.
 TEN_CONG = ["ngôn ngữ", "cấu trúc", "claim", "ngôi xưng", "đánh dấu",
-            "thuộc tính số", "xem trước"]
+            "thuộc tính số", "xem trước", "đo lại"]
+
+# chữ ký hàm hợp lệ: tên + danh sách kiểu, vd `balanceOf(address)` · `x()` · `f(uint256,address)`
+RE_KY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*\((|[a-z0-9\[\],]+)\)$")
 
 
 class LoiCong(Exception):
@@ -333,6 +341,39 @@ def cong_claim(claims: list, o: str) -> None:
                 raise LoiCong(f"{cid} nhật ký có dòng rỗng — {o}")
 
 
+def cong_do_lai(claims: list, o: str) -> None:
+    """Cổng 8 — nút "đo lại ngay" phải khai đủ để CHẠY, hoặc khai rõ vì sao KHÔNG chạy được.
+
+    Vì sao là cổng chứ không phải tuỳ chọn: một nút hỏng là thứ tệ hơn không có nút. Nó
+    hứa với người đọc rằng họ tự kiểm được, rồi trả về số 0 hoặc không gì cả — và người
+    đọc sẽ đọc số 0 đó thành dữ kiện về chain. Claim nào KHÔNG đo lại được từ trình duyệt
+    thì phải nói ra, không được để trống cho người ta tự suy.
+    """
+    for c in claims:
+        if "khong_do_lai" in c and len(str(c["khong_do_lai"]).strip()) < 20:
+            raise LoiCong(f"{c['id']} 'khong_do_lai' phải nói RÕ vì sao (≥20 ký tự) — {o}")
+        d = c.get("do_lai")
+        if not d:
+            continue
+        if c.get("khong_do_lai"):
+            raise LoiCong(f"{c['id']} khai CẢ do_lai lẫn khong_do_lai — chọn một — {o}")
+        for k in ("to", "ky", "cong_thuc", "don_vi", "so_ghim", "chu_so"):
+            if k not in d:
+                raise LoiCong(f"{c['id']} do_lai thiếu '{k}' — {o}")
+        if not re.fullmatch(r"0x[0-9a-fA-F]{40}", d["to"]):
+            raise LoiCong(f"{c['id']} do_lai.to không phải địa chỉ 20 byte — {o}")
+        if not RE_KY.match(d["ky"]):
+            raise LoiCong(f"{c['id']} do_lai.ky không phải chữ ký hàm "
+                          f"(vd 'balanceOf(address)') — {o}: {d['ky']!r}")
+        ct = d["cong_thuc"]
+        if "tu" not in ct:
+            raise LoiCong(f"{c['id']} cong_thuc thiếu 'tu' (lấy word thứ mấy) — {o}")
+        if "chia" not in ct and "thap_phan" not in ct:
+            raise LoiCong(f"{c['id']} cong_thuc phải có 'chia' (tỉ lệ) HOẶC 'thap_phan' "
+                          f"(quy về đơn vị) — không có thì không biết in số gì — {o}")
+        ma_hoa_goi(d)      # nổ ngay tại build nếu tham số không mã hoá được
+
+
 def cong_danh_dau(txt: str, o: str) -> None:
     """Cổng 6 — thuộc tính SỐ của SVG/HTML phải là số hợp lệ.
 
@@ -491,6 +532,23 @@ th{{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;
   padding:9px 12px;margin-top:13px;font-size:14.5px}}
 .dong.bac .nhan{{color:var(--accent)}}
 
+.dolai-o{{margin-top:13px;display:flex;flex-direction:column;gap:8px}}
+button.dolai{{align-self:flex-start;font:600 12.5px/1 var(--mono);letter-spacing:.06em;
+  color:var(--paper);background:var(--accent);border:0;border-radius:2px;
+  padding:9px 13px;cursor:pointer}}
+button.dolai:hover{{filter:brightness(1.08)}}
+button.dolai:focus-visible{{outline:2px solid var(--ink);outline-offset:2px}}
+button.dolai[disabled]{{opacity:.55;cursor:progress}}
+.ketqua{{font:500 12.5px/1.65 var(--mono);color:var(--muted);
+  border-left:2px solid var(--line);padding:2px 0 2px 10px}}
+.ketqua b{{color:var(--ink);font-weight:600}}
+.ketqua.khop{{border-left-color:var(--accent)}}
+.ketqua.lech{{border-left-color:var(--accent)}}
+.ketqua.loi{{border-left-color:var(--ink)}}
+.ketqua .nguon{{display:block;font-size:11px;opacity:.75;margin-top:3px}}
+.dong.khongdo{{border-left:3px solid var(--line);padding:9px 12px;margin-top:13px;
+  font-size:14px;color:var(--muted)}}
+
 /* bài viết là THAM CHIẾU ở trang này — hạ nhẹ xuống, không tranh chỗ với sổ claim */
 .bandaydu{{margin-top:56px;padding-top:6px;border-top:3px solid var(--ink)}}
 .bandaydu h2{{border-top:0;padding-top:0;margin-top:16px}}
@@ -568,6 +626,7 @@ def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None) ->
   Không phải lời khuyên đầu tư. ·
   <a href="https://x.com/blockpinned">@blockpinned</a>
 </div></footer>
+<script>{JS_DO_LAI}</script>
 </body></html>"""
 
 
@@ -609,6 +668,98 @@ def ve_thang(td: dict) -> str:
     return "\n".join(g) + "</div>"
 
 
+def ma_hoa_goi(d: dict) -> str:
+    """Chữ ký hàm + tham số static → calldata. Selector sinh bằng keccak, KHÔNG gõ tay:
+    cái người đọc thấy in trên trang và cái thật sự được gọi phải là một thứ."""
+    data = keccak.selector(d["ky"])
+    for t in d.get("tham_so", []):
+        if isinstance(t, bool) or not isinstance(t, (int, str)):
+            raise LoiCong(f"tham số lạ trong do_lai: {t!r} — chỉ nhận số nguyên hoặc 0x…")
+        data += f"{t:064x}" if isinstance(t, int) else t[2:].lower().rjust(64, "0")
+    return data
+
+
+def khoi_do_lai(c: dict) -> str:
+    """Nút để NGƯỜI ĐỌC tự đo lại claim ngay lúc đọc.
+
+    Vì sao nó là thứ site làm được mà X/TG không: bài trên feed chỉ KỂ rằng số đã được
+    đo; ở đây người đọc bấm một lần và tự thấy số bây giờ, kèm block vừa đọc, đặt cạnh
+    số đã ghim. Họ rời trang với trạng thái khác lúc vào.
+
+    🔴 Trình tự BẮT BUỘC là ghim TRƯỚC rồi đọc: `eth_blockNumber` → `eth_call` TẠI đúng
+    block đó. Gọi `latest` rồi in kèm block đọc sau là hai thời điểm khác nhau dán vào
+    một dòng — đúng loại lỗi kênh này đi bác.
+    """
+    if c.get("khong_do_lai"):
+        return ('<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>'
+                + ihtml.escape(c["khong_do_lai"]) + "</p>")
+    d = c.get("do_lai")
+    if not d:
+        return ""
+    ct = d["cong_thuc"]
+    return (
+        '<div class="dolai-o">'
+        f'<button class="dolai" type="button" data-to="{d["to"]}" data-data="{ma_hoa_goi(d)}"'
+        f' data-tu="{ct["tu"]}" data-chia="{ct.get("chia", "")}" data-nhan="{ct.get("nhan", 1)}"'
+        f' data-thap-phan="{ct.get("thap_phan", 0)}" data-chu-so="{d["chu_so"]}"'
+        f' data-don-vi="{ihtml.escape(d["don_vi"], quote=True)}" data-ghim="{d["so_ghim"]}">'
+        'Đo lại ngay ↻</button>'
+        '<div class="ketqua" role="status" aria-live="polite">'
+        f'gọi <code>{ihtml.escape(d["ky"])}</code> trên <code>{d["to"][:10]}…{d["to"][-4:]}</code>'
+        '</div></div>')
+
+
+JS_DO_LAI = """
+// Hai endpoint keyless, đo được 30/07 là cho phép trình duyệt gọi (CORS *). Gọi endpoint
+// thứ hai CHỈ khi cái đầu lỗi — 🔴 giới hạn nhịp là thật: một endpoint đã trả 429 ngay
+// lượt thứ ba khi thử. Vì vậy trang KHÔNG tự đo lúc mở; chỉ đo khi có người bấm.
+const RPC = ["https://ethereum-rpc.publicnode.com", "https://eth.drpc.org"];
+async function rpcGoi(ep, method, params) {
+  const r = await fetch(ep, {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({jsonrpc: "2.0", id: 1, method, params})});
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  const j = await r.json();
+  if (j.error) throw new Error(j.error.message || "lỗi RPC");
+  return j.result;
+}
+function chuoiSo(x, n) {
+  return x.toLocaleString("vi-VN", {minimumFractionDigits: n, maximumFractionDigits: n});
+}
+async function doLai(b) {
+  const o = b.dataset, ra = b.parentElement.querySelector(".ketqua");
+  b.disabled = true; ra.className = "ketqua dang"; ra.textContent = "đang đo…";
+  const loi = [];
+  for (const ep of RPC) {
+    try {
+      const blk = await rpcGoi(ep, "eth_blockNumber", []);              // ghim TRƯỚC
+      const kq = await rpcGoi(ep, "eth_call", [{to: o.to, data: o.data}, blk]);  // đọc TẠI block đó
+      const h = kq.slice(2), w = [];
+      for (let i = 0; i < h.length; i += 64) w.push(BigInt("0x" + h.slice(i, i + 64)));
+      const tu = Number(o.tu), sc = Number(o.chuSo), ghim = Number(o.ghim);
+      const v = o.chia === "" ? Number(w[tu]) / Math.pow(10, Number(o.thapPhan))
+                              : Number(w[tu]) / Number(w[Number(o.chia)]) * Number(o.nhan);
+      const doi = Math.abs(v - ghim) >= Math.pow(10, -sc) / 2;
+      ra.className = "ketqua " + (doi ? "lech" : "khop");
+      ra.innerHTML = "<b>" + chuoiSo(v, sc) + " " + o.donVi + "</b> tại block "
+        + BigInt(blk).toLocaleString("vi-VN") + " · đã ghim " + chuoiSo(ghim, sc) + " "
+        + o.donVi + " ⇒ <b>" + (doi ? "ĐÃ ĐỔI" : "KHÔNG ĐỔI") + "</b>"
+        + '<span class="nguon">đọc từ ' + ep.replace("https://", "") + "</span>";
+      b.disabled = false; return;
+    } catch (e) { loi.push(ep.replace("https://", "") + ": " + e.message); }
+  }
+  // 🔴 Không in số nào khi đo hỏng. Một số 0 ở đây là bằng chứng về CÔNG CỤ, không phải
+  // về chain — in nó ra là làm đúng cái lỗi mà mấy bài trên trang này đi bác.
+  ra.className = "ketqua loi";
+  ra.innerHTML = "<b>không đo được</b> — cả hai endpoint đều lỗi, nên trang không in số nào."
+    + '<span class="nguon">' + loi.join(" · ") + "</span>";
+  b.disabled = false;
+}
+document.querySelectorAll("button.dolai").forEach(function (b) {
+  b.addEventListener("click", function () { doLai(b); });
+});
+"""
+
+
 def so_claim(claims: list) -> str:
     out = ['<section class="so"><h2 id="so-claim">Sổ claim</h2>',
            '<p class="dan">Mỗi khẳng định của bài này một dòng, kèm điều gì sẽ bác bỏ nó. '
@@ -629,6 +780,7 @@ def so_claim(claims: list) -> str:
   {hinh}
   <p class="dong"><span class="nhan">GHIM TẠI</span>{ihtml.escape(c['ghim'])}</p>
   <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>{ihtml.escape(c['falsifier'])}</p>
+  {khoi_do_lai(c)}
   <ul class="nk">{nk}</ul>
 </article>""")
     return "\n".join(out) + "</section>"
@@ -705,6 +857,7 @@ def main() -> None:
         cong_ngoi_xung(kho, o)
         cong_claim(claims, o)
         cong_cau_truc(fm, body_md, claims, o)
+        cong_do_lai(claims, o)
 
         slug_ = md_path.stem
         # 🔴 THỨ TỰ TRANG LÀ CÓ CHỦ Ý, đừng đảo lại: sổ claim ĐỨNG TRƯỚC bài viết.

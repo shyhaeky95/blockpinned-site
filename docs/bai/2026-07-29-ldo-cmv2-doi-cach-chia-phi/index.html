@@ -147,6 +147,23 @@ th{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;
   padding:9px 12px;margin-top:13px;font-size:14.5px}
 .dong.bac .nhan{color:var(--accent)}
 
+.dolai-o{margin-top:13px;display:flex;flex-direction:column;gap:8px}
+button.dolai{align-self:flex-start;font:600 12.5px/1 var(--mono);letter-spacing:.06em;
+  color:var(--paper);background:var(--accent);border:0;border-radius:2px;
+  padding:9px 13px;cursor:pointer}
+button.dolai:hover{filter:brightness(1.08)}
+button.dolai:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+button.dolai[disabled]{opacity:.55;cursor:progress}
+.ketqua{font:500 12.5px/1.65 var(--mono);color:var(--muted);
+  border-left:2px solid var(--line);padding:2px 0 2px 10px}
+.ketqua b{color:var(--ink);font-weight:600}
+.ketqua.khop{border-left-color:var(--accent)}
+.ketqua.lech{border-left-color:var(--accent)}
+.ketqua.loi{border-left-color:var(--ink)}
+.ketqua .nguon{display:block;font-size:11px;opacity:.75;margin-top:3px}
+.dong.khongdo{border-left:3px solid var(--line);padding:9px 12px;margin-top:13px;
+  font-size:14px;color:var(--muted)}
+
 /* bài viết là THAM CHIẾU ở trang này — hạ nhẹ xuống, không tranh chỗ với sổ claim */
 .bandaydu{margin-top:56px;padding-top:6px;border-top:3px solid var(--ink)}
 .bandaydu h2{border-top:0;padding-top:0;margin-top:16px}
@@ -176,6 +193,7 @@ footer a{color:var(--muted)}
   
   <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum block 25.637.121 (29/07/2026 07:53:59 UTC) · StakingRouter 0xfddf38947afb03c621c71b06c9c70bce73f12999 · CMv1 0x55032650b14df07b85bf18a3a3ec8e0af2e028d5 · CMv2 0xda5f930ce326eb5205085d66c72a4e79d60cb8c1</p>
   <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Gọi lại cùng các getter ở đúng block 25.637.121. Nếu hai bảng phí trả về khác 350/650 và 400/600 bp thì phép đo này sai. Tổng hai cột của từng module phải cộng đúng 1.000 bp — lệch khỏi đó cũng là dấu hiệu đọc sai getter.</p>
+  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Bảng phí của từng module nằm trong một mảng struct do getStakingModules() trả về; bộ giải mã nhỏ của trang này chỉ đọc được kiểu tĩnh nên không tự đọc nó. Tự kiểm được: gọi getStakingModules() trên StakingRouter tại block 25.637.121 và đọc hai trường stakingModuleFee / treasuryFee của module 1 và 4.</p>
   <ul class="nk"><li><span class="d">2026-07-29</span>Đăng. Điểm của claim này là cách chia phí đổi ở tầng contract, đọc được tại một block cố định — nên nó kiểm ngược được bất cứ lúc nào, không phụ thuộc trạng thái hiện tại. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></li></ul>
 </article>
 <article class="claim song" id="C2">
@@ -185,6 +203,7 @@ footer a{color:var(--muted)}
   
   <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum block 25.637.121 · getStakingModuleSummary(4) và getModuleValidatorsBalance(4) · share CMv1 tại block đo 89,8307%</p>
   <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Chỉ cần một trong bốn số 43/0/0/0 khác đi khi gọi lại ở đúng block 25.637.121 là phép đo này sai. Và khi reported balance của CMv2 đổi khỏi 0 ở block sau, claim này hết hiệu lực theo thời gian — phải chạy lại phép tính tỷ lệ gộp, chứ không giữ nguyên câu cũ.</p>
+  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0xbdaf4e770000000000000000000000000000000000000000000000000000000000000004" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="18" data-chu-so="4" data-don-vi="ETH" data-ghim="0">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getModuleValidatorsBalance(uint256)</code> trên <code>0xfddf3894…2999</code></div></div>
   <ul class="nk"><li><span class="d">2026-07-29</span>Đăng. Đây là claim quyết định độ nghiêm trọng của cả bài: bảng phí mới đã tồn tại trên chain nhưng chưa có ETH nào tạo trọng số cho nó tại block đo. Ngưỡng theo dõi tự đặt: tới 18/09/2026, nếu CMv2 vẫn dưới 1% tổng balance module thì hạ mức ưu tiên — đó là quyết định biên tập, không bác snapshot. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></li></ul>
 </article>
 <article class="claim song" id="C3">
@@ -194,6 +213,7 @@ footer a{color:var(--muted)}
   
   <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum block 25.637.121 · getStakingFeeAggregateDistribution() bản đầy đủ (bản E4Precision chỉ trả 6,20%) · bảng 0/25/50/75/100% dựng trên share CMv1 89,8307%</p>
   <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Dựng lại bảng 0/25/50/75/100% từ chính hai bảng phí và share 89,8307% tại block 25.637.121 mà không ra chuỗi 6,2085 → 6,0962 → 5,9839 → 5,8717 → 5,7594 ⇒ bảng này sai. Nếu ai chỉ ra getter đang dùng thực chất đo lượng ETH đã chuyển vào treasury chứ không phải một tỷ lệ phân bổ, thì cách diễn giải cả mục này sai. Tổng balance hoặc cơ cấu balance giữa các module đổi, hoặc DAO thay fee CMv2 ⇒ bảng phải tính lại.</p>
+  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0xfa5093eb" data-tu="1" data-chia="2" data-nhan="100" data-thap-phan="0" data-chu-so="10" data-don-vi="%" data-ghim="6.2085170404">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getStakingFeeAggregateDistribution()</code> trên <code>0xfddf3894…2999</code></div></div>
   <ul class="nk"><li><span class="d">2026-07-29</span>Đăng kèm chữ &#x27;giả định&#x27; ngay trong claim, vì đây đúng chỗ một con số dễ bị trích thành &#x27;Lido mất 7,23% doanh thu&#x27;. Getter trả tỷ lệ trong công thức, không đo ETH thực nhận — muốn biết treasury nhận bao nhiêu phải đo phần thưởng phát sinh theo từng module trong kỳ. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></li></ul>
 </article></section><section class="bandaydu"><h2 id="ban-day-du">Bài đầy đủ</h2><p class="meta">🟡 2026-07-29 &nbsp;·&nbsp; GHIM TẠI Ethereum · block #25.637.121, timestamp 29/07/2026 07:53:59 UTC &nbsp;·&nbsp; <a href="https://x.com/blockpinned/status/2082421671152218340">bản đăng trên X</a></p><p>Lido vừa nâng cấp Staking Router v3. CMv2 đổi cách chia phí — nhưng gần 5 ngày sau, số dư được báo cáo vẫn là <strong>0 ETH</strong>.</p>
 <p>Đây là snapshot tại Ethereum block <strong>25.637.121</strong> — không phải kết luận về mọi block kể từ ngày upgrade.</p>
@@ -239,4 +259,53 @@ footer a{color:var(--muted)}
   Không phải lời khuyên đầu tư. ·
   <a href="https://x.com/blockpinned">@blockpinned</a>
 </div></footer>
+<script>
+// Hai endpoint keyless, đo được 30/07 là cho phép trình duyệt gọi (CORS *). Gọi endpoint
+// thứ hai CHỈ khi cái đầu lỗi — 🔴 giới hạn nhịp là thật: một endpoint đã trả 429 ngay
+// lượt thứ ba khi thử. Vì vậy trang KHÔNG tự đo lúc mở; chỉ đo khi có người bấm.
+const RPC = ["https://ethereum-rpc.publicnode.com", "https://eth.drpc.org"];
+async function rpcGoi(ep, method, params) {
+  const r = await fetch(ep, {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({jsonrpc: "2.0", id: 1, method, params})});
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  const j = await r.json();
+  if (j.error) throw new Error(j.error.message || "lỗi RPC");
+  return j.result;
+}
+function chuoiSo(x, n) {
+  return x.toLocaleString("vi-VN", {minimumFractionDigits: n, maximumFractionDigits: n});
+}
+async function doLai(b) {
+  const o = b.dataset, ra = b.parentElement.querySelector(".ketqua");
+  b.disabled = true; ra.className = "ketqua dang"; ra.textContent = "đang đo…";
+  const loi = [];
+  for (const ep of RPC) {
+    try {
+      const blk = await rpcGoi(ep, "eth_blockNumber", []);              // ghim TRƯỚC
+      const kq = await rpcGoi(ep, "eth_call", [{to: o.to, data: o.data}, blk]);  // đọc TẠI block đó
+      const h = kq.slice(2), w = [];
+      for (let i = 0; i < h.length; i += 64) w.push(BigInt("0x" + h.slice(i, i + 64)));
+      const tu = Number(o.tu), sc = Number(o.chuSo), ghim = Number(o.ghim);
+      const v = o.chia === "" ? Number(w[tu]) / Math.pow(10, Number(o.thapPhan))
+                              : Number(w[tu]) / Number(w[Number(o.chia)]) * Number(o.nhan);
+      const doi = Math.abs(v - ghim) >= Math.pow(10, -sc) / 2;
+      ra.className = "ketqua " + (doi ? "lech" : "khop");
+      ra.innerHTML = "<b>" + chuoiSo(v, sc) + " " + o.donVi + "</b> tại block "
+        + BigInt(blk).toLocaleString("vi-VN") + " · đã ghim " + chuoiSo(ghim, sc) + " "
+        + o.donVi + " ⇒ <b>" + (doi ? "ĐÃ ĐỔI" : "KHÔNG ĐỔI") + "</b>"
+        + '<span class="nguon">đọc từ ' + ep.replace("https://", "") + "</span>";
+      b.disabled = false; return;
+    } catch (e) { loi.push(ep.replace("https://", "") + ": " + e.message); }
+  }
+  // 🔴 Không in số nào khi đo hỏng. Một số 0 ở đây là bằng chứng về CÔNG CỤ, không phải
+  // về chain — in nó ra là làm đúng cái lỗi mà mấy bài trên trang này đi bác.
+  ra.className = "ketqua loi";
+  ra.innerHTML = "<b>không đo được</b> — cả hai endpoint đều lỗi, nên trang không in số nào."
+    + '<span class="nguon">' + loi.join(" · ") + "</span>";
+  b.disabled = false;
+}
+document.querySelectorAll("button.dolai").forEach(function (b) {
+  b.addEventListener("click", function () { doLai(b); });
+});
+</script>
 </body></html>

@@ -14,15 +14,15 @@ chịu cùng luật đó — nên nó ở đây, chạy lại được, và **c�
 ## Dựng lại
 
 ```bash
-python3 build.py            # sinh docs/ — 7 cổng, cổng nào chặn thì KHÔNG có trang
-python3 test_cong.py        # 18 ca ép từng cổng phải nổ, kèm control âm
+python3 build.py            # sinh docs/ — 8 cổng, cổng nào chặn thì KHÔNG có trang
+python3 test_cong.py        # 22 ca ép từng cổng phải nổ, kèm control âm
 python3 preview.py          # ảnh chụp khổ hẹp + phép đo tràn tự kiểm
 ```
 
 `docs/` là thứ GitHub Pages phục vụ. Nó là **bản sinh ra** — sửa nội dung ở
 `content/`, đừng sửa `docs/`.
 
-## Bảy cổng CHẶN build
+## Tám cổng CHẶN build
 
 Không cổng nào chỉ cảnh báo. Cảnh báo là thứ người ta quen mắt bỏ qua.
 
@@ -35,6 +35,7 @@ Không cổng nào chỉ cảnh báo. Cảnh báo là thứ người ta quen m�
 | ⑤ | đánh dấu | markdown ngoài tập con thì **nổ**, không nuốt im |
 | ⑥ | thuộc tính số | toạ độ/số trong HTML sinh ra phải là số hợp lệ |
 | ⑦ | xem trước | bài thiếu dòng mô tả, hoặc ảnh xem trước trỏ vào file không có |
+| ⑧ | đo lại | nút "đo lại ngay" khai thiếu, hoặc claim không đo được mà không nói vì sao |
 
 Cổng ③ là bản máy của một lỗi thật: một claim suýt đăng khi đã bị cắt mất điều
 bác bỏ, mà ô tick "có điều bác bỏ?" vẫn nguyên vì nó thừa kế từ bản trước.

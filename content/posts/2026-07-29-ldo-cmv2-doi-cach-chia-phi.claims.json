@@ -12,7 +12,8 @@
           "ghi": "Đăng. Điểm của claim này là cách chia phí đổi ở tầng contract, đọc được tại một block cố định — nên nó kiểm ngược được bất cứ lúc nào, không phụ thuộc trạng thái hiện tại.",
           "nguon": "https://x.com/blockpinned/status/2082421671152218340"
         }
-      ]
+      ],
+      "khong_do_lai": "Bảng phí của từng module nằm trong một mảng struct do getStakingModules() trả về; bộ giải mã nhỏ của trang này chỉ đọc được kiểu tĩnh nên không tự đọc nó. Tự kiểm được: gọi getStakingModules() trên StakingRouter tại block 25.637.121 và đọc hai trường stakingModuleFee / treasuryFee của module 1 và 4."
     },
     {
       "id": "C2",
@@ -26,7 +27,22 @@
           "ghi": "Đăng. Đây là claim quyết định độ nghiêm trọng của cả bài: bảng phí mới đã tồn tại trên chain nhưng chưa có ETH nào tạo trọng số cho nó tại block đo. Ngưỡng theo dõi tự đặt: tới 18/09/2026, nếu CMv2 vẫn dưới 1% tổng balance module thì hạ mức ưu tiên — đó là quyết định biên tập, không bác snapshot.",
           "nguon": "https://x.com/blockpinned/status/2082421671152218340"
         }
-      ]
+      ],
+      "do_lai": {
+        "chain": "ethereum",
+        "to": "0xfddf38947afb03c621c71b06c9c70bce73f12999",
+        "ky": "getModuleValidatorsBalance(uint256)",
+        "tham_so": [
+          4
+        ],
+        "cong_thuc": {
+          "tu": 0,
+          "thap_phan": 18
+        },
+        "don_vi": "ETH",
+        "chu_so": 4,
+        "so_ghim": 0
+      }
     },
     {
       "id": "C3",
@@ -40,7 +56,20 @@
           "ghi": "Đăng kèm chữ 'giả định' ngay trong claim, vì đây đúng chỗ một con số dễ bị trích thành 'Lido mất 7,23% doanh thu'. Getter trả tỷ lệ trong công thức, không đo ETH thực nhận — muốn biết treasury nhận bao nhiêu phải đo phần thưởng phát sinh theo từng module trong kỳ.",
           "nguon": "https://x.com/blockpinned/status/2082421671152218340"
         }
-      ]
+      ],
+      "do_lai": {
+        "chain": "ethereum",
+        "to": "0xfddf38947afb03c621c71b06c9c70bce73f12999",
+        "ky": "getStakingFeeAggregateDistribution()",
+        "cong_thuc": {
+          "tu": 1,
+          "chia": 2,
+          "nhan": 100
+        },
+        "don_vi": "%",
+        "chu_so": 10,
+        "so_ghim": 6.2085170404
+      }
     }
   ]
 }

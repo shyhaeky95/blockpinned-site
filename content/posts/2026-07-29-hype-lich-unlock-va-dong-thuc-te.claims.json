@@ -12,7 +12,8 @@
           "ghi": "Đăng. Đây là claim trung tâm của bài: không phải 'HYPE sẽ không lạm phát', mà là phép đánh đồng giữa lịch phân bổ và dòng token thật bị bác.",
           "nguon": "https://x.com/blockpinned/status/2082365873952604576"
         }
-      ]
+      ],
+      "khong_do_lai": "HyperCore không có endpoint keyless nào cho trình duyệt đọc state neo theo block: RPC mặc định của Hyperliquid nhận block tag nhưng trả state hiện tại. Số ở đây đọc qua Info API và ghim bằng cửa sổ giờ, nên trang không thể tự đo lại — tự kiểm bằng ba endpoint nêu trong phụ lục."
     },
     {
       "id": "C2",
@@ -26,7 +27,8 @@
           "ghi": "Đăng. Sổ khép về 0 là lý do dám nói 'ledger đã đo' thay vì 'ước lượng': không còn phần dư nào để giấu một kênh rời bucket chưa biết.",
           "nguon": "https://x.com/blockpinned/status/2082365873952604576"
         }
-      ]
+      ],
+      "khong_do_lai": "HyperCore không có endpoint keyless nào cho trình duyệt đọc state neo theo block: RPC mặc định của Hyperliquid nhận block tag nhưng trả state hiện tại. Số ở đây đọc qua Info API và ghim bằng cửa sổ giờ, nên trang không thể tự đo lại — tự kiểm bằng ba endpoint nêu trong phụ lục."
     },
     {
       "id": "C3",
@@ -40,7 +42,8 @@
           "ghi": "Đăng kèm cả hai mẫu số doanh thu và cả hai giá hoà vốn, cố ý không chọn một rồi giấu một. Biên trailing 30 ngày (−0,67 triệu/năm) mỏng tới mức một lượt đo lại có thể lật dấu, nên nó được in ngay cạnh biên nền.",
           "nguon": "https://x.com/blockpinned/status/2082365873952604576"
         }
-      ]
+      ],
+      "khong_do_lai": "HyperCore không có endpoint keyless nào cho trình duyệt đọc state neo theo block: RPC mặc định của Hyperliquid nhận block tag nhưng trả state hiện tại. Số ở đây đọc qua Info API và ghim bằng cửa sổ giờ, nên trang không thể tự đo lại — tự kiểm bằng ba endpoint nêu trong phụ lục."
     }
   ]
 }

@@ -90,6 +90,25 @@ CA = [
      lambda r: sua_md(r, lambda s: re.sub(r"^anh: .*$", "anh: khong-ton-tai.png", s,
                                           count=1, flags=re.M)),
      "không tồn tại"),
+    # ⑧ ĐO LẠI — thêm 30/07. Một nút hỏng TỆ HƠN không có nút: nó hứa người đọc tự kiểm
+    # được rồi trả về số 0 hoặc không gì, và số 0 đó bị đọc thành dữ kiện về chain.
+    ("⑧ ĐO LẠI · thiếu trường bắt buộc",
+     lambda r: sua_claims(r, lambda cs: cs[0].update(
+         do_lai={"to": "0x" + "1" * 40, "ky": "owner()"})),
+     "do_lai thiếu"),
+    ("⑧ ĐO LẠI · chữ ký hàm không phải chữ ký",
+     lambda r: sua_claims(r, lambda cs: cs[0].update(
+         do_lai={"to": "0x" + "1" * 40, "ky": "đọc số dư", "cong_thuc": {"tu": 0, "thap_phan": 18},
+                 "don_vi": "ETH", "chu_so": 4, "so_ghim": 0})),
+     "không phải chữ ký hàm"),
+    ("⑧ ĐO LẠI · địa chỉ không phải 20 byte",
+     lambda r: sua_claims(r, lambda cs: cs[0].update(
+         do_lai={"to": "0xabc", "ky": "owner()", "cong_thuc": {"tu": 0, "thap_phan": 18},
+                 "don_vi": "ETH", "chu_so": 4, "so_ghim": 0})),
+     "không phải địa chỉ 20 byte"),
+    ("⑧ ĐO LẠI · lý do 'không đo được' viết cho có",
+     lambda r: sua_claims(r, lambda cs: cs[0].update(khong_do_lai="chưa làm")),
+     "phải nói RÕ vì sao"),
     ("⑦ XEM TRƯỚC · ảnh chưa khai builder nào sinh",
      lambda r: (r / "site" / "assets" / "la-mat.png").write_bytes(
          (r / "site" / "assets" / "favicon-16.png").read_bytes()),

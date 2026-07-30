@@ -147,6 +147,23 @@ th{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;
   padding:9px 12px;margin-top:13px;font-size:14.5px}
 .dong.bac .nhan{color:var(--accent)}
 
+.dolai-o{margin-top:13px;display:flex;flex-direction:column;gap:8px}
+button.dolai{align-self:flex-start;font:600 12.5px/1 var(--mono);letter-spacing:.06em;
+  color:var(--paper);background:var(--accent);border:0;border-radius:2px;
+  padding:9px 13px;cursor:pointer}
+button.dolai:hover{filter:brightness(1.08)}
+button.dolai:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+button.dolai[disabled]{opacity:.55;cursor:progress}
+.ketqua{font:500 12.5px/1.65 var(--mono);color:var(--muted);
+  border-left:2px solid var(--line);padding:2px 0 2px 10px}
+.ketqua b{color:var(--ink);font-weight:600}
+.ketqua.khop{border-left-color:var(--accent)}
+.ketqua.lech{border-left-color:var(--accent)}
+.ketqua.loi{border-left-color:var(--ink)}
+.ketqua .nguon{display:block;font-size:11px;opacity:.75;margin-top:3px}
+.dong.khongdo{border-left:3px solid var(--line);padding:9px 12px;margin-top:13px;
+  font-size:14px;color:var(--muted)}
+
 /* bài viết là THAM CHIẾU ở trang này — hạ nhẹ xuống, không tranh chỗ với sổ claim */
 .bandaydu{margin-top:56px;padding-top:6px;border-top:3px solid var(--ink)}
 .bandaydu h2{border-top:0;padding-top:0;margin-top:16px}
@@ -172,4 +189,53 @@ footer a{color:var(--muted)}
   Không phải lời khuyên đầu tư. ·
   <a href="https://x.com/blockpinned">@blockpinned</a>
 </div></footer>
+<script>
+// Hai endpoint keyless, đo được 30/07 là cho phép trình duyệt gọi (CORS *). Gọi endpoint
+// thứ hai CHỈ khi cái đầu lỗi — 🔴 giới hạn nhịp là thật: một endpoint đã trả 429 ngay
+// lượt thứ ba khi thử. Vì vậy trang KHÔNG tự đo lúc mở; chỉ đo khi có người bấm.
+const RPC = ["https://ethereum-rpc.publicnode.com", "https://eth.drpc.org"];
+async function rpcGoi(ep, method, params) {
+  const r = await fetch(ep, {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({jsonrpc: "2.0", id: 1, method, params})});
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  const j = await r.json();
+  if (j.error) throw new Error(j.error.message || "lỗi RPC");
+  return j.result;
+}
+function chuoiSo(x, n) {
+  return x.toLocaleString("vi-VN", {minimumFractionDigits: n, maximumFractionDigits: n});
+}
+async function doLai(b) {
+  const o = b.dataset, ra = b.parentElement.querySelector(".ketqua");
+  b.disabled = true; ra.className = "ketqua dang"; ra.textContent = "đang đo…";
+  const loi = [];
+  for (const ep of RPC) {
+    try {
+      const blk = await rpcGoi(ep, "eth_blockNumber", []);              // ghim TRƯỚC
+      const kq = await rpcGoi(ep, "eth_call", [{to: o.to, data: o.data}, blk]);  // đọc TẠI block đó
+      const h = kq.slice(2), w = [];
+      for (let i = 0; i < h.length; i += 64) w.push(BigInt("0x" + h.slice(i, i + 64)));
+      const tu = Number(o.tu), sc = Number(o.chuSo), ghim = Number(o.ghim);
+      const v = o.chia === "" ? Number(w[tu]) / Math.pow(10, Number(o.thapPhan))
+                              : Number(w[tu]) / Number(w[Number(o.chia)]) * Number(o.nhan);
+      const doi = Math.abs(v - ghim) >= Math.pow(10, -sc) / 2;
+      ra.className = "ketqua " + (doi ? "lech" : "khop");
+      ra.innerHTML = "<b>" + chuoiSo(v, sc) + " " + o.donVi + "</b> tại block "
+        + BigInt(blk).toLocaleString("vi-VN") + " · đã ghim " + chuoiSo(ghim, sc) + " "
+        + o.donVi + " ⇒ <b>" + (doi ? "ĐÃ ĐỔI" : "KHÔNG ĐỔI") + "</b>"
+        + '<span class="nguon">đọc từ ' + ep.replace("https://", "") + "</span>";
+      b.disabled = false; return;
+    } catch (e) { loi.push(ep.replace("https://", "") + ": " + e.message); }
+  }
+  // 🔴 Không in số nào khi đo hỏng. Một số 0 ở đây là bằng chứng về CÔNG CỤ, không phải
+  // về chain — in nó ra là làm đúng cái lỗi mà mấy bài trên trang này đi bác.
+  ra.className = "ketqua loi";
+  ra.innerHTML = "<b>không đo được</b> — cả hai endpoint đều lỗi, nên trang không in số nào."
+    + '<span class="nguon">' + loi.join(" · ") + "</span>";
+  b.disabled = false;
+}
+document.querySelectorAll("button.dolai").forEach(function (b) {
+  b.addEventListener("click", function () { doLai(b); });
+});
+</script>
 </body></html>
