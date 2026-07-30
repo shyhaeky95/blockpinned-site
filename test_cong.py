@@ -109,6 +109,13 @@ CA = [
     ("⑧ ĐO LẠI · lý do 'không đo được' viết cho có",
      lambda r: sua_claims(r, lambda cs: cs[0].update(khong_do_lai="chưa làm")),
      "phải nói RÕ vì sao"),
+    # ⑨ HẠN — thêm 30/07. Một ngày viết trong đoạn văn thì tới ngày đó không gì nhắc ai.
+    ("⑨ HẠN · điều-bác-bỏ có ngày mà không khai hạn",
+     lambda r: sua_claims(r, lambda cs: (cs[1].update(status="ĐANG ĐỨNG"), cs[1].pop("han", None))),
+     "mà không khai 'han'"),
+    ("⑨ HẠN · khai hạn nhưng không nói ngày đó phân định gì",
+     lambda r: sua_claims(r, lambda cs: cs[0].update(han="2026-12-31", han_ghi="xem lại")),
+     "thiếu 'han_ghi'"),
     ("⑦ XEM TRƯỚC · ảnh chưa khai builder nào sinh",
      lambda r: (r / "site" / "assets" / "la-mat.png").write_bytes(
          (r / "site" / "assets" / "favicon-16.png").read_bytes()),

@@ -69,7 +69,9 @@
           "ghi": "Đăng kèm hạn 04/08/2026 — đây là claim duy nhất của bài có ngày hết hạn tự đặt, nên nó sẽ được phân định bằng một phép đếm log, không bằng cảm nhận về nhịp.",
           "nguon": "https://x.com/blockpinned/status/2082128396382023921"
         }
-      ]
+      ],
+      "han": "2026-08-04",
+      "han_ghi": "Đếm log ProtocolFeeUpdated trên Ethereum từ 14:05Z ngày 28/07. Thêm từ 5.000 pool trở lên ⇒ rút câu “nhịp bật pool đã giảm mạnh”; dưới ngưỡng đó ⇒ claim đứng."
     }
   ]
 }

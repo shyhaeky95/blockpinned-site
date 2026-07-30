@@ -133,7 +133,7 @@ BODY_FONT = "Be Vietnam Pro"
 
 # Tên các họ cổng — dùng cho dòng in ra, và là chỗ DUY NHẤT đếm chúng.
 TEN_CONG = ["ngôn ngữ", "cấu trúc", "claim", "ngôi xưng", "đánh dấu",
-            "thuộc tính số", "xem trước", "đo lại"]
+            "thuộc tính số", "xem trước", "đo lại", "hạn"]
 
 # chữ ký hàm hợp lệ: tên + danh sách kiểu, vd `balanceOf(address)` · `x()` · `f(uint256,address)`
 RE_KY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*\((|[a-z0-9\[\],]+)\)$")
@@ -341,6 +341,29 @@ def cong_claim(claims: list, o: str) -> None:
                 raise LoiCong(f"{cid} nhật ký có dòng rỗng — {o}")
 
 
+RE_NGAY_VAN = re.compile(r"\b\d{1,2}/\d{1,2}/\d{4}\b")
+
+
+def cong_han(claims: list, o: str) -> None:
+    """Cổng 9 — điều-bác-bỏ có NGÀY thì phải khai `han`, để lời hứa không chết trong văn xuôi.
+
+    Vì sao là cổng: một ngày viết trong đoạn văn thì tới ngày đó không gì nhắc ai cả. Khai
+    ra thì trang chủ tự in "sắp phân định", và tự in "ĐÃ TỚI HẠN" khi desk trễ — tức chính
+    trang công khai là thứ đòi nợ. Claim đã được phân định thì miễn: hạn của nó là lịch sử.
+    """
+    for c in claims:
+        if "han" in c:
+            if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(c["han"])):
+                raise LoiCong(f"{c['id']} 'han' phải dạng YYYY-MM-DD — {o}: {c['han']!r}")
+            if len(str(c.get("han_ghi", "")).strip()) < 20:
+                raise LoiCong(f"{c['id']} có 'han' mà thiếu 'han_ghi' — phải nói ngày đó "
+                              f"PHÂN ĐỊNH cái gì, không chỉ ném ra một cái ngày — {o}")
+        elif c["status"] == "ĐANG ĐỨNG" and RE_NGAY_VAN.search(c.get("falsifier", "")):
+            raise LoiCong(f"{c['id']} điều-bác-bỏ có ngày "
+                          f"{RE_NGAY_VAN.search(c['falsifier']).group()} mà không khai 'han' ⇒ "
+                          f"tới ngày đó sẽ không gì nhắc — {o}")
+
+
 def cong_do_lai(claims: list, o: str) -> None:
     """Cổng 8 — nút "đo lại ngay" phải khai đủ để CHẠY, hoặc khai rõ vì sao KHÔNG chạy được.
 
@@ -532,6 +555,24 @@ th{{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;
   padding:9px 12px;margin-top:13px;font-size:14.5px}}
 .dong.bac .nhan{{color:var(--accent)}}
 
+.dem .phu{{font:500 12px/1.6 var(--mono);color:var(--muted);margin-top:7px;
+  text-transform:none;letter-spacing:0}}
+ul.diem{{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:0}}
+ul.diem li{{display:grid;grid-template-columns:auto 1fr;gap:0 12px;padding:11px 0;
+  border-top:1px solid var(--line);font-size:15px}}
+ul.diem li:last-child{{border-bottom:1px solid var(--line)}}
+ul.diem .tick{{font:600 10.5px/1.7 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid currentColor;border-radius:2px;padding:0 5px;height:fit-content;
+  white-space:nowrap}}
+ul.diem .tick.xac,ul.diem .tick.bac{{color:var(--accent)}}
+ul.diem .tick.sua{{color:var(--muted)}}
+ul.han{{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}}
+ul.han li{{padding:13px 0;border-top:1px solid var(--line);font-size:15px}}
+ul.han li:last-child{{border-bottom:1px solid var(--line)}}
+ul.han .ngay{{font:600 12.5px/1.7 var(--mono);letter-spacing:.04em;color:var(--accent);
+  display:block;margin-bottom:3px}}
+ul.han .con{{font-weight:500;color:var(--muted);margin-left:9px}}
+ul.han .con.qua{{color:var(--accent);font-weight:600}}
 .dolai-o{{margin-top:13px;display:flex;flex-direction:column;gap:8px}}
 button.dolai{{align-self:flex-start;font:600 12.5px/1 var(--mono);letter-spacing:.06em;
   color:var(--paper);background:var(--accent);border:0;border-radius:2px;
@@ -754,6 +795,15 @@ async function doLai(b) {
     + '<span class="nguon">' + loi.join(" · ") + "</span>";
   b.disabled = false;
 }
+// Đếm ngược tính ở TRÌNH DUYỆT, không lúc build: trang tĩnh không tự dựng lại mỗi ngày,
+// nên một con số "còn N ngày" nướng vào HTML sẽ nói dối từ hôm sau.
+document.querySelectorAll(".han .ngay[data-han]").forEach(function (e) {
+  const con = Math.ceil((new Date(e.dataset.han + "T23:59:59Z") - new Date()) / 86400000);
+  const p = document.createElement("span");
+  p.className = "con" + (con < 0 ? " qua" : "");
+  p.textContent = con < 0 ? "ĐÃ TỚI HẠN" : (con === 0 ? "hôm nay" : "còn " + con + " ngày");
+  e.appendChild(p);
+});
 document.querySelectorAll("button.dolai").forEach(function (b) {
   b.addEventListener("click", function () { doLai(b); });
 });
@@ -784,6 +834,60 @@ def so_claim(claims: list) -> str:
   <ul class="nk">{nk}</ul>
 </article>""")
     return "\n".join(out) + "</section>"
+
+
+def bang_diem(moi: list) -> str:
+    """Bảng điểm của CẢ KÊNH trên trang chủ — sinh từ sổ claim, không gõ tay.
+
+    Vì sao có: bản đầu của trang chủ là một câu tagline, ba đoạn kể về cơ chế, rồi một
+    danh sách 4 dòng. Danh sách 4 dòng thì tô vẽ kiểu gì cũng mỏng — thứ thiếu không phải
+    màu sắc mà là NÓI ĐƯỢC ĐIỀU GÌ. Phần mạnh nhất của desk (một điều-bác-bỏ đã chạy và
+    claim sống sót, một claim bị chính điều-bác-bỏ của nó bác) trước đó không xuất hiện ở
+    đâu trên trang chủ cả.
+    """
+    dem = {k: [c for _, _, c in moi if c["status"] == k] for k in TRANG_THAI}
+    o = " · ".join(f'<b class="{TRANG_THAI[k][0]}">{len(v)}</b> {k.lower()}'
+                   for k, v in dem.items() if v)
+    doi = sum(len(v) for k, v in dem.items() if k != "ĐANG ĐỨNG")
+
+    def lien(ten: str) -> str:
+        # 🔴 Nhãn phải mang NGÀY BÀI, không chỉ id claim: hai bài đều có C1, nên một dãy
+        # "C1 · C1" là đọc nhầm ngay. Lỗi này chỉ lộ khi có ≥2 bài cùng trạng thái.
+        return " · ".join(
+            f'<a href="bai/{s}/#{c["id"]}">{s[8:10]}/{s[5:7]}·{c["id"]}</a>'
+            for s, _, c in moi if c["status"] == ten)
+    dong = []
+    if dem["ĐÃ XÁC NHẬN"]:
+        dong.append(f'<li><span class="tick xac">sống sót</span>điều-bác-bỏ đã chạy và claim '
+                    f'đứng vững: {lien("ĐÃ XÁC NHẬN")}</li>')
+    if dem["BỊ BÁC"]:
+        dong.append(f'<li><span class="tick bac">đổ</span>claim bị chính điều-bác-bỏ của nó '
+                    f'bác, và nằm nguyên trên trang: {lien("BỊ BÁC")}</li>')
+    if dem["ĐÃ SỬA"]:
+        dong.append(f'<li><span class="tick sua">đã sửa</span>tự đính chính, giữ lại để thấy '
+                    f'lỗi: {lien("ĐÃ SỬA")}</li>')
+    return (f'<h2 id="bang-diem">Bảng điểm</h2>'
+            f'<div class="dem"><span class="to">{len(moi)}</span> claim &nbsp;·&nbsp; {o}'
+            f'<div class="phu">{doi} trong số đó đã ĐỔI TRẠNG THÁI kể từ lúc đăng — '
+            f'đó là phần X và Telegram không chở được.</div></div>'
+            + (f'<ul class="diem">{"".join(dong)}</ul>' if dong else ""))
+
+
+def sap_phan_dinh(moi: list) -> str:
+    """Lịch những claim tự đặt NGÀY. Đếm ngược tính bằng JS, không tính lúc build —
+    để trang tự đúng qua từng ngày mà không phải dựng lại, và để hai lần dựng cùng
+    nội dung vẫn ra cùng byte."""
+    co = sorted(((c["han"], s, t, c) for s, t, c in moi if c.get("han")), key=lambda x: x[0])
+    if not co:
+        return ""
+    hang = "".join(
+        f'<li><span class="ngay" data-han="{h}">{h[8:10]}/{h[5:7]}/{h[0:4]}</span>'
+        f'<a href="bai/{s}/#{c["id"]}">{c["id"]}</a> — {ihtml.escape(c["han_ghi"])}</li>'
+        for h, s, t, c in co)
+    return (f'<h2 id="sap-phan-dinh">Sắp phân định</h2>'
+            f'<p class="dan">Claim tự đặt ngày. Tới ngày đó là có kết quả, và nếu tôi trễ '
+            f'thì dòng dưới đây tự đổi thành ĐÃ TỚI HẠN.</p>'
+            f'<ul class="han">{hang}</ul>')
 
 
 def dai_trang_thai(claims: list, doc_lai: str) -> str:
@@ -841,7 +945,7 @@ def main() -> None:
     t = THEMES[ten]
     OUT.mkdir(parents=True, exist_ok=True)
     lap_asset()
-    bai = []
+    bai, moi_claim = [], []
 
     for md_path in sorted(CONTENT.glob("posts/*.md"), reverse=True):
         o = f"content/posts/{md_path.name}"
@@ -858,6 +962,7 @@ def main() -> None:
         cong_claim(claims, o)
         cong_cau_truc(fm, body_md, claims, o)
         cong_do_lai(claims, o)
+        cong_han(claims, o)
 
         slug_ = md_path.stem
         # 🔴 THỨ TỰ TRANG LÀ CÓ CHỦ Ý, đừng đảo lại: sổ claim ĐỨNG TRƯỚC bài viết.
@@ -893,6 +998,8 @@ def main() -> None:
         dem = {k: sum(1 for c in claims if c["status"] == k) for k in TRANG_THAI}
         tom = " · ".join(f"{n} {k.lower()}" for k, n in dem.items() if n)
         bai.append((fm, slug_, len(claims), tom))
+        for c in claims:
+            moi_claim.append((slug_, fm["title"], c))
         print(f"  ✓ bai/{slug_}/  ·  {len(claims)} claim ({tom})")
 
     fm_i, body_i = front((CONTENT / "index.md").read_text(encoding="utf-8"), "content/index.md")
@@ -903,6 +1010,7 @@ def main() -> None:
         f'<div class="s">{f["mau"]} {f["date"]} · {n} claim — {sg}</div></a>'
         for f, s, n, sg in bai)
     than_i = (f'<h1>{ihtml.escape(fm_i["tagline"])}</h1>' + render(body_i, "content/index.md")
+              + bang_diem(moi_claim) + sap_phan_dinh(moi_claim)
               + f'<h2 id="bai">Bài</h2>{ds}')
     if not 60 <= len(fm_i.get("mo_ta", "").strip()) <= 200:
         raise LoiCong("content/index.md thiếu 'mo_ta' 60–200 ký tự — trang chủ là chỗ "

@@ -42,7 +42,9 @@
         "don_vi": "ETH",
         "chu_so": 4,
         "so_ghim": 0
-      }
+      },
+      "han": "2026-09-18",
+      "han_ghi": "Nếu CMv2 vẫn dưới 1% tổng balance module, BlockPinned hạ mức ưu tiên theo dõi chủ đề này trong 2026. Đây là quyết định biên tập, không bác snapshot tại block đo."
     },
     {
       "id": "C3",

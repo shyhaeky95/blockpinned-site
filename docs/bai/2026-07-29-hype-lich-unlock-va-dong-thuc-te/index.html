@@ -147,6 +147,24 @@ th{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;
   padding:9px 12px;margin-top:13px;font-size:14.5px}
 .dong.bac .nhan{color:var(--accent)}
 
+.dem .phu{font:500 12px/1.6 var(--mono);color:var(--muted);margin-top:7px;
+  text-transform:none;letter-spacing:0}
+ul.diem{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:0}
+ul.diem li{display:grid;grid-template-columns:auto 1fr;gap:0 12px;padding:11px 0;
+  border-top:1px solid var(--line);font-size:15px}
+ul.diem li:last-child{border-bottom:1px solid var(--line)}
+ul.diem .tick{font:600 10.5px/1.7 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid currentColor;border-radius:2px;padding:0 5px;height:fit-content;
+  white-space:nowrap}
+ul.diem .tick.xac,ul.diem .tick.bac{color:var(--accent)}
+ul.diem .tick.sua{color:var(--muted)}
+ul.han{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+ul.han li{padding:13px 0;border-top:1px solid var(--line);font-size:15px}
+ul.han li:last-child{border-bottom:1px solid var(--line)}
+ul.han .ngay{font:600 12.5px/1.7 var(--mono);letter-spacing:.04em;color:var(--accent);
+  display:block;margin-bottom:3px}
+ul.han .con{font-weight:500;color:var(--muted);margin-left:9px}
+ul.han .con.qua{color:var(--accent);font-weight:600}
 .dolai-o{margin-top:13px;display:flex;flex-direction:column;gap:8px}
 button.dolai{align-self:flex-start;font:600 12.5px/1 var(--mono);letter-spacing:.06em;
   color:var(--paper);background:var(--accent);border:0;border-radius:2px;
@@ -307,6 +325,15 @@ async function doLai(b) {
     + '<span class="nguon">' + loi.join(" · ") + "</span>";
   b.disabled = false;
 }
+// Đếm ngược tính ở TRÌNH DUYỆT, không lúc build: trang tĩnh không tự dựng lại mỗi ngày,
+// nên một con số "còn N ngày" nướng vào HTML sẽ nói dối từ hôm sau.
+document.querySelectorAll(".han .ngay[data-han]").forEach(function (e) {
+  const con = Math.ceil((new Date(e.dataset.han + "T23:59:59Z") - new Date()) / 86400000);
+  const p = document.createElement("span");
+  p.className = "con" + (con < 0 ? " qua" : "");
+  p.textContent = con < 0 ? "ĐÃ TỚI HẠN" : (con === 0 ? "hôm nay" : "còn " + con + " ngày");
+  e.appendChild(p);
+});
 document.querySelectorAll("button.dolai").forEach(function (b) {
   b.addEventListener("click", function () { doLai(b); });
 });
