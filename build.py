@@ -32,6 +32,7 @@ import html as ihtml
 import json
 import pathlib
 import re
+import shutil
 import sys
 
 # keccak thuần stdlib, nằm cạnh file này (cả kho gốc và mirror công khai).
@@ -1021,6 +1022,17 @@ def main() -> None:
             sys.exit(f"🔴 hệ màu lạ {xin!r} — chỉ có {list(THEMES)}")
         ten = xin
     t = THEMES[ten]
+    # 🔴 DỌN thư mục ra trước khi dựng — cùng lỗi đã vá cho mirror, và nó vẫn còn ở đây:
+    # xác 30/07, hai favicon của bản dựng cũ nằm lại ở gốc out/ sau khi ảnh chuyển sang
+    # out/anh/. Bài đổi tên thì trang cũ cũng sống mãi ở đường cũ, không lệnh nào báo.
+    # Chốt an toàn: chỉ dọn thứ TRÔNG NHƯ một bản dựng cũ (rỗng, hoặc có index.html) —
+    # để `--out <thư mục có việc khác>` không bị xoá bừa.
+    if OUT.is_dir():
+        ds = list(OUT.iterdir())
+        if ds and not (OUT / "index.html").exists():
+            sys.exit(f"🔴 {OUT} có sẵn file mà KHÔNG phải bản dựng (thiếu index.html) — "
+                     f"đổi --out, tôi không xoá thư mục của việc khác")
+        shutil.rmtree(OUT)
     OUT.mkdir(parents=True, exist_ok=True)
     lap_asset()
     bai, moi_claim = [], []
