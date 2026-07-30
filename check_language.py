@@ -28,7 +28,13 @@ RETIRED = [
 
 # ── ② từ nghề của repo, không mang ra ngoài (LAUNCH §6b.4) ───────────────────
 JARGON = [
-    (r"\btrần của\b", "nói thẳng giới hạn là gì"),
+    # 🔴 NỚI 30/07 — bản cũ `\btrần của\b` chỉ bắt đúng MỘT cách nói. Draft #27 v2
+    # viết "mức trần" ba lần, cổng trả SẠCH, và người phản biện NGOÀI bắt được thứ
+    # máy bỏ sót. Cùng lỗ đã ghi cho chữ `nấc` (LAUNCH §6d ô #5): bộ lọc chỉ biết
+    # đúng chuỗi đã khai. `LAUNCH §6b.4` khai tử CHỮ "trần", không khai tử riêng
+    # cụm "trần của". Quét từ-nghề chỉ chạy trên file ĐÃ EXPORT nên nới rộng không
+    # làm ồn ghi chú nội bộ trong draft.
+    (r"\btrần\b", "nói thẳng giới hạn: 'pool fee' · 'giới hạn của phép đo'"),
     (r"\bcửa sổ đọc\b", "'số đọc đến ngày …'"),
     (r"\bcận dưới\b", "'ít nhất là …'"),
     (r"\bđăng ký trước\b", "'ghi trước'"),

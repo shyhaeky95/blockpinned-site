@@ -125,6 +125,10 @@ NGUON_ASSET = {
     "post02-card.png": "png",
     "post04-card.png": "png",
     "post05-card.png": "png",
+    # bài #6 — card không mang số thứ tự bài trong tên vì ordinal chỉ chốt lúc
+    # ĐĂNG, mà builder chạy trước đó; `post06-card.png` trong template/out/png
+    # đã bị bản #24 (user bác 30/07) chiếm chỗ.
+    "card-uni-v4-incidence.png": "png",
 }
 
 # Thân bài LUÔN là Be Vietnam Pro ở cả hai hệ — đó là ràng buộc NGÔN NGỮ

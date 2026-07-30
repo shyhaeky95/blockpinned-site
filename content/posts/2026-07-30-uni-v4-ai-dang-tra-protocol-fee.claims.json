@@ -1,0 +1,62 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Trên Uniswap v4, protocol fee được cộng vào tổng phí người swap trả chứ không trừ khỏi pool fee của LP: một pool pool-fee 0,30% đã bật protocol fee thu tổng 0,3499%, và cả bốn mức phí chuẩn đều cho tổng lớn hơn pool fee tương ứng.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ethereum block 25.643.032, đoạn 400 block, 5.413 lượt swap · V4FeeAdapter 0x89a5d5bf00a27d55c02951e49078a5c5771051db · PoolManager 0x000000000004444c5dc75cb358380d2e3de08a90 · bốn đáp án 0,0125% / 0,0625% / 0,3499% / 1,0990% được ghi ra trước khi mở dữ liệu swap",
+      "falsifier": "Lấy bất kỳ pool nào trong 126 pool ghi giá trị 3.499 ở đoạn đó, dựng lại PoolKey của nó và gọi getFee trên V4FeeAdapter tại block 25.643.032. Nếu hợp đồng trả protocol fee bằng 0 thì ở pool đó 3.499 là pool fee của chính pool, không phải phần cộng thêm — claim này phải hạ xuống 'số lượt mang giá trị trùng dự đoán'. Phép kiểm ngược đã chạy trên 8 pool, 8/8 khớp; 118 pool còn lại chưa chạy.",
+      "log": [
+        {
+          "ngay": "2026-07-30",
+          "ghi": "Đăng. Điểm của claim này là bốn đáp án được ghi ra TRƯỚC khi mở dữ liệu swap, nên nó bác được theo cả hai chiều: nếu cơ chế là trừ vào phần LP thì không giá trị nào trong bốn được phép xuất hiện. Giới hạn còn mở là phép kiểm ngược theo từng pool, hiện mới phủ 8/126.",
+          "nguon": "https://x.com/blockpinned/status/2082737959380418674"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "Bốn pool dùng hook DualPool — hook Uniswap Labs công bố live ngày 30/07 — đều trả về protocol fee bằng 0; cùng bộ trường nhưng bỏ địa chỉ hook thì trả về mức của pool không hook tương ứng.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ethereum block 25.642.998 · AllowlistedFactory 0x0000000000077769c332e0d3ed8bc8e02a0ce108 (tạo tại block 25.581.749) · hai đường đếm khớp: allDeploymentsLength() = 4 và log Deployed = 4, cùng một tập bốn địa chỉ · 189 log Swap của bốn pool đều mang mức phí đúng bằng pool fee",
+      "falsifier": "Gọi defaultFee() và hookFamilyId(hook) trên hợp đồng chính sách 0x1cd822b70a0591420f65e94b9b3a0d0b0fb3a314. Ra khác 0 nghĩa là cấu hình đã đổi và claim về trạng thái hiện tại hết đúng. Ở chiều ngược lại, nếu getFee của một trong bốn pool tại block 25.642.998 trả khác 0 thì phép đo tại block đó sai.",
+      "log": [
+        {
+          "ngay": "2026-07-30",
+          "ghi": "Đăng. Hai đường xác nhận độc lập: một là câu hỏi tra cứu vào adapter, hai là trường phí thực tính trong 189 log Swap đã thực thi. Đối chứng bỏ trường hook nằm ngay cạnh nên phép thử phân biệt được, không phải một số 0 trơ.",
+          "nguon": "https://x.com/blockpinned/status/2082737959380418674"
+        }
+      ],
+      "khong_do_lai": "Con số 4 là số hook đăng ký tại AllowlistedFactory đó, tại block đo — nó sẽ tăng khi có hook mới. Một hook DualPool dựng ngoài factory này sẽ không nằm trong tập đếm được."
+    },
+    {
+      "id": "C3",
+      "text": "Sáu chain đã bật protocol fee v4 dùng sáu hợp đồng chính sách có địa chỉ khác nhau nhưng đang mang cùng một bộ giá trị: mức mặc định bằng 0 và hook DualPool chưa được gán nhóm có phí.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "ethereum 0x1cd822b7…a314 @ 25.643.933 · arbitrum 0x8f6a5a19…bd0b @ 489.208.042 · optimism 0x13d9d198…2eb8 @ 154.897.430 · base 0xf963bdbe…ab71 @ 49.302.145 · polygon 0x600c29d3…6093 @ 91.125.747 · robinhood 0x6ee98430…3dfc @ 23.107.483 · đọc lại 30/07/2026 06:40:36 UTC",
+      "falsifier": "Gọi defaultFee() và isHookedNativeMathFeeOn() trên từng hợp đồng ở trên. Một chain trả khác bộ giá trị này thì câu 'cùng một cấu hình trên sáu chain' sai. Control dương đi kèm: getCode của PoolManager phải trả 24.009 byte trên cả sáu — ra 0 thì phép đo mù và mọi số 0 ở trên vô nghĩa.",
+      "log": [
+        {
+          "ngay": "2026-07-30",
+          "ghi": "Đăng. Số 0 ở đây là phát biểu về thế giới chứ không phải về công cụ, vì trên chính lượt gọi đó control dương trả 24.009 byte và control âm địa chỉ rác trả 0x. Endpoint Robinhood trả HTTP 403 với User-Agent mặc định — không vá thì câu 'sáu chain' tụt xuống năm vì một lý do hoàn toàn về công cụ.",
+          "nguon": "https://x.com/blockpinned/status/2082737959380418674"
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "text": "Con số '25% phí của LP' là ngôn ngữ v2/v3 của chính Uniswap — v2 mô tả protocol fee bằng một phần sáu phí LP, v3 có một mức bằng một phần tư — và ở hai cơ chế đó phần protocol được lấy từ khoản phí vốn dành cho LP. Chỗ trượt là mang cách tính đó sang v4.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Trích tài liệu Uniswap, không phải phép đo trên chain của kênh này. Vế v4 đối chiếu là phép đo tại Ethereum block 25.643.032.",
+      "falsifier": "Nếu tài liệu Uniswap mô tả protocol fee v2/v3 bằng một cơ chế khác phân số của phí LP thì vế trích nguồn này sai. Và nếu đo incidence v2/v3 trên chain cho thấy phần protocol cũng được cộng thêm chứ không trừ vào LP thì vế 'hai cơ chế ngược nhau' sai.",
+      "log": [
+        {
+          "ngay": "2026-07-30",
+          "ghi": "Đăng. Claim này cố ý không nâng lên thành phép đo: kênh chưa đo incidence của v2/v3 trên chain bằng phương pháp vừa dùng với v4, nên nó đứng ở mức trích nguồn.",
+          "nguon": "https://x.com/blockpinned/status/2082737959380418674"
+        }
+      ],
+      "khong_do_lai": "Incidence của v2 và v3 chưa được đo trên chain. Muốn kiểm, phải chạy phép thử tương tự trên pool v2/v3: so mức phí người swap thực trả với phần LP thực nhận, tại một block cố định."
+    }
+  ]
+}
