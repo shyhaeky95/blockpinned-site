@@ -1,0 +1,151 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Ngày 16/07, DefiLlama báo phí Uniswap v4 trên Robinhood chain cao hơn 3,9 lần so với phép đếm trực tiếp trên chain ($5.014.570 so với $1.286.386).",
+      "status": "ĐÃ XÁC NHẬN",
+      "ghim": "Robinhood chain · block #10.808.643 → #11.671.782 (trọn ngày 16/07 UTC)",
+      "falsifier": "DefiLlama đã nói sẽ tính lại ngày 16/07. Tôi ghi trước con số mục tiêu là $1,286M. Kết quả tính lại rơi trong khoảng $1,157M–$1,415M (±10%) ⇒ phép đo của tôi được chính đối tượng xác nhận. Rơi NGOÀI khoảng đó ⇒ tôi kiểm lại phép đo của mình trước, chưa kết luận bên nào sai.",
+      "thang_do": {
+        "nhan": "Phí Uniswap v4 trên Robinhood chain — ngày 16/07/2026",
+        "don_vi": "triệu USD",
+        "tu": 0.8, "den": 5.4,
+        "vach": [1, 2, 3, 4, 5],
+        "khoang": {"tu": 1.157, "den": 1.415,
+                   "nhan": "khoảng tôi ghi trước, ngày 26/07 — trước khi họ chạy lại"},
+        "diem": [
+          {"so": 1.286, "nhan": "tôi đếm từng swap trên chain", "ben": "toi"},
+          {"so": 1.311, "nhan": "DefiLlama SAU khi chạy lại — đọc 28/07 01:57Z", "ben": "ho"},
+          {"so": 5.015, "nhan": "DefiLlama TRƯỚC đó — con số issue này mở ra vì nó", "ben": "cu"}
+        ]
+      },
+      "log": [
+        {
+          "ngay": "2026-07-26",
+          "ghi": "Ghi trước con số mục tiêu $1,286M công khai trong thread, trước khi họ chạy lại.",
+          "nguon": "https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5083749092"
+        },
+        {
+          "ngay": "2026-07-27",
+          "ghi": "Đọc lại API lúc 06:32Z: ngày 16/07 vẫn trả $5.014.570 ⇒ họ chưa tính lại. Claim còn nguyên hiệu lực.",
+          "nguon": "https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees"
+        },
+        {
+          "ngay": "2026-07-27",
+          "ghi": "16:23Z — tác giả bản sửa chạy trọn ngày 16/07 qua adapter hiện tại: $1,313M, chia đều 24 khung giờ, không khung nào hụt dữ liệu. Họ viết ra thành lời: hai phép đo độc lập khớp nhau, chênh chạy đúng chiều mà khác biệt phương pháp dự đoán, và theo đúng tiêu chí tôi ghi trước thì việc này khép lại.",
+          "nguon": "https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5093909494"
+        },
+        {
+          "ngay": "2026-07-28",
+          "ghi": "01:57Z — chuỗi công khai đã đổi thật: 16/07 từ $5.014.570 xuống $1.311.188. Rơi trong khoảng tôi ghi trước, lệch 1,93% so với con số tôi ghi. Điều bác bỏ đã chạy và claim sống sót — đây là lần đầu chuyện đó xảy ra trên kênh này.",
+          "nguon": "https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "Trong chuỗi phí v4 có một cú tụt do ĐỔI CÁCH TÍNH, không phải do thị trường — ước tính ban đầu khoảng 1,63× sau khi chuẩn hoá theo v3.",
+      "status": "BỊ BÁC",
+      "ghim": "Số của DefiLlama, một lần đọc duy nhất 27/07/2026 06:32Z · so 7 ngày trước bản sửa với 2 ngày sau",
+      "falsifier": "🔁 Điều bác bỏ này đã được THAY ngày 28/07 vì bản cũ hỏng — nguyên văn bản cũ và lý do thay nằm trong nhật ký ngay dưới. Bản thay: DefiLlama đã công bố sẽ tính lại 08→24/07. Khi có ít nhất 3 ngày trong nhóm 17–23/07 được tính lại, tôi lấy trung vị của (số cũ ÷ số mới) trên đúng những ngày đó. Trung vị ≤1,1× ⇒ cách tính không phải nguyên nhân ⇒ claim này ĐỔ. Trung vị ≥1,3× ⇒ claim đứng. Rơi giữa 1,1× và 1,3× ⇒ hướng đúng nhưng độ lớn 1,63× của tôi bị thổi ⇒ tôi ghi lại con số đúng và đánh dấu claim này là ĐÃ SỬA. Còn nếu tới 30/09/2026 vẫn chưa đủ 3 ngày, tôi ghi CHỜ SỐ — không ghi là đúng.",
+      "log": [
+        {
+          "ngay": "2026-07-27",
+          "ghi": "Đăng ở mức ước tính ban đầu, kèm 4 giới hạn đã khai trong bài. Chưa có dữ liệu mới.",
+          "nguon": null
+        },
+        {
+          "ngay": "2026-07-28",
+          "ghi": "Điều bác bỏ cũ của tôi HỎNG, và tôi thay nó. Nguyên văn bản cũ: \"Sau khi DefiLlama tính lại xong, nếu chuỗi mới vẫn khớp chuỗi cũ trong biên ±10% thì nhận định 'cú tụt này do đổi cách tính' HẾT HIỆU LỰC.\" Hôm nay chuỗi mới khớp chuỗi cũ tới từng đơn vị ở 7/7 ngày của nhóm trước — nhưng khớp vì họ CHƯA tính lại ngày nào trong nhóm đó, không phải vì tính lại rồi mà số không đổi. Câu tôi viết cho phép sự im lặng của bên kia được đọc thành bằng chứng chống lại chính tôi. Một phép thử mà bên kia không làm gì cũng 'chạy' được thì không phải phép thử. Bản thay ở trên đòi số phải thực sự được tính lại mới tính là chạy.",
+          "nguon": null
+        },
+        {
+          "ngay": "2026-07-28",
+          "ghi": "Dữ kiện mới, và tôi ghi kèm giới hạn của nó: 16/07 là ngày duy nhất được tính lại, và nó tụt 3,82× dưới cách tính mới. Đó là một ngày TRƯỚC mốc 24/07 tụt rất mạnh khi đổi cách tính — đúng chiều claim này. Nhưng đúng MỘT ngày, và lại là ngày cao nhất cả chuỗi, nên nó không đủ để nói các ngày còn lại tụt bao nhiêu. Tôi không tính nó là đã xác nhận.",
+          "nguon": "https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees"
+        },
+        {
+          "ngay": "2026-07-28",
+          "ghi": "ĐIỀU BÁC BỎ ĐÃ CHẠY, VÀ CLAIM NÀY ĐỔ. Đọc lại lúc 09:36Z: cả 7 ngày 17–23/07 đều đã được tính lại bằng adapter mới, và trung vị (số cũ ÷ số mới) trên đúng 7 ngày đó là 0,93 — dưới ngưỡng 1,1 tôi ghi trước, tức số mới nhìn chung còn CAO hơn số cũ khoảng 7%. Đổi cách tính không tạo ra cú tụt, nên nhận định này sai và tôi rút nó. Phần vẫn đứng: cú tụt là thật — sau khi cả hai phía dùng cùng một adapter, phí v4 giảm 2,00 lần trong khi v3 cùng kỳ chỉ giảm 1,21 lần.",
+          "nguon": "https://x.com/blockpinned/status/2082047631786983793"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "text": "Bản sửa của DefiLlama chỉ áp dụng cho dữ liệu từ 24/07 trở đi; lịch sử trước đó chưa được tính lại.",
+      "status": "ĐÃ SỬA",
+      "ghim": "Đọc API 27/07/2026 06:32Z",
+      "falsifier": "Con số ngày 16/07 trong chuỗi công khai của DefiLlama đổi khỏi $5.014.570 ⇒ họ đã tính lại ⇒ claim này chuyển sang ĐÃ SỬA và C1 có kết quả.",
+      "log": [
+        {
+          "ngay": "2026-07-26",
+          "ghi": "DefiLlama mở lại issue và cam kết sẽ chạy lại adapter, cập nhật dữ liệu lịch sử. Chưa chốt khoảng ngày: tôi đề xuất 08→24/07, họ dự tính bắt đầu từ 16/07.",
+          "nguon": "https://github.com/DefiLlama/dimension-adapters/issues/8242"
+        },
+        {
+          "ngay": "2026-07-27",
+          "ghi": "Đọc lại 06:32Z: chưa chạy.",
+          "nguon": "https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees"
+        },
+        {
+          "ngay": "2026-07-28",
+          "ghi": "Điều bác bỏ của chính claim này đã nổ: 16/07 đổi khỏi $5.014.570 ⇒ lịch sử ĐÃ bị chạm ⇒ claim như tôi viết là sai. Nhưng sự thật mới hẹp hơn cả claim lẫn điều bác bỏ, nên tôi ghi ra cho đủ: trong khoảng tính lại họ đã công bố (08→24/07, 17 ngày), đúng MỘT ngày đổi — 16/07, đúng ngày được chạy tay để đối chiếu. 16 ngày còn lại y hệt số hôm qua tới từng đơn vị. Ngày 20/07 mà chính bài này in là lệch 1,39× vẫn đang đứng nguyên ở $1.355.193.",
+          "nguon": "https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees"
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "text": "Trong khoảng tính lại DefiLlama đã chốt (08→24/07, 17 ngày), tới 28/07 01:57Z đúng MỘT ngày đã đổi số — ngày 16/07. 16 ngày còn lại giống ảnh chụp hôm trước tới từng đơn vị.",
+      "status": "ĐÃ SỬA",
+      "ghim": "Hai lần đọc chuỗi công khai của DefiLlama: 27/07 06:32Z và 28/07 01:57Z · block đối chiếu của ngày 16/07: #10.808.643 → #11.671.782",
+      "falsifier": "Đọc lại chuỗi công khai. Nếu từ 2 ngày trở lên trong khoảng 08→24/07 đổi khỏi con số ghi ở đây, câu 'mới sửa được một ngày' hết hạn ⇒ tôi ghi ngày và sửa dòng này. Nếu tới 30/09/2026 mà 16 ngày kia vẫn y nguyên, tôi ghi rằng khoảng tính lại đã được công bố nhưng chưa chạy — không ghi rằng họ từ chối, vì tôi không biết điều đó.",
+      "log": [
+        {
+          "ngay": "2026-07-27",
+          "ghi": "16:23Z — họ chốt khoảng tính lại: 08→24/07 UTC, chỉ Robinhood chain, và nói code không cần sửa gì thêm.",
+          "nguon": "https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5093909494"
+        },
+        {
+          "ngay": "2026-07-28",
+          "ghi": "01:57Z — so từng ngày giữa hai lần đọc: chỉ 16/07 đổi. Ngày 20/07, ngày tôi cũng đã đếm trực tiếp và ra lệch 1,39×, vẫn đứng nguyên ở $1.355.193.",
+          "nguon": "https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees"
+        },
+        {
+          "ngay": "2026-07-28",
+          "ghi": "HẾT HIỆU LỰC, và tôi xử lý đúng cách điều bác bỏ này dặn: ghi ngày rồi sửa dòng này. Đọc lại lúc 09:36Z, tức bảy tiếng rưỡi sau lần đọc trên: TOÀN BỘ 17/17 ngày trong khoảng 08→24/07 đã đổi số so với ảnh chụp 27/07 — 11 ngày trong đó đổi quá 10%, và ngày 20/07 nói ở dòng trên tụt từ $1.355.193 xuống $895.611. Không còn 'mới sửa được một ngày' nào; câu này chỉ đúng cho đúng lần đọc 01:57Z.",
+          "nguon": "https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees"
+        }
+      ]
+    },
+    {
+      "id": "C6",
+      "text": "Điều bác bỏ tôi tự viết cho claim C2 bị hỏng: nó có thể được coi là đã chạy trong khi bên kia không làm gì cả.",
+      "status": "ĐÃ SỬA",
+      "ghim": "Bản cũ đăng 27/07 cùng bài này · phát hiện và thay 28/07 01:57Z sau khi so hai lần đọc chuỗi",
+      "falsifier": "Không có — đây là lỗi của chính tôi trong cách viết một phép thử, không phải một khẳng định về thế giới. Bản thay nằm ngay ở C2 phía trên, và bản thay đó thì có điều bác bỏ thật kèm hạn chót.",
+      "log": [
+        {
+          "ngay": "2026-07-28",
+          "ghi": "Bản cũ: 'nếu tính lại xong mà chuỗi mới vẫn khớp chuỗi cũ trong biên ±10% thì nhận định hết hiệu lực.' Hôm nay chuỗi khớp tới từng đơn vị ở cả 7 ngày của nhóm trước — nhưng khớp vì họ chưa tính lại ngày nào trong nhóm đó. Câu tôi viết cho phép sự im lặng của bên kia được đọc thành bằng chứng, và đọc theo chiều bất lợi cho chính tôi. Bản thay đòi ít nhất 3 ngày thực sự được tính lại mới tính là phép thử đã chạy.",
+          "nguon": null
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "text": "Trong issue gốc, tôi gọi sai tên cơ chế bảo vệ adapter v2/v3 — viết từ trí nhớ thay vì tra lại code.",
+      "status": "ĐÃ SỬA",
+      "ghim": "Comment đính chính 26/07/2026 07:19:24Z",
+      "falsifier": "Không có — đây là lỗi của chính tôi, đã tự nhận và đính chính công khai. Mục này giữ lại để người đọc thấy lỗi, không phải để xoá nó.",
+      "log": [
+        {
+          "ngay": "2026-07-26",
+          "ghi": "Đính chính công khai trong thread: cơ chế đúng là addOneToken trong helpers/uniswap.ts. Lỗi không đổi số đo hay nguyên nhân của bài.",
+          "nguon": "https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5082514404"
+        }
+      ]
+    }
+  ]
+}

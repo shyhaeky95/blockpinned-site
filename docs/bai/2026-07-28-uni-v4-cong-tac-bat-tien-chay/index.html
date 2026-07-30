@@ -1,0 +1,233 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Uniswap bật thu phí v4 — chỉ số giảm 53% sau một đêm, và nó không phải bộ đếm — BlockPinned</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Archivo:wght@600;700;800&family=Oswald:wght@500;600;700&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,650;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16.png">
+<style>
+/* ── TOKEN: đổi hệ = sửa ĐÚNG khối này. Nguồn gốc: template/build_cards.py (hệ đỏ
+   đang công khai) và template/reference/…Logo-Explorations (hệ verdigris đề xuất).
+   Hai bản có thể trôi lệch — đây là mối nối đã biết, không phải đã đồng bộ. ── */
+:root{
+  --paper:#ECE5D8; --ink:#26221C; --accent:#94382A;
+  --muted:#66604F; --line:#D9D1C2;
+  --display:'Marcellus',system-ui,sans-serif;
+  --body:'Be Vietnam Pro',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --dw:400; --gian-ten:.13em;
+}
+@media (prefers-color-scheme:dark){
+  /* 🔴 accent PHẢI đổi MÃ, không chỉ đảo paper/ink. Bản khai hệ cấm #94382A trên nền
+     tối — đo được 2,15:1, rớt cả ngưỡng 3,0 của đồ hoạ phi-văn-bản. Bản đầu của file
+     này đảo hai màu nền mà giữ nguyên accent, tức tự vi phạm đúng điều cấm ② trong
+     im lặng: không cổng nào của site nhìn tới cặp (màu, nền) ở chế độ tối. */
+  :root{ --paper:#26221C; --ink:#ECE5D8; --accent:#D26F60;
+          --line:#3D372E; --muted:#A79E8E; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.72;-webkit-text-size-adjust:100%}
+.khung{max-width:680px;margin:0 auto;padding:0 22px}
+a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);
+  text-underline-offset:3px;text-decoration-thickness:1.5px}
+a:hover{color:var(--accent)}
+/* URL dài trong bài (github.com/…/issues/8242) không có chỗ ngắt tự nhiên ⇒ nó
+   nong CẢ TRANG rộng ra và mọi thứ khác tràn theo. Đo được bằng preview.py --do-tran. */
+p,li,td,th,h1,h2,h3,figcaption{overflow-wrap:break-word}
+a,code{word-break:break-word}
+
+/* đầu trang: MARK chính thức nằm trong .mark (hằng số MARK_SVG), tô bằng var(--accent)
+   nên nó tự đổi mã theo nền — đó là cách duy nhất giữ được điều cấm ② của bản khai hệ */
+header.dau{border-bottom:1.5px solid var(--ink);margin-bottom:38px}
+.dau .khung{display:flex;align-items:center;gap:13px;padding-top:22px;padding-bottom:18px;flex-wrap:wrap}
+.mark{width:21px;height:21px;flex:none}
+.mark svg{display:block;width:100%;height:100%}
+.mark path{fill:var(--accent)}
+.ten{font:var(--dw) 20px/1 var(--display);letter-spacing:var(--gian-ten);text-decoration:none}
+.tag{font:500 11.5px/1 var(--mono);letter-spacing:.1em;color:var(--muted);margin-left:auto}
+@media(max-width:540px){.tag{margin-left:0;width:100%;order:3}}
+
+h1{font:var(--dw) clamp(27px,5.4vw,37px)/1.22 var(--display);letter-spacing:-.005em;margin:0 0 16px}
+h2{font:var(--dw) 22px/1.32 var(--display);letter-spacing:.005em;margin:44px 0 12px;
+  padding-top:14px;border-top:1.5px solid var(--line)}
+h3{font:600 16.5px/1.4 var(--body);margin:28px 0 8px}
+p{margin:0 0 17px}
+strong{font-weight:650}
+hr{border:0;border-top:1.5px solid var(--line);margin:34px 0}
+ul,ol{margin:0 0 17px;padding-left:21px} li{margin-bottom:7px}
+code{font:500 .875em var(--mono);background:color-mix(in srgb,var(--ink) 7%,transparent);
+  padding:.1em .35em;word-break:break-word}
+pre{background:color-mix(in srgb,var(--ink) 7%,transparent);padding:15px;overflow-x:auto;
+  border-left:3px solid var(--accent);margin:0 0 17px}
+pre code{background:none;padding:0;font-size:12.5px;line-height:1.62}
+
+.cuon{overflow-x:auto;margin:0 0 19px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:14.5px;min-width:100%}
+th,td{padding:8px 13px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1.5px solid var(--ink)}
+
+.meta{font:500 12.5px/1.65 var(--mono);color:var(--muted);margin:0 0 30px}
+.meta b{color:var(--ink);font-weight:600}
+
+/* ── SỔ CLAIM — thứ duy nhất trên trang được phép nổi ── */
+.so{margin:52px 0 0;padding-top:22px;border-top:3px solid var(--ink)}
+.so>p.dan{font-size:15px;color:var(--muted);margin-bottom:26px}
+.claim{border:1.5px solid var(--line);border-left:4px solid var(--accent);
+  padding:17px 19px;margin-bottom:15px;scroll-margin-top:20px}
+.claim.sua,.claim.bac,.claim.cho{border-left-color:var(--muted)}
+.claim.xac{border-left-width:7px}
+.claim h3{margin:0 0 9px;font:600 16px/1.5 var(--body)}
+.claim .id{font:600 12px var(--mono);color:var(--muted);text-decoration:none}
+.chip{display:inline-block;font:600 11px/1 var(--mono);letter-spacing:.09em;
+  padding:5px 9px;vertical-align:2px;margin-left:8px;white-space:nowrap}
+/* xac = đã bị thử và sống sót. Cùng nền accent với "đang đứng" (cả hai còn hiệu lực),
+   thêm viền ink để đọc ra "có hai bên cùng ký": desk đo, đối tượng tự tính lại.
+   🟡 Đây là xử lý TẠM cho tới vòng thiết kế thật — hình thức chưa qua ai duyệt. */
+.chip.xac{background:var(--accent);color:var(--paper);
+  border:1.5px solid var(--ink);padding:3.5px 7.5px}
+.chip.song{background:var(--accent);color:var(--paper)}
+.chip.sua{background:var(--ink);color:var(--paper)}
+.chip.bac{border:1.5px solid var(--ink);color:var(--ink);text-decoration:line-through}
+.chip.cho{border:1.5px dashed var(--muted);color:var(--muted)}
+.dong{font-size:14px;margin:11px 0 0;padding-left:13px;border-left:2px solid var(--line)}
+.dong .nhan{font:600 10.5px var(--mono);letter-spacing:.1em;color:var(--muted);
+  display:block;margin-bottom:3px}
+.nk{list-style:none;padding:0;margin:13px 0 0;font-size:14px}
+.nk li{padding:7px 0 7px 13px;border-left:2px solid var(--line);margin:0}
+.nk .d{font:600 11.5px var(--mono);color:var(--accent);margin-right:7px}
+
+/* ── DÃI TRẠNG THÁI — màn hình đầu tiên, thứ X/TG không có ── */
+.dai{border:2px solid var(--ink);padding:16px 18px;margin:0 0 30px}
+.dem{font:500 15px/1.5 var(--mono)}
+.dem .to{font:700 27px var(--mono);color:var(--accent);vertical-align:-3px;margin-right:2px}
+.dem b.song,.dem b.xac{color:var(--accent)}
+.khi{font:500 12px/1.6 var(--mono);color:var(--muted);margin-top:7px}
+.toi{display:inline-block;margin-top:12px;font:600 12.5px var(--mono);letter-spacing:.06em;
+  text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:2px}
+
+/* ── HÌNH: claim vẽ thành trục số. Sống được — refill hạ thì chấm di chuyển ── */
+.hinh{margin:17px 0 6px;padding:0}
+.thang .hang{margin-bottom:13px}
+.thang .nh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  font:500 12px/1.5 var(--mono);color:var(--muted);margin-bottom:4px}
+.thang .nh b{font:700 14px var(--mono);color:var(--ink);white-space:nowrap}
+.thang .ray{position:relative;height:15px;background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.thang .ray.tr{height:9px;background:none}
+.thang .cot{display:block;height:100%;background:var(--ink)}
+.thang .cot.toi{background:var(--accent)}
+/* cu = con số ĐÃ BỊ THAY nhưng không được xoá khỏi hình — người đọc phải thấy
+   cái thanh dài ngày trước đó, nếu không thì hình mất luôn phần đáng kể nhất */
+.thang .cot.cu{background:color-mix(in srgb,var(--ink) 22%,transparent)}
+.thang .vung{position:absolute;top:0;height:9px;background:var(--accent);
+  border-left:2px solid var(--accent);border-right:2px solid var(--accent);opacity:.45}
+.thang .nk2{margin:4px 0 0;font-size:11.5px}
+.thang .nk2 b{font-size:12px;color:var(--accent)}
+.hinh figcaption{font:500 11px/1.5 var(--mono);color:var(--muted);margin-top:8px;
+  padding-top:7px;border-top:1px solid var(--line)}
+
+/* điều-bác-bỏ là thứ khác biệt duy nhất của kênh này ⇒ nó phải là dòng NẶNG NHẤT
+   trong khối claim, không phải một đoạn văn thường như bản đầu */
+.dong.bac{border-left:3px solid var(--accent);
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  padding:9px 12px;margin-top:13px;font-size:14.5px}
+.dong.bac .nhan{color:var(--accent)}
+
+/* bài viết là THAM CHIẾU ở trang này — hạ nhẹ xuống, không tranh chỗ với sổ claim */
+.bandaydu{margin-top:56px;padding-top:6px;border-top:3px solid var(--ink)}
+.bandaydu h2{border-top:0;padding-top:0;margin-top:16px}
+
+footer{margin-top:64px;padding:22px 0 46px;border-top:1.5px solid var(--ink);
+  font:500 12px/1.75 var(--mono);color:var(--muted)}
+footer a{color:var(--muted)}
+.bai{display:block;padding:17px 0;border-bottom:1px solid var(--line);text-decoration:none}
+.bai .t{font:600 18.5px/1.4 var(--body);margin-bottom:5px}
+.bai .s{font:500 12px var(--mono);color:var(--muted)}
+</style></head><body>
+<header class="dau"><div class="khung">
+  <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
+  <a class="ten" href="../../">BLOCK·PINNED</a>
+  <span class="tag">SỐ NÀO CŨNG TRUY NGƯỢC ĐƯỢC</span>
+</div></header>
+<main class="khung"><h1>Uniswap bật thu phí v4 — chỉ số giảm 53% sau một đêm, và nó không phải bộ đếm</h1><section class="dai">
+  <div class="dem"><span class="to">4</span> claim &nbsp;·&nbsp; <b class="song">4</b> đang đứng</div>
+  <div class="khi"></div>
+  <a class="toi" href="#so-claim">Xem sổ claim ↓</a>
+</section><section class="so"><h2 id="so-claim">Sổ claim</h2>
+<p class="dan">Mỗi khẳng định của bài này một dòng, kèm điều gì sẽ bác bỏ nó. Trạng thái đổi thì sửa tại đây, và ghi lại ngày. Không dòng nào bị xoá.</p>
+<article class="claim song" id="C1">
+  <h3><a class="id" href="#C1">C1</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Chỉ số tích luỹ phí của Uniswap v4 là SỐ DƯ còn nằm trong hợp đồng, không phải bộ đếm cộng dồn — nên mức giảm 53% (ETH) và 61% (USDC) trên Ethereum không đọc được thành phí đã ngừng phát sinh.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum · hai lượt đọc protocolFeesAccrued lúc 14:51Z ngày 27/07 và 01:48Z ngày 28/07 · cùng cửa sổ block 25.624.853 → 25.628.131</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Có bằng chứng cho thấy protocolFeesAccrued đã bao gồm cả phần phí đã được chuyển khỏi hợp đồng — khi đó công thức khép cửa sổ trong bài sai, và cả bài phải viết lại. Cách tự kiểm nằm ngay trong bài: đọc chỉ số hai lần cách nhau vài giờ, rồi đối chiếu log FeesCollected trong cùng cửa sổ để xem phần giảm có đúng là số dư đã rời hợp đồng.</p>
+  <ul class="nk"><li><span class="d">2026-07-28</span>Đăng cùng bốn lượt đo. Lượt bốn cho hai token trên CÙNG một chain đi hai hướng ngược nhau (Ethereum ETH −92%, USDC +76%) nên luận điểm &#x27;số dư không phải bộ đếm&#x27; chứng minh được trong một chain, không cần mượn chain khác làm đối chứng. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C2">
+  <h3><a class="id" href="#C2">C2</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Cửa sổ 10,97 giờ đầu tiên khép được dòng phí v4 trên Ethereum: 4.382,57 đô, tính bằng (số dư sau − số dư trước) + tổng đã chuyển khỏi hợp đồng. Đây là mức sàn — mới định giá được 10 trong 28 loại token, và mới 1 trong 6 chain quy được ra tiền.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum · block 25.624.853 → 25.628.131 (21h50 ngày 27/07 → 08h48 ngày 28/07, tức 14:50Z → 01:48Z)</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Khép lại đúng cửa sổ này trên Ethereum, cộng đủ phần đã chuyển, mà ra lệch quá 5% so với 4.382,57 đô ⇒ BlockPinned kiểm lại phía mình trước. Ngưỡng 5% được ghi trước ngay trong bài, thay cho chữ &#x27;khác đáng kể&#x27; của bản nháp — một điều bác bỏ phải ghi trước cả ngưỡng lẫn cách tính.</p>
+  <ul class="nk"><li><span class="d">2026-07-28</span>Đăng ở mức này. Con số ghim block hai đầu nên nó không già theo giờ: đọc lại lúc nào cũng phải ra đúng cặp block đó. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C3">
+  <h3><a class="id" href="#C3">C3</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Phần giá trị cuối cùng quy về UNI vẫn chưa tách được riêng cho v4: phí của v2, v3 và v4 vào chung một kho rồi kho mới được dùng để mua và đốt UNI, và bước đó bài này chưa đo được.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Trên rổ định giá được, v4 chiếm 17,71% giá trị dòng vào kho trong những giờ đầu · cùng cửa sổ block 25.624.853 → 25.628.131</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Ai chỉ ra được một đường tiền từ phí v4 tới cơ chế mua và đốt UNI mà bài chưa đo ⇒ phần &#x27;chưa tách được&#x27; phải viết lại. Đây là giới hạn tự khai, không phải kết luận rằng đường tiền đó không tồn tại.</p>
+  <ul class="nk"><li><span class="d">2026-07-28</span>Đăng ở trạng thái chưa tách được, kèm tỉ lệ 17,71% để người đọc thấy độ lớn của phần v4 trong dòng vào kho — không dùng nó thay cho phép đo còn thiếu. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C4">
+  <h3><a class="id" href="#C4">C4</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Nhịp bật pool đã giảm mạnh: đợt đầu bật 36.523 pool trong 7,7 giờ, rồi 23,5 giờ sau chỉ thêm 273 pool và tổng vẫn chưa qua 36.800.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum · 15:06Z ngày 27/07 (36.523 pool) → 02:24Z ngày 28/07 (blk 25.628.338) → 14:35Z ngày 28/07 (blk 25.631.951)</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Nếu từ 21h05 ngày 28/07 (14:05Z) đến 23h59 ngày 04/08/2026 số pool được bật trên Ethereum tăng thêm từ 5.000 trở lên, BlockPinned rút câu này và sửa tại đây. Điều này không bác bỏ ba claim còn lại của bài.</p>
+  <ul class="nk"><li><span class="d">2026-07-28</span>Đăng kèm hạn 04/08/2026 — đây là claim duy nhất của bài có ngày hết hạn tự đặt, nên nó sẽ được phân định bằng một phép đếm log, không bằng cảm nhận về nhịp. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></li></ul>
+</article></section><section class="bandaydu"><h2 id="ban-day-du">Bài đầy đủ</h2><p class="meta">🟡 2026-07-28 &nbsp;·&nbsp; GHIM TẠI Ethereum · cửa sổ 10,97 giờ ghim block hai đầu #25.624.853 → #25.628.131 (21h50 ngày 27/07 → 08h48 ngày 28/07, tức 14:50Z → 01:48Z) &nbsp;·&nbsp; <a href="https://x.com/blockpinned/status/2082128396382023921">bản đăng trên X</a></p><p>Uniswap vừa bật thu phí v4. Một chỉ số phí của v4 trên Ethereum đã giảm 53% sau một đêm — <strong>mức giảm đó không chứng minh doanh thu giảm.</strong> Trang này ghim lại hơn 30 giờ đầu bằng bốn lần đo trực tiếp, và vì sao chỉ số kia sắp bị đọc ngược.</p>
+<p><em>(Mọi giờ là giờ Việt Nam, UTC để trong ngoặc.)</em></p>
+<h2 id="bon-lan-do-bon-moc-thoi-gian">Bốn lần đo, bốn mốc thời gian</h2>
+<p>Hai đề xuất #99 và #100 được thực thi lúc 14h16 ngày 27/07 (07:16Z) — cả 8 cấu hình thu phí lật đúng đích như calldata đã ghim trước.</p>
+<div class="cuon"><table><thead><tr><th>#</th><th>Lúc</th><th>Đo được</th></tr></thead><tbody><tr><td>1</td><td>15h28 ngày 27/07 (08:28Z)</td><td>phí tích luỹ <strong>bằng 0</strong> trên toàn bộ 11 cặp chain–token</td></tr><tr><td>2</td><td>21h51 ngày 27/07 (14:51Z)</td><td><strong>10/11 cặp khác 0</strong> — lần đầu quan sát được số dư phí khác 0</td></tr><tr><td>3</td><td>08h48 ngày 28/07 (01:48Z)</td><td>Ethereum: ETH <strong>−53%</strong>, USDC <strong>−61%</strong></td></tr><tr><td>4</td><td>21h05 ngày 28/07 (14:05Z)</td><td>cùng một chain, hai token đi <strong>hai hướng ngược nhau</strong></td></tr></tbody></table></div>
+<p>Lượt đầu bằng 0 không phải lỗi đo: lúc đó mới 10 pool được bật thu phí, và cả 10 chưa có giao dịch nào kể từ lúc bật.</p>
+<p>Lượt hai chạy lại đúng phép đo đó, đúng bộ cặp đó:</p>
+<div class="cuon"><table><thead><tr><th>Chain</th><th>Số dư phí</th></tr></thead><tbody><tr><td>Ethereum</td><td>0,4018 ETH + 207,88 USDC</td></tr><tr><td>Arbitrum</td><td>0,0288 ETH + 21,92 USDC</td></tr><tr><td>Optimism</td><td>0,0091 ETH + 21,51 USDC</td></tr><tr><td>Base</td><td>0,000027 ETH (USDC còn 0 — cặp duy nhất)</td></tr><tr><td>Polygon</td><td>66,48 POL + 22,31 USDC</td></tr></tbody></table></div>
+<h2 id="ai-bat-pool-va-mau-so-nao-moi-dung">Ai bật pool, và mẫu số nào mới đúng</h2>
+<p>Cùng buổi chiều, số pool được bật nhảy từ 10 lên <strong>36.523</strong> trong chưa đầy 8 giờ, qua 273 giao dịch trên Ethereum — và cả 273 giao dịch đó đều có <code>tx.from</code> là <strong>một</strong> địa chỉ (<code>0x2cf8e5b1…ce43</code>), gọi thẳng adapter phí.</p>
+<p>Mẫu bật pool không phải quét toàn bộ: trong 36.523 pool đã bật khi đó, chỉ <strong>2 pool gắn hook</strong>, trong khi hook chiếm 23,56% số pool v4 trên Ethereum — nhóm mà chính sách hiện tại cho thu 0 phí. Vậy muốn tính tỉ lệ phủ theo chính sách hiện tại, mẫu số phải loại đúng nhóm đó:</p>
+<div class="cuon"><table><thead><tr><th>Mẫu số</th><th>Pool</th><th>Độ phủ</th></tr></thead><tbody><tr><td>toàn bộ pool từng mở</td><td>112.527</td><td>32,60%</td></tr><tr><td><strong>loại 26.512 pool gắn hook</strong></td><td><strong>86.015</strong></td><td><strong>42,65%</strong></td></tr></tbody></table></div>
+<p>Đối chiếu tại block 25.628.131 cho 36.684 pool trùng nhau giữa danh sách không-hook và danh sách đã bật.</p>
+<p>Sau đó nhịp bật pool giảm mạnh: từ 22h06 ngày 27/07 (15:06Z, 36.523 pool) đến 09h24 ngày 28/07 (02:24Z, blk 25.628.338) thêm 170 pool, rồi tới 21h35 ngày 28/07 (14:35Z, blk 25.631.951) thêm 103 pool nữa. Tổng 23,5 giờ thêm 273 pool — so với 36.523 pool trong 7,7 giờ của đợt đầu.</p>
+<h2 id="cai-bay-do-la-so-du-khong-phai-bo-dem">Cái bẫy: đó là SỐ DƯ, không phải bộ đếm</h2>
+<p>Chỉ số tích luỹ phí của v4 — hàm <code>protocolFeesAccrued</code> trên PoolManager — không phải bộ đếm cộng dồn. Nó là <strong>số dư</strong>: phần phí còn nằm trong hợp đồng, chưa ai thu về kho.</p>
+<p>Lượt ba: trên Ethereum số dư tụt từ 0,4018 xuống 0,1887 ETH (−53%) và 207,88 xuống 80,72 USDC (−61%). Trong đúng cửa sổ đó có giao dịch từ hai địa chỉ gọi hàm chuyển phí về kho — hàm công khai, ai gọi cũng được — và cùng cửa sổ đó vẫn có <strong>4.382,57 đô phí mới chảy vào</strong>. Mức giảm vì vậy không đọc được thành phí đã ngừng phát sinh.</p>
+<p>Hai địa chỉ chuyển phí không trùng địa chỉ bật pool; chừng đó chưa đủ kết luận chúng thuộc những chủ thể khác nhau. Bốn chain còn lại cùng lúc vẫn đi lên, và trong cùng cửa sổ không thấy giao dịch chuyển phí nào trên bốn chain đó.</p>
+<p>Lượt bốn thì ngay trong một chain nó cũng tách đôi:</p>
+<div class="cuon"><table><thead><tr><th>Cặp</th><th>Trước → sau</th></tr></thead><tbody><tr><td>Ethereum ETH</td><td>0,1887 → 0,0159 (<strong>−92%</strong>)</td></tr><tr><td>Ethereum USDC</td><td>80,72 → 142,11 (<strong>+76%</strong>)</td></tr><tr><td>Arbitrum ETH</td><td>0,0497 → 0,0048 (−90%) — cửa sổ này Arbitrum cũng có giao dịch chuyển phí</td></tr><tr><td>Optimism · Base · Polygon</td><td>vẫn đi lên</td></tr></tbody></table></div>
+<p>Cùng một loại số dư, trên cùng một chain, trong cùng một buổi chiều, hai token đi hai hướng ngược nhau — và không hướng nào tự nó là doanh thu.</p>
+<h2 id="do-dung-thi-do-the-nao">Đo đúng thì đo thế nào</h2>
+<p>Số dư chỉ nói còn lại bao nhiêu, nên phải cộng thêm phần đã bị lấy đi mới ra phần đã sinh ra. Với từng token, trên cùng một hợp đồng, sau khi cộng đủ các giao dịch chuyển phí:</p>
+<p><strong>phí phát sinh trong cửa sổ = (số dư sau − số dư trước) + tổng đã được chuyển khỏi hợp đồng</strong></p>
+<p>Cửa sổ đầu tiên khép được là <strong>10,97 giờ</strong>, block ghim hai đầu 25.624.853 → 25.628.131, riêng Ethereum <strong>4.382,57 đô</strong>:</p>
+<div class="cuon"><table><thead><tr><th>Token</th><th>USD</th></tr></thead><tbody><tr><td>ETH</td><td>2.117,64</td></tr><tr><td>USDC</td><td>817,49</td></tr><tr><td>LINK</td><td>569,29</td></tr><tr><td>USDT</td><td>448,72</td></tr><tr><td><em>cộng 6 loại nữa</em></td><td></td></tr></tbody></table></div>
+<p>Đây là <strong>mức sàn</strong>: mới định giá được 10/28 loại token — 18 loại còn lại có lượng thật nhưng chưa quy đô được — và mới 1/6 chain quy được ra tiền. Là con số gần <em>&quot;doanh thu v4&quot;</em> nhất trang này đo được, không phải chính nó.</p>
+<h2 id="pham-vi-noi-du-de-khong-ai-doc-qua-tay">Phạm vi — nói đủ để không ai đọc quá tay</h2>
+<ul><li><strong>Không được nhân thành con số năm.</strong> Đây là một cửa sổ 11 giờ ngay trong đợt triển khai, khi độ phủ còn đang đổi từng giờ.</li><li><strong>Phần giá trị cuối cùng quy về UNI vẫn chưa tách được riêng cho v4.</strong> Phí của v2, v3 và v4 vào chung một kho — trên rổ định giá được, v4 chiếm 17,71% giá trị dòng vào kho trong những giờ đầu — rồi kho mới được dùng để mua và đốt UNI, và bước đó chưa đo được.</li><li><strong>Robinhood chưa nằm trong con số đô.</strong> 118.221 pool đã được bật ở đó, nhiều nhất trong sáu chain, và 168 lượt thu phí trên 47 loại token — nhưng ở đó không có nguồn giá neo theo block nên chỉ đọc được bằng đơn vị token. Địa chỉ nói trên có mặt ở cả sáu chain, nhưng riêng Robinhood mới truy được người gửi của 400 trong 786 lượt bật (397 lượt là của nó); 386 lượt còn lại chưa biết ai, nên <strong>không</strong> được đọc thành <em>&quot;một địa chỉ bật 118 nghìn pool&quot;</em>.</li></ul>
+<h2 id="tu-kiem">Tự kiểm</h2>
+<p>Số lượng token, giao dịch và block đọc từ hợp đồng v4 và log on-chain; phần quy ra đô dùng một nguồn giá riêng, đọc tại đúng block chốt cửa sổ.</p>
+<ol><li><strong>Hợp đồng PoolManager v4 trên Ethereum:</strong> <code>0x000000000004444c5dc75cB358380D2e3dE08A90</code></li><li><strong>Đọc <code>protocolFeesAccrued(địa_chỉ_token)</code> hai lần cách nhau vài giờ.</strong> Nếu nó đi xuống trong lúc pool vẫn giao dịch, bạn đã tự chứng minh nó không phải bộ đếm chỉ tăng.</li><li><strong>Đối chiếu log <code>FeesCollected</code></strong> trong cùng cửa sổ, để xem phần giảm có đúng là số dư đã rời hợp đồng không.</li><li><strong>Số pool được bật:</strong> đếm log <code>ProtocolFeeUpdated</code> từ block 25.622.594 — block thực thi đề xuất #99.</li></ol>
+<p>Không phải lời khuyên đầu tư. Cửa sổ đo: 15h28 ngày 27/07 → 21h05 ngày 28/07 giờ Việt Nam (08:28Z 27/07 → 14:05Z 28/07), block ghim theo từng phép đo.</p></section></main>
+<footer><div class="khung">
+  Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá.<br>
+  Không phải lời khuyên đầu tư. ·
+  <a href="https://x.com/blockpinned">@blockpinned</a>
+</div></footer>
+</body></html>

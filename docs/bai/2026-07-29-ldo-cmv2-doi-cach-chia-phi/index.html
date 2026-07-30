@@ -1,0 +1,230 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lido đổi cách chia phí ở module mới — nhưng gần 5 ngày sau, số dư được báo cáo vẫn là 0 ETH — BlockPinned</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Archivo:wght@600;700;800&family=Oswald:wght@500;600;700&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,650;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16.png">
+<style>
+/* ── TOKEN: đổi hệ = sửa ĐÚNG khối này. Nguồn gốc: template/build_cards.py (hệ đỏ
+   đang công khai) và template/reference/…Logo-Explorations (hệ verdigris đề xuất).
+   Hai bản có thể trôi lệch — đây là mối nối đã biết, không phải đã đồng bộ. ── */
+:root{
+  --paper:#ECE5D8; --ink:#26221C; --accent:#94382A;
+  --muted:#66604F; --line:#D9D1C2;
+  --display:'Marcellus',system-ui,sans-serif;
+  --body:'Be Vietnam Pro',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --dw:400; --gian-ten:.13em;
+}
+@media (prefers-color-scheme:dark){
+  /* 🔴 accent PHẢI đổi MÃ, không chỉ đảo paper/ink. Bản khai hệ cấm #94382A trên nền
+     tối — đo được 2,15:1, rớt cả ngưỡng 3,0 của đồ hoạ phi-văn-bản. Bản đầu của file
+     này đảo hai màu nền mà giữ nguyên accent, tức tự vi phạm đúng điều cấm ② trong
+     im lặng: không cổng nào của site nhìn tới cặp (màu, nền) ở chế độ tối. */
+  :root{ --paper:#26221C; --ink:#ECE5D8; --accent:#D26F60;
+          --line:#3D372E; --muted:#A79E8E; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.72;-webkit-text-size-adjust:100%}
+.khung{max-width:680px;margin:0 auto;padding:0 22px}
+a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);
+  text-underline-offset:3px;text-decoration-thickness:1.5px}
+a:hover{color:var(--accent)}
+/* URL dài trong bài (github.com/…/issues/8242) không có chỗ ngắt tự nhiên ⇒ nó
+   nong CẢ TRANG rộng ra và mọi thứ khác tràn theo. Đo được bằng preview.py --do-tran. */
+p,li,td,th,h1,h2,h3,figcaption{overflow-wrap:break-word}
+a,code{word-break:break-word}
+
+/* đầu trang: MARK chính thức nằm trong .mark (hằng số MARK_SVG), tô bằng var(--accent)
+   nên nó tự đổi mã theo nền — đó là cách duy nhất giữ được điều cấm ② của bản khai hệ */
+header.dau{border-bottom:1.5px solid var(--ink);margin-bottom:38px}
+.dau .khung{display:flex;align-items:center;gap:13px;padding-top:22px;padding-bottom:18px;flex-wrap:wrap}
+.mark{width:21px;height:21px;flex:none}
+.mark svg{display:block;width:100%;height:100%}
+.mark path{fill:var(--accent)}
+.ten{font:var(--dw) 20px/1 var(--display);letter-spacing:var(--gian-ten);text-decoration:none}
+.tag{font:500 11.5px/1 var(--mono);letter-spacing:.1em;color:var(--muted);margin-left:auto}
+@media(max-width:540px){.tag{margin-left:0;width:100%;order:3}}
+
+h1{font:var(--dw) clamp(27px,5.4vw,37px)/1.22 var(--display);letter-spacing:-.005em;margin:0 0 16px}
+h2{font:var(--dw) 22px/1.32 var(--display);letter-spacing:.005em;margin:44px 0 12px;
+  padding-top:14px;border-top:1.5px solid var(--line)}
+h3{font:600 16.5px/1.4 var(--body);margin:28px 0 8px}
+p{margin:0 0 17px}
+strong{font-weight:650}
+hr{border:0;border-top:1.5px solid var(--line);margin:34px 0}
+ul,ol{margin:0 0 17px;padding-left:21px} li{margin-bottom:7px}
+code{font:500 .875em var(--mono);background:color-mix(in srgb,var(--ink) 7%,transparent);
+  padding:.1em .35em;word-break:break-word}
+pre{background:color-mix(in srgb,var(--ink) 7%,transparent);padding:15px;overflow-x:auto;
+  border-left:3px solid var(--accent);margin:0 0 17px}
+pre code{background:none;padding:0;font-size:12.5px;line-height:1.62}
+
+.cuon{overflow-x:auto;margin:0 0 19px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:14.5px;min-width:100%}
+th,td{padding:8px 13px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1.5px solid var(--ink)}
+
+.meta{font:500 12.5px/1.65 var(--mono);color:var(--muted);margin:0 0 30px}
+.meta b{color:var(--ink);font-weight:600}
+
+/* ── SỔ CLAIM — thứ duy nhất trên trang được phép nổi ── */
+.so{margin:52px 0 0;padding-top:22px;border-top:3px solid var(--ink)}
+.so>p.dan{font-size:15px;color:var(--muted);margin-bottom:26px}
+.claim{border:1.5px solid var(--line);border-left:4px solid var(--accent);
+  padding:17px 19px;margin-bottom:15px;scroll-margin-top:20px}
+.claim.sua,.claim.bac,.claim.cho{border-left-color:var(--muted)}
+.claim.xac{border-left-width:7px}
+.claim h3{margin:0 0 9px;font:600 16px/1.5 var(--body)}
+.claim .id{font:600 12px var(--mono);color:var(--muted);text-decoration:none}
+.chip{display:inline-block;font:600 11px/1 var(--mono);letter-spacing:.09em;
+  padding:5px 9px;vertical-align:2px;margin-left:8px;white-space:nowrap}
+/* xac = đã bị thử và sống sót. Cùng nền accent với "đang đứng" (cả hai còn hiệu lực),
+   thêm viền ink để đọc ra "có hai bên cùng ký": desk đo, đối tượng tự tính lại.
+   🟡 Đây là xử lý TẠM cho tới vòng thiết kế thật — hình thức chưa qua ai duyệt. */
+.chip.xac{background:var(--accent);color:var(--paper);
+  border:1.5px solid var(--ink);padding:3.5px 7.5px}
+.chip.song{background:var(--accent);color:var(--paper)}
+.chip.sua{background:var(--ink);color:var(--paper)}
+.chip.bac{border:1.5px solid var(--ink);color:var(--ink);text-decoration:line-through}
+.chip.cho{border:1.5px dashed var(--muted);color:var(--muted)}
+.dong{font-size:14px;margin:11px 0 0;padding-left:13px;border-left:2px solid var(--line)}
+.dong .nhan{font:600 10.5px var(--mono);letter-spacing:.1em;color:var(--muted);
+  display:block;margin-bottom:3px}
+.nk{list-style:none;padding:0;margin:13px 0 0;font-size:14px}
+.nk li{padding:7px 0 7px 13px;border-left:2px solid var(--line);margin:0}
+.nk .d{font:600 11.5px var(--mono);color:var(--accent);margin-right:7px}
+
+/* ── DÃI TRẠNG THÁI — màn hình đầu tiên, thứ X/TG không có ── */
+.dai{border:2px solid var(--ink);padding:16px 18px;margin:0 0 30px}
+.dem{font:500 15px/1.5 var(--mono)}
+.dem .to{font:700 27px var(--mono);color:var(--accent);vertical-align:-3px;margin-right:2px}
+.dem b.song,.dem b.xac{color:var(--accent)}
+.khi{font:500 12px/1.6 var(--mono);color:var(--muted);margin-top:7px}
+.toi{display:inline-block;margin-top:12px;font:600 12.5px var(--mono);letter-spacing:.06em;
+  text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:2px}
+
+/* ── HÌNH: claim vẽ thành trục số. Sống được — refill hạ thì chấm di chuyển ── */
+.hinh{margin:17px 0 6px;padding:0}
+.thang .hang{margin-bottom:13px}
+.thang .nh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  font:500 12px/1.5 var(--mono);color:var(--muted);margin-bottom:4px}
+.thang .nh b{font:700 14px var(--mono);color:var(--ink);white-space:nowrap}
+.thang .ray{position:relative;height:15px;background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.thang .ray.tr{height:9px;background:none}
+.thang .cot{display:block;height:100%;background:var(--ink)}
+.thang .cot.toi{background:var(--accent)}
+/* cu = con số ĐÃ BỊ THAY nhưng không được xoá khỏi hình — người đọc phải thấy
+   cái thanh dài ngày trước đó, nếu không thì hình mất luôn phần đáng kể nhất */
+.thang .cot.cu{background:color-mix(in srgb,var(--ink) 22%,transparent)}
+.thang .vung{position:absolute;top:0;height:9px;background:var(--accent);
+  border-left:2px solid var(--accent);border-right:2px solid var(--accent);opacity:.45}
+.thang .nk2{margin:4px 0 0;font-size:11.5px}
+.thang .nk2 b{font-size:12px;color:var(--accent)}
+.hinh figcaption{font:500 11px/1.5 var(--mono);color:var(--muted);margin-top:8px;
+  padding-top:7px;border-top:1px solid var(--line)}
+
+/* điều-bác-bỏ là thứ khác biệt duy nhất của kênh này ⇒ nó phải là dòng NẶNG NHẤT
+   trong khối claim, không phải một đoạn văn thường như bản đầu */
+.dong.bac{border-left:3px solid var(--accent);
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  padding:9px 12px;margin-top:13px;font-size:14.5px}
+.dong.bac .nhan{color:var(--accent)}
+
+/* bài viết là THAM CHIẾU ở trang này — hạ nhẹ xuống, không tranh chỗ với sổ claim */
+.bandaydu{margin-top:56px;padding-top:6px;border-top:3px solid var(--ink)}
+.bandaydu h2{border-top:0;padding-top:0;margin-top:16px}
+
+footer{margin-top:64px;padding:22px 0 46px;border-top:1.5px solid var(--ink);
+  font:500 12px/1.75 var(--mono);color:var(--muted)}
+footer a{color:var(--muted)}
+.bai{display:block;padding:17px 0;border-bottom:1px solid var(--line);text-decoration:none}
+.bai .t{font:600 18.5px/1.4 var(--body);margin-bottom:5px}
+.bai .s{font:500 12px var(--mono);color:var(--muted)}
+</style></head><body>
+<header class="dau"><div class="khung">
+  <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
+  <a class="ten" href="../../">BLOCK·PINNED</a>
+  <span class="tag">SỐ NÀO CŨNG TRUY NGƯỢC ĐƯỢC</span>
+</div></header>
+<main class="khung"><h1>Lido đổi cách chia phí ở module mới — nhưng gần 5 ngày sau, số dư được báo cáo vẫn là 0 ETH</h1><section class="dai">
+  <div class="dem"><span class="to">3</span> claim &nbsp;·&nbsp; <b class="song">3</b> đang đứng</div>
+  <div class="khi"></div>
+  <a class="toi" href="#so-claim">Xem sổ claim ↓</a>
+</section><section class="so"><h2 id="so-claim">Sổ claim</h2>
+<p class="dan">Mỗi khẳng định của bài này một dòng, kèm điều gì sẽ bác bỏ nó. Trạng thái đổi thì sửa tại đây, và ghi lại ngày. Không dòng nào bị xoá.</p>
+<article class="claim song" id="C1">
+  <h3><a class="id" href="#C1">C1</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Module mới CMv2 của Lido chia phí khác module cũ: CMv1 là 350/650 bp (3,50% operator, 6,50% treasury), CMv2 là 400/600 bp (4,00% / 6,00%) — hai bảng đọc trực tiếp từ StakingRouter, không lấy từ slide.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum block 25.637.121 (29/07/2026 07:53:59 UTC) · StakingRouter 0xfddf38947afb03c621c71b06c9c70bce73f12999 · CMv1 0x55032650b14df07b85bf18a3a3ec8e0af2e028d5 · CMv2 0xda5f930ce326eb5205085d66c72a4e79d60cb8c1</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Gọi lại cùng các getter ở đúng block 25.637.121. Nếu hai bảng phí trả về khác 350/650 và 400/600 bp thì phép đo này sai. Tổng hai cột của từng module phải cộng đúng 1.000 bp — lệch khỏi đó cũng là dấu hiệu đọc sai getter.</p>
+  <ul class="nk"><li><span class="d">2026-07-29</span>Đăng. Điểm của claim này là cách chia phí đổi ở tầng contract, đọc được tại một block cố định — nên nó kiểm ngược được bất cứ lúc nào, không phụ thuộc trạng thái hiện tại. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C2">
+  <h3><a class="id" href="#C2">C2</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Tại block đo, CMv2 có 43 registered operators nhưng 0 depositable keys, 0 deposited validators và 0 ETH reported balance — nên bảng phí mới có trọng số bằng 0 trong tỷ lệ fee gộp. Operator đăng ký không đồng nghĩa stake đã di cư.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum block 25.637.121 · getStakingModuleSummary(4) và getModuleValidatorsBalance(4) · share CMv1 tại block đo 89,8307%</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Chỉ cần một trong bốn số 43/0/0/0 khác đi khi gọi lại ở đúng block 25.637.121 là phép đo này sai. Và khi reported balance của CMv2 đổi khỏi 0 ở block sau, claim này hết hiệu lực theo thời gian — phải chạy lại phép tính tỷ lệ gộp, chứ không giữ nguyên câu cũ.</p>
+  <ul class="nk"><li><span class="d">2026-07-29</span>Đăng. Đây là claim quyết định độ nghiêm trọng của cả bài: bảng phí mới đã tồn tại trên chain nhưng chưa có ETH nào tạo trọng số cho nó tại block đo. Ngưỡng theo dõi tự đặt: tới 18/09/2026, nếu CMv2 vẫn dưới 1% tổng balance module thì hạ mức ưu tiên — đó là quyết định biên tập, không bác snapshot. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C3">
+  <h3><a class="id" href="#C3">C3</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Tỷ lệ phân bổ treasury gộp tại block đo là 6,2085170404% phần thưởng; nếu dịch toàn bộ balance từ CMv1 sang CMv2 và giữ mọi thứ khác không đổi, tỷ lệ này về 5,7594% — giảm 7,23%. Con số đó là bài toán giả định, KHÔNG phải doanh thu Lido vừa mất.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum block 25.637.121 · getStakingFeeAggregateDistribution() bản đầy đủ (bản E4Precision chỉ trả 6,20%) · bảng 0/25/50/75/100% dựng trên share CMv1 89,8307%</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Dựng lại bảng 0/25/50/75/100% từ chính hai bảng phí và share 89,8307% tại block 25.637.121 mà không ra chuỗi 6,2085 → 6,0962 → 5,9839 → 5,8717 → 5,7594 ⇒ bảng này sai. Nếu ai chỉ ra getter đang dùng thực chất đo lượng ETH đã chuyển vào treasury chứ không phải một tỷ lệ phân bổ, thì cách diễn giải cả mục này sai. Tổng balance hoặc cơ cấu balance giữa các module đổi, hoặc DAO thay fee CMv2 ⇒ bảng phải tính lại.</p>
+  <ul class="nk"><li><span class="d">2026-07-29</span>Đăng kèm chữ &#x27;giả định&#x27; ngay trong claim, vì đây đúng chỗ một con số dễ bị trích thành &#x27;Lido mất 7,23% doanh thu&#x27;. Getter trả tỷ lệ trong công thức, không đo ETH thực nhận — muốn biết treasury nhận bao nhiêu phải đo phần thưởng phát sinh theo từng module trong kỳ. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></li></ul>
+</article></section><section class="bandaydu"><h2 id="ban-day-du">Bài đầy đủ</h2><p class="meta">🟡 2026-07-29 &nbsp;·&nbsp; GHIM TẠI Ethereum · block #25.637.121, timestamp 29/07/2026 07:53:59 UTC &nbsp;·&nbsp; <a href="https://x.com/blockpinned/status/2082421671152218340">bản đăng trên X</a></p><p>Lido vừa nâng cấp Staking Router v3. CMv2 đổi cách chia phí — nhưng gần 5 ngày sau, số dư được báo cáo vẫn là <strong>0 ETH</strong>.</p>
+<p>Đây là snapshot tại Ethereum block <strong>25.637.121</strong> — không phải kết luận về mọi block kể từ ngày upgrade.</p>
+<h2 id="hai-bang-phi-doc-tu-contract-chu-khong-tu-slide">Hai bảng phí, đọc từ contract chứ không từ slide</h2>
+<p>Trong bản nâng cấp này, StakingRouter có thêm module thứ tư: <strong>Curated Module v2 (CMv2)</strong>. Điểm kinh tế dễ bị bỏ qua là CMv2 dùng một cách chia phí khác module cũ.</p>
+<p>Ở hai module đang được so sánh, 10% phần thưởng staking được chia giữa operator và treasury. Lido tổ chức validator thành các staking module; mỗi module có tỷ lệ chia riêng.</p>
+<div class="cuon"><table><thead><tr><th>Mỗi 100 ETH phần thưởng</th><th>CMv1 (cũ)</th><th>CMv2 (mới)</th></tr></thead><tbody><tr><td>operator — bên vận hành validator</td><td>3,50 ETH</td><td><strong>4,00 ETH</strong></td></tr><tr><td>treasury — quỹ của DAO</td><td>6,50 ETH</td><td><strong>6,00 ETH</strong></td></tr><tr><td>tổng</td><td>10%</td><td>10%</td></tr></tbody></table></div>
+<p>Với mỗi 100 ETH phần thưởng được phân bổ theo CMv2 thay vì CMv1, operator được thêm 0,5 ETH, còn treasury bớt 0,5 ETH. Hai bảng phí này đọc trực tiếp từ StakingRouter tại block đo.</p>
+<p><em>(Các tỷ lệ trên là phần trăm trực tiếp của phần thưởng, không phải phần trăm của riêng khoản phí 10%.)</em></p>
+<h2 id="nhung-doi-trong-contract-chua-dong-nghia-da-co-eth-tao-trong">Nhưng đổi trong contract chưa đồng nghĩa đã có ETH tạo trọng số</h2>
+<p>Tại block đo, CMv2 có:</p>
+<div class="cuon"><table><thead><tr><th>Trạng thái</th><th>Giá trị</th></tr></thead><tbody><tr><td>registered operators</td><td><strong>43</strong></td></tr><tr><td>depositable keys</td><td>0</td></tr><tr><td>deposited validators</td><td>0</td></tr><tr><td>reported balance</td><td><strong>0 ETH</strong></td></tr></tbody></table></div>
+<p>43 operator cho thấy đã có người đăng ký vận hành. <strong>Nó không có nghĩa stake đã di cư.</strong> Bốn trạng thái này phải đọc riêng — operator đăng ký là một chuyện, còn biến đi vào công thức gộp fee là <em>reported balance</em>.</p>
+<p>Tỷ lệ fee chung được tính theo balance của từng module: module giữ nhiều ETH hơn thì bảng phí của module đó có ảnh hưởng lớn hơn. CMv2 có 0 ETH reported balance, nên <strong>tại block đo, bảng phí mới có trọng số bằng 0</strong> trong phép tính này.</p>
+<h2 id="dieu-gi-xay-ra-khi-eth-bat-dau-chuyen-sang-cmv2">Điều gì xảy ra khi ETH bắt đầu chuyển sang CMv2</h2>
+<p>StakingRouter trả tỷ lệ phân bổ treasury gộp tại block đo là <strong>6,2085170404%</strong> phần thưởng staking. Đây là tỷ lệ <strong>trong công thức</strong>, không phải số ETH thực tế đã được chuyển vào treasury.</p>
+<p>Giữ nguyên tổng balance và fee của các module khác, rồi chỉ dịch balance từ CMv1 sang CMv2:</p>
+<div class="cuon"><table><thead><tr><th>Kịch bản chuyển</th><th>Treasury</th><th>Giảm</th></tr></thead><tbody><tr><td>0%</td><td>6,2085%</td><td>—</td></tr><tr><td>25%</td><td>6,0962%</td><td>1,81%</td></tr><tr><td>50%</td><td>5,9839%</td><td>3,62%</td></tr><tr><td>75%</td><td>5,8717%</td><td>5,43%</td></tr><tr><td><strong>100%</strong></td><td><strong>5,7594%</strong></td><td><strong>7,23%</strong></td></tr></tbody></table></div>
+<p><strong>Con số −7,23% không phải doanh thu Lido vừa mất.</strong> Đó là kết quả của một bài toán giả định: toàn bộ balance hiện tại của module cũ chuyển sang bảng phí mới, trong khi các yếu tố còn lại giữ nguyên.</p>
+<p>Với người nắm LDO, đây là một cược tăng trưởng: DAO nhường 0,5 ETH trên mỗi 100 ETH phần thưởng cho operator. Giữ các yếu tố khác không đổi, quy mô phần thưởng tương ứng phải tăng <strong>ít nhất 8,33%</strong> mới bù được phần treasury giảm từ 6,50 xuống 6,00 ETH.</p>
+<p>Người nắm LDO <strong>không</strong> tự động nhận khoản fee này. Tác động tới holder đi qua sức khoẻ DAO treasury, không phải một khoản trả trực tiếp.</p>
+<p>Thực tế có thể đi theo hướng khác: nếu CMv2 hút thêm ETH mới và số ETH đó tạo đủ phần thưởng, treasury có thể nhận tỷ lệ thấp hơn trên mỗi ETH phần thưởng nhưng vẫn thu nhiều ETH hơn về tổng lượng. Muốn biết treasury thực nhận bao nhiêu ETH, phải đo phần thưởng phát sinh theo từng module trong kỳ.</p>
+<p>Thông báo ngày 27/07 của Lido nói về lợi ích kinh tế cho operator và khả năng tuỳ chỉnh phí. Hai bảng số cụ thể ở trên đến từ StakingRouter.</p>
+<h2 id="phu-luc-dia-chi-va-getter">Phụ lục — địa chỉ và getter</h2>
+<div class="cuon"><table><thead><tr><th></th><th>Địa chỉ</th></tr></thead><tbody><tr><td>StakingRouter</td><td><code>0xfddf38947afb03c621c71b06c9c70bce73f12999</code></td></tr><tr><td>CMv1 — curated-onchain-v1</td><td><code>0x55032650b14df07b85bf18a3a3ec8e0af2e028d5</code></td></tr><tr><td>CMv2 — curated-onchain-v2</td><td><code>0xda5f930ce326eb5205085d66c72a4e79d60cb8c1</code></td></tr></tbody></table></div>
+<p>Share của CMv1 tại block đo: <strong>89,8307%</strong> số dư validator được báo cáo qua các module.</p>
+<p>Trạng thái CMv2 đọc bằng <code>getStakingModuleSummary(4)</code> và <code>getModuleValidatorsBalance(4)</code>.</p>
+<p>Tỷ lệ gộp đọc bằng <code>getStakingFeeAggregateDistribution()</code>. Bản <code>…E4Precision()</code> chỉ trả 6,20%; bài dùng bản đầy đủ rồi mới làm tròn. <strong>Getter này trả một tỷ lệ phân bổ, không đo lượng ETH đã chuyển vào treasury.</strong></p>
+<h2 id="phu-luc-kiem-them-so-0">Phụ lục — kiểm thêm số 0</h2>
+<p>Bốn contract consolidation và top-up được kiểm:</p>
+<div class="cuon"><table><thead><tr><th>Contract</th><th>Địa chỉ</th></tr></thead><tbody><tr><td>ConsolidationGateway</td><td><code>0x17be979344f2c2cc806229a532d92f8742c10462</code></td></tr><tr><td>TopUpGateway</td><td><code>0x3fc2c71579d80790aaa3fc7be8b66ac39dc57374</code></td></tr><tr><td>ConsolidationBus</td><td><code>0xd907ce33b4be423823d1cffe80bd147e8b8554c8</code></td></tr><tr><td>ConsolidationMigrator</td><td><code>0x9dc70b5a4f4f5e4af9058c983d560564f031f1d7</code></td></tr></tbody></table></div>
+<p>Trên Ethereum, cùng bộ lọc trả <strong>0/0/0/0</strong> log trong dải block 25.603.297–25.637.121. Mở rộng từ block 0 đến block đo trả <strong>8/14/11/8</strong> — tức công cụ và bộ lọc chạy được, số 0 kia là về dải block chứ không phải về công cụ. Kết quả này chỉ kiểm loại log đã chọn, không đại diện cho mọi hoạt động của bốn contract.</p>
+<h2 id="khi-nao-phai-do-lai">Khi nào phải đo lại</h2>
+<ul><li>Balance được báo cáo của CMv2 đổi khỏi 0.</li><li>DAO thay fee của CMv2.</li><li>Tổng balance hoặc cơ cấu balance giữa các module thay đổi.</li></ul>
+<p>Đây là <strong>trigger cập nhật</strong>, không phải cách bác snapshot cũ.</p>
+<p><em>Ngưỡng dừng theo dõi: đến 18/09/2026, nếu CMv2 vẫn dưới 1% tổng balance module, BlockPinned hạ mức ưu tiên theo dõi chủ đề này trong năm 2026. Đây là quyết định biên tập, không bác bỏ snapshot tại block đo.</em></p>
+<h2 id="tu-kiem">Tự kiểm</h2>
+<p>Gọi lại cùng các getter ở <strong>đúng block 25.637.121</strong>. Nếu kết quả khác <strong>43 registered operators, 0 depositable keys, 0 deposited validators hoặc 0 ETH reported balance</strong> — chỉ cần một trong bốn số khác đi — thì phép đo này sai.</p>
+<p>Bảng giả định dựng lại được bằng chính hai bảng phí và share 89,8307%: chỉ dịch balance từ CMv1 sang CMv2 theo từng mức 0/25/50/75/100%, giữ mọi module khác không đổi.</p>
+<p>Không phải lời khuyên đầu tư. Mọi số động đo tại Ethereum block 25.637.121, timestamp 29/07/2026 07:53:59 UTC.</p></section></main>
+<footer><div class="khung">
+  Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá.<br>
+  Không phải lời khuyên đầu tư. ·
+  <a href="https://x.com/blockpinned">@blockpinned</a>
+</div></footer>
+</body></html>

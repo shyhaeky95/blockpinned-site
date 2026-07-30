@@ -1,0 +1,163 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlockPinned — số nào cũng truy ngược được</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Archivo:wght@600;700;800&family=Oswald:wght@500;600;700&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,650;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./favicon-16.png">
+<style>
+/* ── TOKEN: đổi hệ = sửa ĐÚNG khối này. Nguồn gốc: template/build_cards.py (hệ đỏ
+   đang công khai) và template/reference/…Logo-Explorations (hệ verdigris đề xuất).
+   Hai bản có thể trôi lệch — đây là mối nối đã biết, không phải đã đồng bộ. ── */
+:root{
+  --paper:#ECE5D8; --ink:#26221C; --accent:#94382A;
+  --muted:#66604F; --line:#D9D1C2;
+  --display:'Marcellus',system-ui,sans-serif;
+  --body:'Be Vietnam Pro',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --dw:400; --gian-ten:.13em;
+}
+@media (prefers-color-scheme:dark){
+  /* 🔴 accent PHẢI đổi MÃ, không chỉ đảo paper/ink. Bản khai hệ cấm #94382A trên nền
+     tối — đo được 2,15:1, rớt cả ngưỡng 3,0 của đồ hoạ phi-văn-bản. Bản đầu của file
+     này đảo hai màu nền mà giữ nguyên accent, tức tự vi phạm đúng điều cấm ② trong
+     im lặng: không cổng nào của site nhìn tới cặp (màu, nền) ở chế độ tối. */
+  :root{ --paper:#26221C; --ink:#ECE5D8; --accent:#D26F60;
+          --line:#3D372E; --muted:#A79E8E; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.72;-webkit-text-size-adjust:100%}
+.khung{max-width:680px;margin:0 auto;padding:0 22px}
+a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);
+  text-underline-offset:3px;text-decoration-thickness:1.5px}
+a:hover{color:var(--accent)}
+/* URL dài trong bài (github.com/…/issues/8242) không có chỗ ngắt tự nhiên ⇒ nó
+   nong CẢ TRANG rộng ra và mọi thứ khác tràn theo. Đo được bằng preview.py --do-tran. */
+p,li,td,th,h1,h2,h3,figcaption{overflow-wrap:break-word}
+a,code{word-break:break-word}
+
+/* đầu trang: MARK chính thức nằm trong .mark (hằng số MARK_SVG), tô bằng var(--accent)
+   nên nó tự đổi mã theo nền — đó là cách duy nhất giữ được điều cấm ② của bản khai hệ */
+header.dau{border-bottom:1.5px solid var(--ink);margin-bottom:38px}
+.dau .khung{display:flex;align-items:center;gap:13px;padding-top:22px;padding-bottom:18px;flex-wrap:wrap}
+.mark{width:21px;height:21px;flex:none}
+.mark svg{display:block;width:100%;height:100%}
+.mark path{fill:var(--accent)}
+.ten{font:var(--dw) 20px/1 var(--display);letter-spacing:var(--gian-ten);text-decoration:none}
+.tag{font:500 11.5px/1 var(--mono);letter-spacing:.1em;color:var(--muted);margin-left:auto}
+@media(max-width:540px){.tag{margin-left:0;width:100%;order:3}}
+
+h1{font:var(--dw) clamp(27px,5.4vw,37px)/1.22 var(--display);letter-spacing:-.005em;margin:0 0 16px}
+h2{font:var(--dw) 22px/1.32 var(--display);letter-spacing:.005em;margin:44px 0 12px;
+  padding-top:14px;border-top:1.5px solid var(--line)}
+h3{font:600 16.5px/1.4 var(--body);margin:28px 0 8px}
+p{margin:0 0 17px}
+strong{font-weight:650}
+hr{border:0;border-top:1.5px solid var(--line);margin:34px 0}
+ul,ol{margin:0 0 17px;padding-left:21px} li{margin-bottom:7px}
+code{font:500 .875em var(--mono);background:color-mix(in srgb,var(--ink) 7%,transparent);
+  padding:.1em .35em;word-break:break-word}
+pre{background:color-mix(in srgb,var(--ink) 7%,transparent);padding:15px;overflow-x:auto;
+  border-left:3px solid var(--accent);margin:0 0 17px}
+pre code{background:none;padding:0;font-size:12.5px;line-height:1.62}
+
+.cuon{overflow-x:auto;margin:0 0 19px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:14.5px;min-width:100%}
+th,td{padding:8px 13px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1.5px solid var(--ink)}
+
+.meta{font:500 12.5px/1.65 var(--mono);color:var(--muted);margin:0 0 30px}
+.meta b{color:var(--ink);font-weight:600}
+
+/* ── SỔ CLAIM — thứ duy nhất trên trang được phép nổi ── */
+.so{margin:52px 0 0;padding-top:22px;border-top:3px solid var(--ink)}
+.so>p.dan{font-size:15px;color:var(--muted);margin-bottom:26px}
+.claim{border:1.5px solid var(--line);border-left:4px solid var(--accent);
+  padding:17px 19px;margin-bottom:15px;scroll-margin-top:20px}
+.claim.sua,.claim.bac,.claim.cho{border-left-color:var(--muted)}
+.claim.xac{border-left-width:7px}
+.claim h3{margin:0 0 9px;font:600 16px/1.5 var(--body)}
+.claim .id{font:600 12px var(--mono);color:var(--muted);text-decoration:none}
+.chip{display:inline-block;font:600 11px/1 var(--mono);letter-spacing:.09em;
+  padding:5px 9px;vertical-align:2px;margin-left:8px;white-space:nowrap}
+/* xac = đã bị thử và sống sót. Cùng nền accent với "đang đứng" (cả hai còn hiệu lực),
+   thêm viền ink để đọc ra "có hai bên cùng ký": desk đo, đối tượng tự tính lại.
+   🟡 Đây là xử lý TẠM cho tới vòng thiết kế thật — hình thức chưa qua ai duyệt. */
+.chip.xac{background:var(--accent);color:var(--paper);
+  border:1.5px solid var(--ink);padding:3.5px 7.5px}
+.chip.song{background:var(--accent);color:var(--paper)}
+.chip.sua{background:var(--ink);color:var(--paper)}
+.chip.bac{border:1.5px solid var(--ink);color:var(--ink);text-decoration:line-through}
+.chip.cho{border:1.5px dashed var(--muted);color:var(--muted)}
+.dong{font-size:14px;margin:11px 0 0;padding-left:13px;border-left:2px solid var(--line)}
+.dong .nhan{font:600 10.5px var(--mono);letter-spacing:.1em;color:var(--muted);
+  display:block;margin-bottom:3px}
+.nk{list-style:none;padding:0;margin:13px 0 0;font-size:14px}
+.nk li{padding:7px 0 7px 13px;border-left:2px solid var(--line);margin:0}
+.nk .d{font:600 11.5px var(--mono);color:var(--accent);margin-right:7px}
+
+/* ── DÃI TRẠNG THÁI — màn hình đầu tiên, thứ X/TG không có ── */
+.dai{border:2px solid var(--ink);padding:16px 18px;margin:0 0 30px}
+.dem{font:500 15px/1.5 var(--mono)}
+.dem .to{font:700 27px var(--mono);color:var(--accent);vertical-align:-3px;margin-right:2px}
+.dem b.song,.dem b.xac{color:var(--accent)}
+.khi{font:500 12px/1.6 var(--mono);color:var(--muted);margin-top:7px}
+.toi{display:inline-block;margin-top:12px;font:600 12.5px var(--mono);letter-spacing:.06em;
+  text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:2px}
+
+/* ── HÌNH: claim vẽ thành trục số. Sống được — refill hạ thì chấm di chuyển ── */
+.hinh{margin:17px 0 6px;padding:0}
+.thang .hang{margin-bottom:13px}
+.thang .nh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  font:500 12px/1.5 var(--mono);color:var(--muted);margin-bottom:4px}
+.thang .nh b{font:700 14px var(--mono);color:var(--ink);white-space:nowrap}
+.thang .ray{position:relative;height:15px;background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.thang .ray.tr{height:9px;background:none}
+.thang .cot{display:block;height:100%;background:var(--ink)}
+.thang .cot.toi{background:var(--accent)}
+/* cu = con số ĐÃ BỊ THAY nhưng không được xoá khỏi hình — người đọc phải thấy
+   cái thanh dài ngày trước đó, nếu không thì hình mất luôn phần đáng kể nhất */
+.thang .cot.cu{background:color-mix(in srgb,var(--ink) 22%,transparent)}
+.thang .vung{position:absolute;top:0;height:9px;background:var(--accent);
+  border-left:2px solid var(--accent);border-right:2px solid var(--accent);opacity:.45}
+.thang .nk2{margin:4px 0 0;font-size:11.5px}
+.thang .nk2 b{font-size:12px;color:var(--accent)}
+.hinh figcaption{font:500 11px/1.5 var(--mono);color:var(--muted);margin-top:8px;
+  padding-top:7px;border-top:1px solid var(--line)}
+
+/* điều-bác-bỏ là thứ khác biệt duy nhất của kênh này ⇒ nó phải là dòng NẶNG NHẤT
+   trong khối claim, không phải một đoạn văn thường như bản đầu */
+.dong.bac{border-left:3px solid var(--accent);
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  padding:9px 12px;margin-top:13px;font-size:14.5px}
+.dong.bac .nhan{color:var(--accent)}
+
+/* bài viết là THAM CHIẾU ở trang này — hạ nhẹ xuống, không tranh chỗ với sổ claim */
+.bandaydu{margin-top:56px;padding-top:6px;border-top:3px solid var(--ink)}
+.bandaydu h2{border-top:0;padding-top:0;margin-top:16px}
+
+footer{margin-top:64px;padding:22px 0 46px;border-top:1.5px solid var(--ink);
+  font:500 12px/1.75 var(--mono);color:var(--muted)}
+footer a{color:var(--muted)}
+.bai{display:block;padding:17px 0;border-bottom:1px solid var(--line);text-decoration:none}
+.bai .t{font:600 18.5px/1.4 var(--body);margin-bottom:5px}
+.bai .s{font:500 12px var(--mono);color:var(--muted)}
+</style></head><body>
+<header class="dau"><div class="khung">
+  <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
+  <a class="ten" href="./">BLOCK·PINNED</a>
+  <span class="tag">SỐ NÀO CŨNG TRUY NGƯỢC ĐƯỢC</span>
+</div></header>
+<main class="khung"><h1>Số nào cũng truy ngược được</h1><p>Đây là chỗ giữ <strong>bản chuẩn</strong> của mọi bài tôi đăng.</p>
+<p>X và Telegram là nơi bài được đọc. Nhưng cả hai đều là dòng chảy — chúng biết <em>thêm vào</em>, không biết <em>một claim giờ đang đứng hay đã đổ</em>. Trang này biết.</p>
+<p>Mỗi bài ở đây kèm một <strong>sổ claim</strong>: từng khẳng định một dòng, ghim tại block đã đo, kèm <strong>điều gì sẽ bác bỏ nó</strong>, và một nhật ký ghi lại mọi lần trạng thái của nó thay đổi. Claim nào sai thì ghi là sai, ngay tại chỗ, không xoá.</p>
+<p>Không nhận định giá. Không kèo. Không phải lời khuyên đầu tư.</p><h2 id="bai">Bài</h2><a class="bai" href="bai/2026-07-29-ldo-cmv2-doi-cach-chia-phi/"><div class="t">Lido đổi cách chia phí ở module mới — nhưng gần 5 ngày sau, số dư được báo cáo vẫn là 0 ETH</div><div class="s">🟡 2026-07-29 · 3 claim — 3 đang đứng</div></a><a class="bai" href="bai/2026-07-29-hype-lich-unlock-va-dong-thuc-te/"><div class="t">Lịch unlock không phải lượng HYPE thực sự đi vào lưu hành — ledger thấp hơn mô hình 29–38 lần</div><div class="s">🟢 2026-07-29 · 3 claim — 3 đang đứng</div></a><a class="bai" href="bai/2026-07-28-uni-v4-cong-tac-bat-tien-chay/"><div class="t">Uniswap bật thu phí v4 — chỉ số giảm 53% sau một đêm, và nó không phải bộ đếm</div><div class="s">🟡 2026-07-28 · 4 claim — 4 đang đứng</div></a><a class="bai" href="bai/2026-07-27-defillama-uniswap-v4/"><div class="t">DefiLlama báo phí Uniswap v4 cao hơn 3,9 lần — và bản sửa mới chỉ chạy một chiều</div><div class="s">🟢 2026-07-27 · 6 claim — 1 đã xác nhận · 4 đã sửa · 1 bị bác</div></a></main>
+<footer><div class="khung">
+  Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá.<br>
+  Không phải lời khuyên đầu tư. ·
+  <a href="https://x.com/blockpinned">@blockpinned</a>
+</div></footer>
+</body></html>

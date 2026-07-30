@@ -1,0 +1,233 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lịch unlock không phải lượng HYPE thực sự đi vào lưu hành — ledger thấp hơn mô hình 29–38 lần — BlockPinned</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Archivo:wght@600;700;800&family=Oswald:wght@500;600;700&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,650;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16.png">
+<style>
+/* ── TOKEN: đổi hệ = sửa ĐÚNG khối này. Nguồn gốc: template/build_cards.py (hệ đỏ
+   đang công khai) và template/reference/…Logo-Explorations (hệ verdigris đề xuất).
+   Hai bản có thể trôi lệch — đây là mối nối đã biết, không phải đã đồng bộ. ── */
+:root{
+  --paper:#ECE5D8; --ink:#26221C; --accent:#94382A;
+  --muted:#66604F; --line:#D9D1C2;
+  --display:'Marcellus',system-ui,sans-serif;
+  --body:'Be Vietnam Pro',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --dw:400; --gian-ten:.13em;
+}
+@media (prefers-color-scheme:dark){
+  /* 🔴 accent PHẢI đổi MÃ, không chỉ đảo paper/ink. Bản khai hệ cấm #94382A trên nền
+     tối — đo được 2,15:1, rớt cả ngưỡng 3,0 của đồ hoạ phi-văn-bản. Bản đầu của file
+     này đảo hai màu nền mà giữ nguyên accent, tức tự vi phạm đúng điều cấm ② trong
+     im lặng: không cổng nào của site nhìn tới cặp (màu, nền) ở chế độ tối. */
+  :root{ --paper:#26221C; --ink:#ECE5D8; --accent:#D26F60;
+          --line:#3D372E; --muted:#A79E8E; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.72;-webkit-text-size-adjust:100%}
+.khung{max-width:680px;margin:0 auto;padding:0 22px}
+a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);
+  text-underline-offset:3px;text-decoration-thickness:1.5px}
+a:hover{color:var(--accent)}
+/* URL dài trong bài (github.com/…/issues/8242) không có chỗ ngắt tự nhiên ⇒ nó
+   nong CẢ TRANG rộng ra và mọi thứ khác tràn theo. Đo được bằng preview.py --do-tran. */
+p,li,td,th,h1,h2,h3,figcaption{overflow-wrap:break-word}
+a,code{word-break:break-word}
+
+/* đầu trang: MARK chính thức nằm trong .mark (hằng số MARK_SVG), tô bằng var(--accent)
+   nên nó tự đổi mã theo nền — đó là cách duy nhất giữ được điều cấm ② của bản khai hệ */
+header.dau{border-bottom:1.5px solid var(--ink);margin-bottom:38px}
+.dau .khung{display:flex;align-items:center;gap:13px;padding-top:22px;padding-bottom:18px;flex-wrap:wrap}
+.mark{width:21px;height:21px;flex:none}
+.mark svg{display:block;width:100%;height:100%}
+.mark path{fill:var(--accent)}
+.ten{font:var(--dw) 20px/1 var(--display);letter-spacing:var(--gian-ten);text-decoration:none}
+.tag{font:500 11.5px/1 var(--mono);letter-spacing:.1em;color:var(--muted);margin-left:auto}
+@media(max-width:540px){.tag{margin-left:0;width:100%;order:3}}
+
+h1{font:var(--dw) clamp(27px,5.4vw,37px)/1.22 var(--display);letter-spacing:-.005em;margin:0 0 16px}
+h2{font:var(--dw) 22px/1.32 var(--display);letter-spacing:.005em;margin:44px 0 12px;
+  padding-top:14px;border-top:1.5px solid var(--line)}
+h3{font:600 16.5px/1.4 var(--body);margin:28px 0 8px}
+p{margin:0 0 17px}
+strong{font-weight:650}
+hr{border:0;border-top:1.5px solid var(--line);margin:34px 0}
+ul,ol{margin:0 0 17px;padding-left:21px} li{margin-bottom:7px}
+code{font:500 .875em var(--mono);background:color-mix(in srgb,var(--ink) 7%,transparent);
+  padding:.1em .35em;word-break:break-word}
+pre{background:color-mix(in srgb,var(--ink) 7%,transparent);padding:15px;overflow-x:auto;
+  border-left:3px solid var(--accent);margin:0 0 17px}
+pre code{background:none;padding:0;font-size:12.5px;line-height:1.62}
+
+.cuon{overflow-x:auto;margin:0 0 19px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:14.5px;min-width:100%}
+th,td{padding:8px 13px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1.5px solid var(--ink)}
+
+.meta{font:500 12.5px/1.65 var(--mono);color:var(--muted);margin:0 0 30px}
+.meta b{color:var(--ink);font-weight:600}
+
+/* ── SỔ CLAIM — thứ duy nhất trên trang được phép nổi ── */
+.so{margin:52px 0 0;padding-top:22px;border-top:3px solid var(--ink)}
+.so>p.dan{font-size:15px;color:var(--muted);margin-bottom:26px}
+.claim{border:1.5px solid var(--line);border-left:4px solid var(--accent);
+  padding:17px 19px;margin-bottom:15px;scroll-margin-top:20px}
+.claim.sua,.claim.bac,.claim.cho{border-left-color:var(--muted)}
+.claim.xac{border-left-width:7px}
+.claim h3{margin:0 0 9px;font:600 16px/1.5 var(--body)}
+.claim .id{font:600 12px var(--mono);color:var(--muted);text-decoration:none}
+.chip{display:inline-block;font:600 11px/1 var(--mono);letter-spacing:.09em;
+  padding:5px 9px;vertical-align:2px;margin-left:8px;white-space:nowrap}
+/* xac = đã bị thử và sống sót. Cùng nền accent với "đang đứng" (cả hai còn hiệu lực),
+   thêm viền ink để đọc ra "có hai bên cùng ký": desk đo, đối tượng tự tính lại.
+   🟡 Đây là xử lý TẠM cho tới vòng thiết kế thật — hình thức chưa qua ai duyệt. */
+.chip.xac{background:var(--accent);color:var(--paper);
+  border:1.5px solid var(--ink);padding:3.5px 7.5px}
+.chip.song{background:var(--accent);color:var(--paper)}
+.chip.sua{background:var(--ink);color:var(--paper)}
+.chip.bac{border:1.5px solid var(--ink);color:var(--ink);text-decoration:line-through}
+.chip.cho{border:1.5px dashed var(--muted);color:var(--muted)}
+.dong{font-size:14px;margin:11px 0 0;padding-left:13px;border-left:2px solid var(--line)}
+.dong .nhan{font:600 10.5px var(--mono);letter-spacing:.1em;color:var(--muted);
+  display:block;margin-bottom:3px}
+.nk{list-style:none;padding:0;margin:13px 0 0;font-size:14px}
+.nk li{padding:7px 0 7px 13px;border-left:2px solid var(--line);margin:0}
+.nk .d{font:600 11.5px var(--mono);color:var(--accent);margin-right:7px}
+
+/* ── DÃI TRẠNG THÁI — màn hình đầu tiên, thứ X/TG không có ── */
+.dai{border:2px solid var(--ink);padding:16px 18px;margin:0 0 30px}
+.dem{font:500 15px/1.5 var(--mono)}
+.dem .to{font:700 27px var(--mono);color:var(--accent);vertical-align:-3px;margin-right:2px}
+.dem b.song,.dem b.xac{color:var(--accent)}
+.khi{font:500 12px/1.6 var(--mono);color:var(--muted);margin-top:7px}
+.toi{display:inline-block;margin-top:12px;font:600 12.5px var(--mono);letter-spacing:.06em;
+  text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:2px}
+
+/* ── HÌNH: claim vẽ thành trục số. Sống được — refill hạ thì chấm di chuyển ── */
+.hinh{margin:17px 0 6px;padding:0}
+.thang .hang{margin-bottom:13px}
+.thang .nh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  font:500 12px/1.5 var(--mono);color:var(--muted);margin-bottom:4px}
+.thang .nh b{font:700 14px var(--mono);color:var(--ink);white-space:nowrap}
+.thang .ray{position:relative;height:15px;background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.thang .ray.tr{height:9px;background:none}
+.thang .cot{display:block;height:100%;background:var(--ink)}
+.thang .cot.toi{background:var(--accent)}
+/* cu = con số ĐÃ BỊ THAY nhưng không được xoá khỏi hình — người đọc phải thấy
+   cái thanh dài ngày trước đó, nếu không thì hình mất luôn phần đáng kể nhất */
+.thang .cot.cu{background:color-mix(in srgb,var(--ink) 22%,transparent)}
+.thang .vung{position:absolute;top:0;height:9px;background:var(--accent);
+  border-left:2px solid var(--accent);border-right:2px solid var(--accent);opacity:.45}
+.thang .nk2{margin:4px 0 0;font-size:11.5px}
+.thang .nk2 b{font-size:12px;color:var(--accent)}
+.hinh figcaption{font:500 11px/1.5 var(--mono);color:var(--muted);margin-top:8px;
+  padding-top:7px;border-top:1px solid var(--line)}
+
+/* điều-bác-bỏ là thứ khác biệt duy nhất của kênh này ⇒ nó phải là dòng NẶNG NHẤT
+   trong khối claim, không phải một đoạn văn thường như bản đầu */
+.dong.bac{border-left:3px solid var(--accent);
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  padding:9px 12px;margin-top:13px;font-size:14.5px}
+.dong.bac .nhan{color:var(--accent)}
+
+/* bài viết là THAM CHIẾU ở trang này — hạ nhẹ xuống, không tranh chỗ với sổ claim */
+.bandaydu{margin-top:56px;padding-top:6px;border-top:3px solid var(--ink)}
+.bandaydu h2{border-top:0;padding-top:0;margin-top:16px}
+
+footer{margin-top:64px;padding:22px 0 46px;border-top:1.5px solid var(--ink);
+  font:500 12px/1.75 var(--mono);color:var(--muted)}
+footer a{color:var(--muted)}
+.bai{display:block;padding:17px 0;border-bottom:1px solid var(--line);text-decoration:none}
+.bai .t{font:600 18.5px/1.4 var(--body);margin-bottom:5px}
+.bai .s{font:500 12px var(--mono);color:var(--muted)}
+</style></head><body>
+<header class="dau"><div class="khung">
+  <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
+  <a class="ten" href="../../">BLOCK·PINNED</a>
+  <span class="tag">SỐ NÀO CŨNG TRUY NGƯỢC ĐƯỢC</span>
+</div></header>
+<main class="khung"><h1>Lịch unlock không phải lượng HYPE thực sự đi vào lưu hành — ledger thấp hơn mô hình 29–38 lần</h1><section class="dai">
+  <div class="dem"><span class="to">3</span> claim &nbsp;·&nbsp; <b class="song">3</b> đang đứng</div>
+  <div class="khi"></div>
+  <a class="toi" href="#so-claim">Xem sổ claim ↓</a>
+</section><section class="so"><h2 id="so-claim">Sổ claim</h2>
+<p class="dan">Mỗi khẳng định của bài này một dòng, kèm điều gì sẽ bác bỏ nó. Trạng thái đổi thì sửa tại đây, và ghi lại ngày. Không dòng nào bị xoá.</p>
+<article class="claim song" id="C1">
+  <h3><a class="id" href="#C1">C1</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Lịch unlock không phải lượng HYPE thực sự đi vào lưu hành: mô hình dùng 9,92 triệu HYPE/tháng, còn ledger chính thức chỉ cho 259.866–347.176 HYPE/tháng rời bucket — bằng 2,62–3,50% giả định, tức thấp hơn 29–38 lần.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Bucket core contributors, địa chỉ genesis 0x43e9abea1910387c4292bca4b94de81462f8a251 · bình quân toàn kỳ và 180 ngày gần nhất · ảnh chụp 09h38–10h18 ngày 29/07/2026</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Có một đường phân phối bị bỏ sót, đủ để đưa tốc độ thực lên gần 9,92 triệu HYPE/tháng ⇒ claim này đổ và bài phải viết lại. Đường kiểm: ba endpoint delegatorHistory, ledger transfer và userFillsByTime phải đọc tách nhau; nếu có kênh rời bucket thứ tư mà bài chưa cộng, nó sẽ hiện ra ở chỗ sổ không còn khép về 0.</p>
+  <ul class="nk"><li><span class="d">2026-07-29</span>Đăng. Đây là claim trung tâm của bài: không phải &#x27;HYPE sẽ không lạm phát&#x27;, mà là phép đánh đồng giữa lịch phân bổ và dòng token thật bị bác. <a href="https://x.com/blockpinned/status/2082365873952604576">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C2">
+  <h3><a class="id" href="#C2">C2</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Sổ rời bucket khép về đúng 0: 6.004.521 HYPE withdrawal − 1.078.488 re-deposit − 4.926.027 chuyển first-hop − 3 bán trực tiếp − 3 còn ở spot = 0.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Lịch sử chính thức Hyperliquid trên địa chỉ genesis 0x43e9abea…8a251 · 4.926.027 HYPE qua 202 transfer tới 101 địa chỉ · ảnh chụp 29/07/2026</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Nếu ledger 6.004.521 HYPE withdrawal không còn khép về 0 — dù vì số liệu được sửa lại, vì một nhánh chi bị bỏ sót, hay vì phép cộng của tôi sai — thì toàn bộ phần định lượng của bài phải làm lại. Đây cũng là chỗ một đường phân phối bị bỏ sót sẽ lộ ra.</p>
+  <ul class="nk"><li><span class="d">2026-07-29</span>Đăng. Sổ khép về 0 là lý do dám nói &#x27;ledger đã đo&#x27; thay vì &#x27;ước lượng&#x27;: không còn phần dư nào để giấu một kênh rời bucket chưa biết. <a href="https://x.com/blockpinned/status/2082365873952604576">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C3">
+  <h3><a class="id" href="#C3">C3</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Thay giả định 9,92 triệu bằng ledger đã đo thì mô hình cung đổi dấu: float giảm 0,67–4,47 triệu HYPE/năm ở cả hai mẫu số doanh thu. Nhưng &#x27;float đang co&#x27; không phải một định luật — nếu Assistance Fund ngừng mua, mô hình lập tức đổi sang float tăng 6,46–7,69 triệu HYPE/năm.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Giá HYPE 54,543 đô · doanh thu nền 596.216.586 đô/năm và trailing 30 ngày 455.702.524 đô/năm · đầu vào huỷ thật ngoại suy từ 9,79 ngày · ảnh chụp 29/07/2026</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Đo lại làm CẢ HAI biên Δfloat chuyển sang dương ⇒ claim này đổ. Đầu vào yếu nhất đã tự khai: lượng HYPE bị huỷ thật mới ngoại suy từ 9,79 ngày và bốn đoạn con phân tán 106,2% — nếu tốc độ huỷ thật thấp hơn nhiều so với con số đang dùng, biên 30 ngày rất mỏng sẽ đổ trước.</p>
+  <ul class="nk"><li><span class="d">2026-07-29</span>Đăng kèm cả hai mẫu số doanh thu và cả hai giá hoà vốn, cố ý không chọn một rồi giấu một. Biên trailing 30 ngày (−0,67 triệu/năm) mỏng tới mức một lượt đo lại có thể lật dấu, nên nó được in ngay cạnh biên nền. <a href="https://x.com/blockpinned/status/2082365873952604576">nguồn</a></li></ul>
+</article></section><section class="bandaydu"><h2 id="ban-day-du">Bài đầy đủ</h2><p class="meta">🟢 2026-07-29 &nbsp;·&nbsp; GHIM TẠI KHÔNG neo được block — HyperCore trả state hiện tại · ảnh chụp 09h38–10h18 ngày 29/07/2026 · ledger khép 6.004.521 HYPE withdrawal về đúng 0 &nbsp;·&nbsp; <a href="https://x.com/blockpinned/status/2082365873952604576">bản đăng trên X</a></p><p>Lịch unlock có thực sự cho biết bao nhiêu HYPE đi vào lưu hành? Tôi từng tin vậy.</p>
+<div class="cuon"><table><thead><tr><th></th><th>Lượng</th></tr></thead><tbody><tr><td>Mô hình</td><td><strong>9,92 triệu HYPE/tháng</strong></td></tr><tr><td>Ledger thực tế</td><td><strong>259.866–347.176 HYPE/tháng</strong> rời bucket</td></tr></tbody></table></div>
+<p>Hai thứ đó không phải một.</p>
+<h2 id="con-so-9-92-trieu-den-tu-dau-va-ledger-noi-gi">Con số 9,92 triệu đến từ đâu, và ledger nói gì</h2>
+<p>9,92 triệu là giả định từng được đưa vào mô hình từ phần core contributors — gần 1% tổng cung mỗi tháng. Lịch sử chính thức trên địa chỉ khớp với bucket đó chỉ cho thấy:</p>
+<ul><li>bình quân toàn kỳ: <strong>259.866 HYPE/tháng</strong></li><li>180 ngày gần nhất: <strong>347.176 HYPE/tháng</strong></li></ul>
+<p>Dòng thực tế chỉ bằng <strong>2,62–3,50%</strong> giả định — thấp hơn <strong>29–38 lần</strong>.</p>
+<p>Đây không phải sai số làm tròn. Nó làm mô hình cung <strong>đổi dấu</strong>: nếu 9,92 triệu là dòng thật, float HYPE tăng khoảng 111,5 triệu token/năm; thay bằng ledger đã đo, cùng mô hình cho float <strong>giảm</strong> 0,67–4,47 triệu HYPE/năm tại ảnh chụp hiện tại.</p>
+<p>Một bên là lượng được mô hình hoá theo lịch. Bên kia là lượng HYPE thực sự rời bucket. <strong>Phân bổ trên giấy không tự động trở thành token đã đi vào lưu hành.</strong></p>
+<h2 id="phep-tinh">Phép tính</h2>
+<p><strong>Δfloat = staking rewards vào float + phần gốc rời bucket − Assistance Fund mua − HYPE bị huỷ thật</strong></p>
+<p>Khoảng kết quả rộng vì doanh thu buyback đang giảm:</p>
+<div class="cuon"><table><thead><tr><th>Mẫu số doanh thu</th><th>Δfloat</th></tr></thead><tbody><tr><td>trung bình ba tháng đầy đủ</td><td><strong>−3,25 … −4,47 triệu</strong>/năm</td></tr><tr><td>trailing 30 ngày</td><td><strong>−0,67 … −1,89 triệu</strong>/năm</td></tr></tbody></table></div>
+<p>Cả hai còn âm, nhưng biên 30 ngày rất mỏng.</p>
+<h2 id="roi-bucket-van-chua-co-nghia-la-da-ban">&quot;Rời bucket&quot; vẫn chưa có nghĩa là &quot;đã bán&quot;</h2>
+<p>Ledger khép được 6,00 triệu HYPE withdrawal: 1,08 triệu quay lại staking, 4,93 triệu chuyển tới 101 địa chỉ, ví gốc bán trực tiếp 3 HYPE. Trong 91 địa chỉ đã đủ 30 ngày, lượng bán <strong>tối đa có thể gán</strong> theo thời gian bằng <strong>0,2839%</strong> số chúng nhận — vẫn chỉ là mức tối đa, không phải bằng chứng token vừa nhận đã bị bán.</p>
+<p>Vì vậy mô hình dùng 3,118–4,166 triệu HYPE/năm như lượng <strong>có thể</strong> vào float, không gọi nó là áp lực bán cùng ngày.</p>
+<h2 id="ket-luan-float-dang-co-cung-khong-phai-mot-dinh-luat">Kết luận &quot;float đang co&quot; cũng không phải một định luật</h2>
+<p>Nó phụ thuộc giá, doanh thu dành cho holders và lượng HYPE bị huỷ thật. Đầu vào huỷ thật hiện mới được ngoại suy từ <strong>9,79 ngày</strong>; tốc độ các đoạn con phân tán <strong>106,2%</strong>. Nếu Assistance Fund ngừng mua, mô hình lập tức đổi sang float <strong>tăng</strong> 6,46–7,69 triệu HYPE/năm.</p>
+<p>Điều bài này bác không phải <em>&quot;HYPE sẽ không lạm phát&quot;</em>. Nó bác phép đánh đồng: <strong>lịch unlock = lượng token thực tế đi vào lưu hành.</strong></p>
+<h2 id="phu-luc-bucket-core-contributors">Phụ lục — bucket core contributors</h2>
+<p>Địa chỉ genesis 23,8%: <code>0x43e9abea1910387c4292bca4b94de81462f8a251</code></p>
+<p>Từ lịch sử chính thức của Hyperliquid, sổ khép về đúng 0:</p>
+<div class="cuon"><table><thead><tr><th>Dòng</th><th>HYPE</th></tr></thead><tbody><tr><td>withdrawal</td><td>6.004.521</td></tr><tr><td>− re-deposit</td><td>1.078.488</td></tr><tr><td>− chuyển first-hop</td><td>4.926.027</td></tr><tr><td>− bán trực tiếp</td><td>3</td></tr><tr><td>− còn ở spot</td><td>3</td></tr><tr><td><strong>= còn lại</strong></td><td><strong>0</strong></td></tr></tbody></table></div>
+<p>4.926.027 HYPE được chuyển qua 202 transfer tới 101 địa chỉ. Trong 91 địa chỉ đã đủ 30 ngày: nhận <strong>4.474.027 HYPE</strong>, sell sau lúc nhận tính theo mức tối đa có thể gán <strong>12.702,78 HYPE</strong>, tỉ lệ <strong>0,2839%</strong>.</p>
+<p>Mười địa chỉ nhận trong tháng 7 còn chưa đủ thời gian quan sát, nên không được gộp với nhóm 91 địa chỉ rồi gọi là mẫu hoàn chỉnh.</p>
+<p><strong>Ba endpoint phải tách, đừng đọc thay nhau:</strong></p>
+<ul><li><code>delegatorHistory</code> — principal delegate, undelegate và withdrawal</li><li>ledger transfer — token đi tới địa chỉ nào</li><li><code>userFillsByTime</code> — lệnh đã khớp trên orderbook</li></ul>
+<p>Một transfer không phải một sell. Một withdrawal khỏi staking cũng chưa phải token đã vào orderbook.</p>
+<h2 id="phu-luc-mo-hinh-netflow-anh-chup-29-07">Phụ lục — mô hình netflow, ảnh chụp 29/07</h2>
+<p><strong>Δfloat = E_float + V − AF − B</strong></p>
+<ul><li><code>E_float</code> = 4.355.580–4.533.358 HYPE/năm</li><li><code>V</code> = 3.118.397–4.166.110 HYPE/năm</li><li><code>AF</code> = holders revenue chia giá HYPE</li><li><code>B</code> = 1.013.912 HYPE/năm trong phép tính hiện tại</li></ul>
+<p><code>B</code> là đầu vào yếu nhất: ngoại suy từ 27.183,16 HYPE bị huỷ trong 9,79 ngày, bốn đoạn con phân tán 106,2%. Không được đọc <code>B</code> như một nhịp đã biết.</p>
+<p><strong>Hai mẫu số doanh thu — không được chọn một rồi giấu một:</strong></p>
+<div class="cuon"><table><thead><tr><th>Mẫu số</th><th>Doanh thu/năm</th><th>Δfloat tại giá 54,543 đô</th><th>Giá hoà vốn</th></tr></thead><tbody><tr><td>ba tháng lịch đầy đủ 04–06/2026</td><td>596.216.586 đô</td><td>−4.471.064 … −3.245.573</td><td>77,58–92,29 đô</td></tr><tr><td>trailing 30 ngày</td><td>455.702.524 đô</td><td>−1.894.857 … −669.366</td><td>59,29–70,54 đô</td></tr></tbody></table></div>
+<p><strong>Kiểm giá mua của Assistance Fund:</strong> trong 43 quan sát ngày×cặp, giá AF trả nằm trong biên giá ngày ở <strong>43/43</strong>. Premium có trọng số +0,0858%, median ngày +0,0079%. Chênh lệch giữa giá trả trung bình 30 ngày và spot hiện tại chủ yếu đến từ giá HYPE giảm trong cửa sổ, không phải trượt giá.</p>
+<p><strong>Counterfactual:</strong></p>
+<ul><li>Assistance Fund ngừng mua: <strong>+6.460.065 … +7.685.557</strong> HYPE/năm</li><li>giả định 9,92 triệu HYPE/tháng là đúng: <strong>+111,45 … +111,63 triệu</strong> HYPE/năm</li></ul>
+<h2 id="tu-kiem-va-gioi-han-cua-nguon">Tự kiểm, và giới hạn của nguồn</h2>
+<p>State HYPE được đọc qua Info API và precompile live. <strong>RPC mặc định của Hyperliquid nhận block tag nhưng trả state hiện tại</strong>, nên block number không neo được các số live ở trên — đó là lý do trang này ghim bằng cửa sổ giờ thay vì bằng block, và mọi số phụ thuộc giá sẽ tiếp tục đổi.</p>
+<p>Chuỗi lịch sử <code>delegatorHistory</code>, <code>delegatorRewards</code> và ledger là đường lịch sử <strong>do chính Hyperliquid công bố</strong>; chúng vẫn là nguồn tự công bố, không phải node archive độc lập. Muốn tự kiểm: gọi ba endpoint trên cho đúng địa chỉ genesis ở trên, cộng lại theo bảng khép sổ, rồi so tốc độ rời bucket với con số 9,92 triệu/tháng.</p>
+<p>Không phải lời khuyên đầu tư. Số sống là ảnh chụp 09h38–10h18 ngày 29/07/2026 (giờ Việt Nam).</p></section></main>
+<footer><div class="khung">
+  Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá.<br>
+  Không phải lời khuyên đầu tư. ·
+  <a href="https://x.com/blockpinned">@blockpinned</a>
+</div></footer>
+</body></html>

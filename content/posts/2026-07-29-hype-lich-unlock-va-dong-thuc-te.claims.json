@@ -1,0 +1,46 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Lịch unlock không phải lượng HYPE thực sự đi vào lưu hành: mô hình dùng 9,92 triệu HYPE/tháng, còn ledger chính thức chỉ cho 259.866–347.176 HYPE/tháng rời bucket — bằng 2,62–3,50% giả định, tức thấp hơn 29–38 lần.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Bucket core contributors, địa chỉ genesis 0x43e9abea1910387c4292bca4b94de81462f8a251 · bình quân toàn kỳ và 180 ngày gần nhất · ảnh chụp 09h38–10h18 ngày 29/07/2026",
+      "falsifier": "Có một đường phân phối bị bỏ sót, đủ để đưa tốc độ thực lên gần 9,92 triệu HYPE/tháng ⇒ claim này đổ và bài phải viết lại. Đường kiểm: ba endpoint delegatorHistory, ledger transfer và userFillsByTime phải đọc tách nhau; nếu có kênh rời bucket thứ tư mà bài chưa cộng, nó sẽ hiện ra ở chỗ sổ không còn khép về 0.",
+      "log": [
+        {
+          "ngay": "2026-07-29",
+          "ghi": "Đăng. Đây là claim trung tâm của bài: không phải 'HYPE sẽ không lạm phát', mà là phép đánh đồng giữa lịch phân bổ và dòng token thật bị bác.",
+          "nguon": "https://x.com/blockpinned/status/2082365873952604576"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "Sổ rời bucket khép về đúng 0: 6.004.521 HYPE withdrawal − 1.078.488 re-deposit − 4.926.027 chuyển first-hop − 3 bán trực tiếp − 3 còn ở spot = 0.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Lịch sử chính thức Hyperliquid trên địa chỉ genesis 0x43e9abea…8a251 · 4.926.027 HYPE qua 202 transfer tới 101 địa chỉ · ảnh chụp 29/07/2026",
+      "falsifier": "Nếu ledger 6.004.521 HYPE withdrawal không còn khép về 0 — dù vì số liệu được sửa lại, vì một nhánh chi bị bỏ sót, hay vì phép cộng của tôi sai — thì toàn bộ phần định lượng của bài phải làm lại. Đây cũng là chỗ một đường phân phối bị bỏ sót sẽ lộ ra.",
+      "log": [
+        {
+          "ngay": "2026-07-29",
+          "ghi": "Đăng. Sổ khép về 0 là lý do dám nói 'ledger đã đo' thay vì 'ước lượng': không còn phần dư nào để giấu một kênh rời bucket chưa biết.",
+          "nguon": "https://x.com/blockpinned/status/2082365873952604576"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "text": "Thay giả định 9,92 triệu bằng ledger đã đo thì mô hình cung đổi dấu: float giảm 0,67–4,47 triệu HYPE/năm ở cả hai mẫu số doanh thu. Nhưng 'float đang co' không phải một định luật — nếu Assistance Fund ngừng mua, mô hình lập tức đổi sang float tăng 6,46–7,69 triệu HYPE/năm.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Giá HYPE 54,543 đô · doanh thu nền 596.216.586 đô/năm và trailing 30 ngày 455.702.524 đô/năm · đầu vào huỷ thật ngoại suy từ 9,79 ngày · ảnh chụp 29/07/2026",
+      "falsifier": "Đo lại làm CẢ HAI biên Δfloat chuyển sang dương ⇒ claim này đổ. Đầu vào yếu nhất đã tự khai: lượng HYPE bị huỷ thật mới ngoại suy từ 9,79 ngày và bốn đoạn con phân tán 106,2% — nếu tốc độ huỷ thật thấp hơn nhiều so với con số đang dùng, biên 30 ngày rất mỏng sẽ đổ trước.",
+      "log": [
+        {
+          "ngay": "2026-07-29",
+          "ghi": "Đăng kèm cả hai mẫu số doanh thu và cả hai giá hoà vốn, cố ý không chọn một rồi giấu một. Biên trailing 30 ngày (−0,67 triệu/năm) mỏng tới mức một lượt đo lại có thể lật dấu, nên nó được in ngay cạnh biên nền.",
+          "nguon": "https://x.com/blockpinned/status/2082365873952604576"
+        }
+      ]
+    }
+  ]
+}
