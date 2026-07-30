@@ -116,6 +116,13 @@ CA = [
     ("⑨ HẠN · khai hạn nhưng không nói ngày đó phân định gì",
      lambda r: sua_claims(r, lambda cs: cs[0].update(han="2026-12-31", han_ghi="xem lại")),
      "thiếu 'han_ghi'"),
+    # ⑩ GHI TRƯỚC — thêm 30/07. Đây là cửa để một lần ĐỔ lặng lẽ rơi khỏi bảng.
+    ("⑩ GHI TRƯỚC · đã phân định mà không ghi kết quả",
+     lambda r: sua_claims(r, lambda cs: cs[0]["ghi_truoc"].pop("ket_qua")),
+     "thiếu 'ket_qua'"),
+    ("⑩ GHI TRƯỚC · không nói ghi trước Ở ĐÂU",
+     lambda r: sua_claims(r, lambda cs: cs[0]["ghi_truoc"].update(noi="")),
+     "thiếu 'noi'"),
     ("⑦ XEM TRƯỚC · ảnh chưa khai builder nào sinh",
      lambda r: (r / "site" / "assets" / "la-mat.png").write_bytes(
          (r / "site" / "assets" / "favicon-16.png").read_bytes()),

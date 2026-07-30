@@ -9,14 +9,36 @@
       "thang_do": {
         "nhan": "Phí Uniswap v4 trên Robinhood chain — ngày 16/07/2026",
         "don_vi": "triệu USD",
-        "tu": 0.8, "den": 5.4,
-        "vach": [1, 2, 3, 4, 5],
-        "khoang": {"tu": 1.157, "den": 1.415,
-                   "nhan": "khoảng tôi ghi trước, ngày 26/07 — trước khi họ chạy lại"},
+        "tu": 0.8,
+        "den": 5.4,
+        "vach": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "khoang": {
+          "tu": 1.157,
+          "den": 1.415,
+          "nhan": "khoảng tôi ghi trước, ngày 26/07 — trước khi họ chạy lại"
+        },
         "diem": [
-          {"so": 1.286, "nhan": "tôi đếm từng swap trên chain", "ben": "toi"},
-          {"so": 1.311, "nhan": "DefiLlama SAU khi chạy lại — đọc 28/07 01:57Z", "ben": "ho"},
-          {"so": 5.015, "nhan": "DefiLlama TRƯỚC đó — con số issue này mở ra vì nó", "ben": "cu"}
+          {
+            "so": 1.286,
+            "nhan": "tôi đếm từng swap trên chain",
+            "ben": "toi"
+          },
+          {
+            "so": 1.311,
+            "nhan": "DefiLlama SAU khi chạy lại — đọc 28/07 01:57Z",
+            "ben": "ho"
+          },
+          {
+            "so": 5.015,
+            "nhan": "DefiLlama TRƯỚC đó — con số issue này mở ra vì nó",
+            "ben": "cu"
+          }
         ]
       },
       "log": [
@@ -40,7 +62,15 @@
           "ghi": "01:57Z — chuỗi công khai đã đổi thật: 16/07 từ $5.014.570 xuống $1.311.188. Rơi trong khoảng tôi ghi trước, lệch 1,93% so với con số tôi ghi. Điều bác bỏ đã chạy và claim sống sót — đây là lần đầu chuyện đó xảy ra trên kênh này.",
           "nguon": "https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees"
         }
-      ]
+      ],
+      "ghi_truoc": {
+        "ngay": "2026-07-26",
+        "noi": "dán công khai trong thread issue #8242 của DefiLlama, 13:46Z",
+        "so": "$1.286.386 — khoảng chấp nhận $1,157M–$1,415M (±10%)",
+        "ngay_ket": "2026-07-28",
+        "ai_phan_dinh": "chính DefiLlama chạy lại adapter",
+        "ket_qua": "$1.311.164 — lệch 1,93%, nằm trong khoảng đã ghi trước"
+      }
     },
     {
       "id": "C2",
@@ -69,7 +99,15 @@
           "ghi": "ĐIỀU BÁC BỎ ĐÃ CHẠY, VÀ CLAIM NÀY ĐỔ. Đọc lại lúc 09:36Z: cả 7 ngày 17–23/07 đều đã được tính lại bằng adapter mới, và trung vị (số cũ ÷ số mới) trên đúng 7 ngày đó là 0,93 — dưới ngưỡng 1,1 tôi ghi trước, tức số mới nhìn chung còn CAO hơn số cũ khoảng 7%. Đổi cách tính không tạo ra cú tụt, nên nhận định này sai và tôi rút nó. Phần vẫn đứng: cú tụt là thật — sau khi cả hai phía dùng cùng một adapter, phí v4 giảm 2,00 lần trong khi v3 cùng kỳ chỉ giảm 1,21 lần.",
           "nguon": "https://x.com/blockpinned/status/2082047631786983793"
         }
-      ]
+      ],
+      "ghi_truoc": {
+        "ngay": "2026-07-28",
+        "noi": "điều-bác-bỏ in kèm chính bài, bản thay ngày 28/07",
+        "so": "ngưỡng: trung vị (số cũ ÷ số mới) nhóm 17–23/07 ≤1,1× ⇒ claim ĐỔ · ≥1,3× ⇒ claim đứng",
+        "ngay_ket": "2026-07-28",
+        "ai_phan_dinh": "phép đo của tôi trên chuỗi họ vừa tính lại",
+        "ket_qua": "trung vị 0,93 trên cả 7/7 ngày ⇒ ĐỔ. Tôi rút nhận định công khai cùng ngày."
+      }
     },
     {
       "id": "C3",
@@ -117,7 +155,15 @@
           "ghi": "HẾT HIỆU LỰC, và tôi xử lý đúng cách điều bác bỏ này dặn: ghi ngày rồi sửa dòng này. Đọc lại lúc 09:36Z, tức bảy tiếng rưỡi sau lần đọc trên: TOÀN BỘ 17/17 ngày trong khoảng 08→24/07 đã đổi số so với ảnh chụp 27/07 — 11 ngày trong đó đổi quá 10%, và ngày 20/07 nói ở dòng trên tụt từ $1.355.193 xuống $895.611. Không còn 'mới sửa được một ngày' nào; câu này chỉ đúng cho đúng lần đọc 01:57Z.",
           "nguon": "https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees"
         }
-      ]
+      ],
+      "ghi_truoc": {
+        "ngay": "2026-07-28",
+        "noi": "điều-bác-bỏ in kèm chính bài",
+        "so": "ngưỡng: từ 2 ngày trở lên trong khoảng 08→24/07 đổi số ⇒ câu “mới sửa được một ngày” hết hạn",
+        "ngay_ket": "2026-07-28",
+        "ai_phan_dinh": "đọc lại chuỗi công khai lúc 09:36Z",
+        "ket_qua": "17/17 ngày đã đổi ⇒ hết hạn. Ghi ngày và sửa dòng đó."
+      }
     },
     {
       "id": "C6",

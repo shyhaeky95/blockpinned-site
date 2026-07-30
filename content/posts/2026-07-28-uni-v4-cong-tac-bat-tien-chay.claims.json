@@ -71,7 +71,12 @@
         }
       ],
       "han": "2026-08-04",
-      "han_ghi": "Đếm log ProtocolFeeUpdated trên Ethereum từ 14:05Z ngày 28/07. Thêm từ 5.000 pool trở lên ⇒ rút câu “nhịp bật pool đã giảm mạnh”; dưới ngưỡng đó ⇒ claim đứng."
+      "han_ghi": "Đếm log ProtocolFeeUpdated trên Ethereum từ 14:05Z ngày 28/07. Thêm từ 5.000 pool trở lên ⇒ rút câu “nhịp bật pool đã giảm mạnh”; dưới ngưỡng đó ⇒ claim đứng.",
+      "ghi_truoc": {
+        "ngay": "2026-07-28",
+        "noi": "điều-bác-bỏ in kèm chính bài",
+        "so": "ngưỡng: thêm từ 5.000 pool trở lên trên Ethereum, từ 14:05Z ngày 28/07 đến 23h59 ngày 04/08 ⇒ rút câu “nhịp bật pool đã giảm mạnh”"
+      }
     }
   ]
 }

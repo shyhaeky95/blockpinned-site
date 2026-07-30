@@ -133,7 +133,7 @@ BODY_FONT = "Be Vietnam Pro"
 
 # Tên các họ cổng — dùng cho dòng in ra, và là chỗ DUY NHẤT đếm chúng.
 TEN_CONG = ["ngôn ngữ", "cấu trúc", "claim", "ngôi xưng", "đánh dấu",
-            "thuộc tính số", "xem trước", "đo lại", "hạn"]
+            "thuộc tính số", "xem trước", "đo lại", "hạn", "ghi trước"]
 
 # chữ ký hàm hợp lệ: tên + danh sách kiểu, vd `balanceOf(address)` · `x()` · `f(uint256,address)`
 RE_KY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*\((|[a-z0-9\[\],]+)\)$")
@@ -339,6 +339,35 @@ def cong_claim(claims: list, o: str) -> None:
                 raise LoiCong(f"{cid} nhật ký thiếu ngày dạng YYYY-MM-DD — {o}")
             if not e.get("ghi", "").strip():
                 raise LoiCong(f"{cid} nhật ký có dòng rỗng — {o}")
+
+
+def cong_ghi_truoc(claims: list, o: str) -> None:
+    """Cổng 10 — đã ghi trước thì PHẢI ghi kết quả, kể cả khi kết quả là mình sai.
+
+    Vì sao là cổng: một bảng "tôi ghi trước rồi kết quả ra sao" mà chỉ chở những lần đúng
+    thì tự nó là chọn mẫu, và nó nói nhiều hơn về tác giả bảng so với về đối tượng. Claim
+    đã được phân định mà `ghi_truoc` không có `ket_qua` ⇒ chặn build: đó đúng là cửa để
+    một lần đổ lặng lẽ rơi khỏi bảng.
+    """
+    for c in claims:
+        g = c.get("ghi_truoc")
+        if not g:
+            continue
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(g.get("ngay", ""))):
+            raise LoiCong(f"{c['id']} ghi_truoc.ngay phải dạng YYYY-MM-DD — {o}")
+        if len(str(g.get("noi", "")).strip()) < 10:
+            raise LoiCong(f"{c['id']} ghi_truoc thiếu 'noi' — ghi trước ở đâu mà người khác "
+                          f"kiểm được? không nói ra thì nó không phải ghi trước — {o}")
+        if len(str(g.get("so", "")).strip()) < 20:
+            raise LoiCong(f"{c['id']} ghi_truoc thiếu 'so' (con số hoặc ngưỡng đã ghi) — {o}")
+        if c["status"] == "ĐANG ĐỨNG":
+            continue
+        for k, n in (("ket_qua", 20), ("ai_phan_dinh", 5)):
+            if len(str(g.get(k, "")).strip()) < n:
+                raise LoiCong(f"{c['id']} đã được phân định ({c['status']}) mà ghi_truoc thiếu "
+                              f"'{k}' — bảng ghi-trước chỉ chở lần đúng là chọn mẫu — {o}")
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(g.get("ngay_ket", ""))):
+            raise LoiCong(f"{c['id']} ghi_truoc.ngay_ket phải dạng YYYY-MM-DD — {o}")
 
 
 RE_NGAY_VAN = re.compile(r"\b\d{1,2}/\d{1,2}/\d{4}\b")
@@ -566,6 +595,9 @@ ul.diem .tick{{font:600 10.5px/1.7 var(--mono);letter-spacing:.08em;text-transfo
   white-space:nowrap}}
 ul.diem .tick.xac,ul.diem .tick.bac{{color:var(--accent)}}
 ul.diem .tick.sua{{color:var(--muted)}}
+.dan-gt{{margin:14px 0 0;font-size:15px}}
+.claim .moc{{font:500 12.5px/1.7 var(--mono);color:var(--muted);letter-spacing:.03em}}
+.tro{{margin:12px 0 0;font:500 12.5px/1.6 var(--mono)}}
 ul.han{{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}}
 ul.han li{{padding:13px 0;border-top:1px solid var(--line);font-size:15px}}
 ul.han li:last-child{{border-bottom:1px solid var(--line)}}
@@ -890,6 +922,52 @@ def sap_phan_dinh(moi: list) -> str:
             f'<ul class="han">{hang}</ul>')
 
 
+def vn_ngay(iso: str) -> str:
+    return f"{iso[8:10]}/{iso[5:7]}/{iso[0:4]}"
+
+
+def trang_ghi_truoc(moi: list) -> str:
+    """Trang riêng: mọi lần desk ghi trước một con số hoặc một ngưỡng, và kết quả.
+
+    Đây là thứ khó làm giả nhất mà desk có: một con số dán công khai TRƯỚC khi biết đáp án.
+    Điều kiện để bảng có nghĩa là nó chở CẢ ba trạng thái — thắng, đổ, và đang chờ. Bảng
+    chỉ chở lần đúng thì nói về tác giả bảng, không nói về đối tượng.
+    """
+    co = sorted(((c["ghi_truoc"]["ngay"], s, t, c) for s, t, c in moi if c.get("ghi_truoc")),
+                key=lambda x: x[0], reverse=True)
+    xong = [x for x in co if x[3]["status"] != "ĐANG ĐỨNG"]
+    cho = [x for x in co if x[3]["status"] == "ĐANG ĐỨNG"]
+    hang = []
+    for ngay, sl, tieu, c in co:
+        g, cls = c["ghi_truoc"], TRANG_THAI[c["status"]][0]
+        dang = c["status"] != "ĐANG ĐỨNG"
+        moc = (f'{vn_ngay(ngay)} &nbsp;→&nbsp; {vn_ngay(g["ngay_ket"])}' if dang
+               else f'{vn_ngay(ngay)} &nbsp;→&nbsp; '
+                    + (f'hạn {vn_ngay(c["han"])}' if c.get("han") else "chưa có hạn"))
+        kq = (f'<p class="dong bac"><span class="nhan">KẾT QUẢ · {ihtml.escape(g["ai_phan_dinh"])}</span>'
+              f'{ihtml.escape(g["ket_qua"])}</p>' if dang else
+              '<p class="dong"><span class="nhan">CHƯA CÓ KẾT QUẢ</span>'
+              'Dòng này nằm đây từ trước khi biết đáp án. Tới hạn thì nó có kết quả, '
+              'dù kết quả là tôi sai.</p>')
+        hang.append(f"""<article class="claim {cls}">
+  <h3><span class="chip {cls}">{c['status'] if dang else 'ĐANG CHỜ'}</span>
+      <span class="moc">{moc}</span></h3>
+  <p class="dong"><span class="nhan">TÔI GHI TRƯỚC</span>{ihtml.escape(g["so"])}</p>
+  <p class="dong"><span class="nhan">Ở ĐÂU</span>{ihtml.escape(g["noi"])}</p>
+  {kq}
+  <p class="tro"><a href="../bai/{sl}/#{c['id']}">{vn_ngay(sl[:10])}·{c['id']} — {ihtml.escape(tieu)}</a></p>
+</article>""")
+    return (f'<h1>Tôi ghi trước, rồi kết quả ra sao</h1>'
+            f'<div class="dem"><span class="to">{len(co)}</span> lần ghi trước &nbsp;·&nbsp; '
+            f'<b>{len(xong)}</b> đã có kết quả &nbsp;·&nbsp; <b>{len(cho)}</b> đang chờ</div>'
+            f'<p class="dan">Mỗi dòng dưới đây là một con số hoặc một ngưỡng tôi dán ra '
+            f'<b>trước khi biết đáp án</b>, kèm chỗ đã dán để người khác kiểm được ngày. '
+            f'Bảng này chở cả những lần tôi <b>sai</b> và cả những lần <b>chưa có kết quả</b> — '
+            f'nếu nó chỉ chở lần đúng thì nó nói về tôi, không nói về đối tượng. Bộ sinh trang '
+            f'chặn build nếu một dòng đã được phân định mà thiếu kết quả.</p>'
+            f'<section class="so">{"".join(hang)}</section>')
+
+
 def dai_trang_thai(claims: list, doc_lai: str) -> str:
     """Màn hình đầu tiên. Người bấm vào từ X/TG đã đọc bài rồi — thứ họ chưa biết là
     claim giờ còn đứng không. Trả lời trước, bài để sau."""
@@ -963,6 +1041,7 @@ def main() -> None:
         cong_cau_truc(fm, body_md, claims, o)
         cong_do_lai(claims, o)
         cong_han(claims, o)
+        cong_ghi_truoc(claims, o)
 
         slug_ = md_path.stem
         # 🔴 THỨ TỰ TRANG LÀ CÓ CHỦ Ý, đừng đảo lại: sổ claim ĐỨNG TRƯỚC bài viết.
@@ -1002,6 +1081,7 @@ def main() -> None:
             moi_claim.append((slug_, fm["title"], c))
         print(f"  ✓ bai/{slug_}/  ·  {len(claims)} claim ({tom})")
 
+    gt = [c for _, _, c in moi_claim if c.get("ghi_truoc")]
     fm_i, body_i = front((CONTENT / "index.md").read_text(encoding="utf-8"), "content/index.md")
     cong_ngon_ngu(body_i, "content/index.md")
     cong_ngoi_xung(body_i, "content/index.md")
@@ -1010,7 +1090,10 @@ def main() -> None:
         f'<div class="s">{f["mau"]} {f["date"]} · {n} claim — {sg}</div></a>'
         for f, s, n, sg in bai)
     than_i = (f'<h1>{ihtml.escape(fm_i["tagline"])}</h1>' + render(body_i, "content/index.md")
-              + bang_diem(moi_claim) + sap_phan_dinh(moi_claim)
+              + bang_diem(moi_claim)
+              + ('<p class="dan-gt"><a href="ghi-truoc/">Xem đủ những lần tôi ghi trước một '
+                 'con số rồi đối chiếu kết quả →</a></p>' if gt else "")
+              + sap_phan_dinh(moi_claim)
               + f'<h2 id="bai">Bài</h2>{ds}')
     if not 60 <= len(fm_i.get("mo_ta", "").strip()) <= 200:
         raise LoiCong("content/index.md thiếu 'mo_ta' 60–200 ký tự — trang chủ là chỗ "
@@ -1021,12 +1104,28 @@ def main() -> None:
                     "loai": "website", "tieu_de_og": "BlockPinned — số nào cũng truy ngược được"}),
         encoding="utf-8")
 
+    # trang /ghi-truoc/ — thứ khó làm giả nhất desk có, nên nó được một URL riêng để dán
+    if gt:
+        d_gt = OUT / "ghi-truoc"
+        d_gt.mkdir(parents=True, exist_ok=True)
+        (d_gt / "index.html").write_text(trang(
+            "Tôi ghi trước, rồi kết quả ra sao — BlockPinned", trang_ghi_truoc(moi_claim), t, "..",
+            meta={"mo_ta": "Mọi lần BlockPinned dán một con số hoặc một ngưỡng ra công khai "
+                           "trước khi biết đáp án, kèm kết quả — cả những lần sai và những "
+                           "lần chưa có kết quả.",
+                  "duong": "/ghi-truoc/", "anh": "post01-card.png", "loai": "website",
+                  "tieu_de_og": "Tôi ghi trước, rồi kết quả ra sao"}), encoding="utf-8")
+        print(f"  ✓ ghi-truoc/  ·  {len(gt)} lần ghi trước")
+
     # ── sitemap + robots: điều kiện để máy tìm THẤY trang ────────────────────────
     # Thiếu hai file này thì site vẫn sống, chỉ là không ai tìm ra — đúng loại hỏng
     # KHÔNG báo lỗi. lastmod lấy từ ngày bài, không lấy giờ chạy, để hai lần dựng cùng
     # nội dung ra cùng một byte (dựng không tất định thì mọi phép so bản chép vô nghĩa).
     ngay_moi = max(f["date"] for f, *_ in bai)
-    loc = [(BASE + "/", ngay_moi)] + [(f"{BASE}/bai/{s}/", f["date"]) for f, s, *_ in bai]
+    loc = [(BASE + "/", ngay_moi)]
+    if gt:
+        loc.append((f"{BASE}/ghi-truoc/", ngay_moi))
+    loc += [(f"{BASE}/bai/{s}/", f["date"]) for f, s, *_ in bai]
     (OUT / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'

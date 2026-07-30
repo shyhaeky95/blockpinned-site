@@ -44,7 +44,12 @@
         "so_ghim": 0
       },
       "han": "2026-09-18",
-      "han_ghi": "Nếu CMv2 vẫn dưới 1% tổng balance module, BlockPinned hạ mức ưu tiên theo dõi chủ đề này trong 2026. Đây là quyết định biên tập, không bác snapshot tại block đo."
+      "han_ghi": "Nếu CMv2 vẫn dưới 1% tổng balance module, BlockPinned hạ mức ưu tiên theo dõi chủ đề này trong 2026. Đây là quyết định biên tập, không bác snapshot tại block đo.",
+      "ghi_truoc": {
+        "ngay": "2026-07-29",
+        "noi": "in kèm chính bài",
+        "so": "ngưỡng: tới 18/09/2026 CMv2 vẫn dưới 1% tổng balance module ⇒ hạ mức ưu tiên theo dõi"
+      }
     },
     {
       "id": "C3",
