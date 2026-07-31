@@ -142,7 +142,7 @@ BODY_FONT = "Be Vietnam Pro"
 
 # Tên các họ cổng — dùng cho dòng in ra, và là chỗ DUY NHẤT đếm chúng.
 TEN_CONG = ["ngôn ngữ", "cấu trúc", "claim", "ngôi xưng", "đánh dấu",
-            "thuộc tính số", "xem trước", "đo lại", "hạn", "ghi trước"]
+            "thuộc tính số", "xem trước", "đo lại", "hạn", "ghi trước", "liên kết"]
 
 # chữ ký hàm hợp lệ: tên + danh sách kiểu, vd `balanceOf(address)` · `x()` · `f(uint256,address)`
 RE_KY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*\((|[a-z0-9\[\],]+)\)$")
@@ -627,6 +627,7 @@ button.dolai[disabled]{{opacity:.55;cursor:progress}}
 .ketqua.khop{{border-left-color:var(--accent)}}
 .ketqua.lech{{border-left-color:var(--accent)}}
 .ketqua.loi{{border-left-color:var(--ink)}}
+.nk .nguon-tro{{opacity:.72;font-size:.92em;font-style:italic}}
 .ketqua .nguon{{display:block;font-size:11px;opacity:.75;margin-top:3px}}
 .dong.khongdo{{border-left:3px solid var(--line);padding:9px 12px;margin-top:13px;
   font-size:14px;color:var(--muted)}}
@@ -851,6 +852,48 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
 """
 
 
+def nguon_html(n) -> str:
+    """Trường `nguon` của một dòng nhật ký → HTML.
+
+    🔴 Xác 31/07/2026, người phản biện NGOÀI bắt trên bản đã publish: bản cũ nhét
+    thẳng `nguon` vào `href`. Với bài #1–#6 nó vô hại vì `nguon` luôn là URL thật.
+    Bài #7 là bài đầu tiên trỏ vào ĐƯỜNG DẪN FILE trong repo ⇒ sinh ra
+    `<a href="PENDLE/data/….json">` — URL tương đối, live trả **404**, cả 5 dòng.
+    Nhánh xử lý này chưa từng bị chạm suốt 6 bài, nên 6 lần build sạch KHÔNG chứng
+    minh gì cả (`RULES.md §2`: control chỉ là control khi nó CÓ THỂ fail).
+
+    Sửa: chỉ thứ nào là URL tuyệt đối mới thành liên kết; còn lại in ra dạng CHỮ, để
+    người đọc thấy đó là con trỏ hồ sơ chứ không phải một cái link hứa suông. Không
+    cấm trỏ vào file nội bộ — cấm PHÁT RA một href không tới đâu.
+    """
+    if not n:
+        return ""
+    s = str(n).strip()
+    if re.fullmatch(r"https?://\S+", s):
+        return f' <a href="{ihtml.escape(s, quote=True)}">nguồn</a>'
+    return f' <span class="nguon-tro">nguồn: {ihtml.escape(s)}</span>'
+
+
+def cong_lien_ket(txt: str, o: str, goc: pathlib.Path, tep: pathlib.Path) -> None:
+    """Cổng 11 — mọi `href` NỘI BỘ sinh ra phải trỏ tới thứ có thật trong `out/`.
+
+    Cổng 6 đã gọi đúng tên lớp lỗi này — *"trình duyệt bỏ qua thuộc tính sai trong im
+    lặng, đúng loại lỗi tệ nhất"* — nhưng phạm vi nó đặt ở thuộc tính SỐ. `href` là
+    cùng lớp, lệch đúng một loại trường, và lỗ đó tốn 5 liên kết 404 trên bài #7.
+    Cổng này đóng phần còn lại: liên kết ngoài thì không đụng (không gọi mạng lúc
+    build), liên kết trong thì phải giải được ra một file hoặc một thư mục có index.
+    """
+    for m in re.finditer(r'href="([^"]+)"', txt):
+        h = ihtml.unescape(m.group(1)).strip()
+        if not h or h.startswith(("#", "http://", "https://", "mailto:", "data:")):
+            continue
+        dich = (goc / h.lstrip("/")) if h.startswith("/") else (tep.parent / h)
+        dich = dich.split("#")[0] if isinstance(dich, str) else pathlib.Path(str(dich).split("#")[0])
+        if dich.is_file() or (dich / "index.html").is_file():
+            continue
+        raise LoiCong(f'href nội bộ không tới đâu: "{h}" — {o}')
+
+
 def so_claim(claims: list) -> str:
     out = ['<section class="so"><h2 id="so-claim">Sổ claim</h2>',
            '<p class="dan">Mỗi khẳng định của bài này một dòng, kèm điều gì sẽ bác bỏ nó. '
@@ -859,7 +902,7 @@ def so_claim(claims: list) -> str:
         cls, _ = TRANG_THAI[c["status"]]
         nk = "".join(
             f'<li><span class="d">{e["ngay"]}</span>{ihtml.escape(e["ghi"])}'
-            + (f' <a href="{e["nguon"]}">nguồn</a>' if e.get("nguon") else "")
+            + nguon_html(e.get("nguon"))
             + "</li>" for e in c["log"])
         hinh = (f'<figure class="hinh">{ve_thang(c["thang_do"])}'
                 f'<figcaption>{ihtml.escape(c["thang_do"]["nhan"])}</figcaption></figure>'
@@ -1154,12 +1197,21 @@ def main() -> None:
     (OUT / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap.xml\n", encoding="utf-8")
 
+    # 🔴 Xác 31/07/2026: hai file này KHÔNG do build sinh ra, nhưng `--out` bị dọn sạch
+    # mỗi lần dựng ⇒ mọi lần build đều XOÁ chúng, im lặng. `CNAME` mất là mất tên miền
+    # blockpinned.com; `.nojekyll` mất là GitHub Pages bật Jekyll và nuốt mọi thư mục
+    # bắt đầu bằng dấu gạch dưới. Lần này bắt được ở bước xem `git status` TRƯỚC khi
+    # push, không nhờ cổng nào ⇒ sinh chúng ở đây để không phải bắt bằng mắt lần nữa.
+    (OUT / "CNAME").write_text(BASE.split("//")[1] + "\n", encoding="utf-8")
+    (OUT / ".nojekyll").write_text("", encoding="utf-8")
+
     # cổng 1 + 4 chạy LẠI trên HTML đã sinh: nếu khuôn tự nhét chữ cấm thì phải bắt
     for f in OUT.rglob("*.html"):
         txt = f.read_text(encoding="utf-8")
         cong_ngon_ngu(txt, str(f.relative_to(OUT)))
         cong_ngoi_xung(txt, str(f.relative_to(OUT)))
         cong_danh_dau(txt, str(f.relative_to(OUT)))
+        cong_lien_ket(txt, str(f.relative_to(OUT)), OUT, f)
 
     # Đếm cổng lấy từ chính danh sách, không gõ tay: bản cũ ghi cứng "6/6" và nó thành
     # sai ngay lần thêm cổng thứ bảy — cùng họ "một con số viết ra rồi không ai đếm lại".

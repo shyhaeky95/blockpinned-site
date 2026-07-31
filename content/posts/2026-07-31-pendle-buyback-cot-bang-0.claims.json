@@ -46,9 +46,9 @@
     },
     {
       "id": "C3",
-      "text": "Nhánh chuyển từ hợp đồng buyback sang sPendle có đúng 12 lượt tính từ block 0, và danh sách đã cạn chứ không phải trang đầu của một danh sách dài hơn. Khoảng cách giữa các lượt là 11,5 đến 17,1 ngày, trung vị 14,0.",
+      "text": "Nhánh chuyển từ hợp đồng buyback sang sPendle có đúng 12 lượt tính từ block 0, và danh sách đã cạn chứ không phải trang đầu của một danh sách dài hơn. Khoảng cách giữa các lượt là 11,473 đến 17,121 ngày, trung vị 13,924, trung bình 14,021.",
       "status": "ĐANG ĐỨNG",
-      "ghim": "12 lượt từ block 24.447.170 (13/02) tới block 25.553.407 (17/07), tổng 2.242.951,379862 PENDLE · truy vấn trang kế tiếp trả 0 kết quả ở cả cỡ trang 1.000 lẫn 50",
+      "ghim": "12 lượt từ block 24.447.170 (13/02) tới block 25.553.407 (17/07), tổng 2.242.951,379862 PENDLE · truy vấn trang kế tiếp trả 0 kết quả ở cả cỡ trang 1.000 lẫn 50 · 11 khoảng tính từ timestamp của chính 12 lượt, không từ nhãn ngày; 9/11 khoảng nằm trong 13,4–14,5 ngày",
       "falsifier": "Quét lại log Transfer của PENDLE với người gửi là hợp đồng buyback và người nhận là sPendle, từ block 0, rồi xin trang thứ hai. Nếu trang hai trả về bất kỳ bản ghi nào, hoặc nếu tổng số lượt khác 12, thì danh sách này chưa cạn và mọi phát biểu về nhịp dựng trên nó phải viết lại.",
       "khong_do_lai": "Đây là một truy vấn log trên toàn bộ lịch sử chain, không phải một lời gọi hàm trả về một giá trị, nên nút đo lại trên trình duyệt không chạy được cho claim này.",
       "log": [
@@ -56,6 +56,11 @@
           "ngay": "2026-07-31",
           "ghi": "Đăng. Vế 'đã cạn' được kiểm bằng cách xin trang thứ hai thật, ở hai cỡ trang khác nhau, thay vì suy từ việc số kết quả nhỏ hơn giới hạn một trang.",
           "nguon": "PENDLE/data/pendle_buyback_unit_2026-07-31.json"
+        },
+        {
+          "ngay": "2026-07-31",
+          "ghi": "Sửa một nhãn sai. Bản đăng ghi 'trung vị 14,0'; tính lại 11 khoảng từ timestamp cho trung vị 13,924, còn 14,021 là TRUNG BÌNH — con số có thật, tên gọi sai. Câu cũ còn trộn hai cơ sở đo: hai đầu dải 11,5–17,1 tính bằng timestamp trong khi 14,0 chỉ đúng nếu lấy trung vị theo ngày lịch bỏ giờ (khi đó dải phải là 11–17). Đính chính đã đăng công khai trên X trước khi tới hạn kiểm.",
+          "nguon": "https://x.com/blockpinned/status/2083111195654103262"
         }
       ]
     },
@@ -76,23 +81,28 @@
     },
     {
       "id": "C5",
-      "text": "Dự đoán ghi trước: lượt chuyển kế tiếp từ hợp đồng buyback sang sPendle sẽ xảy ra trước khi khoảng cách của kỳ này vượt 17,1 ngày — tức trước hết ngày 03/08/2026, và hạn kiểm là hết ngày 04/08.",
+      "text": "Dự đoán ghi trước: lượt chuyển kế tiếp từ hợp đồng buyback sang sPendle sẽ xảy ra trước khi khoảng của kỳ này vượt khoảng dài nhất đã đo (17 ngày 2 giờ 54 phút) — tức trước 01:42:47 ngày 04/08/2026 giờ VN, bằng 2026-08-03T18:42:47Z.",
       "status": "ĐANG ĐỨNG",
-      "ghim": "Biên 17,1 ngày là khoảng dài nhất trong 11 khoảng cách giữa 12 lượt chuyển từ 13/02 tới 17/07 · mốc đếm là lượt chuyển 17/07 tại block 25.553.407",
-      "han": "2026-08-04",
-      "han_ghi": "Hết ngày 04/08 phải đọc lại nhánh chuyển và đăng kết quả tại chính trang này, kể cả khi kết quả ngược với bài. Không có lượt chuyển nào thì dự đoán sai và phải ghi ra, không được để im.",
+      "ghim": "Mốc đếm là lượt chuyển 2026-07-17T15:48:47Z tại block 25.553.407 · biên là khoảng dài nhất trong 11 khoảng giữa 12 lượt (10/04 02:38:47Z → 27/04 05:32:47Z = 17 ngày 2 giờ 54 phút = 17,120833 ngày) · hạn kiểm là MỘT thời điểm, không phải một ngày",
+      "han": "2026-08-03",
+      "han_ghi": "Qua 2026-08-03T18:42:47Z (01:42:47 ngày 04/08 giờ VN) phải đọc lại nhánh chuyển và đăng kết quả tại chính trang này, kể cả khi kết quả ngược với bài. Không có lượt chuyển nào thì dự đoán sai và phải ghi ra, không được để im. Ô đếm ngược của trang chạy theo NGÀY nên nó tắt muộn hơn mốc thật khoảng 5 giờ; mốc có hiệu lực là thời điểm ghi trong claim, không phải ô đếm ngược.",
       "ghi_truoc": {
         "ngay": "2026-07-31",
-        "noi": "https://x.com/blockpinned/status/2083065438943244720 và trang này",
-        "so": "lượt chuyển kế tiếp xảy ra trước khi vượt biên 17,1 ngày tính từ 17/07, tức trước hết 03/08/2026; hạn kiểm 04/08/2026"
+        "noi": "https://x.com/blockpinned/status/2083065438943244720 (bản đầu, hai ngày) và https://x.com/blockpinned/status/2083111195654103262 (chốt lại thành một mốc, 31/07) và trang này",
+        "so": "lượt chuyển kế tiếp xảy ra trước 2026-08-03T18:42:47Z, tức trước 01:42:47 ngày 04/08/2026 giờ VN"
       },
-      "falsifier": "Hết ngày 04/08/2026, quét log Transfer của PENDLE với người gửi là hợp đồng buyback và người nhận là sPendle. Không có lượt nào thì dự đoán này sai. Điều đó CHƯA đủ để kết luận chương trình buyback đã dừng — nó chỉ nói kỳ này dài hơn mọi kỳ đã đo. Nếu trước lượt chuyển sang sPendle mà tổng PENDLE đi từ hợp đồng tới các đích khác đạt 144.388,02 thì giả thuyết 'số dư đang chờ chuyển sang sPendle' phải rút lại; chuyển một phần thì chưa xác nhận được gì và phải báo riêng lượng đã chuyển, lượng còn lại và đích nhận.",
+      "falsifier": "Sau 2026-08-03T18:42:47Z (01:42:47 ngày 04/08 giờ VN), quét log Transfer của PENDLE với người gửi là hợp đồng buyback và người nhận là sPendle. Không có lượt nào thì dự đoán này sai. Điều đó CHƯA đủ để kết luận chương trình buyback đã dừng — nó chỉ nói kỳ này dài hơn mọi kỳ đã đo. Nếu trước lượt chuyển sang sPendle mà tổng PENDLE đi từ hợp đồng tới các đích khác đạt 144.388,02 thì giả thuyết 'số dư đang chờ chuyển sang sPendle' phải rút lại; chuyển một phần thì chưa xác nhận được gì và phải báo riêng lượng đã chuyển, lượng còn lại và đích nhận.",
       "khong_do_lai": "Đây là một dự đoán về một sự kiện chưa xảy ra, nên không có giá trị nào để đọc lại từ trình duyệt cho tới khi tới hạn.",
       "log": [
         {
           "ngay": "2026-07-31",
           "ghi": "Ghi trước khi biết kết quả. Đăng lúc bridge lần 13 chưa xảy ra: sổ vẫn 12 lượt, và hợp đồng đang giữ 144.388,02 PENDLE chưa chuyển đi đâu.",
           "nguon": "PENDLE/FACTS.md F14d ⒜"
+        },
+        {
+          "ngay": "2026-07-31",
+          "ghi": "Thu hẹp hạn kiểm TRƯỚC khi tới hạn. Bản đăng chốt dự đoán bằng hai ngày khác nhau và không ngày nào có múi giờ — 'biên đó là 03/08' rồi 'hết ngày 04/08 thì dự đoán đã sai' — cộng lại tự cho thêm 22 giờ 17 phút về phía có lợi cho dự đoán. Mốc đúng tính từ timestamp của 12 lượt là 2026-08-03T18:42:47Z. Một tiêu chí bác bỏ phân xử sau khi tới hạn thì không còn là tiêu chí, nên sửa lúc còn ba ngày. Do một lượt phản biện ngoài trên bản đã đăng chỉ ra.",
+          "nguon": "https://x.com/blockpinned/status/2083111195654103262"
         }
       ]
     }

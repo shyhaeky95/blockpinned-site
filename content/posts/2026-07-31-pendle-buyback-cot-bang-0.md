@@ -40,7 +40,7 @@ Phần **17,56%** còn lại **chưa nối được bằng phép thử này**. N
 
 ## Còn ô 0 kia đang bỏ sót cái gì
 
-Đếm bước thứ hai từ block 0: endpoint trả về **12** lượt chuyển sang sPendle; truy vấn trang kế tiếp trả về **0** kết quả, thử ở cả cỡ trang 1.000 lẫn 50. Khoảng cách giữa các lần: **11,5–17,1 ngày**.
+Đếm bước thứ hai từ block 0: endpoint trả về **12** lượt chuyển sang sPendle; truy vấn trang kế tiếp trả về **0** kết quả, thử ở cả cỡ trang 1.000 lẫn 50. Khoảng cách giữa các lần: **11,473–17,121 ngày**, trung vị **13,924**, trung bình **14,021** — và **9 trên 11** khoảng nằm gọn trong dải 13,4 đến 14,5 ngày.
 
 | ngày | block | PENDLE | cách lần trước |
 |---|---|---|---|
@@ -75,11 +75,15 @@ Rộng hơn: cột buyback trên trang dữ liệu **không phải một đại 
 
 144.388,02 PENDLE đã vào hợp đồng và chưa chuyển sang sPendle trong cửa sổ đo. Nó **không** chứng minh lượt chuyển tiếp theo chắc chắn xảy ra — nên phải ghi trước, trước khi biết kết quả.
 
-## Dự đoán có hạn kiểm: 04/08
+## Dự đoán có hạn kiểm: 01:42:47 ngày 04/08 giờ VN
 
-Trong **11 khoảng cách** giữa 12 lượt chuyển từ 13/02 tới 17/07, khoảng dài nhất là **17,1 ngày**. Tính từ 17/07, biên đó là **03/08**.
+**Sửa 31/07, trước khi tới hạn.** Bản đăng đầu chốt mục này bằng **hai ngày khác nhau**, không ngày nào có múi giờ: *"biên đó là 03/08"* rồi *"hết ngày 04/08 … thì dự đoán đã sai"*. Cộng lại, hai ngày ấy nới hạn thêm **22 giờ 17 phút** về đúng phía có lợi cho dự đoán. Một tiêu chí bác bỏ phân xử **sau** khi tới hạn thì không còn là tiêu chí — nên nó được thay bằng một mốc duy nhất, có giây, trong khi còn ba ngày. Đính chính đã đăng công khai: [reply trên X](https://x.com/blockpinned/status/2083111195654103262).
 
-Hết ngày **04/08**, nếu không có PENDLE nào đi từ hợp đồng buyback sang sPendle, thì dự đoán *"kỳ này không vượt khoảng dài nhất đã đo"* đã sai. Điều đó **chưa đủ** để kết luận chương trình đã dừng — nó chỉ nói kỳ này dài hơn mọi kỳ trước.
+Trong **11 khoảng cách** giữa 12 lượt chuyển từ 13/02 tới 17/07, khoảng dài nhất là **17 ngày 2 giờ 54 phút** — con số "17,1 ngày" là dạng làm tròn của nó. Lượt chuyển gần nhất rơi vào **22:48:47 ngày 17/07 giờ VN** (15:48:47Z). Cộng vào:
+
+**01:42:47 ngày 04/08/2026 giờ VN, tức 2026-08-03T18:42:47Z.**
+
+Qua mốc đó, nếu không có PENDLE nào đi từ hợp đồng buyback sang sPendle, thì dự đoán *"khoảng của kỳ này không vượt khoảng dài nhất đã đo"* đã sai. Điều đó **chưa đủ** để kết luận chương trình đã dừng — nó chỉ nói kỳ này dài hơn mọi kỳ trước.
 
 Nếu trước lượt chuyển sang sPendle mà tổng PENDLE đi từ hợp đồng tới các đích **khác** đạt 144.388,02, thì giả thuyết *"số dư đang chờ chuyển sang sPendle"* phải rút lại. Chuyển **một phần** thì chưa xác nhận được gì — khi đó phải báo riêng lượng đã chuyển, lượng còn lại và đích nhận.
 
