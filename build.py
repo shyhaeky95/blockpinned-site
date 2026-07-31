@@ -129,6 +129,10 @@ NGUON_ASSET = {
     # ĐĂNG, mà builder chạy trước đó; `post06-card.png` trong template/out/png
     # đã bị bản #24 (user bác 30/07) chiếm chỗ.
     "card-uni-v4-incidence.png": "png",
+    # bài #7 — cùng quy ước đặt tên theo NỘI DUNG, không theo ordinal (lý do ở ghi
+    # chú bài #6 ngay trên). Ca này còn là bằng chứng thứ hai cho quy ước đó: ordinal
+    # bài #7 suýt phải đổi vì chân X bị dán nhầm bản nháp rồi xoá + đăng lại 31/07.
+    "card-pendle-buyback.png": "png",
 }
 
 # Thân bài LUÔN là Be Vietnam Pro ở cả hai hệ — đó là ràng buộc NGÔN NGỮ

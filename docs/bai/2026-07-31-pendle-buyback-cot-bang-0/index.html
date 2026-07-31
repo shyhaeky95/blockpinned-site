@@ -1,0 +1,362 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard báo buyback bằng 0, hợp đồng đang giữ 144.388 PENDLE — BlockPinned</title>
+<meta name="description" content="Cột buyback của Pendle trả 0 cho hai kỳ gần nhất. Trên chain, hợp đồng buyback giữ 144.388,02 PENDLE vào qua 65 giao dịch và chưa chuyển ra — hai con số nhìn hai chặng khác nhau.">
+<link rel="canonical" href="https://blockpinned.com/bai/2026-07-31-pendle-buyback-cot-bang-0/">
+<meta property="og:site_name" content="BlockPinned">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dashboard báo buyback bằng 0, hợp đồng đang giữ 144.388 PENDLE">
+<meta property="og:description" content="Cột buyback của Pendle trả 0 cho hai kỳ gần nhất. Trên chain, hợp đồng buyback giữ 144.388,02 PENDLE vào qua 65 giao dịch và chưa chuyển ra — hai con số nhìn hai chặng khác nhau.">
+<meta property="og:url" content="https://blockpinned.com/bai/2026-07-31-pendle-buyback-cot-bang-0/">
+<meta property="og:image" content="https://blockpinned.com/anh/card-pendle-buyback.png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1350">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Archivo:wght@600;700;800&family=Oswald:wght@500;600;700&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,650;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="icon" type="image/png" sizes="32x32" href="../../anh/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../anh/favicon-16.png">
+<style>
+/* ── TOKEN: đổi hệ = sửa ĐÚNG khối này. Nguồn gốc: template/build_cards.py (hệ đỏ
+   đang công khai) và template/reference/…Logo-Explorations (hệ verdigris đề xuất).
+   Hai bản có thể trôi lệch — đây là mối nối đã biết, không phải đã đồng bộ. ── */
+:root{
+  --paper:#ECE5D8; --ink:#26221C; --accent:#94382A;
+  --muted:#66604F; --line:#D9D1C2;
+  --display:'Marcellus',system-ui,sans-serif;
+  --body:'Be Vietnam Pro',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --dw:400; --gian-ten:.13em;
+}
+@media (prefers-color-scheme:dark){
+  /* 🔴 accent PHẢI đổi MÃ, không chỉ đảo paper/ink. Bản khai hệ cấm #94382A trên nền
+     tối — đo được 2,15:1, rớt cả ngưỡng 3,0 của đồ hoạ phi-văn-bản. Bản đầu của file
+     này đảo hai màu nền mà giữ nguyên accent, tức tự vi phạm đúng điều cấm ② trong
+     im lặng: không cổng nào của site nhìn tới cặp (màu, nền) ở chế độ tối. */
+  :root{ --paper:#26221C; --ink:#ECE5D8; --accent:#D26F60;
+          --line:#3D372E; --muted:#A79E8E; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.72;-webkit-text-size-adjust:100%}
+.khung{max-width:680px;margin:0 auto;padding:0 22px}
+a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);
+  text-underline-offset:3px;text-decoration-thickness:1.5px}
+a:hover{color:var(--accent)}
+/* URL dài trong bài (github.com/…/issues/8242) không có chỗ ngắt tự nhiên ⇒ nó
+   nong CẢ TRANG rộng ra và mọi thứ khác tràn theo. Đo được bằng preview.py --do-tran. */
+p,li,td,th,h1,h2,h3,figcaption{overflow-wrap:break-word}
+a,code{word-break:break-word}
+
+/* đầu trang: MARK chính thức nằm trong .mark (hằng số MARK_SVG), tô bằng var(--accent)
+   nên nó tự đổi mã theo nền — đó là cách duy nhất giữ được điều cấm ② của bản khai hệ */
+header.dau{border-bottom:1.5px solid var(--ink);margin-bottom:38px}
+.dau .khung{display:flex;align-items:center;gap:13px;padding-top:22px;padding-bottom:18px;flex-wrap:wrap}
+.mark{width:21px;height:21px;flex:none}
+.mark svg{display:block;width:100%;height:100%}
+.mark path{fill:var(--accent)}
+.ten{font:var(--dw) 20px/1 var(--display);letter-spacing:var(--gian-ten);text-decoration:none}
+.tag{font:500 11.5px/1 var(--mono);letter-spacing:.1em;color:var(--muted);margin-left:auto}
+@media(max-width:540px){.tag{margin-left:0;width:100%;order:3}}
+
+h1{font:var(--dw) clamp(27px,5.4vw,37px)/1.22 var(--display);letter-spacing:-.005em;margin:0 0 16px}
+h2{font:var(--dw) 22px/1.32 var(--display);letter-spacing:.005em;margin:44px 0 12px;
+  padding-top:14px;border-top:1.5px solid var(--line)}
+h3{font:600 16.5px/1.4 var(--body);margin:28px 0 8px}
+p{margin:0 0 17px}
+strong{font-weight:650}
+hr{border:0;border-top:1.5px solid var(--line);margin:34px 0}
+ul,ol{margin:0 0 17px;padding-left:21px} li{margin-bottom:7px}
+code{font:500 .875em var(--mono);background:color-mix(in srgb,var(--ink) 7%,transparent);
+  padding:.1em .35em;word-break:break-word}
+pre{background:color-mix(in srgb,var(--ink) 7%,transparent);padding:15px;overflow-x:auto;
+  border-left:3px solid var(--accent);margin:0 0 17px}
+pre code{background:none;padding:0;font-size:12.5px;line-height:1.62}
+
+.cuon{overflow-x:auto;margin:0 0 19px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:14.5px;min-width:100%}
+th,td{padding:8px 13px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1.5px solid var(--ink)}
+
+.meta{font:500 12.5px/1.65 var(--mono);color:var(--muted);margin:0 0 30px}
+.meta b{color:var(--ink);font-weight:600}
+
+/* ── SỔ CLAIM — thứ duy nhất trên trang được phép nổi ── */
+.so{margin:52px 0 0;padding-top:22px;border-top:3px solid var(--ink)}
+.so>p.dan{font-size:15px;color:var(--muted);margin-bottom:26px}
+.claim{border:1.5px solid var(--line);border-left:4px solid var(--accent);
+  padding:17px 19px;margin-bottom:15px;scroll-margin-top:20px}
+.claim.sua,.claim.bac,.claim.cho{border-left-color:var(--muted)}
+.claim.xac{border-left-width:7px}
+.claim h3{margin:0 0 9px;font:600 16px/1.5 var(--body)}
+.claim .id{font:600 12px var(--mono);color:var(--muted);text-decoration:none}
+.chip{display:inline-block;font:600 11px/1 var(--mono);letter-spacing:.09em;
+  padding:5px 9px;vertical-align:2px;margin-left:8px;white-space:nowrap}
+/* xac = đã bị thử và sống sót. Cùng nền accent với "đang đứng" (cả hai còn hiệu lực),
+   thêm viền ink để đọc ra "có hai bên cùng ký": desk đo, đối tượng tự tính lại.
+   🟡 Đây là xử lý TẠM cho tới vòng thiết kế thật — hình thức chưa qua ai duyệt. */
+.chip.xac{background:var(--accent);color:var(--paper);
+  border:1.5px solid var(--ink);padding:3.5px 7.5px}
+.chip.song{background:var(--accent);color:var(--paper)}
+.chip.sua{background:var(--ink);color:var(--paper)}
+.chip.bac{border:1.5px solid var(--ink);color:var(--ink);text-decoration:line-through}
+.chip.cho{border:1.5px dashed var(--muted);color:var(--muted)}
+.dong{font-size:14px;margin:11px 0 0;padding-left:13px;border-left:2px solid var(--line)}
+.dong .nhan{font:600 10.5px var(--mono);letter-spacing:.1em;color:var(--muted);
+  display:block;margin-bottom:3px}
+.nk{list-style:none;padding:0;margin:13px 0 0;font-size:14px}
+.nk li{padding:7px 0 7px 13px;border-left:2px solid var(--line);margin:0}
+.nk .d{font:600 11.5px var(--mono);color:var(--accent);margin-right:7px}
+
+/* ── DÃI TRẠNG THÁI — màn hình đầu tiên, thứ X/TG không có ── */
+.dai{border:2px solid var(--ink);padding:16px 18px;margin:0 0 30px}
+.dem{font:500 15px/1.5 var(--mono)}
+.dem .to{font:700 27px var(--mono);color:var(--accent);vertical-align:-3px;margin-right:2px}
+.dem b.song,.dem b.xac{color:var(--accent)}
+.khi{font:500 12px/1.6 var(--mono);color:var(--muted);margin-top:7px}
+.toi{display:inline-block;margin-top:12px;font:600 12.5px var(--mono);letter-spacing:.06em;
+  text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:2px}
+
+/* ── HÌNH: claim vẽ thành trục số. Sống được — refill hạ thì chấm di chuyển ── */
+.hinh{margin:17px 0 6px;padding:0}
+.thang .hang{margin-bottom:13px}
+.thang .nh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  font:500 12px/1.5 var(--mono);color:var(--muted);margin-bottom:4px}
+.thang .nh b{font:700 14px var(--mono);color:var(--ink);white-space:nowrap}
+.thang .ray{position:relative;height:15px;background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.thang .ray.tr{height:9px;background:none}
+.thang .cot{display:block;height:100%;background:var(--ink)}
+.thang .cot.toi{background:var(--accent)}
+/* cu = con số ĐÃ BỊ THAY nhưng không được xoá khỏi hình — người đọc phải thấy
+   cái thanh dài ngày trước đó, nếu không thì hình mất luôn phần đáng kể nhất */
+.thang .cot.cu{background:color-mix(in srgb,var(--ink) 22%,transparent)}
+.thang .vung{position:absolute;top:0;height:9px;background:var(--accent);
+  border-left:2px solid var(--accent);border-right:2px solid var(--accent);opacity:.45}
+.thang .nk2{margin:4px 0 0;font-size:11.5px}
+.thang .nk2 b{font-size:12px;color:var(--accent)}
+.hinh figcaption{font:500 11px/1.5 var(--mono);color:var(--muted);margin-top:8px;
+  padding-top:7px;border-top:1px solid var(--line)}
+
+/* điều-bác-bỏ là thứ khác biệt duy nhất của kênh này ⇒ nó phải là dòng NẶNG NHẤT
+   trong khối claim, không phải một đoạn văn thường như bản đầu */
+.dong.bac{border-left:3px solid var(--accent);
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  padding:9px 12px;margin-top:13px;font-size:14.5px}
+.dong.bac .nhan{color:var(--accent)}
+
+.dem .phu{font:500 12px/1.6 var(--mono);color:var(--muted);margin-top:7px;
+  text-transform:none;letter-spacing:0}
+ul.diem{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:0}
+ul.diem li{display:grid;grid-template-columns:auto 1fr;gap:0 12px;padding:11px 0;
+  border-top:1px solid var(--line);font-size:15px}
+ul.diem li:last-child{border-bottom:1px solid var(--line)}
+ul.diem .tick{font:600 10.5px/1.7 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid currentColor;border-radius:2px;padding:0 5px;height:fit-content;
+  white-space:nowrap}
+ul.diem .tick.xac,ul.diem .tick.bac{color:var(--accent)}
+ul.diem .tick.sua{color:var(--muted)}
+.dan-gt{margin:14px 0 0;font-size:15px}
+.claim .moc{font:500 12.5px/1.7 var(--mono);color:var(--muted);letter-spacing:.03em}
+.tro{margin:12px 0 0;font:500 12.5px/1.6 var(--mono)}
+ul.han{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+ul.han li{padding:13px 0;border-top:1px solid var(--line);font-size:15px}
+ul.han li:last-child{border-bottom:1px solid var(--line)}
+ul.han .ngay{font:600 12.5px/1.7 var(--mono);letter-spacing:.04em;color:var(--accent);
+  display:block;margin-bottom:3px}
+ul.han .con{font-weight:500;color:var(--muted);margin-left:9px}
+ul.han .con.qua{color:var(--accent);font-weight:600}
+.dolai-o{margin-top:13px;display:flex;flex-direction:column;gap:8px}
+button.dolai{align-self:flex-start;font:600 12.5px/1 var(--mono);letter-spacing:.06em;
+  color:var(--paper);background:var(--accent);border:0;border-radius:2px;
+  padding:9px 13px;cursor:pointer}
+button.dolai:hover{filter:brightness(1.08)}
+button.dolai:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+button.dolai[disabled]{opacity:.55;cursor:progress}
+.ketqua{font:500 12.5px/1.65 var(--mono);color:var(--muted);
+  border-left:2px solid var(--line);padding:2px 0 2px 10px}
+.ketqua b{color:var(--ink);font-weight:600}
+.ketqua.khop{border-left-color:var(--accent)}
+.ketqua.lech{border-left-color:var(--accent)}
+.ketqua.loi{border-left-color:var(--ink)}
+.ketqua .nguon{display:block;font-size:11px;opacity:.75;margin-top:3px}
+.dong.khongdo{border-left:3px solid var(--line);padding:9px 12px;margin-top:13px;
+  font-size:14px;color:var(--muted)}
+
+/* bài viết là THAM CHIẾU ở trang này — hạ nhẹ xuống, không tranh chỗ với sổ claim */
+.bandaydu{margin-top:56px;padding-top:6px;border-top:3px solid var(--ink)}
+.bandaydu h2{border-top:0;padding-top:0;margin-top:16px}
+
+footer{margin-top:64px;padding:22px 0 46px;border-top:1.5px solid var(--ink);
+  font:500 12px/1.75 var(--mono);color:var(--muted)}
+footer a{color:var(--muted)}
+.bai{display:block;padding:17px 0;border-bottom:1px solid var(--line);text-decoration:none}
+.bai .t{font:600 18.5px/1.4 var(--body);margin-bottom:5px}
+.bai .s{font:500 12px var(--mono);color:var(--muted)}
+</style></head><body>
+<header class="dau"><div class="khung">
+  <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
+  <a class="ten" href="../../">BLOCK·PINNED</a>
+  <span class="tag">SỐ NÀO CŨNG TRUY NGƯỢC ĐƯỢC</span>
+</div></header>
+<main class="khung"><h1>Dashboard báo buyback bằng 0, hợp đồng đang giữ 144.388 PENDLE</h1><section class="dai">
+  <div class="dem"><span class="to">5</span> claim &nbsp;·&nbsp; <b class="song">5</b> đang đứng</div>
+  <div class="khi"></div>
+  <a class="toi" href="#so-claim">Xem sổ claim ↓</a>
+</section><section class="so"><h2 id="so-claim">Sổ claim</h2>
+<p class="dan">Mỗi khẳng định của bài này một dòng, kèm điều gì sẽ bác bỏ nó. Trạng thái đổi thì sửa tại đây, và ghi lại ngày. Không dòng nào bị xoá.</p>
+<article class="claim song" id="C1">
+  <h3><a class="id" href="#C1">C1</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Tại block 25.650.178, hợp đồng buyback của Pendle giữ 144.388,016375167975281387 PENDLE: 65 giao dịch đưa token vào kể từ ngay sau lượt chuyển ngày 17/07, 0 lượt chuyển ra, và số dư bằng đúng phần vào trừ phần ra tới wei.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum block 25.650.178 (2026-07-31T03:34:35Z) · cửa sổ đếm 25.553.408 → 25.650.178 · token PENDLE 0x808507121B80c02388fAd14726482e061B8da827 · hợp đồng buyback 0x9e08C5499F953C6297a7755bcbcED383B606896b</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Đếm lại log Transfer của PENDLE với đích là hợp đồng buyback trong đúng cửa sổ 25.553.408 → 25.650.178, rồi hỏi balanceOf tại block 25.650.178. Nếu số lượt khác 65, hoặc tổng khác 144.388,016375167975281387, hoặc số dư không bằng vào trừ ra, thì claim này sai và tôi kiểm lại phía mình trước. Nếu xuất hiện bất kỳ lượt chuyển RA nào trong cửa sổ đó thì vế &#x27;0 lượt ra&#x27; chết.</p>
+  <div class="dolai-o"><button class="dolai" type="button" data-to="0x808507121B80c02388fAd14726482e061B8da827" data-data="0x70a082310000000000000000000000009e08c5499f953c6297a7755bcbced383b606896b" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="18" data-chu-so="2" data-don-vi="PENDLE" data-ghim="144388.02">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>balanceOf(address)</code> trên <code>0x80850712…a827</code></div></div>
+  <ul class="nk"><li><span class="d">2026-07-31</span>Đăng. Control chạy cùng lượt: bỏ lọc địa chỉ ra 442 log (không rỗng); đích bịa ra 0 log; và đếm lại đúng cửa sổ của lượt đo 30/07 tái lập chính xác 45 log vào, 0 ra, 97.667,665590 PENDLE — script tự dừng nếu ba số đó không trùng. <a href="blockpinned/data/verify_post07_2026-07-31.json — 9/9 PASS">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C2">
+  <h3><a class="id" href="#C2">C2</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Ít nhất 82,44% lượng PENDLE đó (119.039,606792 trên 144.388,016375) đến thẳng từ một lượt swap: token rời một địa chỉ vừa phát sự kiện swap rồi tới hợp đồng buyback trong chính giao dịch đó. Đây là con số sàn, không phải toàn phần.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>65 giao dịch riêng biệt trong cửa sổ 25.553.408 → 25.650.178 · 65/65 có ít nhất một sự kiện swap và có USDT đi ra khỏi hợp đồng · 378 sự kiện swap trên Uniswap v2, v3, v4 và Balancer · cùng một selector 0x8328af2f ở cả 65 giao dịch</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Nối từng sự kiện swap với log Transfer của PENDLE vào hợp đồng theo token, lượng và người nhận. Nếu có giao dịch mà PENDLE tới từ một transfer không liên quan tới swap nào trong cùng giao dịch, phần lượng đó phải bị trừ khỏi con số 82,44%. Ngược lại, mở rộng bộ lọc sang các loại sự kiện swap chưa nhận diện có thể nâng con số này lên — nên con số này là mức sàn ở cả hai chiều.</p>
+  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Phép nối này đọc toàn bộ receipt của 65 giao dịch rồi so từng cặp log, không phải một lời gọi hàm đơn lẻ nên không chạy được bằng một nút trên trình duyệt.</p>
+  <ul class="nk"><li><span class="d">2026-07-31</span>Đăng ở dạng con số sàn, sau ba vòng đo. Vòng 1 hỏi &#x27;địa chỉ gửi có tự phát sự kiện swap không&#x27; và trả 0/65 — sai bề rộng, vì sự kiện swap do pool phát còn người gửi là router. Vòng 2 ra 65/65 nhưng chỉ chứng minh ĐỒNG THỜI. Vòng 3 nối nhân quả và chỉ đóng được 82,44%, với 1/65 giao dịch nối kín hoàn toàn. Bản nháp trước đó gọi thẳng là &#x27;mua qua 65 giao dịch&#x27; — đã hạ. <a href="blockpinned/data/pendle_buy_source_2026-07-31.json và pendle_buy_tie_2026-07-31.json">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C3">
+  <h3><a class="id" href="#C3">C3</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Nhánh chuyển từ hợp đồng buyback sang sPendle có đúng 12 lượt tính từ block 0, và danh sách đã cạn chứ không phải trang đầu của một danh sách dài hơn. Khoảng cách giữa các lượt là 11,5 đến 17,1 ngày, trung vị 14,0.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>12 lượt từ block 24.447.170 (13/02) tới block 25.553.407 (17/07), tổng 2.242.951,379862 PENDLE · truy vấn trang kế tiếp trả 0 kết quả ở cả cỡ trang 1.000 lẫn 50</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Quét lại log Transfer của PENDLE với người gửi là hợp đồng buyback và người nhận là sPendle, từ block 0, rồi xin trang thứ hai. Nếu trang hai trả về bất kỳ bản ghi nào, hoặc nếu tổng số lượt khác 12, thì danh sách này chưa cạn và mọi phát biểu về nhịp dựng trên nó phải viết lại.</p>
+  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Đây là một truy vấn log trên toàn bộ lịch sử chain, không phải một lời gọi hàm trả về một giá trị, nên nút đo lại trên trình duyệt không chạy được cho claim này.</p>
+  <ul class="nk"><li><span class="d">2026-07-31</span>Đăng. Vế &#x27;đã cạn&#x27; được kiểm bằng cách xin trang thứ hai thật, ở hai cỡ trang khác nhau, thay vì suy từ việc số kết quả nhỏ hơn giới hạn một trang. <a href="PENDLE/data/pendle_buyback_unit_2026-07-31.json">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C4">
+  <h3><a class="id" href="#C4">C4</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Bảng lịch sử trên trang dữ liệu của Pendle có 12 ô: hai ô mới nhất bằng 0, chín ô ghép được với một lượt chuyển on-chain theo khối lượng, và một ô không ghép được với lượt nào. Trong chín cặp đã ghép, tính theo ngày UTC, ngày trên bảng đứng trước ngày chuyển 17 ngày ở tám cặp và 20 ngày ở một cặp.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Bảng đọc lúc 2026-07-31 03:34 UTC · ghép theo khối lượng với dung sai 2 PENDLE vì bảng hiển thị số làm tròn · ô lệch 20 ngày là nhãn 07/04 ứng lượt chuyển 27/04 · ô không ghép được là nhãn 24/02, giá trị 203.883,6461908</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Đọc lại endpoint và ghép lại theo cùng quy tắc. Nếu số ô ghép được khác chín, hoặc nếu độ lệch của bất kỳ cặp nào khác 17 và 20 ngày, thì claim này sai. Claim này KHÔNG phát biểu gì về cách trang dữ liệu tính ra các ô đó — một phép đo riêng đã cho thấy cột này là hỗn hợp nhiều nguồn, nên mọi câu dạng &#x27;cột đó đếm các lượt chuyển&#x27; đều nằm ngoài phạm vi và không được suy ra từ đây.</p>
+  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Vế này đối chiếu một endpoint ngoài chain với sổ chuyển on-chain, nên không quy về một lời gọi hợp đồng để bấm lại từ trình duyệt.</p>
+  <ul class="nk"><li><span class="d">2026-07-31</span>Đăng. Bản nháp trước đó viết &#x27;ổn định khoảng 17 ngày qua 11 kỳ&#x27; — con số thừa kế từ một phép đo cũ, chưa tự đếm lại. Đếm từng ô cho ra chín cặp, một ngoại lệ 20 ngày và một ô chưa giải thích được. Cũng đã bỏ một câu sai: bản nháp nói ô nhãn 30/06 trùng khối lượng lượt chuyển 149.086,56 sau khi làm tròn, nhưng 149.086,56 làm tròn ra 149.087, và phép đo cũ đã xếp ô đó khớp với một nguồn khác. <a href="PENDLE/FACTS.md F14d ⒟">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C5">
+  <h3><a class="id" href="#C5">C5</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Dự đoán ghi trước: lượt chuyển kế tiếp từ hợp đồng buyback sang sPendle sẽ xảy ra trước khi khoảng cách của kỳ này vượt 17,1 ngày — tức trước hết ngày 03/08/2026, và hạn kiểm là hết ngày 04/08.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Biên 17,1 ngày là khoảng dài nhất trong 11 khoảng cách giữa 12 lượt chuyển từ 13/02 tới 17/07 · mốc đếm là lượt chuyển 17/07 tại block 25.553.407</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Hết ngày 04/08/2026, quét log Transfer của PENDLE với người gửi là hợp đồng buyback và người nhận là sPendle. Không có lượt nào thì dự đoán này sai. Điều đó CHƯA đủ để kết luận chương trình buyback đã dừng — nó chỉ nói kỳ này dài hơn mọi kỳ đã đo. Nếu trước lượt chuyển sang sPendle mà tổng PENDLE đi từ hợp đồng tới các đích khác đạt 144.388,02 thì giả thuyết &#x27;số dư đang chờ chuyển sang sPendle&#x27; phải rút lại; chuyển một phần thì chưa xác nhận được gì và phải báo riêng lượng đã chuyển, lượng còn lại và đích nhận.</p>
+  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Đây là một dự đoán về một sự kiện chưa xảy ra, nên không có giá trị nào để đọc lại từ trình duyệt cho tới khi tới hạn.</p>
+  <ul class="nk"><li><span class="d">2026-07-31</span>Ghi trước khi biết kết quả. Đăng lúc bridge lần 13 chưa xảy ra: sổ vẫn 12 lượt, và hợp đồng đang giữ 144.388,02 PENDLE chưa chuyển đi đâu. <a href="PENDLE/FACTS.md F14d ⒜">nguồn</a></li></ul>
+</article></section><section class="bandaydu"><h2 id="ban-day-du">Bài đầy đủ</h2><p class="meta">🟡 2026-07-31 &nbsp;·&nbsp; GHIM TẠI Ethereum · block #25.650.178 (31/07/2026 03:34:35 UTC) · cửa sổ #25.553.408 → #25.650.178 · trang dữ liệu Pendle đọc cùng lúc &nbsp;·&nbsp; <a href="https://x.com/blockpinned/status/2083065438943244720">bản đăng trên X</a></p><p><strong>Trang dữ liệu của Pendle: buyback kỳ gần nhất = 0.</strong></p>
+<p><strong>Hợp đồng buyback trên chain: 144.388 PENDLE.</strong></p>
+<p>Hai con số này không mâu thuẫn. Chúng đang nhìn hai chặng khác nhau của cùng một đường tiền — và nếu chỉ đọc con số đầu, bạn sẽ kết luận sai về con số thứ hai.</p>
+<p>Đường tiền có hai bước: hợp đồng buyback gom PENDLE qua nhiều giao dịch nhỏ, rồi chuyển phần đã gom sang sPendle trong một giao dịch. Trong <strong>12 đợt</strong> đo được từ 13/02 tới 17/07, cả 12 đợt đều có cấu trúc đó.</p>
+<p>Cột trên trang dữ liệu phản ánh bước thứ hai. Bước thứ nhất thì không ai nhìn — nên đo nó.</p>
+<p>Tại block <strong>25.650.178</strong> (10h34 ngày 31/07, 03:34:35 UTC), cửa sổ từ block <strong>25.553.408</strong>, ngay sau lần chuyển gần nhất:</p>
+<ul><li><strong>65</strong> giao dịch đưa PENDLE vào hợp đồng — tổng <strong>144.388,016375</strong></li><li><strong>0</strong> lượt chuyển ra</li><li>số dư hợp đồng bằng đúng vào trừ ra, <strong>khớp tới wei</strong></li></ul>
+<h2 id="144-388-pendle-do-co-that-su-duoc-mua-khong">144.388 PENDLE đó có thật sự được mua không?</h2>
+<p>Token nằm trong ví không tự chứng minh nó được mua. Nên mở cả 65 giao dịch ra đọc: cả 65 đều gọi <strong>cùng một hàm</strong> của hợp đồng đó, đều có <strong>USDT đi ra</strong>, <strong>PENDLE đi vào</strong>, và ít nhất một <strong>sự kiện swap</strong> trong cùng giao dịch.</p>
+<p>Nhưng đồng thời chưa phải nhân quả. Nên nối thêm một bước: PENDLE rời một địa chỉ vừa phát sự kiện swap, rồi tới hợp đồng, trong chính giao dịch đó. Nối được <strong>119.039,61 PENDLE — 82,44%</strong>.</p>
+<p>Phần <strong>17,56%</strong> còn lại <strong>chưa nối được bằng phép thử này</strong>. Nhiều khả năng vì danh sách loại pool chưa phủ hết — log của các giao dịch này chứa ít nhất sáu topic AMM mà bộ lọc bốn loại không nhận diện được — nhưng &quot;nhiều khả năng&quot; không phải một phép đo. Nên con số đúng để nhớ là: <strong>ít nhất 82,44% lượng PENDLE này đến thẳng từ một lượt swap</strong> — con số sàn, không phải toàn phần.</p>
+<div class="cuon"><table><thead><tr><th>phép thử</th><th>hỏi gì</th><th>kết quả</th></tr></thead><tbody><tr><td>vòng 1</td><td>địa chỉ <strong>gửi</strong> token có tự phát sự kiện swap không</td><td><strong>0/65</strong> — hỏi sai chỗ: sự kiện swap do <strong>pool</strong> phát, người gửi là router</td></tr><tr><td>vòng 2</td><td>trong cùng giao dịch có swap không, hợp đồng có chi tài sản khác không</td><td><strong>65/65</strong> — nhưng đây mới là <strong>đồng thời</strong></td></tr><tr><td>vòng 3</td><td>PENDLE có rời một địa chỉ vừa phát swap rồi tới hợp đồng không</td><td><strong>82,44%</strong> lượng · <strong>1/65</strong> giao dịch nối kín</td></tr></tbody></table></div>
+<h2 id="con-o-0-kia-dang-bo-sot-cai-gi">Còn ô 0 kia đang bỏ sót cái gì</h2>
+<p>Đếm bước thứ hai từ block 0: endpoint trả về <strong>12</strong> lượt chuyển sang sPendle; truy vấn trang kế tiếp trả về <strong>0</strong> kết quả, thử ở cả cỡ trang 1.000 lẫn 50. Khoảng cách giữa các lần: <strong>11,5–17,1 ngày</strong>.</p>
+<div class="cuon"><table><thead><tr><th>ngày</th><th>block</th><th>PENDLE</th><th>cách lần trước</th></tr></thead><tbody><tr><td>13/02</td><td>24.447.170</td><td>256.295,28</td><td>—</td></tr><tr><td>27/02</td><td>24.547.032</td><td>173.301,79</td><td>13,9</td></tr><tr><td>13/03</td><td>24.647.427</td><td>196.891,65</td><td>14,0</td></tr><tr><td>27/03</td><td>24.746.717</td><td>140.582,29</td><td>13,9</td></tr><tr><td>10/04</td><td>24.846.394</td><td>196.115,03</td><td>13,9</td></tr><tr><td>27/04</td><td>24.969.306</td><td>287.935,30</td><td><strong>17,1</strong></td></tr><tr><td>08/05</td><td>25.051.665</td><td>110.443,77</td><td><strong>11,5</strong></td></tr><tr><td>22/05</td><td>25.148.172</td><td>142.392,18</td><td>13,4</td></tr><tr><td>05/06</td><td>25.249.416</td><td>218.235,05</td><td>14,1</td></tr><tr><td>19/06</td><td>25.350.280</td><td>131.832,08</td><td>14,1</td></tr><tr><td>03/07</td><td>25.449.465</td><td>239.840,40</td><td>13,8</td></tr><tr><td>17/07</td><td>25.553.407</td><td>149.086,56</td><td>14,5</td></tr></tbody></table></div>
+<p>Bảng lịch sử trên trang dữ liệu cũng có <strong>12 ô</strong>. Hai ô mới nhất bằng 0. <strong>Chín</strong> ô ghép được với một lượt chuyển on-chain theo khối lượng. <strong>Một</strong> ô không ghép được với lượt nào — nhãn 24/02, giá trị 203.883,65; chỗ đó tôi chưa giải thích được, và ghi ra đây thay vì bỏ qua cho bảng đẹp.</p>
+<p>Trong chín cặp đã ghép, tính theo ngày UTC, ngày trên bảng đứng <strong>trước</strong> ngày chuyển <strong>17 ngày ở tám cặp, 20 ngày ở một cặp</strong>.</p>
+<p>Nếu kỳ này lệch như chín kỳ kia, nhãn <strong>14/07</strong> ứng với một lượt chuyển rơi vào <strong>31/07 đến 03/08</strong>. Vậy ô 0 chưa đủ để kết luận không có PENDLE đang chờ: tại block đo, hợp đồng vẫn giữ 144.388,02 và chưa chuyển đi đâu.</p>
+<p>Chu kỳ ngay trước có cùng chuỗi sự kiện: <strong>63</strong> giao dịch đưa PENDLE vào từ 14/07 tới 17/07, không lượt ra nào trong lúc gom, rồi <strong>một</strong> giao dịch chuyển toàn bộ phần đã gom sang sPendle — vào bằng ra, khớp tuyệt đối.</p>
+<h2 id="mot-cau-da-bi-chan-truoc-khi-len-bai">Một câu đã bị chặn trước khi lên bài</h2>
+<p>Bản nháp viết: <em>&quot;ô nhãn 30/06 hiển thị 149.086, trùng khối lượng lượt chuyển 149.086,56 ngày 17/07 sau khi làm tròn&quot;</em>. Hai chỗ sai. Thứ nhất, 149.086,56 làm tròn ra <strong>149.087</strong>. Thứ hai, một phép đo cũ đã xếp ô 30/06 là khớp với một nguồn <strong>khác</strong> — tổng của đợt phân phối theo Merkle, lệch 5,4e-8 — chứ không khớp lượt chuyển, vốn lệch 0,565.</p>
+<p>Rộng hơn: cột buyback trên trang dữ liệu <strong>không phải một đại lượng duy nhất</strong>. Đối chiếu 11 kỳ cho 5 kỳ gần nguồn Merkle, 2 kỳ gần lượt chuyển, 2 kỳ không phân định được. Nên bài này <strong>không</strong> nói cột đó &quot;đếm&quot; gì, và không dùng nó làm thước đo khối lượng. Nó chỉ dùng quan hệ <strong>ngày</strong>.</p>
+<h2 id="phep-do-dung-o-day">Phép đo dừng ở đây</h2>
+<p>144.388,02 PENDLE đã vào hợp đồng và chưa chuyển sang sPendle trong cửa sổ đo. Nó <strong>không</strong> chứng minh lượt chuyển tiếp theo chắc chắn xảy ra — nên phải ghi trước, trước khi biết kết quả.</p>
+<h2 id="du-doan-co-han-kiem-04-08">Dự đoán có hạn kiểm: 04/08</h2>
+<p>Trong <strong>11 khoảng cách</strong> giữa 12 lượt chuyển từ 13/02 tới 17/07, khoảng dài nhất là <strong>17,1 ngày</strong>. Tính từ 17/07, biên đó là <strong>03/08</strong>.</p>
+<p>Hết ngày <strong>04/08</strong>, nếu không có PENDLE nào đi từ hợp đồng buyback sang sPendle, thì dự đoán <em>&quot;kỳ này không vượt khoảng dài nhất đã đo&quot;</em> đã sai. Điều đó <strong>chưa đủ</strong> để kết luận chương trình đã dừng — nó chỉ nói kỳ này dài hơn mọi kỳ trước.</p>
+<p>Nếu trước lượt chuyển sang sPendle mà tổng PENDLE đi từ hợp đồng tới các đích <strong>khác</strong> đạt 144.388,02, thì giả thuyết <em>&quot;số dư đang chờ chuyển sang sPendle&quot;</em> phải rút lại. Chuyển <strong>một phần</strong> thì chưa xác nhận được gì — khi đó phải báo riêng lượng đã chuyển, lượng còn lại và đích nhận.</p>
+<p>Tới hạn, kết quả đăng tại đúng trang này, kể cả khi nó ngược với bài.</p>
+<h2 id="cach-tu-kiem-lai">Cách tự kiểm lại</h2>
+<p>Ba địa chỉ:</p>
+<div class="cuon"><table><thead><tr><th>vai</th><th>địa chỉ</th></tr></thead><tbody><tr><td>token PENDLE</td><td><code>0x808507121B80c02388fAd14726482e061B8da827</code></td></tr><tr><td>hợp đồng buyback</td><td><code>0x9e08C5499F953C6297a7755bcbcED383B606896b</code></td></tr><tr><td>sPendle</td><td><code>0x999999999991E178D52Cd95AFd4b00d066664144</code></td></tr></tbody></table></div>
+<ul><li>Mở endpoint dữ liệu sPENDLE của Pendle: trường tổng kết kỳ gần nhất đang là <strong>0</strong>, và hai ô mới nhất của bảng lịch sử — nhãn <strong>28/07</strong> và <strong>14/07</strong> — cũng là 0.</li><li>Lọc chuyển khoản của token PENDLE với đích là hợp đồng buyback, từ block <strong>25.553.408</strong> tới <strong>25.650.178</strong>. Cộng lại, rồi hỏi số dư hợp đồng. Ba con số phải khớp.</li><li>Mở bất kỳ giao dịch nào trong danh sách 65 sẽ thấy ít nhất một sự kiện swap, PENDLE vào hợp đồng và USDT ra khỏi hợp đồng, trong cùng giao dịch.</li></ul>
+<p>Ba cái bẫy công cụ gặp ngay trong lượt đo này, ghi ra để bạn không mất thời gian:</p>
+<ul><li>Endpoint của Pendle trả <strong>403</strong> với thư viện mặc định; phải đặt User-Agent trình duyệt. Code nuốt lỗi sẽ in ra bảng rỗng, và bảng rỗng đọc rất giống &quot;không có buyback nào&quot;.</li><li>Mảng lịch sử xếp <strong>mới trước</strong>. Lấy hai phần tử cuối là đọc hai kỳ <strong>cũ nhất</strong>.</li><li>Một nhà cung cấp RPC phổ biến chặn truy vấn log quá <strong>10 block</strong> ở gói miễn phí, và trả lỗi chứ không trả danh sách rỗng.</li></ul>
+<p>Phép đo neo vào <strong>địa chỉ</strong> hợp đồng. Cụm &quot;sPENDLE buyback contract&quot; chỉ là tên Pendle dùng trong tài liệu, không phải nhãn chain tự cung cấp.</p>
+<h2 id="ba-so-0-trong-bai-nay-va-khong-so-nao-noi-cai-no-co-ve-noi">Ba số 0 trong bài này, và không số nào nói cái nó có vẻ nói</h2>
+<p>Ngày 28/07, đọc đúng ô 0 đó, tôi suýt viết <em>&quot;buyback đã dừng thật&quot;</em>. Lần đo đầu của phần &quot;có phải mua không&quot; trả về <strong>0 swap</strong>, vì nó hỏi sai chỗ phát sự kiện. Và lượt nối cuối cùng trả về <strong>1/65</strong>, vì bộ lọc pool chưa đủ rộng.</p>
+<p>Cả ba số 0 đều đến từ giới hạn của câu hỏi, không từ Pendle. Bài này tồn tại vì cả ba đều bị kiểm lại trước khi thành kết luận.</p>
+<p>Không phải lời khuyên đầu tư. Các số tại block 25.650.178 là mốc cố định, không đổi khi có block mới; số dư hiện tại có thể khác ở các block sau, và dữ liệu trên endpoint có thể được Pendle cập nhật.</p></section></main>
+<footer><div class="khung">
+  Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá.<br>
+  Không phải lời khuyên đầu tư. ·
+  <a href="https://x.com/blockpinned">@blockpinned</a>
+</div></footer>
+<script>
+// Hai endpoint keyless, đo được 30/07 là cho phép trình duyệt gọi (CORS *). Gọi endpoint
+// thứ hai CHỈ khi cái đầu lỗi — 🔴 giới hạn nhịp là thật: một endpoint đã trả 429 ngay
+// lượt thứ ba khi thử. Vì vậy trang KHÔNG tự đo lúc mở; chỉ đo khi có người bấm.
+const RPC = ["https://ethereum-rpc.publicnode.com", "https://eth.drpc.org"];
+async function rpcGoi(ep, method, params) {
+  const r = await fetch(ep, {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({jsonrpc: "2.0", id: 1, method, params})});
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  const j = await r.json();
+  if (j.error) throw new Error(j.error.message || "lỗi RPC");
+  return j.result;
+}
+function chuoiSo(x, n) {
+  return x.toLocaleString("vi-VN", {minimumFractionDigits: n, maximumFractionDigits: n});
+}
+async function doLai(b) {
+  const o = b.dataset, ra = b.parentElement.querySelector(".ketqua");
+  b.disabled = true; ra.className = "ketqua dang"; ra.textContent = "đang đo…";
+  const loi = [];
+  for (const ep of RPC) {
+    try {
+      const blk = await rpcGoi(ep, "eth_blockNumber", []);              // ghim TRƯỚC
+      const kq = await rpcGoi(ep, "eth_call", [{to: o.to, data: o.data}, blk]);  // đọc TẠI block đó
+      const h = kq.slice(2), w = [];
+      for (let i = 0; i < h.length; i += 64) w.push(BigInt("0x" + h.slice(i, i + 64)));
+      const tu = Number(o.tu), sc = Number(o.chuSo), ghim = Number(o.ghim);
+      const v = o.chia === "" ? Number(w[tu]) / Math.pow(10, Number(o.thapPhan))
+                              : Number(w[tu]) / Number(w[Number(o.chia)]) * Number(o.nhan);
+      const doi = Math.abs(v - ghim) >= Math.pow(10, -sc) / 2;
+      ra.className = "ketqua " + (doi ? "lech" : "khop");
+      ra.innerHTML = "<b>" + chuoiSo(v, sc) + " " + o.donVi + "</b> tại block "
+        + BigInt(blk).toLocaleString("vi-VN") + " · đã ghim " + chuoiSo(ghim, sc) + " "
+        + o.donVi + " ⇒ <b>" + (doi ? "ĐÃ ĐỔI" : "KHÔNG ĐỔI") + "</b>"
+        + '<span class="nguon">đọc từ ' + ep.replace("https://", "") + "</span>";
+      b.disabled = false; return;
+    } catch (e) { loi.push(ep.replace("https://", "") + ": " + e.message); }
+  }
+  // 🔴 Không in số nào khi đo hỏng. Một số 0 ở đây là bằng chứng về CÔNG CỤ, không phải
+  // về chain — in nó ra là làm đúng cái lỗi mà mấy bài trên trang này đi bác.
+  ra.className = "ketqua loi";
+  ra.innerHTML = "<b>không đo được</b> — cả hai endpoint đều lỗi, nên trang không in số nào."
+    + '<span class="nguon">' + loi.join(" · ") + "</span>";
+  b.disabled = false;
+}
+// Đếm ngược tính ở TRÌNH DUYỆT, không lúc build: trang tĩnh không tự dựng lại mỗi ngày,
+// nên một con số "còn N ngày" nướng vào HTML sẽ nói dối từ hôm sau.
+document.querySelectorAll(".han .ngay[data-han]").forEach(function (e) {
+  const con = Math.ceil((new Date(e.dataset.han + "T23:59:59Z") - new Date()) / 86400000);
+  const p = document.createElement("span");
+  p.className = "con" + (con < 0 ? " qua" : "");
+  p.textContent = con < 0 ? "ĐÃ TỚI HẠN" : (con === 0 ? "hôm nay" : "còn " + con + " ngày");
+  e.appendChild(p);
+});
+document.querySelectorAll("button.dolai").forEach(function (b) {
+  b.addEventListener("click", function () { doLai(b); });
+});
+</script>
+</body></html>

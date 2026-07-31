@@ -1,0 +1,100 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Tại block 25.650.178, hợp đồng buyback của Pendle giữ 144.388,016375167975281387 PENDLE: 65 giao dịch đưa token vào kể từ ngay sau lượt chuyển ngày 17/07, 0 lượt chuyển ra, và số dư bằng đúng phần vào trừ phần ra tới wei.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ethereum block 25.650.178 (2026-07-31T03:34:35Z) · cửa sổ đếm 25.553.408 → 25.650.178 · token PENDLE 0x808507121B80c02388fAd14726482e061B8da827 · hợp đồng buyback 0x9e08C5499F953C6297a7755bcbcED383B606896b",
+      "falsifier": "Đếm lại log Transfer của PENDLE với đích là hợp đồng buyback trong đúng cửa sổ 25.553.408 → 25.650.178, rồi hỏi balanceOf tại block 25.650.178. Nếu số lượt khác 65, hoặc tổng khác 144.388,016375167975281387, hoặc số dư không bằng vào trừ ra, thì claim này sai và tôi kiểm lại phía mình trước. Nếu xuất hiện bất kỳ lượt chuyển RA nào trong cửa sổ đó thì vế '0 lượt ra' chết.",
+      "do_lai": {
+        "chain": "ethereum",
+        "to": "0x808507121B80c02388fAd14726482e061B8da827",
+        "ky": "balanceOf(address)",
+        "tham_so": [
+          "0x9e08C5499F953C6297a7755bcbcED383B606896b"
+        ],
+        "cong_thuc": {
+          "tu": 0,
+          "thap_phan": 18
+        },
+        "don_vi": "PENDLE",
+        "chu_so": 2,
+        "so_ghim": 144388.02
+      },
+      "log": [
+        {
+          "ngay": "2026-07-31",
+          "ghi": "Đăng. Control chạy cùng lượt: bỏ lọc địa chỉ ra 442 log (không rỗng); đích bịa ra 0 log; và đếm lại đúng cửa sổ của lượt đo 30/07 tái lập chính xác 45 log vào, 0 ra, 97.667,665590 PENDLE — script tự dừng nếu ba số đó không trùng.",
+          "nguon": "blockpinned/data/verify_post07_2026-07-31.json — 9/9 PASS"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "Ít nhất 82,44% lượng PENDLE đó (119.039,606792 trên 144.388,016375) đến thẳng từ một lượt swap: token rời một địa chỉ vừa phát sự kiện swap rồi tới hợp đồng buyback trong chính giao dịch đó. Đây là con số sàn, không phải toàn phần.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "65 giao dịch riêng biệt trong cửa sổ 25.553.408 → 25.650.178 · 65/65 có ít nhất một sự kiện swap và có USDT đi ra khỏi hợp đồng · 378 sự kiện swap trên Uniswap v2, v3, v4 và Balancer · cùng một selector 0x8328af2f ở cả 65 giao dịch",
+      "falsifier": "Nối từng sự kiện swap với log Transfer của PENDLE vào hợp đồng theo token, lượng và người nhận. Nếu có giao dịch mà PENDLE tới từ một transfer không liên quan tới swap nào trong cùng giao dịch, phần lượng đó phải bị trừ khỏi con số 82,44%. Ngược lại, mở rộng bộ lọc sang các loại sự kiện swap chưa nhận diện có thể nâng con số này lên — nên con số này là mức sàn ở cả hai chiều.",
+      "khong_do_lai": "Phép nối này đọc toàn bộ receipt của 65 giao dịch rồi so từng cặp log, không phải một lời gọi hàm đơn lẻ nên không chạy được bằng một nút trên trình duyệt.",
+      "log": [
+        {
+          "ngay": "2026-07-31",
+          "ghi": "Đăng ở dạng con số sàn, sau ba vòng đo. Vòng 1 hỏi 'địa chỉ gửi có tự phát sự kiện swap không' và trả 0/65 — sai bề rộng, vì sự kiện swap do pool phát còn người gửi là router. Vòng 2 ra 65/65 nhưng chỉ chứng minh ĐỒNG THỜI. Vòng 3 nối nhân quả và chỉ đóng được 82,44%, với 1/65 giao dịch nối kín hoàn toàn. Bản nháp trước đó gọi thẳng là 'mua qua 65 giao dịch' — đã hạ.",
+          "nguon": "blockpinned/data/pendle_buy_source_2026-07-31.json và pendle_buy_tie_2026-07-31.json"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "text": "Nhánh chuyển từ hợp đồng buyback sang sPendle có đúng 12 lượt tính từ block 0, và danh sách đã cạn chứ không phải trang đầu của một danh sách dài hơn. Khoảng cách giữa các lượt là 11,5 đến 17,1 ngày, trung vị 14,0.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "12 lượt từ block 24.447.170 (13/02) tới block 25.553.407 (17/07), tổng 2.242.951,379862 PENDLE · truy vấn trang kế tiếp trả 0 kết quả ở cả cỡ trang 1.000 lẫn 50",
+      "falsifier": "Quét lại log Transfer của PENDLE với người gửi là hợp đồng buyback và người nhận là sPendle, từ block 0, rồi xin trang thứ hai. Nếu trang hai trả về bất kỳ bản ghi nào, hoặc nếu tổng số lượt khác 12, thì danh sách này chưa cạn và mọi phát biểu về nhịp dựng trên nó phải viết lại.",
+      "khong_do_lai": "Đây là một truy vấn log trên toàn bộ lịch sử chain, không phải một lời gọi hàm trả về một giá trị, nên nút đo lại trên trình duyệt không chạy được cho claim này.",
+      "log": [
+        {
+          "ngay": "2026-07-31",
+          "ghi": "Đăng. Vế 'đã cạn' được kiểm bằng cách xin trang thứ hai thật, ở hai cỡ trang khác nhau, thay vì suy từ việc số kết quả nhỏ hơn giới hạn một trang.",
+          "nguon": "PENDLE/data/pendle_buyback_unit_2026-07-31.json"
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "text": "Bảng lịch sử trên trang dữ liệu của Pendle có 12 ô: hai ô mới nhất bằng 0, chín ô ghép được với một lượt chuyển on-chain theo khối lượng, và một ô không ghép được với lượt nào. Trong chín cặp đã ghép, tính theo ngày UTC, ngày trên bảng đứng trước ngày chuyển 17 ngày ở tám cặp và 20 ngày ở một cặp.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Bảng đọc lúc 2026-07-31 03:34 UTC · ghép theo khối lượng với dung sai 2 PENDLE vì bảng hiển thị số làm tròn · ô lệch 20 ngày là nhãn 07/04 ứng lượt chuyển 27/04 · ô không ghép được là nhãn 24/02, giá trị 203.883,6461908",
+      "falsifier": "Đọc lại endpoint và ghép lại theo cùng quy tắc. Nếu số ô ghép được khác chín, hoặc nếu độ lệch của bất kỳ cặp nào khác 17 và 20 ngày, thì claim này sai. Claim này KHÔNG phát biểu gì về cách trang dữ liệu tính ra các ô đó — một phép đo riêng đã cho thấy cột này là hỗn hợp nhiều nguồn, nên mọi câu dạng 'cột đó đếm các lượt chuyển' đều nằm ngoài phạm vi và không được suy ra từ đây.",
+      "khong_do_lai": "Vế này đối chiếu một endpoint ngoài chain với sổ chuyển on-chain, nên không quy về một lời gọi hợp đồng để bấm lại từ trình duyệt.",
+      "log": [
+        {
+          "ngay": "2026-07-31",
+          "ghi": "Đăng. Bản nháp trước đó viết 'ổn định khoảng 17 ngày qua 11 kỳ' — con số thừa kế từ một phép đo cũ, chưa tự đếm lại. Đếm từng ô cho ra chín cặp, một ngoại lệ 20 ngày và một ô chưa giải thích được. Cũng đã bỏ một câu sai: bản nháp nói ô nhãn 30/06 trùng khối lượng lượt chuyển 149.086,56 sau khi làm tròn, nhưng 149.086,56 làm tròn ra 149.087, và phép đo cũ đã xếp ô đó khớp với một nguồn khác.",
+          "nguon": "PENDLE/FACTS.md F14d ⒟"
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "text": "Dự đoán ghi trước: lượt chuyển kế tiếp từ hợp đồng buyback sang sPendle sẽ xảy ra trước khi khoảng cách của kỳ này vượt 17,1 ngày — tức trước hết ngày 03/08/2026, và hạn kiểm là hết ngày 04/08.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Biên 17,1 ngày là khoảng dài nhất trong 11 khoảng cách giữa 12 lượt chuyển từ 13/02 tới 17/07 · mốc đếm là lượt chuyển 17/07 tại block 25.553.407",
+      "han": "2026-08-04",
+      "han_ghi": "Hết ngày 04/08 phải đọc lại nhánh chuyển và đăng kết quả tại chính trang này, kể cả khi kết quả ngược với bài. Không có lượt chuyển nào thì dự đoán sai và phải ghi ra, không được để im.",
+      "ghi_truoc": {
+        "ngay": "2026-07-31",
+        "noi": "https://x.com/blockpinned/status/2083065438943244720 và trang này",
+        "so": "lượt chuyển kế tiếp xảy ra trước khi vượt biên 17,1 ngày tính từ 17/07, tức trước hết 03/08/2026; hạn kiểm 04/08/2026"
+      },
+      "falsifier": "Hết ngày 04/08/2026, quét log Transfer của PENDLE với người gửi là hợp đồng buyback và người nhận là sPendle. Không có lượt nào thì dự đoán này sai. Điều đó CHƯA đủ để kết luận chương trình buyback đã dừng — nó chỉ nói kỳ này dài hơn mọi kỳ đã đo. Nếu trước lượt chuyển sang sPendle mà tổng PENDLE đi từ hợp đồng tới các đích khác đạt 144.388,02 thì giả thuyết 'số dư đang chờ chuyển sang sPendle' phải rút lại; chuyển một phần thì chưa xác nhận được gì và phải báo riêng lượng đã chuyển, lượng còn lại và đích nhận.",
+      "khong_do_lai": "Đây là một dự đoán về một sự kiện chưa xảy ra, nên không có giá trị nào để đọc lại từ trình duyệt cho tới khi tới hạn.",
+      "log": [
+        {
+          "ngay": "2026-07-31",
+          "ghi": "Ghi trước khi biết kết quả. Đăng lúc bridge lần 13 chưa xảy ra: sổ vẫn 12 lượt, và hợp đồng đang giữ 144.388,02 PENDLE chưa chuyển đi đâu.",
+          "nguon": "PENDLE/FACTS.md F14d ⒜"
+        }
+      ]
+    }
+  ]
+}
