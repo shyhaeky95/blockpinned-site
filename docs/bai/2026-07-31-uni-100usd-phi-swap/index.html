@@ -1,0 +1,350 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mỗi $100 phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64 — BlockPinned</title>
+<meta name="description" content="Đo trọn một ngày UTC trên Robinhood Chain: mỗi $100 phí swap thì $85,36 ở lại với người cấp thanh khoản, $14,64 về giao thức. Và v4 lấy tỷ lệ thấp nhất trong ba phiên bản.">
+<link rel="canonical" href="https://blockpinned.com/bai/2026-07-31-uni-100usd-phi-swap/">
+<meta property="og:site_name" content="BlockPinned">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mỗi $100 phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64">
+<meta property="og:description" content="Đo trọn một ngày UTC trên Robinhood Chain: mỗi $100 phí swap thì $85,36 ở lại với người cấp thanh khoản, $14,64 về giao thức. Và v4 lấy tỷ lệ thấp nhất trong ba phiên bản.">
+<meta property="og:url" content="https://blockpinned.com/bai/2026-07-31-uni-100usd-phi-swap/">
+<meta property="og:image" content="https://blockpinned.com/anh/card-uni-100usd.png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1350">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Archivo:wght@600;700;800&family=Oswald:wght@500;600;700&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,650;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="icon" type="image/png" sizes="32x32" href="../../anh/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../anh/favicon-16.png">
+<style>
+/* ── TOKEN: đổi hệ = sửa ĐÚNG khối này. Nguồn gốc: template/build_cards.py (hệ đỏ
+   đang công khai) và template/reference/…Logo-Explorations (hệ verdigris đề xuất).
+   Hai bản có thể trôi lệch — đây là mối nối đã biết, không phải đã đồng bộ. ── */
+:root{
+  --paper:#ECE5D8; --ink:#26221C; --accent:#94382A;
+  --muted:#66604F; --line:#D9D1C2;
+  --display:'Marcellus',system-ui,sans-serif;
+  --body:'Be Vietnam Pro',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --dw:400; --gian-ten:.13em;
+}
+@media (prefers-color-scheme:dark){
+  /* 🔴 accent PHẢI đổi MÃ, không chỉ đảo paper/ink. Bản khai hệ cấm #94382A trên nền
+     tối — đo được 2,15:1, rớt cả ngưỡng 3,0 của đồ hoạ phi-văn-bản. Bản đầu của file
+     này đảo hai màu nền mà giữ nguyên accent, tức tự vi phạm đúng điều cấm ② trong
+     im lặng: không cổng nào của site nhìn tới cặp (màu, nền) ở chế độ tối. */
+  :root{ --paper:#26221C; --ink:#ECE5D8; --accent:#D26F60;
+          --line:#3D372E; --muted:#A79E8E; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.72;-webkit-text-size-adjust:100%}
+.khung{max-width:680px;margin:0 auto;padding:0 22px}
+a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);
+  text-underline-offset:3px;text-decoration-thickness:1.5px}
+a:hover{color:var(--accent)}
+/* URL dài trong bài (github.com/…/issues/8242) không có chỗ ngắt tự nhiên ⇒ nó
+   nong CẢ TRANG rộng ra và mọi thứ khác tràn theo. Đo được bằng preview.py --do-tran. */
+p,li,td,th,h1,h2,h3,figcaption{overflow-wrap:break-word}
+a,code{word-break:break-word}
+
+/* đầu trang: MARK chính thức nằm trong .mark (hằng số MARK_SVG), tô bằng var(--accent)
+   nên nó tự đổi mã theo nền — đó là cách duy nhất giữ được điều cấm ② của bản khai hệ */
+header.dau{border-bottom:1.5px solid var(--ink);margin-bottom:38px}
+.dau .khung{display:flex;align-items:center;gap:13px;padding-top:22px;padding-bottom:18px;flex-wrap:wrap}
+.mark{width:21px;height:21px;flex:none}
+.mark svg{display:block;width:100%;height:100%}
+.mark path{fill:var(--accent)}
+.ten{font:var(--dw) 20px/1 var(--display);letter-spacing:var(--gian-ten);text-decoration:none}
+.tag{font:500 11.5px/1 var(--mono);letter-spacing:.1em;color:var(--muted);margin-left:auto}
+@media(max-width:540px){.tag{margin-left:0;width:100%;order:3}}
+
+h1{font:var(--dw) clamp(27px,5.4vw,37px)/1.22 var(--display);letter-spacing:-.005em;margin:0 0 16px}
+h2{font:var(--dw) 22px/1.32 var(--display);letter-spacing:.005em;margin:44px 0 12px;
+  padding-top:14px;border-top:1.5px solid var(--line)}
+h3{font:600 16.5px/1.4 var(--body);margin:28px 0 8px}
+p{margin:0 0 17px}
+strong{font-weight:650}
+hr{border:0;border-top:1.5px solid var(--line);margin:34px 0}
+ul,ol{margin:0 0 17px;padding-left:21px} li{margin-bottom:7px}
+code{font:500 .875em var(--mono);background:color-mix(in srgb,var(--ink) 7%,transparent);
+  padding:.1em .35em;word-break:break-word}
+pre{background:color-mix(in srgb,var(--ink) 7%,transparent);padding:15px;overflow-x:auto;
+  border-left:3px solid var(--accent);margin:0 0 17px}
+pre code{background:none;padding:0;font-size:12.5px;line-height:1.62}
+
+.cuon{overflow-x:auto;margin:0 0 19px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:14.5px;min-width:100%}
+th,td{padding:8px 13px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1.5px solid var(--ink)}
+
+.meta{font:500 12.5px/1.65 var(--mono);color:var(--muted);margin:0 0 30px}
+.meta b{color:var(--ink);font-weight:600}
+
+/* ── SỔ CLAIM — thứ duy nhất trên trang được phép nổi ── */
+.so{margin:52px 0 0;padding-top:22px;border-top:3px solid var(--ink)}
+.so>p.dan{font-size:15px;color:var(--muted);margin-bottom:26px}
+.claim{border:1.5px solid var(--line);border-left:4px solid var(--accent);
+  padding:17px 19px;margin-bottom:15px;scroll-margin-top:20px}
+.claim.sua,.claim.bac,.claim.cho{border-left-color:var(--muted)}
+.claim.xac{border-left-width:7px}
+.claim h3{margin:0 0 9px;font:600 16px/1.5 var(--body)}
+.claim .id{font:600 12px var(--mono);color:var(--muted);text-decoration:none}
+.chip{display:inline-block;font:600 11px/1 var(--mono);letter-spacing:.09em;
+  padding:5px 9px;vertical-align:2px;margin-left:8px;white-space:nowrap}
+/* xac = đã bị thử và sống sót. Cùng nền accent với "đang đứng" (cả hai còn hiệu lực),
+   thêm viền ink để đọc ra "có hai bên cùng ký": desk đo, đối tượng tự tính lại.
+   🟡 Đây là xử lý TẠM cho tới vòng thiết kế thật — hình thức chưa qua ai duyệt. */
+.chip.xac{background:var(--accent);color:var(--paper);
+  border:1.5px solid var(--ink);padding:3.5px 7.5px}
+.chip.song{background:var(--accent);color:var(--paper)}
+.chip.sua{background:var(--ink);color:var(--paper)}
+.chip.bac{border:1.5px solid var(--ink);color:var(--ink);text-decoration:line-through}
+.chip.cho{border:1.5px dashed var(--muted);color:var(--muted)}
+.dong{font-size:14px;margin:11px 0 0;padding-left:13px;border-left:2px solid var(--line)}
+.dong .nhan{font:600 10.5px var(--mono);letter-spacing:.1em;color:var(--muted);
+  display:block;margin-bottom:3px}
+.nk{list-style:none;padding:0;margin:13px 0 0;font-size:14px}
+.nk li{padding:7px 0 7px 13px;border-left:2px solid var(--line);margin:0}
+.nk .d{font:600 11.5px var(--mono);color:var(--accent);margin-right:7px}
+
+/* ── DÃI TRẠNG THÁI — màn hình đầu tiên, thứ X/TG không có ── */
+.dai{border:2px solid var(--ink);padding:16px 18px;margin:0 0 30px}
+.dem{font:500 15px/1.5 var(--mono)}
+.dem .to{font:700 27px var(--mono);color:var(--accent);vertical-align:-3px;margin-right:2px}
+.dem b.song,.dem b.xac{color:var(--accent)}
+.khi{font:500 12px/1.6 var(--mono);color:var(--muted);margin-top:7px}
+.toi{display:inline-block;margin-top:12px;font:600 12.5px var(--mono);letter-spacing:.06em;
+  text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:2px}
+
+/* ── HÌNH: claim vẽ thành trục số. Sống được — refill hạ thì chấm di chuyển ── */
+.hinh{margin:17px 0 6px;padding:0}
+.thang .hang{margin-bottom:13px}
+.thang .nh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  font:500 12px/1.5 var(--mono);color:var(--muted);margin-bottom:4px}
+.thang .nh b{font:700 14px var(--mono);color:var(--ink);white-space:nowrap}
+.thang .ray{position:relative;height:15px;background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.thang .ray.tr{height:9px;background:none}
+.thang .cot{display:block;height:100%;background:var(--ink)}
+.thang .cot.toi{background:var(--accent)}
+/* cu = con số ĐÃ BỊ THAY nhưng không được xoá khỏi hình — người đọc phải thấy
+   cái thanh dài ngày trước đó, nếu không thì hình mất luôn phần đáng kể nhất */
+.thang .cot.cu{background:color-mix(in srgb,var(--ink) 22%,transparent)}
+.thang .vung{position:absolute;top:0;height:9px;background:var(--accent);
+  border-left:2px solid var(--accent);border-right:2px solid var(--accent);opacity:.45}
+.thang .nk2{margin:4px 0 0;font-size:11.5px}
+.thang .nk2 b{font-size:12px;color:var(--accent)}
+.hinh figcaption{font:500 11px/1.5 var(--mono);color:var(--muted);margin-top:8px;
+  padding-top:7px;border-top:1px solid var(--line)}
+
+/* điều-bác-bỏ là thứ khác biệt duy nhất của kênh này ⇒ nó phải là dòng NẶNG NHẤT
+   trong khối claim, không phải một đoạn văn thường như bản đầu */
+.dong.bac{border-left:3px solid var(--accent);
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  padding:9px 12px;margin-top:13px;font-size:14.5px}
+.dong.bac .nhan{color:var(--accent)}
+
+.dem .phu{font:500 12px/1.6 var(--mono);color:var(--muted);margin-top:7px;
+  text-transform:none;letter-spacing:0}
+ul.diem{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:0}
+ul.diem li{display:grid;grid-template-columns:auto 1fr;gap:0 12px;padding:11px 0;
+  border-top:1px solid var(--line);font-size:15px}
+ul.diem li:last-child{border-bottom:1px solid var(--line)}
+ul.diem .tick{font:600 10.5px/1.7 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid currentColor;border-radius:2px;padding:0 5px;height:fit-content;
+  white-space:nowrap}
+ul.diem .tick.xac,ul.diem .tick.bac{color:var(--accent)}
+ul.diem .tick.sua{color:var(--muted)}
+.dan-gt{margin:14px 0 0;font-size:15px}
+.claim .moc{font:500 12.5px/1.7 var(--mono);color:var(--muted);letter-spacing:.03em}
+.tro{margin:12px 0 0;font:500 12.5px/1.6 var(--mono)}
+ul.han{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+ul.han li{padding:13px 0;border-top:1px solid var(--line);font-size:15px}
+ul.han li:last-child{border-bottom:1px solid var(--line)}
+ul.han .ngay{font:600 12.5px/1.7 var(--mono);letter-spacing:.04em;color:var(--accent);
+  display:block;margin-bottom:3px}
+ul.han .con{font-weight:500;color:var(--muted);margin-left:9px}
+ul.han .con.qua{color:var(--accent);font-weight:600}
+.dolai-o{margin-top:13px;display:flex;flex-direction:column;gap:8px}
+button.dolai{align-self:flex-start;font:600 12.5px/1 var(--mono);letter-spacing:.06em;
+  color:var(--paper);background:var(--accent);border:0;border-radius:2px;
+  padding:9px 13px;cursor:pointer}
+button.dolai:hover{filter:brightness(1.08)}
+button.dolai:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+button.dolai[disabled]{opacity:.55;cursor:progress}
+.ketqua{font:500 12.5px/1.65 var(--mono);color:var(--muted);
+  border-left:2px solid var(--line);padding:2px 0 2px 10px}
+.ketqua b{color:var(--ink);font-weight:600}
+.ketqua.khop{border-left-color:var(--accent)}
+.ketqua.lech{border-left-color:var(--accent)}
+.ketqua.loi{border-left-color:var(--ink)}
+.nk .nguon-tro{opacity:.72;font-size:.92em;font-style:italic}
+.ketqua .nguon{display:block;font-size:11px;opacity:.75;margin-top:3px}
+.dong.khongdo{border-left:3px solid var(--line);padding:9px 12px;margin-top:13px;
+  font-size:14px;color:var(--muted)}
+
+/* bài viết là THAM CHIẾU ở trang này — hạ nhẹ xuống, không tranh chỗ với sổ claim */
+.bandaydu{margin-top:56px;padding-top:6px;border-top:3px solid var(--ink)}
+.bandaydu h2{border-top:0;padding-top:0;margin-top:16px}
+
+footer{margin-top:64px;padding:22px 0 46px;border-top:1.5px solid var(--ink);
+  font:500 12px/1.75 var(--mono);color:var(--muted)}
+footer a{color:var(--muted)}
+.bai{display:block;padding:17px 0;border-bottom:1px solid var(--line);text-decoration:none}
+.bai .t{font:600 18.5px/1.4 var(--body);margin-bottom:5px}
+.bai .s{font:500 12px var(--mono);color:var(--muted)}
+</style></head><body>
+<header class="dau"><div class="khung">
+  <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
+  <a class="ten" href="../../">BLOCK·PINNED</a>
+  <span class="tag">SỐ NÀO CŨNG TRUY NGƯỢC ĐƯỢC</span>
+</div></header>
+<main class="khung"><h1>Mỗi $100 phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64</h1><section class="dai">
+  <div class="dem"><span class="to">5</span> claim &nbsp;·&nbsp; <b class="song">5</b> đang đứng</div>
+  <div class="khi"></div>
+  <a class="toi" href="#so-claim">Xem sổ claim ↓</a>
+</section><section class="so"><h2 id="so-claim">Sổ claim</h2>
+<p class="dan">Mỗi khẳng định của bài này một dòng, kèm điều gì sẽ bác bỏ nó. Trạng thái đổi thì sửa tại đây, và ghi lại ngày. Không dòng nào bị xoá.</p>
+<article class="claim song" id="C1">
+  <h3><a class="id" href="#C1">C1</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Trong trọn ngày UTC 29/07/2026 trên Robinhood Chain, người dùng trả tổng $2.521.197 phí swap và Uniswap ghi nhận $369.178 phí giao thức — tức 14,64%, tương đương $14,64 trên mỗi $100.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Robinhood Chain · block 22.006.019 → 22.867.791 (2026-07-29T00:00:00Z → 23:59:59Z) · factory v2 0x8bceaa40b9acdfaedf85adf4ff01f5ad6517937f · factory v3 0x1f7d7550b1b028f7571e69a784071f0205fd2efa · PoolManager v4 0x8366a39cc670b4001a1121b8f6a443a643e40951 · giá quy đổi cuối ngày UTC 29/07</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Dựng lại tập pool từ log tạo pool của ba factory (25.472 pair v2 · 334.102 pool v3 · 209.478 pool v4), quét log Swap của đúng tập đó trong cửa sổ block trên, rồi cộng phí theo tỷ lệ protocol fee của từng pool. Nếu tổng phí lệch quá 0,5% so với $2.521.197, hoặc phần giao thức lệch quá 0,5% so với $369.178, claim này sai.</p>
+  
+  <ul class="nk"><li><span class="d">2026-07-31</span>Đăng. Phép cộng theo tỷ lệ thật từng pool được bắt phải tái lập đúng tổng phí đã đo trước đó: v3 ra đúng $1.723.901,73 (lệch 0,0%), v4 lệch 5 xu do làm tròn. Truy vấn đối chứng với mã sự kiện không tồn tại trả 0 kết quả; không khoảng block nào bị bỏ sót trong 4,09 triệu log. Lượt tính ĐẦU đã bị chính cổng này chặn vì lệch 49% — nguyên nhân là hàm tra giá thiếu một dòng gán giá ETH gốc bằng giá WETH, làm 3.708 pool mất giá.</li></ul>
+</article>
+<article class="claim song" id="C2">
+  <h3><a class="id" href="#C2">C2</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Phiên bản v4 lấy tỷ lệ thấp nhất trong ba phiên bản: 7,81% bình quân gia quyền theo phí của các pool v4 đã bật, so với 16,67% ở v2 và 16,78% ở v3.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Cùng cửa sổ block. v2 $198.383 phí → $33.064 · v3 $1.723.902 → $289.353 · v4 $598.913 → $46.762. Tỷ lệ v4 tính từ trường fee của từng log Swap và protocolFee của đúng pool.</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Một phép dựng độc lập đọc từng log Swap cùng cấu hình protocol fee của đúng pool tại đúng block. Nếu tỷ lệ v4 lệch quá 2 điểm phần trăm so với 7,81%, claim này sai và câu &#x27;phiên bản mới nhất lấy tỷ lệ thấp nhất&#x27; phải sửa công khai.</p>
+  
+  <ul class="nk"><li><span class="d">2026-07-31</span>Đăng. Tỷ lệ 7,81% là bình quân gia quyền theo phí của các pool v4 đã bật, tính từ trường fee của từng log Swap và protocolFee của đúng pool — không phải trung bình số học giữa các pool. Con số này thay cho phép áp đồng loạt một phần sáu ở bản nháp đầu, vốn cho kết quả cao hơn 5,69%.</li></ul>
+</article>
+<article class="claim song" id="C3">
+  <h3><a class="id" href="#C3">C3</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Công tắc protocol fee không bật ở mọi pool: tính theo giá trị phí, 92,9% phát sinh ở pool đã bật; $7,15 trên mỗi $100 phát sinh ở pool chưa bật, giao thức nhận $0.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Tập pool đã bật dựng từ event SetFeeProtocol (v3) và ProtocolFeeUpdated trên PoolManager (v4), quét từ block 1 tới 22.867.791. v2 là công tắc toàn cục feeTo() trên factory.</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Quét lại hai event trên tới hết block 22.867.791 rồi cân theo giá trị phí của từng pool trong cửa sổ đo. Nếu độ phủ lệch quá 3 điểm phần trăm so với 92,9%, claim này sai.</p>
+  
+  <ul class="nk"><li><span class="d">2026-07-31</span>Đăng. Độ phủ đọc bằng EVENT chứ không bằng trạng thái pool: node công khai của chain này trả lỗi cho truy vấn trạng thái tại block cũ. v2 là công tắc toàn cục, đọc feeTo() trên factory và nó trỏ đúng contract giữ tiền đã ghim.</li></ul>
+</article>
+<article class="claim song" id="C4">
+  <h3><a class="id" href="#C4">C4</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Trong 30 pool v4 sinh phí nhiều nhất ngày hôm đó, cả 15 pool gắn hook đều không bật protocol fee. 15 pool còn lại trong nhóm không gắn hook.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Cùng cửa sổ block. Trường hook đọc từ event Initialize trên PoolManager v4; trạng thái công tắc đọc từ event ProtocolFeeUpdated.</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Lấy 30 pool v4 có phí cao nhất trong cửa sổ, đọc trường hook của từng pool và kiểm từng poolId có trong tập đã bật hay không. Nếu có bất kỳ pool gắn hook nào đã bật, claim này sai.</p>
+  
+  <ul class="nk"><li><span class="d">2026-07-31</span>Đăng. Kết quả này nối tiếp bài đăng ngày 30/07 của kênh, vốn đã cho thấy một lớp pool trả 0; lần này đếm được lớp đó lớn cỡ nào trong nhóm sinh phí mạnh nhất.</li></ul>
+</article>
+<article class="claim song" id="C5">
+  <h3><a class="id" href="#C5">C5</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Phần chênh giữa phí giao thức ghi nhận và giá trị UNI đem burn trong cùng ngày KHÔNG nằm trong contract giữ tiền: dòng vào và dòng ra khớp nhau tới từng xu trên phần định giá được ($206.158,02 cả hai chiều), tồn ròng bằng 0.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Cùng cửa sổ block. TokenJar 0x2ac03e14cfe755426daaee0a4994184ce81482f8 · contract burn 0x7a8f74c2585f84c781f951b7f2ff21337d5b630b · UNI trên Robinhood 0xf177d86a28b520e3e396e4f3b96cd8e72d7dabd8. Giới hạn: 420 trên 472 token vào kho không có trong bộ giá đang dùng, nên $206.158 chỉ là phần định giá được.</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Quét log Transfer có đích là TokenJar và có nguồn là TokenJar trong cùng cửa sổ, cộng theo từng token. Nếu tồn ròng khác 0 trên phần định giá được, claim này sai. Control dương: UNI vào contract burn trong cửa sổ phải đúng 62.000 (31 lượt × 2.000).</p>
+  
+  <ul class="nk"><li><span class="d">2026-07-31</span>Đăng. Phép đo này được chạy vì một câu hỏi của người đọc bản nháp: phần chênh giữa phí ghi nhận và UNI đã burn thì đi đâu. Nó BÁC giả thuyết &#x27;còn nằm trong kho&#x27;, và chính vì thế bài bỏ trục cũ (tỷ lệ burn trên phí) trước khi đăng. Giới hạn nặng: 420 trên 472 token vào kho không có trong bộ giá đang dùng.</li></ul>
+</article></section><section class="bandaydu"><h2 id="ban-day-du">Bài đầy đủ</h2><p class="meta">🔴 2026-07-31 &nbsp;·&nbsp; GHIM TẠI Robinhood Chain · block #22.006.019 → #22.867.791 (trọn ngày UTC 29/07/2026) · giá quy đổi lấy tại 23:59:59 UTC 29/07 &nbsp;·&nbsp; <a href="https://x.com/blockpinned/status/2083199069892272255">bản đăng trên X</a></p><p>Uniswap đã bật thu phí trên Robinhood Chain. Câu hỏi ai cũng hỏi là giao thức lấy được bao nhiêu — nhưng chưa thấy nơi nào tách ra.</p>
+<p>Đo trọn một ngày UTC, mỗi <strong>$100</strong> người dùng trả phí swap:</p>
+<p><strong>$85,36</strong> ở lại với người cấp thanh khoản. <strong>$14,64</strong> Uniswap ghi nhận là phí giao thức.</p>
+<h2 id="phien-ban-moi-nhat-lay-ty-le-thap-nhat">Phiên bản mới nhất lấy tỷ lệ thấp nhất</h2>
+<p>Trong $100 phí đó, v4 chiếm <strong>$23,76</strong> — gần một phần tư. Nhưng v4 chỉ nộp về <strong>$1,85</strong>, tức <strong>7,81%</strong>. Cùng lúc, v2 nộp <strong>16,67%</strong> và v3 nộp <strong>16,78%</strong>.</p>
+<p>Nếu bạn đang là LP hoặc đang giữ UNI, khác biệt đó đổi hai thứ ngược nhau. Với LP thì v4 dễ chịu hơn — ở v2 và v3, phí giao thức <strong>trừ vào phần LP</strong>; ở v4 nó <strong>cộng thêm</strong> vào phí người swap trả, nên LP vẫn nhận đủ. Với người giữ UNI thì ngược lại: dòng tiền càng dồn sang v4, phần chảy về giao thức càng mỏng.</p>
+<p>Lý do là cơ chế, không phải chính sách. Ở v2 và v3, phí giao thức là một <strong>phân số của phí pool</strong> — một phần sáu, hoặc một phần tư. Ở v4 nó không phải phân số, mà là một <strong>mức tối đa 0,1%</strong>. Khi đã chạm mức đó, pool thu phí càng cao thì phần giao thức càng chiếm tỷ trọng nhỏ. Với pool fee 1% và protocol fee 0,1%, giao thức nhận khoảng <strong>9%</strong> trên tổng 1,1% mà người swap trả — không phải 16,7%.</p>
+<p>Tỷ lệ thấp không tự nó là xấu, và bài này không đo được chiều đó. Nếu v4 nộp theo tỷ lệ như v2 và v3 <strong>mà nền phí giữ nguyên</strong>, mỗi $100 sẽ có thêm khoảng <strong>$2,11</strong> về giao thức. Nhưng nền phí có giữ nguyên hay không thì chưa ai đo: một lát mỏng của cái bánh to hơn vẫn có thể là nhiều tiền hơn. Muốn trả lời phải đo thị phần v4 qua nhiều ngày — bài này chỉ có một ngày.</p>
+<h2 id="ba-thu-phai-do-de-ra-duoc-14-64">Ba thứ phải đo để ra được $14,64</h2>
+<p><strong>Một — không phải pool nào cũng bật.</strong> Tính theo giá trị phí, <strong>92,9%</strong> phát sinh ở pool đã bật. Còn <strong>$7,15</strong> trên mỗi $100 phát sinh ở pool chưa bật, giao thức nhận <strong>$0</strong>.</p>
+<p>Trong đó có một nhóm đáng chỉ tên: <strong>30 pool v4 sinh phí nhiều nhất</strong> ngày hôm đó có <strong>15 pool gắn hook, và cả 15 đều không bật</strong> protocol fee. 15 pool còn lại trong nhóm không gắn hook.</p>
+<p><strong>Hai — pool đã bật lấy tỷ lệ khác nhau.</strong> Đọc thẳng trên chain, không lấy từ tài liệu: <strong>328.376 pool v3 khai một phần sáu</strong>, <strong>5.564 pool khai một phần tư</strong>.</p>
+<p><strong>Ba — tỷ lệ của v4 phải tính từ từng giao dịch</strong>, vì nó phụ thuộc mức phí của chính pool đó. Bình quân gia quyền theo phí của các pool v4 đã bật: <strong>7,81%</strong>.</p>
+<p>Áp chung một tỷ lệ một phần sáu cho tất cả — cách làm ở bản nháp đầu — cho ra con số cao hơn <strong>5,69%</strong> so với phép cộng theo cấu hình từng pool.</p>
+<h2 id="con-burn-thi-sao">Còn burn thì sao</h2>
+<p>Trong <strong>$14,64</strong> giao thức ghi nhận, <strong>$9,80</strong> đã xuất hiện dưới dạng UNI đem burn trong cùng ngày.</p>
+<p>Phần chênh <strong>không nằm trong kho</strong> — đã kiểm: dòng vào và dòng ra của contract giữ tiền khớp nhau tới từng xu trên phần định giá được, tồn ròng bằng <strong>0</strong>. Nó ở đâu thì chưa nói được, và bài này không đoán.</p>
+<p>Điều đáng biết hơn con số đó là <strong>cách burn xảy ra</strong>: phí giao thức <strong>không mua UNI</strong>. Phí vào contract giữ tiền dưới dạng các token khác nhau, rồi <strong>bất kỳ ai</strong> cũng có thể nộp <strong>2.000 UNI</strong> để lấy ra tối đa 20 asset trong đó — và số UNI ấy bị burn. Người đi gom chỉ làm khi có lời. Burn của UNI không tự động.</p>
+<h2 id="tu-kiem-lai">Tự kiểm lại</h2>
+<p>Ba số gốc, mọi tỷ lệ ở trên đều quy ra từ đây. Trong khoảng block <strong>22.006.019 → 22.867.791</strong> của Robinhood Chain, đúng một ngày UTC:</p>
+<ul><li>người dùng trả tổng <strong>$2.521.197</strong> phí swap</li><li>giao thức ghi nhận <strong>$369.178</strong></li><li>UNI đem burn <strong>62.000 UNI</strong>, tương đương <strong>$247.122</strong></li></ul>
+<p>Tách theo phiên bản: v2 trả $198.383 → ghi nhận $33.064 · v3 trả $1.723.902 → ghi nhận $289.353 · v4 trả $598.913 → ghi nhận $46.762.</p>
+<p>Các số đếm on-chain đọc lại lúc nào cũng ra như vậy; các số USD dùng giá cuối ngày UTC 29/07.</p>
+<p>Bài này thay cho bài đăng ngày 29/07 đã được gỡ khỏi cả hai kênh cùng ngày, sau khi điều kiện tự bác bỏ in kèm nó xảy ra.</p>
+<h2 id="dieu-gi-se-bac-bo-bai-nay">Điều gì sẽ bác bỏ bài này</h2>
+<p>Nếu một phép dựng độc lập — đọc từng log Swap cùng cấu hình protocol fee của đúng pool tại đúng block — cho tỷ lệ v4 lệch quá 2 điểm phần trăm so với <strong>7,81%</strong>, thì câu &quot;phiên bản mới nhất lấy tỷ lệ thấp nhất&quot; phải sửa công khai.</p>
+<p>Không phải lời khuyên đầu tư. Các số đếm on-chain tại khoảng block 22.006.019 → 22.867.791 là mốc cố định, không đổi khi có block mới. Các số USD phụ thuộc nguồn giá cuối ngày UTC 29/07 và sẽ khác nếu dùng giá tại từng lượt swap.</p></section></main>
+<footer><div class="khung">
+  Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá.<br>
+  Không phải lời khuyên đầu tư. ·
+  <a href="https://x.com/blockpinned">@blockpinned</a>
+</div></footer>
+<script>
+// Hai endpoint keyless, đo được 30/07 là cho phép trình duyệt gọi (CORS *). Gọi endpoint
+// thứ hai CHỈ khi cái đầu lỗi — 🔴 giới hạn nhịp là thật: một endpoint đã trả 429 ngay
+// lượt thứ ba khi thử. Vì vậy trang KHÔNG tự đo lúc mở; chỉ đo khi có người bấm.
+const RPC = ["https://ethereum-rpc.publicnode.com", "https://eth.drpc.org"];
+async function rpcGoi(ep, method, params) {
+  const r = await fetch(ep, {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({jsonrpc: "2.0", id: 1, method, params})});
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  const j = await r.json();
+  if (j.error) throw new Error(j.error.message || "lỗi RPC");
+  return j.result;
+}
+function chuoiSo(x, n) {
+  return x.toLocaleString("vi-VN", {minimumFractionDigits: n, maximumFractionDigits: n});
+}
+async function doLai(b) {
+  const o = b.dataset, ra = b.parentElement.querySelector(".ketqua");
+  b.disabled = true; ra.className = "ketqua dang"; ra.textContent = "đang đo…";
+  const loi = [];
+  for (const ep of RPC) {
+    try {
+      const blk = await rpcGoi(ep, "eth_blockNumber", []);              // ghim TRƯỚC
+      const kq = await rpcGoi(ep, "eth_call", [{to: o.to, data: o.data}, blk]);  // đọc TẠI block đó
+      const h = kq.slice(2), w = [];
+      for (let i = 0; i < h.length; i += 64) w.push(BigInt("0x" + h.slice(i, i + 64)));
+      const tu = Number(o.tu), sc = Number(o.chuSo), ghim = Number(o.ghim);
+      const v = o.chia === "" ? Number(w[tu]) / Math.pow(10, Number(o.thapPhan))
+                              : Number(w[tu]) / Number(w[Number(o.chia)]) * Number(o.nhan);
+      const doi = Math.abs(v - ghim) >= Math.pow(10, -sc) / 2;
+      ra.className = "ketqua " + (doi ? "lech" : "khop");
+      ra.innerHTML = "<b>" + chuoiSo(v, sc) + " " + o.donVi + "</b> tại block "
+        + BigInt(blk).toLocaleString("vi-VN") + " · đã ghim " + chuoiSo(ghim, sc) + " "
+        + o.donVi + " ⇒ <b>" + (doi ? "ĐÃ ĐỔI" : "KHÔNG ĐỔI") + "</b>"
+        + '<span class="nguon">đọc từ ' + ep.replace("https://", "") + "</span>";
+      b.disabled = false; return;
+    } catch (e) { loi.push(ep.replace("https://", "") + ": " + e.message); }
+  }
+  // 🔴 Không in số nào khi đo hỏng. Một số 0 ở đây là bằng chứng về CÔNG CỤ, không phải
+  // về chain — in nó ra là làm đúng cái lỗi mà mấy bài trên trang này đi bác.
+  ra.className = "ketqua loi";
+  ra.innerHTML = "<b>không đo được</b> — cả hai endpoint đều lỗi, nên trang không in số nào."
+    + '<span class="nguon">' + loi.join(" · ") + "</span>";
+  b.disabled = false;
+}
+// Đếm ngược tính ở TRÌNH DUYỆT, không lúc build: trang tĩnh không tự dựng lại mỗi ngày,
+// nên một con số "còn N ngày" nướng vào HTML sẽ nói dối từ hôm sau.
+document.querySelectorAll(".han .ngay[data-han]").forEach(function (e) {
+  const con = Math.ceil((new Date(e.dataset.han + "T23:59:59Z") - new Date()) / 86400000);
+  const p = document.createElement("span");
+  p.className = "con" + (con < 0 ? " qua" : "");
+  p.textContent = con < 0 ? "ĐÃ TỚI HẠN" : (con === 0 ? "hôm nay" : "còn " + con + " ngày");
+  e.appendChild(p);
+});
+document.querySelectorAll("button.dolai").forEach(function (b) {
+  b.addEventListener("click", function () { doLai(b); });
+});
+</script>
+</body></html>

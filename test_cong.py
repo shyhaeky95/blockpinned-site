@@ -146,6 +146,22 @@ def main():
             (root / "template").mkdir()
             shutil.copy(lang, root / "template")
             shutil.copy(lang, root / "site")
+            # 🔴 Kho hiện vật phải có mặt trong thư mục tạm, nếu không thì control âm
+            # ("không bẻ gì") FAIL vì lý do của bộ thử chứ không phải của bài — và một
+            # control âm hỏng làm cả bộ mất nghĩa. Bước đưa hiện vật lên site được thêm
+            # 31/07 (build.py ~:1222) nhưng bộ thử không được cập nhật cùng lúc; lộ ra
+            # đúng lần dựng bài #8. Chỉ chép ĐÚNG các file đã khai ở HIEN_VAT.
+            # 🔴 Dùng ĐÚNG công thức tra của build.py — kho gốc có `site/` còn mirror
+            # công khai thì PHẲNG, nên `SITE.parent` trỏ hai chỗ khác nhau. Bản vá đầu
+            # chỉ đúng ở kho gốc và vẫn FAIL khi publish_site chạy test từ trong mirror.
+            kho_goc = next((k for k in (SITE.parent / "blockpinned" / "data",
+                                        SITE.parent / "data")
+                            if k.is_dir()), None)
+            if kho_goc is not None:
+                (root / "data").mkdir(exist_ok=True)
+                for f in kho_goc.iterdir():
+                    if f.is_file() and f.suffix == ".json":
+                        shutil.copy2(f, root / "data" / f.name)
             if be:
                 be(root)
             r = subprocess.run([sys.executable, str(root / "site" / "build.py")],
