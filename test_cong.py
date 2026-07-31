@@ -40,6 +40,8 @@ FACT_MAU = {
     "block": "blk 25.571.508",
     "lenh": "cast call 0x57e114b691db790c35207b2e685d4a43181e6061 \"totalSupply()(uint256)\"",
     "chan": "\"Không có đốt\" không có nghĩa là sắp in thêm — đã mint hết từ đầu.",
+    "khoang_cach": {"tin": "Trang dữ liệu X hiển thị một ô 'đã đốt' khác 0 cho token này",
+                    "o_dau": "ô 'Burned' trên trang token của X"},
     "nguon": "ENA/FACTS.md:12",
 }
 
@@ -173,6 +175,19 @@ CA = [
     ("⑪ FACT · kết luận định giá lọt vào câu fact  ← nhóm ①b",
      lambda r: sua_facts(r, lambda f: f.update(cau="Token này đang rẻ so với doanh thu.")),
      "TỪ ĐÃ KHAI TỬ"),
+    # ── KHOẢNG CÁCH — ca xác: desk xếp "ENA chưa từng bị đốt" lên hàng đầu, user bác.
+    # Đúng, ghim được block, kiểm bằng một lệnh — và không phân biệt ENA khỏi bất cứ
+    # thứ gì, vì phần lớn token không đốt. Ba ca dưới ép cổng mới bắt đúng ca đó.
+    ("⑪ FACT · KHOẢNG CÁCH · không khai gì  ← ca ENA 01/08",
+     lambda r: sua_facts(r, lambda f: f.pop("khoang_cach")),
+     "thiếu 'khoang_cach'"),
+    ("⑪ FACT · KHOẢNG CÁCH · khai niềm tin nhưng KHÔNG có chỗ kiểm",
+     lambda r: sua_facts(r, lambda f: f.update(
+         khoang_cach={"tin": "ai cũng tưởng token này có đốt", "o_dau": ""})),
+     "chỗ kiểm được niềm tin đó"),
+    ("⑪ FACT · KHOẢNG CÁCH · khai dạng chuỗi thay vì object",
+     lambda r: sua_facts(r, lambda f: f.update(khoang_cach="có khoảng cách")),
+     "thiếu 'khoang_cach'"),
     ("⑪ FACT · control DƯƠNG — facts.json hợp lệ phải BUILD ĐƯỢC",
      lambda r: sua_facts(r, lambda f: None),
      None),

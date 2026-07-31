@@ -1059,9 +1059,33 @@ def cong_facts(fs: list) -> None:
             raise LoiCong(f"{o} ({fid}) thiếu 'chan' — câu chặn suy luận sai. "
                           f"Không có suy luận nào cần chặn thì ghi thẳng \"KHÔNG CÓ\"; "
                           f"để trống nghĩa là chưa ai quyết")
+        # ── KHOẢNG CÁCH — thêm 01/08 sau khi user bác một ứng viên của desk ──────
+        # Ca xác: desk xếp "ENA chưa từng bị đốt một wei nào" lên hàng đầu. Đúng, ghim
+        # được block, kiểm bằng một lệnh — và VÔ NGHĨA, vì phần lớn token không đốt.
+        # Nó không phân biệt ENA khỏi bất cứ thứ gì. Cổng cũ cho nó qua sạch, vì cả ba
+        # thứ nó kiểm đều là câu hỏi "có đúng không", không câu nào hỏi "biết rồi thì
+        # đổi được gì".
+        #
+        # 🔴 MÁY KHÔNG PHÁN ĐƯỢC khoảng cách này có đủ lớn hay không — đó là cổng NGƯỜI,
+        # cùng loại với cổng độc giả LAUNCH §6b. Cái máy làm được: ép khai NIỀM TIN bị
+        # bác và CHỖ kiểm được niềm tin đó. Và chính chỗ đó loại ca ENA một cách cơ học —
+        # không tồn tại màn hình nào hiển thị ENA là "đã đốt", nên `o_dau` không điền nổi.
+        kc = f.get("khoang_cach")
+        if not isinstance(kc, dict):
+            raise LoiCong(
+                f"{o} ({fid}) thiếu 'khoang_cach' — Fact phải PHÂN BIỆT đối tượng khỏi "
+                f"mặc định của lớp nó. Khai dạng object: "
+                f"{{\"tin\": <niềm tin/nguồn nói ngược lại>, \"o_dau\": <chỗ kiểm được>}}. "
+                f"Điền không nổi ⇒ fact này không có khoảng cách ⇒ đừng đăng")
+        for k, ten in (("tin", "niềm tin bị bác"), ("o_dau", "chỗ kiểm được niềm tin đó")):
+            if not str(kc.get(k, "")).strip():
+                raise LoiCong(f"{o} ({fid}) 'khoang_cach.{k}' trống — thiếu {ten}")
         for k in ("cau", "so", "chan"):
             cong_ngon_ngu(str(f[k]), f"{o}.{k}")
             cong_ngoi_xung(str(f[k]), f"{o}.{k}")
+        for k in ("tin", "o_dau"):
+            cong_ngon_ngu(str(kc[k]), f"{o}.khoang_cach.{k}")
+            cong_ngoi_xung(str(kc[k]), f"{o}.khoang_cach.{k}")
 
 
 def trang_facts(fs: list) -> str:
@@ -1077,12 +1101,15 @@ def trang_facts(fs: list) -> str:
                   f'{ihtml.escape(chan)}</p>')
         p_ng = (f'<p class="tro">{ihtml.escape(str(f["nguon"]))}</p>'
                 if str(f.get("nguon", "")).strip() else "")
+        kc = f["khoang_cach"]
         hang.append(f"""<article class="claim" id="{ihtml.escape(str(f['id']))}">
   <h3><span class="chip">{ihtml.escape(dt) if dt else 'FACT'}</span>
       <span class="moc">{vn_ngay(ng) if ng else ''}</span></h3>
   <p class="dong"><span class="nhan">FACT</span>{ihtml.escape(str(f['cau']))}</p>
   <p class="dong"><span class="nhan">SỐ</span>{ihtml.escape(str(f['so']))}</p>
   <p class="dong"><span class="nhan">ĐỌC TẠI</span>{ihtml.escape(str(f['block']))}</p>
+  <p class="dong bac"><span class="nhan">NGƯỢC VỚI</span>{ihtml.escape(str(kc['tin']))}
+      &nbsp;— kiểm tại: {ihtml.escape(str(kc['o_dau']))}</p>
   <p class="dong"><span class="nhan">TỰ KIỂM</span><code>{ihtml.escape(str(f['lenh']))}</code></p>
   {p_chan}
   {p_ng}
@@ -1090,9 +1117,10 @@ def trang_facts(fs: list) -> str:
     return (f'<h1>Facts</h1>'
             f'<div class="dem"><span class="to">{len(co)}</span> fact</div>'
             f'<p class="dan">Mỗi mục dưới đây là <b>một sự thật đúng tại một block</b>, kèm '
-            f'<b>một lệnh</b> để bạn tự đọc lại con số đó. Không phân tích, không dự đoán, '
-            f'không nhận định giá. Cái nào cần giải thích dài hơn một dòng thì nó không nằm '
-            f'ở đây — nó là một bài.</p>'
+            f'<b>một lệnh</b> để bạn tự đọc lại con số đó. Mỗi mục cũng phải nói rõ nó '
+            f'<b>đi ngược điều gì</b> và <b>chỗ nào đang nói ngược lại</b> — một điều đúng '
+            f'mà ai cũng đoán được thì không nằm ở đây. Không phân tích, không dự đoán, '
+            f'không nhận định giá. Cái nào cần giải thích dài hơn một dòng thì nó là một bài.</p>'
             f'<section class="so">{"".join(hang)}</section>')
 
 
