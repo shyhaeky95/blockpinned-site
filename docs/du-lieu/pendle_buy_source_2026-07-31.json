@@ -1,0 +1,937 @@
+{
+ "_doc": "VÒNG 2 — nguồn của 65 transfer vào 0x9e08. Vòng 1 (H_KHÔNG) là DƯƠNG TÍNH GIẢ: phép thử hỏi người GỬI có phát log Swap không, mà log Swap do POOL phát. Số 0 đó nói về phép thử.",
+ "do_luc": "2026-07-31T04:48:22Z",
+ "cua_so": [
+  25553408,
+  25650178
+ ],
+ "n_transfer": 65,
+ "n_giao_dich": 65,
+ "tong_pendle": "144388.016375167975281387",
+ "tx_co_log_Swap": 65,
+ "tx_co_token_chi_ra": 65,
+ "tx_dat_CA_HAI": 65,
+ "pendle_trong_tx_dat_ca_hai": "144388.016375167975281387",
+ "ty_le_pct": "100.00",
+ "PHAN_QUYET": "H_MUA",
+ "dex_da_dung": {
+  "UniV4": 90,
+  "UniV3": 167,
+  "UniV2": 119,
+  "Balancer": 2
+ },
+ "token_chi_ra_dem_theo_tx": {
+  "USDT": 65
+ },
+ "selector": {
+  "0x8328af2f": 65
+ },
+ "goi_dia_chi": {
+  "0x9e08c5499f953c6297a7755bcbced383b606896b": 65
+ },
+ "controls": {
+  "C1_receipt_co_log": {
+   "PASS": true
+  },
+  "C2_topic_bia_0_khop": {
+   "PASS": true
+  },
+  "C3_buyback_khong_gui_PENDLE_di_trong_cung_tx": {
+   "PASS": true
+  }
+ },
+ "tran": "Phép thử chứng minh: trong cùng giao dịch có swap on-chain VÀ hợp đồng chi ra một tài sản khác để nhận PENDLE. Nó KHÔNG nói ai khởi lệnh, tiền ở đâu ra, hay giá nào. Câu được phép: 'PENDLE về hợp đồng qua các lượt swap on-chain, trả bằng <token>'. KHÔNG được phép: câu về ý định, về ngân sách, hay 'Pendle dùng doanh thu để mua'.",
+ "chi_tiet_tx": {
+  "0xc5b965e656ab6fe28df6e2b6e88b4a1298bdaa532e617d646b4af58bc0e045c3": {
+   "n_swap": 6,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "1727.767131001753664733"
+  },
+  "0xe4acb3d9f61a285bcd454b87c1ee7b3bc7ade12d08f681a501fe8d1928b39276": {
+   "n_swap": 7,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "1722.512721906910842436"
+  },
+  "0x82e68f0fe10308687cbbfea27cc0bc2644f657e29988ead27dd1f8fe02b7f533": {
+   "n_swap": 3,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2166.688183436201545526"
+  },
+  "0x7821816f905151b836675ea6411a8fcb22fdef2f45845476b770af37cf7118bf": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2163.032181410771815303"
+  },
+  "0x24a78e22328038547f0fb2524be262a4412c877cebeaa82ddd4cd6b44443a06a": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2170.505989176497865024"
+  },
+  "0xfade84094a1d1d722a5c241585893f523f3ad5218e69949e047ea36531fbb8ab": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2187.608490665059572508"
+  },
+  "0xff629bb470b236a59572a6f4e2a53ea6d58549ec02f21bf55c1b8002770e1844": {
+   "n_swap": 4,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2175.671815850670453816"
+  },
+  "0x5bfaf63cd3a77d09a3f0155664368f5446aa97e7c45ef2b8995b8a5864d14e20": {
+   "n_swap": 9,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2185.755589523648082289"
+  },
+  "0x81d012ead5b11c360b6d71a2361527e147840f57d974d4177d2d9507806d1612": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2176.350869691784529083"
+  },
+  "0xac04411f611931361f097a0b201c77cfbffc53adb17b5f3ffd5f45c3f7f45954": {
+   "n_swap": 10,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2134.104344605410551859"
+  },
+  "0x0de85506d822dafd5c6ec978c4f8dd588a579a3ee01813facb3fe3bf337e7bd4": {
+   "n_swap": 5,
+   "dex": [
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2128.453588382429062127"
+  },
+  "0x514b96ac1a42f51dea4f417182b1fc83e46b7b8fab006708a12df20340306baa": {
+   "n_swap": 4,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2136.789753779131175024"
+  },
+  "0x17ffc174767d21f89772d7a9239cd93ebeb307bde466297ac6718b0436702009": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2150.558303916100283762"
+  },
+  "0x0d726d6c7d084b6f25e23544485d761d7c2a9d861a15b61f63605e05d7692289": {
+   "n_swap": 8,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2144.786981230099274608"
+  },
+  "0x052d9ab7c17249da1e6cfcd915034bb9b082dd655513c5dfdc5ee882360269df": {
+   "n_swap": 6,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2152.319702623262089967"
+  },
+  "0xe0ea669d210cf5f54445791a98e83c6ca06985dbff0324a37121552a416afdf2": {
+   "n_swap": 7,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2138.638877038423889546"
+  },
+  "0xccdac2e3a432f85620fb337f1639bdfd11bfd909413d5b784b64bd4ac94517e8": {
+   "n_swap": 6,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2148.549708174335267524"
+  },
+  "0x099ec4f8a4f4f4d6c5136f1e5d7b970f2b1205b782b6e542b7d2ae949f9ef4a3": {
+   "n_swap": 7,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2168.361259425722967974"
+  },
+  "0xfa0869d6b991a32a22917df2a9ae4f6306b0d588be60f5f3eca1558d729bdce0": {
+   "n_swap": 10,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2156.459845859501379506"
+  },
+  "0x530aad4c3e13fdcdc1cbc0d67ea4390fb7e20ad95a2c0b5f6d93011d5fe20605": {
+   "n_swap": 6,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2165.874651644108544655"
+  },
+  "0xbebb577d86adb9c9f7118ac477f064678ca504bebc29e4901d60a8e5c6c80b52": {
+   "n_swap": 11,
+   "dex": [
+    "Balancer",
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2178.429309559125522658"
+  },
+  "0x18018350ba159aed763ac4a8fb9263845ee20279c7380f96296496e7a3322456": {
+   "n_swap": 7,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2173.095369984639551478"
+  },
+  "0xfb0c813ad291bf84876da5a6e2ba8b94127fcc83900198e4eece0a77f76dcd7d": {
+   "n_swap": 6,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2184.422529786740038432"
+  },
+  "0x5d252195a6643eef85fa9a76b0a608209292cc7901229628f73cc545f120fe40": {
+   "n_swap": 4,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2177.722664405155404112"
+  },
+  "0x4e05237b6bcddc53e987c3778e5d363d34333c80f2e1e084d6c74a81dd71e043": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2171.928735145821172557"
+  },
+  "0xfe66af659ea594fafb715ef280a061b844a08806d6420511cfc2d97964eff5cd": {
+   "n_swap": 7,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2180.213284019444700933"
+  },
+  "0x15b89a42e264b677307acc5a2bef8e29504e0f0853d5380f3a5ffe28c224d97c": {
+   "n_swap": 6,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2178.850568948635372197"
+  },
+  "0x874215e5c266edec13f9609cbd4683ced00a2bf1ea1b80fb53d2a7ec2a253f1d": {
+   "n_swap": 6,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2168.491005960280119246"
+  },
+  "0xa0469fcb3f9d5afb78e9d8e95f32f2cf4e42aac1c0e2ae109d2c5bd6fef565ab": {
+   "n_swap": 4,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2169.964065908232110444"
+  },
+  "0x43f4ae2422cd6f354efc09c302ddcdbbc506b9d0d6868fb7bc22b774a099ca2d": {
+   "n_swap": 6,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2181.027346818313107548"
+  },
+  "0x6259f22c3c568a684583c12b49d375e1a0af64fc8be2eef983bca68613282100": {
+   "n_swap": 4,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2196.874231625186064936"
+  },
+  "0xc87339eb9213c1ffd82249566a1fd4d41fc311abcade70a27c2fb66399823b82": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2197.000579968791083183"
+  },
+  "0x133856f49e925ee8e3d6a445955f46bcd40cee7032bde691533604afcb674661": {
+   "n_swap": 3,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2224.029808257294163315"
+  },
+  "0x6cd584d1601287e69b38778b8d0ae0277282cfebb2c332ce6e15660843a9f642": {
+   "n_swap": 4,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2230.54262721390262644"
+  },
+  "0xe4ee9287f3dd03a9f9e367d0feb592d0a4556279d93607cecfd09d2c0a7844b6": {
+   "n_swap": 6,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2232.294865388667293532"
+  },
+  "0x145046ddd1dc784c3ee5af39d3b21fe9ad79a48c5d5871596927527d6e25a413": {
+   "n_swap": 4,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2238.201156940939388653"
+  },
+  "0x070e7201a71708c4af7438b4f2422f266bf7c0feb0bf8355e438d807116c2e76": {
+   "n_swap": 8,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2215.906214811881629773"
+  },
+  "0x39c195a4603e6bd7461e139b409496844793633dbe8287aa7cc9c7fdcd82b21a": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2246.455802521662716547"
+  },
+  "0xccce6491039d0e3758499b0d884b9c10dc475ae0ba618f9fcd9fd7ffe3ebbfa3": {
+   "n_swap": 13,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2275.61080974553545065"
+  },
+  "0x52401592c9dacd6b51fcc8eeb922f8da15b95444a79e016e1bae4da1e99a49c4": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2271.038009654235135732"
+  },
+  "0x7098e59fe9e35f7de7046fbc66dadae1415494e604910e8610f6d99109490a9a": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2243.339355827847120995"
+  },
+  "0x6700d8501f2059286ccae10202598b8c96e138f01a05bb793c5d6bcd063f7869": {
+   "n_swap": 8,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2238.824725879616098555"
+  },
+  "0xd395e1513c352470235fc80fea4139f736b40e26797a330ca1f555db7d968d72": {
+   "n_swap": 8,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2230.084971677205491774"
+  },
+  "0x1c6038b175587e8d20a761b2cbb1c2d6e442d7deb610d4be6575e291d394b413": {
+   "n_swap": 4,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2229.754936185639082754"
+  },
+  "0x419738dc84ebdfea6542ab6fdadc62aaac8dd7957be62a77e8b2f2ae32569e53": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2332.772624138582166876"
+  },
+  "0xcd493cbf1728d622c20d704c1453c6cf012e6b8eb98af18c4615b3f4420e42e6": {
+   "n_swap": 6,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2359.767862300580400848"
+  },
+  "0x2da35ee4c579d1ef25f752764cb1adca158764791ed7d25181dbf3311d05a9b2": {
+   "n_swap": 7,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2371.034174911348642754"
+  },
+  "0x79fd623e504ed9f80eaf7da190045f7f43e4008ba72256d4d12644da4aa1ed8d": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2379.584059918678386199"
+  },
+  "0x13cc335cbb53b0cd960ea31a5e8cffc14bea7e317fea61e765006de1110fe69f": {
+   "n_swap": 6,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2364.690428964875349558"
+  },
+  "0x977c4c5d47223b34f530dae2fd9b27a9929a2034898167fbfa8c003121be3c56": {
+   "n_swap": 6,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2371.318264085311471299"
+  },
+  "0xd6016224f1365fd179ce5315d95cf43b9d46490fab8a627fcaf9574ff2cce56b": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2372.447608390338245713"
+  },
+  "0xbfb6e2a315bac3a6d8b61cdc29521b730582c46022f06bb0ae373fa0e265626b": {
+   "n_swap": 8,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2347.378646765764950114"
+  },
+  "0xcc9f6d8c602639d33529bf08448b14c9cc0480e9d0151845551334fc9a93c5a8": {
+   "n_swap": 13,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2338.249418148468168608"
+  },
+  "0x705f4b4f0a3bd9a0bc03e76bd0e8270c613fc0d9500065cac84a770ac7209a8b": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2321.962565476444551723"
+  },
+  "0xaae7733d00429ea403dc8ce797f2f730397979f25b0c08fcc8666ae0949efbc7": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2306.931252919598063603"
+  },
+  "0x2b661a5d03c25c8eab2845ed480a86746eda70882c03a99e6656502ec5c1f4f3": {
+   "n_swap": 4,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2313.576382025793401482"
+  },
+  "0x4d7627834eccd746213a42917e2d703f0ee02947762e88d1113e7b07eb65c24f": {
+   "n_swap": 3,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2315.90367510951933602"
+  },
+  "0xfd08ad6a21bddf50cee8e5b79c5566dd8ba0e71bc4bfcc3176c73bdcf448d135": {
+   "n_swap": 3,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2307.257330524145096661"
+  },
+  "0x9a62febb353b8f6660ce18817cebd513ff419ef7bfe5b144a170dda439a839ad": {
+   "n_swap": 3,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2316.511709350030354807"
+  },
+  "0xb1bdb6a4e5245b39bccd818f142110c2e6599b12640912bd9a60dc7a3b2de03e": {
+   "n_swap": 4,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2317.495783172563547032"
+  },
+  "0x8c82a478247e5401bcaf6e514526db0e7072ba11ccf75f9e8351a22993c7d600": {
+   "n_swap": 4,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2321.757816354033893317"
+  },
+  "0xfb1601ce0d2cc155d5a478d756fc41b8be8566971cb91a971c5016202acc2c55": {
+   "n_swap": 3,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2320.522849937953955261"
+  },
+  "0x4e0cf2de41d46289903ace62452ad28e5cfec1f2d1b32c6ea7f073e9b2b82fd1": {
+   "n_swap": 4,
+   "dex": [
+    "UniV2",
+    "UniV3"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2326.455410543609719413"
+  },
+  "0x413528fef1dc58defb7614f915ddfeed3d15f3355722ac8df7bedfbcf65c35da": {
+   "n_swap": 7,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2323.699992453223265808"
+  },
+  "0xc099d260e4d8bb545af76e3adf75e4c57e98db957ff578542c610432dccc13fa": {
+   "n_swap": 5,
+   "dex": [
+    "UniV2",
+    "UniV3",
+    "UniV4"
+   ],
+   "token_chi_ra": [
+    "USDT"
+   ],
+   "goi": "0x9e08c5499f953c6297a7755bcbced383b606896b",
+   "selector": "0x8328af2f",
+   "pendle_nhan": "2323.805554100499010577"
+  }
+ }
+}

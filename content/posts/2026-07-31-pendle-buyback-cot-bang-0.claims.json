@@ -24,8 +24,8 @@
       "log": [
         {
           "ngay": "2026-07-31",
-          "ghi": "Đăng. Control chạy cùng lượt: bỏ lọc địa chỉ ra 442 log (không rỗng); đích bịa ra 0 log; và đếm lại đúng cửa sổ của lượt đo 30/07 tái lập chính xác 45 log vào, 0 ra, 97.667,665590 PENDLE — script tự dừng nếu ba số đó không trùng.",
-          "nguon": "blockpinned/data/verify_post07_2026-07-31.json — 9/9 PASS"
+          "ghi": "Đăng. Control chạy cùng lượt: bỏ lọc địa chỉ ra 442 log (không rỗng); đích bịa ra 0 log; và đếm lại đúng cửa sổ của lượt đo 30/07 tái lập chính xác 45 log vào, 0 ra, 97.667,665590 PENDLE — script tự dừng nếu ba số đó không trùng. Ảnh chụp lượt kiểm (9/9 PASS) nay tải được tại mục nguồn; một ghi chú diễn giải trong đó đã bị đánh dấu SỬA tại chỗ — ô nhãn 30/06 khớp nguồn Merkle chứ không khớp lượt chuyển.",
+          "nguon": "/du-lieu/verify_post07_2026-07-31.json"
         }
       ]
     },
@@ -39,8 +39,8 @@
       "log": [
         {
           "ngay": "2026-07-31",
-          "ghi": "Đăng ở dạng con số sàn, sau ba vòng đo. Vòng 1 hỏi 'địa chỉ gửi có tự phát sự kiện swap không' và trả 0/65 — sai bề rộng, vì sự kiện swap do pool phát còn người gửi là router. Vòng 2 ra 65/65 nhưng chỉ chứng minh ĐỒNG THỜI. Vòng 3 nối nhân quả và chỉ đóng được 82,44%, với 1/65 giao dịch nối kín hoàn toàn. Bản nháp trước đó gọi thẳng là 'mua qua 65 giao dịch' — đã hạ.",
-          "nguon": "blockpinned/data/pendle_buy_source_2026-07-31.json và pendle_buy_tie_2026-07-31.json"
+          "ghi": "Đăng ở dạng con số sàn, sau ba vòng đo. Vòng 1 hỏi 'địa chỉ gửi có tự phát sự kiện swap không' và trả 0/65 — sai bề rộng, vì sự kiện swap do pool phát còn người gửi là router. Vòng 2 ra 65/65 nhưng chỉ chứng minh ĐỒNG THỜI. Vòng 3 nối nhân quả và chỉ đóng được 82,44%, với 1/65 giao dịch nối kín hoàn toàn. Bản nháp trước đó gọi thẳng là 'mua qua 65 giao dịch' — đã hạ. Hiện vật nay tải được: 65 transaction hash kèm số sự kiện swap, loại DEX, token chi ra và lượng PENDLE nhận của TỪNG giao dịch. 🔴 File nối (pendle_buy_tie) chỉ lưu 10 trong 64 ca trượt — đó là một giới hạn tự đặt lúc ghi ảnh chụp, không phải kết quả đo, và nay được khai thẳng trong chính file. Ai kiểm 82,44% bằng file đó chỉ kiểm được 10/64 ca. Sinh lại đủ 64: task PENDLE-T-TIE-FULL64.",
+          "nguon": "/du-lieu/pendle_buy_source_2026-07-31.json"
         }
       ]
     },
@@ -55,7 +55,7 @@
         {
           "ngay": "2026-07-31",
           "ghi": "Đăng. Vế 'đã cạn' được kiểm bằng cách xin trang thứ hai thật, ở hai cỡ trang khác nhau, thay vì suy từ việc số kết quả nhỏ hơn giới hạn một trang.",
-          "nguon": "PENDLE/data/pendle_buyback_unit_2026-07-31.json"
+          "nguon": "PENDLE/data/pendle_buyback_unit_2026-07-31.json (kho nghiên cứu, chưa publish)"
         },
         {
           "ngay": "2026-07-31",

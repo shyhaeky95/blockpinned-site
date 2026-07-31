@@ -141,6 +141,14 @@ BODY_FONT = "Be Vietnam Pro"
 
 
 # Tên các họ cổng — dùng cho dòng in ra, và là chỗ DUY NHẤT đếm chúng.
+# Hiện vật đưa lên site — KHAI TỪNG FILE, không quét cả thư mục. Quét thư mục là
+# publish thứ chưa ai đọc; mỗi dòng dưới đây là một file đã được mở ra xem.
+HIEN_VAT = {
+    "verify_post07_2026-07-31.json": "bài #7 — 9/9 kiểm sau đăng",
+    "pendle_buy_source_2026-07-31.json": "bài #7 — 65 tx hash + chi tiết từng tx",
+    "pendle_buy_tie_2026-07-31.json": "bài #7 — lượt nối swap→hợp đồng, 82,44%",
+}
+
 TEN_CONG = ["ngôn ngữ", "cấu trúc", "claim", "ngôi xưng", "đánh dấu",
             "thuộc tính số", "xem trước", "đo lại", "hạn", "ghi trước", "liên kết"]
 
@@ -871,6 +879,10 @@ def nguon_html(n) -> str:
     s = str(n).strip()
     if re.fullmatch(r"https?://\S+", s):
         return f' <a href="{ihtml.escape(s, quote=True)}">nguồn</a>'
+    # đường dẫn NỘI BỘ của chính site: dựng liên kết, và `cong_lien_ket` sẽ kiểm nó
+    # tới nơi — khác hẳn bản cũ, vốn dựng liên kết cho MỌI chuỗi rồi không kiểm gì.
+    if re.fullmatch(r"/[\w./-]+", s):
+        return f' <a href="{ihtml.escape(s, quote=True)}">nguồn</a>'
     return f' <span class="nguon-tro">nguồn: {ihtml.escape(s)}</span>'
 
 
@@ -1202,6 +1214,23 @@ def main() -> None:
     # blockpinned.com; `.nojekyll` mất là GitHub Pages bật Jekyll và nuốt mọi thư mục
     # bắt đầu bằng dấu gạch dưới. Lần này bắt được ở bước xem `git status` TRƯỚC khi
     # push, không nhờ cổng nào ⇒ sinh chúng ở đây để không phải bắt bằng mắt lần nữa.
+    # Hiện vật của bài — đưa lên site để câu "tự kiểm lại" có thứ để tải về. Không có
+    # bước này thì mục nguồn chỉ trỏ vào một đường dẫn trong máy của người viết, tức
+    # một lời hứa không ai thực hiện được (xác 31/07: 5 con trỏ như vậy trên bài #7).
+    kho = next((k for k in (ROOT.parent / "blockpinned" / "data", ROOT.parent / "data")
+                if k.is_dir()), None)
+    if kho is None:
+        raise LoiCong(f"không tìm thấy kho hiện vật cạnh {ROOT}")
+    dich = OUT / "du-lieu"; dich.mkdir(parents=True, exist_ok=True)
+    # 🔴 KHÔNG đặt tên biến này là `ten` — `ten` là tên hệ màu, dùng ở dòng tổng kết
+    # cuối main(); bản đầu giẫm lên nó và in ra "hệ màu 'pendle_buy_tie_….json'".
+    for ten_hv in HIEN_VAT:
+        f = kho / ten_hv
+        if not f.is_file():
+            raise LoiCong(f"hiện vật đã khai nhưng không có: {f}")
+        shutil.copy2(f, dich / ten_hv)
+    print(f"  ✓ du-lieu/  ·  {len(HIEN_VAT)} hiện vật")
+
     (OUT / "CNAME").write_text(BASE.split("//")[1] + "\n", encoding="utf-8")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
 

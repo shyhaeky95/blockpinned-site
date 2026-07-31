@@ -1,0 +1,80 @@
+{
+ "_doc": "verify bài #7 PENDLE — LAUNCH §6c",
+ "chạy_lúc": "2026-07-31T05:26:45Z",
+ "block_ghim_trong_bài": 25650178,
+ "head_lúc_verify": 25650737,
+ "kết_quả": {
+  "1_n_vao_tai_block_ghim": {
+   "đo": "65",
+   "kỳ_vọng": "65",
+   "PASS": true,
+   "ghi_chú": ""
+  },
+  "2_pendle_vao_tai_block_ghim": {
+   "đo": "144388.016375167975281387",
+   "kỳ_vọng": "144388.016375167975281387",
+   "PASS": true,
+   "ghi_chú": ""
+  },
+  "3_n_ra_tai_block_ghim": {
+   "đo": "0",
+   "kỳ_vọng": "0",
+   "PASS": true,
+   "ghi_chú": ""
+  },
+  "4_balanceOf_tai_block_ghim": {
+   "đo": "144388.016375167975281387",
+   "kỳ_vọng": "144388.016375167975281387",
+   "PASS": true,
+   "ghi_chú": ""
+  },
+  "5_ty_le_vs_bridge_17_07": {
+   "đo": "96.85",
+   "kỳ_vọng": "96.85",
+   "PASS": true,
+   "ghi_chú": "149.086,564896 là dòng thứ 12 của sổ F13a"
+  },
+  "6_DIEU_BAC_BO_chua_ban": {
+   "head": 25650737,
+   "head_utc": "2026-07-31T05:26:35Z",
+   "n_transfer_ra_tinh_toi_head": 0,
+   "trong_do_di_sang_sPendle": 0,
+   "balanceOf_tai_head": "144388.016375167975281387",
+   "PASS": true,
+   "ghi_chú": "PASS = chưa có lượt chuyển ra nào ⇒ câu mở bài còn đứng. FAIL = bridge lần 13 ĐÃ hạ giữa lúc dựng chữ ⇒ bài phải viết lại, KHÔNG được đăng bản này (tiền lệ bài #2 chết sau 6,4 giờ)"
+  },
+  "7_cot_API_hai_o_gan_nhat": {
+   "giá_trị": [
+    0.0,
+    0.0
+   ],
+   "nhãn_epoch": [
+    "28/07/2026",
+    "14/07/2026"
+   ],
+   "lastEpochBuybackAmount": 0,
+   "PASS": true,
+   "ghi_chú": "bài nói 'hai kỳ gần nhất đang là 0' — vế đọc từ phía Pendle"
+  },
+  "9_do_tre_17_ngay_trong_cung_payload": {
+   "nhãn_epoch": "30/06/2026",
+   "giá_trị_ô_đó": 149086.0,
+   "lần_chuyển_thật": "17/07 · 149.086,564896 PENDLE",
+   "PASS": true,
+   "ghi_chú": "người đọc kiểm được độ trễ bằng ĐÚNG MỘT lượt gọi API: ô mang nhãn 30/06 chở khối lượng của lần chuyển 17/07  🔴 SỬA 31/07: câu này nói quan hệ KHỐI LƯỢNG và đã bị FACTS.md F14a bác — ô 30/06 khớp nguồn Merkle (5,4e-8), không khớp lượt chuyển (0,565). Độ trễ 17 NGÀY vẫn đứng; chỉ vế khối lượng bị rút."
+  },
+  "8_control": {
+   "âm_địa_chỉ_bịa": {
+    "n": 0,
+    "PASS": true
+   },
+   "dương_bỏ_lọc": {
+    "n": 477,
+    "PASS": true
+   }
+  }
+ },
+ "TỔNG": "9/9 PASS",
+ "FAIL": [],
+ "_sua_31_07": "Ảnh chụp giữ NGUYÊN mọi giá trị đã đo (RULES §9). Một ghi chú DIỄN GIẢI trong đó nay sai và được đánh dấu tại chỗ, không xoá: mục '9_do_tre_17_ngay_trong_cung_payload' viết ô nhãn 30/06 'chở khối lượng của lần chuyển 17/07'. PENDLE/FACTS.md F14a đo được ô đó khớp tổng đợt phân phối Merkle tới 5,4e-8, còn lệch lượt chuyển 0,565 ⇒ quan hệ đúng để phát biểu là quan hệ NGÀY (+17 ngày), không phải quan hệ khối lượng."
+}
