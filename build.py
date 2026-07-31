@@ -19,6 +19,9 @@ BẢY CỔNG, tất cả đều CHẶN build — không cái nào chỉ cảnh b
   7 XEM TRƯỚC  bài phải có dòng mô tả (60–200 ký tự) + ảnh xem trước tồn tại thật:
                 thiếu thì link dán ra Telegram/Discord/forum chỉ còn một dòng chữ trơn
   (+ ảnh phục vụ phải TRÙNG BYTE với bản builder sinh ra, và phải khai builder nào)
+ 11 FACT       đơn vị đăng thứ hai (`brief-chien-luoc-dang-x.md §0b`): mỗi Fact phải
+                có ĐỦ ba thứ — một con số · một block · một lệnh tự kiểm — cộng câu
+                chặn suy luận sai khai tường minh. Danh sách đầy đủ: TEN_CONG.
 
 Cổng 3 và 5 là bản MÁY của một lỗi thật: bài #1 suýt đăng với một claim bị cắt
 mất falsifier, trong khi ô "[x] có falsifier?" vẫn tick vì thừa kế từ bản trước
@@ -155,7 +158,8 @@ HIEN_VAT = {
 }
 
 TEN_CONG = ["ngôn ngữ", "cấu trúc", "claim", "ngôi xưng", "đánh dấu",
-            "thuộc tính số", "xem trước", "đo lại", "hạn", "ghi trước", "liên kết"]
+            "thuộc tính số", "xem trước", "đo lại", "hạn", "ghi trước", "liên kết",
+            "fact"]
 
 # chữ ký hàm hợp lệ: tên + danh sách kiểu, vd `balanceOf(address)` · `x()` · `f(uint256,address)`
 RE_KY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*\((|[a-z0-9\[\],]+)\)$")
@@ -995,6 +999,103 @@ def vn_ngay(iso: str) -> str:
     return f"{iso[8:10]}/{iso[5:7]}/{iso[0:4]}"
 
 
+def doc_facts() -> list:
+    """Đọc `content/facts.json` — đơn vị đăng thứ hai (`brief-chien-luoc-dang-x.md §0b`).
+
+    Fact = một phát biểu ĐÚNG TẠI MỘT BLOCK, kiểm được bằng MỘT lệnh. Không phải bài:
+    không ordinal, không dòng claim, không trang riêng — cả bộ gom vào `/facts/`.
+
+    🔴 File vắng hoặc danh sách rỗng ⇒ trả `[]` và KHÔNG dựng trang. Một trang rỗng
+    đi ra ngoài còn tệ hơn không có trang: nó hứa một mục rồi để trắng.
+    """
+    p = CONTENT / "facts.json"
+    if not p.is_file():
+        return []
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as e:
+        raise LoiCong(f"content/facts.json không phải JSON hợp lệ — {e}")
+    fs = d.get("facts", d) if isinstance(d, dict) else d
+    if not isinstance(fs, list):
+        raise LoiCong("content/facts.json phải là list, hoặc object có khoá 'facts'")
+    return fs
+
+
+def cong_facts(fs: list) -> None:
+    """Cổng ⑪ — luật lọt cửa của `§0b`, phần máy kiểm được.
+
+    Ba thứ bắt buộc vì Fact chỉ có đúng ba thứ: một con số · một block · một lệnh.
+    Thiếu bất kỳ cái nào thì nó không còn là Fact, nó là một câu khẳng định trần —
+    đúng thứ kênh này sinh ra để không phải là.
+
+    🔴 `chan` (câu chặn suy luận sai) BẮT BUỘC KHAI, kể cả khi không có. Máy không
+    biết một fact có suy luận sai phổ thông đi kèm hay không, nên nó không tự quyết
+    được — nhưng nó ÉP người viết phải quyết. Để trống không phải một lựa chọn;
+    viết "KHÔNG CÓ" là một lựa chọn, và nó để lại dấu vết.
+    """
+    thay = set()
+    for i, f in enumerate(fs, 1):
+        o = f"content/facts.json[{i}]"
+        if not isinstance(f, dict):
+            raise LoiCong(f"{o} phải là object")
+        fid = str(f.get("id", "")).strip()
+        if not fid:
+            raise LoiCong(f"{o} thiếu 'id'")
+        if fid in thay:
+            raise LoiCong(f"{o} id '{fid}' TRÙNG — id là neo của URL, trùng là mất một mục")
+        thay.add(fid)
+        for k, ten in (("cau", "câu fact"), ("so", "CON SỐ"),
+                       ("block", "BLOCK + giờ đọc"), ("lenh", "LỆNH tự kiểm")):
+            if not str(f.get(k, "")).strip():
+                raise LoiCong(f"{o} ({fid}) thiếu {ten} — Fact chỉ có ba thứ, "
+                              f"thiếu một là không còn là Fact")
+        if not re.search(r"\d", str(f["block"])):
+            raise LoiCong(f"{o} ({fid}) 'block' không mang số block — "
+                          f"'{f['block']}' đọc như một câu, không như một mốc")
+        if len(str(f["lenh"]).strip()) < 10:
+            raise LoiCong(f"{o} ({fid}) 'lenh' quá ngắn để chạy được: '{f['lenh']}' — "
+                          f"đường tự kiểm phải dán vào terminal là chạy")
+        if not str(f.get("chan", "")).strip():
+            raise LoiCong(f"{o} ({fid}) thiếu 'chan' — câu chặn suy luận sai. "
+                          f"Không có suy luận nào cần chặn thì ghi thẳng \"KHÔNG CÓ\"; "
+                          f"để trống nghĩa là chưa ai quyết")
+        for k in ("cau", "so", "chan"):
+            cong_ngon_ngu(str(f[k]), f"{o}.{k}")
+            cong_ngoi_xung(str(f[k]), f"{o}.{k}")
+
+
+def trang_facts(fs: list) -> str:
+    """Trang `/facts/` — mỗi Fact một khối, mới nhất trước."""
+    co = sorted(fs, key=lambda f: str(f.get("ngay", "")), reverse=True)
+    hang = []
+    for f in co:
+        dt = str(f.get("doi_tuong", "")).strip()
+        ng = str(f.get("ngay", "")).strip()
+        chan = str(f["chan"]).strip()
+        p_chan = ("" if chan.upper() == "KHÔNG CÓ" else
+                  f'<p class="dong"><span class="nhan">ĐỪNG ĐỌC THÀNH</span>'
+                  f'{ihtml.escape(chan)}</p>')
+        p_ng = (f'<p class="tro">{ihtml.escape(str(f["nguon"]))}</p>'
+                if str(f.get("nguon", "")).strip() else "")
+        hang.append(f"""<article class="claim" id="{ihtml.escape(str(f['id']))}">
+  <h3><span class="chip">{ihtml.escape(dt) if dt else 'FACT'}</span>
+      <span class="moc">{vn_ngay(ng) if ng else ''}</span></h3>
+  <p class="dong"><span class="nhan">FACT</span>{ihtml.escape(str(f['cau']))}</p>
+  <p class="dong"><span class="nhan">SỐ</span>{ihtml.escape(str(f['so']))}</p>
+  <p class="dong"><span class="nhan">ĐỌC TẠI</span>{ihtml.escape(str(f['block']))}</p>
+  <p class="dong"><span class="nhan">TỰ KIỂM</span><code>{ihtml.escape(str(f['lenh']))}</code></p>
+  {p_chan}
+  {p_ng}
+</article>""")
+    return (f'<h1>Facts</h1>'
+            f'<div class="dem"><span class="to">{len(co)}</span> fact</div>'
+            f'<p class="dan">Mỗi mục dưới đây là <b>một sự thật đúng tại một block</b>, kèm '
+            f'<b>một lệnh</b> để bạn tự đọc lại con số đó. Không phân tích, không dự đoán, '
+            f'không nhận định giá. Cái nào cần giải thích dài hơn một dòng thì nó không nằm '
+            f'ở đây — nó là một bài.</p>'
+            f'<section class="so">{"".join(hang)}</section>')
+
+
 def trang_ghi_truoc(moi: list) -> str:
     """Trang riêng: mọi lần desk ghi trước một con số hoặc một ngưỡng, và kết quả.
 
@@ -1162,6 +1263,8 @@ def main() -> None:
         print(f"  ✓ bai/{slug_}/  ·  {len(claims)} claim ({tom})")
 
     gt = [c for _, _, c in moi_claim if c.get("ghi_truoc")]
+    facts = doc_facts()
+    cong_facts(facts)          # cổng ⑪ chạy TRƯỚC khi dựng, kể cả khi danh sách rỗng
     fm_i, body_i = front((CONTENT / "index.md").read_text(encoding="utf-8"), "content/index.md")
     cong_ngon_ngu(body_i, "content/index.md")
     cong_ngoi_xung(body_i, "content/index.md")
@@ -1171,8 +1274,10 @@ def main() -> None:
         for f, s, n, sg in bai)
     than_i = (f'<h1>{ihtml.escape(fm_i["tagline"])}</h1>' + render(body_i, "content/index.md")
               + bang_diem(moi_claim)
-              + ('<p class="dan-gt"><a href="ghi-truoc/">Xem đủ những lần tôi ghi trước một '
+              + ('<p class="dan-gt"><a href="track-record/">Xem đủ những lần tôi ghi trước một '
                  'con số rồi đối chiếu kết quả →</a></p>' if gt else "")
+              + ('<p class="dan-gt"><a href="facts/">Facts — mỗi mục một con số, một block, '
+                 'một lệnh để bạn tự đọc lại →</a></p>' if facts else "")
               + sap_phan_dinh(moi_claim)
               + f'<h2 id="bai">Bài</h2>{ds}')
     if not 60 <= len(fm_i.get("mo_ta", "").strip()) <= 200:
@@ -1184,18 +1289,55 @@ def main() -> None:
                     "loai": "website", "tieu_de_og": "BlockPinned — số nào cũng truy ngược được"}),
         encoding="utf-8")
 
-    # trang /ghi-truoc/ — thứ khó làm giả nhất desk có, nên nó được một URL riêng để dán
+    # trang /track-record/ — thứ khó làm giả nhất desk có, nên nó được một URL riêng để dán
+    # 🔴 ĐỔI TÊN 31/07: `/ghi-truoc/` → `/track-record/` (user chốt). Lý do đổi nằm ở
+    # `brief-chien-luoc-dang-x.md §0b`: tên cũ mô tả THAO TÁC (ghi vào lúc nào) chứ không
+    # mô tả thứ đang nằm ở đó, và nó đứng quá gần tên định đặt cho đơn vị đăng thứ hai.
+    # Chữ "ghi trước" trong THÂN BÀI giữ nguyên tiếng Việt — nó là giọng kênh và đã nằm
+    # trong bài đã đăng. Chỉ URL + nhãn mục đổi (LAUNCH §1: shell EN, ruột VN).
     if gt:
-        d_gt = OUT / "ghi-truoc"
+        d_gt = OUT / "track-record"
         d_gt.mkdir(parents=True, exist_ok=True)
         (d_gt / "index.html").write_text(trang(
-            "Tôi ghi trước, rồi kết quả ra sao — BlockPinned", trang_ghi_truoc(moi_claim), t, "..",
+            "Track record — tôi ghi trước, rồi kết quả ra sao — BlockPinned",
+            trang_ghi_truoc(moi_claim), t, "..",
             meta={"mo_ta": "Mọi lần BlockPinned dán một con số hoặc một ngưỡng ra công khai "
                            "trước khi biết đáp án, kèm kết quả — cả những lần sai và những "
                            "lần chưa có kết quả.",
-                  "duong": "/ghi-truoc/", "anh": "post01-card.png", "loai": "website",
-                  "tieu_de_og": "Tôi ghi trước, rồi kết quả ra sao"}), encoding="utf-8")
-        print(f"  ✓ ghi-truoc/  ·  {len(gt)} lần ghi trước")
+                  "duong": "/track-record/", "anh": "post01-card.png", "loai": "website",
+                  "tieu_de_og": "Track record — tôi ghi trước, rồi kết quả ra sao"}),
+            encoding="utf-8")
+        print(f"  ✓ track-record/  ·  {len(gt)} lần ghi trước")
+
+        # 🔴 Đường cũ PHẢI còn sống. Đã kiểm 31/07: không bài X/TG nào đã đăng chứa URL
+        # `/ghi-truoc/` — nhưng site sống từ 30/07, trang bài có link nội bộ tới nó, và
+        # một URL đã từng phục vụ thì không được trả 404 chỉ vì desk đổi ý về cái tên.
+        d_cu = OUT / "ghi-truoc"
+        d_cu.mkdir(parents=True, exist_ok=True)
+        (d_cu / "index.html").write_text(
+            '<!doctype html><html lang="vi"><head><meta charset="utf-8">'
+            f'<link rel="canonical" href="{BASE}/track-record/">'
+            '<meta name="robots" content="noindex">'
+            '<meta http-equiv="refresh" content="0; url=/track-record/">'
+            '<title>Đã chuyển sang /track-record/</title></head>'
+            '<body><p>Trang này đã chuyển sang '
+            f'<a href="{BASE}/track-record/">{BASE}/track-record/</a>.</p></body></html>\n',
+            encoding="utf-8")
+        print("  ✓ ghi-truoc/  ·  trang chuyển hướng sang track-record/")
+
+    # trang /facts/ — đơn vị đăng thứ hai (§0b). Rỗng thì KHÔNG dựng: một mục trống
+    # đi ra ngoài là một lời hứa để trắng, tệ hơn không có mục.
+    if facts:
+        d_f = OUT / "facts"
+        d_f.mkdir(parents=True, exist_ok=True)
+        (d_f / "index.html").write_text(trang(
+            "Facts — BlockPinned", trang_facts(facts), t, "..",
+            meta={"mo_ta": "Mỗi mục là một sự thật đúng tại một block, kèm một lệnh để bạn "
+                           "tự đọc lại con số đó. Không phân tích, không nhận định giá.",
+                  "duong": "/facts/", "anh": "avatar-800.png", "loai": "website",
+                  "tieu_de_og": "Facts — mỗi mục một con số, một block, một lệnh"}),
+            encoding="utf-8")
+        print(f"  ✓ facts/  ·  {len(facts)} fact")
 
     # ── sitemap + robots: điều kiện để máy tìm THẤY trang ────────────────────────
     # Thiếu hai file này thì site vẫn sống, chỉ là không ai tìm ra — đúng loại hỏng
@@ -1204,7 +1346,12 @@ def main() -> None:
     ngay_moi = max(f["date"] for f, *_ in bai)
     loc = [(BASE + "/", ngay_moi)]
     if gt:
-        loc.append((f"{BASE}/ghi-truoc/", ngay_moi))
+        loc.append((f"{BASE}/track-record/", ngay_moi))
+    # 🔴 `/ghi-truoc/` KHÔNG vào sitemap: nó là trang chuyển hướng, đã gắn `noindex`.
+    # Khai một URL chuyển hướng trong sitemap là bảo máy tìm kiếm đi lập chỉ mục cái
+    # bóng của trang thật — hai URL cùng nội dung, và cái thắng có thể là cái sai.
+    if facts:
+        loc.append((f"{BASE}/facts/", max(str(f.get("ngay", "")) or ngay_moi for f in facts)))
     loc += [(f"{BASE}/bai/{s}/", f["date"]) for f, s, *_ in bai]
     (OUT / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'

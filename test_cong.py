@@ -29,6 +29,29 @@ def sua_claims(root, fn):
     p.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+# Fact mẫu HỢP LỆ — bộ thử tự dựng, không lấy từ content/ thật. Lý do: `facts.json`
+# thật có thể rỗng (và đang rỗng), nên ca thử phải mang theo nguyên liệu của nó.
+# Số dưới đây là số THẬT đã đo (ENA/FACTS.md:12) nhưng dùng ở đây chỉ để cổng có
+# thứ để nhai — bộ thử KHÔNG phải đường xuất bản.
+FACT_MAU = {
+    "id": "T001", "ngay": "2026-07-31", "doi_tuong": "ENA",
+    "cau": "ENA chưa từng bị đốt một wei nào.",
+    "so": "totalSupply() = 15.000.000.000 ENA = đúng 15e27 wei",
+    "block": "blk 25.571.508",
+    "lenh": "cast call 0x57e114b691db790c35207b2e685d4a43181e6061 \"totalSupply()(uint256)\"",
+    "chan": "\"Không có đốt\" không có nghĩa là sắp in thêm — đã mint hết từ đầu.",
+    "nguon": "ENA/FACTS.md:12",
+}
+
+
+def sua_facts(root, fn, nhan_doi=False):
+    f = json.loads(json.dumps(FACT_MAU))
+    fn(f)
+    ds = [f, json.loads(json.dumps(FACT_MAU))] if nhan_doi else [f]
+    (root / "site" / "content" / "facts.json").write_text(
+        json.dumps({"facts": ds}, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
 CA = [
     ("control âm — không bẻ gì", None, None),
     ("① NGÔN NGỮ · từ đã khai tử",
@@ -127,6 +150,32 @@ CA = [
      lambda r: (r / "site" / "assets" / "la-mat.png").write_bytes(
          (r / "site" / "assets" / "favicon-16.png").read_bytes()),
      "chưa khai builder"),
+
+    # ── ⑪ FACT — đơn vị đăng thứ hai (brief-chien-luoc-dang-x.md §0b) ───────────
+    # Chặn đúng ba thứ làm nên một Fact (số · block · lệnh) + câu chặn suy luận sai.
+    # 🔴 Ca cuối là control DƯƠNG: một facts.json HỢP LỆ phải build được. Thiếu nó thì
+    # sáu ca trên không phân biệt được "cổng chặn đúng" với "cổng chặn tất".
+    ("⑪ FACT · thiếu con số",
+     lambda r: sua_facts(r, lambda f: f.pop("so")),
+     "thiếu CON SỐ"),
+    ("⑪ FACT · 'block' không mang số block",
+     lambda r: sua_facts(r, lambda f: f.update(block="đọc hôm nay")),
+     "không mang số block"),
+    ("⑪ FACT · lệnh tự kiểm ngắn tới mức không chạy được",
+     lambda r: sua_facts(r, lambda f: f.update(lenh="cast")),
+     "quá ngắn để chạy được"),
+    ("⑪ FACT · để trống câu chặn suy luận sai",
+     lambda r: sua_facts(r, lambda f: f.update(chan="")),
+     "chưa ai quyết"),
+    ("⑪ FACT · hai fact trùng id",
+     lambda r: sua_facts(r, lambda f: None, nhan_doi=True),
+     "TRÙNG"),
+    ("⑪ FACT · kết luận định giá lọt vào câu fact  ← nhóm ①b",
+     lambda r: sua_facts(r, lambda f: f.update(cau="Token này đang rẻ so với doanh thu.")),
+     "TỪ ĐÃ KHAI TỬ"),
+    ("⑪ FACT · control DƯƠNG — facts.json hợp lệ phải BUILD ĐƯỢC",
+     lambda r: sua_facts(r, lambda f: None),
+     None),
 ]
 
 
