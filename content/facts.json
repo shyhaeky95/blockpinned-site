@@ -1,54 +1,6 @@
 {
  "facts": [
   {
-   "id": "cake-farm-alloc-3-chu-ky",
-   "ngay": "2026-08-02",
-   "cau": "Hợp đồng quyết định phần thưởng CAKE cho toàn bộ farm v3 của PancakeSwap trên BSC do một ví đa chữ ký 3-của-7 sở hữu trực tiếp, không có hợp đồng trễ nào ở giữa. Source đã verify ghi hàm đổi phân bổ là set(uint256,uint256,bool) external onlyOwner, và owner() trỏ thẳng vào ví đó. Farm v2 của cùng dự án thì nằm sau một timelock 6 giờ.",
-   "so": "owner() = 0xecc90d54… · getThreshold() = 3 · getOwners() = 7 địa chỉ · totalAllocPoint = 6.079 chia cho 46 pool · pool USDT/SKHYB nhận 68 = 1,1186%, hạng 10, và hợp đồng pool đó mới được tạo 18,5 ngày trước lúc đọc",
-   "block": "BSC block 113.437.121 · 00h53 ngày 02/08/2026 giờ VN (01/08, 17:53:44Z)",
-   "lenh": "curl -s https://bsc-dataseed.bnbchain.org -H 'content-type: application/json' -d '[{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"eth_call\",\"params\":[{\"to\":\"0x556B9306565093C855AEA9AE92A594704c2Cd59e\",\"data\":\"0x8da5cb5b\"},\"latest\"]},{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"eth_call\",\"params\":[{\"to\":\"0x556B9306565093C855AEA9AE92A594704c2Cd59e\",\"data\":\"0x17caf6f1\"},\"latest\"]}]'",
-   "chan": "Nó không nói phân bổ đó sai, cũng không nói khối lượng của pool là giả — khối lượng tháng 7 của chính pool này đã được đo riêng bằng bốn phép thử có đối chứng, kết quả sẽ đăng thành một bài. 1,1186% là thị phần trong ngân sách farm v3 trên BSC, không phải trong tổng phát hành CAKE: hai mẫu số khác nhau. Và một chi tiết đi ngược chiều suy diễn dễ có nhất: phân bổ của pool đó đã bị cắt từ 111 xuống 68 kể từ 23/07, tức đang giảm chứ không tăng.",
-   "khoang_cach": {
-    "tin": "Phần thưởng farm của một sàn lớn do người nắm token quyết, hoặc ít nhất phải đi qua một khoảng trễ trước khi đổi được",
-    "o_dau": "Không gian bỏ phiếu cakevote.eth trên Snapshot đang sống với 3.740 proposal, đặt cạnh owner() của MasterChefV3 và modifier onlyOwner của hàm set() trong source đã verify"
-   },
-   "card": {
-    "kicker": "PANCAKESWAP",
-    "figure": "3 / 7",
-    "label": "CHỮ KÝ ĐỔI ĐƯỢC THƯỞNG CỦA MỌI FARM V3. KHÔNG TIMELOCK.",
-    "readout": "set(pid, allocPoint) → onlyOwner",
-    "he_qua": "POOL SINH THÁNG NÀY ĐÃ ĐỨNG HẠNG 10",
-    "anchor": "BSC · BLOCK 113.437.121 · 01/08/2026 · 17:53:44Z",
-    "kiem": [
-     {
-      "file": "data/verify_fact_cake_2026-08-02.json",
-      "duong": "SAFE_CHU.getThreshold",
-      "bang": 3
-     },
-     {
-      "file": "data/verify_fact_cake_2026-08-02.json",
-      "duong": "SAFE_CHU.getOwners_n",
-      "bang": 7
-     },
-     {
-      "file": "data/verify_fact_cake_2026-08-02.json",
-      "duong": "MCV3.co_timelock_giua_owner_va_contract",
-      "bang": false
-     },
-     {
-      "file": "data/verify_fact_cake_2026-08-02.json",
-      "duong": "POOL_SKHYB.hang",
-      "bang": 10
-     },
-     {
-      "file": "data/verify_fact_cake_2026-08-02.json",
-      "duong": "CONTROL.closure_allocPoint.khop",
-      "bang": true
-     }
-    ]
-   }
-  },
-  {
    "id": "kite-khoa-dang-ky-staking",
    "ngay": "2026-08-01",
    "cau": "Hợp đồng StakingManager của Kite L1 đã khoá đăng ký từ 13/04 và tới block 144.285 chưa có lần nào trả trạng thái đó về false — 109 ngày liên tục, bật 17 ngày lịch trước ngày dự án công bố mainnet. Cả hai hàm nhận người mới vào (initiateValidatorRegistration, initiateDelegatorRegistration) đều mang modifier whenRegistrationNotPaused; quét 24 file source của bản đang chạy, không hàm external nào khác mở được một lượt đăng ký mới.",
