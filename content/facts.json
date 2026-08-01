@@ -1,0 +1,101 @@
+{
+ "facts": [
+  {
+   "id": "kite-khoa-dang-ky-staking",
+   "ngay": "2026-08-01",
+   "cau": "Hợp đồng StakingManager của Kite L1 đã khoá đăng ký từ 13/04 và tới block 144.285 chưa có lần nào trả trạng thái đó về false — 109 ngày liên tục, bật 17 ngày lịch trước ngày dự án công bố mainnet. Cả hai hàm nhận người mới vào (initiateValidatorRegistration, initiateDelegatorRegistration) đều mang modifier whenRegistrationNotPaused; quét 24 file source của bản đang chạy, không hàm external nào khác mở được một lượt đăng ký mới.",
+   "so": "isRegistrationPaused() = true · khoá từ block 62.922 (13/04, 14:38:08Z) · lượt đăng ký cuối block 50.199 (26/03), 128 ngày trước",
+   "block": "Kite L1 block 144.285 · 11h41 ngày 01/08/2026 giờ VN (04:41:12Z)",
+   "lenh": "curl -s https://rpc.gokite.ai -H 'content-type: application/json' -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"eth_call\",\"params\":[{\"to\":\"0x7d627b0F5Ec62155db013B8E7d1Ca9bA53218E82\",\"data\":\"0x660a0696\"},\"latest\"]}'",
+   "chan": "Nó không nói chain ngừng chạy — chính con số block đọc được hôm nay bác điều đó. Nó cũng không nói lý do, vì động cơ không đọc được từ chain. Và nó nói về hợp đồng StakingManager này, không nói về mọi đường vào staking có thể tồn tại ngoài nó.",
+   "khoang_cach": {
+    "tin": "Kite đã ra mainnet nên hệ staking của nó đang mở cho người tham gia",
+    "o_dau": "Thông cáo công ty trên GlobeNewswire ngày 30/04/2026 công bố Kite Chain mainnet và Agent Passport production launch, đặt cạnh state của hợp đồng StakingManager"
+   },
+   "card": {
+    "kicker": "KITE L1",
+    "figure": "109 NGÀY",
+    "label": "HỢP ĐỒNG STAKING KHOÁ ĐĂNG KÝ, CHƯA TỪNG MỞ LẠI",
+    "readout": "isRegistrationPaused() → true",
+    "he_qua": "BẬT 17 NGÀY TRƯỚC NGÀY CÔNG BỐ MAINNET",
+    "anchor": "KITE L1 · BLOCK 144.285 · 01/08/2026 · 04:41:12Z",
+    "kiem": [
+     {
+      "file": "data/verify_facts_2026-08-01.json",
+      "duong": "A_KITE.isRegistrationPaused",
+      "bang": true
+     },
+     {
+      "file": "data/verify_facts_2026-08-01.json",
+      "duong": "A_KITE.head_block",
+      "bang": 144285
+     },
+     {
+      "file": "data/verify_facts_2026-08-01.json",
+      "duong": "control.A1_chain_dung_2366",
+      "bang": true
+     }
+    ]
+   },
+   "dang": {
+    "x": "https://x.com/blockpinned/status/2083572933537288258",
+    "x_tu_kiem": "https://x.com/blockpinned/status/2083572941128904704",
+    "luc": "22h17'52 ngày 01/08/2026 giờ VN (15:17:52Z)",
+    "anh": "card-fact-kite-khoa-dang-ky-staking.png",
+    "telegram": "https://t.me/blockpinned/35",
+    "doi_chieu": "author blockpinned; ảnh card có đính kèm (mediaDetails: photo); note_tweet có mặt ⇒ đăng dạng dài. 279 ký tự đầu đọc được qua syndication khớp bản export tới từng ký tự. Thân bài dài KHÔNG kiểm được bằng hai endpoint công khai (note_tweet chỉ chở id) — đối chiếu đầy đủ lấy từ mặt Telegram.",
+    "x_tu_kiem_doi_chieu": "reply cùng tài khoản, in_reply_to đúng bài chính 2083572933537288258, chở nguyên khối lệnh tự kiểm. User tách khối này khỏi bài chính lúc đăng.",
+    "telegram_doi_chieu": "/34 ảnh card (không caption) + /35 chữ. /35 = 2.379/2.379 ký tự, 11/11 dòng, TRÙNG TỪNG KÝ TỰ với bản export; 0 dấu ống, 0 '**', 0 '##'. Đây là mặt duy nhất đối chiếu được toàn văn.",
+    "luu_y_be_mat": "🔴 Trên X, chuỗi https://rpc.gokite.ai trong bài tự kiểm bị bọc t.co (display_url = 'rpc.gokite.ai', mất https://). Đo 01/08: chạy đúng thứ màn hình X hiện ⇒ curl vào http://rpc.gokite.ai/ và TREO (http=000, không trả gì sau ~2 phút); chạy bản in đầy đủ ⇒ trả 0x…01. Mặt Telegram và trang này giữ nguyên https:// nên chạy được. Cùng họ nợ công cụ với ca 'ssv.network' của Fact SSV.",
+    "web": "https://blockpinned.com/facts/#kite-khoa-dang-ky-staking"
+   }
+  },
+  {
+   "id": "ssv-khong-co-cung-toi-da",
+   "ngay": "2026-08-01",
+   "cau": "Hợp đồng SSV không đặt một mức cung tối đa nào. Không phải chưa công bố — trong mã của token không tồn tại thứ đó: cap() và maxSupply() đều revert, source đã verify chỉ có Ownable, ERC20, ERC20Burnable cùng một hàm mint onlyOwner, không kế thừa ERC20Capped. Ví chủ là Safe 5-của-9, tại cùng block có 0 module và 0 guard.",
+   "so": "totalSupply() = 17.361.673,603050641926322837 SSV · con số cung mà CoinGecko dùng thấp hơn 2.662.500,50 SSV, bằng 15,34% con số hợp đồng",
+   "block": "Ethereum block 25.657.700 · 11h42 ngày 01/08/2026 giờ VN (04:42:47Z)",
+   "lenh": "curl -s https://ethereum-rpc.publicnode.com -H 'content-type: application/json' -d '[{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"eth_call\",\"params\":[{\"to\":\"0x9D65fF81a3c488d585bBfb0Bfe3c7707c7917f54\",\"data\":\"0x355274ea\"},\"latest\"]},{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"eth_call\",\"params\":[{\"to\":\"0x9D65fF81a3c488d585bBfb0Bfe3c7707c7917f54\",\"data\":\"0x18160ddd\"},\"latest\"]}]'",
+   "chan": "Không có mức cung tối đa không có nghĩa là đang phát thêm. Đây là câu về giới hạn, không phải về tốc độ, và vế đó đã đo: cùng giá trị totalSupply đứng y hệt tới từng wei ở block 25.578.857 (21/07) và block 25.657.700 hôm nay, cách nhau 78.843 block. Cùng cặp block đó totalSupply của USDT đổi 2.606.648,29 đơn vị, nên con số đứng yên của SSV là phát biểu về SSV chứ không phải về công cụ đọc. Ràng buộc ngoài chain thì bài này không đo được.",
+   "khoang_cach": {
+    "tin": "SSV có một con số FDV, và con số đó là một mức cung có giới hạn để so sánh",
+    "o_dau": "API công khai của CoinGecko cho ssv-network: ô fully_diluted_valuation có số, trong khi ô max_supply là null, và ô FDV bằng đúng ô vốn hoá"
+   },
+   "card": {
+    "kicker": "SSV",
+    "figure": "17.361.673,60",
+    "label": "SSV ĐÃ PHÁT HÀNH. HỢP ĐỒNG KHÔNG ĐẶT MỨC TỐI ĐA.",
+    "readout": "cap() → execution reverted",
+    "he_qua": "KHÔNG MỨC TỐI ĐA THÌ KHÔNG CÓ FDV",
+    "anchor": "ETHEREUM · BLOCK 25.657.700 · 01/08/2026 · 04:42:47Z",
+    "kiem": [
+     {
+      "file": "data/verify_facts_step2_2026-08-01.json",
+      "duong": "SSV_y_het_tung_wei",
+      "bang": true
+     },
+     {
+      "file": "data/verify_facts_step2_2026-08-01.json",
+      "duong": "control_USDT_PHAI_KHAC",
+      "bang": true
+     },
+     {
+      "file": "data/verify_facts_2026-08-01.json",
+      "duong": "B_SSV.owner_khop_ho_so",
+      "bang": true
+     }
+    ]
+   },
+   "dang": {
+    "x": "https://x.com/blockpinned/status/2083432011432374650",
+    "luc": "2026-08-01 · giờ VN",
+    "anh": "card-fact-ssv-khong-co-cung-toi-da.png",
+    "telegram": "https://t.me/blockpinned/33",
+    "doi_chieu": "bản dán đối chiếu 01/08: 2.364/2.364 ký tự, 7/7 mỏ neo có mặt kể cả dòng cuối; lệch đúng 1 chỗ — 'ssv.network' đổi thành 'SSV network' để X không tự biến thành link. Không con số nào bị đụng.",
+    "telegram_doi_chieu": "/32 ảnh card (không caption) + /33 chữ 2.364 ký tự, 0 dấu ống, 0 '**', 0 '##'. Lệch bản X đúng 1 token: TG giữ 'ssv.network', X đổi thành 'SSV network'. Không con số nào khác nhau.",
+    "web": "https://blockpinned.com/facts/#ssv-khong-co-cung-toi-da"
+   }
+  }
+ ]
+}
