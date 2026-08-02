@@ -1,6 +1,59 @@
 {
  "facts": [
   {
+   "id": "cake-farm-pool-2h27",
+   "ngay": "2026-08-02",
+   "cau": "USDT/SKHYB được đưa vào farm v3 của PancakeSwap chỉ 2 giờ 27 phút sau khi hợp đồng pool ra đời, và vào với 2,3909% toàn bộ ngân sách thưởng của farm. Từ 14/07 đến 31/07 phần đó bị cắt còn 1,1186% qua ba lượt, cách nhau 7 ngày 0 giờ 23 phút rồi 6 ngày 21 giờ 30 phút. Cả ba lượt đều là một đợt cân lại hàng loạt: mỗi giao dịch chở 25, 24 và 24 log SetPool với số pid riêng biệt đúng bằng số log, và cả ba đều kèm một log ExecutionSuccess phát từ đúng địa chỉ mà owner() của hợp đồng farm trả về.",
+   "so": "14/07: 138 điểm trên tổng 5.772 = 2,3909% · 17/07: 111/5.915 = 1,8766% · 24/07: 107/6.004 = 1,7821% · 31/07 tới nay: 68/6.079 = 1,1186%, hạng 10 trong 46 pool · điểm giảm 50,7% nhưng tổng tăng 5,3% nên thị phần giảm 53,2% · hợp đồng pool ra đời block 109.883.740, vào farm block 109.903.364, cách nhau 2 giờ 27 phút 13 giây",
+   "block": "BSC block 113.437.121 · 00h53 ngày 02/08/2026 giờ VN (01/08, 17:53:44Z)",
+   "lenh": "curl -s https://bsc-dataseed.bnbchain.org -H 'content-type: application/json' -d '[{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"eth_call\",\"params\":[{\"to\":\"0x556B9306565093C855AEA9AE92A594704c2Cd59e\",\"data\":\"0x1526fe27000000000000000000000000000000000000000000000000000000000000024b\"},\"latest\"]},{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"eth_call\",\"params\":[{\"to\":\"0x556B9306565093C855AEA9AE92A594704c2Cd59e\",\"data\":\"0x17caf6f1\"},\"latest\"]}]'",
+   "chan": "Không nói pool đó giả, cũng không nói khối lượng của nó là giả — khối lượng tháng 7 của chính pool này đã được đo riêng bằng bốn phép thử có đối chứng và sẽ đăng thành một bài. Không nói phân bổ đang được bơm lên: hướng đo được là 2,39% xuống 1,12%. Con số 1,1186% là thị phần trong ngân sách farm v3 trên BSC, không phải trong tổng phát hành CAKE. Không gán danh tính cho bảy địa chỉ chủ, vì phép đo chỉ xác nhận địa chỉ và ngưỡng chữ ký. Ví đó có gắn một guard mà source chưa verify: guard có phát log trong cả ba giao dịch và không chặn lượt nào, nhưng bài không kết luận nó áp đặt những điều kiện gì.",
+   "khoang_cach": {
+    "tin": "Phần thưởng farm của một sàn lớn do người nắm token quyết, qua bỏ phiếu",
+    "o_dau": "Không gian bỏ phiếu cakevote.eth trên Snapshot đang sống với 3.740 proposal, đặt cạnh một giao dịch duy nhất đổi phân bổ của 24 pool và log ExecutionSuccess của ví đa chữ ký trong chính giao dịch đó"
+   },
+   "card": {
+    "kicker": "PANCAKESWAP",
+    "figure": "2 GIỜ 27 PHÚT",
+    "label": "TỪ LÚC POOL USDT/SKHYB RA ĐỜI TỚI LÚC ĐƯỢC CHIA THƯỞNG",
+    "readout": "AddPool → 2,39% ngân sách farm",
+    "he_qua": "SAU ĐÓ SUẤT ẤY BỊ CẮT HƠN MỘT NỬA",
+    "anchor": "BSC · BLOCK 113.437.121 · 01/08/2026 · 17:53:44Z",
+    "kiem": [
+     {
+      "file": "data/verify_fact_cake_2026-08-02.json",
+      "duong": "POOL_SKHYB.addpool_alloc",
+      "bang": 138
+     },
+     {
+      "file": "data/verify_fact_cake_2026-08-02.json",
+      "duong": "POOL_SKHYB.hang",
+      "bang": 10
+     },
+     {
+      "file": "data/verify_fact_cake_2026-08-02.json",
+      "duong": "BA_LUOT.n_luot_co_ExecutionSuccess_tu_Safe",
+      "bang": 3
+     },
+     {
+      "file": "data/verify_fact_cake_2026-08-02.json",
+      "duong": "BA_LUOT.pid_rieng_bang_so_log",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact_cake_2026-08-02.json",
+      "duong": "CONTROL.closure_allocPoint.khop",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact_cake_2026-08-02.json",
+      "duong": "THI_PHAN_TAI_TUNG_MOC.thi_phan_giam_pct",
+      "bang": -53.2
+     }
+    ]
+   }
+  },
+  {
    "id": "kite-khoa-dang-ky-staking",
    "ngay": "2026-08-01",
    "cau": "Hợp đồng StakingManager của Kite L1 đã khoá đăng ký từ 13/04 và tới block 144.285 chưa có lần nào trả trạng thái đó về false — 109 ngày liên tục, bật 17 ngày lịch trước ngày dự án công bố mainnet. Cả hai hàm nhận người mới vào (initiateValidatorRegistration, initiateDelegatorRegistration) đều mang modifier whenRegistrationNotPaused; quét 24 file source của bản đang chạy, không hàm external nào khác mở được một lượt đăng ký mới.",
