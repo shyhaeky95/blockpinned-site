@@ -1,82 +1,90 @@
 {
-  "claims": [
+ "claims": [
+  {
+   "id": "C1",
+   "text": "Chỉ số tích luỹ phí của Uniswap v4 là SỐ DƯ còn nằm trong hợp đồng, không phải bộ đếm cộng dồn — nên mức giảm 53% (ETH) và 61% (USDC) trên Ethereum không đọc được thành phí đã ngừng phát sinh.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Ethereum · hai lượt đọc protocolFeesAccrued lúc 14:51Z ngày 27/07 và 01:48Z ngày 28/07 · cùng cửa sổ block 25.624.853 → 25.628.131",
+   "falsifier": "Có bằng chứng cho thấy protocolFeesAccrued đã bao gồm cả phần phí đã được chuyển khỏi hợp đồng — khi đó công thức khép cửa sổ trong bài sai, và cả bài phải viết lại. Cách tự kiểm nằm ngay trong bài: đọc chỉ số hai lần cách nhau vài giờ, rồi đối chiếu log FeesCollected trong cùng cửa sổ để xem phần giảm có đúng là số dư đã rời hợp đồng.",
+   "log": [
     {
-      "id": "C1",
-      "text": "Chỉ số tích luỹ phí của Uniswap v4 là SỐ DƯ còn nằm trong hợp đồng, không phải bộ đếm cộng dồn — nên mức giảm 53% (ETH) và 61% (USDC) trên Ethereum không đọc được thành phí đã ngừng phát sinh.",
-      "status": "ĐANG ĐỨNG",
-      "ghim": "Ethereum · hai lượt đọc protocolFeesAccrued lúc 14:51Z ngày 27/07 và 01:48Z ngày 28/07 · cùng cửa sổ block 25.624.853 → 25.628.131",
-      "falsifier": "Có bằng chứng cho thấy protocolFeesAccrued đã bao gồm cả phần phí đã được chuyển khỏi hợp đồng — khi đó công thức khép cửa sổ trong bài sai, và cả bài phải viết lại. Cách tự kiểm nằm ngay trong bài: đọc chỉ số hai lần cách nhau vài giờ, rồi đối chiếu log FeesCollected trong cùng cửa sổ để xem phần giảm có đúng là số dư đã rời hợp đồng.",
-      "log": [
-        {
-          "ngay": "2026-07-28",
-          "ghi": "Đăng cùng bốn lượt đo. Lượt bốn cho hai token trên CÙNG một chain đi hai hướng ngược nhau (Ethereum ETH −92%, USDC +76%) nên luận điểm 'số dư không phải bộ đếm' chứng minh được trong một chain, không cần mượn chain khác làm đối chứng.",
-          "nguon": "https://x.com/blockpinned/status/2082128396382023921"
-        }
-      ],
-      "do_lai": {
-        "chain": "ethereum",
-        "to": "0x000000000004444c5dc75cB358380D2e3dE08A90",
-        "ky": "protocolFeesAccrued(address)",
-        "tham_so": [
-          "0x0000000000000000000000000000000000000000"
-        ],
-        "cong_thuc": {
-          "tu": 0,
-          "thap_phan": 18
-        },
-        "don_vi": "ETH",
-        "chu_so": 4,
-        "so_ghim": 0.0159
-      }
-    },
-    {
-      "id": "C2",
-      "text": "Cửa sổ 10,97 giờ đầu tiên khép được dòng phí v4 trên Ethereum: 4.382,57 đô, tính bằng (số dư sau − số dư trước) + tổng đã chuyển khỏi hợp đồng. Đây là mức sàn — mới định giá được 10 trong 28 loại token, và mới 1 trong 6 chain quy được ra tiền.",
-      "status": "ĐANG ĐỨNG",
-      "ghim": "Ethereum · block 25.624.853 → 25.628.131 (21h50 ngày 27/07 → 08h48 ngày 28/07, tức 14:50Z → 01:48Z)",
-      "falsifier": "Khép lại đúng cửa sổ này trên Ethereum, cộng đủ phần đã chuyển, mà ra lệch quá 5% so với 4.382,57 đô ⇒ BlockPinned kiểm lại phía mình trước. Ngưỡng 5% được ghi trước ngay trong bài, thay cho chữ 'khác đáng kể' của bản nháp — một điều bác bỏ phải ghi trước cả ngưỡng lẫn cách tính.",
-      "log": [
-        {
-          "ngay": "2026-07-28",
-          "ghi": "Đăng ở mức này. Con số ghim block hai đầu nên nó không già theo giờ: đọc lại lúc nào cũng phải ra đúng cặp block đó.",
-          "nguon": "https://x.com/blockpinned/status/2082128396382023921"
-        }
-      ]
-    },
-    {
-      "id": "C3",
-      "text": "Phần giá trị cuối cùng quy về UNI vẫn chưa tách được riêng cho v4: phí của v2, v3 và v4 vào chung một kho rồi kho mới được dùng để mua và đốt UNI, và bước đó bài này chưa đo được.",
-      "status": "ĐANG ĐỨNG",
-      "ghim": "Trên rổ định giá được, v4 chiếm 17,71% giá trị dòng vào kho trong những giờ đầu · cùng cửa sổ block 25.624.853 → 25.628.131",
-      "falsifier": "Ai chỉ ra được một đường tiền từ phí v4 tới cơ chế mua và đốt UNI mà bài chưa đo ⇒ phần 'chưa tách được' phải viết lại. Đây là giới hạn tự khai, không phải kết luận rằng đường tiền đó không tồn tại.",
-      "log": [
-        {
-          "ngay": "2026-07-28",
-          "ghi": "Đăng ở trạng thái chưa tách được, kèm tỉ lệ 17,71% để người đọc thấy độ lớn của phần v4 trong dòng vào kho — không dùng nó thay cho phép đo còn thiếu.",
-          "nguon": "https://x.com/blockpinned/status/2082128396382023921"
-        }
-      ]
-    },
-    {
-      "id": "C4",
-      "text": "Nhịp bật pool đã giảm mạnh: đợt đầu bật 36.523 pool trong 7,7 giờ, rồi 23,5 giờ sau chỉ thêm 273 pool và tổng vẫn chưa qua 36.800.",
-      "status": "ĐANG ĐỨNG",
-      "ghim": "Ethereum · 15:06Z ngày 27/07 (36.523 pool) → 02:24Z ngày 28/07 (blk 25.628.338) → 14:35Z ngày 28/07 (blk 25.631.951)",
-      "falsifier": "Nếu từ 21h05 ngày 28/07 (14:05Z) đến 23h59 ngày 04/08/2026 số pool được bật trên Ethereum tăng thêm từ 5.000 trở lên, BlockPinned rút câu này và sửa tại đây. Điều này không bác bỏ ba claim còn lại của bài.",
-      "log": [
-        {
-          "ngay": "2026-07-28",
-          "ghi": "Đăng kèm hạn 04/08/2026 — đây là claim duy nhất của bài có ngày hết hạn tự đặt, nên nó sẽ được phân định bằng một phép đếm log, không bằng cảm nhận về nhịp.",
-          "nguon": "https://x.com/blockpinned/status/2082128396382023921"
-        }
-      ],
-      "han": "2026-08-04",
-      "han_ghi": "Đếm log ProtocolFeeUpdated trên Ethereum từ 14:05Z ngày 28/07. Thêm từ 5.000 pool trở lên ⇒ rút câu “nhịp bật pool đã giảm mạnh”; dưới ngưỡng đó ⇒ claim đứng.",
-      "ghi_truoc": {
-        "ngay": "2026-07-28",
-        "noi": "điều-bác-bỏ in kèm chính bài",
-        "so": "ngưỡng: thêm từ 5.000 pool trở lên trên Ethereum, từ 14:05Z ngày 28/07 đến 23h59 ngày 04/08 ⇒ rút câu “nhịp bật pool đã giảm mạnh”"
-      }
+     "ngay": "2026-07-28",
+     "ghi": "Đăng cùng bốn lượt đo. Lượt bốn cho hai token trên CÙNG một chain đi hai hướng ngược nhau (Ethereum ETH −92%, USDC +76%) nên luận điểm 'số dư không phải bộ đếm' chứng minh được trong một chain, không cần mượn chain khác làm đối chứng.",
+     "nguon": "https://x.com/blockpinned/status/2082128396382023921"
     }
-  ]
+   ],
+   "do_lai": {
+    "chain": "ethereum",
+    "to": "0x000000000004444c5dc75cB358380D2e3dE08A90",
+    "ky": "protocolFeesAccrued(address)",
+    "tham_so": [
+     "0x0000000000000000000000000000000000000000"
+    ],
+    "cong_thuc": {
+     "tu": 0,
+     "thap_phan": 18
+    },
+    "don_vi": "ETH",
+    "chu_so": 4,
+    "so_ghim": 0.0159
+   }
+  },
+  {
+   "id": "C2",
+   "text": "Cửa sổ 10,97 giờ đầu tiên khép được dòng phí v4 trên Ethereum: 4.382,57 đô, tính bằng (số dư sau − số dư trước) + tổng đã chuyển khỏi hợp đồng. Đây là mức sàn — mới định giá được 10 trong 28 loại token, và mới 1 trong 6 chain quy được ra tiền.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Ethereum · block 25.624.853 → 25.628.131 (21h50 ngày 27/07 → 08h48 ngày 28/07, tức 14:50Z → 01:48Z)",
+   "falsifier": "Khép lại đúng cửa sổ này trên Ethereum, cộng đủ phần đã chuyển, mà ra lệch quá 5% so với 4.382,57 đô ⇒ BlockPinned kiểm lại phía mình trước. Ngưỡng 5% được ghi trước ngay trong bài, thay cho chữ 'khác đáng kể' của bản nháp — một điều bác bỏ phải ghi trước cả ngưỡng lẫn cách tính.",
+   "log": [
+    {
+     "ngay": "2026-07-28",
+     "ghi": "Đăng ở mức này. Con số ghim block hai đầu nên nó không già theo giờ: đọc lại lúc nào cũng phải ra đúng cặp block đó.",
+     "nguon": "https://x.com/blockpinned/status/2082128396382023921"
+    }
+   ]
+  },
+  {
+   "id": "C3",
+   "text": "Phần giá trị cuối cùng quy về UNI vẫn chưa tách được riêng cho v4: phí của v2, v3 và v4 vào chung một kho rồi kho mới được dùng để mua và đốt UNI, và bước đó bài này chưa đo được.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Trên rổ định giá được, v4 chiếm 17,71% giá trị dòng vào kho trong những giờ đầu · cùng cửa sổ block 25.624.853 → 25.628.131",
+   "falsifier": "Ai chỉ ra được một đường tiền từ phí v4 tới cơ chế mua và đốt UNI mà bài chưa đo ⇒ phần 'chưa tách được' phải viết lại. Đây là giới hạn tự khai, không phải kết luận rằng đường tiền đó không tồn tại.",
+   "log": [
+    {
+     "ngay": "2026-07-28",
+     "ghi": "Đăng ở trạng thái chưa tách được, kèm tỉ lệ 17,71% để người đọc thấy độ lớn của phần v4 trong dòng vào kho — không dùng nó thay cho phép đo còn thiếu.",
+     "nguon": "https://x.com/blockpinned/status/2082128396382023921"
+    }
+   ]
+  },
+  {
+   "id": "C4",
+   "text": "Nhịp bật pool đã giảm mạnh: đợt đầu bật 36.523 pool trong 7,7 giờ, rồi 23,5 giờ sau chỉ thêm 273 pool và tổng vẫn chưa qua 36.800.",
+   "status": "BỊ BÁC",
+   "ghim": "Ethereum · 15:06Z ngày 27/07 (36.523 pool) → 02:24Z ngày 28/07 (blk 25.628.338) → 14:35Z ngày 28/07 (blk 25.631.951)",
+   "falsifier": "Nếu từ 21h05 ngày 28/07 (14:05Z) đến 23h59 ngày 04/08/2026 số pool được bật trên Ethereum tăng thêm từ 5.000 trở lên, BlockPinned rút câu này và sửa tại đây. Điều này không bác bỏ ba claim còn lại của bài.",
+   "log": [
+    {
+     "ngay": "2026-07-28",
+     "ghi": "Đăng kèm hạn 04/08/2026 — đây là claim duy nhất của bài có ngày hết hạn tự đặt, nên nó sẽ được phân định bằng một phép đếm log, không bằng cảm nhận về nhịp.",
+     "nguon": "https://x.com/blockpinned/status/2082128396382023921"
+    },
+    {
+     "ngay": "2026-08-03",
+     "ghi": "Điều-bác-bỏ bị vượt. Thước đo giữ nguyên cách bài gốc đếm: poolId duy nhất trong sự kiện ProtocolFeeUpdated. Nền 36.788 poolId quét từ block tạo hợp đồng, giao với tập 51.651 của khoảng sau bằng rỗng. Bốn phép kiểm phá số đã chạy: 0 log đặt phí về 0; một giao dịch phát tối đa 150 sự kiện nên khoá loại trùng là cặp mã giao dịch cộng chỉ số log; 0 sự kiện trong 3.911.671 block trước nền; log thô không có poolId lặp. Ba cách sắp thứ tự cho cùng phần tử thứ 5.000.",
+     "nguon": "UNI/data/v4_pool_delta_recheck_2026-08-03.json · v4_fee_event_semantics_2026-08-03.json · v4_fee_history_full_2026-08-03.json · v4_fee_thu5000_2026-08-03.json"
+    }
+   ],
+   "han": "2026-08-04",
+   "han_ghi": "Đếm log ProtocolFeeUpdated trên Ethereum từ 14:05Z ngày 28/07. Thêm từ 5.000 pool trở lên ⇒ rút câu “nhịp bật pool đã giảm mạnh”; dưới ngưỡng đó ⇒ claim đứng.",
+   "ghi_truoc": {
+    "ngay": "2026-07-28",
+    "noi": "điều-bác-bỏ in kèm chính bài",
+    "so": "ngưỡng: thêm từ 5.000 pool trở lên trên Ethereum, từ 14:05Z ngày 28/07 đến 23h59 ngày 04/08 ⇒ rút câu “nhịp bật pool đã giảm mạnh”",
+    "ket_qua": "51.651 poolId trong khoảng đã ghi trước, gấp 10,3 lần ngưỡng 5.000. Ngưỡng bị vượt từ block 25.637.495 lúc 16h08 ngày 29/07, tức 17 giờ 31 phút sau khi bài lên. BlockPinned rút câu về nhịp; ba claim còn lại của bài không nằm trong phạm vi điều-bác-bỏ này.",
+    "ai_phan_dinh": "phép đo trên sổ cái Ethereum tại block 25.672.390, quét từ block tạo hợp đồng PoolManager 21.688.329",
+    "ngay_ket": "2026-08-03"
+   }
+  }
+ ]
 }

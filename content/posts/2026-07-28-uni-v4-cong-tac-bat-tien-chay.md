@@ -50,6 +50,8 @@ Mẫu bật pool không phải quét toàn bộ: trong 36.523 pool đã bật kh
 
 Sau đó nhịp bật pool giảm mạnh: từ 22h06 ngày 27/07 (15:06Z, 36.523 pool) đến 09h24 ngày 28/07 (02:24Z, blk 25.628.338) thêm 170 pool, rồi tới 21h35 ngày 28/07 (14:35Z, blk 25.631.951) thêm 103 pool nữa. Tổng 23,5 giờ thêm 273 pool — so với 36.523 pool trong 7,7 giờ của đợt đầu.
 
+🔴 **SỬA 03/08 — câu ngay trên đã bị RÚT.** Điều-bác-bỏ ghi kèm bài này đã bị chính số liệu vượt qua: ngưỡng là thêm 5.000 poolId trong khoảng 21h05 ngày 28/07 đến hết ngày 04/08, đo được **51.651** — gấp 10,3 lần — tính tới block 25.672.390. Ngưỡng bị vượt từ block 25.637.495, lúc 16h08 ngày 29/07, tức 17 giờ 31 phút sau khi bài lên. Câu "nhịp bật pool giảm mạnh" **không còn hiệu lực**. Bốn con số trong câu đó — 36.523 · 170 · 103 · 273 — **vẫn đúng trong đúng cửa sổ của chúng**; cái bị rút là kết luận về nhịp rút ra từ một cửa sổ 23,5 giờ. Ba claim còn lại của bài không bị đụng. Số đo đầy đủ và cách tự kiểm: https://x.com/blockpinned/status/2084196432089878872
+
 ## Cái bẫy: đó là SỐ DƯ, không phải bộ đếm
 
 Chỉ số tích luỹ phí của v4 — hàm `protocolFeesAccrued` trên PoolManager — không phải bộ đếm cộng dồn. Nó là **số dư**: phần phí còn nằm trong hợp đồng, chưa ai thu về kho.

@@ -203,7 +203,7 @@ footer a{color:var(--muted)}
   <span class="tag">SỐ NÀO CŨNG TRUY NGƯỢC ĐƯỢC</span>
 </div></header>
 <main class="khung"><h1>Uniswap bật thu phí v4 — chỉ số giảm 53% sau một đêm, và nó không phải bộ đếm</h1><section class="dai">
-  <div class="dem"><span class="to">4</span> claim &nbsp;·&nbsp; <b class="song">4</b> đang đứng</div>
+  <div class="dem"><span class="to">4</span> claim &nbsp;·&nbsp; <b class="song">3</b> đang đứng · <b class="bac">1</b> bị bác</div>
   <div class="khi"></div>
   <a class="toi" href="#so-claim">Xem sổ claim ↓</a>
 </section><section class="so"><h2 id="so-claim">Sổ claim</h2>
@@ -238,15 +238,15 @@ footer a{color:var(--muted)}
   
   <ul class="nk"><li><span class="d">2026-07-28</span>Đăng ở trạng thái chưa tách được, kèm tỉ lệ 17,71% để người đọc thấy độ lớn của phần v4 trong dòng vào kho — không dùng nó thay cho phép đo còn thiếu. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></li></ul>
 </article>
-<article class="claim song" id="C4">
+<article class="claim bac" id="C4">
   <h3><a class="id" href="#C4">C4</a>
-      <span class="chip song">ĐANG ĐỨNG</span></h3>
+      <span class="chip bac">BỊ BÁC</span></h3>
   <p style="margin:0">Nhịp bật pool đã giảm mạnh: đợt đầu bật 36.523 pool trong 7,7 giờ, rồi 23,5 giờ sau chỉ thêm 273 pool và tổng vẫn chưa qua 36.800.</p>
   
   <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum · 15:06Z ngày 27/07 (36.523 pool) → 02:24Z ngày 28/07 (blk 25.628.338) → 14:35Z ngày 28/07 (blk 25.631.951)</p>
   <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Nếu từ 21h05 ngày 28/07 (14:05Z) đến 23h59 ngày 04/08/2026 số pool được bật trên Ethereum tăng thêm từ 5.000 trở lên, BlockPinned rút câu này và sửa tại đây. Điều này không bác bỏ ba claim còn lại của bài.</p>
   
-  <ul class="nk"><li><span class="d">2026-07-28</span>Đăng kèm hạn 04/08/2026 — đây là claim duy nhất của bài có ngày hết hạn tự đặt, nên nó sẽ được phân định bằng một phép đếm log, không bằng cảm nhận về nhịp. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></li></ul>
+  <ul class="nk"><li><span class="d">2026-07-28</span>Đăng kèm hạn 04/08/2026 — đây là claim duy nhất của bài có ngày hết hạn tự đặt, nên nó sẽ được phân định bằng một phép đếm log, không bằng cảm nhận về nhịp. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></li><li><span class="d">2026-08-03</span>Điều-bác-bỏ bị vượt. Thước đo giữ nguyên cách bài gốc đếm: poolId duy nhất trong sự kiện ProtocolFeeUpdated. Nền 36.788 poolId quét từ block tạo hợp đồng, giao với tập 51.651 của khoảng sau bằng rỗng. Bốn phép kiểm phá số đã chạy: 0 log đặt phí về 0; một giao dịch phát tối đa 150 sự kiện nên khoá loại trùng là cặp mã giao dịch cộng chỉ số log; 0 sự kiện trong 3.911.671 block trước nền; log thô không có poolId lặp. Ba cách sắp thứ tự cho cùng phần tử thứ 5.000. <span class="nguon-tro">nguồn: UNI/data/v4_pool_delta_recheck_2026-08-03.json · v4_fee_event_semantics_2026-08-03.json · v4_fee_history_full_2026-08-03.json · v4_fee_thu5000_2026-08-03.json</span></li></ul>
 </article></section><section class="bandaydu"><h2 id="ban-day-du">Bài đầy đủ</h2><p class="meta">🟡 2026-07-28 &nbsp;·&nbsp; GHIM TẠI Ethereum · cửa sổ 10,97 giờ ghim block hai đầu #25.624.853 → #25.628.131 (21h50 ngày 27/07 → 08h48 ngày 28/07, tức 14:50Z → 01:48Z) &nbsp;·&nbsp; <a href="https://x.com/blockpinned/status/2082128396382023921">bản đăng trên X</a></p><p>Uniswap vừa bật thu phí v4. Một chỉ số phí của v4 trên Ethereum đã giảm 53% sau một đêm — <strong>mức giảm đó không chứng minh doanh thu giảm.</strong> Trang này ghim lại hơn 30 giờ đầu bằng bốn lần đo trực tiếp, và vì sao chỉ số kia sắp bị đọc ngược.</p>
 <p><em>(Mọi giờ là giờ Việt Nam, UTC để trong ngoặc.)</em></p>
 <h2 id="bon-lan-do-bon-moc-thoi-gian">Bốn lần đo, bốn mốc thời gian</h2>
@@ -261,6 +261,7 @@ footer a{color:var(--muted)}
 <div class="cuon"><table><thead><tr><th>Mẫu số</th><th>Pool</th><th>Độ phủ</th></tr></thead><tbody><tr><td>toàn bộ pool từng mở</td><td>112.527</td><td>32,60%</td></tr><tr><td><strong>loại 26.512 pool gắn hook</strong></td><td><strong>86.015</strong></td><td><strong>42,65%</strong></td></tr></tbody></table></div>
 <p>Đối chiếu tại block 25.628.131 cho 36.684 pool trùng nhau giữa danh sách không-hook và danh sách đã bật.</p>
 <p>Sau đó nhịp bật pool giảm mạnh: từ 22h06 ngày 27/07 (15:06Z, 36.523 pool) đến 09h24 ngày 28/07 (02:24Z, blk 25.628.338) thêm 170 pool, rồi tới 21h35 ngày 28/07 (14:35Z, blk 25.631.951) thêm 103 pool nữa. Tổng 23,5 giờ thêm 273 pool — so với 36.523 pool trong 7,7 giờ của đợt đầu.</p>
+<p>🔴 <strong>SỬA 03/08 — câu ngay trên đã bị RÚT.</strong> Điều-bác-bỏ ghi kèm bài này đã bị chính số liệu vượt qua: ngưỡng là thêm 5.000 poolId trong khoảng 21h05 ngày 28/07 đến hết ngày 04/08, đo được <strong>51.651</strong> — gấp 10,3 lần — tính tới block 25.672.390. Ngưỡng bị vượt từ block 25.637.495, lúc 16h08 ngày 29/07, tức 17 giờ 31 phút sau khi bài lên. Câu &quot;nhịp bật pool giảm mạnh&quot; <strong>không còn hiệu lực</strong>. Bốn con số trong câu đó — 36.523 · 170 · 103 · 273 — <strong>vẫn đúng trong đúng cửa sổ của chúng</strong>; cái bị rút là kết luận về nhịp rút ra từ một cửa sổ 23,5 giờ. Ba claim còn lại của bài không bị đụng. Số đo đầy đủ và cách tự kiểm: https://x.com/blockpinned/status/2084196432089878872</p>
 <h2 id="cai-bay-do-la-so-du-khong-phai-bo-dem">Cái bẫy: đó là SỐ DƯ, không phải bộ đếm</h2>
 <p>Chỉ số tích luỹ phí của v4 — hàm <code>protocolFeesAccrued</code> trên PoolManager — không phải bộ đếm cộng dồn. Nó là <strong>số dư</strong>: phần phí còn nằm trong hợp đồng, chưa ai thu về kho.</p>
 <p>Lượt ba: trên Ethereum số dư tụt từ 0,4018 xuống 0,1887 ETH (−53%) và 207,88 xuống 80,72 USDC (−61%). Trong đúng cửa sổ đó có giao dịch từ hai địa chỉ gọi hàm chuyển phí về kho — hàm công khai, ai gọi cũng được — và cùng cửa sổ đó vẫn có <strong>4.382,57 đô phí mới chảy vào</strong>. Mức giảm vì vậy không đọc được thành phí đã ngừng phát sinh.</p>
