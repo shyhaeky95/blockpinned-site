@@ -188,6 +188,33 @@ CA = [
     ("⑪ FACT · KHOẢNG CÁCH · khai dạng chuỗi thay vì object",
      lambda r: sua_facts(r, lambda f: f.update(khoang_cach="có khoảng cách")),
      "thiếu 'khoang_cach'"),
+    # ── KHUÔN v2 — brief §0b chốt 02/08, áp cho Fact `ngay` ≥ 2026-08-03. Xác:
+    # ba Fact đầu phình 2.364 → 4.175 ký tự (Fact 3 DÀI HƠN bài dài #8) mà 12/12
+    # cổng PASS sạch — không cổng nào đếm độ dài hay số câu chặn của một Fact.
+    ("⑪ FACT v2 · 'cau' quá trần 600",
+     lambda r: sua_facts(r, lambda f: f.update(
+         ngay="2026-08-03", cau="Con số này đứng yên qua từng lần đọc. " * 20)),
+     "trần 600"),
+    ("⑪ FACT v2 · 'chan' hai câu — hết tư cách Fact",
+     lambda r: sua_facts(r, lambda f: f.update(
+         ngay="2026-08-03",
+         chan="Không có đốt không có nghĩa là sắp in thêm. Và đây là câu thứ hai.")),
+     "câu > 1"),
+    ("⑪ FACT v2 · 'cau' dính tên hàm — thân bài phải đọc được",
+     lambda r: sua_facts(r, lambda f: f.update(
+         ngay="2026-08-03", cau="ENA chưa từng bị đốt: totalSupply() đứng yên.")),
+     "dính tên hàm"),
+    ("⑪ FACT v2 · 'so' chở chuỗi mốc dài quá 200",
+     lambda r: sua_facts(r, lambda f: f.update(
+         ngay="2026-08-03", so="ngày 14/07: 138 điểm · " * 12)),
+     "MỘT con số chính"),
+    ("⑪ FACT v2 · control CHỐNG NHIỄU — Fact cũ (≤02/08) chan dài KHÔNG bị bắt",
+     lambda r: sua_facts(r, lambda f: f.update(
+         chan="Không có đốt không có nghĩa là sắp in thêm. Và đây là câu thứ hai.")),
+     None),
+    ("⑪ FACT v2 · control DƯƠNG — Fact mới viết đúng khuôn phải BUILD ĐƯỢC",
+     lambda r: sua_facts(r, lambda f: f.update(ngay="2026-08-03")),
+     None),
     ("⑪ FACT · control DƯƠNG — facts.json hợp lệ phải BUILD ĐƯỢC",
      lambda r: sua_facts(r, lambda f: None),
      None),

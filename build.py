@@ -1086,6 +1086,34 @@ def cong_facts(fs: list) -> None:
         for k in ("tin", "o_dau"):
             cong_ngon_ngu(str(kc[k]), f"{o}.khoang_cach.{k}")
             cong_ngoi_xung(str(kc[k]), f"{o}.khoang_cach.{k}")
+        # ── KHUÔN v2 — brief §0b chốt 02/08/2026, áp từ Fact 03/08 trở đi ────────
+        # Vì sao có: ba Fact đầu phình 2.364 → 4.175 ký tự (Fact 3 DÀI HƠN bài dài
+        # #8) mà 12/12 cổng đều PASS — không cổng nào đếm độ dài hay số câu chặn
+        # của một Fact. Ranh giới "câu chặn không nhét vừa ⇒ bài dài" sống trong
+        # văn xuôi từ 31/07 và không nổ. Chuẩn v2: người đầu tư chứng khoán đọc
+        # được thân bài; tầng kỹ thuật nằm ở reply + trường `lenh` của trang này.
+        # 🔴 Fact `ngay` ≤ 02/08 giữ luật cũ — ĐÃ ĐĂNG, sửa là đính chính công khai.
+        if str(f.get("ngay", "")) >= "2026-08-03":
+            if len(str(f["cau"])) > 600:
+                raise LoiCong(f"{o} ({fid}) khuôn v2: 'cau' {len(str(f['cau'])):,} ký tự "
+                              f"> trần 600 — không nén nổi thì nó là BÀI DÀI, không phải Fact")
+            if len(str(f["so"])) > 200:
+                raise LoiCong(f"{o} ({fid}) khuôn v2: 'so' {len(str(f['so'])):,} ký tự > 200 "
+                              f"— Fact chở MỘT con số chính, không chở chuỗi mốc + tỉ lệ")
+            chan = str(f["chan"]).strip()
+            if chan.upper() != "KHÔNG CÓ":
+                n_cau = len(re.findall(r"[.!?…](?=\s|$)", chan))
+                if n_cau > 1:
+                    raise LoiCong(f"{o} ({fid}) khuôn v2: 'chan' có {n_cau} câu > 1 — cần "
+                                  f"từ 2 câu chặn trở lên thì đây không phải Fact, xếp bài dài")
+            for k in ("cau", "chan"):
+                for re_, ten in lang.FACT_KY_THUAT:
+                    m = re_.search(str(f[k]))
+                    if m:
+                        raise LoiCong(f"{o} ({fid}) khuôn v2: '{k}' dính {ten}: "
+                                      f"{m.group(0)!r} — tầng kỹ thuật nằm ở 'lenh' và "
+                                      f"reply, thân bài phải đọc được bởi người đầu tư "
+                                      f"chứng khoán chưa chạm crypto")
 
 
 def trang_facts(fs: list) -> str:

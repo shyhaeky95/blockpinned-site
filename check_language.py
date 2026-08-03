@@ -98,6 +98,21 @@ JARGON = [
     (r"\bpositive control\b", "—"),
 ]
 
+# ── ③ thuật ngữ MÁY trong THÂN POST FACT — khuôn v2, brief §0b chốt 02/08 ────
+# 🔴 KHÔNG nhập vào RETIRED/JARGON: hai danh sách đó cấm chữ trên MỌI mặt công
+# khai, còn các mẫu dưới đây chỉ cấm ở đúng MỘT chỗ — thân post X của một Fact
+# (chuẩn người đọc: người đầu tư chứng khoán chưa chạm crypto). Cùng chuỗi đó
+# ở tầng reply (`## BẢN X REPLY`), ở bài dài, ở web /facts/ là HỢP LỆ — nhét
+# vào RETIRED là cấm luôn lệnh tự kiểm ở nơi nó bắt buộc phải sống.
+# Dùng chung bởi: template/export_post.py (cổng xuất) · site/build.py (cổng ⑪).
+FACT_KY_THUAT = [
+    (re.compile(r"\b(curl|cast|wget)\b", re.I), "lệnh terminal"),
+    (re.compile(r"\b0x[0-9a-fA-F]{4,}"), "địa chỉ/hex"),
+    (re.compile(r"[A-Za-z_][A-Za-z0-9_]+\([A-Za-z0-9_,.]*\)"), "tên hàm"),
+    (re.compile(r"\bjson-?rpc\b", re.I), "jsonrpc"),
+    (re.compile(r"\b(block|blk)\s*#?\s*[\d.]{4,}", re.I), "số block"),
+]
+
 # quét cái ĐI RA NGOÀI, không quét hồ sơ nội bộ
 TARGETS = ["drafts/*.md", "template/out/*.txt", "template/out/*.html"]
 # file sinh chữ công khai — bỏ qua dòng comment (đó là hồ sơ ghi lý do, phải giữ)
