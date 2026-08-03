@@ -1,6 +1,59 @@
 {
  "facts": [
   {
+   "id": "aave-rseth-deficit-weth",
+   "ngay": "2026-08-03",
+   "cau": "Sau vụ tấn công cầu nối rsETH của Kelp, sổ cho vay WETH của Aave vẫn còn ghi một khoản thiếu hụt.\n\nTrong thị trường Aave V3 Core trên Ethereum, sổ WETH đang ghi thiếu 52.964,45 WETH, tương đương khoảng 98,5 triệu USD theo giá ETH lúc kiểm tra. Không đổi một wei so với lần đo gần 9 ngày trước.\n\nNếu không thu hồi được hoặc không có bên liên quan bù lại, thị trường Aave V3 Core này sẽ phải xử lý khoản lỗ; nguồn bù và bên gánh cuối cùng vẫn chưa được chốt.\n\nĐọc trực tiếp từ sổ cái công khai của Ethereum, 09h34 ngày 03/08.\n\nCách tự kiểm riêng con số này: ở reply ngay dưới.",
+   "so": "getReserveDeficit(WETH) = 52.964,453911883321543567 WETH; khoảng 98,5 triệu USD tại giá spot 1.858,965 USD/ETH lúc 10h39 ngày 03/08/2026 giờ VN",
+   "block": "Ethereum block 25.671.409 · 09h34 ngày 03/08/2026 giờ VN (02:34:23Z)",
+   "lenh": "curl -sS https://eth.drpc.org -H 'content-type: application/json' -d '[{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"eth_call\",\"params\":[{\"to\":\"0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2\",\"data\":\"0xc952485d000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2\"},\"0x187b6f1\"]},{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"eth_call\",\"params\":[{\"to\":\"0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2\",\"data\":\"0xd1946dbc\"},\"0x187b6f1\"]}]'",
+   "chan": "Nếu không thu hồi được hoặc không có bên liên quan bù lại, thị trường Aave V3 Core này sẽ phải xử lý khoản lỗ; nguồn bù và bên gánh cuối cùng vẫn chưa được chốt.",
+   "khoang_cach": {
+    "tin": "Sự cố cầu nối của Kelp đã qua nên khoản thiếu hụt liên quan trên Aave cũng đã được xử lý xong",
+    "o_dau": "Báo cáo sự cố của Aave mô tả tuyến Kelp giải phóng rsETH khi không có lượt đốt tương ứng ở mạng nguồn; deficit WETH kết tinh sau đó và vẫn đọc được hôm nay"
+   },
+   "card": {
+    "kicker": "AAVE",
+    "figure": "52.964,45 WETH",
+    "label": "KHOẢN THIẾU HỤT ≈ 98,5 TRIỆU USD",
+    "readout": "getReserveDeficit(WETH) → 52.964,45",
+    "he_qua": "KHÔNG ĐƯỢC BÙ → AAVE V3 CORE PHẢI XỬ LÝ KHOẢN LỖ",
+    "anchor": "ETHEREUM · BLOCK 25.671.409 · 03/08/2026 · 02:34:23Z",
+    "kiem": [
+     {
+      "file": "data/verify_fact_aave_2026-08-03.json",
+      "duong": "calls.getReserveDeficit.raw_uint256",
+      "bang": "52964453911883321543567"
+     },
+     {
+      "file": "data/verify_fact_aave_2026-08-03.json",
+      "duong": "calls.getReservesList.weth_present",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact_aave_2026-08-03.json",
+      "duong": "comparison.unchanged_to_wei",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact_aave_2026-08-03.json",
+      "duong": "block.number",
+      "bang": 25671409
+     },
+     {
+      "file": "data/verify_fact_aave_2026-08-03.json",
+      "duong": "usd_conversion.eth_usd_spot",
+      "bang": "1858.965"
+     },
+     {
+      "file": "data/verify_fact_aave_2026-08-03.json",
+      "duong": "usd_conversion.usd_display_vi",
+      "bang": "khoảng 98,5 triệu USD"
+     }
+    ]
+   }
+  },
+  {
    "id": "cake-farm-pool-2h27",
    "ngay": "2026-08-02",
    "cau": "USDT/SKHYB được đưa vào farm v3 của PancakeSwap chỉ 2 giờ 27 phút sau khi hợp đồng pool ra đời, và vào với 2,3909% toàn bộ ngân sách thưởng của farm. Từ 14/07 đến 31/07 phần đó bị cắt còn 1,1186% qua ba lượt, cách nhau 7 ngày 0 giờ 23 phút rồi 6 ngày 21 giờ 30 phút. Cả ba lượt đều là một đợt cân lại hàng loạt: mỗi giao dịch chở 25, 24 và 24 log SetPool với số pid riêng biệt đúng bằng số log, và cả ba đều kèm một log ExecutionSuccess phát từ đúng địa chỉ mà owner() của hợp đồng farm trả về.",

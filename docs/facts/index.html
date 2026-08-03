@@ -202,7 +202,26 @@ footer a{color:var(--muted)}
   <a class="ten" href="../">BLOCK·PINNED</a>
   <span class="tag">SỐ NÀO CŨNG TRUY NGƯỢC ĐƯỢC</span>
 </div></header>
-<main class="khung"><h1>Facts</h1><div class="dem"><span class="to">3</span> fact</div><p class="dan">Mỗi mục dưới đây là <b>một sự thật đúng tại một block</b>, kèm <b>một lệnh</b> để bạn tự đọc lại con số đó. Mỗi mục cũng phải nói rõ nó <b>đi ngược điều gì</b> và <b>chỗ nào đang nói ngược lại</b> — một điều đúng mà ai cũng đoán được thì không nằm ở đây. Không phân tích, không dự đoán, không nhận định giá. Cái nào cần giải thích dài hơn một dòng thì nó là một bài.</p><section class="so"><article class="claim" id="cake-farm-pool-2h27">
+<main class="khung"><h1>Facts</h1><div class="dem"><span class="to">4</span> fact</div><p class="dan">Mỗi mục dưới đây là <b>một sự thật đúng tại một block</b>, kèm <b>một lệnh</b> để bạn tự đọc lại con số đó. Mỗi mục cũng phải nói rõ nó <b>đi ngược điều gì</b> và <b>chỗ nào đang nói ngược lại</b> — một điều đúng mà ai cũng đoán được thì không nằm ở đây. Không phân tích, không dự đoán, không nhận định giá. Cái nào cần giải thích dài hơn một dòng thì nó là một bài.</p><section class="so"><article class="claim" id="aave-rseth-deficit-weth">
+  <h3><span class="chip">FACT</span>
+      <span class="moc">03/08/2026</span></h3>
+  <p class="dong"><span class="nhan">FACT</span>Sau vụ tấn công cầu nối rsETH của Kelp, sổ cho vay WETH của Aave vẫn còn ghi một khoản thiếu hụt.
+
+Trong thị trường Aave V3 Core trên Ethereum, sổ WETH đang ghi thiếu 52.964,45 WETH, tương đương khoảng 98,5 triệu USD theo giá ETH lúc kiểm tra. Không đổi một wei so với lần đo gần 9 ngày trước.
+
+Nếu không thu hồi được hoặc không có bên liên quan bù lại, thị trường Aave V3 Core này sẽ phải xử lý khoản lỗ; nguồn bù và bên gánh cuối cùng vẫn chưa được chốt.
+
+Đọc trực tiếp từ sổ cái công khai của Ethereum, 09h34 ngày 03/08.
+
+Cách tự kiểm riêng con số này: ở reply ngay dưới.</p>
+  <p class="dong"><span class="nhan">SỐ</span>getReserveDeficit(WETH) = 52.964,453911883321543567 WETH; khoảng 98,5 triệu USD tại giá spot 1.858,965 USD/ETH lúc 10h39 ngày 03/08/2026 giờ VN</p>
+  <p class="dong"><span class="nhan">ĐỌC TẠI</span>Ethereum block 25.671.409 · 09h34 ngày 03/08/2026 giờ VN (02:34:23Z)</p>
+  <p class="dong bac"><span class="nhan">NGƯỢC VỚI</span>Sự cố cầu nối của Kelp đã qua nên khoản thiếu hụt liên quan trên Aave cũng đã được xử lý xong
+      &nbsp;— kiểm tại: Báo cáo sự cố của Aave mô tả tuyến Kelp giải phóng rsETH khi không có lượt đốt tương ứng ở mạng nguồn; deficit WETH kết tinh sau đó và vẫn đọc được hôm nay</p>
+  <p class="dong"><span class="nhan">TỰ KIỂM</span><code>curl -sS https://eth.drpc.org -H &#x27;content-type: application/json&#x27; -d &#x27;[{&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:1,&quot;method&quot;:&quot;eth_call&quot;,&quot;params&quot;:[{&quot;to&quot;:&quot;0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2&quot;,&quot;data&quot;:&quot;0xc952485d000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&quot;},&quot;0x187b6f1&quot;]},{&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:2,&quot;method&quot;:&quot;eth_call&quot;,&quot;params&quot;:[{&quot;to&quot;:&quot;0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2&quot;,&quot;data&quot;:&quot;0xd1946dbc&quot;},&quot;0x187b6f1&quot;]}]&#x27;</code></p>
+  <p class="dong"><span class="nhan">ĐỪNG ĐỌC THÀNH</span>Nếu không thu hồi được hoặc không có bên liên quan bù lại, thị trường Aave V3 Core này sẽ phải xử lý khoản lỗ; nguồn bù và bên gánh cuối cùng vẫn chưa được chốt.</p>
+  
+</article><article class="claim" id="cake-farm-pool-2h27">
   <h3><span class="chip">FACT</span>
       <span class="moc">02/08/2026</span></h3>
   <p class="dong"><span class="nhan">FACT</span>USDT/SKHYB được đưa vào farm v3 của PancakeSwap chỉ 2 giờ 27 phút sau khi hợp đồng pool ra đời, và vào với 2,3909% toàn bộ ngân sách thưởng của farm. Từ 14/07 đến 31/07 phần đó bị cắt còn 1,1186% qua ba lượt, cách nhau 7 ngày 0 giờ 23 phút rồi 6 ngày 21 giờ 30 phút. Cả ba lượt đều là một đợt cân lại hàng loạt: mỗi giao dịch chở 25, 24 và 24 log SetPool với số pid riêng biệt đúng bằng số log, và cả ba đều kèm một log ExecutionSuccess phát từ đúng địa chỉ mà owner() của hợp đồng farm trả về.</p>
