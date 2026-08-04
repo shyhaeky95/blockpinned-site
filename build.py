@@ -137,6 +137,8 @@ NGUON_ASSET = {
     # QUYẾT (16,7% đối 7,81% đọc ra "v4 tệ hơn", trong khi tăng trưởng nền phí chưa đo).
     # Bản dùng là phép TÁCH: $85,36 đối $14,64 trên mỗi $100 phí swap.
     "card-uni-100usd.png": "png",
+    # bài #9 — cùng quy ước tên theo NỘI DUNG, không theo ordinal.
+    "card-cmv2-220.png": "png",
     # bài #7 — cùng quy ước đặt tên theo NỘI DUNG, không theo ordinal (lý do ở ghi
     # chú bài #6 ngay trên). Ca này còn là bằng chứng thứ hai cho quy ước đó: ordinal
     # bài #7 suýt phải đổi vì chân X bị dán nhầm bản nháp rồi xoá + đăng lại 31/07.

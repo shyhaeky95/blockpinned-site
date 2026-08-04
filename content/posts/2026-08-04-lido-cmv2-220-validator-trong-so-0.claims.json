@@ -1,0 +1,115 @@
+{
+ "claims": [
+  {
+   "id": "C1",
+   "text": "Tại Ethereum block 25.680.251, số dư mà oracle báo về cho module staking thứ tư của Lido — đại lượng dùng làm trọng số chia phần thưởng giữa các module — bằng đúng 0,0000 ETH, trong khi module đó đã có 220 validator nạp tiền thật.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Ethereum block 25.680.251 · StakingRouter 0xfddf38947afb03c621c71b06c9c70bce73f12999 · getModuleValidatorsBalance(4) và getStakingModuleSummary(4)",
+   "falsifier": "Gọi lại getModuleValidatorsBalance(4) trên StakingRouter tại đúng block 25.680.251. Trả về khác 0 thì claim này sai. Chiều thứ hai: đọc dữ liệu đầu vào của các giao dịch báo cáo oracle trong cửa sổ đó — nếu có lượt nào gửi giá trị khác 0 cho module 4 thì câu 'oracle gửi 0 ở cả 10 lượt' sai. Sự kiện xảy ra SAU block 25.680.251 không bác claim này; nó chỉ làm trạng thái đổi.",
+   "do_lai": {
+    "chain": "ethereum",
+    "to": "0xfddf38947afb03c621c71b06c9c70bce73f12999",
+    "ky": "getModuleValidatorsBalance(uint256)",
+    "tham_so": [4],
+    "cong_thuc": {
+     "tu": 0,
+     "thap_phan": 9
+    },
+    "don_vi": "ETH",
+    "chu_so": 4,
+    "so_ghim": 0
+   },
+   "log": [
+    {
+     "ngay": "2026-08-04",
+     "ghi": "Đăng. Đây là claim quyết định của bài: nó nói số 0 là KẾT QUẢ ĐÚNG của cách trường dữ liệu được định nghĩa, không phải dấu hiệu module bị bỏ qua. Bằng chứng cơ chế nằm ở chú thích trong source contract — tiền đang chờ kích hoạt bị loại khỏi số dư báo cáo — cộng với việc bốn lượt báo cáo SAU khi 220 validator đã nạp vẫn gửi 0.",
+     "nguon": "https://x.com/blockpinned/status/2084586520129024148"
+    }
+   ]
+  },
+  {
+   "id": "C2",
+   "text": "Tại Ethereum block 25.680.251, module thứ tư có 220 validator đã nạp và 3.059 key sẵn sàng nạp. Sáu ngày trước, tại block 25.637.121, hai con số đó là 0 và 0.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Ethereum block 25.680.251 · getStakingModuleSummary(4) trả (exited, deposited, depositable) = (0, 220, 3.059) · mốc so sánh: block 25.637.121, đã đăng ngày 29/07/2026",
+   "falsifier": "Gọi lại getStakingModuleSummary(4) tại đúng block 25.680.251. Word thứ hai khác 220 hoặc word thứ ba khác 3.059 thì claim này sai. Con số ở block 25.637.121 đã được công bố ngày 29/07 và kiểm lại được tại đúng block đó.",
+   "do_lai": {
+    "chain": "ethereum",
+    "to": "0xfddf38947afb03c621c71b06c9c70bce73f12999",
+    "ky": "getStakingModuleSummary(uint256)",
+    "tham_so": [4],
+    "cong_thuc": {
+     "tu": 1,
+     "thap_phan": 0
+    },
+    "don_vi": "validator",
+    "chu_so": 0,
+    "so_ghim": 220
+   },
+   "log": [
+    {
+     "ngay": "2026-08-04",
+     "ghi": "Đăng. Nút đo lại đọc trạng thái HIỆN TẠI, nên con số nó trả về sẽ trôi khỏi 220 khi module nhận thêm validator — đó là hành vi đúng, không phải lỗi. Con số ghim là giá trị tại block 25.680.251.",
+     "nguon": "https://x.com/blockpinned/status/2084586520129024148"
+    }
+   ]
+  },
+  {
+   "id": "C3",
+   "text": "Module thứ tư dùng loại credential có mức ETH tối đa 2.048 cho mỗi validator; ba module còn lại dùng loại có mức tối đa 32. Chênh lệch 64 lần này là lý do việc đếm validator không cho biết quy mô ETH của module.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Ethereum block 25.680.251 · StakingRouter · MAX_EFFECTIVE_BALANCE_WC_TYPE_01() = 32 ETH · MAX_EFFECTIVE_BALANCE_WC_TYPE_02() = 2.048 ETH · trường withdrawalCredentialsType trong getStakingModule(i): module 1·2·3 = 1, module 4 = 2",
+   "falsifier": "Gọi hai hàm hằng trên StakingRouter tại block 25.680.251: trả về khác 32e18 và 2.048e18 wei thì claim này sai. Chiều thứ hai, độc lập: đọc trường withdrawalCredentialsType trong struct do getStakingModule(i) trả về cho từng module — nếu module 4 không mang giá trị 2, hoặc một trong ba module còn lại không mang giá trị 1, claim này sai.",
+   "do_lai": {
+    "chain": "ethereum",
+    "to": "0xfddf38947afb03c621c71b06c9c70bce73f12999",
+    "ky": "MAX_EFFECTIVE_BALANCE_WC_TYPE_02()",
+    "tham_so": [],
+    "cong_thuc": {
+     "tu": 0,
+     "thap_phan": 18
+    },
+    "don_vi": "ETH",
+    "chu_so": 0,
+    "so_ghim": 2048
+   },
+   "log": [
+    {
+     "ngay": "2026-08-04",
+     "ghi": "Đăng. Hai hàm hằng này trả WEI, không phải gwei. Lượt tính đầu của desk chia 10^9 và in ra '32.000.000.000 ETH'; nó chỉ lộ ra vì con số vô nghĩa — nếu hàm trả gwei thật thì cùng một lỗi sẽ cho 2.048.000 và trông hoàn toàn hợp lý.",
+     "nguon": "https://x.com/blockpinned/status/2084586520129024148"
+    }
+   ]
+  },
+  {
+   "id": "C4",
+   "text": "Tại consensus slot 14.917.257, hàng chờ gửi tiền của Ethereum có 39.020 lượt chở 2.521.416 ETH. Phép lọc theo credential nhận diện 20.343 lượt là Lido Core — 52,13% số lượt nhưng 25,82% lượng ETH — và cả 20.343 lượt đó đều mang đúng 32,0 ETH.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Consensus slot 14.917.257 · 15h11 ngày 04/08/2026 (08:11Z) · lọc theo withdrawal_credentials đọc từ StakingRouter.getWithdrawalCredentials() tại Ethereum block 25.680.251, không hardcode",
+   "falsifier": "Đọc lại danh sách pending_deposits của beacon state, lọc theo credential lấy từ chính contract, rồi đếm hai lần — một lần theo lượt, một lần theo ETH. Nếu tỉ lệ theo lượt và tỉ lệ theo ETH không chênh nhau khoảng gấp đôi, hoặc nếu xuất hiện lượt Lido Core mang mệnh giá khác 32,0 ETH, thì cách đọc của bài này sai. Đối chứng bắt buộc đi kèm: cùng truy vấn phải tìm được các lượt lớn hơn 32 ETH ở phần còn lại của mạng — không tìm được thì số 0 kia nói về công cụ chứ không về hệ thống.",
+   "khong_do_lai": "Số này nằm ở tầng đồng thuận, không phải trên EVM, nên nút đo lại của trang không gọi tới được. Nặng hơn: endpoint công khai dùng cho phép đo chỉ trả trạng thái HIỆN TẠI và trả lỗi khi hỏi một slot cũ, nên chính snapshot tại slot 14.917.257 không gọi lại được bằng đường đó. Ai đọc lại sẽ đọc một ảnh chụp khác của cùng hàng chờ.",
+   "log": [
+    {
+     "ngay": "2026-08-04",
+     "ghi": "Đăng. Hồ sơ nội bộ trước đó ghi tỉ trọng là '26,0%' nhưng trích kèm một phân số đếm LƯỢT — 26,0 là tỉ lệ theo ETH, phân số kia ra 52,3%. Hai mẫu số khác nhau ghép vào một câu; cả hai số đều đúng, chỉ phép ghép là sai. Bài tách hẳn hai đại lượng vì lý do đó.",
+     "nguon": "https://x.com/blockpinned/status/2084586520129024148"
+    }
+   ]
+  },
+  {
+   "id": "C5",
+   "text": "Ngưỡng 1% tổng số dư Lido Core là 87.030,64 ETH. Với giả định validator loại mới được nạp đủ 2.048 ETH, ngưỡng đó cần 43 validator; đếm theo loại 32 ETH thì cần 2.720 — chênh khoảng 63,3 lần.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Ethereum block 25.680.251 · tổng số dư bốn module 8.703.064,3492 ETH (v1 7.820.581,5167 · CSM 722.470,1193 · SimpleDVT 160.012,7132 · module 4 0,0000)",
+   "falsifier": "Cộng số dư bốn module đọc tại block 25.680.251; nếu tổng khác 8.703.064,3492 ETH thì ngưỡng 87.030,64 sai. Chia ngưỡng cho hai mức tối đa: 87.030,64 / 2.048 = 42,50 và 87.030,64 / 32 = 2.719,71, làm tròn lên thành 43 và 2.720; ra khác hai số đó thì phép tính của bài sai. Con số 43 chỉ đúng dưới giả định nạp đủ 2.048 ETH mỗi validator — giả định này được in kèm, không giấu.",
+   "khong_do_lai": "Đây là phép chia trên TỔNG số dư của bốn module, mà nút đo lại của trang chỉ gọi được một hàm trong một lượt nên không dựng được tổng bốn module. Từng số dư thành phần đọc lại được bằng getModuleValidatorsBalance(i) cho i = 1..4 tại đúng block ghim.",
+   "log": [
+    {
+     "ngay": "2026-08-04",
+     "ghi": "Đăng. Con số 63,3 lần là 2.720 chia 43 = 63,256, không làm tròn thành 63 — với một kênh lấy khả năng truy ngược làm điểm tựa thì một lần làm tròn im lặng cũng là một chỗ không kiểm lại được.",
+     "nguon": "https://x.com/blockpinned/status/2084586520129024148"
+    }
+   ]
+  }
+ ]
+}

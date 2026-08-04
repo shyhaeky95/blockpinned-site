@@ -1,0 +1,350 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>220 validator đã nạp, trọng số phí của module vẫn đúng 0,0000 ETH — BlockPinned</title>
+<meta name="description" content="Module staking mới của Lido có 220 validator đã nạp tiền thật, nhưng số dư đi vào công thức chia phần thưởng vẫn bằng 0 — và số 0 đó đúng theo cách trường dữ liệu được thiết kế.">
+<link rel="canonical" href="https://blockpinned.com/bai/2026-08-04-lido-cmv2-220-validator-trong-so-0/">
+<meta property="og:site_name" content="BlockPinned">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="220 validator đã nạp, trọng số phí của module vẫn đúng 0,0000 ETH">
+<meta property="og:description" content="Module staking mới của Lido có 220 validator đã nạp tiền thật, nhưng số dư đi vào công thức chia phần thưởng vẫn bằng 0 — và số 0 đó đúng theo cách trường dữ liệu được thiết kế.">
+<meta property="og:url" content="https://blockpinned.com/bai/2026-08-04-lido-cmv2-220-validator-trong-so-0/">
+<meta property="og:image" content="https://blockpinned.com/anh/card-cmv2-220.png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1350">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Archivo:wght@600;700;800&family=Oswald:wght@500;600;700&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,650;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="icon" type="image/png" sizes="32x32" href="../../anh/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../anh/favicon-16.png">
+<style>
+/* ── TOKEN: đổi hệ = sửa ĐÚNG khối này. Nguồn gốc: template/build_cards.py (hệ đỏ
+   đang công khai) và template/reference/…Logo-Explorations (hệ verdigris đề xuất).
+   Hai bản có thể trôi lệch — đây là mối nối đã biết, không phải đã đồng bộ. ── */
+:root{
+  --paper:#ECE5D8; --ink:#26221C; --accent:#94382A;
+  --muted:#66604F; --line:#D9D1C2;
+  --display:'Marcellus',system-ui,sans-serif;
+  --body:'Be Vietnam Pro',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --dw:400; --gian-ten:.13em;
+}
+@media (prefers-color-scheme:dark){
+  /* 🔴 accent PHẢI đổi MÃ, không chỉ đảo paper/ink. Bản khai hệ cấm #94382A trên nền
+     tối — đo được 2,15:1, rớt cả ngưỡng 3,0 của đồ hoạ phi-văn-bản. Bản đầu của file
+     này đảo hai màu nền mà giữ nguyên accent, tức tự vi phạm đúng điều cấm ② trong
+     im lặng: không cổng nào của site nhìn tới cặp (màu, nền) ở chế độ tối. */
+  :root{ --paper:#26221C; --ink:#ECE5D8; --accent:#D26F60;
+          --line:#3D372E; --muted:#A79E8E; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.72;-webkit-text-size-adjust:100%}
+.khung{max-width:680px;margin:0 auto;padding:0 22px}
+a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);
+  text-underline-offset:3px;text-decoration-thickness:1.5px}
+a:hover{color:var(--accent)}
+/* URL dài trong bài (github.com/…/issues/8242) không có chỗ ngắt tự nhiên ⇒ nó
+   nong CẢ TRANG rộng ra và mọi thứ khác tràn theo. Đo được bằng preview.py --do-tran. */
+p,li,td,th,h1,h2,h3,figcaption{overflow-wrap:break-word}
+a,code{word-break:break-word}
+
+/* đầu trang: MARK chính thức nằm trong .mark (hằng số MARK_SVG), tô bằng var(--accent)
+   nên nó tự đổi mã theo nền — đó là cách duy nhất giữ được điều cấm ② của bản khai hệ */
+header.dau{border-bottom:1.5px solid var(--ink);margin-bottom:38px}
+.dau .khung{display:flex;align-items:center;gap:13px;padding-top:22px;padding-bottom:18px;flex-wrap:wrap}
+.mark{width:21px;height:21px;flex:none}
+.mark svg{display:block;width:100%;height:100%}
+.mark path{fill:var(--accent)}
+.ten{font:var(--dw) 20px/1 var(--display);letter-spacing:var(--gian-ten);text-decoration:none}
+.tag{font:500 11.5px/1 var(--mono);letter-spacing:.1em;color:var(--muted);margin-left:auto}
+@media(max-width:540px){.tag{margin-left:0;width:100%;order:3}}
+
+h1{font:var(--dw) clamp(27px,5.4vw,37px)/1.22 var(--display);letter-spacing:-.005em;margin:0 0 16px}
+h2{font:var(--dw) 22px/1.32 var(--display);letter-spacing:.005em;margin:44px 0 12px;
+  padding-top:14px;border-top:1.5px solid var(--line)}
+h3{font:600 16.5px/1.4 var(--body);margin:28px 0 8px}
+p{margin:0 0 17px}
+strong{font-weight:650}
+hr{border:0;border-top:1.5px solid var(--line);margin:34px 0}
+ul,ol{margin:0 0 17px;padding-left:21px} li{margin-bottom:7px}
+code{font:500 .875em var(--mono);background:color-mix(in srgb,var(--ink) 7%,transparent);
+  padding:.1em .35em;word-break:break-word}
+pre{background:color-mix(in srgb,var(--ink) 7%,transparent);padding:15px;overflow-x:auto;
+  border-left:3px solid var(--accent);margin:0 0 17px}
+pre code{background:none;padding:0;font-size:12.5px;line-height:1.62}
+
+.cuon{overflow-x:auto;margin:0 0 19px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:14.5px;min-width:100%}
+th,td{padding:8px 13px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1.5px solid var(--ink)}
+
+.meta{font:500 12.5px/1.65 var(--mono);color:var(--muted);margin:0 0 30px}
+.meta b{color:var(--ink);font-weight:600}
+
+/* ── SỔ CLAIM — thứ duy nhất trên trang được phép nổi ── */
+.so{margin:52px 0 0;padding-top:22px;border-top:3px solid var(--ink)}
+.so>p.dan{font-size:15px;color:var(--muted);margin-bottom:26px}
+.claim{border:1.5px solid var(--line);border-left:4px solid var(--accent);
+  padding:17px 19px;margin-bottom:15px;scroll-margin-top:20px}
+.claim.sua,.claim.bac,.claim.cho{border-left-color:var(--muted)}
+.claim.xac{border-left-width:7px}
+.claim h3{margin:0 0 9px;font:600 16px/1.5 var(--body)}
+.claim .id{font:600 12px var(--mono);color:var(--muted);text-decoration:none}
+.chip{display:inline-block;font:600 11px/1 var(--mono);letter-spacing:.09em;
+  padding:5px 9px;vertical-align:2px;margin-left:8px;white-space:nowrap}
+/* xac = đã bị thử và sống sót. Cùng nền accent với "đang đứng" (cả hai còn hiệu lực),
+   thêm viền ink để đọc ra "có hai bên cùng ký": desk đo, đối tượng tự tính lại.
+   🟡 Đây là xử lý TẠM cho tới vòng thiết kế thật — hình thức chưa qua ai duyệt. */
+.chip.xac{background:var(--accent);color:var(--paper);
+  border:1.5px solid var(--ink);padding:3.5px 7.5px}
+.chip.song{background:var(--accent);color:var(--paper)}
+.chip.sua{background:var(--ink);color:var(--paper)}
+.chip.bac{border:1.5px solid var(--ink);color:var(--ink);text-decoration:line-through}
+.chip.cho{border:1.5px dashed var(--muted);color:var(--muted)}
+.dong{font-size:14px;margin:11px 0 0;padding-left:13px;border-left:2px solid var(--line)}
+.dong .nhan{font:600 10.5px var(--mono);letter-spacing:.1em;color:var(--muted);
+  display:block;margin-bottom:3px}
+.nk{list-style:none;padding:0;margin:13px 0 0;font-size:14px}
+.nk li{padding:7px 0 7px 13px;border-left:2px solid var(--line);margin:0}
+.nk .d{font:600 11.5px var(--mono);color:var(--accent);margin-right:7px}
+
+/* ── DÃI TRẠNG THÁI — màn hình đầu tiên, thứ X/TG không có ── */
+.dai{border:2px solid var(--ink);padding:16px 18px;margin:0 0 30px}
+.dem{font:500 15px/1.5 var(--mono)}
+.dem .to{font:700 27px var(--mono);color:var(--accent);vertical-align:-3px;margin-right:2px}
+.dem b.song,.dem b.xac{color:var(--accent)}
+.khi{font:500 12px/1.6 var(--mono);color:var(--muted);margin-top:7px}
+.toi{display:inline-block;margin-top:12px;font:600 12.5px var(--mono);letter-spacing:.06em;
+  text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:2px}
+
+/* ── HÌNH: claim vẽ thành trục số. Sống được — refill hạ thì chấm di chuyển ── */
+.hinh{margin:17px 0 6px;padding:0}
+.thang .hang{margin-bottom:13px}
+.thang .nh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  font:500 12px/1.5 var(--mono);color:var(--muted);margin-bottom:4px}
+.thang .nh b{font:700 14px var(--mono);color:var(--ink);white-space:nowrap}
+.thang .ray{position:relative;height:15px;background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.thang .ray.tr{height:9px;background:none}
+.thang .cot{display:block;height:100%;background:var(--ink)}
+.thang .cot.toi{background:var(--accent)}
+/* cu = con số ĐÃ BỊ THAY nhưng không được xoá khỏi hình — người đọc phải thấy
+   cái thanh dài ngày trước đó, nếu không thì hình mất luôn phần đáng kể nhất */
+.thang .cot.cu{background:color-mix(in srgb,var(--ink) 22%,transparent)}
+.thang .vung{position:absolute;top:0;height:9px;background:var(--accent);
+  border-left:2px solid var(--accent);border-right:2px solid var(--accent);opacity:.45}
+.thang .nk2{margin:4px 0 0;font-size:11.5px}
+.thang .nk2 b{font-size:12px;color:var(--accent)}
+.hinh figcaption{font:500 11px/1.5 var(--mono);color:var(--muted);margin-top:8px;
+  padding-top:7px;border-top:1px solid var(--line)}
+
+/* điều-bác-bỏ là thứ khác biệt duy nhất của kênh này ⇒ nó phải là dòng NẶNG NHẤT
+   trong khối claim, không phải một đoạn văn thường như bản đầu */
+.dong.bac{border-left:3px solid var(--accent);
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  padding:9px 12px;margin-top:13px;font-size:14.5px}
+.dong.bac .nhan{color:var(--accent)}
+
+.dem .phu{font:500 12px/1.6 var(--mono);color:var(--muted);margin-top:7px;
+  text-transform:none;letter-spacing:0}
+ul.diem{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:0}
+ul.diem li{display:grid;grid-template-columns:auto 1fr;gap:0 12px;padding:11px 0;
+  border-top:1px solid var(--line);font-size:15px}
+ul.diem li:last-child{border-bottom:1px solid var(--line)}
+ul.diem .tick{font:600 10.5px/1.7 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid currentColor;border-radius:2px;padding:0 5px;height:fit-content;
+  white-space:nowrap}
+ul.diem .tick.xac,ul.diem .tick.bac{color:var(--accent)}
+ul.diem .tick.sua{color:var(--muted)}
+.dan-gt{margin:14px 0 0;font-size:15px}
+.claim .moc{font:500 12.5px/1.7 var(--mono);color:var(--muted);letter-spacing:.03em}
+.tro{margin:12px 0 0;font:500 12.5px/1.6 var(--mono)}
+ul.han{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+ul.han li{padding:13px 0;border-top:1px solid var(--line);font-size:15px}
+ul.han li:last-child{border-bottom:1px solid var(--line)}
+ul.han .ngay{font:600 12.5px/1.7 var(--mono);letter-spacing:.04em;color:var(--accent);
+  display:block;margin-bottom:3px}
+ul.han .con{font-weight:500;color:var(--muted);margin-left:9px}
+ul.han .con.qua{color:var(--accent);font-weight:600}
+.dolai-o{margin-top:13px;display:flex;flex-direction:column;gap:8px}
+button.dolai{align-self:flex-start;font:600 12.5px/1 var(--mono);letter-spacing:.06em;
+  color:var(--paper);background:var(--accent);border:0;border-radius:2px;
+  padding:9px 13px;cursor:pointer}
+button.dolai:hover{filter:brightness(1.08)}
+button.dolai:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+button.dolai[disabled]{opacity:.55;cursor:progress}
+.ketqua{font:500 12.5px/1.65 var(--mono);color:var(--muted);
+  border-left:2px solid var(--line);padding:2px 0 2px 10px}
+.ketqua b{color:var(--ink);font-weight:600}
+.ketqua.khop{border-left-color:var(--accent)}
+.ketqua.lech{border-left-color:var(--accent)}
+.ketqua.loi{border-left-color:var(--ink)}
+.nk .nguon-tro{opacity:.72;font-size:.92em;font-style:italic}
+.ketqua .nguon{display:block;font-size:11px;opacity:.75;margin-top:3px}
+.dong.khongdo{border-left:3px solid var(--line);padding:9px 12px;margin-top:13px;
+  font-size:14px;color:var(--muted)}
+
+/* bài viết là THAM CHIẾU ở trang này — hạ nhẹ xuống, không tranh chỗ với sổ claim */
+.bandaydu{margin-top:56px;padding-top:6px;border-top:3px solid var(--ink)}
+.bandaydu h2{border-top:0;padding-top:0;margin-top:16px}
+
+footer{margin-top:64px;padding:22px 0 46px;border-top:1.5px solid var(--ink);
+  font:500 12px/1.75 var(--mono);color:var(--muted)}
+footer a{color:var(--muted)}
+.bai{display:block;padding:17px 0;border-bottom:1px solid var(--line);text-decoration:none}
+.bai .t{font:600 18.5px/1.4 var(--body);margin-bottom:5px}
+.bai .s{font:500 12px var(--mono);color:var(--muted)}
+</style></head><body>
+<header class="dau"><div class="khung">
+  <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
+  <a class="ten" href="../../">BLOCK·PINNED</a>
+  <span class="tag">SỐ NÀO CŨNG TRUY NGƯỢC ĐƯỢC</span>
+</div></header>
+<main class="khung"><h1>220 validator đã nạp, trọng số phí của module vẫn đúng 0,0000 ETH</h1><section class="dai">
+  <div class="dem"><span class="to">5</span> claim &nbsp;·&nbsp; <b class="song">5</b> đang đứng</div>
+  <div class="khi"></div>
+  <a class="toi" href="#so-claim">Xem sổ claim ↓</a>
+</section><section class="so"><h2 id="so-claim">Sổ claim</h2>
+<p class="dan">Mỗi khẳng định của bài này một dòng, kèm điều gì sẽ bác bỏ nó. Trạng thái đổi thì sửa tại đây, và ghi lại ngày. Không dòng nào bị xoá.</p>
+<article class="claim song" id="C1">
+  <h3><a class="id" href="#C1">C1</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Tại Ethereum block 25.680.251, số dư mà oracle báo về cho module staking thứ tư của Lido — đại lượng dùng làm trọng số chia phần thưởng giữa các module — bằng đúng 0,0000 ETH, trong khi module đó đã có 220 validator nạp tiền thật.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum block 25.680.251 · StakingRouter 0xfddf38947afb03c621c71b06c9c70bce73f12999 · getModuleValidatorsBalance(4) và getStakingModuleSummary(4)</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Gọi lại getModuleValidatorsBalance(4) trên StakingRouter tại đúng block 25.680.251. Trả về khác 0 thì claim này sai. Chiều thứ hai: đọc dữ liệu đầu vào của các giao dịch báo cáo oracle trong cửa sổ đó — nếu có lượt nào gửi giá trị khác 0 cho module 4 thì câu &#x27;oracle gửi 0 ở cả 10 lượt&#x27; sai. Sự kiện xảy ra SAU block 25.680.251 không bác claim này; nó chỉ làm trạng thái đổi.</p>
+  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0xbdaf4e770000000000000000000000000000000000000000000000000000000000000004" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="9" data-chu-so="4" data-don-vi="ETH" data-ghim="0">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getModuleValidatorsBalance(uint256)</code> trên <code>0xfddf3894…2999</code></div></div>
+  <ul class="nk"><li><span class="d">2026-08-04</span>Đăng. Đây là claim quyết định của bài: nó nói số 0 là KẾT QUẢ ĐÚNG của cách trường dữ liệu được định nghĩa, không phải dấu hiệu module bị bỏ qua. Bằng chứng cơ chế nằm ở chú thích trong source contract — tiền đang chờ kích hoạt bị loại khỏi số dư báo cáo — cộng với việc bốn lượt báo cáo SAU khi 220 validator đã nạp vẫn gửi 0. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C2">
+  <h3><a class="id" href="#C2">C2</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Tại Ethereum block 25.680.251, module thứ tư có 220 validator đã nạp và 3.059 key sẵn sàng nạp. Sáu ngày trước, tại block 25.637.121, hai con số đó là 0 và 0.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum block 25.680.251 · getStakingModuleSummary(4) trả (exited, deposited, depositable) = (0, 220, 3.059) · mốc so sánh: block 25.637.121, đã đăng ngày 29/07/2026</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Gọi lại getStakingModuleSummary(4) tại đúng block 25.680.251. Word thứ hai khác 220 hoặc word thứ ba khác 3.059 thì claim này sai. Con số ở block 25.637.121 đã được công bố ngày 29/07 và kiểm lại được tại đúng block đó.</p>
+  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0x07e203ac0000000000000000000000000000000000000000000000000000000000000004" data-tu="1" data-chia="" data-nhan="1" data-thap-phan="0" data-chu-so="0" data-don-vi="validator" data-ghim="220">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getStakingModuleSummary(uint256)</code> trên <code>0xfddf3894…2999</code></div></div>
+  <ul class="nk"><li><span class="d">2026-08-04</span>Đăng. Nút đo lại đọc trạng thái HIỆN TẠI, nên con số nó trả về sẽ trôi khỏi 220 khi module nhận thêm validator — đó là hành vi đúng, không phải lỗi. Con số ghim là giá trị tại block 25.680.251. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C3">
+  <h3><a class="id" href="#C3">C3</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Module thứ tư dùng loại credential có mức ETH tối đa 2.048 cho mỗi validator; ba module còn lại dùng loại có mức tối đa 32. Chênh lệch 64 lần này là lý do việc đếm validator không cho biết quy mô ETH của module.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum block 25.680.251 · StakingRouter · MAX_EFFECTIVE_BALANCE_WC_TYPE_01() = 32 ETH · MAX_EFFECTIVE_BALANCE_WC_TYPE_02() = 2.048 ETH · trường withdrawalCredentialsType trong getStakingModule(i): module 1·2·3 = 1, module 4 = 2</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Gọi hai hàm hằng trên StakingRouter tại block 25.680.251: trả về khác 32e18 và 2.048e18 wei thì claim này sai. Chiều thứ hai, độc lập: đọc trường withdrawalCredentialsType trong struct do getStakingModule(i) trả về cho từng module — nếu module 4 không mang giá trị 2, hoặc một trong ba module còn lại không mang giá trị 1, claim này sai.</p>
+  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0x833bcd51" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="18" data-chu-so="0" data-don-vi="ETH" data-ghim="2048">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>MAX_EFFECTIVE_BALANCE_WC_TYPE_02()</code> trên <code>0xfddf3894…2999</code></div></div>
+  <ul class="nk"><li><span class="d">2026-08-04</span>Đăng. Hai hàm hằng này trả WEI, không phải gwei. Lượt tính đầu của desk chia 10^9 và in ra &#x27;32.000.000.000 ETH&#x27;; nó chỉ lộ ra vì con số vô nghĩa — nếu hàm trả gwei thật thì cùng một lỗi sẽ cho 2.048.000 và trông hoàn toàn hợp lý. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C4">
+  <h3><a class="id" href="#C4">C4</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Tại consensus slot 14.917.257, hàng chờ gửi tiền của Ethereum có 39.020 lượt chở 2.521.416 ETH. Phép lọc theo credential nhận diện 20.343 lượt là Lido Core — 52,13% số lượt nhưng 25,82% lượng ETH — và cả 20.343 lượt đó đều mang đúng 32,0 ETH.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Consensus slot 14.917.257 · 15h11 ngày 04/08/2026 (08:11Z) · lọc theo withdrawal_credentials đọc từ StakingRouter.getWithdrawalCredentials() tại Ethereum block 25.680.251, không hardcode</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Đọc lại danh sách pending_deposits của beacon state, lọc theo credential lấy từ chính contract, rồi đếm hai lần — một lần theo lượt, một lần theo ETH. Nếu tỉ lệ theo lượt và tỉ lệ theo ETH không chênh nhau khoảng gấp đôi, hoặc nếu xuất hiện lượt Lido Core mang mệnh giá khác 32,0 ETH, thì cách đọc của bài này sai. Đối chứng bắt buộc đi kèm: cùng truy vấn phải tìm được các lượt lớn hơn 32 ETH ở phần còn lại của mạng — không tìm được thì số 0 kia nói về công cụ chứ không về hệ thống.</p>
+  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Số này nằm ở tầng đồng thuận, không phải trên EVM, nên nút đo lại của trang không gọi tới được. Nặng hơn: endpoint công khai dùng cho phép đo chỉ trả trạng thái HIỆN TẠI và trả lỗi khi hỏi một slot cũ, nên chính snapshot tại slot 14.917.257 không gọi lại được bằng đường đó. Ai đọc lại sẽ đọc một ảnh chụp khác của cùng hàng chờ.</p>
+  <ul class="nk"><li><span class="d">2026-08-04</span>Đăng. Hồ sơ nội bộ trước đó ghi tỉ trọng là &#x27;26,0%&#x27; nhưng trích kèm một phân số đếm LƯỢT — 26,0 là tỉ lệ theo ETH, phân số kia ra 52,3%. Hai mẫu số khác nhau ghép vào một câu; cả hai số đều đúng, chỉ phép ghép là sai. Bài tách hẳn hai đại lượng vì lý do đó. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></li></ul>
+</article>
+<article class="claim song" id="C5">
+  <h3><a class="id" href="#C5">C5</a>
+      <span class="chip song">ĐANG ĐỨNG</span></h3>
+  <p style="margin:0">Ngưỡng 1% tổng số dư Lido Core là 87.030,64 ETH. Với giả định validator loại mới được nạp đủ 2.048 ETH, ngưỡng đó cần 43 validator; đếm theo loại 32 ETH thì cần 2.720 — chênh khoảng 63,3 lần.</p>
+  
+  <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum block 25.680.251 · tổng số dư bốn module 8.703.064,3492 ETH (v1 7.820.581,5167 · CSM 722.470,1193 · SimpleDVT 160.012,7132 · module 4 0,0000)</p>
+  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Cộng số dư bốn module đọc tại block 25.680.251; nếu tổng khác 8.703.064,3492 ETH thì ngưỡng 87.030,64 sai. Chia ngưỡng cho hai mức tối đa: 87.030,64 / 2.048 = 42,50 và 87.030,64 / 32 = 2.719,71, làm tròn lên thành 43 và 2.720; ra khác hai số đó thì phép tính của bài sai. Con số 43 chỉ đúng dưới giả định nạp đủ 2.048 ETH mỗi validator — giả định này được in kèm, không giấu.</p>
+  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Đây là phép chia trên TỔNG số dư của bốn module, mà nút đo lại của trang chỉ gọi được một hàm trong một lượt nên không dựng được tổng bốn module. Từng số dư thành phần đọc lại được bằng getModuleValidatorsBalance(i) cho i = 1..4 tại đúng block ghim.</p>
+  <ul class="nk"><li><span class="d">2026-08-04</span>Đăng. Con số 63,3 lần là 2.720 chia 43 = 63,256, không làm tròn thành 63 — với một kênh lấy khả năng truy ngược làm điểm tựa thì một lần làm tròn im lặng cũng là một chỗ không kiểm lại được. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></li></ul>
+</article></section><section class="bandaydu"><h2 id="ban-day-du">Bài đầy đủ</h2><p class="meta">🟡 2026-08-04 &nbsp;·&nbsp; GHIM TẠI Ethereum block #25.680.251 · hàng chờ deposit đọc tại consensus slot 14.917.257, 15h11 ngày 04/08/2026 (08:11Z) &nbsp;·&nbsp; <a href="https://x.com/blockpinned/status/2084586520129024148">bản đăng trên X</a></p><p><strong>220 validator đã gửi tiền thật vào module staking mới của Lido. Số dư đi vào công thức phân bổ phần thưởng của module đó vẫn đúng 0,0000 ETH.</strong></p>
+<p>Sáu ngày trước, BlockPinned ghi nhận module này có 43 node operator, <strong>0 validator đã nạp</strong> và số dư oracle báo về là 0 ETH. Một trong hai con số đã đổi.</p>
+<p>Nếu bạn dùng riêng số dư oracle để hỏi &quot;module mới đã được dùng chưa&quot;, số 0 kia sẽ đọc thành &quot;chưa ai dùng&quot;. Chỗ sai không nằm ở số 0. Nó nằm ở việc dùng số dư oracle để kết luận module đã nhận deposit hay chưa — trong khi trường này loại tiền đang chờ kích hoạt.</p>
+<h2 id="so-0-nay-phu-hop-voi-cach-truong-so-du-duoc-thiet-ke">Số 0 này phù hợp với cách trường số dư được thiết kế</h2>
+<p>Trong công thức phân bổ phần thưởng giữa các staking module mà bài này kiểm, trọng số lấy từ <strong>số dư do oracle báo về</strong>, không lấy từ số validator. Contract không tự tính số dư ấy: oracle đọc dữ liệu ở tầng đồng thuận của Ethereum rồi đưa con số vào báo cáo on-chain. Và phần chú thích ngay tại trường dữ liệu đó trong source contract ghi rõ — tiền đang chờ kích hoạt bị loại khỏi số dư báo cáo.</p>
+<p>Trong 10 lượt báo cáo gần nhất tính tới Ethereum block <strong>25.680.251</strong>, con số oracle thật sự đưa vào cho module mới đều là <strong>0 gwei</strong>. Bốn lượt trong số đó xảy ra <strong>sau</strong> khi số validator đã nạp của module đạt 220.</p>
+<p>Nói cách khác: ETH của 220 validator đã được gửi, nhưng chưa đi vào số dư oracle. Vậy tại thời điểm đo, nó đang ở đâu?</p>
+<h2 id="220-validator-do-dang-nam-trong-hang-cho-kich-hoat">220 validator đó đang nằm trong hàng chờ kích hoạt</h2>
+<p>Và quy mô của hàng chờ mới là chỗ đáng nhìn.</p>
+<p>Tại consensus slot <strong>14.917.257</strong>, lúc 15h11 ngày 04/08 (08:11Z), hàng chờ gửi tiền của Ethereum có <strong>39.020 lượt, chở 2.521.416 ETH</strong>. Trong cùng ảnh chụp, Lido Core — bốn staking module, không tính stVaults — chiếm <strong>52,13% số lượt</strong> nhưng <strong>25,82% lượng ETH</strong>.</p>
+<p>Hai con số cho cùng một chỗ đứng, chênh nhau gấp đôi. Lý do đo được: tại cùng slot đó, cả <strong>20.343 lượt</strong> mà phép lọc credential nhận diện là Lido Core đều mang đúng <strong>32,0 ETH</strong>, trong khi phần còn lại của mạng có lượt mang tới <strong>1.920 ETH</strong>.</p>
+<p>Cả hai con số đều đúng. Đại lượng cần dùng thì phụ thuộc câu hỏi: số lượt, hay lượng ETH. Hàng chờ này được xử lý theo lượng ETH — nên để đo phần tiền đang đứng chờ của bốn module Lido Core, tỉ lệ là <strong>25,82%</strong>.</p>
+<p>Hỏi về <strong>toàn bộ Lido</strong> thì con số cao hơn, và nó là mức tối thiểu: stVaults tự đặt credential riêng nên nằm ngoài phép lọc. Một stVault đã đo có 5 lượt / <strong>5.090 ETH</strong> trong hàng — cộng riêng nó đã thành <strong>26,02%</strong>, và chưa quét hết stVaults.</p>
+<p>Phép lọc có nhìn sót lượt lớn không? Tại cùng slot đó, truy vấn trả <strong>1.648</strong> lượt lớn hơn 32 ETH trên toàn hàng chờ (thường gặp 1.920 · 1.888 · 1.024 · 1.800) và <strong>0</strong> lượt như vậy trong 20.343 lượt được nhận diện là Lido Core.</p>
+<p>Hàng dài đến mức nào: cũng tại slot đó, lượt đứng đầu <strong>đã chờ 50,23 ngày</strong> và vẫn chưa tới lượt. 220 validator của module mới nằm rải trong dải vị trí <strong>38.145–38.846</strong> trên tổng 39.020 lượt.</p>
+<h2 id="va-day-la-cai-bay-that-su-cua-viec-dem-validator">Và đây là cái bẫy thật sự của việc đếm validator</h2>
+<p><strong>Credential</strong> — đoạn dữ liệu gắn với mỗi validator, quy định nơi rút tiền và loại validator — của module mới thuộc loại khác ba module cũ. Và chính loại đó quyết định <strong>mức ETH tối đa</strong> được tính cho một validator: loại cũ <strong>32 ETH</strong>, loại module mới dùng <strong>2.048 ETH</strong>.</p>
+<p>Nghĩa là mức ETH tối đa của một validator loại mới bằng 64 validator loại cũ. Lấy số validator để suy ra lượng ETH mà không xét loại credential và mức nạp, quy mô ước tính có thể lệch tới ngần ấy lần.</p>
+<p>Cụ thể, với ngưỡng 1% tổng số dư Lido Core — <strong>87.030,64 ETH</strong>: giả định validator loại mới đều được nạp đủ 2.048 ETH thì cần <strong>43</strong> cái, thay vì <strong>2.720</strong> validator loại 32 ETH.</p>
+<p>Cùng một cột mốc, số validator cần thiết chênh khoảng <strong>63,3 lần</strong>. Khác biệt đến từ loại credential, từ mức nạp mà bạn giả định, và từ việc phải làm tròn lên số validator nguyên đủ để vượt ngưỡng.</p>
+<h2 id="tu-kiem-lai">Tự kiểm lại</h2>
+<p>Số tầng thực thi ghim tại Ethereum block <strong>25.680.251</strong>, đọc lại được bằng RPC có hỗ trợ trạng thái lịch sử tại đúng block đó:</p>
+<ul><li>số dư module mới <strong>0,0000 ETH</strong></li><li>validator đã nạp <strong>220</strong>, key sẵn sàng nạp <strong>3.059</strong></li><li>mức ETH tối đa của hai loại credential: <strong>32</strong> và <strong>2.048</strong></li></ul>
+<p>Số hàng chờ đọc tại consensus slot <strong>14.917.257</strong> lúc 15h11 ngày 04/08; endpoint dùng ở đây chỉ trả trạng thái hiện tại nên không gọi lại được chính ảnh chụp đó.</p>
+<p>Mốc BlockPinned ghi trước từ 29/07 không đổi: tới <strong>18/09</strong>, nếu số dư module mới vẫn dưới 1% tổng số dư Lido Core thì hạ mức ưu tiên theo dõi. Nó vẫn được kiểm bằng số dư module. Bài này không rút mốc đó và cũng không đoán trước kết quả. Một biến quan trọng là tốc độ hàng chờ xử lý lượng ETH đứng trước 220 validator này, trong một hàng mà lượt đứng đầu đã đợi 50,23 ngày tại ảnh chụp trên — nhưng không phải biến duy nhất: kết quả còn phụ thuộc lượng deposit mới, mức ETH thực nạp trên mỗi validator, và phân bổ giữa các module.</p>
+<p>Bài này đo tiền <strong>đang ở đâu</strong>, không đo tiền <strong>đến từ đâu</strong>. Việc 220 validator này được tạo bằng tiền mới hay bằng tiền dịch sang từ ba module cũ là một câu hỏi khác, cần phép đo khác, và không câu nào trong bài trả lời nó.</p>
+<p><em>Không phải lời khuyên đầu tư. Số tầng thực thi đo tại Ethereum block 25.680.251; số hàng chờ đọc tại consensus slot 14.917.257, lúc 15h11 ngày 04/08/2026 (08:11Z), và sẽ đổi.</em></p></section></main>
+<footer><div class="khung">
+  Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá.<br>
+  Không phải lời khuyên đầu tư. ·
+  <a href="https://x.com/blockpinned">@blockpinned</a>
+</div></footer>
+<script>
+// Hai endpoint keyless, đo được 30/07 là cho phép trình duyệt gọi (CORS *). Gọi endpoint
+// thứ hai CHỈ khi cái đầu lỗi — 🔴 giới hạn nhịp là thật: một endpoint đã trả 429 ngay
+// lượt thứ ba khi thử. Vì vậy trang KHÔNG tự đo lúc mở; chỉ đo khi có người bấm.
+const RPC = ["https://ethereum-rpc.publicnode.com", "https://eth.drpc.org"];
+async function rpcGoi(ep, method, params) {
+  const r = await fetch(ep, {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({jsonrpc: "2.0", id: 1, method, params})});
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  const j = await r.json();
+  if (j.error) throw new Error(j.error.message || "lỗi RPC");
+  return j.result;
+}
+function chuoiSo(x, n) {
+  return x.toLocaleString("vi-VN", {minimumFractionDigits: n, maximumFractionDigits: n});
+}
+async function doLai(b) {
+  const o = b.dataset, ra = b.parentElement.querySelector(".ketqua");
+  b.disabled = true; ra.className = "ketqua dang"; ra.textContent = "đang đo…";
+  const loi = [];
+  for (const ep of RPC) {
+    try {
+      const blk = await rpcGoi(ep, "eth_blockNumber", []);              // ghim TRƯỚC
+      const kq = await rpcGoi(ep, "eth_call", [{to: o.to, data: o.data}, blk]);  // đọc TẠI block đó
+      const h = kq.slice(2), w = [];
+      for (let i = 0; i < h.length; i += 64) w.push(BigInt("0x" + h.slice(i, i + 64)));
+      const tu = Number(o.tu), sc = Number(o.chuSo), ghim = Number(o.ghim);
+      const v = o.chia === "" ? Number(w[tu]) / Math.pow(10, Number(o.thapPhan))
+                              : Number(w[tu]) / Number(w[Number(o.chia)]) * Number(o.nhan);
+      const doi = Math.abs(v - ghim) >= Math.pow(10, -sc) / 2;
+      ra.className = "ketqua " + (doi ? "lech" : "khop");
+      ra.innerHTML = "<b>" + chuoiSo(v, sc) + " " + o.donVi + "</b> tại block "
+        + BigInt(blk).toLocaleString("vi-VN") + " · đã ghim " + chuoiSo(ghim, sc) + " "
+        + o.donVi + " ⇒ <b>" + (doi ? "ĐÃ ĐỔI" : "KHÔNG ĐỔI") + "</b>"
+        + '<span class="nguon">đọc từ ' + ep.replace("https://", "") + "</span>";
+      b.disabled = false; return;
+    } catch (e) { loi.push(ep.replace("https://", "") + ": " + e.message); }
+  }
+  // 🔴 Không in số nào khi đo hỏng. Một số 0 ở đây là bằng chứng về CÔNG CỤ, không phải
+  // về chain — in nó ra là làm đúng cái lỗi mà mấy bài trên trang này đi bác.
+  ra.className = "ketqua loi";
+  ra.innerHTML = "<b>không đo được</b> — cả hai endpoint đều lỗi, nên trang không in số nào."
+    + '<span class="nguon">' + loi.join(" · ") + "</span>";
+  b.disabled = false;
+}
+// Đếm ngược tính ở TRÌNH DUYỆT, không lúc build: trang tĩnh không tự dựng lại mỗi ngày,
+// nên một con số "còn N ngày" nướng vào HTML sẽ nói dối từ hôm sau.
+document.querySelectorAll(".han .ngay[data-han]").forEach(function (e) {
+  const con = Math.ceil((new Date(e.dataset.han + "T23:59:59Z") - new Date()) / 86400000);
+  const p = document.createElement("span");
+  p.className = "con" + (con < 0 ? " qua" : "");
+  p.textContent = con < 0 ? "ĐÃ TỚI HẠN" : (con === 0 ? "hôm nay" : "còn " + con + " ngày");
+  e.appendChild(p);
+});
+document.querySelectorAll("button.dolai").forEach(function (b) {
+  b.addEventListener("click", function () { doLai(b); });
+});
+</script>
+</body></html>
