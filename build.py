@@ -82,7 +82,29 @@ TRANG_THAI = {
 }
 
 THEMES = {
-    # 🟢 HỆ ĐÃ CHỐT 29/07 — hướng THE BENCHMARK. Nguồn duy nhất:
+    # 🟢 HỆ ĐÃ CHỐT 06/08/2026 — bản D2, user duyệt tại /thu-d2/ trên chính tên miền.
+    # Nguồn: ~/blockpinned/design-v2/implement-D2/ (bp.css + NOTES.md, có số đo).
+    # 🔴 BA điều cấm của hệ này, mỗi điều đều ĐO ĐƯỢC, không phải gu:
+    #  ① HUE = TRẠNG THÁI CLAIM. Không tồn tại hue thứ sáu đứng cạnh được cả năm trạng
+    #    thái (cam ↔ ĐÃ SỬA ΔE 11,1 dark / 8,8 light; mọi sắc đỏ ↔ BỊ BÁC 2,8–8,7) ⇒
+    #    nút và link mặc MỰC, không mặc hue.
+    #  ② Năm trạng thái không phân biệt được bằng màu đơn thuần (đỏ ↔ lá ΔE 2,7 deutan)
+    #    ⇒ mỗi chip mang thêm GLYPH riêng + hình khối riêng. Bỏ glyph là vi phạm.
+    #  ③ Cam thương hiệu cấm đứng cạnh chip trạng thái (coral ↔ BỊ BÁC ΔE 11,4 / 6,8):
+    #    trong thẻ claim, khối GHIM TẠI mặc mực.
+    # Nền ẤM để tone cam cầm nhịp mà không tốn hue nào — neutral có chroma ≈ 0.
+    "d2": dict(paper="#faf7f2", ink="#1a1512", accent="#b8412a", accent_toi="#ff7a5c",
+               muted="#5f564b", muted_toi="#a89d8f", line="#e6ded1", line_toi="#302a24",
+               display="Inter", dw="800", gian_ten="-.01em",
+               bg2="#f3efe7", bg2_toi="#15130f", card="#fffdfa", card_toi="#1b1815",
+               inset="#f5f1ea", inset_toi="#141210",
+               line_soft="#efe9df", line_soft_toi="#241f1a",
+               faint="#8a8073", faint_toi="#7d7365",
+               xn="#0f8a3c", xn_toi="#35c46a", song="#1d5fae", song_toi="#4d9fff",
+               sua="#a16207", sua_toi="#f0b429", bac="#be123c", bac_toi="#ef4056",
+               cho="#64748b", cho_toi="#94a3b8"),
+    # hệ 29/07 — hướng THE BENCHMARK, GIỮ LÀM HỒ SƠ sau khi D2 được duyệt 06/08.
+    # Nguồn duy nhất:
     # template/out/logo/final/he.json (do template/logo_final.py sinh ra).
     # 🔴 HAI mã rubric là BẮT BUỘC, không phải tuỳ chọn thẩm mỹ: #94382A đo được
     # 2,15:1 trên nền ink ⇒ điều cấm ② của bản khai hệ. Nền tối dùng #D26F60 (4,66).
@@ -482,192 +504,345 @@ def cong_ngoi_xung(txt: str, o: str) -> None:
 
 # ════════════════════════════════════════════════════════════════════ KHUÔN
 
-def css(t: dict) -> str:
-    return f"""
-/* ── TOKEN: đổi hệ = sửa ĐÚNG khối này. Nguồn gốc: template/build_cards.py (hệ đỏ
-   đang công khai) và template/reference/…Logo-Explorations (hệ verdigris đề xuất).
-   Hai bản có thể trôi lệch — đây là mối nối đã biết, không phải đã đồng bộ. ── */
-:root{{
-  --paper:{t['paper']}; --ink:{t['ink']}; --accent:{t['accent']};
-  --muted:{t['muted']}; --line:{t['line']};
-  --display:'{t['display']}',system-ui,sans-serif;
-  --body:'{BODY_FONT}',system-ui,sans-serif;
-  --mono:'IBM Plex Mono',ui-monospace,monospace;
-  --dw:{t['dw']}; --gian-ten:{t['gian_ten']};
-}}
-@media (prefers-color-scheme:dark){{
-  /* 🔴 accent PHẢI đổi MÃ, không chỉ đảo paper/ink. Bản khai hệ cấm #94382A trên nền
-     tối — đo được 2,15:1, rớt cả ngưỡng 3,0 của đồ hoạ phi-văn-bản. Bản đầu của file
-     này đảo hai màu nền mà giữ nguyên accent, tức tự vi phạm đúng điều cấm ② trong
-     im lặng: không cổng nào của site nhìn tới cặp (màu, nền) ở chế độ tối. */
-  :root{{ --paper:{t['ink']}; --ink:{t['paper']}; --accent:{t['accent_toi']};
-          --line:{t['line_toi']}; --muted:{t['muted_toi']}; }}
-}}
-*{{box-sizing:border-box}}
-body{{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
-  font-size:17px;line-height:1.72;-webkit-text-size-adjust:100%}}
-.khung{{max-width:680px;margin:0 auto;padding:0 22px}}
-a{{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);
-  text-underline-offset:3px;text-decoration-thickness:1.5px}}
-a:hover{{color:var(--accent)}}
-/* URL dài trong bài (github.com/…/issues/8242) không có chỗ ngắt tự nhiên ⇒ nó
-   nong CẢ TRANG rộng ra và mọi thứ khác tràn theo. Đo được bằng preview.py --do-tran. */
-p,li,td,th,h1,h2,h3,figcaption{{overflow-wrap:break-word}}
-a,code{{word-break:break-word}}
+CSS_THAN = """
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;
+  -webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;
+  background:radial-gradient(1100px 420px at 78% -190px,
+    color-mix(in srgb,var(--accent) 13%,transparent),transparent 70%) no-repeat,var(--bg)}
+.khung{max-width:900px;margin:0 auto;padding:0 clamp(16px,4vw,26px)}
+a{color:var(--ink);text-decoration:none}
+main a,footer a{text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--accent) 55%,transparent);
+  text-underline-offset:3px;text-decoration-thickness:1.5px}
+main a:hover,footer a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+p,li,td,th,h1,h2,h3,figcaption{overflow-wrap:break-word}
+a,code{word-break:break-word}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 
-/* đầu trang: MARK chính thức nằm trong .mark (hằng số MARK_SVG), tô bằng var(--accent)
-   nên nó tự đổi mã theo nền — đó là cách duy nhất giữ được điều cấm ② của bản khai hệ */
-header.dau{{border-bottom:1.5px solid var(--ink);margin-bottom:38px}}
-.dau .khung{{display:flex;align-items:center;gap:13px;padding-top:22px;padding-bottom:18px;flex-wrap:wrap}}
-.mark{{width:21px;height:21px;flex:none}}
-.mark svg{{display:block;width:100%;height:100%}}
-.mark path{{fill:var(--accent)}}
-.ten{{font:var(--dw) 20px/1 var(--display);letter-spacing:var(--gian-ten);text-decoration:none}}
-.tag{{font:500 11.5px/1 var(--mono);letter-spacing:.1em;color:var(--muted);margin-left:auto}}
-@media(max-width:540px){{.tag{{margin-left:0;width:100%;order:3}}}}
+/* ── đầu trang: dính, có mục lục ngang. MARK tô bằng var(--accent) nên tự đổi mã
+   theo nền — cách duy nhất giữ được điều cấm ② của bản khai hệ ── */
+header.dau{position:sticky;top:0;z-index:20;margin-bottom:34px;
+  background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)}
+.dau .khung{display:flex;align-items:center;gap:12px;padding-top:11px;padding-bottom:11px;flex-wrap:wrap}
+.mark{width:31px;height:31px;flex:none}
+.mark svg{display:block;width:100%;height:100%}
+.mark path{fill:var(--accent)}
+.ten{font:var(--dw) 18px/1 var(--display);letter-spacing:var(--gian-ten);text-decoration:none}
+.ten span{color:var(--accent)}
+nav.dieu{margin-left:auto;display:flex;gap:2px;align-items:center}
+nav.dieu a{font:600 13px/1 var(--body);color:var(--muted);padding:7px 11px;border-radius:7px;text-decoration:none}
+nav.dieu a:hover{color:var(--ink);background:var(--card)}
+nav.dieu a.tai{color:var(--ink);background:var(--card);border:1px solid var(--line)}
+button.nut-nen{font:500 12px/1 var(--mono);background:var(--card);border:1px solid var(--line);
+  color:var(--muted);padding:7px 9px;border-radius:7px;cursor:pointer;margin-left:6px}
+button.nut-nen:hover{color:var(--ink);border-color:var(--muted)}
+.tag{font:500 11px/1 var(--mono);letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
+@media(max-width:760px){.tag{display:none}}
+@media(max-width:640px){nav.dieu a:not(.tai){display:none}}
 
-h1{{font:var(--dw) clamp(27px,5.4vw,37px)/1.22 var(--display);letter-spacing:-.005em;margin:0 0 16px}}
-h2{{font:var(--dw) 22px/1.32 var(--display);letter-spacing:.005em;margin:44px 0 12px;
-  padding-top:14px;border-top:1.5px solid var(--line)}}
-h3{{font:600 16.5px/1.4 var(--body);margin:28px 0 8px}}
-p{{margin:0 0 17px}}
-strong{{font-weight:650}}
-hr{{border:0;border-top:1.5px solid var(--line);margin:34px 0}}
-ul,ol{{margin:0 0 17px;padding-left:21px}} li{{margin-bottom:7px}}
-code{{font:500 .875em var(--mono);background:color-mix(in srgb,var(--ink) 7%,transparent);
-  padding:.1em .35em;word-break:break-word}}
-pre{{background:color-mix(in srgb,var(--ink) 7%,transparent);padding:15px;overflow-x:auto;
-  border-left:3px solid var(--accent);margin:0 0 17px}}
-pre code{{background:none;padding:0;font-size:12.5px;line-height:1.62}}
+h1{font:var(--dw) clamp(28px,5.2vw,40px)/1.14 var(--display);letter-spacing:-.025em;margin:0 0 16px;text-wrap:balance}
+h2{font:750 23px/1.28 var(--display);letter-spacing:-.018em;margin:46px 0 14px;text-wrap:balance}
+h2::before{content:"";display:block;width:34px;height:3px;border-radius:2px;background:var(--accent);margin-bottom:12px;opacity:.9}
+h3{font:650 16.5px/1.45 var(--body);margin:26px 0 8px}
+p{margin:0 0 18px}
+strong{font-weight:680}
+hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+ul,ol{margin:0 0 18px;padding-left:21px}
+li{margin-bottom:7px}
+code{font:500 .875em var(--mono);background:var(--inset);border:1px solid var(--line-soft);
+  border-radius:5px;padding:.1em .35em;word-break:break-word}
+pre{background:var(--inset);border:1px solid var(--line-soft);border-radius:10px;padding:14px 16px;
+  overflow-x:auto;margin:0 0 18px}
+pre code{background:none;border:0;padding:0;font-size:12.5px;line-height:1.62}
 
-.cuon{{overflow-x:auto;margin:0 0 19px;-webkit-overflow-scrolling:touch}}
-table{{border-collapse:collapse;font-size:14.5px;min-width:100%}}
-th,td{{padding:8px 13px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}}
-th{{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;
-  color:var(--muted);border-bottom:1.5px solid var(--ink)}}
+.cuon{overflow-x:auto;margin:0 0 19px;-webkit-overflow-scrolling:touch;
+  border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;font-size:14.5px;min-width:100%}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line-soft);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1px solid var(--line)}
 
-.meta{{font:500 12.5px/1.65 var(--mono);color:var(--muted);margin:0 0 30px}}
-.meta b{{color:var(--ink);font-weight:600}}
+.meta{font:500 12.5px/1.7 var(--mono);color:var(--muted);margin:0 0 26px;
+  background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:10px;padding:11px 16px}
+.meta b{color:var(--ink);font-weight:600}
+
+/* ── BẢNG ĐIỂM: thanh xếp chồng + chip có SỐ. Màn hình đầu tiên, thứ X/TG không có ── */
+.dai,.board{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:16px 18px 14px;margin:0 0 28px;
+  box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 26px -18px rgba(0,0,0,.5)}
+.bh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.bh b{font:700 13px/1.4 var(--body);letter-spacing:.01em}
+.bh span{font:500 11.5px/1.5 var(--mono);color:var(--faint)}
+.stack{display:flex;gap:2px;height:20px;border-radius:5px;overflow:hidden;background:var(--inset)}
+.seg{background:var(--st);min-width:3px}
+.seg.xac{--st:var(--c-xn)}.seg.song{--st:var(--c-song)}.seg.sua{--st:var(--c-sua)}
+.seg.bac{--st:var(--c-bac)}.seg.cho{--st:var(--c-cho)}
+.chu-thich{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.lg{display:inline-flex;align-items:center;gap:7px;font:600 12px/1 var(--body);
+  padding:6px 10px 6px 8px;border-radius:999px;border:1px solid var(--line);
+  background:var(--inset);color:var(--muted);text-decoration:none}
+.lg .sw{width:9px;height:9px;border-radius:2px;background:var(--st);flex:none}
+.lg .n{font:700 12px var(--mono);color:var(--ink)}
+.lg.xac{--st:var(--c-xn)}.lg.song{--st:var(--c-song)}.lg.sua{--st:var(--c-sua)}
+.lg.bac{--st:var(--c-bac)}.lg.cho{--st:var(--c-cho)}
+.lg:hover{border-color:var(--st);color:var(--ink)}
+.khi{font:500 12px/1.65 var(--mono);color:var(--faint);margin-top:11px}
+.toi{display:inline-block;margin-top:12px;font:700 12.5px/1 var(--mono);letter-spacing:.05em;
+  text-decoration:none;color:var(--ink);background:var(--nut-nen);color:var(--nut-chu);
+  padding:9px 13px;border-radius:8px}
+.toi:hover{filter:brightness(1.1)}
+
+.dem{font:500 15px/1.55 var(--body);color:var(--muted)}
+.dem .to{font:700 30px/1 var(--mono);color:var(--ink);vertical-align:-4px;margin-right:4px;letter-spacing:-.02em}
+.dem b{font-weight:700}
+.dem b.xac{color:var(--c-xn)}.dem b.song{color:var(--c-song)}.dem b.sua{color:var(--c-sua)}
+.dem b.bac{color:var(--c-bac)}.dem b.cho{color:var(--c-cho)}
+.dem .phu{font:500 12.5px/1.65 var(--body);color:var(--faint);margin-top:8px;
+  text-transform:none;letter-spacing:0}
+
+/* ── THẺ SỐ ── */
+.the-so{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 22px}
+@media(max-width:820px){.the-so{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:420px){.the-so{grid-template-columns:1fr}}
+.o{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:15px 16px 13px;display:flex;flex-direction:column;gap:5px;overflow:hidden;
+  text-decoration:none;transition:border-color .18s,transform .18s}
+.o::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--st,var(--accent))}
+.o::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--st,var(--accent)) 9%,transparent),transparent 62%)}
+.o:hover{border-color:color-mix(in srgb,var(--st,var(--accent)) 45%,var(--line));transform:translateY(-1px)}
+.o.xac{--st:var(--c-xn)}.o.song{--st:var(--c-song)}.o.sua{--st:var(--c-sua)}
+.o.bac{--st:var(--c-bac)}.o.cho{--st:var(--c-cho)}
+.o .nh{font:700 11px/1.4 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);position:relative}
+.o .gt{font:700 28px/1.15 var(--mono);letter-spacing:-.02em;position:relative}
+.o .gc{font:400 12px/1.45 var(--body);color:var(--faint);position:relative}
 
 /* ── SỔ CLAIM — thứ duy nhất trên trang được phép nổi ── */
-.so{{margin:52px 0 0;padding-top:22px;border-top:3px solid var(--ink)}}
-.so>p.dan{{font-size:15px;color:var(--muted);margin-bottom:26px}}
-.claim{{border:1.5px solid var(--line);border-left:4px solid var(--accent);
-  padding:17px 19px;margin-bottom:15px;scroll-margin-top:20px}}
-.claim.sua,.claim.bac,.claim.cho{{border-left-color:var(--muted)}}
-.claim.xac{{border-left-width:7px}}
-.claim h3{{margin:0 0 9px;font:600 16px/1.5 var(--body)}}
-.claim .id{{font:600 12px var(--mono);color:var(--muted);text-decoration:none}}
-.chip{{display:inline-block;font:600 11px/1 var(--mono);letter-spacing:.09em;
-  padding:5px 9px;vertical-align:2px;margin-left:8px;white-space:nowrap}}
-/* xac = đã bị thử và sống sót. Cùng nền accent với "đang đứng" (cả hai còn hiệu lực),
-   thêm viền ink để đọc ra "có hai bên cùng ký": desk đo, đối tượng tự tính lại.
-   🟡 Đây là xử lý TẠM cho tới vòng thiết kế thật — hình thức chưa qua ai duyệt. */
-.chip.xac{{background:var(--accent);color:var(--paper);
-  border:1.5px solid var(--ink);padding:3.5px 7.5px}}
-.chip.song{{background:var(--accent);color:var(--paper)}}
-.chip.sua{{background:var(--ink);color:var(--paper)}}
-.chip.bac{{border:1.5px solid var(--ink);color:var(--ink);text-decoration:line-through}}
-.chip.cho{{border:1.5px dashed var(--muted);color:var(--muted)}}
-.dong{{font-size:14px;margin:11px 0 0;padding-left:13px;border-left:2px solid var(--line)}}
-.dong .nhan{{font:600 10.5px var(--mono);letter-spacing:.1em;color:var(--muted);
-  display:block;margin-bottom:3px}}
-.nk{{list-style:none;padding:0;margin:13px 0 0;font-size:14px}}
-.nk li{{padding:7px 0 7px 13px;border-left:2px solid var(--line);margin:0}}
-.nk .d{{font:600 11.5px var(--mono);color:var(--accent);margin-right:7px}}
+.so{margin:48px 0 0}
+.so>p.dan{font-size:14.5px;color:var(--muted);margin:0 0 20px;max-width:74ch}
+.claim{--st:var(--accent);background:var(--card);border:1px solid var(--line);
+  border-left:4px solid var(--st);border-radius:14px;padding:18px 20px;margin-bottom:14px;
+  scroll-margin-top:82px;transition:box-shadow .18s,border-color .18s}
+.claim.xac{--st:var(--c-xn)}.claim.song{--st:var(--c-song)}.claim.sua{--st:var(--c-sua)}
+.claim.bac{--st:var(--c-bac)}.claim.cho{--st:var(--c-cho)}
+.claim.sua{border-left-style:double;border-left-width:6px}
+.claim.cho{border-left-style:dashed}
+.claim:hover{box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 26px -18px rgba(0,0,0,.5)}
+.claim:target{border-color:var(--st);box-shadow:0 0 0 3px color-mix(in srgb,var(--st) 20%,transparent)}
+.claim h3{margin:0 0 11px;font:700 15px/1.5 var(--body);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.claim .id{font:700 15px var(--mono);color:var(--ink);text-decoration:none}
+.claim .id:hover{color:var(--accent)}
+.claim>p{margin:0 0 13px;font-size:15.5px;line-height:1.66}
 
-/* ── DÃI TRẠNG THÁI — màn hình đầu tiên, thứ X/TG không có ── */
-.dai{{border:2px solid var(--ink);padding:16px 18px;margin:0 0 30px}}
-.dem{{font:500 15px/1.5 var(--mono)}}
-.dem .to{{font:700 27px var(--mono);color:var(--accent);vertical-align:-3px;margin-right:2px}}
-.dem b.song,.dem b.xac{{color:var(--accent)}}
-.khi{{font:500 12px/1.6 var(--mono);color:var(--muted);margin-top:7px}}
-.toi{{display:inline-block;margin-top:12px;font:600 12.5px var(--mono);letter-spacing:.06em;
-  text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:2px}}
+/* năm trạng thái mang BA kênh: màu · glyph · hình khối. Bỏ glyph là vi phạm điều cấm ②:
+   đo được đỏ ↔ lá chỉ cách nhau ΔE 2,7 với người mù màu deutan — hue một mình không đủ */
+.chip{--st:var(--accent);display:inline-flex;align-items:center;gap:7px;
+  font:700 11.5px/1 var(--mono);letter-spacing:.055em;padding:5px 11px;border-radius:999px;
+  color:var(--st);border:1.5px solid var(--st);background:color-mix(in srgb,var(--st) 13%,transparent);
+  white-space:nowrap}
+.chip::before{font-size:11px;line-height:1}
+.chip.xac{--st:var(--c-xn)}.chip.xac::before{content:"✓"}
+.chip.song{--st:var(--c-song)}.chip.song::before{content:"●"}
+.chip.sua{--st:var(--c-sua)}.chip.sua::before{content:"✎"}
+.chip.cho{--st:var(--c-cho);border-style:dashed}.chip.cho::before{content:"○"}
+/* BỊ BÁC là trạng thái ỒN NHẤT của kênh này ⇒ nền đặc, không phải nền nhạt */
+.chip.bac{--st:var(--c-bac);background:var(--c-bac);color:var(--card);border-color:var(--c-bac)}
+.chip.bac::before{content:"✕"}
 
-/* ── HÌNH: claim vẽ thành trục số. Sống được — refill hạ thì chấm di chuyển ── */
-.hinh{{margin:17px 0 6px;padding:0}}
-.thang .hang{{margin-bottom:13px}}
-.thang .nh{{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
-  font:500 12px/1.5 var(--mono);color:var(--muted);margin-bottom:4px}}
-.thang .nh b{{font:700 14px var(--mono);color:var(--ink);white-space:nowrap}}
-.thang .ray{{position:relative;height:15px;background:color-mix(in srgb,var(--ink) 8%,transparent)}}
-.thang .ray.tr{{height:9px;background:none}}
-.thang .cot{{display:block;height:100%;background:var(--ink)}}
-.thang .cot.toi{{background:var(--accent)}}
-/* cu = con số ĐÃ BỊ THAY nhưng không được xoá khỏi hình — người đọc phải thấy
-   cái thanh dài ngày trước đó, nếu không thì hình mất luôn phần đáng kể nhất */
-.thang .cot.cu{{background:color-mix(in srgb,var(--ink) 22%,transparent)}}
-.thang .vung{{position:absolute;top:0;height:9px;background:var(--accent);
-  border-left:2px solid var(--accent);border-right:2px solid var(--accent);opacity:.45}}
-.thang .nk2{{margin:4px 0 0;font-size:11.5px}}
-.thang .nk2 b{{font-size:12px;color:var(--accent)}}
-.hinh figcaption{{font:500 11px/1.5 var(--mono);color:var(--muted);margin-top:8px;
-  padding-top:7px;border-top:1px solid var(--line)}}
+/* 🔴 Trong thẻ claim KHÔNG có cam: khối GHIM TẠI đứng ngay trên keyline đỏ của
+   ĐIỀU-GÌ-BÁC-BỎ, mà coral ↔ đỏ đo được ΔE 11,4 (nền tối) / 6,8 (nền sáng) */
+.dong{font-size:14px;margin:0 0 11px;background:var(--inset);border:1px solid var(--line-soft);
+  border-left:2px solid var(--muted);border-radius:9px;padding:10px 13px;line-height:1.65}
+.dong .nhan{font:700 10px var(--mono);letter-spacing:.09em;color:var(--muted);
+  display:block;margin-bottom:4px;text-transform:uppercase}
+.dong code{font-size:11.5px;background:none;border:0;padding:0;display:block;
+  white-space:pre-wrap;color:var(--muted)}
+/* điều-bác-bỏ là thứ khác biệt duy nhất của kênh này ⇒ dòng NẶNG NHẤT trong khối claim */
+.dong.bac{background:transparent;border:0;border-left:2px solid color-mix(in srgb,var(--c-bac) 45%,transparent);
+  border-radius:0;padding:2px 0 2px 12px;font-size:14px;color:var(--muted)}
+.dong.bac .nhan{color:var(--c-bac)}
+.dong.khongdo{background:transparent;border:1px dashed var(--line);border-radius:9px;
+  color:var(--faint);font-size:13px}
+.claim .moc{font:500 12.5px/1.7 var(--mono);color:var(--faint);letter-spacing:.02em}
+.tro{margin:12px 0 0;font:500 12.5px/1.6 var(--mono)}
 
-/* điều-bác-bỏ là thứ khác biệt duy nhất của kênh này ⇒ nó phải là dòng NẶNG NHẤT
-   trong khối claim, không phải một đoạn văn thường như bản đầu */
-.dong.bac{{border-left:3px solid var(--accent);
-  background:color-mix(in srgb,var(--accent) 7%,transparent);
-  padding:9px 12px;margin-top:13px;font-size:14.5px}}
-.dong.bac .nhan{{color:var(--accent)}}
+.nk{list-style:none;padding:0;margin:14px 0 0;font-size:13.5px}
+.nk li{position:relative;padding:7px 0 7px 22px;margin:0;color:var(--muted);line-height:1.6}
+.nk li::before{content:"";position:absolute;left:0;top:14px;width:9px;height:9px;border-radius:50%;
+  background:var(--st);box-shadow:0 0 0 3px color-mix(in srgb,var(--st) 18%,transparent)}
+.nk .d{font:700 11.5px var(--mono);color:var(--ink);margin-right:8px}
+.nk .nguon-tro{opacity:.72;font-size:.92em;font-style:italic}
 
-.dem .phu{{font:500 12px/1.6 var(--mono);color:var(--muted);margin-top:7px;
-  text-transform:none;letter-spacing:0}}
-ul.diem{{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:0}}
-ul.diem li{{display:grid;grid-template-columns:auto 1fr;gap:0 12px;padding:11px 0;
-  border-top:1px solid var(--line);font-size:15px}}
-ul.diem li:last-child{{border-bottom:1px solid var(--line)}}
-ul.diem .tick{{font:600 10.5px/1.7 var(--mono);letter-spacing:.08em;text-transform:uppercase;
-  border:1px solid currentColor;border-radius:2px;padding:0 5px;height:fit-content;
-  white-space:nowrap}}
-ul.diem .tick.xac,ul.diem .tick.bac{{color:var(--accent)}}
-ul.diem .tick.sua{{color:var(--muted)}}
-.dan-gt{{margin:14px 0 0;font-size:15px}}
-.claim .moc{{font:500 12.5px/1.7 var(--mono);color:var(--muted);letter-spacing:.03em}}
-.tro{{margin:12px 0 0;font:500 12.5px/1.6 var(--mono)}}
-ul.han{{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}}
-ul.han li{{padding:13px 0;border-top:1px solid var(--line);font-size:15px}}
-ul.han li:last-child{{border-bottom:1px solid var(--line)}}
-ul.han .ngay{{font:600 12.5px/1.7 var(--mono);letter-spacing:.04em;color:var(--accent);
-  display:block;margin-bottom:3px}}
-ul.han .con{{font-weight:500;color:var(--muted);margin-left:9px}}
-ul.han .con.qua{{color:var(--accent);font-weight:600}}
-.dolai-o{{margin-top:13px;display:flex;flex-direction:column;gap:8px}}
-button.dolai{{align-self:flex-start;font:600 12.5px/1 var(--mono);letter-spacing:.06em;
-  color:var(--paper);background:var(--accent);border:0;border-radius:2px;
-  padding:9px 13px;cursor:pointer}}
-button.dolai:hover{{filter:brightness(1.08)}}
-button.dolai:focus-visible{{outline:2px solid var(--ink);outline-offset:2px}}
-button.dolai[disabled]{{opacity:.55;cursor:progress}}
-.ketqua{{font:500 12.5px/1.65 var(--mono);color:var(--muted);
-  border-left:2px solid var(--line);padding:2px 0 2px 10px}}
-.ketqua b{{color:var(--ink);font-weight:600}}
-.ketqua.khop{{border-left-color:var(--accent)}}
-.ketqua.lech{{border-left-color:var(--accent)}}
-.ketqua.loi{{border-left-color:var(--ink)}}
-.nk .nguon-tro{{opacity:.72;font-size:.92em;font-style:italic}}
-.ketqua .nguon{{display:block;font-size:11px;opacity:.75;margin-top:3px}}
-.dong.khongdo{{border-left:3px solid var(--line);padding:9px 12px;margin-top:13px;
-  font-size:14px;color:var(--muted)}}
+/* ── HÌNH: claim vẽ thành trục số ── */
+.hinh{margin:0 0 13px;padding:0}
+.thang .hang{margin-bottom:13px}
+.thang .nh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  font:500 12px/1.5 var(--mono);color:var(--muted);margin-bottom:4px}
+.thang .nh b{font:700 14px var(--mono);color:var(--ink);white-space:nowrap}
+.thang .ray{position:relative;height:14px;background:var(--inset);border-radius:4px;overflow:hidden}
+.thang .ray.tr{height:9px;background:none;overflow:visible}
+.thang .cot{display:block;height:100%;background:var(--muted);border-radius:0 4px 4px 0}
+.thang .cot.toi{background:var(--accent)}
+.thang .cot.cu{background:color-mix(in srgb,var(--ink) 22%,transparent)}
+.thang .vung{position:absolute;top:0;height:9px;background:var(--accent);
+  border-left:2px solid var(--accent);border-right:2px solid var(--accent);opacity:.45}
+.thang .nk2{margin:4px 0 0;font-size:11.5px;color:var(--faint)}
+.thang .nk2 b{font-size:12px;color:var(--accent)}
+.hinh figcaption{font:500 11px/1.5 var(--mono);color:var(--faint);margin-top:8px;
+  padding-top:7px;border-top:1px solid var(--line-soft)}
+
+/* ── danh sách trên trang chủ ── */
+ul.diem{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+ul.diem li{display:grid;grid-template-columns:auto 1fr;gap:0 12px;align-items:start;
+  background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px;font-size:14.5px}
+ul.diem .tick{font:700 10.5px/1.7 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid currentColor;border-radius:999px;padding:1px 9px;height:fit-content;white-space:nowrap}
+ul.diem .tick.xac{color:var(--c-xn)}
+ul.diem .tick.bac{color:var(--c-bac)}
+ul.diem .tick.sua{color:var(--c-sua)}
+.dan-gt{margin:14px 0 0;font-size:15px}
+ul.han{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+ul.han li{background:var(--card);border:1px solid var(--line);border-left:4px dashed var(--c-cho);
+  border-radius:12px;padding:13px 16px;font-size:14.5px}
+ul.han .ngay{font:700 13px/1.7 var(--mono);letter-spacing:.03em;color:var(--ink);display:block;margin-bottom:3px}
+ul.han .con{font-weight:600;color:var(--c-cho);margin-left:9px;font-family:var(--mono);font-size:11.5px}
+ul.han .con.qua{color:var(--c-sua)}
+
+/* ── nút ĐO LẠI: mực + hình khối, KHÔNG mặc hue (điều cấm ①) ── */
+.dolai-o{margin:0 0 12px;display:flex;flex-direction:column;gap:9px;
+  background:var(--inset);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+button.dolai{align-self:flex-start;font:700 12.5px/1 var(--body);letter-spacing:.02em;
+  color:var(--nut-chu);background:var(--nut-nen);border:0;border-radius:8px;
+  padding:10px 15px;cursor:pointer}
+button.dolai:hover{transform:translateY(-1px)}
+button.dolai[disabled]{opacity:.6;cursor:progress;transform:none}
+.ketqua{font:500 12.5px/1.65 var(--mono);color:var(--muted);
+  border-left:2px solid var(--line);padding:2px 0 2px 10px}
+.ketqua b{color:var(--ink);font-weight:700}
+.ketqua.khop{border-left-color:var(--c-xn)}
+.ketqua.khop b{color:var(--c-xn)}
+.ketqua.lech{border-left-color:var(--c-sua)}
+.ketqua.lech b{color:var(--c-sua)}
+.ketqua.loi{border-left-color:var(--c-bac)}
+.ketqua.loi b{color:var(--c-bac)}
+.ketqua .nguon{display:block;font-size:11px;color:var(--faint);margin-top:3px}
 
 /* bài viết là THAM CHIẾU ở trang này — hạ nhẹ xuống, không tranh chỗ với sổ claim */
-.bandaydu{{margin-top:56px;padding-top:6px;border-top:3px solid var(--ink)}}
-.bandaydu h2{{border-top:0;padding-top:0;margin-top:16px}}
+.bandaydu{margin-top:56px;padding-top:8px;border-top:1px solid var(--line)}
+.bandaydu>p,.bandaydu>ul,.bandaydu>ol{max-width:72ch}
+.bandaydu h2{margin-top:34px}
 
-footer{{margin-top:64px;padding:22px 0 46px;border-top:1.5px solid var(--ink);
-  font:500 12px/1.75 var(--mono);color:var(--muted)}}
-footer a{{color:var(--muted)}}
-.bai{{display:block;padding:17px 0;border-bottom:1px solid var(--line);text-decoration:none}}
-.bai .t{{font:600 18.5px/1.4 var(--body);margin-bottom:5px}}
-.bai .s{{font:500 12px var(--mono);color:var(--muted)}}
+footer{margin-top:64px;padding:22px 0 46px;border-top:1px solid var(--line);background:var(--bg2);
+  font:500 12px/1.75 var(--mono);color:var(--faint)}
+footer a{color:var(--muted)}
+
+.bai{display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 16px;align-items:start;
+  background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 18px;
+  margin-bottom:10px;text-decoration:none;transition:border-color .16s,transform .16s}
+.bai:hover{border-color:var(--muted);transform:translateY(-1px)}
+.bai .t{font:650 17px/1.4 var(--body);letter-spacing:-.01em;grid-column:2}
+.bai .s{font:500 12px/1.6 var(--mono);color:var(--faint);grid-column:2}
+.bai .d{font:500 12px/1.6 var(--mono);color:var(--faint);grid-row:1/3;grid-column:1;padding-top:3px}
+@media(max-width:640px){.bai{grid-template-columns:1fr}.bai .t,.bai .s{grid-column:1}.bai .d{grid-row:auto}}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 """
 
 
-FONTS = ("https://fonts.googleapis.com/css2?family=Marcellus"
-         "&family=Archivo:wght@600;700;800"
-         "&family=Oswald:wght@500;600;700&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,650;0,700;1,400"
-         "&family=IBM+Plex+Mono:wght@400;500;600&display=swap")
+# Giá trị mặc định cho các khoá hệ D2 thêm vào — hai hệ cũ giữ nguyên bản khai của
+# chúng và vẫn dựng được: thiếu khoá nào thì lấy ở đây, không nổ.
+MAC_DINH_HE = dict(
+    bg2="#f3efe7", bg2_toi="#15130f", card="#ffffff", card_toi="#1b1815",
+    inset="#f5f1ea", inset_toi="#141210", line_soft="#efe9df", line_soft_toi="#241f1a",
+    faint="#8a8073", faint_toi="#7d7365",
+    xn="#0f8a3c", xn_toi="#35c46a", song="#1d5fae", song_toi="#4d9fff",
+    sua="#a16207", sua_toi="#f0b429", bac="#be123c", bac_toi="#ef4056",
+    cho="#64748b", cho_toi="#94a3b8",
+)
+
+
+def css(t: dict) -> str:
+    """Tầng nhìn của site. Khối TOKEN sinh từ hệ màu; phần còn lại là hằng CSS_THAN.
+
+    Vì sao tách hai: thân CSS không có chỗ nào cần nội suy, mà để nó trong f-string
+    thì mọi dấu ngoặc nhọn phải nhân đôi — một dấu quên là một luật CSS chết trong
+    im lặng. Tách ra thì thân viết như CSS thật.
+
+    🔴 Nền mặc định THEO MÁY người đọc (prefers-color-scheme). Nút đổi nền chỉ ghi
+    đè bằng data-theme; tắt JS thì trang vẫn có đủ hai nền. Đó là ràng buộc cũ của
+    site (BRIEF-web.md §110) và nó vẫn đứng — nút là phần THÊM, không phải phần chịu tải.
+    """
+    v = {**MAC_DINH_HE, **t}
+    sang = (f"--bg:{v['paper']};--bg2:{v['bg2']};--card:{v['card']};--inset:{v['inset']};"
+            f"--ink:{v['ink']};--muted:{v['muted']};--faint:{v['faint']};"
+            f"--line:{v['line']};--line-soft:{v['line_soft']};--accent:{v['accent']};"
+            f"--c-xn:{v['xn']};--c-song:{v['song']};--c-sua:{v['sua']};"
+            f"--c-bac:{v['bac']};--c-cho:{v['cho']};"
+            f"--nut-nen:{v['ink']};--nut-chu:{v['card']};color-scheme:light;")
+    toi = (f"--bg:{v['ink']};--bg2:{v['bg2_toi']};--card:{v['card_toi']};--inset:{v['inset_toi']};"
+           f"--ink:{v['paper']};--muted:{v['muted_toi']};--faint:{v['faint_toi']};"
+           f"--line:{v['line_toi']};--line-soft:{v['line_soft_toi']};--accent:{v['accent_toi']};"
+           f"--c-xn:{v['xn_toi']};--c-song:{v['song_toi']};--c-sua:{v['sua_toi']};"
+           f"--c-bac:{v['bac_toi']};--c-cho:{v['cho_toi']};"
+           f"--nut-nen:{v['paper']};--nut-chu:{v['ink']};color-scheme:dark;")
+    return (f":root{{{sang}--display:'{v['display']}','{BODY_FONT}',system-ui,sans-serif;"
+            f"--body:'{v['display']}','{BODY_FONT}',system-ui,sans-serif;"
+            f"--mono:'JetBrains Mono',ui-monospace,monospace;"
+            f"--dw:{v['dw']};--gian-ten:{v['gian_ten']}}}\n"
+            f"@media (prefers-color-scheme:dark){{:root:not([data-theme=\"sang\"]){{{toi}}}}}\n"
+            f":root[data-theme=\"toi\"]{{{toi}}}\n"
+            + CSS_THAN)
+
+
+# 🔴 Be Vietnam Pro ĐỨNG SAU Inter chứ không bị bỏ: trình duyệt rơi về nó theo TỪNG
+# GLYPH, nên dấu tiếng Việt nào Inter thiếu thì vẫn được nó đỡ. Ràng buộc ngôn ngữ
+# (font dựng cho dấu tiếng Việt) giữ nguyên; thứ đổi là mặt chữ mặc định.
+# Marcellus/Oswald/Archivo rời lượt tải: hai hệ cũ nay là hồ sơ, và tải font cho một
+# hệ không ai xem là bắt người đọc trả băng thông cho lịch sử của desk.
+FONTS = ("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800"
+         "&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,650;0,700;1,400"
+         "&family=JetBrains+Mono:wght@400;500;700&display=swap")
+
+# Mục trên thanh điều hướng — dựng từ ĐÂY, không gõ tay ở từng trang. Trang nào chưa
+# tồn tại thì main() tắt mục đó: cổng ⑪ (liên kết) sẽ chặn build nếu một mục trỏ vào
+# thư mục không có index.html, và đó là hành vi đúng.
+MUC_DIEU_HUONG = [("", "Sổ gốc"), ("facts/", "Facts"),
+                  ("track-record/", "Track record"), ("du-lieu/", "Dữ liệu")]
+CO_TRANG = {"facts/": False, "track-record/": False, "du-lieu/": False}
+
+# Nút đổi nền. Trang KHÔNG phụ thuộc nó: mặc định đọc prefers-color-scheme của máy,
+# nút chỉ ghi đè và nhớ lựa chọn. Tắt JS thì mất nút, không mất nền tối.
+JS_NEN = """
+(function(){
+  var d=document.documentElement,c=localStorage.getItem('bp-nen');
+  if(c==='toi'||c==='sang')d.setAttribute('data-theme',c);
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('#nut-nen'); if(!b)return;
+    var toi=matchMedia('(prefers-color-scheme:dark)').matches;
+    var nay=d.getAttribute('data-theme')||(toi?'toi':'sang');
+    var moi=nay==='toi'?'sang':'toi';
+    d.setAttribute('data-theme',moi); localStorage.setItem('bp-nen',moi);
+  });
+})();
+"""
+
+
+def dieu_huong(goc: str, dang: str) -> str:
+    """Thanh điều hướng. `dang` là mục đang mở — nó KHÔNG được là một link tự trỏ."""
+    g = goc or "."
+    ra = []
+    for duong, nhan in MUC_DIEU_HUONG:
+        if duong and not CO_TRANG.get(duong):
+            continue
+        lop = ' class="tai"' if duong == dang else ""
+        ra.append(f'<a href="{g}/{duong}"{lop}>{nhan}</a>')
+    return ('<nav class="dieu">' + "".join(ra)
+            + '<button class="nut-nen" id="nut-nen" type="button" '
+              'title="Đổi nền sáng/tối" aria-label="Đổi nền sáng/tối">☀ / ☾</button></nav>')
 
 
 def kich_thuoc_png(p: pathlib.Path) -> tuple:
@@ -683,7 +858,8 @@ def kich_thuoc_png(p: pathlib.Path) -> tuple:
     return int.from_bytes(b[16:20], "big"), int.from_bytes(b[20:24], "big")
 
 
-def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None) -> str:
+def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None,
+          muc: str = "") -> str:
     # Thẻ xem trước: khi link được dán vào Telegram · Discord · forum · tin nhắn riêng,
     # KHÔNG có bộ thẻ này thì nó hiện ra một dòng chữ trơn và không ai bấm. Ảnh dùng lại
     # đúng card đã dựng cho bài trên kênh (2400×1350) — không dựng ảnh riêng cho web.
@@ -716,11 +892,13 @@ def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None) ->
 <link rel="stylesheet" href="{FONTS}">
 <link rel="icon" type="image/png" sizes="32x32" href="{goc or '.'}/anh/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="{goc or '.'}/anh/favicon-16.png">
-<style>{css(t)}</style></head><body>
+<style>{css(t)}</style>
+<script>{JS_NEN}</script></head><body>
 <header class="dau"><div class="khung">
   <span class="mark">{MARK_SVG}</span>
-  <a class="ten" href="{goc or '.'}/">BLOCK·PINNED</a>
-  <span class="tag">SỐ NÀO CŨNG TRUY NGƯỢC ĐƯỢC</span>
+  <a class="ten" href="{goc or '.'}/">Block<span>Pinned</span></a>
+  <span class="tag">số nào cũng truy ngược được</span>
+  {dieu_huong(goc, muc)}
 </div></header>
 <main class="khung">{than}</main>
 <footer><div class="khung">
@@ -953,8 +1131,6 @@ def bang_diem(moi: list) -> str:
     đâu trên trang chủ cả.
     """
     dem = {k: [c for _, _, c in moi if c["status"] == k] for k in TRANG_THAI}
-    o = " · ".join(f'<b class="{TRANG_THAI[k][0]}">{len(v)}</b> {k.lower()}'
-                   for k, v in dem.items() if v)
     doi = sum(len(v) for k, v in dem.items() if k != "ĐANG ĐỨNG")
 
     def lien(ten: str) -> str:
@@ -973,10 +1149,34 @@ def bang_diem(moi: list) -> str:
     if dem["ĐÃ SỬA"]:
         dong.append(f'<li><span class="tick sua">đã sửa</span>tự đính chính, giữ lại để thấy '
                     f'lỗi: {lien("ĐÃ SỬA")}</li>')
+    d_num = {k: len(v) for k, v in dem.items()}
+    cho_moc = sum(1 for _, _, c in moi if c.get("han") and c["status"] == "ĐANG ĐỨNG")
+
+    def the(lop: str, nhan: str, gt: int, gc: str) -> str:
+        return (f'<div class="o {lop}"><span class="nh">{nhan}</span>'
+                f'<span class="gt">{gt}</span><span class="gc">{gc}</span></div>')
+
+    the_so = ("".join([
+        the("", "Khẳng định trong sổ", len(moi),
+            f"trên {len({s for s, _, _ in moi})} bài đã đăng"),
+        the("xac", "Điều bác bỏ đã chạy", d_num["ĐÃ XÁC NHẬN"],
+            "claim bị thử và sống sót — mức bằng chứng mạnh nhất kênh này tạo được"),
+        the("sua", "Kênh tự sửa công khai", d_num["ĐÃ SỬA"],
+            "sửa tại chỗ, bản cũ giữ nguyên trong nhật ký"),
+        the("bac", "Khẳng định bị bác", d_num["BỊ BÁC"],
+            "bị chính điều-bác-bỏ của nó bác, và nằm nguyên trên trang"),
+    ]))
+    phu = (f'{doi} trong số đó đã ĐỔI TRẠNG THÁI kể từ lúc đăng — đó là phần X và '
+           f'Telegram không chở được.')
+    if cho_moc:
+        phu += f' Còn {cho_moc} mốc tự đặt ngày, chưa tới hạn.'
     return (f'<h2 id="bang-diem">Bảng điểm</h2>'
-            f'<div class="dem"><span class="to">{len(moi)}</span> claim &nbsp;·&nbsp; {o}'
-            f'<div class="phu">{doi} trong số đó đã ĐỔI TRẠNG THÁI kể từ lúc đăng — '
-            f'đó là phần X và Telegram không chở được.</div></div>'
+            f'<div class="the-so">{the_so}</div>'
+            f'<section class="board">'
+            f'<div class="bh"><b>Sổ gốc BlockPinned</b>'
+            f'<span>{len(moi)} khẳng định · {len({s for s, _, _ in moi})} bài</span></div>'
+            f'{thanh_xep(d_num, len(moi))}'
+            f'<div class="dem phu">{phu}</div></section>'
             + (f'<ul class="diem">{"".join(dong)}</ul>' if dong else ""))
 
 
@@ -1196,14 +1396,76 @@ def trang_ghi_truoc(moi: list) -> str:
             f'<section class="so">{"".join(hang)}</section>')
 
 
+def thanh_xep(dem: dict, tong: int) -> str:
+    """Thanh xếp chồng + chip có SỐ — bảng điểm dùng chung cho trang bài và trang chủ.
+
+    🔴 Bề rộng tính bằng dấu CHẤM: đây là CSS, không phải chữ hiện ra. `so_vn` đổi dấu
+    thập phân sang phẩy cho người đọc, và một `width:77,14%` là một luật CSS chết trong
+    im lặng — đúng họ lỗi mà cổng ⑥ (thuộc tính số) sinh ra để bắt.
+
+    Mỗi chip mang GLYPH riêng (CSS `.chip::before`) chứ không chỉ mang màu: đo được đỏ
+    và xanh lá chỉ cách nhau ΔE 2,7 với người mù màu deutan, nên màu một mình không
+    phân biệt nổi năm trạng thái.
+    """
+    if not tong:
+        return ""
+    seg = "".join(
+        f'<span class="seg {TRANG_THAI[k][0]}" style="width:{n / tong * 100:.2f}%" '
+        f'title="{k} · {n}"></span>'
+        for k, n in dem.items() if n)
+    chip = "".join(
+        f'<span class="lg {TRANG_THAI[k][0]}"><span class="sw"></span>'
+        f'{k} <span class="n">{n}</span></span>'
+        for k, n in dem.items() if n)
+    return f'<div class="stack">{seg}</div><div class="chu-thich">{chip}</div>'
+
+
+def trang_du_lieu(kho: pathlib.Path) -> str:
+    """Trang `/du-lieu/` — danh sách hiện vật thô, sinh từ HIEN_VAT chứ không quét thư mục.
+
+    Vì sao có trang này: từ 31/07 hiện vật đã được chép lên site, nhưng KHÔNG có mục
+    nào dẫn tới chúng — muốn tải phải đoán đúng tên file. Một file nằm trên máy chủ mà
+    không có đường vào thì đúng bằng không có.
+
+    Mô tả từng file lấy từ trường `_doc` NGAY TRONG file, không gõ lại ở đây: một dòng
+    mô tả chép tay là một dòng sẽ trôi lệch khỏi thứ nó mô tả.
+    """
+    hang = []
+    for ten_f, nhan in HIEN_VAT.items():
+        f = kho / ten_f
+        try:
+            doc = json.loads(f.read_text(encoding="utf-8")).get("_doc", "")
+        except (json.JSONDecodeError, OSError, AttributeError):
+            doc = ""
+        kb = f.stat().st_size / 1024
+        hang.append(
+            f'<article class="claim">'
+            f'<h3><a class="id" href="{ihtml.escape(ten_f)}">{ihtml.escape(ten_f)}</a>'
+            f'<span class="moc">{so_vn(kb, 1)} KB · {ihtml.escape(nhan)}</span></h3>'
+            + (f'<p class="dong"><span class="nhan">FILE NÀY LÀ GÌ</span>'
+               f'{ihtml.escape(str(doc))}</p>' if doc else "")
+            + f'<p class="dong"><span class="nhan">TẢI VỀ</span>'
+              f'<code>curl -sO {BASE}/du-lieu/{ihtml.escape(ten_f)}</code></p>'
+            + '</article>')
+    return (f'<h1>Dữ liệu thô đứng sau bài</h1>'
+            f'<div class="dem"><span class="to">{len(HIEN_VAT)}</span> file · JSON</div>'
+            f'<p class="dan">Tải về, mở ra, đếm lại. Mỗi file mang sẵn một trường '
+            f'<code>_doc</code> nói nó là gì và <b>vòng đo nào của nó đã hỏng</b> — một tập '
+            f'dữ liệu không kể được chỗ nó từng sai thì không kiểm lại được.</p>'
+            f'<section class="so">{"".join(hang)}</section>'
+            f'<p class="dan-gt">Không phải bài nào cũng có file ở đây. Một phép đo chỉ sinh '
+            f'file thô khi nó là phép <b>quét</b> — nghìn lượt log, nhiều vòng đối chứng. '
+            f'Phép đo gọi một hàm tại một block thì đường tự kiểm ngắn hơn file: lệnh gọi in '
+            f'ngay trong sổ claim của bài, bấm “Đo lại” là chạy.</p>')
+
+
 def dai_trang_thai(claims: list, doc_lai: str) -> str:
     """Màn hình đầu tiên. Người bấm vào từ X/TG đã đọc bài rồi — thứ họ chưa biết là
     claim giờ còn đứng không. Trả lời trước, bài để sau."""
     d = {k: sum(1 for c in claims if c["status"] == k) for k in TRANG_THAI}
-    o = " · ".join(f'<b class="{TRANG_THAI[k][0]}">{n}</b> {k.lower()}'
-                   for k, n in d.items() if n)
     return f"""<section class="dai">
-  <div class="dem"><span class="to">{len(claims)}</span> claim &nbsp;·&nbsp; {o}</div>
+  <div class="bh"><b>Sổ claim của bài này</b><span>{len(claims)} khẳng định · trạng thái đổi thì ghi thêm, không xoá</span></div>
+  {thanh_xep(d, len(claims))}
   <div class="khi">{ihtml.escape(doc_lai)}</div>
   <a class="toi" href="#so-claim">Xem sổ claim ↓</a>
 </section>"""
@@ -1242,7 +1504,7 @@ def lap_asset() -> None:
 def main() -> None:
     # Mặc định là hệ ĐÃ CHỐT. Bản đầu đọc argv bằng cách "có chữ verdigris ở đâu đó
     # trong argv" — thứ đó lặng lẽ đúng cho tới khi đường dẫn --out chứa chữ đó.
-    ten = "benchmark"
+    ten = "d2"
     if "--theme" in sys.argv:
         xin = sys.argv[sys.argv.index("--theme") + 1]
         if xin not in THEMES:
@@ -1262,6 +1524,21 @@ def main() -> None:
         shutil.rmtree(OUT)
     OUT.mkdir(parents=True, exist_ok=True)
     lap_asset()
+
+    # 🔴 Thanh điều hướng dựng TRƯỚC trang đầu tiên, nên phải biết trước trang nào sẽ có.
+    # Bản đầu định đọc sau vòng lặp — nhưng trang bài được ghi TRONG vòng lặp, tức nó sẽ
+    # mang một thanh điều hướng khai theo trạng thái chưa biết. Cổng ⑪ bắt được ca trỏ
+    # vào thư mục rỗng, nhưng không bắt được ca ngược: có trang mà mục bị tắt.
+    CO_TRANG["facts/"] = bool(doc_facts())
+    CO_TRANG["du-lieu/"] = bool(HIEN_VAT)
+    try:
+        CO_TRANG["track-record/"] = any(
+            c.get("ghi_truoc")
+            for p in CONTENT.glob("posts/*.claims.json")
+            for c in json.loads(p.read_text(encoding="utf-8"))["claims"])
+    except (json.JSONDecodeError, KeyError, TypeError):
+        CO_TRANG["track-record/"] = False   # vòng lặp dưới sẽ báo lỗi đúng chỗ hỏng
+
     bai, moi_claim = [], []
 
     for md_path in sorted(CONTENT.glob("posts/*.md"), reverse=True):
@@ -1358,7 +1635,7 @@ def main() -> None:
         d_gt.mkdir(parents=True, exist_ok=True)
         (d_gt / "index.html").write_text(trang(
             "Track record — tôi ghi trước, rồi kết quả ra sao — BlockPinned",
-            trang_ghi_truoc(moi_claim), t, "..",
+            trang_ghi_truoc(moi_claim), t, "..", muc="track-record/",
             meta={"mo_ta": "Mọi lần BlockPinned dán một con số hoặc một ngưỡng ra công khai "
                            "trước khi biết đáp án, kèm kết quả — cả những lần sai và những "
                            "lần chưa có kết quả.",
@@ -1389,7 +1666,7 @@ def main() -> None:
         d_f = OUT / "facts"
         d_f.mkdir(parents=True, exist_ok=True)
         (d_f / "index.html").write_text(trang(
-            "Facts — BlockPinned", trang_facts(facts), t, "..",
+            "Facts — BlockPinned", trang_facts(facts), t, "..", muc="facts/",
             meta={"mo_ta": "Mỗi mục là một sự thật đúng tại một block, kèm một lệnh để bạn "
                            "tự đọc lại con số đó. Không phân tích, không nhận định giá.",
                   "duong": "/facts/", "anh": "avatar-800.png", "loai": "website",
@@ -1410,6 +1687,7 @@ def main() -> None:
     # bóng của trang thật — hai URL cùng nội dung, và cái thắng có thể là cái sai.
     if facts:
         loc.append((f"{BASE}/facts/", max(str(f.get("ngay", "")) or ngay_moi for f in facts)))
+    loc.append((f"{BASE}/du-lieu/", ngay_moi))
     loc += [(f"{BASE}/bai/{s}/", f["date"]) for f, s, *_ in bai]
     (OUT / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -1439,7 +1717,14 @@ def main() -> None:
         if not f.is_file():
             raise LoiCong(f"hiện vật đã khai nhưng không có: {f}")
         shutil.copy2(f, dich / ten_hv)
-    print(f"  ✓ du-lieu/  ·  {len(HIEN_VAT)} hiện vật")
+    (dich / "index.html").write_text(trang(
+        "Dữ liệu thô — BlockPinned", trang_du_lieu(kho), t, "..", muc="du-lieu/",
+        meta={"mo_ta": "File JSON thô đứng sau các bài: tải về, mở ra, đếm lại. Mỗi file "
+                       "mang sẵn một dòng nói nó là gì và vòng đo nào của nó đã hỏng.",
+              "duong": "/du-lieu/", "anh": "avatar-800.png", "loai": "website",
+              "tieu_de_og": "Dữ liệu thô đứng sau bài"}),
+        encoding="utf-8")
+    print(f"  ✓ du-lieu/  ·  {len(HIEN_VAT)} hiện vật + trang danh sách")
 
     (OUT / "CNAME").write_text(BASE.split("//")[1] + "\n", encoding="utf-8")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")

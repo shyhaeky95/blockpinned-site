@@ -1,23 +1,23 @@
 <!doctype html><html lang="vi"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mỗi $100 phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64 — BlockPinned</title>
-<meta name="description" content="Đo trọn một ngày UTC trên Robinhood Chain: mỗi $100 phí swap thì $85,36 ở lại với người cấp thanh khoản, $14,64 về giao thức. Và v4 lấy tỷ lệ thấp nhất trong ba phiên bản.">
-<link rel="canonical" href="https://blockpinned.com/bai/2026-07-31-uni-100usd-phi-swap/">
+<title>Dữ liệu thô — BlockPinned</title>
+<meta name="description" content="File JSON thô đứng sau các bài: tải về, mở ra, đếm lại. Mỗi file mang sẵn một dòng nói nó là gì và vòng đo nào của nó đã hỏng.">
+<link rel="canonical" href="https://blockpinned.com/du-lieu/">
 <meta property="og:site_name" content="BlockPinned">
 <meta property="og:locale" content="vi_VN">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Mỗi $100 phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64">
-<meta property="og:description" content="Đo trọn một ngày UTC trên Robinhood Chain: mỗi $100 phí swap thì $85,36 ở lại với người cấp thanh khoản, $14,64 về giao thức. Và v4 lấy tỷ lệ thấp nhất trong ba phiên bản.">
-<meta property="og:url" content="https://blockpinned.com/bai/2026-07-31-uni-100usd-phi-swap/">
-<meta property="og:image" content="https://blockpinned.com/anh/card-uni-100usd.png">
-<meta property="og:image:width" content="2400">
-<meta property="og:image:height" content="1350">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dữ liệu thô đứng sau bài">
+<meta property="og:description" content="File JSON thô đứng sau các bài: tải về, mở ra, đếm lại. Mỗi file mang sẵn một dòng nói nó là gì và vòng đo nào của nó đã hỏng.">
+<meta property="og:url" content="https://blockpinned.com/du-lieu/">
+<meta property="og:image" content="https://blockpinned.com/anh/avatar-800.png">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="800">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,650;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
-<link rel="icon" type="image/png" sizes="32x32" href="../../anh/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../../anh/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../anh/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../anh/favicon-16.png">
 <style>:root{--bg:#faf7f2;--bg2:#f3efe7;--card:#fffdfa;--inset:#f5f1ea;--ink:#1a1512;--muted:#5f564b;--faint:#8a8073;--line:#e6ded1;--line-soft:#efe9df;--accent:#b8412a;--c-xn:#0f8a3c;--c-song:#1d5fae;--c-sua:#a16207;--c-bac:#be123c;--c-cho:#64748b;--nut-nen:#1a1512;--nut-chu:#fffdfa;color-scheme:light;--display:'Inter','Be Vietnam Pro',system-ui,sans-serif;--body:'Inter','Be Vietnam Pro',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;--dw:800;--gian-ten:-.01em}
 @media (prefers-color-scheme:dark){:root:not([data-theme="sang"]){--bg:#1a1512;--bg2:#15130f;--card:#1b1815;--inset:#141210;--ink:#faf7f2;--muted:#a89d8f;--faint:#7d7365;--line:#302a24;--line-soft:#241f1a;--accent:#ff7a5c;--c-xn:#35c46a;--c-song:#4d9fff;--c-sua:#f0b429;--c-bac:#ef4056;--c-cho:#94a3b8;--nut-nen:#faf7f2;--nut-chu:#1a1512;color-scheme:dark;}}
 :root[data-theme="toi"]{--bg:#1a1512;--bg2:#15130f;--card:#1b1815;--inset:#141210;--ink:#faf7f2;--muted:#a89d8f;--faint:#7d7365;--line:#302a24;--line-soft:#241f1a;--accent:#ff7a5c;--c-xn:#35c46a;--c-song:#4d9fff;--c-sua:#f0b429;--c-bac:#ef4056;--c-cho:#94a3b8;--nut-nen:#faf7f2;--nut-chu:#1a1512;color-scheme:dark;}
@@ -283,93 +283,11 @@ footer a{color:var(--muted)}
 </script></head><body>
 <header class="dau"><div class="khung">
   <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
-  <a class="ten" href="../../">Block<span>Pinned</span></a>
+  <a class="ten" href="../">Block<span>Pinned</span></a>
   <span class="tag">số nào cũng truy ngược được</span>
-  <nav class="dieu"><a href="../../" class="tai">Sổ gốc</a><a href="../../facts/">Facts</a><a href="../../track-record/">Track record</a><a href="../../du-lieu/">Dữ liệu</a><button class="nut-nen" id="nut-nen" type="button" title="Đổi nền sáng/tối" aria-label="Đổi nền sáng/tối">☀ / ☾</button></nav>
+  <nav class="dieu"><a href="../">Sổ gốc</a><a href="../facts/">Facts</a><a href="../track-record/">Track record</a><a href="../du-lieu/" class="tai">Dữ liệu</a><button class="nut-nen" id="nut-nen" type="button" title="Đổi nền sáng/tối" aria-label="Đổi nền sáng/tối">☀ / ☾</button></nav>
 </div></header>
-<main class="khung"><h1>Mỗi $100 phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64</h1><section class="dai">
-  <div class="bh"><b>Sổ claim của bài này</b><span>5 khẳng định · trạng thái đổi thì ghi thêm, không xoá</span></div>
-  <div class="stack"><span class="seg song" style="width:100.00%" title="ĐANG ĐỨNG · 5"></span></div><div class="chu-thich"><span class="lg song"><span class="sw"></span>ĐANG ĐỨNG <span class="n">5</span></span></div>
-  <div class="khi"></div>
-  <a class="toi" href="#so-claim">Xem sổ claim ↓</a>
-</section><section class="so"><h2 id="so-claim">Sổ claim</h2>
-<p class="dan">Mỗi khẳng định của bài này một dòng, kèm điều gì sẽ bác bỏ nó. Trạng thái đổi thì sửa tại đây, và ghi lại ngày. Không dòng nào bị xoá.</p>
-<article class="claim song" id="C1">
-  <h3><a class="id" href="#C1">C1</a>
-      <span class="chip song">ĐANG ĐỨNG</span></h3>
-  <p style="margin:0">Trong trọn ngày UTC 29/07/2026 trên Robinhood Chain, người dùng trả tổng $2.521.197 phí swap và Uniswap ghi nhận $369.178 phí giao thức — tức 14,64%, tương đương $14,64 trên mỗi $100.</p>
-  
-  <p class="dong"><span class="nhan">GHIM TẠI</span>Robinhood Chain · block 22.006.019 → 22.867.791 (2026-07-29T00:00:00Z → 23:59:59Z) · factory v2 0x8bceaa40b9acdfaedf85adf4ff01f5ad6517937f · factory v3 0x1f7d7550b1b028f7571e69a784071f0205fd2efa · PoolManager v4 0x8366a39cc670b4001a1121b8f6a443a643e40951 · giá quy đổi cuối ngày UTC 29/07</p>
-  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Dựng lại tập pool từ log tạo pool của ba factory (25.472 pair v2 · 334.102 pool v3 · 209.478 pool v4), quét log Swap của đúng tập đó trong cửa sổ block trên, rồi cộng phí theo tỷ lệ protocol fee của từng pool. Nếu tổng phí lệch quá 0,5% so với $2.521.197, hoặc phần giao thức lệch quá 0,5% so với $369.178, claim này sai.</p>
-  
-  <ul class="nk"><li><span class="d">2026-07-31</span>Đăng. Phép cộng theo tỷ lệ thật từng pool được bắt phải tái lập đúng tổng phí đã đo trước đó: v3 ra đúng $1.723.901,73 (lệch 0,0%), v4 lệch 5 xu do làm tròn. Truy vấn đối chứng với mã sự kiện không tồn tại trả 0 kết quả; không khoảng block nào bị bỏ sót trong 4,09 triệu log. Lượt tính ĐẦU đã bị chính cổng này chặn vì lệch 49% — nguyên nhân là hàm tra giá thiếu một dòng gán giá ETH gốc bằng giá WETH, làm 3.708 pool mất giá.</li></ul>
-</article>
-<article class="claim song" id="C2">
-  <h3><a class="id" href="#C2">C2</a>
-      <span class="chip song">ĐANG ĐỨNG</span></h3>
-  <p style="margin:0">Phiên bản v4 lấy tỷ lệ thấp nhất trong ba phiên bản: 7,81% bình quân gia quyền theo phí của các pool v4 đã bật, so với 16,67% ở v2 và 16,78% ở v3.</p>
-  
-  <p class="dong"><span class="nhan">GHIM TẠI</span>Cùng cửa sổ block. v2 $198.383 phí → $33.064 · v3 $1.723.902 → $289.353 · v4 $598.913 → $46.762. Tỷ lệ v4 tính từ trường fee của từng log Swap và protocolFee của đúng pool.</p>
-  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Một phép dựng độc lập đọc từng log Swap cùng cấu hình protocol fee của đúng pool tại đúng block. Nếu tỷ lệ v4 lệch quá 2 điểm phần trăm so với 7,81%, claim này sai và câu &#x27;phiên bản mới nhất lấy tỷ lệ thấp nhất&#x27; phải sửa công khai.</p>
-  
-  <ul class="nk"><li><span class="d">2026-07-31</span>Đăng. Tỷ lệ 7,81% là bình quân gia quyền theo phí của các pool v4 đã bật, tính từ trường fee của từng log Swap và protocolFee của đúng pool — không phải trung bình số học giữa các pool. Con số này thay cho phép áp đồng loạt một phần sáu ở bản nháp đầu, vốn cho kết quả cao hơn 5,69%.</li></ul>
-</article>
-<article class="claim song" id="C3">
-  <h3><a class="id" href="#C3">C3</a>
-      <span class="chip song">ĐANG ĐỨNG</span></h3>
-  <p style="margin:0">Công tắc protocol fee không bật ở mọi pool: tính theo giá trị phí, 92,9% phát sinh ở pool đã bật; $7,15 trên mỗi $100 phát sinh ở pool chưa bật, giao thức nhận $0.</p>
-  
-  <p class="dong"><span class="nhan">GHIM TẠI</span>Tập pool đã bật dựng từ event SetFeeProtocol (v3) và ProtocolFeeUpdated trên PoolManager (v4), quét từ block 1 tới 22.867.791. v2 là công tắc toàn cục feeTo() trên factory.</p>
-  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Quét lại hai event trên tới hết block 22.867.791 rồi cân theo giá trị phí của từng pool trong cửa sổ đo. Nếu độ phủ lệch quá 3 điểm phần trăm so với 92,9%, claim này sai.</p>
-  
-  <ul class="nk"><li><span class="d">2026-07-31</span>Đăng. Độ phủ đọc bằng EVENT chứ không bằng trạng thái pool: node công khai của chain này trả lỗi cho truy vấn trạng thái tại block cũ. v2 là công tắc toàn cục, đọc feeTo() trên factory và nó trỏ đúng contract giữ tiền đã ghim.</li></ul>
-</article>
-<article class="claim song" id="C4">
-  <h3><a class="id" href="#C4">C4</a>
-      <span class="chip song">ĐANG ĐỨNG</span></h3>
-  <p style="margin:0">Trong 30 pool v4 sinh phí nhiều nhất ngày hôm đó, cả 15 pool gắn hook đều không bật protocol fee. 15 pool còn lại trong nhóm không gắn hook.</p>
-  
-  <p class="dong"><span class="nhan">GHIM TẠI</span>Cùng cửa sổ block. Trường hook đọc từ event Initialize trên PoolManager v4; trạng thái công tắc đọc từ event ProtocolFeeUpdated.</p>
-  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Lấy 30 pool v4 có phí cao nhất trong cửa sổ, đọc trường hook của từng pool và kiểm từng poolId có trong tập đã bật hay không. Nếu có bất kỳ pool gắn hook nào đã bật, claim này sai.</p>
-  
-  <ul class="nk"><li><span class="d">2026-07-31</span>Đăng. Kết quả này nối tiếp bài đăng ngày 30/07 của kênh, vốn đã cho thấy một lớp pool trả 0; lần này đếm được lớp đó lớn cỡ nào trong nhóm sinh phí mạnh nhất.</li></ul>
-</article>
-<article class="claim song" id="C5">
-  <h3><a class="id" href="#C5">C5</a>
-      <span class="chip song">ĐANG ĐỨNG</span></h3>
-  <p style="margin:0">Phần chênh giữa phí giao thức ghi nhận và giá trị UNI đem burn trong cùng ngày KHÔNG nằm trong contract giữ tiền: dòng vào và dòng ra khớp nhau tới từng xu trên phần định giá được ($206.158,02 cả hai chiều), tồn ròng bằng 0.</p>
-  
-  <p class="dong"><span class="nhan">GHIM TẠI</span>Cùng cửa sổ block. TokenJar 0x2ac03e14cfe755426daaee0a4994184ce81482f8 · contract burn 0x7a8f74c2585f84c781f951b7f2ff21337d5b630b · UNI trên Robinhood 0xf177d86a28b520e3e396e4f3b96cd8e72d7dabd8. Giới hạn: 420 trên 472 token vào kho không có trong bộ giá đang dùng, nên $206.158 chỉ là phần định giá được.</p>
-  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Quét log Transfer có đích là TokenJar và có nguồn là TokenJar trong cùng cửa sổ, cộng theo từng token. Nếu tồn ròng khác 0 trên phần định giá được, claim này sai. Control dương: UNI vào contract burn trong cửa sổ phải đúng 62.000 (31 lượt × 2.000).</p>
-  
-  <ul class="nk"><li><span class="d">2026-07-31</span>Đăng. Phép đo này được chạy vì một câu hỏi của người đọc bản nháp: phần chênh giữa phí ghi nhận và UNI đã burn thì đi đâu. Nó BÁC giả thuyết &#x27;còn nằm trong kho&#x27;, và chính vì thế bài bỏ trục cũ (tỷ lệ burn trên phí) trước khi đăng. Giới hạn nặng: 420 trên 472 token vào kho không có trong bộ giá đang dùng.</li></ul>
-</article></section><section class="bandaydu"><h2 id="ban-day-du">Bài đầy đủ</h2><p class="meta">🔴 2026-07-31 &nbsp;·&nbsp; GHIM TẠI Robinhood Chain · block #22.006.019 → #22.867.791 (trọn ngày UTC 29/07/2026) · giá quy đổi lấy tại 23:59:59 UTC 29/07 &nbsp;·&nbsp; <a href="https://x.com/blockpinned/status/2083199069892272255">bản đăng trên X</a></p><p>Uniswap đã bật thu phí trên Robinhood Chain. Câu hỏi ai cũng hỏi là giao thức lấy được bao nhiêu — nhưng chưa thấy nơi nào tách ra.</p>
-<p>Đo trọn một ngày UTC, mỗi <strong>$100</strong> người dùng trả phí swap:</p>
-<p><strong>$85,36</strong> ở lại với người cấp thanh khoản. <strong>$14,64</strong> Uniswap ghi nhận là phí giao thức.</p>
-<h2 id="phien-ban-moi-nhat-lay-ty-le-thap-nhat">Phiên bản mới nhất lấy tỷ lệ thấp nhất</h2>
-<p>Trong $100 phí đó, v4 chiếm <strong>$23,76</strong> — gần một phần tư. Nhưng v4 chỉ nộp về <strong>$1,85</strong>, tức <strong>7,81%</strong>. Cùng lúc, v2 nộp <strong>16,67%</strong> và v3 nộp <strong>16,78%</strong>.</p>
-<p>Nếu bạn đang là LP hoặc đang giữ UNI, khác biệt đó đổi hai thứ ngược nhau. Với LP thì v4 dễ chịu hơn — ở v2 và v3, phí giao thức <strong>trừ vào phần LP</strong>; ở v4 nó <strong>cộng thêm</strong> vào phí người swap trả, nên LP vẫn nhận đủ. Với người giữ UNI thì ngược lại: dòng tiền càng dồn sang v4, phần chảy về giao thức càng mỏng.</p>
-<p>Lý do là cơ chế, không phải chính sách. Ở v2 và v3, phí giao thức là một <strong>phân số của phí pool</strong> — một phần sáu, hoặc một phần tư. Ở v4 nó không phải phân số, mà là một <strong>mức tối đa 0,1%</strong>. Khi đã chạm mức đó, pool thu phí càng cao thì phần giao thức càng chiếm tỷ trọng nhỏ. Với pool fee 1% và protocol fee 0,1%, giao thức nhận khoảng <strong>9%</strong> trên tổng 1,1% mà người swap trả — không phải 16,7%.</p>
-<p>Tỷ lệ thấp không tự nó là xấu, và bài này không đo được chiều đó. Nếu v4 nộp theo tỷ lệ như v2 và v3 <strong>mà nền phí giữ nguyên</strong>, mỗi $100 sẽ có thêm khoảng <strong>$2,11</strong> về giao thức. Nhưng nền phí có giữ nguyên hay không thì chưa ai đo: một lát mỏng của cái bánh to hơn vẫn có thể là nhiều tiền hơn. Muốn trả lời phải đo thị phần v4 qua nhiều ngày — bài này chỉ có một ngày.</p>
-<h2 id="ba-thu-phai-do-de-ra-duoc-14-64">Ba thứ phải đo để ra được $14,64</h2>
-<p><strong>Một — không phải pool nào cũng bật.</strong> Tính theo giá trị phí, <strong>92,9%</strong> phát sinh ở pool đã bật. Còn <strong>$7,15</strong> trên mỗi $100 phát sinh ở pool chưa bật, giao thức nhận <strong>$0</strong>.</p>
-<p>Trong đó có một nhóm đáng chỉ tên: <strong>30 pool v4 sinh phí nhiều nhất</strong> ngày hôm đó có <strong>15 pool gắn hook, và cả 15 đều không bật</strong> protocol fee. 15 pool còn lại trong nhóm không gắn hook.</p>
-<p><strong>Hai — pool đã bật lấy tỷ lệ khác nhau.</strong> Đọc thẳng trên chain, không lấy từ tài liệu: <strong>328.376 pool v3 khai một phần sáu</strong>, <strong>5.564 pool khai một phần tư</strong>.</p>
-<p><strong>Ba — tỷ lệ của v4 phải tính từ từng giao dịch</strong>, vì nó phụ thuộc mức phí của chính pool đó. Bình quân gia quyền theo phí của các pool v4 đã bật: <strong>7,81%</strong>.</p>
-<p>Áp chung một tỷ lệ một phần sáu cho tất cả — cách làm ở bản nháp đầu — cho ra con số cao hơn <strong>5,69%</strong> so với phép cộng theo cấu hình từng pool.</p>
-<h2 id="con-burn-thi-sao">Còn burn thì sao</h2>
-<p>Trong <strong>$14,64</strong> giao thức ghi nhận, <strong>$9,80</strong> đã xuất hiện dưới dạng UNI đem burn trong cùng ngày.</p>
-<p>Phần chênh <strong>không nằm trong kho</strong> — đã kiểm: dòng vào và dòng ra của contract giữ tiền khớp nhau tới từng xu trên phần định giá được, tồn ròng bằng <strong>0</strong>. Nó ở đâu thì chưa nói được, và bài này không đoán.</p>
-<p>Điều đáng biết hơn con số đó là <strong>cách burn xảy ra</strong>: phí giao thức <strong>không mua UNI</strong>. Phí vào contract giữ tiền dưới dạng các token khác nhau, rồi <strong>bất kỳ ai</strong> cũng có thể nộp <strong>2.000 UNI</strong> để lấy ra tối đa 20 asset trong đó — và số UNI ấy bị burn. Người đi gom chỉ làm khi có lời. Burn của UNI không tự động.</p>
-<h2 id="tu-kiem-lai">Tự kiểm lại</h2>
-<p>Ba số gốc, mọi tỷ lệ ở trên đều quy ra từ đây. Trong khoảng block <strong>22.006.019 → 22.867.791</strong> của Robinhood Chain, đúng một ngày UTC:</p>
-<ul><li>người dùng trả tổng <strong>$2.521.197</strong> phí swap</li><li>giao thức ghi nhận <strong>$369.178</strong></li><li>UNI đem burn <strong>62.000 UNI</strong>, tương đương <strong>$247.122</strong></li></ul>
-<p>Tách theo phiên bản: v2 trả $198.383 → ghi nhận $33.064 · v3 trả $1.723.902 → ghi nhận $289.353 · v4 trả $598.913 → ghi nhận $46.762.</p>
-<p>Các số đếm on-chain đọc lại lúc nào cũng ra như vậy; các số USD dùng giá cuối ngày UTC 29/07.</p>
-<p>Bài này thay cho bài đăng ngày 29/07 đã được gỡ khỏi cả hai kênh cùng ngày, sau khi điều kiện tự bác bỏ in kèm nó xảy ra.</p>
-<h2 id="dieu-gi-se-bac-bo-bai-nay">Điều gì sẽ bác bỏ bài này</h2>
-<p>Nếu một phép dựng độc lập — đọc từng log Swap cùng cấu hình protocol fee của đúng pool tại đúng block — cho tỷ lệ v4 lệch quá 2 điểm phần trăm so với <strong>7,81%</strong>, thì câu &quot;phiên bản mới nhất lấy tỷ lệ thấp nhất&quot; phải sửa công khai.</p>
-<p>Không phải lời khuyên đầu tư. Các số đếm on-chain tại khoảng block 22.006.019 → 22.867.791 là mốc cố định, không đổi khi có block mới. Các số USD phụ thuộc nguồn giá cuối ngày UTC 29/07 và sẽ khác nếu dùng giá tại từng lượt swap.</p></section></main>
+<main class="khung"><h1>Dữ liệu thô đứng sau bài</h1><div class="dem"><span class="to">3</span> file · JSON</div><p class="dan">Tải về, mở ra, đếm lại. Mỗi file mang sẵn một trường <code>_doc</code> nói nó là gì và <b>vòng đo nào của nó đã hỏng</b> — một tập dữ liệu không kể được chỗ nó từng sai thì không kiểm lại được.</p><section class="so"><article class="claim"><h3><a class="id" href="verify_post07_2026-07-31.json">verify_post07_2026-07-31.json</a><span class="moc">2,9 KB · bài #7 — 9/9 kiểm sau đăng</span></h3><p class="dong"><span class="nhan">FILE NÀY LÀ GÌ</span>verify bài #7 PENDLE — LAUNCH §6c</p><p class="dong"><span class="nhan">TẢI VỀ</span><code>curl -sO https://blockpinned.com/du-lieu/verify_post07_2026-07-31.json</code></p></article><article class="claim"><h3><a class="id" href="pendle_buy_source_2026-07-31.json">pendle_buy_source_2026-07-31.json</a><span class="moc">21,4 KB · bài #7 — 65 tx hash + chi tiết từng tx</span></h3><p class="dong"><span class="nhan">FILE NÀY LÀ GÌ</span>VÒNG 2 — nguồn của 65 transfer vào 0x9e08. Vòng 1 (H_KHÔNG) là DƯƠNG TÍNH GIẢ: phép thử hỏi người GỬI có phát log Swap không, mà log Swap do POOL phát. Số 0 đó nói về phép thử.</p><p class="dong"><span class="nhan">TẢI VỀ</span><code>curl -sO https://blockpinned.com/du-lieu/pendle_buy_source_2026-07-31.json</code></p></article><article class="claim"><h3><a class="id" href="pendle_buy_tie_2026-07-31.json">pendle_buy_tie_2026-07-31.json</a><span class="moc">2,6 KB · bài #7 — lượt nối swap→hợp đồng, 82,44%</span></h3><p class="dong"><span class="nhan">FILE NÀY LÀ GÌ</span>Nối swap output → PENDLE vào 0x9e08. Đóng cú bác &#x27;đồng thời ≠ nhân quả&#x27;.</p><p class="dong"><span class="nhan">TẢI VỀ</span><code>curl -sO https://blockpinned.com/du-lieu/pendle_buy_tie_2026-07-31.json</code></p></article></section><p class="dan-gt">Không phải bài nào cũng có file ở đây. Một phép đo chỉ sinh file thô khi nó là phép <b>quét</b> — nghìn lượt log, nhiều vòng đối chứng. Phép đo gọi một hàm tại một block thì đường tự kiểm ngắn hơn file: lệnh gọi in ngay trong sổ claim của bài, bấm “Đo lại” là chạy.</p></main>
 <footer><div class="khung">
   Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá.<br>
   Không phải lời khuyên đầu tư. ·
