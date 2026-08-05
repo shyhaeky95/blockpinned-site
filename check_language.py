@@ -14,7 +14,7 @@ Chạy:  python3 template/check_language.py        → quét mặc định
        python3 template/check_language.py <file> → quét file cụ thể
        python3 template/check_language.py --selftest → control dương, 0 phụ thuộc file ngoài
 """
-import pathlib, re, sys
+import os, pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).parent.parent
 
@@ -197,28 +197,89 @@ def selftest():
                if not any(re.search(p, s, re.I) for s in PHAI_NO)]
     for p in chua_no:
         sai.append(f"🟠 MẪU CHẾT — không ca nào trong PHAI_NO làm nó nổ: {p!r}")
+    # ── ② CHẾ ĐỘ: cùng một VẬT, bốn cách gõ ⇒ phải cùng một câu trả lời ──────
+    #
+    # 🔴 Ca ⓑ là control ÂM cho xác 03–04/08: trên mã cũ (`"template/out/" in str(p)`)
+    # nó trả False ⇒ nhánh từ-nghề + nhánh định-giá TẮT ⇒ cổng in "✅ sạch" trên một
+    # bản xuất bẩn. Selftest cũ PASS suốt trong khi lỗi vẫn sống, vì **không ca nào
+    # của nó đi qua nhánh này** — nó chỉ kiểm MẪU, không kiểm CÔNG TẮC.
+    ca_che_do = [
+        ("ⓐ từ gốc kho, path tương đối",   ROOT,             "template/out/x.txt", True),
+        ("ⓑ từ template/, path tương đối", ROOT / "template", "out/x.txt",          True),
+        ("ⓒ đường tuyệt đối",              ROOT,             str(OUT_DIR / "x.txt"), True),
+        ("ⓓ ÂM: draft từ gốc kho",         ROOT,             "drafts/x.md",        False),
+        ("ⓔ ÂM: draft từ template/",       ROOT / "template", "../drafts/x.md",     False),
+    ]
+    cwd0 = os.getcwd()
+    try:
+        for ten, cwd, arg, mong in ca_che_do:
+            os.chdir(cwd)
+            duoc = la_ban_xuat(pathlib.Path(arg))
+            if duoc != mong:
+                sai.append(f"🔴 CHẾ ĐỘ SAI — {ten}: `{arg}` ⇒ bản xuất={duoc}, phải={mong}")
+    finally:
+        os.chdir(cwd0)
+
     for line in sai:
         print(line)
     print(f"\nselftest ①b · {len(PHAI_NO)} ca phải nổ · {len(PHAI_QUA)} ca phải qua · "
           f"{len(VALUATION)} mẫu")
+    print(f"selftest CHẾ ĐỘ · {len(ca_che_do)} cách gõ cho cùng một vật")
     if sai:
         sys.exit(f"🔴 SELFTEST HỎNG — {len(sai)} ca")
     print("✅ selftest sạch — cổng nổ đúng chỗ và im đúng chỗ")
+    print("🔵 KHÔNG đo được ở đây, ghi ra thay vì giả vờ: ca ⓐ–ⓔ kiểm CÔNG TẮC chọn chế "
+          "độ, không kiểm dây nối từ công tắc tới `scan()`. Dây đó phải đo bằng một lượt "
+          "chạy thật trên bản xuất có từ nghề, gọi từ hai chỗ đứng khác nhau.")
+
+
+OUT_DIR = (ROOT / "template" / "out").resolve()
+
+
+def la_ban_xuat(p: pathlib.Path) -> bool:
+    """Vật này có phải BẢN XUẤT không — hỏi về VẬT, không hỏi cách gõ lệnh.
+
+    🔴 XÁC 03–04/08/2026, hai lượt. Dòng cũ là `pure = "template/out/" in str(p)`
+    — một phép thử trên CHUỖI đường dẫn. CÙNG MỘT FILE cho hai kết quả khác nhau
+    tuỳ chỗ đứng lúc gọi:
+
+        cd <kho>          && python3 template/check_language.py template/out/x.txt → 2 hit
+        cd <kho>/template && python3 check_language.py out/x.txt                   → ✅ sạch
+
+    Nhánh TỪ NGHỀ và nhánh ①b KẾT LUẬN ĐỊNH GIÁ (thứ **chặn cứng**) không chạy, mà
+    cổng vẫn in dòng xanh. Draft bài #33 nhận "✅ sạch" rồi người phản biện NGOÀI
+    bắt 4 lần chữ `trần` — mẫu bắt nó đã nằm sẵn trong chính file này.
+
+    ⇒ `resolve()` trước rồi mới hỏi. Tương đối, tuyệt đối, hay qua symlink đều phải
+    cho CÙNG một câu trả lời. Luật: `Crypto Research/RULES.md §2c`.
+    """
+    try:
+        return p.resolve().is_relative_to(OUT_DIR)
+    except (OSError, ValueError):
+        return False
 
 
 def main():
     if "--selftest" in sys.argv:
         return selftest()
-    files = ([pathlib.Path(a) for a in sys.argv[1:]] if len(sys.argv) > 1 else
+    # `--ban-xuat`: ép chế độ đầy đủ cho văn bản KHÔNG nằm trong template/out/
+    # (bản dán tay, reply, file tạm). Thiếu cửa này thì một văn bản sắp ra ngoài mà
+    # nằm chỗ khác vẫn bị soi ở chế độ draft — đúng lỗ vừa vá, đi lối khác.
+    ep = "--ban-xuat" in sys.argv
+    argv = [a for a in sys.argv[1:] if not a.startswith("--")]
+    files = ([pathlib.Path(a) for a in argv] if argv else
              [p for g in TARGETS for p in ROOT.glob(g)] +
              [ROOT / g for g in GENERATORS])
     hard = soft = 0
+    n_xuat = n_khac = 0
     for p in files:
         if not p.exists():
             continue
         gen = str(p).endswith(".py")
         # draft lẫn ghi chú nội bộ ⇒ chỉ soi TỪ ĐÃ KHAI TỬ; từ nghề chỉ soi bản xuất
-        pure = "template/out/" in str(p)
+        pure = ep or la_ban_xuat(p)
+        n_xuat += pure
+        n_khac += not pure
         for kind, ln, pat, fix, why, txt in scan(p, skip_comments=gen, jargon=pure,
                                                  valuation=pure):
             if kind.startswith("🔴"):
@@ -230,7 +291,12 @@ def main():
             print(f"{kind}  {shown}:{ln}\n"
                   f"    khớp : {pat}\n    thay : {fix}\n    vì   : {why}\n    dòng : {txt}\n")
     n = len([p for p in files if p.exists()])
-    print(f"quét {n} file · 🔴 {hard} từ đã khai tử · 🟡 {soft} từ nghề repo")
+    # 🔴 Dòng này PHẢI khai NHÁNH, không chỉ đếm file (`RULES.md §2c` điểm 2): một cổng
+    # có chế độ tắt mà không nói nó đang ở chế độ nào thì "✅" của hai chế độ trông y
+    # hệt nhau — và đó chính là cách lỗ trên sống được hai ngày.
+    print(f"quét {n} file · {n_xuat} bản xuất (soi ĐỦ: khai tử + định giá + từ nghề) · "
+          f"{n_khac} draft/generator (chỉ soi từ khai tử)" + (" · --ban-xuat ÉP" if ep else ""))
+    print(f"🔴 {hard} từ đã khai tử · 🟡 {soft} từ nghề repo")
     if hard:
         sys.exit("\n🔴 CÓ TỪ ĐÃ KHAI TỬ — không đăng cho tới khi sửa.")
     if soft:

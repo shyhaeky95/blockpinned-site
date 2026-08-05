@@ -1,6 +1,79 @@
 {
  "facts": [
   {
+   "id": "morpho-10-xu-1-ty",
+   "ngay": "2026-08-05",
+   "cau": "Khi bảng số của một nền tảng cho vay báo \"cung tăng thêm một tỷ đô\", rất dễ hiểu đó là một tỷ đô vừa chảy vào.\n\nHôm 22/07, số dư sổ sách của một market trên Morpho Blue tăng thêm hơn 1,066 tỷ đô trong đúng một giao dịch. Lượng USDC thực chuyển trong giao dịch đó: 0,10.\n\nGiao dịch đó không chuyển hơn một tỷ USDC đi đâu — nó ghi vào sổ khoản lãi dồn qua 47,4 ngày market không được cập nhật lần nào; khoản lãi đó có đòi được không thì BlockPinned chưa đo.\n\nĐọc trực tiếp từ sổ cái công khai của Ethereum, 15h55 ngày 05/08.\n\nBằng chứng và cách tự kiểm: ở reply ngay dưới.",
+   "so": "Lãi ghi vào sổ trong một giao dịch: 1.066.799.814,528395 USDC. USDC thật đổi chủ trong chính giao dịch đó: 0,10.",
+   "block": "Ethereum block 25.587.853 · 18h04 ngày 22/07/2026 giờ VN (11:04:11Z)",
+   "lenh": "curl -sS https://eth.drpc.org -H 'content-type: application/json' -d '[{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"eth_getTransactionReceipt\",\"params\":[\"0xd9aed85413f9d8e79acfc6035595f227955665c5fd7c5d9784989b507f9b1afa\"]},{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"eth_call\",\"params\":[{\"to\":\"0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb\",\"data\":\"0x5c60e39a0f9563442d64ab3bd3bcb27058db0b0d4046a4c46f0acd811dacae9551d2b129\"},\"0x186708c\"]},{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"eth_call\",\"params\":[{\"to\":\"0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb\",\"data\":\"0x5c60e39a0f9563442d64ab3bd3bcb27058db0b0d4046a4c46f0acd811dacae9551d2b129\"},\"0x186708d\"]}]'",
+   "chan": "Giao dịch đó không chuyển hơn một tỷ USDC đi đâu — nó ghi vào sổ khoản lãi dồn qua 47,4 ngày market không được cập nhật lần nào; khoản lãi đó có đòi được không thì BlockPinned chưa đo.",
+   "khoang_cach": {
+    "tin": "Bảng số của một nền tảng cho vay báo tiền gửi tăng thêm một tỷ đô thì có nghĩa là một tỷ đô vừa chảy vào",
+    "o_dau": "Mọi bảng theo dõi hiển thị mức cung của market cho vay bằng số sổ sách, và số đó cộng cả lãi được ghi nhận chứ không chỉ tiền gửi vào"
+   },
+   "card": {
+    "kicker": "MORPHO BLUE",
+    "figure": "1.066.799.814,53",
+    "label": "USDC GHI SỔ. USDC THỰC CHUYỂN: 0,10.",
+    "readout": "AccrueInterest → 1.066.799.814,53",
+    "he_qua": "SỔ SÁCH TĂNG ≠ TIỀN VÀO",
+    "anchor": "ETHEREUM · BLOCK 25.587.853 · TX 0xd9ae…1afa · 22/07/2026 11:04:11Z",
+    "kiem": [
+     {
+      "file": "data/verify_fact05_2026-08-05.json",
+      "duong": "interest_raw",
+      "bang": 1066799814528395
+     },
+     {
+      "file": "data/verify_fact05_2026-08-05.json",
+      "duong": "hieu_totalSupplyAssets",
+      "bang": 1066799814528395
+     },
+     {
+      "file": "data/verify_fact05_2026-08-05.json",
+      "duong": "hieu_khop_interest_trong_log",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact05_2026-08-05.json",
+      "duong": "dt_giay",
+      "bang": 4096992
+     },
+     {
+      "file": "data/verify_fact05_2026-08-05.json",
+      "duong": "util_truoc_bang_1",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact05_2026-08-05.json",
+      "duong": "taylor_dung_lai_duoc_khoan_lai",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact05_2026-08-05.json",
+      "duong": "transfer_deu_bang_100000",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact05_2026-08-05.json",
+      "duong": "so_log_accrue",
+      "bang": 2
+     },
+     {
+      "file": "data/verify_fact05_2026-08-05.json",
+      "duong": "block",
+      "bang": 25587853
+     },
+     {
+      "file": "data/verify_fact05_2026-08-05.json",
+      "duong": "queue_vi_tri_1_la_market_bai",
+      "bang": true
+     }
+    ]
+   }
+  },
+  {
    "id": "aave-rseth-deficit-weth",
    "ngay": "2026-08-03",
    "cau": "Sau vụ tấn công cầu nối rsETH của Kelp, sổ cho vay WETH của Aave vẫn còn ghi một khoản thiếu hụt.\n\nTrong thị trường Aave V3 Core trên Ethereum, sổ WETH đang ghi thiếu 52.964,45 WETH, tương đương khoảng 98,5 triệu USD theo giá ETH lúc kiểm tra. Không đổi một wei so với lần đo gần 9 ngày trước.\n\nNếu không thu hồi được hoặc không có bên liên quan bù lại, thị trường Aave V3 Core này sẽ phải xử lý khoản lỗ; nguồn bù và bên gánh cuối cùng vẫn chưa được chốt.\n\nĐọc trực tiếp từ sổ cái công khai của Ethereum, 09h34 ngày 03/08.\n\nCách tự kiểm riêng con số này: ở reply ngay dưới.",
