@@ -697,13 +697,22 @@ th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;
 
 /* ── danh sách trên trang chủ ── */
 ul.diem{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
-ul.diem li{display:grid;grid-template-columns:auto 1fr;gap:0 12px;align-items:start;
-  background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px;font-size:14.5px}
+/* 🔴 li này là GRID ⇒ mỗi con trực tiếp thành MỘT Ô. Nội dung phải gói trong đúng
+   một .noi, nếu không mỗi thẻ <a> sẽ rơi xuống một ô riêng ở cột 1 và dấu phân cách
+   thành ô mồ côi — bản 06/08 hỏng đúng kiểu đó. */
+ul.diem li{--st:var(--accent);display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 12px;
+  align-items:start;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--st);
+  border-radius:12px;padding:14px 16px;font-size:14.5px}
+ul.diem li.xac{--st:var(--c-xn)}ul.diem li.bac{--st:var(--c-bac)}ul.diem li.sua{--st:var(--c-sua)}
 ul.diem .tick{font:700 10.5px/1.7 var(--mono);letter-spacing:.08em;text-transform:uppercase;
-  border:1px solid currentColor;border-radius:999px;padding:1px 9px;height:fit-content;white-space:nowrap}
-ul.diem .tick.xac{color:var(--c-xn)}
-ul.diem .tick.bac{color:var(--c-bac)}
-ul.diem .tick.sua{color:var(--c-sua)}
+  color:var(--st);border:1px solid currentColor;border-radius:999px;padding:1px 9px;
+  height:fit-content;white-space:nowrap}
+ul.diem .noi{display:flex;flex-direction:column;gap:9px;min-width:0}
+ul.diem .giai{line-height:1.6}
+ul.diem .ma{display:flex;flex-wrap:wrap;gap:6px}
+ul.diem .ma a{font:600 11.5px/1 var(--mono);color:var(--muted);background:var(--inset);
+  border:1px solid var(--line);border-radius:999px;padding:6px 10px;text-decoration:none;white-space:nowrap}
+ul.diem .ma a:hover{color:var(--ink);border-color:var(--st);text-decoration:none}
 .dan-gt{margin:14px 0 0;font-size:15px}
 ul.han{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
 ul.han li{background:var(--card);border:1px solid var(--line);border-left:4px dashed var(--c-cho);
@@ -748,6 +757,81 @@ footer a{color:var(--muted)}
 .bai .s{font:500 12px/1.6 var(--mono);color:var(--faint);grid-column:2}
 .bai .d{font:500 12px/1.6 var(--mono);color:var(--faint);grid-row:1/3;grid-column:1;padding-top:3px}
 @media(max-width:640px){.bai{grid-template-columns:1fr}.bai .t,.bai .s{grid-column:1}.bai .d{grid-row:auto}}
+
+
+/* ── TRANG FACTS: khuôn riêng, không dùng khuôn claim. Panel số bên trái đứng một
+   mình được — đó là thứ người ta chụp màn hình và dán đi ── */
+.fact{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  margin-bottom:16px;scroll-margin-top:82px;
+  box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 26px -18px rgba(0,0,0,.5)}
+.fact:target{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.f-top{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr)}
+.f-top.mot-cot{grid-template-columns:1fr}
+@media(max-width:820px){.f-top{grid-template-columns:1fr}}
+/* Panel số DÍNH theo mép trên: thân fact dài hơn panel rất nhiều, để panel giãn
+   theo thân thì con số trôi mất khỏi màn hình đúng lúc người ta đang đọc về nó.
+   Đường kẻ dọc đặt ở .f-body chứ không ở panel — panel nay cao theo nội dung. */
+/* KHÔNG tô nền cho panel dính: nền chỉ đẹp khi panel cao bằng thẻ, còn khi nó dính
+   và trôi xuống thì mảng màu đó đọc thành một hộp lơ lửng giữa thẻ. */
+.f-fig{padding:19px 21px;display:flex;flex-direction:column;gap:8px;align-self:start;
+  position:sticky;top:74px}
+.f-top.co-fig .f-body{border-left:1px solid var(--line)}
+@media(max-width:820px){
+  .f-fig{position:static;border-bottom:1px solid var(--line);border-radius:14px 14px 0 0}
+  .f-top.co-fig .f-body{border-left:0}
+}
+.f-kicker{font:700 10.5px/1.4 var(--mono);letter-spacing:.14em;color:var(--accent)}
+/* con số dài nhất ở đây là 16 ký tự — cỡ chữ phải để nó đứng TRỌN một dòng.
+   Một con số bị ngắt dòng giữa chừng là một con số khó đọc lại. */
+.f-num{font:700 clamp(21px,2.4vw,28px)/1.12 var(--mono);letter-spacing:-.03em;white-space:nowrap}
+@media(max-width:400px){.f-num{font-size:19px;white-space:normal}}
+.f-lab{font:700 11.5px/1.5 var(--body);letter-spacing:.05em;color:var(--muted)}
+.f-body{padding:19px 21px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.f-cau{margin:0;font-size:15.5px;line-height:1.68}
+.f-so{margin:0;font:500 12.5px/1.75 var(--mono);color:var(--muted);background:var(--inset);
+  border:1px solid var(--line-soft);border-left:2px solid var(--muted);border-radius:9px;
+  padding:10px 13px;overflow-wrap:anywhere}
+.f-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.f-grid{grid-template-columns:1fr}}
+.f-box .k{font:700 10px/1.5 var(--mono);letter-spacing:.09em;text-transform:uppercase;
+  display:block;margin-bottom:5px}
+.f-box .v{font-size:13px;line-height:1.6;color:var(--muted)}
+.f-box.vi .k{color:var(--accent)}
+.f-box.chan{border-left:2px dashed var(--line);padding-left:12px}
+.f-box.chan .k{color:var(--muted)}
+.f-foot{border-top:1px solid var(--line-soft);padding:12px 21px;display:flex;gap:12px;
+  align-items:baseline;flex-wrap:wrap;background:var(--inset)}
+.f-foot .lb{font:700 10px var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.f-foot .blk{font:500 12px/1.6 var(--mono);color:var(--ink)}
+details.lenh{margin:0 21px 16px}
+details.lenh summary{cursor:pointer;font:500 11.5px var(--mono);color:var(--muted);padding:7px 0}
+details.lenh summary:hover,details.lenh[open] summary{color:var(--ink)}
+.cmd{background:var(--inset);border:1px solid var(--line-soft);border-radius:9px;padding:10px 12px;
+  font:400 11.5px/1.6 var(--mono);color:var(--muted);overflow-x:auto;white-space:pre;margin:0}
+
+/* ── TRACK RECORD: ghi trước → kết quả, hai cột đọc thành một chuyển động ── */
+.tr{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--st);
+  border-radius:14px;overflow:hidden;margin-bottom:15px;--st:var(--accent);
+  box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 26px -18px rgba(0,0,0,.5)}
+.tr.xac{--st:var(--c-xn)}.tr.song{--st:var(--c-song)}.tr.sua{--st:var(--c-sua)}
+.tr.bac{--st:var(--c-bac)}.tr.cho{--st:var(--c-cho)}
+.tr.song{border-left-style:dashed}
+.tr.sua{border-left-style:double;border-left-width:6px}
+.tr-head{display:flex;align-items:center;gap:11px;flex-wrap:wrap;padding:15px 18px 0}
+.tr-head .moc{font:500 12.5px/1.7 var(--mono);color:var(--faint)}
+.tr-body{display:grid;grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr);padding:14px 18px 4px}
+@media(max-width:820px){.tr-body{grid-template-columns:1fr}}
+.tr-body .col{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border-radius:10px}
+.tr-body .truoc{background:var(--inset);border:1px solid var(--line-soft)}
+.tr-body .sau{background:color-mix(in srgb,var(--st) 9%,transparent);
+  border:1px solid color-mix(in srgb,var(--st) 30%,transparent)}
+.tr-body .col .k{font:700 10px var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tr-body .sau .k{color:var(--st)}
+.tr-body .col .txt{font-size:13.5px;line-height:1.62;color:var(--muted)}
+.tr-body .col .noi{font:500 11.5px/1.55 var(--mono);color:var(--faint);overflow-wrap:anywhere}
+.tr-body .mui{display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:18px}
+@media(max-width:820px){.tr-body .mui{padding:8px 0;transform:rotate(90deg)}}
+.tr-foot{padding:10px 18px 14px;font:500 12.5px/1.6 var(--mono)}
 
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 """
@@ -1136,19 +1220,30 @@ def bang_diem(moi: list) -> str:
     def lien(ten: str) -> str:
         # 🔴 Nhãn phải mang NGÀY BÀI, không chỉ id claim: hai bài đều có C1, nên một dãy
         # "C1 · C1" là đọc nhầm ngay. Lỗi này chỉ lộ khi có ≥2 bài cùng trạng thái.
-        return " · ".join(
-            f'<a href="bai/{s}/#{c["id"]}">{s[8:10]}/{s[5:7]}·{c["id"]}</a>'
+        return "".join(
+            f'<a href="bai/{s}/#{c["id"]}">{s[8:10]}/{s[5:7]} · {c["id"]}</a>'
             for s, _, c in moi if c["status"] == ten)
+
+    # 🔴 MỖI <li> CHỈ ĐƯỢC CÓ ĐÚNG HAI CON. `ul.diem li` là grid, mà grid biến TỪNG con
+    # thành một ô riêng — bản đầu để chuỗi link nằm trần trong `li`, nên mỗi thẻ <a> rơi
+    # xuống một ô ở cột 1 và dấu phân cách " · " thành một ô mồ côi cuối dòng. Trông như
+    # lỗi thẩm mỹ, thực ra là hiểu sai grid, và nó chỉ lộ khi một trạng thái có ≥2 link.
+    def muc(cls: str, nhan: str, giai: str, ten: str) -> str:
+        return (f'<li class="{cls}"><span class="tick {cls}">{nhan}</span>'
+                f'<span class="noi"><span class="giai">{giai}</span>'
+                f'<span class="ma">{lien(ten)}</span></span></li>')
+
     dong = []
     if dem["ĐÃ XÁC NHẬN"]:
-        dong.append(f'<li><span class="tick xac">sống sót</span>điều-bác-bỏ đã chạy và claim '
-                    f'đứng vững: {lien("ĐÃ XÁC NHẬN")}</li>')
+        dong.append(muc("xac", "sống sót",
+                        "điều-bác-bỏ đã chạy và claim đứng vững", "ĐÃ XÁC NHẬN"))
     if dem["BỊ BÁC"]:
-        dong.append(f'<li><span class="tick bac">đổ</span>claim bị chính điều-bác-bỏ của nó '
-                    f'bác, và nằm nguyên trên trang: {lien("BỊ BÁC")}</li>')
+        dong.append(muc("bac", "đổ",
+                        "claim bị chính điều-bác-bỏ của nó bác, và nằm nguyên trên trang",
+                        "BỊ BÁC"))
     if dem["ĐÃ SỬA"]:
-        dong.append(f'<li><span class="tick sua">đã sửa</span>tự đính chính, giữ lại để thấy '
-                    f'lỗi: {lien("ĐÃ SỬA")}</li>')
+        dong.append(muc("sua", "đã sửa",
+                        "tự đính chính, giữ lại để thấy lỗi", "ĐÃ SỬA"))
     d_num = {k: len(v) for k, v in dem.items()}
     cho_moc = sum(1 for _, _, c in moi if c.get("han") and c["status"] == "ĐANG ĐỨNG")
 
@@ -1319,38 +1414,66 @@ def cong_facts(fs: list) -> None:
 
 
 def trang_facts(fs: list) -> str:
-    """Trang `/facts/` — mỗi Fact một khối, mới nhất trước."""
+    """Trang `/facts/` — KHUÔN RIÊNG, không mượn khuôn claim.
+
+    🔴 Vòng port 06/08 để trang này chạy khuôn claim chung và user bác ngay: một Fact
+    không có trạng thái, không có nhật ký, không có điều-bác-bỏ — nó có MỘT CON SỐ.
+    Khuôn claim xếp con số đó thành dòng thứ hai trong một chồng dòng nhãn giống nhau,
+    tức là giấu đúng thứ duy nhất đáng nhìn. Ở đây con số đứng riêng một panel, đủ lớn
+    để chụp màn hình dán đi mà vẫn đọc được nguồn.
+
+    Panel số lấy từ `card` trong facts.json — cùng nguồn với card đăng trên kênh, nên
+    số trên web và số trên ảnh không thể trôi lệch nhau.
+    """
     co = sorted(fs, key=lambda f: str(f.get("ngay", "")), reverse=True)
     hang = []
     for f in co:
-        dt = str(f.get("doi_tuong", "")).strip()
+        card = f.get("card") or {}
         ng = str(f.get("ngay", "")).strip()
+        kicker = str(card.get("kicker") or f.get("doi_tuong") or "FACT").strip()
+        figure = str(card.get("figure") or "").strip()
+        label = str(card.get("label") or "").strip()
         chan = str(f["chan"]).strip()
-        p_chan = ("" if chan.upper() == "KHÔNG CÓ" else
-                  f'<p class="dong"><span class="nhan">ĐỪNG ĐỌC THÀNH</span>'
-                  f'{ihtml.escape(chan)}</p>')
+        kc = f["khoang_cach"]
+        dau = f'{ihtml.escape(kicker)}{" · " + vn_ngay(ng) if ng else ""}'
+        # Fact chưa có card thì KHÔNG dựng panel rỗng — panel rỗng là một ô trống to
+        # giữa trang, tệ hơn hẳn một khối chữ đủ bề ngang.
+        fig = (f'<div class="f-fig"><span class="f-kicker">{dau}</span>'
+               f'<span class="f-num">{ihtml.escape(figure)}</span>'
+               + (f'<span class="f-lab">{ihtml.escape(label)}</span>' if label else "")
+               + '</div>') if figure else ""
+        o_chan = ("" if chan.upper() == "KHÔNG CÓ" else
+                  f'<div class="f-box chan"><span class="k">Fact này KHÔNG nói</span>'
+                  f'<span class="v">{ihtml.escape(chan)}</span></div>')
         p_ng = (f'<p class="tro">{ihtml.escape(str(f["nguon"]))}</p>'
                 if str(f.get("nguon", "")).strip() else "")
-        kc = f["khoang_cach"]
-        hang.append(f"""<article class="claim" id="{ihtml.escape(str(f['id']))}">
-  <h3><span class="chip">{ihtml.escape(dt) if dt else 'FACT'}</span>
-      <span class="moc">{vn_ngay(ng) if ng else ''}</span></h3>
-  <p class="dong"><span class="nhan">FACT</span>{ihtml.escape(str(f['cau']))}</p>
-  <p class="dong"><span class="nhan">SỐ</span>{ihtml.escape(str(f['so']))}</p>
-  <p class="dong"><span class="nhan">ĐỌC TẠI</span>{ihtml.escape(str(f['block']))}</p>
-  <p class="dong bac"><span class="nhan">NGƯỢC VỚI</span>{ihtml.escape(str(kc['tin']))}
-      &nbsp;— kiểm tại: {ihtml.escape(str(kc['o_dau']))}</p>
-  <p class="dong"><span class="nhan">TỰ KIỂM</span><code>{ihtml.escape(str(f['lenh']))}</code></p>
-  {p_chan}
-  {p_ng}
+        hang.append(f"""<article class="fact" id="{ihtml.escape(str(f['id']))}">
+  <div class="f-top{' co-fig' if fig else ' mot-cot'}">
+    {fig}
+    <div class="f-body">
+      {'' if fig else f'<p class="f-kicker">{dau}</p>'}
+      <p class="f-cau">{ihtml.escape(str(f['cau']))}</p>
+      <p class="f-so">{ihtml.escape(str(f['so']))}</p>
+      <div class="f-grid">
+        <div class="f-box vi"><span class="k">Vì sao đáng quan tâm</span>
+          <span class="v">Điều thường được tin: <i>“{ihtml.escape(str(kc['tin']))}”</i>.
+          Chỗ kiểm được: {ihtml.escape(str(kc['o_dau']))}</span></div>
+        {o_chan}
+      </div>
+      {p_ng}
+    </div>
+  </div>
+  <div class="f-foot"><span class="lb">Đọc tại</span>
+    <span class="blk">{ihtml.escape(str(f['block']))}</span></div>
+  <details class="lenh"><summary>▸ lệnh tự kiểm — dán vào terminal là chạy</summary>
+    <pre class="cmd">{ihtml.escape(str(f['lenh']))}</pre></details>
 </article>""")
-    return (f'<h1>Facts</h1>'
-            f'<div class="dem"><span class="to">{len(co)}</span> fact</div>'
-            f'<p class="dan">Mỗi mục dưới đây là <b>một sự thật đúng tại một block</b>, kèm '
-            f'<b>một lệnh</b> để bạn tự đọc lại con số đó. Mỗi mục cũng phải nói rõ nó '
-            f'<b>đi ngược điều gì</b> và <b>chỗ nào đang nói ngược lại</b> — một điều đúng '
-            f'mà ai cũng đoán được thì không nằm ở đây. Không phân tích, không dự đoán, '
-            f'không nhận định giá. Cái nào cần giải thích dài hơn một dòng thì nó là một bài.</p>'
+    return (f'<h1>Một con số, một block, một lệnh để bạn tự kiểm</h1>'
+            f'<div class="dem"><span class="to">{len(co)}</span> fact · mới nhất trước</div>'
+            f'<p class="dan">Fact ngắn hơn bài: không lập luận dài, chỉ một phép đo đứng '
+            f'một mình. Mỗi mục ghi rõ <b>đo tại block nào</b>, <b>lệnh nào đọc lại được</b>, '
+            f'và — quan trọng không kém — <b>nó KHÔNG nói điều gì</b>. Cái nào cần giải thích '
+            f'dài hơn một dòng thì nó là một bài.</p>'
             f'<section class="so">{"".join(hang)}</section>')
 
 
@@ -1360,6 +1483,11 @@ def trang_ghi_truoc(moi: list) -> str:
     Đây là thứ khó làm giả nhất mà desk có: một con số dán công khai TRƯỚC khi biết đáp án.
     Điều kiện để bảng có nghĩa là nó chở CẢ ba trạng thái — thắng, đổ, và đang chờ. Bảng
     chỉ chở lần đúng thì nói về tác giả bảng, không nói về đối tượng.
+
+    🔴 Bố cục HAI CỘT có việc, không phải trang trí: ghi trước ở trái, kết quả ở phải,
+    mũi tên ở giữa. Xếp dọc thành một chồng dòng nhãn giống nhau (bản 06/08 trước khi
+    user bác) thì mất đúng thứ trang này bán — người đọc phải NHÌN THẤY hai đầu của
+    một lời hứa, mới thấy được khoảng cách giữa chúng.
     """
     co = sorted(((c["ghi_truoc"]["ngay"], s, t, c) for s, t, c in moi if c.get("ghi_truoc")),
                 key=lambda x: x[0], reverse=True)
@@ -1369,21 +1497,30 @@ def trang_ghi_truoc(moi: list) -> str:
     for ngay, sl, tieu, c in co:
         g, cls = c["ghi_truoc"], TRANG_THAI[c["status"]][0]
         dang = c["status"] != "ĐANG ĐỨNG"
-        moc = (f'{vn_ngay(ngay)} &nbsp;→&nbsp; {vn_ngay(g["ngay_ket"])}' if dang
-               else f'{vn_ngay(ngay)} &nbsp;→&nbsp; '
-                    + (f'hạn {vn_ngay(c["han"])}' if c.get("han") else "chưa có hạn"))
-        kq = (f'<p class="dong bac"><span class="nhan">KẾT QUẢ · {ihtml.escape(g["ai_phan_dinh"])}</span>'
-              f'{ihtml.escape(g["ket_qua"])}</p>' if dang else
-              '<p class="dong"><span class="nhan">CHƯA CÓ KẾT QUẢ</span>'
-              'Dòng này nằm đây từ trước khi biết đáp án. Tới hạn thì nó có kết quả, '
-              'dù kết quả là tôi sai.</p>')
-        hang.append(f"""<article class="claim {cls}">
-  <h3><span class="chip {cls}">{c['status'] if dang else 'ĐANG CHỜ'}</span>
-      <span class="moc">{moc}</span></h3>
-  <p class="dong"><span class="nhan">TÔI GHI TRƯỚC</span>{ihtml.escape(g["so"])}</p>
-  <p class="dong"><span class="nhan">Ở ĐÂU</span>{ihtml.escape(g["noi"])}</p>
-  {kq}
-  <p class="tro"><a href="../bai/{sl}/#{c['id']}">{vn_ngay(sl[:10])}·{c['id']} — {ihtml.escape(tieu)}</a></p>
+        ngay_sau = (vn_ngay(g["ngay_ket"]) if dang else
+                    (f'hạn {vn_ngay(c["han"])}' if c.get("han") else "chưa có hạn"))
+        cot_sau = (
+            f'<div class="col sau"><span class="k">Kết quả</span>'
+            f'<span class="ngay">{ngay_sau}</span>'
+            f'<span class="txt">{ihtml.escape(g["ket_qua"])}</span>'
+            f'<span class="noi">ai phán định: {ihtml.escape(g["ai_phan_dinh"])}</span></div>'
+            if dang else
+            f'<div class="col sau"><span class="k">Chưa tới ngày</span>'
+            f'<span class="ngay">{ngay_sau}</span>'
+            f'<span class="txt">Dòng này nằm đây từ trước khi biết đáp án. Tới hạn thì nó '
+            f'có kết quả, dù kết quả là tôi sai.</span></div>')
+        hang.append(f"""<article class="tr {cls}">
+  <div class="tr-head"><span class="chip {cls}">{c['status'] if dang else 'ĐANG CHỜ'}</span>
+    <span class="moc">{vn_ngay(ngay)} → {ngay_sau}</span></div>
+  <div class="tr-body">
+    <div class="col truoc"><span class="k">Tôi ghi trước</span>
+      <span class="ngay">{vn_ngay(ngay)}</span>
+      <span class="txt">{ihtml.escape(g["so"])}</span>
+      <span class="noi">{ihtml.escape(g["noi"])}</span></div>
+    <div class="mui">→</div>
+    {cot_sau}
+  </div>
+  <div class="tr-foot"><a href="../bai/{sl}/#{c['id']}">{vn_ngay(sl[:10])} · {c['id']} — {ihtml.escape(tieu)}</a></div>
 </article>""")
     return (f'<h1>Tôi ghi trước, rồi kết quả ra sao</h1>'
             f'<div class="dem"><span class="to">{len(co)}</span> lần ghi trước &nbsp;·&nbsp; '
@@ -1394,30 +1531,6 @@ def trang_ghi_truoc(moi: list) -> str:
             f'nếu nó chỉ chở lần đúng thì nó nói về tôi, không nói về đối tượng. Bộ sinh trang '
             f'chặn build nếu một dòng đã được phân định mà thiếu kết quả.</p>'
             f'<section class="so">{"".join(hang)}</section>')
-
-
-def thanh_xep(dem: dict, tong: int) -> str:
-    """Thanh xếp chồng + chip có SỐ — bảng điểm dùng chung cho trang bài và trang chủ.
-
-    🔴 Bề rộng tính bằng dấu CHẤM: đây là CSS, không phải chữ hiện ra. `so_vn` đổi dấu
-    thập phân sang phẩy cho người đọc, và một `width:77,14%` là một luật CSS chết trong
-    im lặng — đúng họ lỗi mà cổng ⑥ (thuộc tính số) sinh ra để bắt.
-
-    Mỗi chip mang GLYPH riêng (CSS `.chip::before`) chứ không chỉ mang màu: đo được đỏ
-    và xanh lá chỉ cách nhau ΔE 2,7 với người mù màu deutan, nên màu một mình không
-    phân biệt nổi năm trạng thái.
-    """
-    if not tong:
-        return ""
-    seg = "".join(
-        f'<span class="seg {TRANG_THAI[k][0]}" style="width:{n / tong * 100:.2f}%" '
-        f'title="{k} · {n}"></span>'
-        for k, n in dem.items() if n)
-    chip = "".join(
-        f'<span class="lg {TRANG_THAI[k][0]}"><span class="sw"></span>'
-        f'{k} <span class="n">{n}</span></span>'
-        for k, n in dem.items() if n)
-    return f'<div class="stack">{seg}</div><div class="chu-thich">{chip}</div>'
 
 
 def trang_du_lieu(kho: pathlib.Path) -> str:
@@ -1457,6 +1570,30 @@ def trang_du_lieu(kho: pathlib.Path) -> str:
             f'file thô khi nó là phép <b>quét</b> — nghìn lượt log, nhiều vòng đối chứng. '
             f'Phép đo gọi một hàm tại một block thì đường tự kiểm ngắn hơn file: lệnh gọi in '
             f'ngay trong sổ claim của bài, bấm “Đo lại” là chạy.</p>')
+
+
+def thanh_xep(dem: dict, tong: int) -> str:
+    """Thanh xếp chồng + chip có SỐ — bảng điểm dùng chung cho trang bài và trang chủ.
+
+    🔴 Bề rộng tính bằng dấu CHẤM: đây là CSS, không phải chữ hiện ra. `so_vn` đổi dấu
+    thập phân sang phẩy cho người đọc, và một `width:77,14%` là một luật CSS chết trong
+    im lặng — đúng họ lỗi mà cổng ⑥ (thuộc tính số) sinh ra để bắt.
+
+    Mỗi chip mang GLYPH riêng (CSS `.chip::before`) chứ không chỉ mang màu: đo được đỏ
+    và xanh lá chỉ cách nhau ΔE 2,7 với người mù màu deutan, nên màu một mình không
+    phân biệt nổi năm trạng thái.
+    """
+    if not tong:
+        return ""
+    seg = "".join(
+        f'<span class="seg {TRANG_THAI[k][0]}" style="width:{n / tong * 100:.2f}%" '
+        f'title="{k} · {n}"></span>'
+        for k, n in dem.items() if n)
+    chip = "".join(
+        f'<span class="lg {TRANG_THAI[k][0]}"><span class="sw"></span>'
+        f'{k} <span class="n">{n}</span></span>'
+        for k, n in dem.items() if n)
+    return f'<div class="stack">{seg}</div><div class="chu-thich">{chip}</div>'
 
 
 def dai_trang_thai(claims: list, doc_lai: str) -> str:
