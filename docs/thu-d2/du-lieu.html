@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dữ liệu thô — BlockPinned</title>
+<meta name="description" content="File JSON thô đứng sau các bài: tải về, mở ra, đếm lại.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="bp.css">
+<style>
+.files { display:flex; flex-direction:column; gap:12px; margin-top:20px; }
+.file { background:var(--card); border:1px solid var(--border); border-radius:var(--r-lg); padding:16px 18px;
+  display:grid; grid-template-columns:minmax(0,1fr) auto; gap:14px; align-items:start; transition:.16s; }
+.file:hover { border-color:var(--muted); }
+.file .nm { font-family:'JetBrains Mono',monospace; font-size:13.5px; font-weight:700; color:var(--ink); overflow-wrap:anywhere; }
+.file .doc { font-size:13.2px; line-height:1.6; color:var(--muted); margin-top:7px; }
+.file .keys { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--faint); margin-top:8px; line-height:1.6; overflow-wrap:anywhere; }
+.file .meta { display:flex; flex-direction:column; align-items:flex-end; gap:7px; }
+.file .sz { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted); white-space:nowrap; }
+.file .bai { font-size:11.5px; color:var(--faint); }
+@media (max-width:640px){ .file { grid-template-columns:1fr; } .file .meta { align-items:flex-start; flex-direction:row; } }
+.luat { margin-top:22px; border-left:3px solid var(--token); padding:2px 0 2px 16px; }
+.luat p { margin:0 0 10px; font-size:14px; line-height:1.7; color:var(--muted); max-width:70ch; }
+.luat p b { color:var(--ink); }
+</style>
+</head>
+<body>
+<div class="thu-bar">
+  <b>BẢN THỬ THIẾT KẾ</b>
+  <span>Không phải trang chính thức. Số ở đây <b>chép tay</b> từ dữ liệu ngày 05/08/2026 và bộ này chỉ dựng <b>một</b> bài mẫu — trang thật đang chạy ở <a href="/">blockpinned.com</a> với đủ 8 bài. Bản thử không được index và sẽ bị gỡ ở lần xuất bản kế tiếp.</span>
+</div>
+<style>
+.thu-bar { position:sticky; top:0; z-index:40; display:flex; gap:10px; align-items:baseline; flex-wrap:wrap;
+  background:color-mix(in srgb, var(--c-sua) 16%, var(--bg));
+  border-bottom:1px solid color-mix(in srgb, var(--c-sua) 45%, transparent);
+  color:var(--ink); padding:8px clamp(14px,3vw,32px); font-size:12px; line-height:1.5; }
+.thu-bar b { color:var(--c-sua); letter-spacing:0.06em; font-size:11px; }
+.thu-bar span b { color:var(--ink); letter-spacing:0; font-size:12px; }
+.thu-bar a { color:var(--token); text-decoration:underline; text-underline-offset:2px; }
+header.top { top:34px; }
+.rail { top:104px; }
+</style>
+
+<header class="top"><div class="top-in">
+  <svg class="logo" viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z" fill="currentColor"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z" fill="currentColor"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z" fill="currentColor"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z" fill="currentColor"/></svg>
+  <span class="wordmark">Block<span>Pinned</span></span>
+  <nav class="main">
+    <a href="index.html">Sổ gốc</a>
+    <a href="facts.html">Facts</a>
+    <a href="track-record.html">Track record</a>
+    <a href="token-uni.html">Token</a>
+    <a href="du-lieu.html" class="on">Dữ liệu</a>
+    <button class="theme" id="themeBtn" title="Đổi nền sáng/tối">☀ / ☾</button>
+  </nav>
+</div></header>
+
+<div class="page">
+  <div class="crumb"><span class="tag-token">DỮ LIỆU</span><span>3 file · JSON thô</span></div>
+  <h1 class="title">Dữ liệu thô đứng sau bài</h1>
+  <p class="dek">Tải về, mở ra, đếm lại. Mỗi file mang sẵn một trường <code class="mono">_doc</code> nói nó là gì và <strong>vòng đo nào của nó đã hỏng</strong> — vì một tập dữ liệu không kể được chỗ nó từng sai thì không kiểm lại được.</p>
+
+  <div class="files">
+
+    <div class="file">
+      <div>
+        <div class="nm">pendle_buy_source_2026-07-31.json</div>
+        <div class="doc"><strong>Vòng 2</strong> — nguồn của 65 lượt transfer vào hợp đồng buyback. Vòng 1 (H_KHÔNG) là <strong>dương tính giả</strong>: phép thử hỏi người GỬI có phát log Swap không, mà log Swap do <strong>POOL</strong> phát — nên số 0 của vòng 1 nói về phép thử, không nói về thế giới.</div>
+        <div class="keys">trường: _doc · do_luc · cua_so · n_transfer · n_giao_dich · tong_pendle · tx_co_log_Swap · tx_co_token_chi_ra</div>
+      </div>
+      <div class="meta">
+        <span class="sz">21,4 KB</span>
+        <span class="bai">bài PENDLE · 31/07/2026</span>
+        <button class="mini" data-copy="curl -sO https://blockpinned.com/du-lieu/pendle_buy_source_2026-07-31.json">⧉ chép lệnh tải</button>
+      </div>
+    </div>
+
+    <div class="file">
+      <div>
+        <div class="nm">pendle_buy_tie_2026-07-31.json</div>
+        <div class="doc">Nối đầu ra của swap với lượng PENDLE đi vào hợp đồng buyback — phép đo đóng cú bác <em>"đồng thời ≠ nhân quả"</em>.</div>
+        <div class="keys">trường: _doc · do_luc · n_tx · n_dat · n_truot · n_tx_khong_co_pool · tong_pendle_vao_9e08 · tong_pendle_pool_nha_ra</div>
+      </div>
+      <div class="meta">
+        <span class="sz">2,6 KB</span>
+        <span class="bai">bài PENDLE · 31/07/2026</span>
+        <button class="mini" data-copy="curl -sO https://blockpinned.com/du-lieu/pendle_buy_tie_2026-07-31.json">⧉ chép lệnh tải</button>
+      </div>
+    </div>
+
+    <div class="file">
+      <div>
+        <div class="nm">verify_post07_2026-07-31.json</div>
+        <div class="doc">Bộ verify chạy <strong>sau khi bài đã đăng</strong>: đọc lại từng con số trong bài tại block đã ghim, rồi đối chiếu toàn văn. Có trường <code class="mono">FAIL</code> và trường ghi lần sửa ngày 31/07 — kết quả không đạt cũng nằm trong file.</div>
+        <div class="keys">trường: _doc · chạy_lúc · block_ghim_trong_bài · head_lúc_verify · kết_quả · TỔNG · FAIL · _sua_31_07</div>
+      </div>
+      <div class="meta">
+        <span class="sz">2,9 KB</span>
+        <span class="bai">bài PENDLE · 31/07/2026</span>
+        <button class="mini" data-copy="curl -sO https://blockpinned.com/du-lieu/verify_post07_2026-07-31.json">⧉ chép lệnh tải</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="luat">
+    <p><b>Không phải bài nào cũng có file ở đây.</b> Một phép đo chỉ sinh file thô khi nó là phép <strong>quét</strong> — nghìn lượt log, nhiều vòng đối chứng. Những phép đo gọi một hàm tại một block thì đường tự kiểm ngắn hơn file: lệnh gọi in ngay trong sổ claim của bài, bấm "Đo lại" là chạy.</p>
+    <p><b>File không được sửa lặng lẽ.</b> Nếu một file phải sửa, bản sửa mang thêm trường ghi ngày và lý do — như <code class="mono">_sua_31_07</code> trong file verify ở trên — chứ không ghi đè.</p>
+  </div>
+
+</div>
+
+<div id="tip" role="status" aria-live="polite"></div>
+
+<footer class="bot"><div class="bot-in">
+  <svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z" fill="currentColor"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z" fill="currentColor"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z" fill="currentColor"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z" fill="currentColor"/></svg>
+  <span>BlockPinned · sổ gốc công khai · kể cả khi kênh sai, sửa ngay tại chỗ, không xoá · không phải lời khuyên đầu tư</span>
+</div></footer>
+
+<script src="bp.js"></script>
+</body>
+</html>

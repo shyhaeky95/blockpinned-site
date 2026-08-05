@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Facts — BlockPinned</title>
+<meta name="description" content="Mỗi fact: một con số, một block, một lệnh tự kiểm, và điều nó KHÔNG nói.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="bp.css">
+<style>
+.facts { display:flex; flex-direction:column; gap:16px; margin-top:22px; }
+.fact { background:var(--card); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--shadow); scroll-margin-top:80px; }
+.fact:target { border-color:var(--token); box-shadow:0 0 0 3px color-mix(in srgb, var(--token) 18%, transparent); }
+.f-top { display:grid; grid-template-columns:minmax(0,365px) minmax(0,1fr); gap:0; }
+@media (max-width:860px){ .f-top { grid-template-columns:1fr; } }
+.f-fig { padding:20px 22px; border-right:1px solid var(--border); display:flex; flex-direction:column; gap:8px;
+  background:linear-gradient(160deg, color-mix(in srgb, var(--token) 10%, transparent), transparent 70%); }
+@media (max-width:860px){ .f-fig { border-right:0; border-bottom:1px solid var(--border); } }
+.f-kicker { font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:700; letter-spacing:0.14em; color:var(--token); }
+/* con số dài nhất ở đây là 16 ký tự (1.066.799.814,53) — cỡ chữ phải để nó
+   đứng TRỌN một dòng, số bị ngắt dòng giữa chừng là số khó đọc lại */
+.f-num { font-family:'JetBrains Mono',monospace; font-size:clamp(22px,2.5vw,29px); font-weight:700;
+  letter-spacing:-0.03em; line-height:1.12; white-space:nowrap; }
+@media (max-width:400px){ .f-num { font-size:20px; } }
+.f-lab { font-size:11.5px; font-weight:700; letter-spacing:0.05em; color:var(--muted); line-height:1.5; }
+.f-body { padding:20px 22px; display:flex; flex-direction:column; gap:14px; min-width:0; }
+.f-cau { font-size:15.5px; line-height:1.68; margin:0; }
+.f-so { font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.75; color:var(--muted); background:var(--inset);
+  border:1px solid var(--border-soft); border-left:2px solid var(--muted); border-radius:8px; padding:10px 13px; overflow-wrap:anywhere; }
+.f-so b { color:var(--ink); font-weight:500; }
+.f-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media (max-width:700px){ .f-grid { grid-template-columns:1fr; } }
+.f-box .k { font-size:10px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; display:block; margin-bottom:5px; }
+.f-box .v { font-size:13px; line-height:1.6; color:var(--muted); }
+.f-box.gap .k { color:var(--token); }
+.f-box.chan .k { color:var(--muted); }
+.f-box.chan { border-left:2px dashed var(--border); padding-left:12px; }
+.f-foot { border-top:1px solid var(--border-soft); padding:13px 22px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; background:var(--inset); }
+.f-foot .lb { font-size:10px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--muted); }
+.f-foot .blk { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink); }
+.f-foot .sp { margin-left:auto; display:flex; gap:6px; }
+details.lenh { margin:0 22px 16px; }
+details.lenh summary { cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--muted); padding:6px 0; }
+details.lenh summary:hover { color:var(--ink); }
+details.lenh[open] summary { color:var(--ink); }
+</style>
+</head>
+<body>
+<div class="thu-bar">
+  <b>BẢN THỬ THIẾT KẾ</b>
+  <span>Không phải trang chính thức. Số ở đây <b>chép tay</b> từ dữ liệu ngày 05/08/2026 và bộ này chỉ dựng <b>một</b> bài mẫu — trang thật đang chạy ở <a href="/">blockpinned.com</a> với đủ 8 bài. Bản thử không được index và sẽ bị gỡ ở lần xuất bản kế tiếp.</span>
+</div>
+<style>
+.thu-bar { position:sticky; top:0; z-index:40; display:flex; gap:10px; align-items:baseline; flex-wrap:wrap;
+  background:color-mix(in srgb, var(--c-sua) 16%, var(--bg));
+  border-bottom:1px solid color-mix(in srgb, var(--c-sua) 45%, transparent);
+  color:var(--ink); padding:8px clamp(14px,3vw,32px); font-size:12px; line-height:1.5; }
+.thu-bar b { color:var(--c-sua); letter-spacing:0.06em; font-size:11px; }
+.thu-bar span b { color:var(--ink); letter-spacing:0; font-size:12px; }
+.thu-bar a { color:var(--token); text-decoration:underline; text-underline-offset:2px; }
+header.top { top:34px; }
+.rail { top:104px; }
+</style>
+
+<header class="top"><div class="top-in">
+  <svg class="logo" viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z" fill="currentColor"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z" fill="currentColor"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z" fill="currentColor"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z" fill="currentColor"/></svg>
+  <span class="wordmark">Block<span>Pinned</span></span>
+  <nav class="main">
+    <a href="index.html">Sổ gốc</a>
+    <a href="facts.html" class="on">Facts</a>
+    <a href="track-record.html">Track record</a>
+    <a href="token-uni.html">Token</a>
+    <a href="du-lieu.html">Dữ liệu</a>
+    <button class="theme" id="themeBtn" title="Đổi nền sáng/tối">☀ / ☾</button>
+  </nav>
+</div></header>
+
+<div class="page">
+  <div class="crumb"><span class="tag-token">FACTS</span><span>5 mục · mới nhất trước</span></div>
+  <h1 class="title">Một con số, một block, một lệnh để bạn tự kiểm</h1>
+  <p class="dek">Fact ngắn hơn bài: không lập luận dài, chỉ một phép đo đứng một mình. Mỗi mục ghi rõ <strong>đo tại block nào</strong>, <strong>lệnh nào đọc lại được</strong>, và — quan trọng không kém — <strong>nó KHÔNG nói điều gì</strong>.</p>
+
+  <div class="facts">
+
+    <article class="fact" id="F-02">
+      <div class="f-top">
+        <div class="f-fig">
+          <span class="f-kicker">MORPHO BLUE · 05/08/2026</span>
+          <span class="f-num">1.066.799.814,53</span>
+          <span class="f-lab">USDC GHI SỔ. USDC THỰC CHUYỂN: 0,10.</span>
+        </div>
+        <div class="f-body">
+          <p class="f-cau">Khi bảng số của một nền tảng cho vay báo "cung tăng thêm một tỷ đô", rất dễ hiểu đó là một tỷ đô vừa chảy vào. Hôm 22/07, số dư sổ sách của một market Morpho Blue nhảy đúng ngần ấy — trong một giao dịch mà lượng USDC thật đổi chủ là <strong>mười xu</strong>.</p>
+          <p class="f-so">Lãi ghi vào sổ trong một giao dịch: <b>1.066.799.814,528395 USDC</b>. USDC thật đổi chủ trong chính giao dịch đó: <b>0,10</b>.</p>
+          <div class="f-grid">
+            <div class="f-box gap"><span class="k">Vì sao đáng quan tâm</span><span class="v">Điều thường được tin: <em>"bảng số báo tiền gửi tăng thêm một tỷ đô thì có nghĩa là một tỷ đô vừa chảy vào"</em>. Chỗ lệch nằm ở: mọi bảng theo dõi hiển thị mức cung của market bằng <strong>số sổ sách</strong>, mà số đó cộng cả lãi được ghi nhận chứ không chỉ tiền gửi vào.</span></div>
+            <div class="f-box chan"><span class="k">Fact này KHÔNG nói</span><span class="v">Giao dịch đó không chuyển hơn một tỷ USDC đi đâu — nó ghi vào sổ khoản lãi dồn qua 47,4 ngày market không được cập nhật lần nào; khoản lãi đó có đòi được không thì BlockPinned <strong>chưa đo</strong>.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="f-foot">
+        <span class="lb">Ghim tại</span><span class="blk">Ethereum block 25.587.853 · 18h04 ngày 22/07/2026 (11:04:11Z)</span>
+        <span class="sp"><button class="mini" data-copy-link="#F-02">🔗 chép link</button></span>
+      </div>
+      <details class="lenh"><summary>▸ lệnh tự kiểm (curl, 3 lời gọi)</summary>
+        <pre class="cmd">curl -sS https://eth.drpc.org -H 'content-type: application/json' -d '[{"jsonrpc":"2.0","id":1,"method":"eth_getTransactionReceipt","params":["0xd9aed85413f9d8e79acfc6035595f227955665c5fd7c5d9784989b507f9b1afa"]},{"jsonrpc":"2.0","id":2,"method":"eth_call","params":[{"to":"0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb","data":"0x5c60e39a0f9563442d64ab3bd3bcb27058db0b0d4046a4c46f0acd811dacae9551d2b129"},"0x186708c"]},{"jsonrpc":"2.0","id":3,"method":"eth_call","params":[{"to":"0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb","data":"0x5c60e39a0f9563442d64ab3bd3bcb27058db0b0d4046a4c46f0acd811dacae9551d2b129"},"0x186708d"]}]'</pre>
+      </details>
+    </article>
+
+    <article class="fact" id="F-01">
+      <div class="f-top">
+        <div class="f-fig">
+          <span class="f-kicker">AAVE · 03/08/2026</span>
+          <span class="f-num">52.964,45 WETH</span>
+          <span class="f-lab">KHOẢN THIẾU HỤT ≈ 98,5 TRIỆU USD</span>
+        </div>
+        <div class="f-body">
+          <p class="f-cau">Sau vụ tấn công cầu nối rsETH của Kelp, sổ cho vay WETH của Aave <strong>vẫn còn ghi một khoản thiếu hụt</strong> — đọc lại được hôm nay, bằng một lời gọi.</p>
+          <p class="f-so">getReserveDeficit(WETH) = <b>52.964,453911883321543567 WETH</b>; khoảng <b>98,5 triệu USD</b> tại giá spot 1.858,965 USD/ETH lúc 10h39 ngày 03/08/2026.</p>
+          <div class="f-grid">
+            <div class="f-box gap"><span class="k">Vì sao đáng quan tâm</span><span class="v">Điều thường được tin: <em>"sự cố cầu nối của Kelp đã qua nên khoản thiếu hụt liên quan trên Aave cũng đã xử lý xong"</em>. Báo cáo sự cố của Aave mô tả tuyến Kelp giải phóng rsETH khi không có lượt đốt tương ứng ở mạng nguồn; deficit WETH kết tinh sau đó và <strong>vẫn đọc được</strong>.</span></div>
+            <div class="f-box chan"><span class="k">Fact này KHÔNG nói</span><span class="v">Nếu không thu hồi được hoặc không có bên liên quan bù lại, thị trường Aave V3 Core này sẽ phải xử lý khoản lỗ; <strong>nguồn bù và bên gánh cuối cùng vẫn chưa được chốt</strong>.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="f-foot">
+        <span class="lb">Ghim tại</span><span class="blk">Ethereum block 25.671.409 · 09h34 ngày 03/08/2026 (02:34:23Z)</span>
+        <span class="sp"><button class="mini" data-copy-link="#F-01">🔗 chép link</button></span>
+      </div>
+      <details class="lenh"><summary>▸ lệnh tự kiểm (curl, 2 lời gọi)</summary>
+        <pre class="cmd">curl -sS https://eth.drpc.org -H 'content-type: application/json' -d '[{"jsonrpc":"2.0","id":1,"method":"eth_call","params":[{"to":"0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2","data":"0xc952485d000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"},"0x187b6f1"]},{"jsonrpc":"2.0","id":2,"method":"eth_call","params":[{"to":"0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2","data":"0xd1946dbc"},"0x187b6f1"]}]'</pre>
+      </details>
+    </article>
+
+    <article class="fact" id="F-03">
+      <div class="f-top">
+        <div class="f-fig">
+          <span class="f-kicker">PANCAKESWAP · 02/08/2026</span>
+          <span class="f-num">2 giờ 27 phút</span>
+          <span class="f-lab">TỪ LÚC POOL USDT/SKHYB RA ĐỜI TỚI LÚC ĐƯỢC CHIA THƯỞNG</span>
+        </div>
+        <div class="f-body">
+          <p class="f-cau">USDT/SKHYB được đưa vào farm v3 của PancakeSwap chỉ <strong>2 giờ 27 phút 13 giây</strong> sau khi hợp đồng pool ra đời, và vào với <strong>2,3909%</strong> toàn bộ ngân sách thưởng của farm.</p>
+          <p class="f-so">14/07: <b>138</b> điểm trên tổng 5.772 = <b>2,3909%</b> · 17/07: 111/5.915 = 1,8766% · 24/07: 107/6.004 = 1,7821% · 31/07 tới nay: 68/6.079 = <b>1,1186%</b>, hạng 10 trong 46 pool · điểm giảm 50,7% nhưng tổng tăng 5,3% nên thị phần giảm 53,2% · hợp đồng pool ra đời block 109.883.740, vào farm block 109.903.364.</p>
+          <div class="f-grid">
+            <div class="f-box gap"><span class="k">Vì sao đáng quan tâm</span><span class="v">Điều thường được tin: <em>"phần thưởng farm của một sàn lớn do người nắm token quyết, qua bỏ phiếu"</em>. Không gian bỏ phiếu cakevote.eth đang sống với 3.740 proposal — đặt cạnh <strong>một giao dịch duy nhất</strong> đổi phân bổ của 24 pool, kèm log ExecutionSuccess của ví đa chữ ký trong chính giao dịch đó.</span></div>
+            <div class="f-box chan"><span class="k">Fact này KHÔNG nói</span><span class="v">Không nói pool đó giả, cũng không nói khối lượng của nó là giả. Không nói phân bổ đang được bơm lên — hướng đo được là <strong>2,39% xuống 1,12%</strong>.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="f-foot">
+        <span class="lb">Ghim tại</span><span class="blk">BSC block 113.437.121 · 00h53 ngày 02/08/2026 (01/08, 17:53:44Z)</span>
+        <span class="sp"><button class="mini" data-copy-link="#F-03">🔗 chép link</button></span>
+      </div>
+      <details class="lenh"><summary>▸ lệnh tự kiểm (curl, 2 lời gọi)</summary>
+        <pre class="cmd">curl -s https://bsc-dataseed.bnbchain.org -H 'content-type: application/json' -d '[{"jsonrpc":"2.0","id":1,"method":"eth_call","params":[{"to":"0x556B9306565093C855AEA9AE92A594704c2Cd59e","data":"0x1526fe27000000000000000000000000000000000000000000000000000000000000024b"},"latest"]},{"jsonrpc":"2.0","id":2,"method":"eth_call","params":[{"to":"0x556B9306565093C855AEA9AE92A594704c2Cd59e","data":"0x17caf6f1"},"latest"]}]'</pre>
+      </details>
+    </article>
+
+    <article class="fact" id="F-04">
+      <div class="f-top">
+        <div class="f-fig">
+          <span class="f-kicker">KITE L1 · 01/08/2026</span>
+          <span class="f-num">109 ngày</span>
+          <span class="f-lab">HỢP ĐỒNG STAKING KHOÁ ĐĂNG KÝ, CHƯA TỪNG MỞ LẠI</span>
+        </div>
+        <div class="f-body">
+          <p class="f-cau">Hợp đồng StakingManager của Kite L1 đã khoá đăng ký từ <strong>13/04</strong> và tới block 144.285 chưa có lần nào trả trạng thái đó về false — <strong>109 ngày liên tục</strong>.</p>
+          <p class="f-so">isRegistrationPaused() = <b>true</b> · khoá từ block 62.922 (13/04, 14:38:08Z) · lượt đăng ký cuối block 50.199 (26/03), <b>128 ngày</b> trước.</p>
+          <div class="f-grid">
+            <div class="f-box gap"><span class="k">Vì sao đáng quan tâm</span><span class="v">Điều thường được tin: <em>"Kite đã ra mainnet nên hệ staking của nó đang mở cho người tham gia"</em>. Thông cáo ngày 30/04/2026 công bố mainnet và Agent Passport production launch — đặt cạnh <strong>state của chính hợp đồng StakingManager</strong>.</span></div>
+            <div class="f-box chan"><span class="k">Fact này KHÔNG nói</span><span class="v">Không nói chain ngừng chạy — chính con số block đọc được hôm nay bác điều đó. Không nói lý do, vì <strong>động cơ không đọc được từ chain</strong>. Và nó nói về hợp đồng này, không nói về mọi đường vào staking có thể tồn tại ngoài nó.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="f-foot">
+        <span class="lb">Ghim tại</span><span class="blk">Kite L1 block 144.285 · 11h41 ngày 01/08/2026 (04:41:12Z)</span>
+        <span class="sp"><button class="mini" data-copy-link="#F-04">🔗 chép link</button></span>
+      </div>
+      <details class="lenh"><summary>▸ lệnh tự kiểm (curl, 1 lời gọi)</summary>
+        <pre class="cmd">curl -s https://rpc.gokite.ai -H 'content-type: application/json' -d '{"jsonrpc":"2.0","id":1,"method":"eth_call","params":[{"to":"0x7d627b0F5Ec62155db013B8E7d1Ca9bA53218E82","data":"0x660a0696"},"latest"]}'</pre>
+      </details>
+    </article>
+
+    <article class="fact" id="F-05">
+      <div class="f-top">
+        <div class="f-fig">
+          <span class="f-kicker">SSV · 01/08/2026</span>
+          <span class="f-num">17.361.673,60</span>
+          <span class="f-lab">SSV ĐÃ PHÁT HÀNH. HỢP ĐỒNG KHÔNG ĐẶT MỨC TỐI ĐA.</span>
+        </div>
+        <div class="f-body">
+          <p class="f-cau">Hợp đồng SSV không đặt một mức cung tối đa nào. Không phải chưa công bố — <strong>trong mã của token không tồn tại thứ đó</strong>: cap() và maxSupply() đều revert.</p>
+          <p class="f-so">totalSupply() = <b>17.361.673,603050641926322837 SSV</b> · con số cung mà CoinGecko dùng thấp hơn <b>2.662.500,50 SSV</b>, bằng <b>15,34%</b> con số hợp đồng.</p>
+          <div class="f-grid">
+            <div class="f-box gap"><span class="k">Vì sao đáng quan tâm</span><span class="v">Điều thường được tin: <em>"SSV có một con số FDV, và con số đó là một mức cung có giới hạn để so sánh"</em>. API công khai của CoinGecko: ô fully_diluted_valuation <strong>có số</strong>, trong khi ô max_supply là <strong>null</strong>, và ô FDV bằng đúng ô vốn hoá.</span></div>
+            <div class="f-box chan"><span class="k">Fact này KHÔNG nói</span><span class="v">Không có mức cung tối đa <strong>không có nghĩa là đang phát thêm</strong>. Đây là câu về giới hạn, không phải về tốc độ — và vế đó đã đo: cùng giá trị totalSupply đứng y hệt tới từng wei ở block 25.578.857 (21/07) và block 25.657.700, cách nhau 78.843 block.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="f-foot">
+        <span class="lb">Ghim tại</span><span class="blk">Ethereum block 25.657.700 · 11h42 ngày 01/08/2026 (04:42:47Z)</span>
+        <span class="sp"><button class="mini" data-copy-link="#F-05">🔗 chép link</button></span>
+      </div>
+      <details class="lenh"><summary>▸ lệnh tự kiểm (curl, 2 lời gọi)</summary>
+        <pre class="cmd">curl -s https://ethereum-rpc.publicnode.com -H 'content-type: application/json' -d '[{"jsonrpc":"2.0","id":1,"method":"eth_call","params":[{"to":"0x9D65fF81a3c488d585bBfb0Bfe3c7707c7917f54","data":"0x355274ea"},"latest"]},{"jsonrpc":"2.0","id":2,"method":"eth_call","params":[{"to":"0x9D65fF81a3c488d585bBfb0Bfe3c7707c7917f54","data":"0x18160ddd"},"latest"]}]'</pre>
+      </details>
+    </article>
+
+  </div>
+</div>
+
+<div id="tip" role="status" aria-live="polite"></div>
+
+<footer class="bot"><div class="bot-in">
+  <svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z" fill="currentColor"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z" fill="currentColor"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z" fill="currentColor"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z" fill="currentColor"/></svg>
+  <span>BlockPinned · sổ gốc công khai · kể cả khi kênh sai, sửa ngay tại chỗ, không xoá · không phải lời khuyên đầu tư</span>
+</div></footer>
+
+<script src="bp.js"></script>
+</body>
+</html>
