@@ -1,5 +1,6 @@
 ---
 title: 220 validator đã nạp, trọng số phí của module vẫn đúng 0,0000 ETH
+token: LDO
 date: 2026-08-04
 mau: 🟡
 ghim: Ethereum block #25.680.251 · hàng chờ deposit đọc tại consensus slot 14.917.257, 15h11 ngày 04/08/2026 (08:11Z)

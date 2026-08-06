@@ -1,5 +1,6 @@
 ---
 title: Dashboard báo buyback bằng 0, hợp đồng đang giữ 144.388 PENDLE
+token: PENDLE
 date: 2026-07-31
 mau: 🟡
 ghim: Ethereum · block #25.650.178 (31/07/2026 03:34:35 UTC) · cửa sổ #25.553.408 → #25.650.178 · trang dữ liệu Pendle đọc cùng lúc

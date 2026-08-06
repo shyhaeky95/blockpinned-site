@@ -1,5 +1,6 @@
 ---
 title: Ai đang trả protocol fee của Uniswap v4, và pool nào vẫn đang trả 0
+token: UNI
 date: 2026-07-30
 mau: 🔴
 ghim: Ethereum · block #25.643.032 (đoạn 400 block) · DualPool tại block #25.642.998 · đọc lại 30/07/2026 06:40:36 UTC

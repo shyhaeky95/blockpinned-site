@@ -1,5 +1,6 @@
 ---
 title: Mỗi $100 phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64
+token: UNI
 date: 2026-07-31
 mau: 🔴
 ghim: Robinhood Chain · block #22.006.019 → #22.867.791 (trọn ngày UTC 29/07/2026) · giá quy đổi lấy tại 23:59:59 UTC 29/07

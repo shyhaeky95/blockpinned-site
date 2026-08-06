@@ -1,5 +1,6 @@
 ---
 title: DefiLlama báo phí Uniswap v4 cao hơn 3,9 lần — và bản sửa mới chỉ chạy một chiều
+token: UNI
 date: 2026-07-27
 mau: 🟢
 ghim: Robinhood chain · block #10.808.643 → #11.671.782 (trọn ngày 16/07 UTC)

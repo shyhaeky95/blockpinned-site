@@ -1,5 +1,6 @@
 ---
 title: Lịch unlock không phải lượng HYPE thực sự đi vào lưu hành — ledger thấp hơn mô hình 29–38 lần
+token: HYPE
 date: 2026-07-29
 mau: 🟢
 ghim: KHÔNG neo được block — HyperCore trả state hiện tại · ảnh chụp 09h38–10h18 ngày 29/07/2026 · ledger khép 6.004.521 HYPE withdrawal về đúng 0

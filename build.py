@@ -167,9 +167,12 @@ NGUON_ASSET = {
     "card-pendle-buyback.png": "png",
 }
 
-# Thân bài LUÔN là Be Vietnam Pro ở cả hai hệ — đó là ràng buộc NGÔN NGỮ
-# (font dựng cho dấu tiếng Việt), không phải lựa chọn thương hiệu.
-BODY_FONT = "Be Vietnam Pro"
+# Ràng buộc NGÔN NGỮ của thân bài: mặt chữ phải dựng đủ dấu tiếng Việt — đó là điều
+# kiện, không phải lựa chọn thương hiệu. Trước 06/08 điều kiện này được thoả bằng cách
+# nạp thêm Be Vietnam Pro làm lưới đỡ; nay nó được thoả bằng chính subset `vietnamese`
+# của Inter, và điều đó ĐO ĐƯỢC (xem khối FONT_MAT). Chuỗi dự phòng cuối cùng là
+# `system-ui` — mọi hệ điều hành đang chạy đều dựng đủ dấu tiếng Việt ở font hệ thống.
+BODY_FONT = "system-ui"
 
 
 # Tên các họ cổng — dùng cho dòng in ra, và là chỗ DUY NHẤT đếm chúng.
@@ -543,6 +546,14 @@ button.nut-nen:hover{color:var(--ink);border-color:var(--muted)}
 @media(max-width:640px){nav.dieu a:not(.tai){display:none}}
 
 h1{font:var(--dw) clamp(28px,5.2vw,40px)/1.14 var(--display);letter-spacing:-.025em;margin:0 0 16px;text-wrap:balance}
+/* Câu mở đầu to hơn phần thân một bậc và nhạt hơn — nó là lời chào, không phải nội
+   dung. Chỉ khớp khi ngay sau <h1> có một đoạn văn: trang bài đi <h1>+<section> nên
+   không dính, và đó là điều đúng (ở đó thứ đứng đầu phải là sổ claim). */
+h1+p{font:400 18.5px/1.66 var(--body);color:var(--muted);max-width:64ch}
+h1+p strong{color:var(--ink);font-weight:650}
+/* dòng chữ dài quá 75 ký tự thì mắt trượt hàng — bề rộng khung là 900px, không phải
+   bề rộng đọc được */
+main>p,main>ul,main>ol{max-width:72ch}
 h2{font:750 23px/1.28 var(--display);letter-spacing:-.018em;margin:46px 0 14px;text-wrap:balance}
 h2::before{content:"";display:block;width:34px;height:3px;border-radius:2px;background:var(--accent);margin-bottom:12px;opacity:.9}
 h3{font:650 16.5px/1.45 var(--body);margin:26px 0 8px}
@@ -577,19 +588,50 @@ th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;
 .bh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .bh b{font:700 13px/1.4 var(--body);letter-spacing:.01em}
 .bh span{font:500 11.5px/1.5 var(--mono);color:var(--faint)}
-.stack{display:flex;gap:2px;height:20px;border-radius:5px;overflow:hidden;background:var(--inset)}
-.seg{background:var(--st);min-width:3px}
+.stack{display:flex;gap:2px;height:22px;border-radius:6px;overflow:hidden;background:var(--inset)}
+.seg{background:var(--st);min-width:3px;transition:opacity .16s}
 .seg.xac{--st:var(--c-xn)}.seg.song{--st:var(--c-song)}.seg.sua{--st:var(--c-sua)}
 .seg.bac{--st:var(--c-bac)}.seg.cho{--st:var(--c-cho)}
+/* Thanh CHẠY TỪ 0 khi lọt tầm mắt. Chỉ phép biến hình chạy — bề rộng thật nằm sẵn
+   trong HTML, nên tắt JS hoặc tắt chuyển động là thanh đứng ở đúng tỉ lệ, không phải
+   ở 0. (Cùng lý do đã BỎ hiệu ứng đếm-lên cho chữ số: NOTES §3.) */
+html.chuyen .stack .seg{transform:scaleX(0);transform-origin:left;
+  transition:transform .7s cubic-bezier(.22,.75,.3,1) calc(var(--i,0)*90ms),opacity .16s}
+html.chuyen .stack.chay .seg{transform:none}
+html.js .stack .seg{cursor:pointer}
+.stack:hover .seg{opacity:.38}
+.stack .seg:hover{opacity:1}
+/* Đưa chuột lên một dòng claim thì đoạn thanh của trạng thái ĐÓ sáng lên, và ngược
+   lại. Hai khối vốn nói về cùng một tập số — nối chúng bằng mắt thì người đọc không
+   phải tự bắc cầu. CSS không so được thuộc tính cha với con, nên năm luật, không một. */
+.stack[data-noi="xac"] .seg:not(.xac),
+.stack[data-noi="song"] .seg:not(.song),
+.stack[data-noi="sua"] .seg:not(.sua),
+.stack[data-noi="bac"] .seg:not(.bac),
+.stack[data-noi="cho"] .seg:not(.cho){opacity:.3}
+.roi{opacity:.4;transition:opacity .16s}
+/* vạch tiến trình đọc — dày 2px, nằm trên thanh điều hướng dính */
+#bp-tien{position:fixed;left:0;top:0;height:2px;width:100%;z-index:30;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;pointer-events:none}
+#bp-tip{position:fixed;z-index:60;left:0;top:0;pointer-events:none;opacity:0;
+  font:600 11.5px/1 var(--mono);color:var(--ink);background:var(--card);
+  border:1px solid var(--line);border-radius:8px;padding:7px 10px;white-space:nowrap;
+  box-shadow:0 10px 26px -14px rgba(0,0,0,.65);transition:opacity .13s}
+#bp-tip.hien{opacity:1}
 .chu-thich{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .lg{display:inline-flex;align-items:center;gap:7px;font:600 12px/1 var(--body);
-  padding:6px 10px 6px 8px;border-radius:999px;border:1px solid var(--line);
-  background:var(--inset);color:var(--muted);text-decoration:none}
+  padding:7px 11px 7px 9px;border-radius:999px;border:1px solid var(--line);
+  background:var(--inset);color:var(--muted);text-decoration:none;cursor:default;
+  transition:border-color .16s,background .16s,color .16s,box-shadow .16s}
+html.js .lg{cursor:pointer}
 .lg .sw{width:9px;height:9px;border-radius:2px;background:var(--st);flex:none}
 .lg .n{font:700 12px var(--mono);color:var(--ink)}
 .lg.xac{--st:var(--c-xn)}.lg.song{--st:var(--c-song)}.lg.sua{--st:var(--c-sua)}
 .lg.bac{--st:var(--c-bac)}.lg.cho{--st:var(--c-cho)}
 .lg:hover{border-color:var(--st);color:var(--ink)}
+.lg[aria-pressed="true"]{border-color:var(--st);color:var(--ink);
+  background:color-mix(in srgb,var(--st) 16%,var(--inset));
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--st) 15%,transparent)}
 .khi{font:500 12px/1.65 var(--mono);color:var(--faint);margin-top:11px}
 .toi{display:inline-block;margin-top:12px;font:700 12.5px/1 var(--mono);letter-spacing:.05em;
   text-decoration:none;color:var(--ink);background:var(--nut-nen);color:var(--nut-chu);
@@ -604,22 +646,98 @@ th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;
 .dem .phu{font:500 12.5px/1.65 var(--body);color:var(--faint);margin-top:8px;
   text-transform:none;letter-spacing:0}
 
-/* ── THẺ SỐ ── */
-.the-so{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 22px}
-@media(max-width:820px){.the-so{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:420px){.the-so{grid-template-columns:1fr}}
-.o{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;
-  padding:15px 16px 13px;display:flex;flex-direction:column;gap:5px;overflow:hidden;
-  text-decoration:none;transition:border-color .18s,transform .18s}
-.o::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--st,var(--accent))}
-.o::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,color-mix(in srgb,var(--st,var(--accent)) 9%,transparent),transparent 62%)}
-.o:hover{border-color:color-mix(in srgb,var(--st,var(--accent)) 45%,var(--line));transform:translateY(-1px)}
-.o.xac{--st:var(--c-xn)}.o.song{--st:var(--c-song)}.o.sua{--st:var(--c-sua)}
-.o.bac{--st:var(--c-bac)}.o.cho{--st:var(--c-cho)}
-.o .nh{font:700 11px/1.4 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);position:relative}
-.o .gt{font:700 28px/1.15 var(--mono);letter-spacing:-.02em;position:relative}
-.o .gc{font:400 12px/1.45 var(--body);color:var(--faint);position:relative}
+/* ── DÒNG TRẠNG THÁI: mỗi claim một dòng ĐỌC ĐƯỢC BẰNG CHỮ, lọc theo chip ở trên.
+   Thay hai thứ user bác 06/08: hàng thẻ số in lại số của chú giải, và dãy mã
+   "27/07 · C1" không nói được claim đó nói gì ── */
+.tt-khu{margin:0 0 30px}
+.tt-dau{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  flex-wrap:wrap;margin:0 0 13px}
+.nhom-loc{display:flex;gap:6px;flex-wrap:wrap}
+.lg-loc{font:600 12px/1 var(--body);padding:8px 13px;border-radius:999px;
+  border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:default;
+  transition:border-color .16s,color .16s,background .16s}
+html.js .lg-loc{cursor:pointer}
+.lg-loc .n{font:700 12px var(--mono);color:var(--ink);margin-left:4px}
+.lg-loc:hover{color:var(--ink);border-color:var(--muted)}
+.lg-loc[aria-pressed="true"]{color:var(--nut-chu);background:var(--nut-nen);border-color:transparent}
+.lg-loc[aria-pressed="true"] .n{color:var(--nut-chu)}
+.tt-dau .lo{font:500 12px/1.6 var(--mono);color:var(--faint)}
+ol.tt-ds{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+ol.tt-ds li{--st:var(--accent)}
+ol.tt-ds li.xac{--st:var(--c-xn)}ol.tt-ds li.song{--st:var(--c-song)}
+ol.tt-ds li.sua{--st:var(--c-sua)}ol.tt-ds li.bac{--st:var(--c-bac)}ol.tt-ds li.cho{--st:var(--c-cho)}
+/* .tt-hop là HỘP của một dòng — dùng cho cả thẻ <a> (trang chủ) lẫn <summary>
+   (tủ kính token). Một khuôn, hai vai: hai bản chép là hai bản sẽ trôi lệch. */
+.tt-hop{display:grid;grid-template-columns:auto minmax(0,1fr);gap:5px 14px;align-items:start;
+  background:var(--card);border:1px solid var(--line);border-left:3px solid var(--st);
+  border-radius:12px;padding:13px 16px;text-decoration:none;list-style:none;
+  transition:transform .16s,border-color .16s,box-shadow .16s}
+.tt-hop::-webkit-details-marker{display:none}
+.tt-hop:hover{transform:translateY(-1px);text-decoration:none;
+  border-color:color-mix(in srgb,var(--st) 45%,var(--line));
+  box-shadow:0 1px 2px rgba(0,0,0,.05),0 12px 28px -20px rgba(0,0,0,.6)}
+ol.tt-ds .chip{grid-row:1/3;align-self:start;margin-top:1px}
+ol.tt-ds .tx{font:500 15px/1.6 var(--body);color:var(--ink);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ol.tt-ds .mt{font:500 11.5px/1.55 var(--mono);color:var(--faint)}
+@media(max-width:620px){.tt-hop{grid-template-columns:minmax(0,1fr)}
+  ol.tt-ds .chip{grid-row:auto;justify-self:start;margin-bottom:3px}}
+
+/* ── TỦ KÍNH: dòng mở ra được. Đóng thì gọn như trang chủ; mở thì có đủ ghim, điều
+   bác bỏ, và nút đo lại nếu dòng đó gọi lại được ── */
+.crumb{font:700 10.5px/1.5 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 10px}
+/* 🔴 KHÔNG đặt display:grid lên chính <summary> — đo được: Chrome dựng cả phần
+   đang ĐÓNG của <details> vào trong hộp summary (dòng 720px thay vì 161px, trang
+   15.652px, không một lời cảnh báo). Lưới nằm ở .tt-hop bên trong summary. */
+details.tu-so>summary{cursor:pointer;list-style:none;display:block}
+details.tu-so>summary::-webkit-details-marker{display:none}
+details.tu-so .tt-hop{grid-template-columns:auto minmax(0,1fr) 15px}
+details.tu-so .mui{grid-row:1/3;grid-column:3;align-self:center;color:var(--faint);
+  font:400 12px/1 var(--mono);transition:transform .2s}
+details.tu-so[open] .mui{transform:rotate(180deg)}
+details.tu-so[open] .tt-hop{border-bottom-left-radius:0;border-bottom-right-radius:0;
+  transform:none;box-shadow:none}
+details.tu-so[open] .tx{-webkit-line-clamp:9}
+.tu-mo{background:var(--card);border:1px solid var(--line);border-top:0;
+  border-left:3px solid var(--st);border-radius:0 0 12px 12px;padding:12px 16px 14px}
+.tu-mo .dong:last-of-type{margin-bottom:11px}
+.tu-mo .tro{margin:0;font:600 12.5px/1.6 var(--mono)}
+/* 🔴 Khổ hẹp phải ĐẶT TAY từng ô. Bản đầu chỉ đổi số cột (1fr + 15px) rồi để lưới
+   tự xếp — và nó xếp dòng chú thích vào đúng cột 15px, thành một cột chữ dọc mỗi
+   dòng một ký tự, cao gần một màn hình. Lưới tự xếp lấp ô trống theo thứ tự, nó
+   không biết cột nào là cột dành cho mũi tên. */
+@media(max-width:620px){
+  details.tu-so .tt-hop{grid-template-columns:minmax(0,1fr) 15px}
+  details.tu-so .chip,details.tu-so .tx,details.tu-so .mt{grid-column:1}
+  details.tu-so .mui{grid-row:1;grid-column:2;align-self:start}}
+
+/* ── HAI CỬA: track record + facts. Cỡ thẻ = lời khai về mức quan trọng ── */
+.cua{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0 0}
+@media(max-width:760px){.cua{grid-template-columns:1fr}}
+.cua-o{position:relative;display:flex;flex-direction:column;gap:9px;overflow:hidden;
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:20px 22px 18px;text-decoration:none;
+  transition:transform .18s,border-color .18s,box-shadow .18s}
+.cua-o::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--accent)}
+.cua-o::after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(420px 160px at 88% -34px,color-mix(in srgb,var(--accent) 15%,transparent),transparent 72%)}
+.cua-o:hover{transform:translateY(-2px);text-decoration:none;color:var(--ink);
+  border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
+  box-shadow:0 2px 4px rgba(0,0,0,.05),0 18px 40px -26px rgba(0,0,0,.7)}
+.cua-o>*{position:relative}
+.cua-o .k{font:700 10.5px/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.cua-o .t{font:700 clamp(18px,2.2vw,21px)/1.32 var(--display);letter-spacing:-.015em;text-wrap:balance}
+.cua-o .g{font:400 13.5px/1.62 var(--body);color:var(--muted)}
+.cua-o .n{margin-top:auto;padding:11px 36px 0 0;border-top:1px solid var(--line-soft);
+  font:500 12px/1.7 var(--mono);color:var(--faint);display:flex;flex-wrap:wrap;
+  align-items:baseline;gap:7px}
+.cua-o .n b{font:700 17px var(--mono);color:var(--ink);letter-spacing:-.02em}
+.cua-o .n i{display:inline-block;width:3px;height:3px;border-radius:50%;
+  background:var(--muted);margin:0 3px;vertical-align:middle}
+.cua-o .mui{position:absolute;right:20px;bottom:15px;font-size:19px;color:var(--muted);
+  transition:transform .18s,color .18s}
+.cua-o:hover .mui{transform:translateX(4px);color:var(--accent)}
 
 /* ── SỔ CLAIM — thứ duy nhất trên trang được phép nổi ── */
 .so{margin:48px 0 0}
@@ -695,24 +813,6 @@ th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;
 .hinh figcaption{font:500 11px/1.5 var(--mono);color:var(--faint);margin-top:8px;
   padding-top:7px;border-top:1px solid var(--line-soft)}
 
-/* ── danh sách trên trang chủ ── */
-ul.diem{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
-/* 🔴 li này là GRID ⇒ mỗi con trực tiếp thành MỘT Ô. Nội dung phải gói trong đúng
-   một .noi, nếu không mỗi thẻ <a> sẽ rơi xuống một ô riêng ở cột 1 và dấu phân cách
-   thành ô mồ côi — bản 06/08 hỏng đúng kiểu đó. */
-ul.diem li{--st:var(--accent);display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 12px;
-  align-items:start;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--st);
-  border-radius:12px;padding:14px 16px;font-size:14.5px}
-ul.diem li.xac{--st:var(--c-xn)}ul.diem li.bac{--st:var(--c-bac)}ul.diem li.sua{--st:var(--c-sua)}
-ul.diem .tick{font:700 10.5px/1.7 var(--mono);letter-spacing:.08em;text-transform:uppercase;
-  color:var(--st);border:1px solid currentColor;border-radius:999px;padding:1px 9px;
-  height:fit-content;white-space:nowrap}
-ul.diem .noi{display:flex;flex-direction:column;gap:9px;min-width:0}
-ul.diem .giai{line-height:1.6}
-ul.diem .ma{display:flex;flex-wrap:wrap;gap:6px}
-ul.diem .ma a{font:600 11.5px/1 var(--mono);color:var(--muted);background:var(--inset);
-  border:1px solid var(--line);border-radius:999px;padding:6px 10px;text-decoration:none;white-space:nowrap}
-ul.diem .ma a:hover{color:var(--ink);border-color:var(--st);text-decoration:none}
 .dan-gt{margin:14px 0 0;font-size:15px}
 ul.han{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
 ul.han li{background:var(--card);border:1px solid var(--line);border-left:4px dashed var(--c-cho);
@@ -749,14 +849,49 @@ footer{margin-top:64px;padding:22px 0 46px;border-top:1px solid var(--line);back
   font:500 12px/1.75 var(--mono);color:var(--faint)}
 footer a{color:var(--muted)}
 
-.bai{display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 16px;align-items:start;
-  background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 18px;
-  margin-bottom:10px;text-decoration:none;transition:border-color .16s,transform .16s}
-.bai:hover{border-color:var(--muted);transform:translateY(-1px)}
-.bai .t{font:650 17px/1.4 var(--body);letter-spacing:-.01em;grid-column:2}
-.bai .s{font:500 12px/1.6 var(--mono);color:var(--faint);grid-column:2}
-.bai .d{font:500 12px/1.6 var(--mono);color:var(--faint);grid-row:1/3;grid-column:1;padding-top:3px}
-@media(max-width:640px){.bai{grid-template-columns:1fr}.bai .t,.bai .s{grid-column:1}.bai .d{grid-row:auto}}
+/* ── DẢI BÀI: cuộn NGANG, mỗi thẻ mang thanh trạng thái riêng của bài đó ── */
+.khu-bai{margin-top:52px}
+.khu-dau{display:flex;align-items:flex-end;gap:14px}
+.khu-dau h2{margin:0}
+.dieu-rail{margin-left:auto;display:flex;gap:7px;padding-bottom:3px}
+button.rn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);
+  background:var(--card);color:var(--muted);font:600 15px/1 var(--body);cursor:pointer;
+  transition:color .16s,border-color .16s,transform .16s}
+button.rn:hover:not([disabled]){color:var(--ink);border-color:var(--muted);transform:translateY(-1px)}
+button.rn[disabled]{opacity:.32;cursor:default}
+@media(max-width:560px){.dieu-rail{display:none}}
+/* mép phải mờ dần = dấu hiệu "còn nữa bên kia"; tắt khi đã cuộn hết đường */
+.rail-boc{position:relative}
+.rail-boc::after{content:"";position:absolute;right:0;top:0;bottom:16px;width:52px;
+  pointer-events:none;background:linear-gradient(90deg,transparent,var(--bg));
+  transition:opacity .22s}
+.rail-boc.het::after{opacity:0}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,1fr);gap:14px;
+  margin-top:16px;padding:3px 2px 16px;overflow-x:auto;overscroll-behavior-x:contain;
+  scroll-snap-type:x proximity;scroll-padding-left:2px;-webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+@media(min-width:760px){.rail{grid-auto-columns:minmax(272px,300px)}}
+.rail::-webkit-scrollbar{height:8px}
+.rail::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
+.rail::-webkit-scrollbar-thumb:hover{background:var(--muted)}
+.rail:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:12px}
+.bai{scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:16px 18px 15px;text-decoration:none;
+  transition:border-color .16s,transform .16s,box-shadow .16s}
+/* 🔴 Giữ MỰC khi rê chuột. Luật `main a:hover{color:accent}` đúng cho link trong
+   thân bài, nhưng ở thẻ lớn nó tô coral cả tiêu đề — mà coral là màu KHUNG TRANG,
+   không phải màu trạng thái, và thẻ này đứng ngay dưới một dải chip trạng thái.
+   Chuyển động + viền + mũi tên đã đủ báo "bấm được". */
+.bai:hover{border-color:var(--muted);transform:translateY(-2px);text-decoration:none;
+  color:var(--ink);box-shadow:0 2px 4px rgba(0,0,0,.05),0 16px 34px -24px rgba(0,0,0,.65)}
+.bai .d{font:500 11.5px/1.5 var(--mono);color:var(--faint)}
+.bai .t{font:650 16.5px/1.42 var(--body);letter-spacing:-.01em;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.bai .mini{display:flex;gap:2px;height:6px;border-radius:3px;overflow:hidden;
+  background:var(--inset);margin-top:auto}
+.bai .s{font:500 11.5px/1.55 var(--mono);color:var(--faint)}
+.rail-goi{margin:2px 0 0;font:500 11.5px/1.6 var(--mono);color:var(--faint)}
 
 
 /* ── TRANG FACTS: khuôn riêng, không dùng khuôn claim. Panel số bên trái đứng một
@@ -833,9 +968,24 @@ details.lenh summary:hover,details.lenh[open] summary{color:var(--ink)}
 @media(max-width:820px){.tr-body .mui{padding:8px 0;transform:rotate(90deg)}}
 .tr-foot{padding:10px 18px 14px;font:500 12.5px/1.6 var(--mono)}
 
+/* ── HIỆN DẦN khi lọt tầm mắt. Chỉ ĐỘ MỜ và VỊ TRÍ chạy — không con số nào chạy:
+   hiệu ứng đếm-lên đã bị bỏ vì trong ~0,9s nó in ra những con số CHƯA TỪNG ĐO
+   (NOTES §3). Lớp `chuyen` chỉ được gắn khi máy không xin giảm chuyển động, nên
+   luật này không bao giờ khớp với người đã tắt — họ thấy trang tĩnh, đủ chữ ── */
+html.chuyen [data-hien]{opacity:0;transform:translateY(16px);
+  transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.3,1)}
+html.chuyen [data-hien].hien{opacity:1;transform:none}
+
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 """
 
+
+# 🔴 TÊN HỆ ĐANG SHIP — hằng, để CHỖ KHÁC ĐỌC ĐƯỢC. Trước 06/08 con số này chỉ tồn
+# tại dưới dạng một dòng gán bên trong `main()`, nên `preview.py` (cổng đo tràn khổ
+# điện thoại) giữ bản sao riêng của nó và bản sao đó đứng ở `benchmark` — một hệ đã
+# khai tử. Tức cổng đo màn hình hẹp đang đo MỘT CÁI HÌNH KHÁC cái đang ship, đúng
+# họ lỗi mà chính docstring của `preview.py` cảnh báo. Một tên, một chỗ khai.
+HE_MAC_DINH = "d2"
 
 # Giá trị mặc định cho các khoá hệ D2 thêm vào — hai hệ cũ giữ nguyên bản khai của
 # chúng và vẫn dựng được: thiếu khoá nào thì lấy ở đây, không nổ.
@@ -873,8 +1023,8 @@ def css(t: dict) -> str:
            f"--c-xn:{v['xn_toi']};--c-song:{v['song_toi']};--c-sua:{v['sua_toi']};"
            f"--c-bac:{v['bac_toi']};--c-cho:{v['cho_toi']};"
            f"--nut-nen:{v['paper']};--nut-chu:{v['ink']};color-scheme:dark;")
-    return (f":root{{{sang}--display:'{v['display']}','{BODY_FONT}',system-ui,sans-serif;"
-            f"--body:'{v['display']}','{BODY_FONT}',system-ui,sans-serif;"
+    return (f":root{{{sang}--display:'{v['display']}',{BODY_FONT},sans-serif;"
+            f"--body:'{v['display']}',{BODY_FONT},sans-serif;"
             f"--mono:'JetBrains Mono',ui-monospace,monospace;"
             f"--dw:{v['dw']};--gian-ten:{v['gian_ten']}}}\n"
             f"@media (prefers-color-scheme:dark){{:root:not([data-theme=\"sang\"]){{{toi}}}}}\n"
@@ -882,27 +1032,111 @@ def css(t: dict) -> str:
             + CSS_THAN)
 
 
-# 🔴 Be Vietnam Pro ĐỨNG SAU Inter chứ không bị bỏ: trình duyệt rơi về nó theo TỪNG
-# GLYPH, nên dấu tiếng Việt nào Inter thiếu thì vẫn được nó đỡ. Ràng buộc ngôn ngữ
-# (font dựng cho dấu tiếng Việt) giữ nguyên; thứ đổi là mặt chữ mặc định.
-# Marcellus/Oswald/Archivo rời lượt tải: hai hệ cũ nay là hồ sơ, và tải font cho một
-# hệ không ai xem là bắt người đọc trả băng thông cho lịch sử của desk.
-FONTS = ("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800"
-         "&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,650;0,700;1,400"
-         "&family=JetBrains+Mono:wght@400;500;700&display=swap")
+# ════════════════════════════════════════════════════════════════════════ FONT
+# 🔴 TỰ HOST, KHÔNG CDN — 06/08/2026. `BRIEF-web.md` ghi "không CDN" từ đầu, mà bản
+# chạy suốt từ 30/07 vẫn nạp `fonts.googleapis.com`. Ba cái giá của CDN, cái thứ ba
+# mới là cái đắt:
+#  ① hai lượt bắt tay tên miền lạ trước khi có chữ đầu tiên;
+#  ② trang phụ thuộc một bên thứ ba để đọc được;
+#  ③ mỗi người mở trang đều để lại một lượt gọi tới máy chủ của Google, kèm địa chỉ
+#     IP và trang họ đang đọc. Kênh này bán "số nào cũng truy ngược được" — không có
+#     lý do gì bắt người đọc trả bằng dấu vết của họ để đọc nó.
+#
+# 🔵 BE VIETNAM PRO ĐÃ BỎ, và bỏ theo một PHÉP ĐO chứ không theo cảm giác nhẹ máy:
+# quét toàn bộ chữ hiện ra của bản dựng 06/08 — 227 ký tự khác nhau — thì **không có
+# một ký tự tiếng Việt nào** rơi ra ngoài ba subset của Inter. 18 ký tự nằm ngoài đều
+# là mũi tên, ký hiệu toán, mặt trời/mặt trăng và emoji, mà 17/18 nằm ngoài MỌI subset
+# của Inter ⇒ Be Vietnam Pro không đỡ được cái nào trong số đó. Nó nằm trong lượt tải
+# để phòng một ca không xảy ra. Ca đó xảy ra thì trình duyệt rơi về `system-ui`, và
+# đó là hành vi đúng — không phải một trang hỏng.
+#
+# Bản biến thiên (variable): MỘT file chở cả dải 400–800, thay vì một file mỗi cỡ.
+# unicode-range chép NGUYÊN VĂN từ CSS Google phát cho chính bộ file này (06/08/2026)
+# — sai một dải thì trình duyệt tải nhầm file, hoặc tải cả ba trong khi chỉ cần một.
+#
+# 🔴 THỨ TỰ DƯỚI ĐÂY LÀ MỘT LUẬT, KHÔNG PHẢI SẮP CHO ĐẸP: `vietnamese` phải đứng
+# CUỐI mỗi họ. Khi hai `@font-face` cùng họ cùng nhận một ký tự, CSS lấy khai báo
+# ĐỨNG SAU. Mà dải `latin-ext` (U+0100-02BA) TRÙM lên 13 chữ cái tiếng Việt —
+# Ă ă Đ đ ĩ ũ Ơ ơ Ư ư ỳ ỷ ỹ. Xác bằng phép đo trên chính bản dựng: đặt latin-ext
+# sau, trình duyệt tải **84 KB** file latin-ext chỉ để dựng 13 chữ đó, trong khi
+# **0** ký tự trên toàn site cần riêng dải latin-ext. Đặt vietnamese sau thì 13 chữ
+# ấy về file 10 KB, và latin-ext nằm im cho tới khi có bài dùng tới nó thật.
+FONT_MAT = [
+    ("Inter", "inter-latin.woff2", "400 800",
+     "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,"
+     "U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"),
+    ("Inter", "inter-latin-ext.woff2", "400 800",
+     "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,"
+     "U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,"
+     "U+2113,U+2C60-2C7F,U+A720-A7FF"),
+    ("Inter", "inter-vietnamese.woff2", "400 800",
+     "U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,"
+     "U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB"),
+    ("JetBrains Mono", "jetbrains-mono-latin.woff2", "400 700",
+     "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,"
+     "U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"),
+    ("JetBrains Mono", "jetbrains-mono-latin-ext.woff2", "400 700",
+     "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,"
+     "U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,"
+     "U+2113,U+2C60-2C7F,U+A720-A7FF"),
+    ("JetBrains Mono", "jetbrains-mono-vietnamese.woff2", "400 700",
+     "U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,"
+     "U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB"),
+]
+# Hai subset này có mặt trên MỌI trang (chữ Việt có dấu + số ở khối mono) nên chúng
+# được nạp trước; latin-ext chỉ tải khi có ký tự thuộc dải đó, và bản dựng hiện tại
+# không có ký tự nào — nó nằm đây làm lưới đỡ cho bài sau, không tốn lượt tải nào.
+FONT_NAP_TRUOC = ["inter-latin.woff2", "inter-vietnamese.woff2",
+                  "jetbrains-mono-latin.woff2", "jetbrains-mono-vietnamese.woff2"]
+
+
+def font_face(goc: str) -> str:
+    """Khối @font-face, đường dẫn TƯƠNG ĐỐI theo độ sâu trang.
+
+    🔴 Không dùng đường tuyệt đối `/font/…`: `preview.py` dựng trang bằng `file://`
+    để đo tràn khổ điện thoại, và ở đó `/font/` trỏ ra gốc ổ đĩa ⇒ ảnh chụp của cổng
+    sẽ là ảnh một trang KHÔNG CÓ font thật. Cổng đo phải nhìn đúng cái sắp ship.
+    """
+    g = goc or "."
+    return "".join(
+        f"@font-face{{font-family:'{ho}';font-style:normal;font-weight:{nang};"
+        f"font-display:swap;src:url({g}/font/{tep}) format('woff2');"
+        f"unicode-range:{dai}}}"
+        for ho, tep, nang, dai in FONT_MAT)
+
+# ═══════════════════════════════════════════════════════ TỦ KÍNH THEO TOKEN
+# Mọi bài KHAI `token:` ở front matter. Không suy từ tiêu đề: chữ "Uniswap" nằm trong
+# cả bài về DefiLlama lẫn bài về Robinhood Chain lẫn bài về Lido (đoạn so sánh), nên
+# một trang hồ sơ dựng bằng phép đoán sẽ sai đúng ở chỗ nó được dùng để chứng minh
+# chiều sâu. Token lạ ⇒ CHẶN build: thêm tên vào đây là một quyết định, không phải
+# một lượt gõ.
+TOKEN_TEN = {"UNI": "Uniswap", "LDO": "Lido", "HYPE": "Hyperliquid", "PENDLE": "Pendle"}
+
+# Tủ kính hiện mở cho ĐÚNG MỘT token, khai ở đây; toàn bộ nội dung trang sinh từ dữ
+# liệu, nên đổi dòng này là trang tự dựng lại cho token khác. Kèm SÀN: dưới 3 bài thì
+# chặn — một tủ kính hai bài trưng ra ít hơn cái tên của nó hứa.
+TU_KINH = "UNI"
+TU_KINH_SAN = 3
+TU_KINH_DUONG = f"token/{TU_KINH.lower()}/"
 
 # Mục trên thanh điều hướng — dựng từ ĐÂY, không gõ tay ở từng trang. Trang nào chưa
 # tồn tại thì main() tắt mục đó: cổng ⑪ (liên kết) sẽ chặn build nếu một mục trỏ vào
 # thư mục không có index.html, và đó là hành vi đúng.
 MUC_DIEU_HUONG = [("", "Sổ gốc"), ("facts/", "Facts"),
-                  ("track-record/", "Track record"), ("du-lieu/", "Dữ liệu")]
-CO_TRANG = {"facts/": False, "track-record/": False, "du-lieu/": False}
+                  ("track-record/", "Track record"), (TU_KINH_DUONG, "Token"),
+                  ("du-lieu/", "Dữ liệu")]
+CO_TRANG = {"facts/": False, "track-record/": False, TU_KINH_DUONG: False, "du-lieu/": False}
 
 # Nút đổi nền. Trang KHÔNG phụ thuộc nó: mặc định đọc prefers-color-scheme của máy,
 # nút chỉ ghi đè và nhớ lựa chọn. Tắt JS thì mất nút, không mất nền tối.
 JS_NEN = """
 (function(){
   var d=document.documentElement,c=localStorage.getItem('bp-nen');
+  // Hai lớp này gắn TRONG <head>, trước lượt vẽ đầu tiên — gắn muộn hơn thì trang
+  // nháy một nhịp. 'js' = có JavaScript (mở khoá con trỏ chuột cho nút lọc);
+  // 'chuyen' = máy KHÔNG xin giảm chuyển động, tức được phép chạy hiệu ứng.
+  d.classList.add('js');
+  if(!matchMedia('(prefers-reduced-motion:reduce)').matches)d.classList.add('chuyen');
   if(c==='toi'||c==='sang')d.setAttribute('data-theme',c);
   document.addEventListener('click',function(e){
     var b=e.target.closest('#nut-nen'); if(!b)return;
@@ -911,6 +1145,161 @@ JS_NEN = """
     var moi=nay==='toi'?'sang':'toi';
     d.setAttribute('data-theme',moi); localStorage.setItem('bp-nen',moi);
   });
+})();
+"""
+
+
+JS_HIEU_UNG = """
+// Tầng hiệu ứng. BA luật tự đặt, kiểm được bằng cách tắt JS rồi mở lại trang:
+//  ① KHÔNG con số nào do JS sinh ra. Mọi chữ số đã nằm trong HTML từ lúc dựng; tầng
+//     này chỉ đổi độ mờ, vị trí, và ẩn/hiện dòng. (Hiệu ứng đếm-lên bị bỏ 05/08 vì
+//     trong ~0,9s nó in ra những con số CHƯA TỪNG ĐO — NOTES §3.)
+//  ② Tắt JS thì trang vẫn ĐỦ: thanh đứng ở đúng tỉ lệ, mọi dòng hiện, chú giải đọc
+//     được, dải bài vẫn vuốt ngang được bằng ngón tay.
+//  ③ Người xin giảm chuyển động không mất chức năng nào — chỉ mất phần chạy.
+(function(){
+  var goc=document.documentElement, chuyen=goc.classList.contains('chuyen');
+
+  // ── hiện dần + thanh xếp chồng chạy từ 0 khi khối lọt tầm mắt
+  function mo(e){
+    e.classList.add('hien');
+    e.querySelectorAll('.stack').forEach(function(s){s.classList.add('chay')});
+  }
+  var khoi=document.querySelectorAll('[data-hien]');
+  // 🔴 threshold PHẢI là 0. Bản đầu để .12 — tức "12% DIỆN TÍCH KHỐI phải lọt tầm
+  // mắt" — và nó im lặng nuốt đúng khối quan trọng nhất: danh sách claim cao gấp
+  // nhiều lần màn hình, nên 12% của nó không bao giờ lọt và khối nằm ở opacity 0
+  // vĩnh viễn. Ngưỡng tính theo diện tích PHẦN TỬ chứ không theo màn hình, nên khối
+  // càng dài thì luật càng dễ ăn mất nó. Đo được ở ảnh chụp khổ điện thoại 06/08.
+  if(chuyen&&window.IntersectionObserver){
+    var xem=new IntersectionObserver(function(ds,o){
+      ds.forEach(function(m){if(m.isIntersecting){mo(m.target);o.unobserve(m.target)}});
+    },{rootMargin:'0px 0px -6% 0px',threshold:0});
+    khoi.forEach(function(e){xem.observe(e)});
+    // 🔴 LƯỚI AN TOÀN, không phải phần trang trí: nếu vì bất cứ lý do gì mà lượt gọi
+    // của bộ theo dõi không chạy (ảnh chụp máy, trình duyệt lạ, tab nền), khối sẽ nằm
+    // ở opacity 0 VĨNH VIỄN — tức hiệu ứng làm mất nội dung. Xác 06/08: ảnh chụp khổ
+    // điện thoại của chính cổng preview ra một trang trắng từ khối thứ hai trở xuống.
+    // Sau 3 giây thì hiện hết, bất kể có ai cuộn hay không.
+    setTimeout(function(){khoi.forEach(mo)},3000);
+  }else{ khoi.forEach(mo); }
+  // thanh nằm ngoài mọi khối [data-hien] vẫn phải ở đúng tỉ lệ, không đứng ở 0
+  document.querySelectorAll('.stack').forEach(function(s){
+    if(!s.closest('[data-hien]'))s.classList.add('chay');
+  });
+
+  // ── LỌC theo trạng thái. Chú giải của thanh CHÍNH LÀ bộ lọc — không dựng bộ điều
+  //    khiển thứ hai, vì hai bộ là hai bản sẽ trôi lệch. Vùng đích tự khai bằng
+  //    data-loc-vung, và giá trị của nó là bộ lọc mặc định của trang đó.
+  var vung=document.querySelector('[data-loc-vung]');
+  if(vung){
+    var macDinh=vung.getAttribute('data-loc-vung'),
+        nut=document.querySelectorAll('button[data-loc]'),
+        dong=vung.querySelectorAll('[data-st]'),
+        lo=document.getElementById('loc-lo'), dangLoc=null;
+    var ap=function(loc){
+      var n=0;
+      dong.forEach(function(d){
+        var hien = loc==='het' ? true
+                 : loc==='doi' ? d.getAttribute('data-doi')==='1'
+                 : d.getAttribute('data-st')===loc;
+        d.hidden=!hien; if(hien)n++;
+      });
+      nut.forEach(function(b){
+        b.setAttribute('aria-pressed',b.getAttribute('data-loc')===loc?'true':'false');
+      });
+      if(lo)lo.textContent=n+(n===1?' dòng':' dòng')+' đang hiện';
+      dangLoc=loc;
+    };
+    nut.forEach(function(b){
+      b.addEventListener('click',function(){
+        var l=b.getAttribute('data-loc');
+        ap(l===dangLoc?macDinh:l);           // bấm lại chip đang bật = quay về mặc định
+      });
+    });
+    document.querySelectorAll('.stack .seg[data-loc]').forEach(function(s){
+      s.addEventListener('click',function(){
+        var l=s.getAttribute('data-loc'); ap(l===dangLoc?macDinh:l);
+      });
+    });
+    ap(macDinh);
+  }
+
+  // ── NỐI HAI KHỐI BẰNG MẮT: rê chuột lên một dòng claim thì đoạn thanh của trạng
+  //    thái đó sáng lên; rê lên một đoạn thanh thì những dòng KHÁC trạng thái mờ đi.
+  //    Hai khối vốn nói về cùng một tập số — người đọc không phải tự bắc cầu.
+  function soi(st){
+    document.querySelectorAll('.stack').forEach(function(s){
+      if(st) s.setAttribute('data-noi',st); else s.removeAttribute('data-noi');
+    });
+  }
+  function mo_dong(st){
+    document.querySelectorAll('[data-st]').forEach(function(d){
+      d.classList.toggle('roi', !!st && d.getAttribute('data-st') !== st);
+    });
+  }
+  document.querySelectorAll('[data-st]').forEach(function(d){
+    d.addEventListener('mouseenter',function(){soi(d.getAttribute('data-st'))});
+    d.addEventListener('mouseleave',function(){soi('')});
+  });
+  document.querySelectorAll('.stack .seg[data-loc]').forEach(function(s){
+    s.addEventListener('mouseenter',function(){mo_dong(s.getAttribute('data-loc'))});
+    s.addEventListener('mouseleave',function(){mo_dong('')});
+  });
+
+  // ── vạch tiến trình đọc. Nó KHÔNG phải một con số — chỉ là chỗ đang đứng trong
+  //    trang, thứ trình duyệt vốn đã biết.
+  var tien=document.createElement('div'); tien.id='bp-tien'; document.body.appendChild(tien);
+  var capTien=function(){
+    var h=document.documentElement.scrollHeight-innerHeight;
+    tien.style.transform='scaleX('+(h>0?Math.min(scrollY/h,1):0)+')';
+  };
+  addEventListener('scroll',capTien,{passive:true});
+  addEventListener('resize',capTien); capTien();
+
+  // ── chú giải bay trên từng đoạn thanh (thay tooltip mặc định: nó chờ một giây
+  //    rồi mới hiện, và ở nền tối nó trắng bệch)
+  var tip=null;
+  document.querySelectorAll('[data-tip]').forEach(function(e){
+    e.addEventListener('mouseenter',function(){
+      if(!tip){tip=document.createElement('div');tip.id='bp-tip';document.body.appendChild(tip)}
+      tip.textContent=e.getAttribute('data-tip');
+      var r=e.getBoundingClientRect();
+      tip.style.transform='translate(-50%,-118%)';
+      tip.style.left=Math.min(Math.max(r.left+r.width/2,70),innerWidth-70)+'px';
+      tip.style.top=r.top+'px';
+      tip.classList.add('hien');
+    });
+    e.addEventListener('mouseleave',function(){if(tip)tip.classList.remove('hien')});
+  });
+
+  // ── dải bài: mũi tên cuộn đúng MỘT thẻ (đo bằng khoảng cách thật giữa hai thẻ,
+  //    không gõ cứng bề rộng — gõ cứng là một con số thứ hai sẽ trôi lệch với CSS)
+  var rail=document.getElementById('rail');
+  if(rail){
+    var nutR=document.querySelectorAll('button[data-rail]'),
+        the=rail.querySelectorAll('.bai');
+    var buoc=function(){
+      if(the.length>1)return the[1].offsetLeft-the[0].offsetLeft;
+      return the.length?the[0].getBoundingClientRect().width:280;
+    };
+    var capNhat=function(){
+      var het=rail.scrollWidth-rail.clientWidth-2;
+      nutR.forEach(function(b){
+        b.disabled = +b.getAttribute('data-rail')<0 ? rail.scrollLeft<=2 : rail.scrollLeft>=het;
+      });
+      rail.parentNode.classList.toggle('het', rail.scrollLeft>=het);
+    };
+    nutR.forEach(function(b){
+      b.addEventListener('click',function(){
+        rail.scrollBy({left:buoc()*(+b.getAttribute('data-rail')),
+                       behavior:chuyen?'smooth':'auto'});
+      });
+    });
+    rail.addEventListener('scroll',capNhat,{passive:true});
+    addEventListener('resize',capNhat);
+    capNhat();
+  }
 })();
 """
 
@@ -967,16 +1356,17 @@ def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None,
 <meta property="og:image:width" content="{w}">
 <meta property="og:image:height" content="{h}">
 <meta name="twitter:card" content="summary_large_image">"""
+    g = goc or "."
+    nap = "".join(f'<link rel="preload" as="font" type="font/woff2" crossorigin '
+                  f'href="{g}/font/{f}">' for f in FONT_NAP_TRUOC)
     return f"""<!doctype html><html lang="vi"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{ihtml.escape(tieu_de)}</title>
 {xt}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="{FONTS}">
-<link rel="icon" type="image/png" sizes="32x32" href="{goc or '.'}/anh/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="{goc or '.'}/anh/favicon-16.png">
-<style>{css(t)}</style>
+{nap}
+<link rel="icon" type="image/png" sizes="32x32" href="{g}/anh/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="{g}/anh/favicon-16.png">
+<style>{font_face(goc)}{css(t)}</style>
 <script>{JS_NEN}</script></head><body>
 <header class="dau"><div class="khung">
   <span class="mark">{MARK_SVG}</span>
@@ -991,6 +1381,7 @@ def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None,
   <a href="https://x.com/blockpinned">@blockpinned</a>
 </div></footer>
 <script>{JS_DO_LAI}</script>
+<script>{JS_HIEU_UNG}</script>
 </body></html>"""
 
 
@@ -1180,7 +1571,7 @@ def cong_lien_ket(txt: str, o: str, goc: pathlib.Path, tep: pathlib.Path) -> Non
 
 
 def so_claim(claims: list) -> str:
-    out = ['<section class="so"><h2 id="so-claim">Sổ claim</h2>',
+    out = ['<section class="so" data-loc-vung="het"><h2 id="so-claim">Sổ claim</h2>',
            '<p class="dan">Mỗi khẳng định của bài này một dòng, kèm điều gì sẽ bác bỏ nó. '
            'Trạng thái đổi thì sửa tại đây, và ghi lại ngày. Không dòng nào bị xoá.</p>']
     for c in claims:
@@ -1192,7 +1583,7 @@ def so_claim(claims: list) -> str:
         hinh = (f'<figure class="hinh">{ve_thang(c["thang_do"])}'
                 f'<figcaption>{ihtml.escape(c["thang_do"]["nhan"])}</figcaption></figure>'
                 if c.get("thang_do") else "")
-        out.append(f"""<article class="claim {cls}" id="{c['id']}">
+        out.append(f"""<article class="claim {cls}" id="{c['id']}" data-st="{cls}">
   <h3><a class="id" href="#{c['id']}">{c['id']}</a>
       <span class="chip {cls}">{c['status']}</span></h3>
   <p style="margin:0">{ihtml.escape(c['text'])}</p>
@@ -1213,66 +1604,112 @@ def bang_diem(moi: list) -> str:
     màu sắc mà là NÓI ĐƯỢC ĐIỀU GÌ. Phần mạnh nhất của desk (một điều-bác-bỏ đã chạy và
     claim sống sót, một claim bị chính điều-bác-bỏ của nó bác) trước đó không xuất hiện ở
     đâu trên trang chủ cả.
+
+    🔴 VÒNG 2 — 06/08, user bác bản vừa lên, hai câu, hai lỗi khác nhau:
+
+    ① *"3 cái gần như bị trùng"* — hàng bốn THẺ SỐ đứng ngay trên thanh xếp chồng, và
+      ba trong bốn thẻ in lại đúng ba con số của chú giải bên dưới (2 · 4 · 2), chỉ khác
+      cái nhãn. Một con số nói hai lần ở hai chỗ cách nhau 40px thì lần thứ hai không
+      thêm thông tin nào, mà lại chiếm mất chỗ của thứ chưa ai nói. Nay CHÚ GIẢI là chỗ
+      DUY NHẤT mang số của từng trạng thái; thẻ số bỏ hẳn.
+    ② *"nhìn vô không hiểu"* — khối `ul.diem` cũ in mỗi claim thành một hạt `27/07 · C1`.
+      Người đọc không có cách nào biết C1 nói gì mà không bấm đi. Nay mỗi dòng in NGUYÊN
+      VĂN câu claim, kèm bài và ngày; dãy mã biến mất.
+
+    Và vì cả hai lỗi trên đều là *"đúng số, sai chỗ đọc"*, phần thay thế không phải một
+    khối tĩnh nữa: chú giải trở thành BỘ LỌC của chính danh sách bên dưới nó — bấm chip
+    nào thì danh sách còn đúng những claim đang ở trạng thái đó. Số trên chip và số dòng
+    hiện ra là CÙNG MỘT phép đếm, nên không có chỗ cho hai mẫu số ghép nhầm vào một câu.
     """
     dem = {k: [c for _, _, c in moi if c["status"] == k] for k in TRANG_THAI}
-    doi = sum(len(v) for k, v in dem.items() if k != "ĐANG ĐỨNG")
-
-    def lien(ten: str) -> str:
-        # 🔴 Nhãn phải mang NGÀY BÀI, không chỉ id claim: hai bài đều có C1, nên một dãy
-        # "C1 · C1" là đọc nhầm ngay. Lỗi này chỉ lộ khi có ≥2 bài cùng trạng thái.
-        return "".join(
-            f'<a href="bai/{s}/#{c["id"]}">{s[8:10]}/{s[5:7]} · {c["id"]}</a>'
-            for s, _, c in moi if c["status"] == ten)
-
-    # 🔴 MỖI <li> CHỈ ĐƯỢC CÓ ĐÚNG HAI CON. `ul.diem li` là grid, mà grid biến TỪNG con
-    # thành một ô riêng — bản đầu để chuỗi link nằm trần trong `li`, nên mỗi thẻ <a> rơi
-    # xuống một ô ở cột 1 và dấu phân cách " · " thành một ô mồ côi cuối dòng. Trông như
-    # lỗi thẩm mỹ, thực ra là hiểu sai grid, và nó chỉ lộ khi một trạng thái có ≥2 link.
-    def muc(cls: str, nhan: str, giai: str, ten: str) -> str:
-        return (f'<li class="{cls}"><span class="tick {cls}">{nhan}</span>'
-                f'<span class="noi"><span class="giai">{giai}</span>'
-                f'<span class="ma">{lien(ten)}</span></span></li>')
-
-    dong = []
-    if dem["ĐÃ XÁC NHẬN"]:
-        dong.append(muc("xac", "sống sót",
-                        "điều-bác-bỏ đã chạy và claim đứng vững", "ĐÃ XÁC NHẬN"))
-    if dem["BỊ BÁC"]:
-        dong.append(muc("bac", "đổ",
-                        "claim bị chính điều-bác-bỏ của nó bác, và nằm nguyên trên trang",
-                        "BỊ BÁC"))
-    if dem["ĐÃ SỬA"]:
-        dong.append(muc("sua", "đã sửa",
-                        "tự đính chính, giữ lại để thấy lỗi", "ĐÃ SỬA"))
     d_num = {k: len(v) for k, v in dem.items()}
+    doi = sum(n for k, n in d_num.items() if k != "ĐANG ĐỨNG")
+    so_bai = len({s for s, _, _ in moi})
     cho_moc = sum(1 for _, _, c in moi if c.get("han") and c["status"] == "ĐANG ĐỨNG")
 
-    def the(lop: str, nhan: str, gt: int, gc: str) -> str:
-        return (f'<div class="o {lop}"><span class="nh">{nhan}</span>'
-                f'<span class="gt">{gt}</span><span class="gc">{gc}</span></div>')
+    # Mỗi dòng mang ĐỦ ba thứ để đọc được mà không phải bấm đi: trạng thái (chip có
+    # glyph) · nguyên văn câu claim · bài và ngày. `data-doi` cho bộ lọc biết dòng nào
+    # thuộc nhóm "đã đổi trạng thái" — nhóm mặc định, vì đó là thứ X/Telegram không chở.
+    hang = "".join(
+        f'<li class="tt {TRANG_THAI[c["status"]][0]}" data-st="{TRANG_THAI[c["status"]][0]}" '
+        f'data-doi="{0 if c["status"] == "ĐANG ĐỨNG" else 1}">'
+        f'<a class="tt-hop" href="bai/{s}/#{c["id"]}">'
+        f'<span class="chip {TRANG_THAI[c["status"]][0]}">{c["status"]}</span>'
+        f'<span class="tx">{ihtml.escape(c["text"])}</span>'
+        f'<span class="mt">{vn_ngay(s[:10])} · {c["id"]} · {ihtml.escape(tieu)}</span>'
+        f'</a></li>'
+        for s, tieu, c in moi)
 
-    the_so = ("".join([
-        the("", "Khẳng định trong sổ", len(moi),
-            f"trên {len({s for s, _, _ in moi})} bài đã đăng"),
-        the("xac", "Điều bác bỏ đã chạy", d_num["ĐÃ XÁC NHẬN"],
-            "claim bị thử và sống sót — mức bằng chứng mạnh nhất kênh này tạo được"),
-        the("sua", "Kênh tự sửa công khai", d_num["ĐÃ SỬA"],
-            "sửa tại chỗ, bản cũ giữ nguyên trong nhật ký"),
-        the("bac", "Khẳng định bị bác", d_num["BỊ BÁC"],
-            "bị chính điều-bác-bỏ của nó bác, và nằm nguyên trên trang"),
-    ]))
-    phu = (f'{doi} trong số đó đã ĐỔI TRẠNG THÁI kể từ lúc đăng — đó là phần X và '
+    phu = (f'<b>{doi}</b> trong số đó đã ĐỔI TRẠNG THÁI kể từ lúc đăng — đó là phần X và '
            f'Telegram không chở được.')
     if cho_moc:
         phu += f' Còn {cho_moc} mốc tự đặt ngày, chưa tới hạn.'
     return (f'<h2 id="bang-diem">Bảng điểm</h2>'
-            f'<div class="the-so">{the_so}</div>'
-            f'<section class="board">'
+            f'<section class="board" data-hien>'
             f'<div class="bh"><b>Sổ gốc BlockPinned</b>'
-            f'<span>{len(moi)} khẳng định · {len({s for s, _, _ in moi})} bài</span></div>'
+            f'<span>{len(moi)} khẳng định · {so_bai} bài</span></div>'
             f'{thanh_xep(d_num, len(moi))}'
             f'<div class="dem phu">{phu}</div></section>'
-            + (f'<ul class="diem">{"".join(dong)}</ul>' if dong else ""))
+            f'<div class="tt-khu" data-hien>'
+            f'<div class="tt-dau">'
+            f'<div class="nhom-loc">'
+            f'<button class="lg-loc" type="button" data-loc="doi">Đã đổi trạng thái '
+            f'<span class="n">{doi}</span></button>'
+            f'<button class="lg-loc" type="button" data-loc="het">Cả sổ '
+            f'<span class="n">{len(moi)}</span></button></div>'
+            f'<span class="lo" id="loc-lo"></span></div>'
+            f'<ol class="tt-ds" id="tt-ds" data-loc-vung="doi">{hang}</ol></div>')
+
+
+def cua_vao(gt: list, facts: list) -> str:
+    """Hai CỬA lớn thay hai dòng link chữ.
+
+    User 06/08, chỉ vào đúng hai dòng đó: *"cái này nên làm bự lên, thành 2 ô đẹp để
+    giới thiệu mỗi ô"*. Và đó là một lỗi bố cục thật, không phải gu: `/track-record/`
+    với `/facts/` là hai trang mạnh nhất site có — một trang chở những lần dán số ra
+    TRƯỚC khi biết đáp án, một trang chở những phát biểu kiểm lại được bằng đúng một
+    lệnh. Trước bản này cả hai nằm dưới dạng hai dòng gạch chân, cùng cỡ chữ với chú
+    thích, trôi giữa hai khối lớn. Cỡ chữ trên trang là một lời khai về mức quan trọng,
+    và lời khai đó đang nói ngược nội dung.
+
+    Số trên mỗi cửa đọc thẳng từ nguồn của trang nó dẫn tới, không gõ tay — hai chỗ
+    cùng giữ một con số là hai chỗ sẽ trôi lệch (`RULES.md §13`).
+    """
+    if not gt and not facts:
+        return ""
+    o = []
+    if gt:
+        xong = sum(1 for c in gt if c["status"] != "ĐANG ĐỨNG")
+        o.append(
+            f'<a class="cua-o" href="track-record/">'
+            f'<span class="k">Track record</span>'
+            f'<span class="t">Tôi ghi trước một con số — rồi dán kết quả ngay cạnh nó</span>'
+            f'<span class="g">Chở cả những lần tôi sai và những lần chưa tới ngày. Một bảng '
+            f'chỉ chở lần đúng thì nó nói về tôi, không nói về đối tượng.</span>'
+            f'<span class="n"><b>{len(gt)}</b> lần ghi trước<i></i>'
+            f'<b>{xong}</b> đã có kết quả</span>'
+            f'<span class="mui" aria-hidden="true">→</span></a>')
+    if facts:
+        o.append(
+            f'<a class="cua-o" href="facts/">'
+            f'<span class="k">Facts</span>'
+            f'<span class="t">Mỗi mục một con số, một block, một lệnh để bạn tự đọc lại</span>'
+            f'<span class="g">Không cần tin tôi: chép lệnh, dán vào máy bạn, đọc ra đúng con '
+            f'số đó. Ra số khác cũng là một kết quả — và tôi muốn biết.</span>'
+            f'<span class="n"><b>{len(facts)}</b> fact<i></i>mỗi cái một lệnh chạy lại được</span>'
+            f'<span class="mui" aria-hidden="true">→</span></a>')
+    return f'<div class="cua" data-hien>{"".join(o)}</div>'
+
+
+def thanh_mini(dem: dict, tong: int) -> str:
+    """Thanh xếp chồng cỡ nhỏ, dùng trong thẻ bài ở dải ngang. Chỉ có hình — chú giải
+    của nó là dòng chữ ngay dưới thẻ (*"5 claim — 5 đang đứng"*), nên nó không phải là
+    màu-đứng-một-mình."""
+    if not tong:
+        return ""
+    return ('<span class="mini" aria-hidden="true">' + "".join(
+        f'<span class="seg {TRANG_THAI[k][0]}" style="width:{n / tong * 100:.2f}%"></span>'
+        for k, n in dem.items() if n) + "</span>")
 
 
 def sap_phan_dinh(moi: list) -> str:
@@ -1533,6 +1970,106 @@ def trang_ghi_truoc(moi: list) -> str:
             f'<section class="so">{"".join(hang)}</section>')
 
 
+def dai_bai(bai_list: list, tien_to: str) -> str:
+    """Dải bài cuộn NGANG — dùng chung cho trang chủ và tủ kính token.
+
+    Một khuôn, hai chỗ gọi: hai bản chép của cùng một thẻ là hai bản sẽ trôi lệch, và
+    lần trôi đó sẽ lộ ra ở chỗ tệ nhất — thẻ bài, thứ người ta nhìn trước khi bấm.
+    `tien_to` là đường về thư mục bài, khác nhau theo độ sâu trang gọi.
+    """
+    the = "".join(
+        f'<a class="bai" href="{tien_to}bai/{s}/">'
+        f'<span class="d">{f["mau"]} {vn_ngay(str(f["date"])[:10])}</span>'
+        f'<span class="t">{ihtml.escape(f["title"])}</span>'
+        f'{thanh_mini(dm, n)}'
+        f'<span class="s">{n} claim — {sg}</span></a>'
+        for f, s, n, sg, dm in bai_list)
+    return (f'<section class="khu-bai" data-hien>'
+            f'<div class="khu-dau"><h2 id="bai">Bài</h2>'
+            f'<div class="dieu-rail">'
+            f'<button class="rn" type="button" data-rail="-1" aria-label="Lùi một thẻ">←</button>'
+            f'<button class="rn" type="button" data-rail="1" aria-label="Tới một thẻ">→</button>'
+            f'</div></div>'
+            f'<div class="rail-boc"><div class="rail" id="rail" tabindex="0" role="region" '
+            f'aria-label="Danh sách bài — cuộn ngang">{the}</div></div>'
+            f'<p class="rail-goi">{len(bai_list)} bài · vuốt ngang, hoặc bấm mũi tên</p></section>')
+
+
+def trang_token(ma: str, bai_t: list, claims_t: list) -> str:
+    """TỦ KÍNH một token: mọi khẳng định đã đăng về nó, gom về một trang.
+
+    Vì sao trang này tồn tại: bài sống theo NGÀY, hồ sơ sống theo ĐỐI TƯỢNG. Người
+    đang cân nhắc Uniswap không đọc theo ngày đăng — câu họ hỏi là *"kênh này đã đo
+    được gì về nó, và những câu đó giờ còn đứng không"*. Trang chủ trả lời câu đó cho
+    cả kênh; trang này trả lời cho một token, và đó là dạng hồ sơ gửi ra ngoài được.
+
+    🔴 KHÔNG khai một luật "Đo lại" cho cả trang. Bản mockup 05/08 chốt *"trang token
+    KHÔNG có nút Đo lại"*, lý lẽ là bảy con số của UNI đều cộng dồn trên một khoảng
+    block chứ không phải một lời gọi tại một block. Lý lẽ đó đúng, nhưng đếm trên dữ
+    liệu thật thì **1 trong 19** khẳng định UNI có khai `do_lai` chạy được — nên phát
+    biểu theo cả cụm sẽ sai với đúng một dòng, và dòng đó là dòng mạnh nhất. Trang
+    này vì thế không hứa gì theo cụm: mỗi dòng in đúng cái nó có — nút ở dòng gọi lại
+    được, lý do ở dòng đã khai vì sao không, đường dựng lại ở mọi dòng còn lại.
+    """
+    ten = TOKEN_TEN[ma]
+    d_num = {k: sum(1 for _, _, c in claims_t if c["status"] == k) for k in TRANG_THAI}
+    doi = sum(n for k, n in d_num.items() if k != "ĐANG ĐỨNG")
+    n_do = sum(1 for _, _, c in claims_t if c.get("do_lai"))
+    n_kd = sum(1 for _, _, c in claims_t if c.get("khong_do_lai"))
+    con = len(claims_t) - n_do - n_kd
+
+    hang = "".join(
+        f'<li class="tt {TRANG_THAI[c["status"]][0]}" data-st="{TRANG_THAI[c["status"]][0]}" '
+        f'data-doi="{0 if c["status"] == "ĐANG ĐỨNG" else 1}">'
+        # 🔴 Hộp lưới nằm trong một <span> BÊN TRONG <summary>, không phải trên chính
+        # <summary>. Đo 06/08 trên Chrome: đặt `display:grid` thẳng lên summary thì
+        # phần đang ĐÓNG của <details> vẫn được dựng và nằm luôn trong hộp summary —
+        # mỗi dòng cao 720px thay vì 161px, cả trang 15.652px. Trình duyệt không báo
+        # gì; lộ ra ở ảnh chụp khổ điện thoại của cổng preview.
+        f'<details class="tu-so"><summary><span class="tt-hop">'
+        f'<span class="chip {TRANG_THAI[c["status"]][0]}">{c["status"]}</span>'
+        f'<span class="tx">{ihtml.escape(c["text"])}</span>'
+        f'<span class="mt">{vn_ngay(s[:10])} · {c["id"]} · {ihtml.escape(tieu)}</span>'
+        f'<span class="mui" aria-hidden="true">▾</span>'
+        f'</span></summary><div class="tu-mo">'
+        f'<p class="dong"><span class="nhan">GHIM TẠI</span>{ihtml.escape(c["ghim"])}</p>'
+        f'<p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>'
+        f'{ihtml.escape(c["falsifier"])}</p>'
+        f'{khoi_do_lai(c)}'
+        f'<p class="tro"><a href="../../bai/{s}/#{c["id"]}">Mở dòng này trong bài →</a></p>'
+        f'</div></details></li>'
+        for s, tieu, c in claims_t)
+
+    tu_kiem = (f'<b>{n_do}</b> dòng gọi lại được bằng đúng một lệnh — mở dòng đó ra là có '
+               f'nút bấm, và nó đọc chain thật ngay lúc bạn bấm. ')
+    if n_kd:
+        tu_kiem += (f'<b>{n_kd}</b> dòng khai sẵn vì sao trình duyệt không gọi lại được. ')
+    tu_kiem += (f'{con} dòng còn lại là phép quét trên một khoảng block: cách dựng lại nằm '
+                f'ngay trong ô ĐIỀU GÌ BÁC BỎ của chính dòng đó — mở ra là thấy.')
+
+    return (f'<p class="crumb">Tủ kính token · {ma}</p>'
+            f'<h1>{ten} — mọi con số kênh này đã ghim, và câu nào còn đứng</h1>'
+            f'<p class="dan">Bài sống theo ngày; hồ sơ sống theo đối tượng. Trang này gom mọi '
+            f'khẳng định đã đăng về {ten} về một chỗ, giữ nguyên trạng thái hiện tại của từng '
+            f'câu — kể cả những câu đã đổ. Bấm một dòng để mở block nó được đọc ra và điều gì '
+            f'sẽ bác bỏ nó.</p>'
+            f'<section class="board" data-hien>'
+            f'<div class="bh"><b>Hồ sơ {ten}</b>'
+            f'<span>{len(claims_t)} khẳng định · {len(bai_t)} bài</span></div>'
+            f'{thanh_xep(d_num, len(claims_t))}'
+            f'<div class="dem phu"><b>{doi}</b> trong số đó đã đổi trạng thái kể từ lúc đăng. '
+            f'{tu_kiem}</div></section>'
+            f'<div class="tt-khu" data-hien>'
+            f'<div class="tt-dau"><div class="nhom-loc">'
+            f'<button class="lg-loc" type="button" data-loc="het">Cả hồ sơ '
+            f'<span class="n">{len(claims_t)}</span></button>'
+            f'<button class="lg-loc" type="button" data-loc="doi">Đã đổi trạng thái '
+            f'<span class="n">{doi}</span></button></div>'
+            f'<span class="lo" id="loc-lo"></span></div>'
+            f'<ol class="tt-ds tu-ds" id="tt-ds" data-loc-vung="het">{hang}</ol></div>'
+            + dai_bai(bai_t, "../../"))
+
+
 def trang_du_lieu(kho: pathlib.Path) -> str:
     """Trang `/du-lieu/` — danh sách hiện vật thô, sinh từ HIEN_VAT chứ không quét thư mục.
 
@@ -1585,26 +2122,37 @@ def thanh_xep(dem: dict, tong: int) -> str:
     """
     if not tong:
         return ""
+    co = [(k, n) for k, n in dem.items() if n]
+    # `--i` là số thứ tự để CSS trễ nhịp từng đoạn khi thanh chạy từ 0. Bề rộng vẫn nằm
+    # sẵn trong HTML ⇒ tắt JS là thanh đứng yên ở đúng tỉ lệ thật, không phải ở 0.
     seg = "".join(
-        f'<span class="seg {TRANG_THAI[k][0]}" style="width:{n / tong * 100:.2f}%" '
-        f'title="{k} · {n}"></span>'
-        for k, n in dem.items() if n)
+        f'<span class="seg {TRANG_THAI[k][0]}" style="width:{n / tong * 100:.2f}%;--i:{i}" '
+        f'data-loc="{TRANG_THAI[k][0]}" data-tip="{k} · {n}/{tong}"></span>'
+        for i, (k, n) in enumerate(co))
+    # 🔴 Chip là NÚT, không phải nhãn: nó vừa là chú giải của thanh (bắt buộc — năm
+    # trạng thái không phân biệt nổi bằng hue, `NOTES §1`), vừa là bộ lọc của danh sách
+    # claim đứng ngay dưới. Tắt JS thì nút không làm gì và chú giải vẫn đọc đủ.
     chip = "".join(
-        f'<span class="lg {TRANG_THAI[k][0]}"><span class="sw"></span>'
-        f'{k} <span class="n">{n}</span></span>'
-        for k, n in dem.items() if n)
-    return f'<div class="stack">{seg}</div><div class="chu-thich">{chip}</div>'
+        f'<button class="lg {TRANG_THAI[k][0]}" type="button" data-loc="{TRANG_THAI[k][0]}" '
+        f'aria-pressed="false"><span class="sw"></span>{k} <span class="n">{n}</span></button>'
+        for k, n in co)
+    return (f'<div class="stack" aria-hidden="true">{seg}</div>'
+            f'<div class="chu-thich">{chip}</div>')
 
 
-def dai_trang_thai(claims: list, doc_lai: str) -> str:
+def dai_trang_thai(claims: list, doc_lai: str, ho_so: str = "") -> str:
     """Màn hình đầu tiên. Người bấm vào từ X/TG đã đọc bài rồi — thứ họ chưa biết là
-    claim giờ còn đứng không. Trả lời trước, bài để sau."""
+    claim giờ còn đứng không. Trả lời trước, bài để sau.
+
+    `ho_so` là đường sang tủ kính của token bài này thuộc về — chỉ có khi token đó
+    thật sự có trang, và cổng ⑪ (liên kết) sẽ chặn build nếu nó trỏ vào thư mục rỗng.
+    """
     d = {k: sum(1 for c in claims if c["status"] == k) for k in TRANG_THAI}
-    return f"""<section class="dai">
+    return f"""<section class="dai" data-hien>
   <div class="bh"><b>Sổ claim của bài này</b><span>{len(claims)} khẳng định · trạng thái đổi thì ghi thêm, không xoá</span></div>
   {thanh_xep(d, len(claims))}
   <div class="khi">{ihtml.escape(doc_lai)}</div>
-  <a class="toi" href="#so-claim">Xem sổ claim ↓</a>
+  <a class="toi" href="#so-claim">Xem sổ claim ↓</a>{ho_so}
 </section>"""
 
 
@@ -1637,11 +2185,29 @@ def lap_asset() -> None:
         kich_thuoc_png(f)      # nổ sớm nếu file hỏng, thay vì để mạng xã hội dựng khung sai
         (dich / f.name).write_bytes(f.read_bytes())
 
+    # ── FONT tự host. Hai chiều đều CHẶN, vì cả hai chiều đều hỏng trong im lặng:
+    # thiếu file thì `@font-face` trỏ vào hư không (chữ vẫn hiện — bằng font hệ thống —
+    # và không lệnh nào báo); thừa file thì một mặt chữ không ai khai đi ra ngoài.
+    khai = {tep for _, tep, _, _ in FONT_MAT}
+    kho_f, dich_f = kho / "font", OUT / "font"
+    dich_f.mkdir(parents=True, exist_ok=True)
+    for tep in sorted(khai):
+        f = kho_f / tep
+        if not f.is_file():
+            raise LoiCong(f"thiếu assets/font/{tep} — FONT_MAT khai nó, mà file không có. "
+                          f"Tải lại từ Google Fonts (bản variable) rồi để vào assets/font/")
+        (dich_f / tep).write_bytes(f.read_bytes())
+    for f in sorted(kho_f.glob("*.woff2")):
+        if f.name not in khai:
+            raise LoiCong(f"assets/font/{f.name} không có trong FONT_MAT — khai nó kèm "
+                          f"unicode-range, hoặc bỏ file. Font không khai thì không ai "
+                          f"biết trang đang nạp cái gì")
+
 
 def main() -> None:
     # Mặc định là hệ ĐÃ CHỐT. Bản đầu đọc argv bằng cách "có chữ verdigris ở đâu đó
     # trong argv" — thứ đó lặng lẽ đúng cho tới khi đường dẫn --out chứa chữ đó.
-    ten = "d2"
+    ten = HE_MAC_DINH
     if "--theme" in sys.argv:
         xin = sys.argv[sys.argv.index("--theme") + 1]
         if xin not in THEMES:
@@ -1676,7 +2242,16 @@ def main() -> None:
     except (json.JSONDecodeError, KeyError, TypeError):
         CO_TRANG["track-record/"] = False   # vòng lặp dưới sẽ báo lỗi đúng chỗ hỏng
 
-    bai, moi_claim = [], []
+    # Tủ kính bật/tắt phải biết TRƯỚC vòng lặp, vì thanh điều hướng được dựng cùng
+    # trang bài đầu tiên. Lượt quét này chỉ đọc front matter — rẻ, và nó là chỗ duy
+    # nhất quyết định mục "Token" có mặt hay không.
+    dem_token = {}
+    for p in CONTENT.glob("posts/*.md"):
+        fm0, _ = front(p.read_text(encoding="utf-8"), f"content/posts/{p.name}")
+        dem_token[fm0.get("token", "")] = dem_token.get(fm0.get("token", ""), 0) + 1
+    CO_TRANG[TU_KINH_DUONG] = dem_token.get(TU_KINH, 0) >= TU_KINH_SAN
+
+    bai, moi_claim, token_cua = [], [], {}
 
     for md_path in sorted(CONTENT.glob("posts/*.md"), reverse=True):
         o = f"content/posts/{md_path.name}"
@@ -1697,12 +2272,22 @@ def main() -> None:
         cong_ghi_truoc(claims, o)
 
         slug_ = md_path.stem
+        # Khai token là BẮT BUỘC — nó là khoá của hồ sơ theo đối tượng, và một bài
+        # không khai thì nó lặng lẽ rơi khỏi tủ kính của chính token nó nói về.
+        tk = fm.get("token", "").strip()
+        if tk not in TOKEN_TEN:
+            raise LoiCong(f"front matter 'token' thiếu hoặc lạ ({tk!r}) — {o}. "
+                          f"Đang biết: {', '.join(sorted(TOKEN_TEN))}. Token mới thì "
+                          f"thêm vào TOKEN_TEN kèm tên đầy đủ, đừng viết tắt tuỳ ý")
+        token_cua[slug_] = tk
+        ho_so = (f'<a class="toi phu" href="../../{TU_KINH_DUONG}">Hồ sơ {TOKEN_TEN[tk]} →</a>'
+                 if tk == TU_KINH and CO_TRANG[TU_KINH_DUONG] else "")
         # 🔴 THỨ TỰ TRANG LÀ CÓ CHỦ Ý, đừng đảo lại: sổ claim ĐỨNG TRƯỚC bài viết.
         # Bản đầu đặt bài lên trước và màn hình đầu tiên giống hệt Telegram — người
         # bấm vào từ X/TG đã đọc bài rồi, đưa lại bài là không cho họ lý do ở lại.
         # Bài vẫn đăng đủ dạng native trên X/TG (LAUNCH.md:152), ở đây nó là THAM CHIẾU.
         than = (f"<h1>{ihtml.escape(fm['title'])}</h1>"
-                + dai_trang_thai(claims, fm.get("doc_lai", ""))
+                + dai_trang_thai(claims, fm.get("doc_lai", ""), ho_so)
                 + so_claim(claims)
                 + f'<section class="bandaydu"><h2 id="ban-day-du">Bài đầy đủ</h2>'
                   f'<p class="meta">{fm["mau"]} {fm["date"]} &nbsp;·&nbsp; '
@@ -1729,7 +2314,7 @@ def main() -> None:
         # với N=1 bài toàn "đang đứng" thì công thức cũ trông đúng. Nay in ĐỦ PHỔ.
         dem = {k: sum(1 for c in claims if c["status"] == k) for k in TRANG_THAI}
         tom = " · ".join(f"{n} {k.lower()}" for k, n in dem.items() if n)
-        bai.append((fm, slug_, len(claims), tom))
+        bai.append((fm, slug_, len(claims), tom, dem))
         for c in claims:
             moi_claim.append((slug_, fm["title"], c))
         print(f"  ✓ bai/{slug_}/  ·  {len(claims)} claim ({tom})")
@@ -1740,18 +2325,16 @@ def main() -> None:
     fm_i, body_i = front((CONTENT / "index.md").read_text(encoding="utf-8"), "content/index.md")
     cong_ngon_ngu(body_i, "content/index.md")
     cong_ngoi_xung(body_i, "content/index.md")
-    ds = "".join(
-        f'<a class="bai" href="bai/{s}/"><div class="t">{ihtml.escape(f["title"])}</div>'
-        f'<div class="s">{f["mau"]} {f["date"]} · {n} claim — {sg}</div></a>'
-        for f, s, n, sg in bai)
+    # 🔴 DẢI NGANG thay chồng dọc — user 06/08: *"bài viết để cuối, có cách nào phát
+    # triển theo chiều ngang thay vì chiều dọc kéo xuống như cũ"*. Bài NẰM CUỐI là có
+    # chủ ý và giữ nguyên (người bấm vào từ X/TG đã đọc bài rồi); thứ đổi là 8 thẻ xếp
+    # dọc — chúng đẩy chân trang xuống gần hai màn hình và mỗi thẻ chỉ chở đúng một dòng
+    # chữ. Xếp ngang thì cùng chỗ đó chở được thêm một thanh trạng thái cho từng bài.
     than_i = (f'<h1>{ihtml.escape(fm_i["tagline"])}</h1>' + render(body_i, "content/index.md")
               + bang_diem(moi_claim)
-              + ('<p class="dan-gt"><a href="track-record/">Xem đủ những lần tôi ghi trước một '
-                 'con số rồi đối chiếu kết quả →</a></p>' if gt else "")
-              + ('<p class="dan-gt"><a href="facts/">Facts — mỗi mục một con số, một block, '
-                 'một lệnh để bạn tự đọc lại →</a></p>' if facts else "")
+              + cua_vao(gt, facts)
               + sap_phan_dinh(moi_claim)
-              + f'<h2 id="bai">Bài</h2>{ds}')
+              + dai_bai(bai, ""))
     if not 60 <= len(fm_i.get("mo_ta", "").strip()) <= 200:
         raise LoiCong("content/index.md thiếu 'mo_ta' 60–200 ký tự — trang chủ là chỗ "
                       "hay bị dán link nhất, để trắng là mất ở đúng cửa")
@@ -1760,6 +2343,33 @@ def main() -> None:
               meta={"mo_ta": fm_i["mo_ta"].strip(), "duong": "/", "anh": "avatar-800.png",
                     "loai": "website", "tieu_de_og": "BlockPinned — số nào cũng truy ngược được"}),
         encoding="utf-8")
+
+    # ── TỦ KÍNH token ────────────────────────────────────────────────────────────
+    # Dựng SAU vòng lặp vì nó cần cả bài lẫn claim của token; bật/tắt thì đã quyết
+    # trước vòng lặp (thanh điều hướng cần biết sớm). Hai con số phải khớp nhau, và
+    # lệch thì CHẶN: nếu lượt quét front matter nói "đủ bài" mà lượt dựng thật lại
+    # đếm ra ít hơn sàn, nghĩa là hai lượt đọc cùng một thư mục ra hai kết quả.
+    bai_tk = [x for x in bai if token_cua[x[1]] == TU_KINH]
+    if CO_TRANG[TU_KINH_DUONG]:
+        if len(bai_tk) < TU_KINH_SAN:
+            raise LoiCong(f"tủ kính {TU_KINH} bật nhưng chỉ dựng được {len(bai_tk)} bài "
+                          f"(sàn {TU_KINH_SAN}) — hai lượt đọc cùng thư mục ra hai kết quả")
+        claims_tk = [(s, t, c) for s, t, c in moi_claim if token_cua[s] == TU_KINH]
+        d_tk = OUT / "token" / TU_KINH.lower()
+        d_tk.mkdir(parents=True, exist_ok=True)
+        (d_tk / "index.html").write_text(trang(
+            f"{TOKEN_TEN[TU_KINH]} — hồ sơ {TU_KINH} — BlockPinned",
+            trang_token(TU_KINH, bai_tk, claims_tk), t, "../..", muc=TU_KINH_DUONG,
+            meta={"mo_ta": f"Mọi khẳng định BlockPinned đã đăng về {TOKEN_TEN[TU_KINH]}: "
+                           f"{len(claims_tk)} câu trên {len(bai_tk)} bài, mỗi câu ghim tại "
+                           f"block đã đo, kèm điều gì sẽ bác bỏ nó và trạng thái hiện tại.",
+                  "duong": f"/{TU_KINH_DUONG}", "anh": "card-uni-100usd.png", "loai": "website",
+                  "tieu_de_og": f"{TOKEN_TEN[TU_KINH]} — mọi con số đã ghim, và câu nào còn đứng"}),
+            encoding="utf-8")
+        print(f"  ✓ {TU_KINH_DUONG}  ·  {len(claims_tk)} khẳng định trên {len(bai_tk)} bài")
+    elif len(bai_tk) >= TU_KINH_SAN:
+        raise LoiCong(f"{TU_KINH} có {len(bai_tk)} bài (đủ sàn) mà mục Token lại tắt — "
+                      f"lượt quét front matter và lượt dựng không đồng ý với nhau")
 
     # trang /track-record/ — thứ khó làm giả nhất desk có, nên nó được một URL riêng để dán
     # 🔴 ĐỔI TÊN 31/07: `/ghi-truoc/` → `/track-record/` (user chốt). Lý do đổi nằm ở
@@ -1824,6 +2434,10 @@ def main() -> None:
     # bóng của trang thật — hai URL cùng nội dung, và cái thắng có thể là cái sai.
     if facts:
         loc.append((f"{BASE}/facts/", max(str(f.get("ngay", "")) or ngay_moi for f in facts)))
+    if CO_TRANG[TU_KINH_DUONG]:
+        # lastmod của tủ kính = ngày bài MỚI NHẤT của chính token đó, không phải ngày
+        # bài mới nhất của site: trang này chỉ đổi khi hồ sơ token đổi.
+        loc.append((f"{BASE}/{TU_KINH_DUONG}", max(str(f["date"]) for f, *_ in bai_tk)))
     loc.append((f"{BASE}/du-lieu/", ngay_moi))
     loc += [(f"{BASE}/bai/{s}/", f["date"]) for f, s, *_ in bai]
     (OUT / "sitemap.xml").write_text(

@@ -13,12 +13,10 @@
 <meta property="og:image:width" content="2400">
 <meta property="og:image:height" content="1350">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,650;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../font/inter-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../font/inter-vietnamese.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../font/jetbrains-mono-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../font/jetbrains-mono-vietnamese.woff2">
 <link rel="icon" type="image/png" sizes="32x32" href="../../anh/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../../anh/favicon-16.png">
-<style>:root{--bg:#faf7f2;--bg2:#f3efe7;--card:#fffdfa;--inset:#f5f1ea;--ink:#1a1512;--muted:#5f564b;--faint:#8a8073;--line:#e6ded1;--line-soft:#efe9df;--accent:#b8412a;--c-xn:#0f8a3c;--c-song:#1d5fae;--c-sua:#a16207;--c-bac:#be123c;--c-cho:#64748b;--nut-nen:#1a1512;--nut-chu:#fffdfa;color-scheme:light;--display:'Inter','Be Vietnam Pro',system-ui,sans-serif;--body:'Inter','Be Vietnam Pro',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;--dw:800;--gian-ten:-.01em}
+<style>@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(../../font/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(../../font/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(../../font/inter-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(../../font/jetbrains-mono-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(../../font/jetbrains-mono-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(../../font/jetbrains-mono-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}:root{--bg:#faf7f2;--bg2:#f3efe7;--card:#fffdfa;--inset:#f5f1ea;--ink:#1a1512;--muted:#5f564b;--faint:#8a8073;--line:#e6ded1;--line-soft:#efe9df;--accent:#b8412a;--c-xn:#0f8a3c;--c-song:#1d5fae;--c-sua:#a16207;--c-bac:#be123c;--c-cho:#64748b;--nut-nen:#1a1512;--nut-chu:#fffdfa;color-scheme:light;--display:'Inter',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;--dw:800;--gian-ten:-.01em}
 @media (prefers-color-scheme:dark){:root:not([data-theme="sang"]){--bg:#1a1512;--bg2:#15130f;--card:#1b1815;--inset:#141210;--ink:#faf7f2;--muted:#a89d8f;--faint:#7d7365;--line:#302a24;--line-soft:#241f1a;--accent:#ff7a5c;--c-xn:#35c46a;--c-song:#4d9fff;--c-sua:#f0b429;--c-bac:#ef4056;--c-cho:#94a3b8;--nut-nen:#faf7f2;--nut-chu:#1a1512;color-scheme:dark;}}
 :root[data-theme="toi"]{--bg:#1a1512;--bg2:#15130f;--card:#1b1815;--inset:#141210;--ink:#faf7f2;--muted:#a89d8f;--faint:#7d7365;--line:#302a24;--line-soft:#241f1a;--accent:#ff7a5c;--c-xn:#35c46a;--c-song:#4d9fff;--c-sua:#f0b429;--c-bac:#ef4056;--c-cho:#94a3b8;--nut-nen:#faf7f2;--nut-chu:#1a1512;color-scheme:dark;}
 
@@ -60,6 +58,14 @@ button.nut-nen:hover{color:var(--ink);border-color:var(--muted)}
 @media(max-width:640px){nav.dieu a:not(.tai){display:none}}
 
 h1{font:var(--dw) clamp(28px,5.2vw,40px)/1.14 var(--display);letter-spacing:-.025em;margin:0 0 16px;text-wrap:balance}
+/* Câu mở đầu to hơn phần thân một bậc và nhạt hơn — nó là lời chào, không phải nội
+   dung. Chỉ khớp khi ngay sau <h1> có một đoạn văn: trang bài đi <h1>+<section> nên
+   không dính, và đó là điều đúng (ở đó thứ đứng đầu phải là sổ claim). */
+h1+p{font:400 18.5px/1.66 var(--body);color:var(--muted);max-width:64ch}
+h1+p strong{color:var(--ink);font-weight:650}
+/* dòng chữ dài quá 75 ký tự thì mắt trượt hàng — bề rộng khung là 900px, không phải
+   bề rộng đọc được */
+main>p,main>ul,main>ol{max-width:72ch}
 h2{font:750 23px/1.28 var(--display);letter-spacing:-.018em;margin:46px 0 14px;text-wrap:balance}
 h2::before{content:"";display:block;width:34px;height:3px;border-radius:2px;background:var(--accent);margin-bottom:12px;opacity:.9}
 h3{font:650 16.5px/1.45 var(--body);margin:26px 0 8px}
@@ -94,19 +100,50 @@ th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;
 .bh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .bh b{font:700 13px/1.4 var(--body);letter-spacing:.01em}
 .bh span{font:500 11.5px/1.5 var(--mono);color:var(--faint)}
-.stack{display:flex;gap:2px;height:20px;border-radius:5px;overflow:hidden;background:var(--inset)}
-.seg{background:var(--st);min-width:3px}
+.stack{display:flex;gap:2px;height:22px;border-radius:6px;overflow:hidden;background:var(--inset)}
+.seg{background:var(--st);min-width:3px;transition:opacity .16s}
 .seg.xac{--st:var(--c-xn)}.seg.song{--st:var(--c-song)}.seg.sua{--st:var(--c-sua)}
 .seg.bac{--st:var(--c-bac)}.seg.cho{--st:var(--c-cho)}
+/* Thanh CHẠY TỪ 0 khi lọt tầm mắt. Chỉ phép biến hình chạy — bề rộng thật nằm sẵn
+   trong HTML, nên tắt JS hoặc tắt chuyển động là thanh đứng ở đúng tỉ lệ, không phải
+   ở 0. (Cùng lý do đã BỎ hiệu ứng đếm-lên cho chữ số: NOTES §3.) */
+html.chuyen .stack .seg{transform:scaleX(0);transform-origin:left;
+  transition:transform .7s cubic-bezier(.22,.75,.3,1) calc(var(--i,0)*90ms),opacity .16s}
+html.chuyen .stack.chay .seg{transform:none}
+html.js .stack .seg{cursor:pointer}
+.stack:hover .seg{opacity:.38}
+.stack .seg:hover{opacity:1}
+/* Đưa chuột lên một dòng claim thì đoạn thanh của trạng thái ĐÓ sáng lên, và ngược
+   lại. Hai khối vốn nói về cùng một tập số — nối chúng bằng mắt thì người đọc không
+   phải tự bắc cầu. CSS không so được thuộc tính cha với con, nên năm luật, không một. */
+.stack[data-noi="xac"] .seg:not(.xac),
+.stack[data-noi="song"] .seg:not(.song),
+.stack[data-noi="sua"] .seg:not(.sua),
+.stack[data-noi="bac"] .seg:not(.bac),
+.stack[data-noi="cho"] .seg:not(.cho){opacity:.3}
+.roi{opacity:.4;transition:opacity .16s}
+/* vạch tiến trình đọc — dày 2px, nằm trên thanh điều hướng dính */
+#bp-tien{position:fixed;left:0;top:0;height:2px;width:100%;z-index:30;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;pointer-events:none}
+#bp-tip{position:fixed;z-index:60;left:0;top:0;pointer-events:none;opacity:0;
+  font:600 11.5px/1 var(--mono);color:var(--ink);background:var(--card);
+  border:1px solid var(--line);border-radius:8px;padding:7px 10px;white-space:nowrap;
+  box-shadow:0 10px 26px -14px rgba(0,0,0,.65);transition:opacity .13s}
+#bp-tip.hien{opacity:1}
 .chu-thich{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .lg{display:inline-flex;align-items:center;gap:7px;font:600 12px/1 var(--body);
-  padding:6px 10px 6px 8px;border-radius:999px;border:1px solid var(--line);
-  background:var(--inset);color:var(--muted);text-decoration:none}
+  padding:7px 11px 7px 9px;border-radius:999px;border:1px solid var(--line);
+  background:var(--inset);color:var(--muted);text-decoration:none;cursor:default;
+  transition:border-color .16s,background .16s,color .16s,box-shadow .16s}
+html.js .lg{cursor:pointer}
 .lg .sw{width:9px;height:9px;border-radius:2px;background:var(--st);flex:none}
 .lg .n{font:700 12px var(--mono);color:var(--ink)}
 .lg.xac{--st:var(--c-xn)}.lg.song{--st:var(--c-song)}.lg.sua{--st:var(--c-sua)}
 .lg.bac{--st:var(--c-bac)}.lg.cho{--st:var(--c-cho)}
 .lg:hover{border-color:var(--st);color:var(--ink)}
+.lg[aria-pressed="true"]{border-color:var(--st);color:var(--ink);
+  background:color-mix(in srgb,var(--st) 16%,var(--inset));
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--st) 15%,transparent)}
 .khi{font:500 12px/1.65 var(--mono);color:var(--faint);margin-top:11px}
 .toi{display:inline-block;margin-top:12px;font:700 12.5px/1 var(--mono);letter-spacing:.05em;
   text-decoration:none;color:var(--ink);background:var(--nut-nen);color:var(--nut-chu);
@@ -121,22 +158,98 @@ th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;
 .dem .phu{font:500 12.5px/1.65 var(--body);color:var(--faint);margin-top:8px;
   text-transform:none;letter-spacing:0}
 
-/* ── THẺ SỐ ── */
-.the-so{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 22px}
-@media(max-width:820px){.the-so{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:420px){.the-so{grid-template-columns:1fr}}
-.o{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;
-  padding:15px 16px 13px;display:flex;flex-direction:column;gap:5px;overflow:hidden;
-  text-decoration:none;transition:border-color .18s,transform .18s}
-.o::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--st,var(--accent))}
-.o::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,color-mix(in srgb,var(--st,var(--accent)) 9%,transparent),transparent 62%)}
-.o:hover{border-color:color-mix(in srgb,var(--st,var(--accent)) 45%,var(--line));transform:translateY(-1px)}
-.o.xac{--st:var(--c-xn)}.o.song{--st:var(--c-song)}.o.sua{--st:var(--c-sua)}
-.o.bac{--st:var(--c-bac)}.o.cho{--st:var(--c-cho)}
-.o .nh{font:700 11px/1.4 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);position:relative}
-.o .gt{font:700 28px/1.15 var(--mono);letter-spacing:-.02em;position:relative}
-.o .gc{font:400 12px/1.45 var(--body);color:var(--faint);position:relative}
+/* ── DÒNG TRẠNG THÁI: mỗi claim một dòng ĐỌC ĐƯỢC BẰNG CHỮ, lọc theo chip ở trên.
+   Thay hai thứ user bác 06/08: hàng thẻ số in lại số của chú giải, và dãy mã
+   "27/07 · C1" không nói được claim đó nói gì ── */
+.tt-khu{margin:0 0 30px}
+.tt-dau{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  flex-wrap:wrap;margin:0 0 13px}
+.nhom-loc{display:flex;gap:6px;flex-wrap:wrap}
+.lg-loc{font:600 12px/1 var(--body);padding:8px 13px;border-radius:999px;
+  border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:default;
+  transition:border-color .16s,color .16s,background .16s}
+html.js .lg-loc{cursor:pointer}
+.lg-loc .n{font:700 12px var(--mono);color:var(--ink);margin-left:4px}
+.lg-loc:hover{color:var(--ink);border-color:var(--muted)}
+.lg-loc[aria-pressed="true"]{color:var(--nut-chu);background:var(--nut-nen);border-color:transparent}
+.lg-loc[aria-pressed="true"] .n{color:var(--nut-chu)}
+.tt-dau .lo{font:500 12px/1.6 var(--mono);color:var(--faint)}
+ol.tt-ds{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+ol.tt-ds li{--st:var(--accent)}
+ol.tt-ds li.xac{--st:var(--c-xn)}ol.tt-ds li.song{--st:var(--c-song)}
+ol.tt-ds li.sua{--st:var(--c-sua)}ol.tt-ds li.bac{--st:var(--c-bac)}ol.tt-ds li.cho{--st:var(--c-cho)}
+/* .tt-hop là HỘP của một dòng — dùng cho cả thẻ <a> (trang chủ) lẫn <summary>
+   (tủ kính token). Một khuôn, hai vai: hai bản chép là hai bản sẽ trôi lệch. */
+.tt-hop{display:grid;grid-template-columns:auto minmax(0,1fr);gap:5px 14px;align-items:start;
+  background:var(--card);border:1px solid var(--line);border-left:3px solid var(--st);
+  border-radius:12px;padding:13px 16px;text-decoration:none;list-style:none;
+  transition:transform .16s,border-color .16s,box-shadow .16s}
+.tt-hop::-webkit-details-marker{display:none}
+.tt-hop:hover{transform:translateY(-1px);text-decoration:none;
+  border-color:color-mix(in srgb,var(--st) 45%,var(--line));
+  box-shadow:0 1px 2px rgba(0,0,0,.05),0 12px 28px -20px rgba(0,0,0,.6)}
+ol.tt-ds .chip{grid-row:1/3;align-self:start;margin-top:1px}
+ol.tt-ds .tx{font:500 15px/1.6 var(--body);color:var(--ink);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ol.tt-ds .mt{font:500 11.5px/1.55 var(--mono);color:var(--faint)}
+@media(max-width:620px){.tt-hop{grid-template-columns:minmax(0,1fr)}
+  ol.tt-ds .chip{grid-row:auto;justify-self:start;margin-bottom:3px}}
+
+/* ── TỦ KÍNH: dòng mở ra được. Đóng thì gọn như trang chủ; mở thì có đủ ghim, điều
+   bác bỏ, và nút đo lại nếu dòng đó gọi lại được ── */
+.crumb{font:700 10.5px/1.5 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 10px}
+/* 🔴 KHÔNG đặt display:grid lên chính <summary> — đo được: Chrome dựng cả phần
+   đang ĐÓNG của <details> vào trong hộp summary (dòng 720px thay vì 161px, trang
+   15.652px, không một lời cảnh báo). Lưới nằm ở .tt-hop bên trong summary. */
+details.tu-so>summary{cursor:pointer;list-style:none;display:block}
+details.tu-so>summary::-webkit-details-marker{display:none}
+details.tu-so .tt-hop{grid-template-columns:auto minmax(0,1fr) 15px}
+details.tu-so .mui{grid-row:1/3;grid-column:3;align-self:center;color:var(--faint);
+  font:400 12px/1 var(--mono);transition:transform .2s}
+details.tu-so[open] .mui{transform:rotate(180deg)}
+details.tu-so[open] .tt-hop{border-bottom-left-radius:0;border-bottom-right-radius:0;
+  transform:none;box-shadow:none}
+details.tu-so[open] .tx{-webkit-line-clamp:9}
+.tu-mo{background:var(--card);border:1px solid var(--line);border-top:0;
+  border-left:3px solid var(--st);border-radius:0 0 12px 12px;padding:12px 16px 14px}
+.tu-mo .dong:last-of-type{margin-bottom:11px}
+.tu-mo .tro{margin:0;font:600 12.5px/1.6 var(--mono)}
+/* 🔴 Khổ hẹp phải ĐẶT TAY từng ô. Bản đầu chỉ đổi số cột (1fr + 15px) rồi để lưới
+   tự xếp — và nó xếp dòng chú thích vào đúng cột 15px, thành một cột chữ dọc mỗi
+   dòng một ký tự, cao gần một màn hình. Lưới tự xếp lấp ô trống theo thứ tự, nó
+   không biết cột nào là cột dành cho mũi tên. */
+@media(max-width:620px){
+  details.tu-so .tt-hop{grid-template-columns:minmax(0,1fr) 15px}
+  details.tu-so .chip,details.tu-so .tx,details.tu-so .mt{grid-column:1}
+  details.tu-so .mui{grid-row:1;grid-column:2;align-self:start}}
+
+/* ── HAI CỬA: track record + facts. Cỡ thẻ = lời khai về mức quan trọng ── */
+.cua{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0 0}
+@media(max-width:760px){.cua{grid-template-columns:1fr}}
+.cua-o{position:relative;display:flex;flex-direction:column;gap:9px;overflow:hidden;
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:20px 22px 18px;text-decoration:none;
+  transition:transform .18s,border-color .18s,box-shadow .18s}
+.cua-o::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--accent)}
+.cua-o::after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(420px 160px at 88% -34px,color-mix(in srgb,var(--accent) 15%,transparent),transparent 72%)}
+.cua-o:hover{transform:translateY(-2px);text-decoration:none;color:var(--ink);
+  border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
+  box-shadow:0 2px 4px rgba(0,0,0,.05),0 18px 40px -26px rgba(0,0,0,.7)}
+.cua-o>*{position:relative}
+.cua-o .k{font:700 10.5px/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.cua-o .t{font:700 clamp(18px,2.2vw,21px)/1.32 var(--display);letter-spacing:-.015em;text-wrap:balance}
+.cua-o .g{font:400 13.5px/1.62 var(--body);color:var(--muted)}
+.cua-o .n{margin-top:auto;padding:11px 36px 0 0;border-top:1px solid var(--line-soft);
+  font:500 12px/1.7 var(--mono);color:var(--faint);display:flex;flex-wrap:wrap;
+  align-items:baseline;gap:7px}
+.cua-o .n b{font:700 17px var(--mono);color:var(--ink);letter-spacing:-.02em}
+.cua-o .n i{display:inline-block;width:3px;height:3px;border-radius:50%;
+  background:var(--muted);margin:0 3px;vertical-align:middle}
+.cua-o .mui{position:absolute;right:20px;bottom:15px;font-size:19px;color:var(--muted);
+  transition:transform .18s,color .18s}
+.cua-o:hover .mui{transform:translateX(4px);color:var(--accent)}
 
 /* ── SỔ CLAIM — thứ duy nhất trên trang được phép nổi ── */
 .so{margin:48px 0 0}
@@ -212,24 +325,6 @@ th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;
 .hinh figcaption{font:500 11px/1.5 var(--mono);color:var(--faint);margin-top:8px;
   padding-top:7px;border-top:1px solid var(--line-soft)}
 
-/* ── danh sách trên trang chủ ── */
-ul.diem{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
-/* 🔴 li này là GRID ⇒ mỗi con trực tiếp thành MỘT Ô. Nội dung phải gói trong đúng
-   một .noi, nếu không mỗi thẻ <a> sẽ rơi xuống một ô riêng ở cột 1 và dấu phân cách
-   thành ô mồ côi — bản 06/08 hỏng đúng kiểu đó. */
-ul.diem li{--st:var(--accent);display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 12px;
-  align-items:start;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--st);
-  border-radius:12px;padding:14px 16px;font-size:14.5px}
-ul.diem li.xac{--st:var(--c-xn)}ul.diem li.bac{--st:var(--c-bac)}ul.diem li.sua{--st:var(--c-sua)}
-ul.diem .tick{font:700 10.5px/1.7 var(--mono);letter-spacing:.08em;text-transform:uppercase;
-  color:var(--st);border:1px solid currentColor;border-radius:999px;padding:1px 9px;
-  height:fit-content;white-space:nowrap}
-ul.diem .noi{display:flex;flex-direction:column;gap:9px;min-width:0}
-ul.diem .giai{line-height:1.6}
-ul.diem .ma{display:flex;flex-wrap:wrap;gap:6px}
-ul.diem .ma a{font:600 11.5px/1 var(--mono);color:var(--muted);background:var(--inset);
-  border:1px solid var(--line);border-radius:999px;padding:6px 10px;text-decoration:none;white-space:nowrap}
-ul.diem .ma a:hover{color:var(--ink);border-color:var(--st);text-decoration:none}
 .dan-gt{margin:14px 0 0;font-size:15px}
 ul.han{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
 ul.han li{background:var(--card);border:1px solid var(--line);border-left:4px dashed var(--c-cho);
@@ -266,14 +361,49 @@ footer{margin-top:64px;padding:22px 0 46px;border-top:1px solid var(--line);back
   font:500 12px/1.75 var(--mono);color:var(--faint)}
 footer a{color:var(--muted)}
 
-.bai{display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 16px;align-items:start;
-  background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 18px;
-  margin-bottom:10px;text-decoration:none;transition:border-color .16s,transform .16s}
-.bai:hover{border-color:var(--muted);transform:translateY(-1px)}
-.bai .t{font:650 17px/1.4 var(--body);letter-spacing:-.01em;grid-column:2}
-.bai .s{font:500 12px/1.6 var(--mono);color:var(--faint);grid-column:2}
-.bai .d{font:500 12px/1.6 var(--mono);color:var(--faint);grid-row:1/3;grid-column:1;padding-top:3px}
-@media(max-width:640px){.bai{grid-template-columns:1fr}.bai .t,.bai .s{grid-column:1}.bai .d{grid-row:auto}}
+/* ── DẢI BÀI: cuộn NGANG, mỗi thẻ mang thanh trạng thái riêng của bài đó ── */
+.khu-bai{margin-top:52px}
+.khu-dau{display:flex;align-items:flex-end;gap:14px}
+.khu-dau h2{margin:0}
+.dieu-rail{margin-left:auto;display:flex;gap:7px;padding-bottom:3px}
+button.rn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);
+  background:var(--card);color:var(--muted);font:600 15px/1 var(--body);cursor:pointer;
+  transition:color .16s,border-color .16s,transform .16s}
+button.rn:hover:not([disabled]){color:var(--ink);border-color:var(--muted);transform:translateY(-1px)}
+button.rn[disabled]{opacity:.32;cursor:default}
+@media(max-width:560px){.dieu-rail{display:none}}
+/* mép phải mờ dần = dấu hiệu "còn nữa bên kia"; tắt khi đã cuộn hết đường */
+.rail-boc{position:relative}
+.rail-boc::after{content:"";position:absolute;right:0;top:0;bottom:16px;width:52px;
+  pointer-events:none;background:linear-gradient(90deg,transparent,var(--bg));
+  transition:opacity .22s}
+.rail-boc.het::after{opacity:0}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,1fr);gap:14px;
+  margin-top:16px;padding:3px 2px 16px;overflow-x:auto;overscroll-behavior-x:contain;
+  scroll-snap-type:x proximity;scroll-padding-left:2px;-webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+@media(min-width:760px){.rail{grid-auto-columns:minmax(272px,300px)}}
+.rail::-webkit-scrollbar{height:8px}
+.rail::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
+.rail::-webkit-scrollbar-thumb:hover{background:var(--muted)}
+.rail:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:12px}
+.bai{scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:16px 18px 15px;text-decoration:none;
+  transition:border-color .16s,transform .16s,box-shadow .16s}
+/* 🔴 Giữ MỰC khi rê chuột. Luật `main a:hover{color:accent}` đúng cho link trong
+   thân bài, nhưng ở thẻ lớn nó tô coral cả tiêu đề — mà coral là màu KHUNG TRANG,
+   không phải màu trạng thái, và thẻ này đứng ngay dưới một dải chip trạng thái.
+   Chuyển động + viền + mũi tên đã đủ báo "bấm được". */
+.bai:hover{border-color:var(--muted);transform:translateY(-2px);text-decoration:none;
+  color:var(--ink);box-shadow:0 2px 4px rgba(0,0,0,.05),0 16px 34px -24px rgba(0,0,0,.65)}
+.bai .d{font:500 11.5px/1.5 var(--mono);color:var(--faint)}
+.bai .t{font:650 16.5px/1.42 var(--body);letter-spacing:-.01em;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.bai .mini{display:flex;gap:2px;height:6px;border-radius:3px;overflow:hidden;
+  background:var(--inset);margin-top:auto}
+.bai .s{font:500 11.5px/1.55 var(--mono);color:var(--faint)}
+.rail-goi{margin:2px 0 0;font:500 11.5px/1.6 var(--mono);color:var(--faint)}
 
 
 /* ── TRANG FACTS: khuôn riêng, không dùng khuôn claim. Panel số bên trái đứng một
@@ -350,11 +480,24 @@ details.lenh summary:hover,details.lenh[open] summary{color:var(--ink)}
 @media(max-width:820px){.tr-body .mui{padding:8px 0;transform:rotate(90deg)}}
 .tr-foot{padding:10px 18px 14px;font:500 12.5px/1.6 var(--mono)}
 
+/* ── HIỆN DẦN khi lọt tầm mắt. Chỉ ĐỘ MỜ và VỊ TRÍ chạy — không con số nào chạy:
+   hiệu ứng đếm-lên đã bị bỏ vì trong ~0,9s nó in ra những con số CHƯA TỪNG ĐO
+   (NOTES §3). Lớp `chuyen` chỉ được gắn khi máy không xin giảm chuyển động, nên
+   luật này không bao giờ khớp với người đã tắt — họ thấy trang tĩnh, đủ chữ ── */
+html.chuyen [data-hien]{opacity:0;transform:translateY(16px);
+  transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.3,1)}
+html.chuyen [data-hien].hien{opacity:1;transform:none}
+
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 </style>
 <script>
 (function(){
   var d=document.documentElement,c=localStorage.getItem('bp-nen');
+  // Hai lớp này gắn TRONG <head>, trước lượt vẽ đầu tiên — gắn muộn hơn thì trang
+  // nháy một nhịp. 'js' = có JavaScript (mở khoá con trỏ chuột cho nút lọc);
+  // 'chuyen' = máy KHÔNG xin giảm chuyển động, tức được phép chạy hiệu ứng.
+  d.classList.add('js');
+  if(!matchMedia('(prefers-reduced-motion:reduce)').matches)d.classList.add('chuyen');
   if(c==='toi'||c==='sang')d.setAttribute('data-theme',c);
   document.addEventListener('click',function(e){
     var b=e.target.closest('#nut-nen'); if(!b)return;
@@ -369,16 +512,16 @@ details.lenh summary:hover,details.lenh[open] summary{color:var(--ink)}
   <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
   <a class="ten" href="../../">Block<span>Pinned</span></a>
   <span class="tag">số nào cũng truy ngược được</span>
-  <nav class="dieu"><a href="../../" class="tai">Sổ gốc</a><a href="../../facts/">Facts</a><a href="../../track-record/">Track record</a><a href="../../du-lieu/">Dữ liệu</a><button class="nut-nen" id="nut-nen" type="button" title="Đổi nền sáng/tối" aria-label="Đổi nền sáng/tối">☀ / ☾</button></nav>
+  <nav class="dieu"><a href="../../" class="tai">Sổ gốc</a><a href="../../facts/">Facts</a><a href="../../track-record/">Track record</a><a href="../../token/uni/">Token</a><a href="../../du-lieu/">Dữ liệu</a><button class="nut-nen" id="nut-nen" type="button" title="Đổi nền sáng/tối" aria-label="Đổi nền sáng/tối">☀ / ☾</button></nav>
 </div></header>
-<main class="khung"><h1>DefiLlama báo phí Uniswap v4 cao hơn 3,9 lần — và bản sửa mới chỉ chạy một chiều</h1><section class="dai">
+<main class="khung"><h1>DefiLlama báo phí Uniswap v4 cao hơn 3,9 lần — và bản sửa mới chỉ chạy một chiều</h1><section class="dai" data-hien>
   <div class="bh"><b>Sổ claim của bài này</b><span>6 khẳng định · trạng thái đổi thì ghi thêm, không xoá</span></div>
-  <div class="stack"><span class="seg xac" style="width:16.67%" title="ĐÃ XÁC NHẬN · 1"></span><span class="seg sua" style="width:66.67%" title="ĐÃ SỬA · 4"></span><span class="seg bac" style="width:16.67%" title="BỊ BÁC · 1"></span></div><div class="chu-thich"><span class="lg xac"><span class="sw"></span>ĐÃ XÁC NHẬN <span class="n">1</span></span><span class="lg sua"><span class="sw"></span>ĐÃ SỬA <span class="n">4</span></span><span class="lg bac"><span class="sw"></span>BỊ BÁC <span class="n">1</span></span></div>
+  <div class="stack" aria-hidden="true"><span class="seg xac" style="width:16.67%;--i:0" data-loc="xac" data-tip="ĐÃ XÁC NHẬN · 1/6"></span><span class="seg sua" style="width:66.67%;--i:1" data-loc="sua" data-tip="ĐÃ SỬA · 4/6"></span><span class="seg bac" style="width:16.67%;--i:2" data-loc="bac" data-tip="BỊ BÁC · 1/6"></span></div><div class="chu-thich"><button class="lg xac" type="button" data-loc="xac" aria-pressed="false"><span class="sw"></span>ĐÃ XÁC NHẬN <span class="n">1</span></button><button class="lg sua" type="button" data-loc="sua" aria-pressed="false"><span class="sw"></span>ĐÃ SỬA <span class="n">4</span></button><button class="lg bac" type="button" data-loc="bac" aria-pressed="false"><span class="sw"></span>BỊ BÁC <span class="n">1</span></button></div>
   <div class="khi">Cập nhật 28/07/2026 09:36 UTC — DefiLlama đã tính lại TOÀN BỘ khoảng 08→24/07. Phép đếm trực tiếp của tôi được xác nhận ở cả hai ngày ghi trước; nhận định &#x27;cú tụt do đổi cách tính&#x27; bị chính điều bác bỏ của nó bác, và tôi rút</div>
-  <a class="toi" href="#so-claim">Xem sổ claim ↓</a>
-</section><section class="so"><h2 id="so-claim">Sổ claim</h2>
+  <a class="toi" href="#so-claim">Xem sổ claim ↓</a><a class="toi phu" href="../../token/uni/">Hồ sơ Uniswap →</a>
+</section><section class="so" data-loc-vung="het"><h2 id="so-claim">Sổ claim</h2>
 <p class="dan">Mỗi khẳng định của bài này một dòng, kèm điều gì sẽ bác bỏ nó. Trạng thái đổi thì sửa tại đây, và ghi lại ngày. Không dòng nào bị xoá.</p>
-<article class="claim xac" id="C1">
+<article class="claim xac" id="C1" data-st="xac">
   <h3><a class="id" href="#C1">C1</a>
       <span class="chip xac">ĐÃ XÁC NHẬN</span></h3>
   <p style="margin:0">Ngày 16/07, DefiLlama báo phí Uniswap v4 trên Robinhood chain cao hơn 3,9 lần so với phép đếm trực tiếp trên chain ($5.014.570 so với $1.286.386).</p>
@@ -392,7 +535,7 @@ details.lenh summary:hover,details.lenh[open] summary{color:var(--ink)}
   
   <ul class="nk"><li><span class="d">2026-07-26</span>Ghi trước con số mục tiêu $1,286M công khai trong thread, trước khi họ chạy lại. <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5083749092">nguồn</a></li><li><span class="d">2026-07-27</span>Đọc lại API lúc 06:32Z: ngày 16/07 vẫn trả $5.014.570 ⇒ họ chưa tính lại. Claim còn nguyên hiệu lực. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></li><li><span class="d">2026-07-27</span>16:23Z — tác giả bản sửa chạy trọn ngày 16/07 qua adapter hiện tại: $1,313M, chia đều 24 khung giờ, không khung nào hụt dữ liệu. Họ viết ra thành lời: hai phép đo độc lập khớp nhau, chênh chạy đúng chiều mà khác biệt phương pháp dự đoán, và theo đúng tiêu chí tôi ghi trước thì việc này khép lại. <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5093909494">nguồn</a></li><li><span class="d">2026-07-28</span>01:57Z — chuỗi công khai đã đổi thật: 16/07 từ $5.014.570 xuống $1.311.188. Rơi trong khoảng tôi ghi trước, lệch 1,93% so với con số tôi ghi. Điều bác bỏ đã chạy và claim sống sót — đây là lần đầu chuyện đó xảy ra trên kênh này. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></li></ul>
 </article>
-<article class="claim bac" id="C2">
+<article class="claim bac" id="C2" data-st="bac">
   <h3><a class="id" href="#C2">C2</a>
       <span class="chip bac">BỊ BÁC</span></h3>
   <p style="margin:0">Trong chuỗi phí v4 có một cú tụt do ĐỔI CÁCH TÍNH, không phải do thị trường — ước tính ban đầu khoảng 1,63× sau khi chuẩn hoá theo v3.</p>
@@ -402,7 +545,7 @@ details.lenh summary:hover,details.lenh[open] summary{color:var(--ink)}
   
   <ul class="nk"><li><span class="d">2026-07-27</span>Đăng ở mức ước tính ban đầu, kèm 4 giới hạn đã khai trong bài. Chưa có dữ liệu mới.</li><li><span class="d">2026-07-28</span>Điều bác bỏ cũ của tôi HỎNG, và tôi thay nó. Nguyên văn bản cũ: &quot;Sau khi DefiLlama tính lại xong, nếu chuỗi mới vẫn khớp chuỗi cũ trong biên ±10% thì nhận định &#x27;cú tụt này do đổi cách tính&#x27; HẾT HIỆU LỰC.&quot; Hôm nay chuỗi mới khớp chuỗi cũ tới từng đơn vị ở 7/7 ngày của nhóm trước — nhưng khớp vì họ CHƯA tính lại ngày nào trong nhóm đó, không phải vì tính lại rồi mà số không đổi. Câu tôi viết cho phép sự im lặng của bên kia được đọc thành bằng chứng chống lại chính tôi. Một phép thử mà bên kia không làm gì cũng &#x27;chạy&#x27; được thì không phải phép thử. Bản thay ở trên đòi số phải thực sự được tính lại mới tính là chạy.</li><li><span class="d">2026-07-28</span>Dữ kiện mới, và tôi ghi kèm giới hạn của nó: 16/07 là ngày duy nhất được tính lại, và nó tụt 3,82× dưới cách tính mới. Đó là một ngày TRƯỚC mốc 24/07 tụt rất mạnh khi đổi cách tính — đúng chiều claim này. Nhưng đúng MỘT ngày, và lại là ngày cao nhất cả chuỗi, nên nó không đủ để nói các ngày còn lại tụt bao nhiêu. Tôi không tính nó là đã xác nhận. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></li><li><span class="d">2026-07-28</span>ĐIỀU BÁC BỎ ĐÃ CHẠY, VÀ CLAIM NÀY ĐỔ. Đọc lại lúc 09:36Z: cả 7 ngày 17–23/07 đều đã được tính lại bằng adapter mới, và trung vị (số cũ ÷ số mới) trên đúng 7 ngày đó là 0,93 — dưới ngưỡng 1,1 tôi ghi trước, tức số mới nhìn chung còn CAO hơn số cũ khoảng 7%. Đổi cách tính không tạo ra cú tụt, nên nhận định này sai và tôi rút nó. Phần vẫn đứng: cú tụt là thật — sau khi cả hai phía dùng cùng một adapter, phí v4 giảm 2,00 lần trong khi v3 cùng kỳ chỉ giảm 1,21 lần. <a href="https://x.com/blockpinned/status/2082047631786983793">nguồn</a></li></ul>
 </article>
-<article class="claim sua" id="C3">
+<article class="claim sua" id="C3" data-st="sua">
   <h3><a class="id" href="#C3">C3</a>
       <span class="chip sua">ĐÃ SỬA</span></h3>
   <p style="margin:0">Bản sửa của DefiLlama chỉ áp dụng cho dữ liệu từ 24/07 trở đi; lịch sử trước đó chưa được tính lại.</p>
@@ -412,7 +555,7 @@ details.lenh summary:hover,details.lenh[open] summary{color:var(--ink)}
   
   <ul class="nk"><li><span class="d">2026-07-26</span>DefiLlama mở lại issue và cam kết sẽ chạy lại adapter, cập nhật dữ liệu lịch sử. Chưa chốt khoảng ngày: tôi đề xuất 08→24/07, họ dự tính bắt đầu từ 16/07. <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242">nguồn</a></li><li><span class="d">2026-07-27</span>Đọc lại 06:32Z: chưa chạy. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></li><li><span class="d">2026-07-28</span>Điều bác bỏ của chính claim này đã nổ: 16/07 đổi khỏi $5.014.570 ⇒ lịch sử ĐÃ bị chạm ⇒ claim như tôi viết là sai. Nhưng sự thật mới hẹp hơn cả claim lẫn điều bác bỏ, nên tôi ghi ra cho đủ: trong khoảng tính lại họ đã công bố (08→24/07, 17 ngày), đúng MỘT ngày đổi — 16/07, đúng ngày được chạy tay để đối chiếu. 16 ngày còn lại y hệt số hôm qua tới từng đơn vị. Ngày 20/07 mà chính bài này in là lệch 1,39× vẫn đang đứng nguyên ở $1.355.193. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></li></ul>
 </article>
-<article class="claim sua" id="C5">
+<article class="claim sua" id="C5" data-st="sua">
   <h3><a class="id" href="#C5">C5</a>
       <span class="chip sua">ĐÃ SỬA</span></h3>
   <p style="margin:0">Trong khoảng tính lại DefiLlama đã chốt (08→24/07, 17 ngày), tới 28/07 01:57Z đúng MỘT ngày đã đổi số — ngày 16/07. 16 ngày còn lại giống ảnh chụp hôm trước tới từng đơn vị.</p>
@@ -422,7 +565,7 @@ details.lenh summary:hover,details.lenh[open] summary{color:var(--ink)}
   
   <ul class="nk"><li><span class="d">2026-07-27</span>16:23Z — họ chốt khoảng tính lại: 08→24/07 UTC, chỉ Robinhood chain, và nói code không cần sửa gì thêm. <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5093909494">nguồn</a></li><li><span class="d">2026-07-28</span>01:57Z — so từng ngày giữa hai lần đọc: chỉ 16/07 đổi. Ngày 20/07, ngày tôi cũng đã đếm trực tiếp và ra lệch 1,39×, vẫn đứng nguyên ở $1.355.193. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></li><li><span class="d">2026-07-28</span>HẾT HIỆU LỰC, và tôi xử lý đúng cách điều bác bỏ này dặn: ghi ngày rồi sửa dòng này. Đọc lại lúc 09:36Z, tức bảy tiếng rưỡi sau lần đọc trên: TOÀN BỘ 17/17 ngày trong khoảng 08→24/07 đã đổi số so với ảnh chụp 27/07 — 11 ngày trong đó đổi quá 10%, và ngày 20/07 nói ở dòng trên tụt từ $1.355.193 xuống $895.611. Không còn &#x27;mới sửa được một ngày&#x27; nào; câu này chỉ đúng cho đúng lần đọc 01:57Z. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></li></ul>
 </article>
-<article class="claim sua" id="C6">
+<article class="claim sua" id="C6" data-st="sua">
   <h3><a class="id" href="#C6">C6</a>
       <span class="chip sua">ĐÃ SỬA</span></h3>
   <p style="margin:0">Điều bác bỏ tôi tự viết cho claim C2 bị hỏng: nó có thể được coi là đã chạy trong khi bên kia không làm gì cả.</p>
@@ -432,7 +575,7 @@ details.lenh summary:hover,details.lenh[open] summary{color:var(--ink)}
   
   <ul class="nk"><li><span class="d">2026-07-28</span>Bản cũ: &#x27;nếu tính lại xong mà chuỗi mới vẫn khớp chuỗi cũ trong biên ±10% thì nhận định hết hiệu lực.&#x27; Hôm nay chuỗi khớp tới từng đơn vị ở cả 7 ngày của nhóm trước — nhưng khớp vì họ chưa tính lại ngày nào trong nhóm đó. Câu tôi viết cho phép sự im lặng của bên kia được đọc thành bằng chứng, và đọc theo chiều bất lợi cho chính tôi. Bản thay đòi ít nhất 3 ngày thực sự được tính lại mới tính là phép thử đã chạy.</li></ul>
 </article>
-<article class="claim sua" id="C4">
+<article class="claim sua" id="C4" data-st="sua">
   <h3><a class="id" href="#C4">C4</a>
       <span class="chip sua">ĐÃ SỬA</span></h3>
   <p style="margin:0">Trong issue gốc, tôi gọi sai tên cơ chế bảo vệ adapter v2/v3 — viết từ trí nhớ thay vì tra lại code.</p>
@@ -545,5 +688,158 @@ document.querySelectorAll(".han .ngay[data-han]").forEach(function (e) {
 document.querySelectorAll("button.dolai").forEach(function (b) {
   b.addEventListener("click", function () { doLai(b); });
 });
+</script>
+<script>
+// Tầng hiệu ứng. BA luật tự đặt, kiểm được bằng cách tắt JS rồi mở lại trang:
+//  ① KHÔNG con số nào do JS sinh ra. Mọi chữ số đã nằm trong HTML từ lúc dựng; tầng
+//     này chỉ đổi độ mờ, vị trí, và ẩn/hiện dòng. (Hiệu ứng đếm-lên bị bỏ 05/08 vì
+//     trong ~0,9s nó in ra những con số CHƯA TỪNG ĐO — NOTES §3.)
+//  ② Tắt JS thì trang vẫn ĐỦ: thanh đứng ở đúng tỉ lệ, mọi dòng hiện, chú giải đọc
+//     được, dải bài vẫn vuốt ngang được bằng ngón tay.
+//  ③ Người xin giảm chuyển động không mất chức năng nào — chỉ mất phần chạy.
+(function(){
+  var goc=document.documentElement, chuyen=goc.classList.contains('chuyen');
+
+  // ── hiện dần + thanh xếp chồng chạy từ 0 khi khối lọt tầm mắt
+  function mo(e){
+    e.classList.add('hien');
+    e.querySelectorAll('.stack').forEach(function(s){s.classList.add('chay')});
+  }
+  var khoi=document.querySelectorAll('[data-hien]');
+  // 🔴 threshold PHẢI là 0. Bản đầu để .12 — tức "12% DIỆN TÍCH KHỐI phải lọt tầm
+  // mắt" — và nó im lặng nuốt đúng khối quan trọng nhất: danh sách claim cao gấp
+  // nhiều lần màn hình, nên 12% của nó không bao giờ lọt và khối nằm ở opacity 0
+  // vĩnh viễn. Ngưỡng tính theo diện tích PHẦN TỬ chứ không theo màn hình, nên khối
+  // càng dài thì luật càng dễ ăn mất nó. Đo được ở ảnh chụp khổ điện thoại 06/08.
+  if(chuyen&&window.IntersectionObserver){
+    var xem=new IntersectionObserver(function(ds,o){
+      ds.forEach(function(m){if(m.isIntersecting){mo(m.target);o.unobserve(m.target)}});
+    },{rootMargin:'0px 0px -6% 0px',threshold:0});
+    khoi.forEach(function(e){xem.observe(e)});
+    // 🔴 LƯỚI AN TOÀN, không phải phần trang trí: nếu vì bất cứ lý do gì mà lượt gọi
+    // của bộ theo dõi không chạy (ảnh chụp máy, trình duyệt lạ, tab nền), khối sẽ nằm
+    // ở opacity 0 VĨNH VIỄN — tức hiệu ứng làm mất nội dung. Xác 06/08: ảnh chụp khổ
+    // điện thoại của chính cổng preview ra một trang trắng từ khối thứ hai trở xuống.
+    // Sau 3 giây thì hiện hết, bất kể có ai cuộn hay không.
+    setTimeout(function(){khoi.forEach(mo)},3000);
+  }else{ khoi.forEach(mo); }
+  // thanh nằm ngoài mọi khối [data-hien] vẫn phải ở đúng tỉ lệ, không đứng ở 0
+  document.querySelectorAll('.stack').forEach(function(s){
+    if(!s.closest('[data-hien]'))s.classList.add('chay');
+  });
+
+  // ── LỌC theo trạng thái. Chú giải của thanh CHÍNH LÀ bộ lọc — không dựng bộ điều
+  //    khiển thứ hai, vì hai bộ là hai bản sẽ trôi lệch. Vùng đích tự khai bằng
+  //    data-loc-vung, và giá trị của nó là bộ lọc mặc định của trang đó.
+  var vung=document.querySelector('[data-loc-vung]');
+  if(vung){
+    var macDinh=vung.getAttribute('data-loc-vung'),
+        nut=document.querySelectorAll('button[data-loc]'),
+        dong=vung.querySelectorAll('[data-st]'),
+        lo=document.getElementById('loc-lo'), dangLoc=null;
+    var ap=function(loc){
+      var n=0;
+      dong.forEach(function(d){
+        var hien = loc==='het' ? true
+                 : loc==='doi' ? d.getAttribute('data-doi')==='1'
+                 : d.getAttribute('data-st')===loc;
+        d.hidden=!hien; if(hien)n++;
+      });
+      nut.forEach(function(b){
+        b.setAttribute('aria-pressed',b.getAttribute('data-loc')===loc?'true':'false');
+      });
+      if(lo)lo.textContent=n+(n===1?' dòng':' dòng')+' đang hiện';
+      dangLoc=loc;
+    };
+    nut.forEach(function(b){
+      b.addEventListener('click',function(){
+        var l=b.getAttribute('data-loc');
+        ap(l===dangLoc?macDinh:l);           // bấm lại chip đang bật = quay về mặc định
+      });
+    });
+    document.querySelectorAll('.stack .seg[data-loc]').forEach(function(s){
+      s.addEventListener('click',function(){
+        var l=s.getAttribute('data-loc'); ap(l===dangLoc?macDinh:l);
+      });
+    });
+    ap(macDinh);
+  }
+
+  // ── NỐI HAI KHỐI BẰNG MẮT: rê chuột lên một dòng claim thì đoạn thanh của trạng
+  //    thái đó sáng lên; rê lên một đoạn thanh thì những dòng KHÁC trạng thái mờ đi.
+  //    Hai khối vốn nói về cùng một tập số — người đọc không phải tự bắc cầu.
+  function soi(st){
+    document.querySelectorAll('.stack').forEach(function(s){
+      if(st) s.setAttribute('data-noi',st); else s.removeAttribute('data-noi');
+    });
+  }
+  function mo_dong(st){
+    document.querySelectorAll('[data-st]').forEach(function(d){
+      d.classList.toggle('roi', !!st && d.getAttribute('data-st') !== st);
+    });
+  }
+  document.querySelectorAll('[data-st]').forEach(function(d){
+    d.addEventListener('mouseenter',function(){soi(d.getAttribute('data-st'))});
+    d.addEventListener('mouseleave',function(){soi('')});
+  });
+  document.querySelectorAll('.stack .seg[data-loc]').forEach(function(s){
+    s.addEventListener('mouseenter',function(){mo_dong(s.getAttribute('data-loc'))});
+    s.addEventListener('mouseleave',function(){mo_dong('')});
+  });
+
+  // ── vạch tiến trình đọc. Nó KHÔNG phải một con số — chỉ là chỗ đang đứng trong
+  //    trang, thứ trình duyệt vốn đã biết.
+  var tien=document.createElement('div'); tien.id='bp-tien'; document.body.appendChild(tien);
+  var capTien=function(){
+    var h=document.documentElement.scrollHeight-innerHeight;
+    tien.style.transform='scaleX('+(h>0?Math.min(scrollY/h,1):0)+')';
+  };
+  addEventListener('scroll',capTien,{passive:true});
+  addEventListener('resize',capTien); capTien();
+
+  // ── chú giải bay trên từng đoạn thanh (thay tooltip mặc định: nó chờ một giây
+  //    rồi mới hiện, và ở nền tối nó trắng bệch)
+  var tip=null;
+  document.querySelectorAll('[data-tip]').forEach(function(e){
+    e.addEventListener('mouseenter',function(){
+      if(!tip){tip=document.createElement('div');tip.id='bp-tip';document.body.appendChild(tip)}
+      tip.textContent=e.getAttribute('data-tip');
+      var r=e.getBoundingClientRect();
+      tip.style.transform='translate(-50%,-118%)';
+      tip.style.left=Math.min(Math.max(r.left+r.width/2,70),innerWidth-70)+'px';
+      tip.style.top=r.top+'px';
+      tip.classList.add('hien');
+    });
+    e.addEventListener('mouseleave',function(){if(tip)tip.classList.remove('hien')});
+  });
+
+  // ── dải bài: mũi tên cuộn đúng MỘT thẻ (đo bằng khoảng cách thật giữa hai thẻ,
+  //    không gõ cứng bề rộng — gõ cứng là một con số thứ hai sẽ trôi lệch với CSS)
+  var rail=document.getElementById('rail');
+  if(rail){
+    var nutR=document.querySelectorAll('button[data-rail]'),
+        the=rail.querySelectorAll('.bai');
+    var buoc=function(){
+      if(the.length>1)return the[1].offsetLeft-the[0].offsetLeft;
+      return the.length?the[0].getBoundingClientRect().width:280;
+    };
+    var capNhat=function(){
+      var het=rail.scrollWidth-rail.clientWidth-2;
+      nutR.forEach(function(b){
+        b.disabled = +b.getAttribute('data-rail')<0 ? rail.scrollLeft<=2 : rail.scrollLeft>=het;
+      });
+      rail.parentNode.classList.toggle('het', rail.scrollLeft>=het);
+    };
+    nutR.forEach(function(b){
+      b.addEventListener('click',function(){
+        rail.scrollBy({left:buoc()*(+b.getAttribute('data-rail')),
+                       behavior:chuyen?'smooth':'auto'});
+      });
+    });
+    rail.addEventListener('scroll',capNhat,{passive:true});
+    addEventListener('resize',capNhat);
+    capNhat();
+  }
+})();
 </script>
 </body></html>
