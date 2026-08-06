@@ -55,7 +55,20 @@ button.nut-nen{font:500 12px/1 var(--mono);background:var(--card);border:1px sol
 button.nut-nen:hover{color:var(--ink);border-color:var(--muted)}
 .tag{font:500 11px/1 var(--mono);letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
 @media(max-width:760px){.tag{display:none}}
-@media(max-width:640px){nav.dieu a:not(.tai){display:none}}
+/* 🔴 KHỔ ĐIỆN THOẠI PHẢI THẤY ĐỦ MỤC. Luật cũ ở đây là `nav.dieu a:not(.tai){display:none}`
+   — tức trên điện thoại thanh điều hướng chỉ hiện đúng mục ĐANG MỞ, và người vào bằng
+   điện thoại không có cách nào biết Facts · Track record · Token tồn tại. Bản đồ của cả
+   site vô hình ở đúng thiết bị phần lớn người đọc dùng (user bắt 06/08). Nay thanh rơi
+   xuống hàng thứ hai và CUỘN NGANG — không mục nào bị giấu. */
+@media(max-width:640px){
+  .dau .khung{gap:8px 10px}
+  nav.dieu{order:3;width:100%;margin-left:0;overflow-x:auto;padding:1px 0 3px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    -webkit-mask-image:linear-gradient(90deg,#000 88%,transparent)}
+  nav.dieu::-webkit-scrollbar{display:none}
+  nav.dieu a{flex:none;white-space:nowrap}
+  button.nut-nen{order:2;margin-left:auto}
+}
 
 h1{font:var(--dw) clamp(28px,5.2vw,40px)/1.14 var(--display);letter-spacing:-.025em;margin:0 0 16px;text-wrap:balance}
 /* Câu mở đầu to hơn phần thân một bậc và nhạt hơn — nó là lời chào, không phải nội
@@ -174,6 +187,8 @@ html.js .lg-loc{cursor:pointer}
 .lg-loc[aria-pressed="true"]{color:var(--nut-chu);background:var(--nut-nen);border-color:transparent}
 .lg-loc[aria-pressed="true"] .n{color:var(--nut-chu)}
 .tt-dau .lo{font:500 12px/1.6 var(--mono);color:var(--faint)}
+.mo-them{margin-top:10px;width:100%;justify-content:center}
+.mo-them[hidden]{display:none}
 ol.tt-ds{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
 ol.tt-ds li{--st:var(--accent)}
 ol.tt-ds li.xac{--st:var(--c-xn)}ol.tt-ds li.song{--st:var(--c-song)}
@@ -193,7 +208,10 @@ ol.tt-ds .tx{font:500 15px/1.6 var(--body);color:var(--ink);
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 ol.tt-ds .mt{font:500 11.5px/1.55 var(--mono);color:var(--faint)}
 @media(max-width:620px){.tt-hop{grid-template-columns:minmax(0,1fr)}
-  ol.tt-ds .chip{grid-row:auto;justify-self:start;margin-bottom:3px}}
+  ol.tt-ds .chip{grid-row:auto;justify-self:start;margin-bottom:3px}
+  /* dòng chú thích gói về MỘT hàng: hai hàng × 8 dòng là gần một màn hình điện
+     thoại, mà nó chỉ là nhãn — tiêu đề bài đầy đủ nằm ở đầu bài, không mất đi đâu */
+  ol.tt-ds .mt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
 
 /* ── TỦ KÍNH: dòng mở ra được. Đóng thì gọn như trang chủ; mở thì có đủ ghim, điều
    bác bỏ, và nút đo lại nếu dòng đó gọi lại được ── */
@@ -224,8 +242,47 @@ details.tu-so[open] .tx{-webkit-line-clamp:9}
   details.tu-so .chip,details.tu-so .tx,details.tu-so .mt{grid-column:1}
   details.tu-so .mui{grid-row:1;grid-column:2;align-self:start}}
 
-/* ── HAI CỬA: track record + facts. Cỡ thẻ = lời khai về mức quan trọng ── */
+/* ── BẢN ĐỒ SITE: hàng ô ngang ở màn hình đầu. Người lạ phải thấy trang có gì
+   TRƯỚC khi phải cuộn — đo được: bản trước, mục Bài nằm ở 3.421px trên khổ điện
+   thoại, tức 4,2 màn hình mới tới ── */
+.ban-do{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 8px}
+.o-map{position:relative;flex:1 1 235px;display:flex;flex-direction:column;gap:3px;
+  overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:15px 17px 14px;text-decoration:none;
+  transition:transform .18s,border-color .18s,box-shadow .18s}
+.o-map::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--accent)}
+.o-map::after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(320px 120px at 85% -26px,color-mix(in srgb,var(--accent) 13%,transparent),transparent 72%)}
+.o-map:hover{transform:translateY(-2px);text-decoration:none;color:var(--ink);
+  border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
+  box-shadow:0 2px 4px rgba(0,0,0,.05),0 16px 34px -24px rgba(0,0,0,.7)}
+.o-map>*{position:relative}
+.o-map .k{font:700 10.5px/1.5 var(--mono);letter-spacing:.16em;color:var(--accent)}
+.o-map .v{font:700 27px/1.15 var(--mono);letter-spacing:-.03em;color:var(--ink)}
+.o-map .g{font:400 12.5px/1.5 var(--body);color:var(--muted);padding-right:22px}
+.o-map .mui{position:absolute;right:15px;bottom:12px;font-size:17px;color:var(--muted);
+  transition:transform .18s,color .18s}
+.o-map:hover .mui{transform:translateX(4px);color:var(--accent)}
+/* Khổ điện thoại: HAI cột, không phải năm ô xếp dọc — xếp dọc thì chính cái bản đồ
+   lại thành một đoạn phải cuộn, tức nó tự phản lại lý do nó tồn tại (đo: 607px).
+   Ô lẻ cuối cùng trải hết hàng để không có ô mồ côi. */
+@media(max-width:620px){
+  .ban-do{gap:9px}
+  .o-map{flex:1 1 calc(50% - 5px);padding:13px 14px 12px}
+  .o-map .v{font-size:23px}
+  .o-map .g{font-size:11.5px;padding-right:16px}
+  .o-map .mui{right:12px;bottom:10px;font-size:15px}
+  .o-map:last-child:nth-child(odd){flex-basis:100%}
+}
+
+/* ── THẺ CỬA lớn — nay là khuôn của MỤC LỤC TOKEN ── */
 .cua{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0 0}
+.cua-3{grid-template-columns:repeat(auto-fit,minmax(262px,1fr))}
+.cua-o .mini{margin:3px 0 0;display:flex;gap:2px;height:6px;border-radius:3px;
+  overflow:hidden;background:var(--inset)}
+.cua-o.tok .t{font-size:clamp(17px,2vw,19px)}
+.cua-o.tok .n{margin:0;padding:0;border-top:0}
+.cua-o.tok .g{margin-top:auto;padding:11px 30px 0 0;border-top:1px solid var(--line-soft)}
 @media(max-width:760px){.cua{grid-template-columns:1fr}}
 .cua-o{position:relative;display:flex;flex-direction:column;gap:9px;overflow:hidden;
   background:var(--card);border:1px solid var(--line);border-radius:16px;
@@ -512,7 +569,7 @@ html.chuyen [data-hien].hien{opacity:1;transform:none}
   <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
   <a class="ten" href="../">Block<span>Pinned</span></a>
   <span class="tag">số nào cũng truy ngược được</span>
-  <nav class="dieu"><a href="../">Sổ gốc</a><a href="../facts/" class="tai">Facts</a><a href="../track-record/">Track record</a><a href="../token/uni/">Token</a><a href="../du-lieu/">Dữ liệu</a><button class="nut-nen" id="nut-nen" type="button" title="Đổi nền sáng/tối" aria-label="Đổi nền sáng/tối">☀ / ☾</button></nav>
+  <nav class="dieu"><a href="../">Sổ gốc</a><a href="../token/">Token</a><a href="../track-record/">Track record</a><a href="../facts/" class="tai">Facts</a><button class="nut-nen" id="nut-nen" type="button" title="Đổi nền sáng/tối" aria-label="Đổi nền sáng/tối">☀ / ☾</button></nav>
 </div></header>
 <main class="khung"><h1>Một con số, một block, một lệnh để bạn tự kiểm</h1><div class="dem"><span class="to">5</span> fact · mới nhất trước</div><p class="dan">Fact ngắn hơn bài: không lập luận dài, chỉ một phép đo đứng một mình. Mỗi mục ghi rõ <b>đo tại block nào</b>, <b>lệnh nào đọc lại được</b>, và — quan trọng không kém — <b>nó KHÔNG nói điều gì</b>. Cái nào cần giải thích dài hơn một dòng thì nó là một bài.</p><section class="so"><article class="fact" id="morpho-10-xu-1-ty">
   <div class="f-top co-fig">
@@ -741,21 +798,35 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     var macDinh=vung.getAttribute('data-loc-vung'),
         nut=document.querySelectorAll('button[data-loc]'),
         dong=vung.querySelectorAll('[data-st]'),
-        lo=document.getElementById('loc-lo'), dangLoc=null;
+        lo=document.getElementById('loc-lo'), dangLoc=null,
+        them=document.getElementById('mo-them'),
+        cap=parseInt(vung.getAttribute('data-cap')||'0',10), moRong=false;
+    // Màn hẹp cắt sâu hơn: cùng 5 dòng đó trên điện thoại cao gần một màn rưỡi, mà
+    // thứ user muốn thấy sớm là BÀI. Ba dòng đủ để hiểu khối này là gì.
+    if(cap&&matchMedia('(max-width:620px)').matches)cap=3;
     var ap=function(loc){
-      var n=0;
+      var n=0;                       // số dòng KHỚP bộ lọc
       dong.forEach(function(d){
-        var hien = loc==='het' ? true
+        var khop = loc==='het' ? true
                  : loc==='doi' ? d.getAttribute('data-doi')==='1'
                  : d.getAttribute('data-st')===loc;
-        d.hidden=!hien; if(hien)n++;
+        if(khop)n++;
+        // cắt bớt là việc của TẦNG NHÌN: dòng bị cắt vẫn nằm trong trang, vẫn tìm
+        // được bằng Ctrl+F sau khi bấm mở, và số trên nút là số thật của bộ lọc.
+        d.hidden = !khop || (cap && !moRong && n>cap);
       });
       nut.forEach(function(b){
         b.setAttribute('aria-pressed',b.getAttribute('data-loc')===loc?'true':'false');
       });
-      if(lo)lo.textContent=n+(n===1?' dòng':' dòng')+' đang hiện';
+      var hien = (cap && !moRong) ? Math.min(n,cap) : n;
+      if(lo)lo.textContent = hien<n ? hien+'/'+n+' dòng đang hiện' : n+' dòng đang hiện';
+      if(them){
+        them.hidden = !cap || n<=cap;
+        them.textContent = moRong ? 'Thu gọn' : 'Xem tất cả '+n+' dòng';
+      }
       dangLoc=loc;
     };
+    if(them)them.addEventListener('click',function(){moRong=!moRong;ap(dangLoc)});
     nut.forEach(function(b){
       b.addEventListener('click',function(){
         var l=b.getAttribute('data-loc');

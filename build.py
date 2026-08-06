@@ -543,7 +543,20 @@ button.nut-nen{font:500 12px/1 var(--mono);background:var(--card);border:1px sol
 button.nut-nen:hover{color:var(--ink);border-color:var(--muted)}
 .tag{font:500 11px/1 var(--mono);letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
 @media(max-width:760px){.tag{display:none}}
-@media(max-width:640px){nav.dieu a:not(.tai){display:none}}
+/* 🔴 KHỔ ĐIỆN THOẠI PHẢI THẤY ĐỦ MỤC. Luật cũ ở đây là `nav.dieu a:not(.tai){display:none}`
+   — tức trên điện thoại thanh điều hướng chỉ hiện đúng mục ĐANG MỞ, và người vào bằng
+   điện thoại không có cách nào biết Facts · Track record · Token tồn tại. Bản đồ của cả
+   site vô hình ở đúng thiết bị phần lớn người đọc dùng (user bắt 06/08). Nay thanh rơi
+   xuống hàng thứ hai và CUỘN NGANG — không mục nào bị giấu. */
+@media(max-width:640px){
+  .dau .khung{gap:8px 10px}
+  nav.dieu{order:3;width:100%;margin-left:0;overflow-x:auto;padding:1px 0 3px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    -webkit-mask-image:linear-gradient(90deg,#000 88%,transparent)}
+  nav.dieu::-webkit-scrollbar{display:none}
+  nav.dieu a{flex:none;white-space:nowrap}
+  button.nut-nen{order:2;margin-left:auto}
+}
 
 h1{font:var(--dw) clamp(28px,5.2vw,40px)/1.14 var(--display);letter-spacing:-.025em;margin:0 0 16px;text-wrap:balance}
 /* Câu mở đầu to hơn phần thân một bậc và nhạt hơn — nó là lời chào, không phải nội
@@ -662,6 +675,8 @@ html.js .lg-loc{cursor:pointer}
 .lg-loc[aria-pressed="true"]{color:var(--nut-chu);background:var(--nut-nen);border-color:transparent}
 .lg-loc[aria-pressed="true"] .n{color:var(--nut-chu)}
 .tt-dau .lo{font:500 12px/1.6 var(--mono);color:var(--faint)}
+.mo-them{margin-top:10px;width:100%;justify-content:center}
+.mo-them[hidden]{display:none}
 ol.tt-ds{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
 ol.tt-ds li{--st:var(--accent)}
 ol.tt-ds li.xac{--st:var(--c-xn)}ol.tt-ds li.song{--st:var(--c-song)}
@@ -681,7 +696,10 @@ ol.tt-ds .tx{font:500 15px/1.6 var(--body);color:var(--ink);
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 ol.tt-ds .mt{font:500 11.5px/1.55 var(--mono);color:var(--faint)}
 @media(max-width:620px){.tt-hop{grid-template-columns:minmax(0,1fr)}
-  ol.tt-ds .chip{grid-row:auto;justify-self:start;margin-bottom:3px}}
+  ol.tt-ds .chip{grid-row:auto;justify-self:start;margin-bottom:3px}
+  /* dòng chú thích gói về MỘT hàng: hai hàng × 8 dòng là gần một màn hình điện
+     thoại, mà nó chỉ là nhãn — tiêu đề bài đầy đủ nằm ở đầu bài, không mất đi đâu */
+  ol.tt-ds .mt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
 
 /* ── TỦ KÍNH: dòng mở ra được. Đóng thì gọn như trang chủ; mở thì có đủ ghim, điều
    bác bỏ, và nút đo lại nếu dòng đó gọi lại được ── */
@@ -712,8 +730,47 @@ details.tu-so[open] .tx{-webkit-line-clamp:9}
   details.tu-so .chip,details.tu-so .tx,details.tu-so .mt{grid-column:1}
   details.tu-so .mui{grid-row:1;grid-column:2;align-self:start}}
 
-/* ── HAI CỬA: track record + facts. Cỡ thẻ = lời khai về mức quan trọng ── */
+/* ── BẢN ĐỒ SITE: hàng ô ngang ở màn hình đầu. Người lạ phải thấy trang có gì
+   TRƯỚC khi phải cuộn — đo được: bản trước, mục Bài nằm ở 3.421px trên khổ điện
+   thoại, tức 4,2 màn hình mới tới ── */
+.ban-do{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 8px}
+.o-map{position:relative;flex:1 1 235px;display:flex;flex-direction:column;gap:3px;
+  overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:15px 17px 14px;text-decoration:none;
+  transition:transform .18s,border-color .18s,box-shadow .18s}
+.o-map::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--accent)}
+.o-map::after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(320px 120px at 85% -26px,color-mix(in srgb,var(--accent) 13%,transparent),transparent 72%)}
+.o-map:hover{transform:translateY(-2px);text-decoration:none;color:var(--ink);
+  border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
+  box-shadow:0 2px 4px rgba(0,0,0,.05),0 16px 34px -24px rgba(0,0,0,.7)}
+.o-map>*{position:relative}
+.o-map .k{font:700 10.5px/1.5 var(--mono);letter-spacing:.16em;color:var(--accent)}
+.o-map .v{font:700 27px/1.15 var(--mono);letter-spacing:-.03em;color:var(--ink)}
+.o-map .g{font:400 12.5px/1.5 var(--body);color:var(--muted);padding-right:22px}
+.o-map .mui{position:absolute;right:15px;bottom:12px;font-size:17px;color:var(--muted);
+  transition:transform .18s,color .18s}
+.o-map:hover .mui{transform:translateX(4px);color:var(--accent)}
+/* Khổ điện thoại: HAI cột, không phải năm ô xếp dọc — xếp dọc thì chính cái bản đồ
+   lại thành một đoạn phải cuộn, tức nó tự phản lại lý do nó tồn tại (đo: 607px).
+   Ô lẻ cuối cùng trải hết hàng để không có ô mồ côi. */
+@media(max-width:620px){
+  .ban-do{gap:9px}
+  .o-map{flex:1 1 calc(50% - 5px);padding:13px 14px 12px}
+  .o-map .v{font-size:23px}
+  .o-map .g{font-size:11.5px;padding-right:16px}
+  .o-map .mui{right:12px;bottom:10px;font-size:15px}
+  .o-map:last-child:nth-child(odd){flex-basis:100%}
+}
+
+/* ── THẺ CỬA lớn — nay là khuôn của MỤC LỤC TOKEN ── */
 .cua{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0 0}
+.cua-3{grid-template-columns:repeat(auto-fit,minmax(262px,1fr))}
+.cua-o .mini{margin:3px 0 0;display:flex;gap:2px;height:6px;border-radius:3px;
+  overflow:hidden;background:var(--inset)}
+.cua-o.tok .t{font-size:clamp(17px,2vw,19px)}
+.cua-o.tok .n{margin:0;padding:0;border-top:0}
+.cua-o.tok .g{margin-top:auto;padding:11px 30px 0 0;border-top:1px solid var(--line-soft)}
 @media(max-width:760px){.cua{grid-template-columns:1fr}}
 .cua-o{position:relative;display:flex;flex-direction:column;gap:9px;overflow:hidden;
   background:var(--card);border:1px solid var(--line);border-radius:16px;
@@ -1122,10 +1179,19 @@ TU_KINH_DUONG = f"token/{TU_KINH.lower()}/"
 # Mục trên thanh điều hướng — dựng từ ĐÂY, không gõ tay ở từng trang. Trang nào chưa
 # tồn tại thì main() tắt mục đó: cổng ⑪ (liên kết) sẽ chặn build nếu một mục trỏ vào
 # thư mục không có index.html, và đó là hành vi đúng.
-MUC_DIEU_HUONG = [("", "Sổ gốc"), ("facts/", "Facts"),
-                  ("track-record/", "Track record"), (TU_KINH_DUONG, "Token"),
-                  ("du-lieu/", "Dữ liệu")]
-CO_TRANG = {"facts/": False, "track-record/": False, TU_KINH_DUONG: False, "du-lieu/": False}
+#
+# 🔴 06/08 vòng 3, hai đổi do user quyết:
+#  ① Mục "Token" trỏ `/token/` (MỤC LỤC) chứ không trỏ thẳng tủ kính UNI. Tủ kính chỉ
+#    mở cho token đủ sàn, nhưng bản đồ phải chở ĐỦ token — nếu không thì HYPE và
+#    PENDLE biến mất khỏi site dù bài của chúng vẫn sống.
+#  ② `/du-lieu/` RỜI thanh điều hướng, URL giữ nguyên. Lý do đo được: 3 file ở đó đều
+#    thuộc đúng MỘT bài (#7), tức nó phủ 1/8 số bài mà lại đứng ngang hàng Facts và
+#    Track record — mục nav hứa nhiều hơn cái nó chở. Nay nó được dẫn từ chỗ nó thuộc
+#    về: ô Dữ liệu trong bản đồ trang chủ, và link trong chính bài #7.
+MUC_DIEU_HUONG = [("", "Sổ gốc"), ("token/", "Token"),
+                  ("track-record/", "Track record"), ("facts/", "Facts")]
+CO_TRANG = {"facts/": False, "track-record/": False, "token/": False,
+            TU_KINH_DUONG: False, "du-lieu/": False}
 
 # Nút đổi nền. Trang KHÔNG phụ thuộc nó: mặc định đọc prefers-color-scheme của máy,
 # nút chỉ ghi đè và nhớ lựa chọn. Tắt JS thì mất nút, không mất nền tối.
@@ -1196,21 +1262,35 @@ JS_HIEU_UNG = """
     var macDinh=vung.getAttribute('data-loc-vung'),
         nut=document.querySelectorAll('button[data-loc]'),
         dong=vung.querySelectorAll('[data-st]'),
-        lo=document.getElementById('loc-lo'), dangLoc=null;
+        lo=document.getElementById('loc-lo'), dangLoc=null,
+        them=document.getElementById('mo-them'),
+        cap=parseInt(vung.getAttribute('data-cap')||'0',10), moRong=false;
+    // Màn hẹp cắt sâu hơn: cùng 5 dòng đó trên điện thoại cao gần một màn rưỡi, mà
+    // thứ user muốn thấy sớm là BÀI. Ba dòng đủ để hiểu khối này là gì.
+    if(cap&&matchMedia('(max-width:620px)').matches)cap=3;
     var ap=function(loc){
-      var n=0;
+      var n=0;                       // số dòng KHỚP bộ lọc
       dong.forEach(function(d){
-        var hien = loc==='het' ? true
+        var khop = loc==='het' ? true
                  : loc==='doi' ? d.getAttribute('data-doi')==='1'
                  : d.getAttribute('data-st')===loc;
-        d.hidden=!hien; if(hien)n++;
+        if(khop)n++;
+        // cắt bớt là việc của TẦNG NHÌN: dòng bị cắt vẫn nằm trong trang, vẫn tìm
+        // được bằng Ctrl+F sau khi bấm mở, và số trên nút là số thật của bộ lọc.
+        d.hidden = !khop || (cap && !moRong && n>cap);
       });
       nut.forEach(function(b){
         b.setAttribute('aria-pressed',b.getAttribute('data-loc')===loc?'true':'false');
       });
-      if(lo)lo.textContent=n+(n===1?' dòng':' dòng')+' đang hiện';
+      var hien = (cap && !moRong) ? Math.min(n,cap) : n;
+      if(lo)lo.textContent = hien<n ? hien+'/'+n+' dòng đang hiện' : n+' dòng đang hiện';
+      if(them){
+        them.hidden = !cap || n<=cap;
+        them.textContent = moRong ? 'Thu gọn' : 'Xem tất cả '+n+' dòng';
+      }
       dangLoc=loc;
     };
+    if(them)them.addEventListener('click',function(){moRong=!moRong;ap(dangLoc)});
     nut.forEach(function(b){
       b.addEventListener('click',function(){
         var l=b.getAttribute('data-loc');
@@ -1658,47 +1738,82 @@ def bang_diem(moi: list) -> str:
             f'<button class="lg-loc" type="button" data-loc="het">Cả sổ '
             f'<span class="n">{len(moi)}</span></button></div>'
             f'<span class="lo" id="loc-lo"></span></div>'
-            f'<ol class="tt-ds" id="tt-ds" data-loc-vung="doi">{hang}</ol></div>')
+            # 🔴 CẮT CÒN 5 DÒNG. Trang chủ trước đó in cả 8 dòng "đã đổi" (và 35 dòng
+            # nếu bấm "Cả sổ") ngay giữa trang, đẩy mục Bài xuống 4,2 màn hình trên
+            # điện thoại — user đo bằng chính ngón tay mình. Danh sách đầy đủ vẫn ở
+            # đây, sau đúng một lượt bấm; số trên nút là số THẬT, không phải "xem thêm".
+            f'<ol class="tt-ds" id="tt-ds" data-loc-vung="doi" data-cap="5">{hang}</ol>'
+            f'<button class="lg-loc mo-them" type="button" id="mo-them" hidden></button></div>')
 
 
-def cua_vao(gt: list, facts: list) -> str:
-    """Hai CỬA lớn thay hai dòng link chữ.
+def ban_do(so_bai: int, so_token: int, gt: list, facts: list, so_hien_vat: int) -> str:
+    """BẢN ĐỒ SITE — hàng ô ngang ở màn hình đầu trang chủ.
 
-    User 06/08, chỉ vào đúng hai dòng đó: *"cái này nên làm bự lên, thành 2 ô đẹp để
-    giới thiệu mỗi ô"*. Và đó là một lỗi bố cục thật, không phải gu: `/track-record/`
-    với `/facts/` là hai trang mạnh nhất site có — một trang chở những lần dán số ra
-    TRƯỚC khi biết đáp án, một trang chở những phát biểu kiểm lại được bằng đúng một
-    lệnh. Trước bản này cả hai nằm dưới dạng hai dòng gạch chân, cùng cỡ chữ với chú
-    thích, trôi giữa hai khối lớn. Cỡ chữ trên trang là một lời khai về mức quan trọng,
-    và lời khai đó đang nói ngược nội dung.
+    User 06/08, vòng 3: *"làm sao để mà người ngoài nhìn vô biết được trang này có
+    cái gì… ví dụ như vô sổ gốc rồi kéo mãi xuống mới thấy bài viết?"*. Đo trước khi
+    sửa: trên khổ điện thoại, mục **Bài** nằm ở **3.421px** — phải cuộn **4,2 màn
+    hình**. Và thanh điều hướng thì giấu mọi mục không phải mục đang mở khi màn hẹp,
+    nên người vào bằng điện thoại **không thấy** site có những trang nào.
 
-    Số trên mỗi cửa đọc thẳng từ nguồn của trang nó dẫn tới, không gõ tay — hai chỗ
-    cùng giữ một con số là hai chỗ sẽ trôi lệch (`RULES.md §13`).
+    Ô ở đây **thay** hai thẻ lớn Track record/Facts của vòng 2, không đứng cạnh chúng:
+    cùng một link in hai lần ở hai chỗ chính là lỗi *"3 cái gần như bị trùng"* mà user
+    đã bác một vòng trước. Thứ giữ lại từ hai thẻ đó là CHỮ — mỗi ô vẫn mang một câu
+    nói nó là gì, chỉ gọn hơn và đứng sớm hơn ba màn hình.
+
+    Số trên ô đọc từ nguồn của chính mục nó dẫn tới. Ô Dữ liệu nằm đây vì user gỡ nó
+    khỏi thanh điều hướng — gỡ khỏi nav không có nghĩa là giấu.
     """
-    if not gt and not facts:
-        return ""
-    o = []
-    if gt:
-        xong = sum(1 for c in gt if c["status"] != "ĐANG ĐỨNG")
-        o.append(
-            f'<a class="cua-o" href="track-record/">'
-            f'<span class="k">Track record</span>'
-            f'<span class="t">Tôi ghi trước một con số — rồi dán kết quả ngay cạnh nó</span>'
-            f'<span class="g">Chở cả những lần tôi sai và những lần chưa tới ngày. Một bảng '
-            f'chỉ chở lần đúng thì nó nói về tôi, không nói về đối tượng.</span>'
-            f'<span class="n"><b>{len(gt)}</b> lần ghi trước<i></i>'
-            f'<b>{xong}</b> đã có kết quả</span>'
-            f'<span class="mui" aria-hidden="true">→</span></a>')
-    if facts:
-        o.append(
-            f'<a class="cua-o" href="facts/">'
-            f'<span class="k">Facts</span>'
-            f'<span class="t">Mỗi mục một con số, một block, một lệnh để bạn tự đọc lại</span>'
-            f'<span class="g">Không cần tin tôi: chép lệnh, dán vào máy bạn, đọc ra đúng con '
-            f'số đó. Ra số khác cũng là một kết quả — và tôi muốn biết.</span>'
-            f'<span class="n"><b>{len(facts)}</b> fact<i></i>mỗi cái một lệnh chạy lại được</span>'
-            f'<span class="mui" aria-hidden="true">→</span></a>')
-    return f'<div class="cua" data-hien>{"".join(o)}</div>'
+    o = [("BÀI", so_bai, "sổ claim của từng bài", "#bai"),
+         ("TOKEN", so_token, "hồ sơ theo đối tượng", "token/"),
+         ("GHI TRƯỚC", len(gt), "dán số trước khi biết đáp án", "track-record/"),
+         ("FACTS", len(facts), "một số, một block, một lệnh", "facts/"),
+         ("DỮ LIỆU", so_hien_vat, "file thô, tải về đếm lại", "du-lieu/")]
+    return '<nav class="ban-do" aria-label="Trang này có gì">' + "".join(
+        f'<a class="o-map" href="{d}"><span class="k">{k}</span>'
+        f'<span class="v">{n}</span><span class="g">{g}</span>'
+        f'<span class="mui" aria-hidden="true">→</span></a>'
+        for k, n, g, d in o if n) + "</nav>"
+
+
+def trang_muc_token(tk: dict) -> str:
+    """Mục lục `/token/` — CẢ BỐN token, kể cả token chưa đủ sàn mở tủ kính.
+
+    User 06/08 chốt giữ sàn 3 bài (chỉ UNI có tủ kính), nhưng thêm trang này, và lý do
+    là một luật chứ không phải một trang: **tủ kính có sàn, bản đồ thì không**. Không
+    có trang này thì HYPE và PENDLE biến mất khỏi site dù bài của chúng vẫn sống —
+    site sẽ nói dối về phạm vi của chính nó, bằng cách im lặng.
+
+    Token chưa đủ sàn KHÔNG được dựng một trang trống cho có: nó trỏ thẳng sang bài,
+    và nói rõ còn thiếu mấy bài. Một trang một-bài chỉ là bản chép của bài đó.
+    """
+    hang = []
+    for ma, v in sorted(tk.items(), key=lambda x: (-x[1]["bai"], -x[1]["claim"])):
+        co_tu = ma == TU_KINH and CO_TRANG[TU_KINH_DUONG]
+        dich = f"{TU_KINH.lower()}/" if co_tu else f"../bai/{v['slug_moi']}/"
+        d_num = {k: v["dem"].get(k, 0) for k in TRANG_THAI}
+        thieu = TU_KINH_SAN - v["bai"]
+        hang.append(
+            f'<a class="cua-o tok" href="{dich}">'
+            f'<span class="k">{ma}</span>'
+            f'<span class="t">{TOKEN_TEN[ma]}</span>'
+            f'<span class="n"><b>{v["bai"]}</b> bài<i></i><b>{v["claim"]}</b> khẳng định</span>'
+            f'{thanh_mini(d_num, v["claim"])}'
+            f'<span class="g">'
+            + (f'Mở tủ kính — mọi câu về {TOKEN_TEN[ma]} trên một trang, mỗi câu ghim '
+               f'tại block đã đo.' if co_tu else
+               f'Chưa mở tủ kính: cần {TU_KINH_SAN} bài, đang có {v["bai"]}'
+               f'{" — còn " + str(thieu) + " bài nữa" if thieu > 0 else ""}. '
+               f'Vào thẳng bài mới nhất.')
+            + f'</span><span class="mui" aria-hidden="true">→</span></a>')
+    tong_b = sum(v["bai"] for v in tk.values())
+    tong_c = sum(v["claim"] for v in tk.values())
+    return (f'<p class="crumb">Hồ sơ theo đối tượng</p>'
+            f'<h1>Kênh này đã đo được gì, xếp theo token</h1>'
+            f'<p class="dan">{len(tk)} token · {tong_b} bài · {tong_c} khẳng định. Token nào đủ '
+            f'<b>{TU_KINH_SAN} bài</b> thì có một trang gom mọi câu về nó — mỗi câu giữ nguyên '
+            f'trạng thái hiện tại, kể cả những câu đã đổ. Token chưa đủ thì vào thẳng bài, '
+            f'vì một trang dựng từ một bài chỉ là bản chép của bài đó.</p>'
+            f'<div class="cua cua-3" data-hien>{"".join(hang)}</div>')
 
 
 def thanh_mini(dem: dict, tong: int) -> str:
@@ -2250,6 +2365,9 @@ def main() -> None:
         fm0, _ = front(p.read_text(encoding="utf-8"), f"content/posts/{p.name}")
         dem_token[fm0.get("token", "")] = dem_token.get(fm0.get("token", ""), 0) + 1
     CO_TRANG[TU_KINH_DUONG] = dem_token.get(TU_KINH, 0) >= TU_KINH_SAN
+    # Mục lục token có mặt khi có BẤT KỲ token nào — nó là bản đồ, không phải tủ kính,
+    # nên nó không có sàn. Sàn chỉ chặn việc MỞ MỘT TRANG RIÊNG cho token mỏng.
+    CO_TRANG["token/"] = bool([k for k in dem_token if k])
 
     bai, moi_claim, token_cua = [], [], {}
 
@@ -2330,11 +2448,28 @@ def main() -> None:
     # chủ ý và giữ nguyên (người bấm vào từ X/TG đã đọc bài rồi); thứ đổi là 8 thẻ xếp
     # dọc — chúng đẩy chân trang xuống gần hai màn hình và mỗi thẻ chỉ chở đúng một dòng
     # chữ. Xếp ngang thì cùng chỗ đó chở được thêm một thanh trạng thái cho từng bài.
-    than_i = (f'<h1>{ihtml.escape(fm_i["tagline"])}</h1>' + render(body_i, "content/index.md")
+    # Hồ sơ theo token — gom SAU vòng lặp, dùng cho cả bản đồ trang chủ lẫn `/token/`
+    tk = {}
+    for f, s, n, sg, dm in bai:
+        v = tk.setdefault(token_cua[s],
+                          {"bai": 0, "claim": 0, "dem": {}, "slug_moi": s, "ngay": ""})
+        v["bai"] += 1
+        v["claim"] += n
+        for k, x in dm.items():
+            v["dem"][k] = v["dem"].get(k, 0) + x
+        if str(f["date"]) > v["ngay"]:
+            v["ngay"], v["slug_moi"] = str(f["date"]), s
+
+    # 🔴 THỨ TỰ TRANG CHỦ, vòng 3: bản đồ ĐỨNG ĐẦU (người lạ phải thấy site có gì
+    # trước khi phải cuộn), rồi bảng điểm, rồi BÀI, rồi mốc chờ. Bài dời lên trên
+    # "Sắp phân định" vì user đo bằng chính tay mình: *"vô sổ gốc rồi kéo mãi xuống
+    # mới thấy bài viết"* — 4,2 màn hình trên điện thoại ở bản trước.
+    than_i = (f'<h1>{ihtml.escape(fm_i["tagline"])}</h1>'
+              + ban_do(len(bai), len(tk), gt, facts, len(HIEN_VAT))
+              + render(body_i, "content/index.md")
               + bang_diem(moi_claim)
-              + cua_vao(gt, facts)
-              + sap_phan_dinh(moi_claim)
-              + dai_bai(bai, ""))
+              + dai_bai(bai, "")
+              + sap_phan_dinh(moi_claim))
     if not 60 <= len(fm_i.get("mo_ta", "").strip()) <= 200:
         raise LoiCong("content/index.md thiếu 'mo_ta' 60–200 ký tự — trang chủ là chỗ "
                       "hay bị dán link nhất, để trắng là mất ở đúng cửa")
@@ -2349,6 +2484,21 @@ def main() -> None:
     # trước vòng lặp (thanh điều hướng cần biết sớm). Hai con số phải khớp nhau, và
     # lệch thì CHẶN: nếu lượt quét front matter nói "đủ bài" mà lượt dựng thật lại
     # đếm ra ít hơn sàn, nghĩa là hai lượt đọc cùng một thư mục ra hai kết quả.
+    # Mục lục token — không có sàn, chở đủ mọi token có bài
+    d_mt = OUT / "token"
+    d_mt.mkdir(parents=True, exist_ok=True)
+    ds_tk = " · ".join(f"{m} {v['bai']} bài"
+                       for m, v in sorted(tk.items(), key=lambda x: -x[1]["bai"]))
+    (d_mt / "index.html").write_text(trang(
+        "Token — hồ sơ theo đối tượng — BlockPinned", trang_muc_token(tk), t, "..",
+        muc="token/",
+        meta={"mo_ta": f"Mọi token BlockPinned đã đo, kèm số bài và số khẳng định của "
+                       f"từng cái: {ds_tk}. Token đủ {TU_KINH_SAN} bài thì có trang hồ sơ riêng.",
+              "duong": "/token/", "anh": "avatar-800.png", "loai": "website",
+              "tieu_de_og": "Kênh này đã đo được gì, xếp theo token"}),
+        encoding="utf-8")
+    print(f"  ✓ token/  ·  mục lục {len(tk)} token")
+
     bai_tk = [x for x in bai if token_cua[x[1]] == TU_KINH]
     if CO_TRANG[TU_KINH_DUONG]:
         if len(bai_tk) < TU_KINH_SAN:
@@ -2434,6 +2584,7 @@ def main() -> None:
     # bóng của trang thật — hai URL cùng nội dung, và cái thắng có thể là cái sai.
     if facts:
         loc.append((f"{BASE}/facts/", max(str(f.get("ngay", "")) or ngay_moi for f in facts)))
+    loc.append((f"{BASE}/token/", ngay_moi))
     if CO_TRANG[TU_KINH_DUONG]:
         # lastmod của tủ kính = ngày bài MỚI NHẤT của chính token đó, không phải ngày
         # bài mới nhất của site: trang này chỉ đổi khi hồ sơ token đổi.
