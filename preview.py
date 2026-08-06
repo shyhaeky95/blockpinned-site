@@ -18,6 +18,12 @@ import pathlib, re, shutil, subprocess, sys, tempfile
 
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 SITE = pathlib.Path(__file__).parent
+# 🔴 ĐỌC TÊN HỆ TỪ CHÍNH build.py, không giữ bản sao. Xác 06/08/2026: site đã sang hệ
+# `d2` từ commit ac0d11b, còn dòng mặc định ở đây vẫn đứng ở `benchmark` — nghĩa là
+# cổng đo tràn khổ điện thoại chạy trên một hệ ĐÃ KHAI TỬ, và mọi dòng "✓ không tràn"
+# nó in ra là nói về một trang không ai truy cập. Đúng cái bẫy docstring dưới cảnh báo.
+sys.path.insert(0, str(SITE))
+from build import HE_MAC_DINH  # noqa: E402  (phải sau SITE, vì nó dựng đường dẫn)
 OUT = SITE / "out"
 SHOT = SITE / "preview"; SHOT.mkdir(exist_ok=True)
 BAI = "bai/2026-07-27-defillama-uniswap-v4/index.html"
@@ -29,7 +35,16 @@ BAI = "bai/2026-07-27-defillama-uniswap-v4/index.html"
 RONG = 500
 KHUNG = [("dau", BAI, 1740, None),
          ("soclaim", BAI, 1620, "so"),      # cắt riêng sổ claim, không dựa vào cuộn theo neo
-         ("chu", "index.html", 1180, None)]
+         ("chu", "index.html", 1180, None),
+         # 🔴 06/08: MỌI trang phục vụ đều phải nằm ở đây. Trang nào không có trong
+         # danh sách này thì cổng đo tràn KHÔNG nhìn tới, và một trang hỏng ở khổ điện
+         # thoại đi ra ngoài không báo gì cả. Trước lượt này chỉ có 3 khuôn: `/facts/`,
+         # `/track-record/`, `/du-lieu/` chưa lần nào được đo — ba trang, không cổng.
+         ("token", "token/uni/index.html", 1500, None),
+         ("muctoken", "token/index.html", 1400, None),
+         ("facts", "facts/index.html", 1500, None),
+         ("trackrecord", "track-record/index.html", 1500, None),
+         ("dulieu", "du-lieu/index.html", 1300, None)]
 
 # 🔴 Hai cách đo SAI đã thử và bị bác, ghi lại để không ai dựng lại:
 #   ① documentElement.scrollWidth — không bao giờ nhỏ hơn viewport ⇒ là chặn dưới
@@ -39,7 +54,7 @@ KHUNG = [("dau", BAI, 1740, None),
 #      chính nó và báo PASS ở mọi cấu hình (luật bằng chứng của desk §2).
 # Cách đúng: gói nội dung vào một div có overflow:auto — nó CÓ hộp cuộn thật, nên
 # scrollWidth phản ánh tràn thật. Kèm thủ phạm rộng nhất để báo động chỉ ra chỗ sửa.
-DO_TRAN = """<script>addEventListener('load',()=>{
+DO_TRAN = """<script>addEventListener('load',()=>{document.fonts.ready.then(()=>{
  const w=document.createElement('div');
  w.style.cssText='width:'+WW+'px;overflow:auto';
  while(document.body.firstChild) w.appendChild(document.body.firstChild);
@@ -50,8 +65,32 @@ DO_TRAN = """<script>addEventListener('load',()=>{
    const r=e.getBoundingClientRect();
    if(r.width&&r.right>mx){mx=r.right;who=e.tagName.toLowerCase()+(e.className?'.'+String(e.className).split(' ')[0]:'')}
  }
- document.body.insertAdjacentHTML('beforeend','<i id=ovf>'+w.scrollWidth+'|'+WW+'|'+Math.round(mx)+'|'+who+'</i>');
-})</script>"""
+ const f=document.fonts.check('16px Inter')&&document.fonts.check('12px "JetBrains Mono"');
+ document.body.insertAdjacentHTML('beforeend','<i id=ovf>'+w.scrollWidth+'|'+WW+'|'+Math.round(mx)+'|'+who+'|'+(f?'font':'KHONG-FONT')+'</i>');
+})})</script>"""
+
+
+def neo_font(html: str) -> str:
+    """Đổi đường font TƯƠNG ĐỐI sang đường tuyệt đối của bản dựng.
+
+    🔴 Vì sao bắt buộc, và nó suýt lọt: từ 06/08 font được TỰ HOST, `build.py` in ra
+    `url(./font/…)` (trang gốc) và `url(../../font/…)` (trang bài) — đúng cho site
+    thật. Nhưng phép đo ở đây CHÉP trang sang thư mục tạm, nên hai đường đó trỏ vào
+    hư không và Chrome dựng bằng font hệ thống. Bề rộng chữ khác font là khác ⇒ cổng
+    sẽ đo một trang KHÔNG PHẢI trang sắp ship, y hệt cái bẫy hệ màu `benchmark` vừa
+    vá cùng ngày. Marker `KHONG-FONT` ở trên là cái bắt lần sau, nếu ai đổi cách
+    sinh đường dẫn mà quên chỗ này.
+
+    🔴 Đổi bằng REGEX, không phải hai lượt `replace` cố định: bản đầu chỉ vá
+    `./font/` (trang gốc) và `../../font/` (trang bài) — nên bốn trang sâu ĐÚNG MỘT
+    cấp (`/facts/`, `/track-record/`, `/du-lieu/`, `/token/`) vẫn dựng bằng font hệ
+    thống. Chúng lọt được vì đúng lượt thêm chúng vào `KHUNG` cũng là lượt ĐẦU TIÊN
+    chúng được đo — không có bản trước để so, nên "mới" và "hỏng" trông giống nhau.
+    Và marker báo hỏng khi đó cũng không hiện ra: regex đọc nó viết `(\\w+)`, mà
+    `KHONG-FONT` có dấu gạch ⇒ cổng in "không đo được" thay vì "không có font".
+    """
+    goc = (OUT / "font").as_uri()
+    return re.sub(r"url\((?:\./|(?:\.\./)+)font/", f"url({goc}/", html)
 
 
 def chrome(args, timeout=150):
@@ -83,14 +122,17 @@ def do_tran(html: str, tmp: pathlib.Path, nhan: str) -> bool:
     tran = False
     for w in (360, 430):
         f = tmp / f"ovf{w}.html"
-        f.write_text(html.replace("</body>", f"<script>WW={w}</script>" + DO_TRAN + "</body>"),
-                     encoding="utf-8")
+        f.write_text(neo_font(html).replace(
+            "</body>", f"<script>WW={w}</script>" + DO_TRAN + "</body>"), encoding="utf-8")
         r = chrome(["--dump-dom", "--window-size=520,900", f.as_uri()], timeout=90)
-        m = re.search(r'<i id="ovf">(\d+)\|(\d+)\|(\d+)\|([^<]*)</i>', r.stdout)
+        m = re.search(r'<i id="ovf">(\d+)\|(\d+)\|(\d+)\|([^|]*)\|([\w-]+)</i>', r.stdout)
         if not m:
             print(f"  ⚠ {nhan} @{w}px: không đo được — phép đo MÙ, đừng đọc là 'không tràn'")
             continue
         sw, lim, mx, who = int(m.group(1)), int(m.group(2)), int(m.group(3)), m.group(4)
+        if m.group(5) != "font":
+            sys.exit(f"🔴 {nhan} @{w}px: trang dựng KHÔNG CÓ font thật — bề rộng chữ đo được "
+                     f"là của font hệ thống, không phải của bản sắp ship. Sửa neo_font().")
         if sw > lim:
             print(f"  🔴 {nhan} @{w}px: TRÀN {sw}px > {lim}px · rộng nhất: <{who}> tới {mx}px")
             tran = True
@@ -116,8 +158,11 @@ def main() -> None:
     # 🔴 Bản đầu để mặc định là ["do", "verdigris"] — tức phép đo tràn chạy trên HAI hệ
     # đã khai tử và KHÔNG bao giờ chạy trên hệ đang ship. Đúng hình dạng lỗi đã ghi hai
     # lần trong hồ sơ nhận diện: "phép thử đo một cái hình khác cái hình sắp được chốt".
-    # Mặc định nay là hệ mà build.py thật sự dùng; muốn đo hệ cũ thì gọi tên nó.
-    hes = [sys.argv[1]] if len(sys.argv) > 1 else ["benchmark"]
+    # 🔴 Và nó TÁI PHÁT ngay lần đổi hệ kế tiếp (29/07 vá tay thành "benchmark"; 06/08
+    # site sang "d2" mà dòng này đứng nguyên) — vì bản vá hôm đó chép một cái TÊN sang
+    # đây thay vì đọc tên từ chủ của nó. Nay đọc `build.HE_MAC_DINH`: đổi hệ ở một chỗ
+    # là cổng đi theo, không có lượt vá tay nào để quên.
+    hes = [sys.argv[1]] if len(sys.argv) > 1 else [HE_MAC_DINH]
     tran = 0
     with tempfile.TemporaryDirectory() as td:
         tmp = pathlib.Path(td)
@@ -143,7 +188,7 @@ def main() -> None:
                         "@media (prefers-color-scheme:dark)",
                         "@media (prefers-color-scheme:dark) and (min-width:99999px)")
                     s = tmp / f"{he}-{hau}-{nen}.html"
-                    s.write_text(h, encoding="utf-8")
+                    s.write_text(neo_font(h), encoding="utf-8")
                     png = SHOT / f"{he}-{hau}-{nen}.png"
                     r = chrome([f"--screenshot={png}", f"--window-size={RONG},{cao}",
                                 "--force-device-scale-factor=2", s.as_uri()])
