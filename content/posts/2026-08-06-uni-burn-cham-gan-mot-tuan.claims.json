@@ -1,0 +1,79 @@
+{
+ "claims": [
+  {
+   "id": "C1",
+   "text": "Từ block đầu tới Robinhood block 29.174.972, contract Firepit trên Robinhood Chain đã huỷ 170 lượt × 2.000 = 340.000 UNI bản Robinhood. Trên Ethereum, mới 22 lượt × 2.000 = 44.000 UNI gốc tới địa chỉ đốt qua gateway của chain này — 12,9%. Phần chênh là 296.000 UNI.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Robinhood Chain block 1 → 29.174.972 · Firepit 0x7a8f74c2585f84c781f951b7f2ff21337d5b630b · token bản Robinhood 0xf177d86a28b520e3e396e4f3b96cd8e72d7dabd8 · phía Ethereum: gateway 0x85001cc4867c5e1c22da4b79bb8852b9e2a06da0, block 25.671.175 → 25.690.453, 0 range rớt",
+   "falsifier": "Quét log Transfer của token bản Robinhood với from = Firepit và to = address(0) trên toàn dải block: ra khác 170 lượt hoặc khác 340.000 UNI thì claim này sai. Chiều thứ hai, độc lập: đếm Transfer với to = Firepit — vào phải bằng ra, cũng 170 lượt / 340.000. Phía Ethereum: đọc Transfer của UNI tới địa chỉ đốt, lọc địa chỉ gửi là gateway, trong dải block ghim — không ra đúng 22 dòng × 2.000 UNI thì con số 44.000 và tỉ lệ 12,9% sai. Hai đầu này đọc ở hai chain và hai thời điểm nên KHÔNG cộng lại được; cộng 296.000 với 44.000 để ra một lượng đã đốt là đọc sai claim.",
+   "khong_do_lai": "Đây là phép cộng dồn trên một dải block ở HAI chain, không phải một lời gọi tại một block, nên nút đo lại của trang không dựng được. Nặng hơn: một nửa phép đo nằm trên Robinhood Chain, mà nút của trang chỉ gọi được RPC Ethereum. Đường dựng lại đầy đủ nằm ở phần điều-bác-bỏ và ở script trong hồ sơ.",
+   "log": [
+    {
+     "ngay": "2026-08-06",
+     "ghi": "Đăng. Lượt đếm đầu của desk lấy nhầm chiều — đếm Transfer với to = Firepit (UNI chảy VÀO) trong khi mô tả nó là 'đã phát lệnh rút', và quét từ một block ghim thuộc bài khác. Hai lỗi bù nhau nên con số vẫn trông hợp lý. Bản dùng quét từ block đầu với đúng chiều huỷ, và giữ phép đối chứng ngược lại làm chốt.",
+     "nguon": "https://x.com/blockpinned/status/2085288243067748407"
+    }
+   ]
+  },
+  {
+   "id": "C2",
+   "text": "Địa chỉ 0x85001cc4867c5e1c22da4b79bb8852b9e2a06da0 trên Ethereum là gateway của Robinhood Chain. Contract này chưa verify source, nên một bảng quy kết chỉ dựa vào danh sách gateway đã gắn nhãn sẽ xếp nó vào nhóm chưa rõ chain — bảng trước đây của chính BlockPinned cũng vậy.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Ethereum block 25.690.453 · counterpartGateway() (selector 0x2db09c1c) trả 0xfd9b17206278c16ddaacf6ac8f05dbf97edcb31e · chiều ngược đọc trên Robinhood Chain block 29.174.972 · outbox 0xf0ce991ea4a0d2400a4ab49b20ae333f6dce3de9",
+   "falsifier": "Bốn phép đọc độc lập chống claim này, chỉ cần một phép hỏng là phép gán chain mất giá trị và mọi câu gán 44.000 UNI cho Robinhood Chain phải rút: ⒜ gọi counterpartGateway() trên Ethereum — không trả 0xfd9b1720…b31e thì sai; ⒝ gọi cùng hàm đó trên địa chỉ vừa trả về bằng RPC công khai của Robinhood Chain — không trỏ ngược đúng 0x85001cc4… thì sai; ⒞ đọc một thông điệp L2ToL1Tx do Firepit phát — không ghi đích là 0x85001cc4… hoặc dữ liệu kèm theo không chứa đồng thời địa chỉ UNI trên Ethereum, địa chỉ đốt và số 2.000 × 10¹⁸ thì sai; ⒟ giao dịch đưa 2.000 UNI tới địa chỉ đốt gọi executeTransaction trên outbox — bridge() của outbox không trùng bridge đọc từ inbox() của gateway thì sai. Claim này KHÔNG nói Robinhood Chain là chain đóng góp lớn nhất: còn hai địa chỉ gửi chưa rõ thuộc chain nào, 20.000 và 4.000 UNI; nếu chúng cùng một chain và tổng vượt 44.000 thì thứ hạng ở cấp chain phải viết lại — nhưng 22 lượt và 44.000 UNI từ chính địa chỉ này vẫn đứng.",
+   "khong_do_lai": "Hàm counterpartGateway() trả về một ĐỊA CHỈ, không phải một đại lượng có đơn vị, nên nút đo lại của trang — vốn chỉ biết in một con số kèm đơn vị — sẽ dựng nó thành một số nguyên vô nghĩa. Ba phép đọc còn lại nằm trên Robinhood Chain hoặc trong calldata của một giao dịch, cả hai đều ngoài tầm nút này.",
+   "log": [
+    {
+     "ngay": "2026-08-06",
+     "ghi": "Đăng. Đây là claim gánh: nếu nó đổ thì cả bài đổ theo, vì mọi con số phía sau đều gán cho Robinhood Chain qua đúng địa chỉ này. Vì thế bài không dựa vào một nguồn nhãn nào bên ngoài mà đọc thẳng bốn phép từ chain.",
+     "nguon": "https://x.com/blockpinned/status/2085288243067748407"
+    }
+   ]
+  },
+  {
+   "id": "C3",
+   "text": "Cả 170 lệnh rút do Firepit phát đều nhắm địa chỉ đốt — đọc từng thông điệp, không suy từ mẫu.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Robinhood Chain block 1 → 29.174.972 · L2ToL1Tx lọc theo đích là gateway 0xfd9b17206278c16ddaacf6ac8f05dbf97edcb31e: 312 thông điệp, 170 chứa đồng thời địa chỉ đốt + UNI trên Ethereum 0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984 + số 2.000 × 10¹⁸",
+   "falsifier": "Quét lại L2ToL1Tx với đích là gateway trên toàn dải block, đếm số thông điệp chứa đủ ba dấu hiệu trên. Ra ít hơn 170 thì có lệnh rút không nhắm địa chỉ đốt và câu 'cả 170' sai. Ra nhiều hơn 170 thì phép ghép một-đổi-một với 170 lượt Firepit huỷ token sai. 142 thông điệp còn lại là rút thường của bên khác qua cùng gateway; nếu một thông điệp trong nhóm đó cũng mang đủ ba dấu hiệu thì phép đếm này lẫn và claim sai.",
+   "khong_do_lai": "Phép đo là quét log trên toàn dải block của Robinhood Chain rồi so khớp nội dung từng thông điệp, không phải một lời gọi tại một block, và chain đó nằm ngoài RPC mà nút của trang gọi được.",
+   "log": [
+    {
+     "ngay": "2026-08-06",
+     "ghi": "Đăng. Bản nháp đầu viết '170 lệnh đốt' — rộng hơn phép đo, vì lúc đó mới đọc payload của MỘT lượt rồi suy ra cả 170. Claim chỉ được viết ở dạng này sau khi quét đủ 312 thông điệp và đối từng cái.",
+     "nguon": "https://x.com/blockpinned/status/2085288247438307423"
+    }
+   ]
+  },
+  {
+   "id": "C4",
+   "text": "Mỗi lệnh rút chờ 6,44–7,41 ngày mới được thực thi trên Ethereum: đo trên cả 22 lượt đã về, min 6,44 · trung vị 6,76 · max 7,41 ngày. Vì vậy lượng UNI đốt hiển thị hôm nay phản ánh các LỆNH RÚT phát khoảng một tuần trước — còn PHÍ tạo ra lượng UNI đó phát sinh sớm hơn nữa.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Ethereum block 25.671.175 → 25.690.453 · giải mã trường l2Timestamp trong calldata executeTransaction của cả 22 lượt · hàng chờ thứ nhất (khoảng cách giữa hai lệnh liên tiếp trên Robinhood Chain): min 0 · trung vị 71 phút · max 1.682 phút",
+   "falsifier": "Với mỗi giao dịch đưa 2.000 UNI từ gateway tới địa chỉ đốt, đọc calldata của lời gọi executeTransaction và lấy trường l2Timestamp, rồi trừ khỏi timestamp block Ethereum của chính giao dịch đó. Ra ngoài khoảng 6,44–7,41 ngày ở bất kỳ lượt nào thì claim này sai. Phép ghép cặp này không giả định thứ tự — mỗi lượt tự khai thời điểm nó được phát ở đầu Robinhood — nên nếu ai đó ghép theo thứ tự trước-sau và ra số khác thì đó là phép ghép kia sai, không phải claim này. 🔴 Con số này là độ trễ từ LỆNH RÚT tới lúc thực thi, KHÔNG phải từ lúc phí phát sinh: đoạn phí nằm trong TokenJar trước khi thành UNI chưa được đo, nên tổng độ trễ thực tế chỉ có thể dài hơn.",
+   "khong_do_lai": "Phép đo là giải mã calldata của 22 giao dịch đã xảy ra rồi lấy phân vị, không phải một lời gọi trả về một con số. Nút của trang gọi eth_call tại một block; nó không đọc được calldata của giao dịch cũ.",
+   "log": [
+    {
+     "ngay": "2026-08-06",
+     "ghi": "Đăng. Bản trước ước lượng độ trễ bằng cách giả định các lượt thực thi theo đúng thứ tự phát — giả định đó thừa: chính calldata đã mang sẵn l2Timestamp, nên ghép cặp được chính xác cho cả 22 lượt.",
+     "nguon": "https://x.com/blockpinned/status/2085288247438307423"
+    }
+   ]
+  },
+  {
+   "id": "C5",
+   "text": "Chờ đủ tuổi chưa đủ để một lệnh rút được thực thi — còn phải có người chọn lượt đó. Lệnh rút đầu tiên của Firepit mang số thứ tự 679; quét toàn bộ 601 lượt thực thi của cầu, số thứ tự 0 → 796, thì 679 không có mặt trong khi 678 và 680 đều đã thực thi. Nên 296.000 UNI chưa về không phải đều đang chờ đúng quy trình.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Lệnh rút đầu: Robinhood block 20.678.587, 10:59:00Z ngày 27/07 · outbox 0xf0ce991ea4a0d2400a4ab49b20ae333f6dce3de9, 601 lượt OutBoxTransactionExecuted, index 0 → 796 · chưa thực thi quanh đó: 679 · 682–687 · 689 · 693 · 699 · cả 22 lượt đã về đều do 0x2cf8e5b175aa29c1fdf0e9fe572735c78eacce43 gọi",
+   "falsifier": "Quét log OutBoxTransactionExecuted của outbox trên toàn dải block và lập danh sách index đã thực thi. Nếu 679 có trong danh sách thì claim này sai. Nếu 678 hoặc 680 KHÔNG có trong danh sách thì phép so sánh 'bị nhảy qua' mất chỗ dựa và claim cũng sai. Chiều thứ hai: nếu mọi index chưa thực thi đều lớn hơn mọi index đã thực thi thì thứ tự là tuần tự và cách đọc của bài sai. 🔴 Chỗ bài chưa với tới: 127/601 lượt thực thi có đích là gateway này nhưng chỉ 22 đưa UNI tới địa chỉ đốt; 105 lượt còn lại đưa tài sản khác đi chỗ khác và bài không đo chúng — nên claim này nói về CÁCH chọn lượt, không nói gì về ý định của người chọn.",
+   "khong_do_lai": "Phải quét log trên toàn dải block Ethereum rồi so hai tập index, không phải một lời gọi tại một block. Nút của trang chỉ chạy eth_call.",
+   "log": [
+    {
+     "ngay": "2026-08-06",
+     "ghi": "Đăng. Câu hỏi mở ra claim này là 'vì sao lệnh đầu tiên chưa về' — và câu trả lời rẻ tiền, 'chưa tới lượt', bị chính dữ liệu bác: hai lượt kề bên đã thực thi. Đây cũng là chỗ hạ một câu ở bản nháp nói toàn bộ 296.000 UNI đều chưa đủ tuổi.",
+     "nguon": "https://x.com/blockpinned/status/2085288247438307423"
+    }
+   ]
+  }
+ ]
+}

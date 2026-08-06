@@ -165,6 +165,11 @@ NGUON_ASSET = {
     # chú bài #6 ngay trên). Ca này còn là bằng chứng thứ hai cho quy ước đó: ordinal
     # bài #7 suýt phải đổi vì chân X bị dán nhầm bản nháp rồi xoá + đăng lại 31/07.
     "card-pendle-buyback.png": "png",
+    # bài #10 — dựng dưới tên "bai11" (ordinal chỉ chốt lúc ĐĂNG, builder chạy trước),
+    # nên đổi tên đầu ra của chính builder theo NỘI DUNG chứ không đổi tay khi chép sang
+    # đây: tên lệch thì `template/out/png/<tên>` không tồn tại và phép so byte ngay dưới
+    # BỎ QUA TRONG IM LẶNG. Hậu tố `-muc` là biến thể nền mực, user chốt 06/08.
+    "card-rh-burn-cham-mot-tuan-muc.png": "png",
 }
 
 # Ràng buộc NGÔN NGỮ của thân bài: mặt chữ phải dựng đủ dấu tiếng Việt — đó là điều
