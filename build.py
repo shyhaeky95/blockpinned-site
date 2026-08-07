@@ -146,6 +146,7 @@ NGUON_ASSET = {
     "favicon-16.png":  "logo/final",
     "favicon-32.png":  "logo/final",
     "avatar-800.png":  "logo/final",
+    "card-hype-doi-dau-muc.png": "png",
     "post01-card.png": "png",
     "post02-card.png": "png",
     "post04-card.png": "png",
