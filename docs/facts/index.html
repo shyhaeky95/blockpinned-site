@@ -571,7 +571,27 @@ html.chuyen [data-hien].hien{opacity:1;transform:none}
   <span class="tag">số nào cũng truy ngược được</span>
   <nav class="dieu"><a href="../">Sổ gốc</a><a href="../token/">Token</a><a href="../track-record/">Track record</a><a href="../facts/" class="tai">Facts</a><button class="nut-nen" id="nut-nen" type="button" title="Đổi nền sáng/tối" aria-label="Đổi nền sáng/tối">☀ / ☾</button></nav>
 </div></header>
-<main class="khung"><h1>Một con số, một block, một lệnh để bạn tự kiểm</h1><div class="dem"><span class="to">5</span> fact · mới nhất trước</div><p class="dan">Fact ngắn hơn bài: không lập luận dài, chỉ một phép đo đứng một mình. Mỗi mục ghi rõ <b>đo tại block nào</b>, <b>lệnh nào đọc lại được</b>, và — quan trọng không kém — <b>nó KHÔNG nói điều gì</b>. Cái nào cần giải thích dài hơn một dòng thì nó là một bài.</p><section class="so"><article class="fact" id="morpho-10-xu-1-ty">
+<main class="khung"><h1>Một con số, một block, một lệnh để bạn tự kiểm</h1><div class="dem"><span class="to">6</span> fact · mới nhất trước</div><p class="dan">Fact ngắn hơn bài: không lập luận dài, chỉ một phép đo đứng một mình. Mỗi mục ghi rõ <b>đo tại block nào</b>, <b>lệnh nào đọc lại được</b>, và — quan trọng không kém — <b>nó KHÔNG nói điều gì</b>. Cái nào cần giải thích dài hơn một dòng thì nó là một bài.</p><section class="so"><article class="fact" id="uniswap-tra-thuong-cho-nguoi-la">
+  <div class="f-top co-fig">
+    <div class="f-fig"><span class="f-kicker">UNISWAP · 07/08/2026</span><span class="f-num">0,19970%</span><span class="f-lab">ĐỔI LẤY TRỌN PHÍ CHƯA THU</span></div>
+    <div class="f-body">
+      
+      <p class="f-cau">Token launch trên pools.trade được thiết kế để thanh khoản khoá vĩnh viễn — người tạo không rút position ra được. Nhưng phí giao dịch vẫn tích lại, và trên Uniswap v3/v4 phí không tự nhập trở lại thành thanh khoản. Luật Hayden Adams mô tả: bất kỳ ai cũng lấy được khoản phí chưa thu, miễn đồng thời làm position lớn thêm khoảng 0,2%. Phần thưởng đến từ phí của chính position; đổi lại position nhận thêm thanh khoản.</p>
+      <p class="f-so">640 lượt trong một ngày trên Robinhood Chain, mức tăng trung vị 0,19970%. Riêng position của FRONG: 7 ví khác nhau, 36 lượt, 0 lượt rút.</p>
+      <div class="f-grid">
+        <div class="f-box vi"><span class="k">Vì sao đáng quan tâm</span>
+          <span class="v">Điều thường được tin: <i>“Auto-compound của một launchpad là do dự án tự chạy bot thu phí rồi tái đầu tư”</i>.
+          Chỗ kiểm được: Đọc trên chính receipt: người bấm nút là một ví thường, không phải Uniswap và không phải người tạo token — và họ giữ khoản phí vừa thu</span></div>
+        <div class="f-box chan"><span class="k">Fact này KHÔNG nói</span><span class="v">Luật 0,2% là lời mô tả của Hayden Adams — contract giữ position chưa verify source nên BlockPinned chỉ đo được hành vi đã thực thi, và con số 640 lượt là của cả chain trong một ngày chứ không riêng pools.trade.</span></div>
+      </div>
+      
+    </div>
+  </div>
+  <div class="f-foot"><span class="lb">Đọc tại</span>
+    <span class="blk">Robinhood Chain block 29.792.362 · 07h48 ngày 07/08/2026 giờ VN (00:48:34Z)</span></div>
+  <details class="lenh"><summary>▸ lệnh tự kiểm — dán vào terminal là chạy</summary>
+    <pre class="cmd">curl -sS https://rpc.mainnet.chain.robinhood.com -H &#x27;content-type: application/json&#x27; -d &#x27;{&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:1,&quot;method&quot;:&quot;eth_getTransactionReceipt&quot;,&quot;params&quot;:[&quot;0x166841f7f811e9563a1138e28bc7d94d49e252b87dd580f8ed2cb892cc8a9611&quot;]}&#x27;</pre></details>
+</article><article class="fact" id="morpho-10-xu-1-ty">
   <div class="f-top co-fig">
     <div class="f-fig"><span class="f-kicker">MORPHO BLUE · 05/08/2026</span><span class="f-num">1.066.799.814,53</span><span class="f-lab">USDC GHI SỔ. USDC THỰC CHUYỂN: 0,10.</span></div>
     <div class="f-body">

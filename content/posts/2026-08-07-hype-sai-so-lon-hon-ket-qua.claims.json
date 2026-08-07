@@ -13,7 +13,12 @@
           "ghi": "Đăng. Tử số đo trực tiếp; mẫu số 2.419.166 là chuỗi của desk và khớp con số 2,41 triệu báo cáo tự in trong 0,38%. Lấy mẫu số của họ thì tỉ lệ là 54,40%.",
           "nguon": "https://x.com/blockpinned/status/2085611015794995577"
         }
-      ]
+      ],
+      "en": {
+        "text": "In Q2 2026 the wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 received 1,311,093 HYPE in staking emissions, 54.20% of the quarter's 2,419,166 total. Hyperliquid's Info API lists that wallet under nonCirculatingUserBalances, holding 241,150,943.99 at measurement time.",
+        "falsifier": "Call delegatorRewards for that wallet and sum totalAmount over April, May and June 2026: anything other than 1,311,093 falsifies the figure. Check the series for gaps — record count, distinct-day count and span length must be equal, otherwise the quarterly total is a lower bound. For the classification: call tokenDetails and read nonCirculatingUserBalances. If the wallet is not in that list, the central premise loses its support.",
+        "ghim": "Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · nonCirculatingUserBalances has 4 entries · circulatingSupply 299,024,976.59 · totalSupply 999,049,594.42"
+      }
     },
     {
       "id": "C2",
@@ -28,7 +33,12 @@
           "ghi": "Đăng. Vế này là giả định ngầm cho tới 07/08 — một lượt phản biện ngoài đòi đo nó, và phép đo đã thay giả định. Chiều rủi ro bị nêu ngược trong lượt phản biện đó: đích nhận là địa chỉ lưu thông chính là giả định của mô hình, còn kịch bản làm phép tính đổi là đích nhận thuộc danh sách loại-trừ.",
           "nguon": "https://x.com/blockpinned/status/2085611015794995577"
         }
-      ]
+      ],
+      "en": {
+        "text": "In the same quarter the wallet sent out 1,288,966 HYPE across 58 transfers to 29 distinct addresses, and 0 of those 29 are in the non-circulating set at measurement time. There were 0 inbound token transfers. The outflow is therefore added back to circulation, and the addition term does not double count.",
+        "falsifier": "Re-scan userNonFundingLedgerUpdates for Q2 month by month, take the HYPE rows where the wallet is the source, and match each destination against nonCirculatingUserBalances. If any recipient is in that set, the amount added back must be smaller than 1,288,967 — which makes the result more negative, not less. A month returning exactly 500, 1000 or 2000 rows has hit the row limit and the total becomes a lower bound. Before trusting the zero, check the test discriminates: query the same membership for this wallet, for 0xfefe…fefe and for the dead address — all three must return present.",
+        "ghim": "Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · userNonFundingLedgerUpdates scanned month by month, 0 of 3 months hit the row limit"
+      }
     },
     {
       "id": "C3",
@@ -43,7 +53,12 @@
           "ghi": "Đăng. Dấu âm không treo vào hạng mục yếu nhất: đặt phần huỷ bằng 0 thì vẫn còn −373.168. Phần huỷ là chỗ kém chắc nhất vì phép đo lượng huỷ của chính BlockPinned chênh 106% tuỳ khoảng thời gian chọn, và một kết luận về lượng huỷ từng viết ra đã bị tự rút vì lý do đó.",
           "nguon": "https://x.com/blockpinned/status/2085611015794995577"
         }
-      ]
+      ],
+      "en": {
+        "text": "Holding every other figure from the report unchanged and altering only the treatment of emissions accruing to the non-circulating wallet, Q2 2026 net issuance is −412,960 HYPE rather than the +890,000 the report concludes. Removing the 39,792 token-burn line entirely still leaves −373,168.",
+        "falsifier": "Add the four terms: 2,419,166 − 1,311,093 = 1,108,073; + 1,288,967 = 2,397,040; − 2,810,000 = −412,960. Any other result falsifies the arithmetic. This claim does not say the report is wrong about direction: its own next paragraph also concludes supply tightened, so reading this as a disagreement about direction is a misreading of the claim.",
+        "ghim": "Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · 2,419,166 − 1,311,093 = 1,108,073; + 1,288,967 = 2,397,040; − 2,810,000 from the report (buyback 2,770,208 + burn 39,792) · circulating base 299,024,977"
+      }
     },
     {
       "id": "C4",
@@ -58,7 +73,44 @@
           "ghi": "Đăng. Trước khi đo, desk đăng ký một điều-bác-bỏ cho mệnh đề phần này tăng dần theo thời gian — và nó nổ: quý I/2026 thấp hơn quý IV/2025, quý cuối trên quý đầu chỉ 1,006 lần. Bản draft thứ hai vẫn viết sai-số-ổn-định-qua-sáu-quý và bị lượt phản biện ngoài thứ hai bắt; chủ ngữ đã thu về LƯỢNG CHẢY VÀO VÍ.",
           "nguon": "https://x.com/blockpinned/status/2085611015794995577"
         }
-      ]
+      ],
+      "en": {
+        "text": "Emissions accruing to that wallet stay within a narrow band across six full quarters: 1,303,294 · 1,327,384 · 1,336,732 · 1,351,753 · 1,289,617 · 1,311,093, a 4.82% spread between highest and lowest. This series measures INFLOW TO THE WALLET. It does not show that earlier quarterly reports used the same treatment, because only the 2Q2026 report is in hand.",
+        "falsifier": "Sum totalAmount per calendar quarter: a full quarter falling outside 1,289,617–1,351,753 means the narrow-band reading has to be rewritten. A complete calendar quarter after Q2 2026 recording below 1.0M HYPE falsifies it. This claim must not be quoted as an error repeated six times: that would require six quarterly reports and proof that each applied the same treatment, and only one is in hand.",
+        "ghim": "Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · delegatorRewards returns 587 records / 587 distinct days / 587-day span, 2024-12-29 to 2026-08-07, no missing day"
+      }
     }
-  ]
+  ],
+  "en": {
+    "title": "HYPE Q2 2026 net issuance: +890,000 vs −412,960 — receipt",
+    "og_title": "Applying the report's own circulating-supply definition consistently: HYPE Q2 net issuance is −412,960, not +890,000",
+    "mo_ta": "Receipt for a Vietnamese write-up: the numbers, the exact Hyperliquid Info API calls, the falsifiers, and what the measurement does not cover.",
+    "intro": "This is a receipt, not a translation. The full write-up is in Vietnamese; everything needed to verify or refute the claims is here in English: the figures, the exact API calls that produce them, what would falsify each claim, and what the measurement does not cover.",
+    "pin": "No block number anywhere. HyperCore is read through Hyperliquid's Info API; the default public HyperEVM RPC does not serve reliable historical state (same block number twice, 20 s apart, returns two different values; a future block returns a number instead of an error; the official docs state it is \"not supported at this time on the default RPC implementation\"). Third-party paid endpoints were not tested. Every figure below is a wall-clock snapshot taken 2026-08-07.",
+    "how_to_check": [
+      [
+        "Wallet classification and supply",
+        "POST https://api.hyperliquid.xyz/info · {\"type\":\"tokenDetails\",\"tokenId\":\"<HYPE>\"} — read nonCirculatingUserBalances, circulatingSupply, totalSupply. Get tokenId from {\"type\":\"spotMetaAndAssetCtxs\"}."
+      ],
+      [
+        "Emissions accruing to the wallet",
+        "{\"type\":\"delegatorRewards\",\"user\":\"0x43e9abea1910387c4292bca4b94de81462f8a251\"} — sum totalAmount per quarter. Check for gaps: record count, distinct-day count and span length must all be equal."
+      ],
+      [
+        "Outflows and their destinations",
+        "{\"type\":\"userNonFundingLedgerUpdates\",\"user\":\"0x43e9abea…\",\"startTime\":…,\"endTime\":…} — scan month by month so the row limit is never hit; match every destination against the non-circulating set above."
+      ],
+      [
+        "Total staked",
+        "{\"type\":\"validatorSummaries\"} — sum the stake field, divide by 1e8."
+      ]
+    ],
+    "limits": [
+      "The non-circulating classification is read at measurement time, not per day inside Q2. There is no historical source for that field.",
+      "The ~299M float base attributed to the report is an inference from its own subtraction, not a direct snapshot of the exclusion list during Q2.",
+      "Input data comes from an API published by Hyperliquid itself. That is one source, not two independent ones. The arithmetic on top of it is checkable.",
+      "Only the 2Q2026 report is in hand. The six-quarter series measures inflow to the wallet; it does not show that earlier reports used the same treatment.",
+      "The two paths measuring outflow differ by 1 HYPE (1,288,966 from the transfer ledger, 1,288,967 from finalised withdrawals). The difference sits entirely in April and is 0.00008%; the arithmetic uses the second. Using the first gives −412,961."
+    ]
+  }
 }

@@ -275,6 +275,65 @@
     "telegram_doi_chieu": "/32 ảnh card (không caption) + /33 chữ 2.364 ký tự, 0 dấu ống, 0 '**', 0 '##'. Lệch bản X đúng 1 token: TG giữ 'ssv.network', X đổi thành 'SSV network'. Không con số nào khác nhau.",
     "web": "https://blockpinned.com/facts/#ssv-khong-co-cung-toi-da"
    }
+  },
+  {
+   "id": "uniswap-tra-thuong-cho-nguoi-la",
+   "ngay": "2026-08-07",
+   "cau": "Token launch trên pools.trade được thiết kế để thanh khoản khoá vĩnh viễn — người tạo không rút position ra được. Nhưng phí giao dịch vẫn tích lại, và trên Uniswap v3/v4 phí không tự nhập trở lại thành thanh khoản. Luật Hayden Adams mô tả: bất kỳ ai cũng lấy được khoản phí chưa thu, miễn đồng thời làm position lớn thêm khoảng 0,2%. Phần thưởng đến từ phí của chính position; đổi lại position nhận thêm thanh khoản.",
+   "so": "640 lượt trong một ngày trên Robinhood Chain, mức tăng trung vị 0,19970%. Riêng position của FRONG: 7 ví khác nhau, 36 lượt, 0 lượt rút.",
+   "block": "Robinhood Chain block 29.792.362 · 07h48 ngày 07/08/2026 giờ VN (00:48:34Z)",
+   "lenh": "curl -sS https://rpc.mainnet.chain.robinhood.com -H 'content-type: application/json' -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"eth_getTransactionReceipt\",\"params\":[\"0x166841f7f811e9563a1138e28bc7d94d49e252b87dd580f8ed2cb892cc8a9611\"]}'",
+   "chan": "Luật 0,2% là lời mô tả của Hayden Adams — contract giữ position chưa verify source nên BlockPinned chỉ đo được hành vi đã thực thi, và con số 640 lượt là của cả chain trong một ngày chứ không riêng pools.trade.",
+   "khoang_cach": {
+    "tin": "Auto-compound của một launchpad là do dự án tự chạy bot thu phí rồi tái đầu tư",
+    "o_dau": "Đọc trên chính receipt: người bấm nút là một ví thường, không phải Uniswap và không phải người tạo token — và họ giữ khoản phí vừa thu"
+   },
+   "card": {
+    "kicker": "UNISWAP",
+    "figure": "0,19970%",
+    "label": "ĐỔI LẤY TRỌN PHÍ CHƯA THU",
+    "readout": "eth_getTransactionReceipt → 2 ModifyLiquidity",
+    "he_qua": "AI CŨNG LẤY ĐƯỢC, MIỄN BƠM THÊM VÀO POSITION",
+    "anchor": "ROBINHOOD CHAIN · BLOCK 29.792.362 · 07/08/2026 · 00:48:34Z",
+    "kiem": [
+     {
+      "file": "data/verify_fact_uni_autocompound_2026-08-07.json",
+      "duong": "receipt_dung_HAI_log_ModifyLiquidity",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact_uni_autocompound_2026-08-07.json",
+      "duong": "hai_delta_dung_0_va_100e18",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact_uni_autocompound_2026-08-07.json",
+      "duong": "hai_log_cung_salt_409801",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact_uni_autocompound_2026-08-07.json",
+      "duong": "position_409801_CHUA_TUNG_RUT",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact_uni_autocompound_2026-08-07.json",
+      "duong": "control_am_dia_chi_bia_phai_rong",
+      "bang": true
+     }
+    ],
+    "bien_the": "muc"
+   },
+   "dang": {
+    "x": "https://x.com/blockpinned/status/2085646156634443830",
+    "x_reply": "https://x.com/blockpinned/status/2085646161193681036",
+    "luc": "2026-08-07 · giờ VN",
+    "anh": "card-fact-uniswap-tra-thuong-cho-nguoi-la-muc.png",
+    "telegram": "https://t.me/blockpinned/58",
+    "doi_chieu": "oEmbed X trả 354/1.635 ký tự = phủ 21,7% (trần của oEmbed, không phải trần của bài — RULES §2b ĐỘ PHỦ). Phần phủ được khớp bản xuất. Hai lệch có chủ ý khi đăng: user thêm '@Uniswap $UNI' vào cuối TW1; và X TỰ biến 'pools.trade' thành link t.co vì nó có hình dạng tên miền — chữ hiển thị đổi, không con số nào bị đụng. 🔴 Bản X này VƯỢT khuôn Fact v2 theo quyết định user 07/08 (1.635 > trần 1000 · 12 đoạn > 5 · có số block trong thân post); cổng KHÔNG bị nới, bản dán mang hậu tố _OVERRIDE-USER.",
+    "telegram_doi_chieu": "/58 chữ 2.505 ký tự — so với bản xuất KHỚP TUYỆT ĐỐI 2.505/2.505 sau chuẩn hoá khoảng trắng, tức phủ 100% thân tin. 10/10 mỏ neo có mặt (640 · 0,19970 · 0,159746 · 7 ví · 36 lượt · 29.792.362 · 29.946.913 · 0,2% · 409801 · 166841f7); 0 dấu '**', 0 '##', 0 dấu ống.",
+    "web": "https://blockpinned.com/facts/#uniswap-tra-thuong-cho-nguoi-la"
+   }
   }
  ]
 }

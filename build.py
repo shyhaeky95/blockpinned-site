@@ -2325,6 +2325,120 @@ def lap_asset() -> None:
                           f"biết trang đang nạp cái gì")
 
 
+# ── TẦNG BIÊN LAI EN ─────────────────────────────────────────────────────────
+# 🔴 ĐÂY KHÔNG PHẢI BẢN DỊCH, và sự phân biệt đó là lý do nó tồn tại.
+# `LAUNCH §1` chốt "kênh chính tiếng Việt + tầng biên lai tiếng Anh". Tầng đó chưa
+# bao giờ được dựng, nên lượt đối chất đầu (07/08, HRC) suýt gửi một câu EN trỏ vào
+# trang VN — tức đặt bằng chứng SAU bức tường ngôn ngữ đúng chỗ bên nhận cần kiểm.
+# Nặng hơn phần lập luận: các câu KHAI GIỚI HẠN là thứ chặn người ta đọc claim rộng
+# hơn nó nói, và chúng chỉ có tiếng Việt.
+#
+# Vì sao KHÔNG làm nút chuyển VN↔EN: nút chuyển hàm ý "cùng nội dung, khác tiếng" ⇒
+# đẻ ra N cặp văn xuôi phải khớp nhau vĩnh viễn, không cổng nào soi được — đúng hình
+# dạng defect bài #10 (hai mặt một bài nói ngược nhau) nhân lên cỡ nguyên bài. Trang
+# này là TÀI LIỆU KHÁC LOẠI: số + lời gọi + điều bác bỏ + giới hạn. Không có văn xuôi
+# chung nên không có gì để lệch; thứ chung duy nhất là các trường trong claims.json,
+# và chúng bị cổng dưới đây canh.
+#
+# 🔴 KHÔNG khai hreflang: hai trang không phải bản dịch của nhau.
+
+def _so_trong(txt: str, toi_thieu: int = 4) -> set:
+    """Bóc số, bỏ dấu phân cách để '1,311,093' (EN) và '1.311.093' (VN) so được.
+    TRẦN ĐÃ KHAI: chỉ soi số từ `toi_thieu` chữ số trở lên — dưới ngưỡng là nhiễu
+    (số claim, '0/29', '58 transfers') và sẽ làm cổng kêu oan tới mức bị bỏ qua."""
+    ra = set()
+    for m in re.finditer(r"\d[\d.,]*\d|\d", txt):
+        n = m.group().replace(",", "").replace(".", "")
+        if len(n) >= toi_thieu:
+            ra.add(n)
+    return ra
+
+
+def bien_lai_en(fm: dict, claims: list, body_md: str, slug_: str, t: dict, o: str):
+    """Sinh /en/<slug>/ nếu claims.json có khối `en`. Không có ⇒ bỏ qua (opt-in).
+
+    Cổng — mỗi cái NỔ ĐƯỢC:
+      (a) khai `en` mà claim nào thiếu `en.text`/`en.falsifier` ⇒ LoiCong. Không cho
+          ra một trang biên lai thủng claim.
+      (b) 🔴 SỐ TRÊN TRANG EN PHẢI CÓ MẶT Ở BẢN VN. Đây là phép so hai mặt mà
+          `OPS-T-CROSS-SURFACE-DIFF` còn thiếu; thêm một bề mặt mà không thêm phép so
+          là tự dựng lại defect bài #10.
+    """
+    en = fm.get("_en")
+    if not en:
+        return None
+    # 🔴 `ghim` BẮT BUỘC phải có bản EN, không được rơi về trường VN. Bản đầu 07/08
+    #    dùng lại thẳng `c["ghim"]` và trang EN in ra một ô neo TIẾNG VIỆT chở số định
+    #    dạng Việt (`299.024.976,59`) — người đọc Anh parse dấu chấm/phẩy ngược lại, tức
+    #    RỦI RO ĐỌC SAI SỐ ngay ở ô neo phép đo. Không cổng nào bắt; mở ảnh ra nhìn mới thấy.
+    #    Fallback im lặng sang trường VN chính là cơ chế đã để nó lọt ⇒ bỏ hẳn fallback.
+    thieu = [c["id"] for c in claims
+             if not (c.get("en", {}).get("text", "").strip()
+                     and c.get("en", {}).get("falsifier", "").strip()
+                     and c.get("en", {}).get("ghim", "").strip())]
+    if thieu:
+        raise LoiCong(f"khai khối `en` nhưng claim {thieu} thiếu en.text/en.falsifier/en.ghim — {o}. "
+                      f"Biên lai thủng claim còn tệ hơn không có biên lai")
+
+    vn = " ".join([body_md, fm.get("ghim", ""), fm.get("mo_ta", "")]
+                  + [str(c.get(k, "")) for c in claims
+                     for k in ("text", "ghim", "falsifier", "khong_do_lai", "do_lai")])
+    en_txt = " ".join([en.get("intro", ""), en.get("pin", "")]
+                      + [x for pair in en.get("how_to_check", []) for x in pair]
+                      + list(en.get("limits", []))
+                      + [c["en"]["text"] + " " + c["en"]["falsifier"] + " " + c["en"]["ghim"]
+                         for c in claims])
+    la = _so_trong(en_txt) - _so_trong(vn)
+    if la:
+        raise LoiCong(f"trang EN mang số KHÔNG có ở bản VN: {sorted(la)} — {o}. "
+                      f"Hai mặt của một bài không được nói khác nhau (defect bài #10)")
+
+    esc = ihtml.escape
+    muc = "".join(
+        f'<article class="claim {TRANG_THAI[c["status"]][0]}">'
+        f'<h3>{c["id"]} <span class="tt">{esc(TRANG_THAI_EN.get(c["status"], c["status"]))}</span></h3>'
+        f'<p class="ct">{esc(c["en"]["text"])}</p>'
+        f'<p class="ghim"><b>Pinned at:</b> {esc(c["en"]["ghim"])}</p>'
+        f'<p class="fal"><b>What would falsify it:</b> {esc(c["en"]["falsifier"])}</p>'
+        f'</article>' for c in claims)
+    cach = "".join(f"<li><b>{esc(a)}</b> — <code>{esc(b)}</code></li>"
+                   for a, b in en.get("how_to_check", []))
+    gh = "".join(f"<li>{esc(x)}</li>" for x in en.get("limits", []))
+    than = (f"<h1>{esc(en['og_title'])}</h1>"
+            f'<p class="dan">{esc(en["intro"])}</p>'
+            f'<p class="meta">{fm["mau"]} {fm["date"]} &nbsp;·&nbsp; {esc(en["pin"])}</p>'
+            f'<h2>Claims</h2>{muc}'
+            f'<h2>How to check</h2><ul class="cach">{cach}</ul>'
+            f'<h2>What this does not cover</h2><ul class="gh">{gh}</ul>'
+            f'<h2>Sources</h2><ul class="cach">'
+            f'<li>Full write-up (<b>in Vietnamese</b>): '
+            f'<a href="../../bai/{slug_}/">/bai/{slug_}/</a></li>'
+            + (f'<li>As posted on X: <a href="{fm["kenh_x"]}">{esc(fm["kenh_x"])}</a></li>'
+               if fm.get("kenh_x") else "")
+            + '</ul>'
+            # 🔴 Chrome của site (nav + footer) là tiếng Việt và DÙNG CHUNG cho 10 trang —
+            #    không sửa nó cho một trang. Nhưng footer chở HAI câu CÓ NGHĨA với người đọc:
+            #    chính sách đính chính và disclaimer. Để chúng chỉ-tiếng-Việt trên một trang
+            #    biên lai gửi ra ngoài là bỏ sót đúng thứ trang này sinh ra để phục vụ ⇒ đưa
+            #    bản EN vào THÂN, chỗ trang này kiểm soát. Chrome còn lại thuần thẩm mỹ.
+            + '<p class="dan" style="margin-top:2.5rem">Corrections are made in place and '
+              'never deleted; every claim above carries its current status. '
+              '<b>Not investment advice.</b></p>')
+    d = OUT / "en" / slug_
+    d.mkdir(parents=True, exist_ok=True)
+    (d / "index.html").write_text(
+        trang(en["title"], than, t, "../..",
+              meta={"mo_ta": en["mo_ta"].strip(), "duong": f"/en/{slug_}/",
+                    "anh": fm.get("anh"), "loai": "article",
+                    "tieu_de_og": en["og_title"]}),
+        encoding="utf-8")
+    return f"en/{slug_}/"
+
+
+TRANG_THAI_EN = {"ĐÃ XÁC NHẬN": "CONFIRMED", "ĐANG ĐỨNG": "STANDING",
+                 "ĐÃ SỬA": "CORRECTED", "BỊ BÁC": "REFUTED"}
+
+
 def main() -> None:
     # Mặc định là hệ ĐÃ CHỐT. Bản đầu đọc argv bằng cách "có chữ verdigris ở đâu đó
     # trong argv" — thứ đó lặng lẽ đúng cho tới khi đường dẫn --out chứa chữ đó.
@@ -2383,7 +2497,10 @@ def main() -> None:
         cj = md_path.with_suffix(".claims.json")
         if not cj.exists():
             raise LoiCong(f"thiếu {cj.name} — mọi bài phải có sổ claim, đó là lý do site này tồn tại")
-        claims = json.loads(cj.read_text(encoding="utf-8"))["claims"]
+        _cj = json.loads(cj.read_text(encoding="utf-8"))
+        claims = _cj["claims"]
+        # khối `en` (nếu có) đi kèm fm để bien_lai_en() đọc — nguồn vẫn là MỘT file
+        fm["_en"] = _cj.get("en")
 
         # cổng chạy TRƯỚC khi in ra bất cứ thứ gì (LAUNCH.md:126)
         kho = body_md + "\n" + json.dumps(claims, ensure_ascii=False) + "\n" + json.dumps(fm, ensure_ascii=False)
@@ -2432,6 +2549,9 @@ def main() -> None:
                         "anh": fm.get("anh"), "loai": "article",
                         "tieu_de_og": fm["title"]}),
             encoding="utf-8")
+        _en_duong = bien_lai_en(fm, claims, body_md, slug_, t, o)
+        if _en_duong:
+            print(f"  ✓ {_en_duong}  ·  biên lai EN ({len(claims)} claim)")
         # 🔴 Tóm tắt CHỈ đếm "đang đứng" là NÓI DỐI THEO CHIỀU TỰ HẠ MÌNH: bài #1 có
         # 4 claim (1 xác nhận · 1 đứng · 2 đã sửa) mà dòng cũ in "4 claim, 1 đang đứng"
         # ⇒ đọc ra như 3/4 đã đổ. Lỗi này chỉ xuất hiện khi có claim ở trạng thái thứ ba;
