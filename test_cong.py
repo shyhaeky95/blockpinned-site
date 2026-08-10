@@ -208,6 +208,21 @@ CA = [
      lambda r: sua_facts(r, lambda f: f.update(
          ngay="2026-08-03", so="ngày 14/07: 138 điểm · " * 12)),
      "MỘT con số chính"),
+    # ── SỐ BLOCK hạ xuống KHẨU-VỊ 10/08 (user chốt, `LAUNCH.md §6f`) ────────────
+    # Xác: bản X đã đăng 07/08 mang `block 29.946.913` trong thân post, đủ bốn mặt,
+    # hậu kiểm Telegram khớp 2.505/2.505 ký tự, không ai phản ứng — và số block là tem
+    # nhận diện của kênh (`LAUNCH.md §1`). Hai ca dưới đi thành CẶP có chủ ý: nếu chỉ
+    # có ca dương thì "đậu" có thể vì cổng đã chết hẳn, không phải vì nó hẹp đúng chỗ.
+    ("⑪ FACT v2 · số block trong 'cau' phải BUILD ĐƯỢC (hạ xuống KHẨU-VỊ 10/08)",
+     lambda r: sua_facts(r, lambda f: f.update(
+         ngay="2026-08-03",
+         cau="Lượt gần nhất tính tới block 29.946.913 chỉ còn 0,159746%.")),
+     None),
+    ("⑪ FACT v2 · hex trong 'cau' VẪN phải chặn — cặp đối chứng của ca trên",
+     lambda r: sua_facts(r, lambda f: f.update(
+         ngay="2026-08-03",
+         cau="Giao dịch 0x166841f7f811e9563a1138e28bc7d94d49e2 chứng trọn cơ chế.")),
+     "dính địa chỉ/hex"),
     ("⑪ FACT v2 · control CHỐNG NHIỄU — Fact cũ (≤02/08) chan dài KHÔNG bị bắt",
      lambda r: sua_facts(r, lambda f: f.update(
          chan="Không có đốt không có nghĩa là sắp in thêm. Và đây là câu thứ hai.")),

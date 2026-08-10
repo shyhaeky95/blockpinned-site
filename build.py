@@ -56,7 +56,14 @@ OUT = ROOT / (sys.argv[sys.argv.index("--out") + 1] if "--out" in sys.argv else 
 # ── cổng 1 dùng CHUNG danh sách từ với template/check_language.py ────────────
 # Chép danh sách sang đây = hai bản sẽ lệch (luật bằng chứng của desk §13).
 # Hai chỗ tìm: kho gốc (~/blockpinned/template) và cạnh chính nó (repo công khai).
-for _p in (ROOT.parent / "template", ROOT):
+# 🔴 VÁ 10/08/2026 (`OPS-T-CONG-CHI-BAO`): đường đầu SAI SUỐT TỪ ĐẦU — `ROOT` là chính
+# repo công khai (`~/blockpinned-public`), nên `ROOT.parent / "template"` trỏ vào
+# `~/template`, **không tồn tại**. Vòng tìm luôn rơi xuống nhánh hai, tức **bản chép
+# cạnh chính nó** — và hai bản đã lệch md5 (bản chép là snapshot commit `5dcbc73`, 05/08).
+# Comment ngay trên nói *"dùng CHUNG danh sách"* trong khi máy đọc bản chép ⇒ đúng ca
+# `RULES.md §2c`: cổng chạy, in dòng xanh, mà đọc nhầm vật.
+# 🔵 Nhánh cuối GIỮ LẠI có chủ ý: repo công khai phải build được một mình (CI, máy khác).
+for _p in (ROOT.parent / "blockpinned" / "template", ROOT.parent / "template", ROOT):
     if (_p / "check_language.py").exists():
         sys.path.insert(0, str(_p))
         break
@@ -1966,8 +1973,19 @@ def cong_facts(fs: list) -> None:
                 if n_cau > 1:
                     raise LoiCong(f"{o} ({fid}) khuôn v2: 'chan' có {n_cau} câu > 1 — cần "
                                   f"từ 2 câu chặn trở lên thì đây không phải Fact, xếp bài dài")
+            # 🔵 `getattr` chứ không import thẳng: nhánh dự phòng ở trên có thể nạp một
+            # bản `check_language.py` cũ chưa có tập này, và khi đó hành xử phải như CŨ
+            # (chặn cứng mọi nhãn) — thiếu tập không được biến thành "bỏ qua hết".
+            khau_vi = getattr(lang, "FACT_KY_THUAT_KHAU_VI", frozenset())
             for k in ("cau", "chan"):
                 for re_, ten in lang.FACT_KY_THUAT:
+                    # 🔴 Số block hạ xuống KHẨU-VỊ 10/08 (user chốt, `LAUNCH.md §6f`):
+                    # bản X đã đăng 07/08 mang `block 29.946.913` trong thân post, đủ bốn
+                    # mặt, không ai phản ứng — và nó là tem nhận diện của kênh (`§1`).
+                    # Không hạ ở đây thì một Fact qua được `export_post` sẽ RỚT lúc build
+                    # web, tức hai cổng cùng khuôn v2 mà phán ngược nhau.
+                    if ten in khau_vi:
+                        continue
                     m = re_.search(str(f[k]))
                     if m:
                         raise LoiCong(f"{o} ({fid}) khuôn v2: '{k}' dính {ten}: "

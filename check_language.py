@@ -113,6 +113,17 @@ FACT_KY_THUAT = [
     (re.compile(r"\b(block|blk)\s*#?\s*[\d.]{4,}", re.I), "số block"),
 ]
 
+# 🔴 TÁCH MỨC 10/08/2026 — user chốt trong phiên audit cổng (`OPS-T-CONG-CHI-BAO`).
+# Bốn nhãn còn lại làm người đọc TẮT thật: `curl …`, `0x166841f7…`, `market(bytes32)`
+# là chữ của máy, không ai đọc tiếp. Nhưng **một mốc block viết đời thường thì không** —
+# xác: bản X đã đăng 07/08 mang nguyên `block 29.946.913` trong thân post, đủ bốn mặt,
+# hậu kiểm Telegram khớp 2.505/2.505 ký tự, **không ai phản ứng**. Số block còn là NHẬN
+# DIỆN của kênh (`LAUNCH.md §1`: tem block number). Chặn nó là chặn chữ ký của kênh.
+# ⇒ nhãn trong tập này sinh finding mức KHẨU-VỊ. Consumer nào KHÔNG biết tập này thì
+# hành xử như cũ (chặn cứng) ⇒ thêm tập là nới CÓ KIỂM SOÁT, không phải đổi ngầm.
+# Hình tuple KHÔNG đổi — `site/build.py:1970` unpack đúng hai phần tử.
+FACT_KY_THUAT_KHAU_VI = {"số block"}
+
 # quét cái ĐI RA NGOÀI, không quét hồ sơ nội bộ
 TARGETS = ["drafts/*.md", "template/out/*.txt", "template/out/*.html"]
 # file sinh chữ công khai — bỏ qua dòng comment (đó là hồ sơ ghi lý do, phải giữ)
@@ -121,7 +132,7 @@ GENERATORS = ["template/build_cards.py", "template/build_post01.py",
 
 
 def scan(path: pathlib.Path, skip_comments: bool, jargon: bool = True,
-         valuation: bool = True):
+         valuation: bool = True, cat_ghi_chu: bool = False):
     """`valuation=False` ⇒ bỏ nhóm ①b.
 
     🔴 Vì sao ①b KHÔNG quét draft, dù nó chặn cứng: lượt chạy thật bắt
@@ -134,7 +145,23 @@ def scan(path: pathlib.Path, skip_comments: bool, jargon: bool = True,
     """
     rules = RETIRED if valuation else RETIRED_TU
     out = []
-    for i, line in enumerate(path.read_text(encoding="utf-8").split("\n"), 1):
+    dong = path.read_text(encoding="utf-8").split("\n")
+    # 🔴 `cat_ghi_chu` thêm 10/08/2026 (`OPS-T-CONG-CHI-BAO`). Mục `## Ghi chú dựng
+    # bài` là HỒ SƠ NỘI BỘ — nó bàn VỀ câu chữ nên nó chở từ nghề một cách hợp lệ, y
+    # như lý do `valuation` không quét draft (xác 29/07 ghi ở docstring trên).
+    # Đo 10/08: lượt `soi.py` đầu tiên trên draft pools.trade trả **6 ĐÁNG-SỬA, cả 6
+    # nằm trong ghi chú** (dòng 95 · 96 · 105 …) — không dòng nào đi ra ngoài.
+    # 🔵 Cắt bằng CHỈ SỐ DÒNG, không bằng cách bỏ text: số dòng phải giữ đúng, vì
+    # "vị trí lỗi" là một trong ba thứ cổng bắt buộc phải trả (`LAUNCH.md §6f`).
+    # 🟠 Mặc định `False` — KHÔNG đổi hành xử cũ. Ô `OPS-T-LANG-GATE-DEFAULT-DO` hỏi
+    # nên miễn trừ file hay sửa chữ; cờ này mở ĐƯỜNG THỨ BA (cắt theo MỤC, không theo
+    # file) nhưng chọn đường nào vẫn là quyết định của user ở ô đó.
+    if cat_ghi_chu:
+        for k, l in enumerate(dong):
+            if re.match(r"^##\s+Ghi chú", l):
+                dong = dong[:k]
+                break
+    for i, line in enumerate(dong, 1):
         if skip_comments and line.lstrip().startswith("#"):
             continue
         for pat, fix, why in rules:
