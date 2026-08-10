@@ -49,7 +49,12 @@ KHUNG = [("dau", BAI, 1740, None),
          # cảnh báo ở trên nói thẳng: trang không có trong danh sách này thì cổng đo
          # tràn KHÔNG nhìn tới, và một trang hỏng ở khổ điện thoại đi ra ngoài không
          # báo gì. Đây cũng là trang đi kèm ĐỐI CHẤT, tức nơi sai đắt gấp mười.
-         ("en", "en/2026-08-07-hype-sai-so-lon-hon-ket-qua/index.html", 1600, None)]
+         ("en", "en/2026-08-07-hype-sai-so-lon-hon-ket-qua/index.html", 1600, None),
+         # 🔴 10/08: bài CAKE là bài ĐẦU TIÊN có BẢNG trong thân bài (ba bảng: ba giai
+         # đoạn · tỷ trọng theo mức phí · tỷ lệ chuyển hoá). `BAI` mẫu ở trên không có
+         # bảng nào, nên trước lượt này cổng đo tràn CHƯA BAO GIỜ nhìn thấy một bảng ở
+         # khổ điện thoại. Bảng là ứng viên tràn số một; thêm ngay lượt dựng đầu.
+         ("cakebang", "bai/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/index.html", 2100, None)]
 
 # 🔴 Hai cách đo SAI đã thử và bị bác, ghi lại để không ai dựng lại:
 #   ① documentElement.scrollWidth — không bao giờ nhỏ hơn viewport ⇒ là chặn dưới

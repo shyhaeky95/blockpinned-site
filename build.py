@@ -147,6 +147,10 @@ NGUON_ASSET = {
     "favicon-32.png":  "logo/final",
     "avatar-800.png":  "logo/final",
     "card-hype-doi-dau-muc.png": "png",
+    # bài CAKE 10/08 — cùng quy ước tên theo NỘI DUNG, không theo ordinal.
+    # Builder: template/build_card_cake_thi_phan_phi.py, số đọc thẳng từ ba artifact
+    # của CAKE và có assert từ chối dựng khi cycle 10/08 đã đóng.
+    "card-cake-thi-phan-phi-muc.png": "png",
     "post01-card.png": "png",
     "post02-card.png": "png",
     "post04-card.png": "png",
@@ -1173,7 +1177,8 @@ def font_face(goc: str) -> str:
 # một trang hồ sơ dựng bằng phép đoán sẽ sai đúng ở chỗ nó được dùng để chứng minh
 # chiều sâu. Token lạ ⇒ CHẶN build: thêm tên vào đây là một quyết định, không phải
 # một lượt gõ.
-TOKEN_TEN = {"UNI": "Uniswap", "LDO": "Lido", "HYPE": "Hyperliquid", "PENDLE": "Pendle"}
+TOKEN_TEN = {"UNI": "Uniswap", "LDO": "Lido", "HYPE": "Hyperliquid", "PENDLE": "Pendle",
+             "CAKE": "PancakeSwap"}
 
 # Tủ kính hiện mở cho ĐÚNG MỘT token, khai ở đây; toàn bộ nội dung trang sinh từ dữ
 # liệu, nên đổi dòng này là trang tự dựng lại cho token khác. Kèm SÀN: dưới 3 bài thì
