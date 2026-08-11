@@ -1108,8 +1108,8 @@ MAC_DINH_HE = dict(
 # trục này là HÌNH — thân CSS nào, vỏ trang nào, hàm mặt có tiêm hook không.
 #
 # Vì sao phải rời nhau: gộp vào một cờ thì không lượt nào đổi được màu mà giữ hình,
-# hay ngược lại — mà `/thu-v3/` tồn tại ĐÚNG để hỏi câu "cùng identity màu, hình mới
-# thì thế nào". Gộp cờ là làm hỏng chính câu hỏi đang cần trả lời.
+# hay ngược lại — `/thu-v3/` đã tồn tại trong vòng duyệt 10–11/08 để hỏi đúng câu
+# "cùng identity màu, hình mới thì thế nào". Gộp cờ vẫn làm mất đường rollback D2.
 #
 # Vì sao tên là `--bo-cuc` chứ không phải `--he`: trong file này chữ "hệ" ĐÃ CÓ CHỦ —
 # thông báo lỗi của `main()` in "hệ màu lạ". Hai vật cùng tên là thứ cắn về sau, và
@@ -1118,11 +1118,12 @@ MAC_DINH_HE = dict(
 # 🔵 CÙNG LUẬT "một tên, một chỗ khai" như đoạn ngay trên `HE_MAC_DINH`. `preview.py`
 # phải ĐỌC hằng này, KHÔNG giữ bản sao — bản sao là đúng cách nó đứng lại ở `benchmark`
 # và đi đo một cái hình khác cái đang ship.
-BO_CUC_MAC_DINH = "d2"
+BO_CUC_MAC_DINH = "v3"
 BO_CUC_CO = {
-    # D2 = hệ đang phục vụ. Rỗng có chủ ý: không ghi đè gì thì không đổi gì.
+    # D2 = bản rollback sau lượt lật production 11/08. Rỗng có chủ ý: cờ
+    # `--bo-cuc d2` phải dựng lại đúng byte của giao diện đã phục vụ trước đó.
     "d2": {},
-    # v3 = `design-v3-wow`, phiên codex 10/08. Bản gốc tự khai "token màu vẫn là D2
+    # v3 = hệ đang phục vụ, từ `design-v3-wow`, phiên codex 10/08. Bản gốc tự khai "token màu vẫn là D2
     # nguyên văn"; ĐO LẠI bằng cách so `css(THEMES['d2'])` với ba khối `:root` của
     # `fold.css` thì lệch 6 ô + thêm 2 token. Chép nguyên văn xuống đây để chênh lệch
     # là một BẢN KHAI đọc được, không phải sai khác âm thầm giữa hai file.

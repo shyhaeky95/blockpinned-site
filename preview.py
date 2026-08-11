@@ -244,7 +244,7 @@ def main() -> None:
     # là cổng đi theo, không có lượt vá tay nào để quên.
     # `--bo-cuc <ten>` chọn hệ trình bày; đối số trần còn lại (nếu có) là hệ MÀU, giữ
     # nguyên cách gọi cũ. Tách hai trục ở đây y như build.py tách chúng — gộp lại thì
-    # không lượt nào đo được "đổi hình mà giữ màu", đúng câu hỏi /thu-v3/ sinh ra để hỏi.
+    # không lượt nào đo được "đổi hình mà giữ màu"; đó vẫn là đường rollback D2 cần giữ.
     argv = sys.argv[1:]
     bo_cuc = BO_CUC_MAC_DINH
     if "--bo-cuc" in argv:
