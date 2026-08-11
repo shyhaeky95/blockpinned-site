@@ -28,15 +28,21 @@
     });
   }
 
-  // Global Quick Find: one compact map of every public surface.
+  // Global Quick Find: one compact map of every public surface. Resolve every
+  // destination from the logo's home link: it already knows whether this page is
+  // production, `/thu-v3/`, or a local file preview. The design mockup filenames
+  // must never escape into the published navigation.
+  var quickHome = document.querySelector("a.ten");
+  var quickRoot = quickHome ? quickHome.href : new URL(".", location.href).href;
+  function quickHref(path) { return new URL(path, quickRoot).href; }
   var quickRoutes = [
-    { href: "fold-home.html", code: "00", kind: "Bắt đầu", title: "Sổ gốc", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
-    { href: "fold-bai.html", code: "01", kind: "Điều tra", title: "Bài phân tích", copy: "Kết luận, tuyến bằng chứng và chỗ tự kiểm", tags: "article bai dieu tra kết luận bằng chứng", tone: "article" },
-    { href: "token-index.html", code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ sơ", tags: "token directory coverage logo", tone: "token" },
-    { href: "token-uni.html", code: "UNI", kind: "Hồ sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
-    { href: "token-sky-v2.html", code: "SKY", kind: "Primer", title: "Sky · SKY", copy: "Backing, P&L và holder bridge trong một cỗ máy", tags: "sky primer backing pnl holder", tone: "sky" },
-    { href: "facts.html", code: "03", kind: "Tự kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
-    { href: "track-record.html", code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" }
+    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Sổ gốc", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
+    { href: quickHref("bai/2026-07-27-defillama-uniswap-v4/"), code: "01", kind: "Điều tra", title: "Bài phân tích", copy: "Kết luận, tuyến bằng chứng và chỗ tự kiểm", tags: "article bai dieu tra kết luận bằng chứng", tone: "article" },
+    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ sơ", tags: "token directory coverage logo", tone: "token" },
+    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
+    { href: quickHref("facts/"), code: "03", kind: "Tự kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
+    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
+    { href: quickHref("du-lieu/"), code: "05", kind: "Hiện vật", title: "Dữ liệu thô", copy: "JSON, SHA-256 và lệnh tải để tự đếm lại", tags: "du lieu data json hash sha curl hien vat", tone: "data" }
   ];
   var quickHost = themeButton && themeButton.parentNode;
   if (quickHost) {
@@ -71,8 +77,13 @@
     function quickNormalise(value) {
       return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
     }
+    function quickRouteKey(value) {
+      try {
+        return new URL(value, location.href).href.replace(/index\.html(?:[?#].*)?$/, "").replace(/[?#].*$/, "").replace(/\/$/, "");
+      } catch (ignore) { return value; }
+    }
     function currentQuickPage() {
-      return location.pathname.split("/").pop() || "index.html";
+      return quickRouteKey(location.href);
     }
     function paintQuickSelection() {
       var links = quickResults.querySelectorAll("[data-quick-result]");
@@ -92,7 +103,7 @@
       });
       quickSelected = Math.min(quickSelected, Math.max(0, quickVisible.length - 1));
       quickResults.innerHTML = quickVisible.length ? quickVisible.map(function (route, index) {
-        var here = route.href === current;
+        var here = quickRouteKey(route.href) === current;
         return '<a id="quick-result-' + index + '" class="quick-find-result" data-quick-result data-tone="' + route.tone + '" href="' + route.href + '" role="option" aria-selected="false">'
           + '<span class="quick-find-code" aria-hidden="true">' + route.code + '</span>'
           + '<span class="quick-find-copy"><small>' + route.kind + '</small><b>' + route.title + '</b><em>' + route.copy + '</em></span>'
@@ -197,7 +208,7 @@
   }
 
   // Reveal only major story beats. Reduced-motion users see everything immediately.
-  var revealItems = document.querySelectorAll(".finding-home,.article-verdict,.may-hero,.token-overview,.token-card,.numrow,.chart-card,.cred,.ho-so,.evidence,.than>h2,.than>figure,.ba-so,.fact-protocol,.facts-ledger-head,.fact-wow,.track-score,.track-ledger-head,.track-entry,.uni-vault,.uni-coverage,.uni-ledger-head,.uni-claim,.uni-articles");
+  var revealItems = document.querySelectorAll(".finding-home,.article-verdict,.may-hero,.token-overview,.token-card,.numrow,.chart-card,.cred,.ho-so,.evidence,.than>h2,.than>figure,.ba-so,.fact-protocol,.facts-ledger-head,.fact-wow,.track-score,.track-ledger-head,.track-entry,.uni-vault,.uni-coverage,.uni-ledger-head,.uni-claim,.uni-articles,.data-protocol,.data-ledger-head,.data-file,.data-note");
   if (!reduce && "IntersectionObserver" in window) {
     var revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -607,6 +618,27 @@
   }
   openArticleClaim();
   addEventListener("hashchange", openArticleClaim);
+
+  // The data archive exposes two exact byte-level handles: a stable anchor for the
+  // file record, plus copy controls for its SHA-256 and download command.
+  document.querySelectorAll("[data-data-file][id]").forEach(function (file) {
+    var actions = file.querySelector(".data-file-actions");
+    if (!actions) return;
+    actions.appendChild(makeEvidenceLinkButton(file.id, "Sao chép link file " + file.dataset.fileIndex));
+  });
+  document.querySelectorAll("[data-copy-text]").forEach(function (button) {
+    var idle = button.dataset.copyIdle || button.textContent;
+    button.addEventListener("click", function () {
+      copyPlainText(button.dataset.copyText || "").then(function (copied) {
+        button.textContent = copied ? "Đã sao chép ✓" : "Hãy chọn thủ công";
+        button.classList.toggle("da-chep", copied);
+        setTimeout(function () {
+          button.textContent = idle;
+          button.classList.remove("da-chep");
+        }, 1800);
+      }).catch(function () { button.textContent = "Hãy chọn thủ công"; });
+    });
+  });
 
   // A copy control exists only when JavaScript can actually copy the command.
   document.querySelectorAll(".fact-wow details.lenh").forEach(function (details) {

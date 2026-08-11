@@ -48,7 +48,9 @@ KHUNG = [("dau", BAI, 1740, None),
          ("muctoken", "token/index.html", 1400, None),
          ("facts", "facts/index.html", 1500, None),
          ("trackrecord", "track-record/index.html", 1500, None),
-         ("dulieu", "du-lieu/index.html", 1300, None),
+         # v3 biến trang này thành một kho hiện vật có hero + manifest + từng file;
+         # 1300px chỉ chụp tới tiêu đề sổ, tức bỏ qua đúng phần cần nghiệm thu.
+         ("dulieu", "du-lieu/index.html", 2300, None),
          # 🔴 07/08: loại trang MỚI (tầng biên lai EN). Thêm ngay lượt dựng đầu —
          # cảnh báo ở trên nói thẳng: trang không có trong danh sách này thì cổng đo
          # tràn KHÔNG nhìn tới, và một trang hỏng ở khổ điện thoại đi ra ngoài không

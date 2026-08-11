@@ -31,6 +31,7 @@ một dòng cũng gây đúng lỗi đó, lần này do máy.
 Chạy:  python3 site/build.py [--theme benchmark|do|verdigris] [--out <thư mục>]
        mặc định là `benchmark` — hệ nhận diện đã chốt 29/07; hai hệ kia giữ làm hồ sơ
 """
+import hashlib
 import html as ihtml
 import json
 import pathlib
@@ -3045,6 +3046,78 @@ def trang_du_lieu(kho: pathlib.Path) -> str:
             f'ngay trong sổ claim của bài, bấm “Đo lại” là chạy.</p>')
 
 
+def trang_du_lieu_v3(kho: pathlib.Path) -> str:
+    """Kho hiện vật v3: biến mỗi JSON thành một bản ghi kiểm được bằng byte.
+
+    Nội dung mô tả vẫn có một chủ là `_doc` trong file. Tầng trình bày chỉ tính ba
+    thuộc tính từ chính byte đang phát hành — kích thước, số trường gốc và SHA-256 —
+    nên người tải có thể kiểm mình đang cầm đúng hiện vật mà trang mô tả.
+    """
+    tep = []
+    tong_byte = 0
+    for stt, (ten_f, nhan) in enumerate(HIEN_VAT.items(), 1):
+        f = kho / ten_f
+        raw = f.read_bytes()
+        tong_byte += len(raw)
+        try:
+            obj = json.loads(raw)
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            obj = {}
+        doc = str(obj.get("_doc", "")) if isinstance(obj, dict) else ""
+        so_truong = len(obj) if isinstance(obj, dict) else 0
+        kb = len(raw) / 1024
+        bam = hashlib.sha256(raw).hexdigest()
+        lenh = f"curl -sO {BASE}/du-lieu/{ten_f}"
+        tep.append(f'''<article class="data-file" id="file-{stt:02d}" data-data-file data-file-index="{stt:02d}">
+  <header class="data-file-head">
+    <span class="data-file-index">FILE {stt:02d}</span>
+    <span class="data-file-format">JSON · {so_vn(kb, 1)} KB</span>
+    <span class="data-file-actions"></span>
+  </header>
+  <h2><a href="{ihtml.escape(ten_f, quote=True)}" download>{ihtml.escape(ten_f)}</a></h2>
+  <p class="data-file-role">{ihtml.escape(nhan)}</p>
+  <div class="data-file-doc"><span>_doc</span><p>{ihtml.escape(doc)}</p></div>
+  <dl class="data-file-facts">
+    <div><dt>Kích thước</dt><dd>{so_vn(kb, 1)} KB</dd></div>
+    <div><dt>Trường gốc</dt><dd>{so_truong}</dd></div>
+    <div><dt>Định dạng</dt><dd>JSON</dd></div>
+  </dl>
+  <div class="data-hash"><span>SHA-256</span><code>{bam}</code>
+    <button type="button" data-copy-text="{bam}" data-copy-idle="Sao chép hash">Sao chép hash</button></div>
+  <div class="data-download">
+    <code>{ihtml.escape(lenh)}</code>
+    <button type="button" data-copy-text="{ihtml.escape(lenh, quote=True)}" data-copy-idle="Sao chép lệnh">Sao chép lệnh</button>
+    <a href="{ihtml.escape(ten_f, quote=True)}" download>Tải JSON ↓</a>
+  </div>
+</article>''')
+
+    nav = "".join(
+        f'<a href="#file-{i:02d}"><span>{i:02d}</span>{ihtml.escape(ten)}</a>'
+        for i, ten in enumerate(HIEN_VAT, 1))
+    return f'''<section class="hero data-hero">
+  <span class="ghost-num" aria-hidden="true">{len(HIEN_VAT)}</span>
+  <span class="hero-code" aria-hidden="true">PUBLIC EVIDENCE ARCHIVE</span>
+  <p class="eyebrow"><span>KHO HIỆN VẬT</span><span class="im">JSON · TỰ HOST</span></p>
+  <h1 class="display">Dữ liệu thô <span class="nhan-manh">đứng sau bài</span></h1>
+  <p class="subline">Tải file gốc, kiểm hash, rồi đếm lại. Trường <code>_doc</code> trong mỗi file nói nó là gì và vòng đo nào của nó đã hỏng.</p>
+  <div class="data-protocol">
+    <div class="heronum"><p class="l">Hiện vật đang phát hành</p><p class="v">{len(HIEN_VAT)}<em> file</em></p><p class="d">đọc và tải trực tiếp</p></div>
+    <div class="data-path" role="img" aria-label="Tuyến kiểm hiện vật: đọc mô tả gốc, đối chiếu SHA-256, tải về đếm lại">
+      <div><span>01 · ĐỌC</span><b>_doc</b><small>mô tả nằm trong file</small></div><i>→</i>
+      <div><span>02 · ĐỐI CHIẾU</span><b>SHA-256</b><small>hash từ đúng byte phát hành</small></div><i>→</i>
+      <div><span>03 · DỰNG LẠI</span><b>curl</b><small>tải về và tự đếm</small></div>
+    </div>
+  </div>
+  <div class="data-stats"><span><b>{so_vn(tong_byte / 1024, 1)} KB</b> tổng dung lượng</span><span><b>{len(HIEN_VAT)}</b> hash công khai</span><span><b>0</b> tài sản ngoài miền</span></div>
+</section>
+<nav class="data-map" aria-label="Chỉ mục hiện vật"><span>CHỈ MỤC FILE</span>{nav}</nav>
+<section class="data-ledger" aria-labelledby="data-ledger-title">
+  <header class="data-ledger-head"><div><span>PUBLIC DATA LEDGER</span><h2 id="data-ledger-title">{len(HIEN_VAT)} hiện vật tải được</h2></div><p>Mỗi dòng dưới đây có mô tả gốc, hash và lệnh tải của chính byte đang phục vụ.</p></header>
+  {"".join(tep)}
+</section>
+<aside class="data-note"><span>PHẠM VI</span><p>Không phải bài nào cũng có file ở đây. Phép quét qua nhiều log và nhiều vòng đối chứng mới cần hiện vật thô; phép gọi một hàm tại một block có đường tự kiểm ngắn hơn, nằm ngay trong sổ claim của bài.</p></aside>'''
+
+
 def thanh_xep(dem: dict, tong: int) -> str:
     """Thanh xếp chồng + chip có SỐ — bảng điểm dùng chung cho trang bài và trang chủ.
 
@@ -4064,8 +4137,9 @@ def main() -> None:
         if not f.is_file():
             raise LoiCong(f"hiện vật đã khai nhưng không có: {f}")
         shutil.copy2(f, dich / ten_hv)
+    than_du_lieu = trang_du_lieu_v3(kho) if BO_CUC == "v3" else trang_du_lieu(kho)
     (dich / "index.html").write_text(trang(
-        "Dữ liệu thô — BlockPinned", trang_du_lieu(kho), t, "..", muc="du-lieu/", mat="page-du-lieu",
+        "Dữ liệu thô — BlockPinned", than_du_lieu, t, "..", muc="du-lieu/", mat="page-du-lieu",
         meta={"mo_ta": "File JSON thô đứng sau các bài: tải về, mở ra, đếm lại. Mỗi file "
                        "mang sẵn một dòng nói nó là gì và vòng đo nào của nó đã hỏng.",
               "duong": "/du-lieu/", "anh": "avatar-800.png", "loai": "website",
