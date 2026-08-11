@@ -1457,6 +1457,34 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
 .uni-articles .seg{height:100%}.uni-articles .seg.xac{background:var(--c-xn)}.uni-articles .seg.song{background:var(--c-song)}.uni-articles .seg.sua{background:var(--c-sua)}.uni-articles .seg.bac{background:var(--c-bac)}
 .uni-articles .bai .s,.uni-articles .rail-goi{font:550 9px/1.45 var(--mono);color:var(--faint)}.uni-articles .rail-goi{margin:6px 0 0;text-align:right}
 
+/* Bài là CỬA VÀO, không còn là phụ lục ở chân trang. Cùng component cho home + token. */
+.article-priority{margin:clamp(42px,6vw,72px) 0;padding:clamp(24px,3.5vw,38px);border:1px solid color-mix(in srgb,var(--accent) 25%,var(--line));
+  border-radius:22px;background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 5%,var(--card)),var(--bg2));
+  box-shadow:0 28px 80px -58px color-mix(in srgb,var(--accent) 72%,var(--ink));position:relative;overflow:hidden;isolation:isolate}
+.article-priority::before{content:"";position:absolute;z-index:-1;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
+.article-priority::after{content:"READ";position:absolute;z-index:-1;right:-.04em;top:-.19em;font:850 clamp(92px,15vw,190px)/1 var(--display);
+  letter-spacing:-.08em;color:color-mix(in srgb,var(--accent) 4%,transparent);pointer-events:none}
+.article-priority .khu-dau{align-items:flex-end;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.article-priority .bai-heading{display:grid;gap:8px;max-width:70ch}.article-priority .bai-heading .section-code{margin:0;color:var(--accent)}
+.article-priority .bai-heading h2{margin:0;font:790 clamp(31px,4.4vw,50px)/1 var(--display);letter-spacing:-.05em}
+.article-priority .bai-heading>p:last-child{margin:0;max-width:64ch;font:520 13px/1.62 var(--body);color:var(--muted)}
+.article-priority .rail{grid-auto-columns:minmax(238px,27%);gap:12px;margin-top:0;padding-top:2px}
+.article-priority .bai{min-height:230px;padding:21px;border-color:color-mix(in srgb,var(--accent) 12%,var(--line));position:relative;overflow:hidden}
+.article-priority .bai::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(300px circle at 100% 0,
+  color-mix(in srgb,var(--accent) 8%,transparent),transparent 66%);opacity:0;transition:opacity .2s}
+.article-priority .bai:hover::before,.article-priority .bai:focus-visible::before{opacity:1}
+.article-priority .bai-lead{grid-column:span 2;min-height:258px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 9%,var(--card)),var(--card))}
+.article-priority .bai-lead::after{content:"MỚI NHẤT";position:absolute;right:18px;bottom:54px;font:800 8px/1 var(--mono);letter-spacing:.16em;color:var(--accent)}
+.article-priority .bai-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.article-priority .bai-token{padding:5px 7px;border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:999px;
+  background:color-mix(in srgb,var(--accent) 6%,transparent);font:800 8px/1 var(--mono);letter-spacing:.1em;color:var(--accent)}
+.article-priority .bai .t{position:relative;z-index:1;margin:19px 0 auto;font-size:18px;line-height:1.36;max-width:34ch}
+.article-priority .bai-lead .t{font-size:clamp(22px,3vw,31px);line-height:1.18;max-width:25ch;letter-spacing:-.035em}
+.article-priority .mini{position:relative;z-index:1;margin-top:25px}.article-priority .bai-foot{position:relative;z-index:1;display:flex;align-items:end;justify-content:space-between;gap:12px;margin-top:10px}
+.article-priority .bai-go{font:750 9px/1.3 var(--mono);color:var(--accent);white-space:nowrap}.article-priority .bai-go i{font-style:normal;transition:transform .2s}
+.article-priority .bai:hover .bai-go i,.article-priority .bai:focus-visible .bai-go i{display:inline-block;transform:translate(2px,-2px)}
+.article-priority .rail-goi{margin-top:9px;text-align:left;letter-spacing:.03em}
+
 @media(max-width:900px){
   .uni-vault{grid-template-columns:1fr}.uni-vault-total{min-height:205px;border-right:0;border-bottom:1px solid var(--line)}.uni-vault-state{padding:31px 34px}
   .uni-coverage{grid-template-columns:1fr 1fr 1fr}.uni-coverage-copy{grid-column:1/-1;min-height:145px}.uni-coverage article:first-of-type{border-left:0}
@@ -1473,6 +1501,10 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   .uni-claim .tx{font-size:15px;line-height:1.52}.uni-claim[data-uni-changed="1"] .tt-hop::after{grid-area:chip;justify-self:end;margin-right:45px;align-self:center}
   .uni-claim[data-uni-changed="1"] .mt{padding-right:0}.uni-claim .tu-mo{padding:0 16px 18px 19px}.uni-claim .dong{padding:15px;font-size:12.5px}
   .uni-articles{margin-top:65px}.uni-articles .rail{grid-auto-columns:minmax(270px,86%)}.uni-articles .dieu-rail{display:none}
+  .article-priority{margin-inline:-5px;padding:23px 18px;border-radius:18px}.article-priority .khu-dau{display:grid;align-items:start}
+  .article-priority .dieu-rail{display:none}.article-priority .rail{grid-auto-columns:minmax(270px,86%)}
+  .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead::after{display:none}
+  .article-priority .bai-lead .t{font-size:23px}.article-priority::after{font-size:100px;top:-.12em}
 }
 @media(max-width:420px){
   .uni-vault-total{display:grid;grid-template-columns:auto 1fr;gap:20px}.uni-ring{width:92px;height:92px}.uni-ring::before{width:62px;height:62px}.uni-ring b{font-size:31px}

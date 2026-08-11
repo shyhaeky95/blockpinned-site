@@ -3087,33 +3087,46 @@ Bộ sinh trang chặn build nếu một dòng đã được phân định mà t
   </section>''')
 
 
-def dai_bai(bai_list: list, tien_to: str, them_lop: str = "") -> str:
+def dai_bai(bai_list: list, tien_to: str, them_lop: str = "", *, uu_tien: bool = False,
+            tieu_de: str = "Bài", gioi_thieu: str = "") -> str:
     """Dải bài cuộn NGANG — dùng chung cho trang chủ và tủ kính token.
 
     Một khuôn, hai chỗ gọi: hai bản chép của cùng một thẻ là hai bản sẽ trôi lệch, và
     lần trôi đó sẽ lộ ra ở chỗ tệ nhất — thẻ bài, thứ người ta nhìn trước khi bấm.
     `tien_to` là đường về thư mục bài, khác nhau theo độ sâu trang gọi.
     """
-    the = "".join(
-        f'<a class="bai" href="{tien_to}bai/{s}/">'
-        f'<span class="d">{f["mau"]} {vn_ngay(str(f["date"])[:10])}</span>'
-        f'<span class="t">{ihtml.escape(f["title"])}</span>'
-        f'{thanh_mini(dm, n)}'
-        f'<span class="s">{n} claim — {sg}</span></a>'
-        for f, s, n, sg, dm in bai_list)
+    v3_uu_tien = BO_CUC == "v3" and uu_tien
+    the = []
+    for i, (f, s, n, sg, dm) in enumerate(bai_list, 1):
+        lop = "bai bai-lead" if v3_uu_tien and i == 1 else "bai"
+        ngay = f'{f["mau"]} {vn_ngay(str(f["date"])[:10])}'
+        dau = (f'<span class="bai-top"><span class="d">{ngay}</span>'
+               f'<span class="bai-token">{ihtml.escape(f.get("token", ""))}</span></span>'
+               if v3_uu_tien else f'<span class="d">{ngay}</span>')
+        chan = (f'<span class="bai-foot"><span class="s">{n} claim — {sg}</span>'
+                f'<span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span>'
+                if v3_uu_tien else f'<span class="s">{n} claim — {sg}</span>')
+        the.append(f'<a class="{lop}" href="{tien_to}bai/{s}/">{dau}'
+                   f'<span class="t">{ihtml.escape(f["title"])}</span>'
+                   f'{thanh_mini(dm, n)}{chan}</a>')
     # v3 gắn `aria-labelledby="bai"` — khối này CÓ `<h2 id="bai">` bên trong, nên trình
     # đọc màn hình đọc được tên vùng thay vì "section". Lấy từ bản codex. Không gắn cho
     # D2 vì D2 phải trùng từng byte với bản đang phục vụ; đây là nợ nhỏ của D2, ghi ra
     # đây để lượt lật bố cục sau không phải tìm lại.
     nhan = ' aria-labelledby="bai"' if BO_CUC == "v3" else ""
-    return (f'<section class="khu-bai{them_lop}" data-hien{nhan}>'
-            f'<div class="khu-dau"><h2 id="bai">Bài</h2>'
+    lop_uu_tien = " article-priority" if v3_uu_tien else ""
+    dau_muc = (f'<div class="bai-heading"><p class="section-code">READING DESK · '
+               f'{len(bai_list)} INVESTIGATIONS</p><h2 id="bai">{ihtml.escape(tieu_de)}</h2>'
+               f'<p>{ihtml.escape(gioi_thieu)}</p></div>' if v3_uu_tien else
+               '<h2 id="bai">Bài</h2>')
+    return (f'<section class="khu-bai{them_lop}{lop_uu_tien}" data-hien{nhan}>'
+            f'<div class="khu-dau">{dau_muc}'
             f'<div class="dieu-rail">'
             f'<button class="rn" type="button" data-rail="-1" aria-label="Lùi một thẻ">←</button>'
             f'<button class="rn" type="button" data-rail="1" aria-label="Tới một thẻ">→</button>'
             f'</div></div>'
             f'<div class="rail-boc"><div class="rail" id="rail" tabindex="0" role="region" '
-            f'aria-label="Danh sách bài — cuộn ngang">{the}</div></div>'
+            f'aria-label="Danh sách bài — cuộn ngang">{"".join(the)}</div></div>'
             f'<p class="rail-goi">{len(bai_list)} bài · vuốt ngang, hoặc bấm mũi tên</p></section>')
 
 
@@ -3197,6 +3210,10 @@ def trang_token(ma: str, bai_t: list, claims_t: list) -> str:
                       f'aria-pressed="false"><i class="uni-dot {TRANG_THAI[k][0]}"></i>'
                       f'{ten_tt[TRANG_THAI[k][0]]} <b>{d_num[k]}</b></button>' for k in thu_tu)
         n = len(claims_t)
+        khoi_bai = dai_bai(
+            bai_t, "../../", " uni-articles", uu_tien=True,
+            tieu_de=f"Bài điều tra về {ma}",
+            gioi_thieu="Bắt đầu từ bài gốc để thấy câu hỏi, đường đo và giới hạn trước khi mở từng claim.")
         return (f'''<section class="hero uni-hero">
     <p class="eyebrow">Token vault · {ma} <span class="im">public evidence file</span></p>
     <div class="uni-title-lockup">
@@ -3221,6 +3238,8 @@ trạng thái hiện tại, mốc ghim, điều kiện bác bỏ và đường t
 <i aria-hidden="true">→</i><span>Mở từng claim để thấy chính xác điều gì có thể bác bỏ nó.</span></p>
     </section>
   </section>
+
+  {khoi_bai}
 
   <section class="uni-coverage" aria-labelledby="uni-coverage-title">
     <div class="uni-coverage-copy"><p class="section-code">REPRODUCTION COVERAGE</p>\
@@ -3253,7 +3272,7 @@ trạng thái hiện tại, mốc ghim, điều kiện bác bỏ và đường t
       {hang}
     </ol>
     <p class="uni-empty" data-uni-empty hidden>Không có claim khớp bộ lọc này.</p>
-  </section>''' + dai_bai(bai_t, "../../", " uni-articles"))
+  </section>''')
 
     return (f'<p class="crumb">Tủ kính token · {ma}</p>'
             f'<h1>{ten} — mọi con số kênh này đã ghim, và câu nào còn đứng</h1>'
@@ -4011,6 +4030,11 @@ def trang_chu_v3(bai: list, moi_claim: list, gt: list, tk: dict, khai: dict) -> 
         chuoi = [(d["ngay"], int(d["usd"])) for d in hv["chuoi"]]
         khoi_nb = khoi_noi_bat(nb, nb_slug, chuoi, hv["_doc_luc"])
 
+    khoi_bai = dai_bai(
+        bai, "", " home-articles", uu_tien=True,
+        tieu_de="Bài điều tra mới nhất",
+        gioi_thieu="Đây là cửa vào chính: mở bài để thấy câu hỏi, phép đo và điều gì có thể chứng minh nó sai.")
+
     return (f'''<section class="ledger-asset" id="so-goc" aria-labelledby="ledger-title">
   <div class="ledger-head">
     <div>
@@ -4047,8 +4071,8 @@ sẽ bác bỏ nó, rồi cập nhật công khai khi kết quả thay đổi.</
       </div>
     </div>
     <nav class="home-map" aria-label="Khám phá BlockPinned">
-      <a class="home-door" href="#ho-so"><span class="door-no">01</span>\
-<span class="door-copy"><b>Điều tra</b><small>Theo một con số từ dashboard về tận chain.</small></span>\
+      <a class="home-door" href="#bai"><span class="door-no">01</span>\
+<span class="door-copy"><b>Bài điều tra</b><small>Đọc trọn câu hỏi, đường đo và phần có thể sai.</small></span>\
 <span class="door-go" aria-hidden="true">↘</span></a>
       <a class="home-door" href="token/"><span class="door-no">02</span>\
 <span class="door-copy"><b>Token</b><small>Hồ sơ theo đối tượng, gom mọi câu đã ghim.</small></span>\
@@ -4063,6 +4087,8 @@ sẽ bác bỏ nó, rồi cập nhật công khai khi kết quả thay đổi.</
   </div>
 </section>
 
+{khoi_bai}
+
 {khoi_nb}
 
 <section class="inv-khu" id="ho-so">
@@ -4072,7 +4098,7 @@ sẽ bác bỏ nó, rồi cập nhật công khai khi kết quả thay đổi.</
     <a href="#bai">xem tất cả</a>
   </div>
   <div class="inv">{"".join(the_ds)}</div>
-</section>''' + sap_phan_dinh(moi_claim) + dai_bai(bai, "", " home-articles"))
+</section>''' + sap_phan_dinh(moi_claim))
 
 
 def cong_bo_cuc(html_chu: str, html_token: str, so_bai: int, so_token: int) -> None:
@@ -4082,9 +4108,12 @@ def cong_bo_cuc(html_chu: str, html_token: str, so_bai: int, so_token: int) -> N
     Component bắt buộc + số item mới là hợp đồng giữa builder với CSS/JS.
     """
     if BO_CUC == "v3":
-        if ('class="khu-bai home-articles"' not in html_chu
-                or html_chu.count('<a class="bai"') != so_bai):
+        moc_bai = 'class="khu-bai home-articles article-priority"'
+        if (moc_bai not in html_chu
+                or html_chu.count('<a class="bai') != so_bai):
             raise LoiCong("mục bài trang chủ v3 thiếu cấu trúc home-articles hoặc mất thẻ bài")
+        if html_chu.index(moc_bai) > html_chu.index('id="ho-so"'):
+            raise LoiCong("mục bài trang chủ v3 đã tụt xuống sau hồ sơ — phải là cửa vào ở nửa đầu trang")
         if (not all(x in html_token for x in ('class="token-switcher"',
                                                'class="token-overview"',
                                                'class="token-directory"',
@@ -4098,6 +4127,17 @@ def cong_bo_cuc(html_chu: str, html_token: str, so_bai: int, so_token: int) -> N
         if ('class="cua cua-3"' not in html_token
                 or html_token.count('class="cua-o tok"') != so_token):
             raise LoiCong("mục token D2 thiếu lưới cua hoặc mất token")
+
+
+def cong_bai_token(html_tu: str, so_bai: int) -> None:
+    """Bài gốc trên hồ sơ token phải đứng trước tủ claim, không chìm ở chân trang."""
+    if BO_CUC != "v3":
+        return
+    moc_bai = 'class="khu-bai uni-articles article-priority"'
+    if moc_bai not in html_tu or html_tu.count('<a class="bai') != so_bai:
+        raise LoiCong("mục bài token v3 thiếu article-priority hoặc mất thẻ bài")
+    if html_tu.index(moc_bai) > html_tu.index('class="uni-coverage"'):
+        raise LoiCong("mục bài token v3 đã tụt xuống sau tủ claim — phải đứng ngay sau phần mở đầu")
 
 
 def main() -> None:
@@ -4323,15 +4363,16 @@ def main() -> None:
         claims_tk = [(s, t, c) for s, t, c in moi_claim if token_cua[s] == TU_KINH]
         d_tk = OUT / "token" / TU_KINH.lower()
         d_tk.mkdir(parents=True, exist_ok=True)
-        (d_tk / "index.html").write_text(trang(
+        html_tu = trang(
             f"{TOKEN_TEN[TU_KINH]} — hồ sơ {TU_KINH} — BlockPinned",
             trang_token(TU_KINH, bai_tk, claims_tk), t, "../..", muc=TU_KINH_DUONG, mat="page-token-uni",
             meta={"mo_ta": f"Mọi khẳng định BlockPinned đã đăng về {TOKEN_TEN[TU_KINH]}: "
                            f"{len(claims_tk)} câu trên {len(bai_tk)} bài, mỗi câu ghim tại "
                            f"block đã đo, kèm điều gì sẽ bác bỏ nó và trạng thái hiện tại.",
                   "duong": f"/{TU_KINH_DUONG}", "anh": "card-uni-100usd.png", "loai": "website",
-                  "tieu_de_og": f"{TOKEN_TEN[TU_KINH]} — mọi con số đã ghim, và câu nào còn đứng"}),
-            encoding="utf-8")
+                  "tieu_de_og": f"{TOKEN_TEN[TU_KINH]} — mọi con số đã ghim, và câu nào còn đứng"})
+        cong_bai_token(html_tu, len(bai_tk))
+        (d_tk / "index.html").write_text(html_tu, encoding="utf-8")
         print(f"  ✓ {TU_KINH_DUONG}  ·  {len(claims_tk)} khẳng định trên {len(bai_tk)} bài")
     elif len(bai_tk) >= TU_KINH_SAN:
         raise LoiCong(f"{TU_KINH} có {len(bai_tk)} bài (đủ sàn) mà mục Token lại tắt — "

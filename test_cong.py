@@ -269,9 +269,13 @@ CA = [
                            '<div class="token-grid-hong" id="token-grid">'),
      "mục token v3 thiếu cấu trúc"),
     ("BỐ CỤC v3 · dải bài trang chủ mất component phải NỔ",
-     lambda r: sua_builder(r, 'dai_bai(bai, "", " home-articles")',
-                           'dai_bai(bai, "")'),
+     lambda r: sua_builder(r, 'bai, "", " home-articles", uu_tien=True,',
+                           'bai, "", uu_tien=True,'),
      "mục bài trang chủ v3 thiếu cấu trúc"),
+    ("BỐ CỤC v3 · dải bài token mất ưu tiên phải NỔ",
+     lambda r: sua_builder(r, 'bai_t, "../../", " uni-articles", uu_tien=True,',
+                           'bai_t, "../../", uu_tien=True,'),
+     "mục bài token v3 thiếu article-priority"),
     ("VISUAL · marker còn nhưng cấu hình bị xoá phải NỔ",
      lambda r: sua_json_bai(r, PENDLE_CJ, lambda d: d["visuals"].pop(0)),
      "marker visual và cấu hình không khớp"),
@@ -296,7 +300,8 @@ THEM_ARGV = {ten: ca[3] for ca in CA if len(ca) > 3 for ten in [ca[0]]}
 for _t in ("BỐ CỤC v3 · thiếu v3.css phải NỔ — trang đủ chữ mà không có hình là hỏng im nhất",
            "BỐ CỤC v3 · thiếu v3.js phải NỔ",
            "BỐ CỤC v3 · token rơi về chữ trần phải NỔ",
-           "BỐ CỤC v3 · dải bài trang chủ mất component phải NỔ"):
+           "BỐ CỤC v3 · dải bài trang chủ mất component phải NỔ",
+           "BỐ CỤC v3 · dải bài token mất ưu tiên phải NỔ"):
     THEM_ARGV[_t] = ["--bo-cuc", "v3"]
 
 
