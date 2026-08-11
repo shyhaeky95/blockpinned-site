@@ -36,8 +36,8 @@
   var quickRoot = quickHome ? quickHome.href : new URL(".", location.href).href;
   function quickHref(path) { return new URL(path, quickRoot).href; }
   var quickRoutes = [
-    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Sổ gốc", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
-    { href: quickHref("bai/2026-07-27-defillama-uniswap-v4/"), code: "01", kind: "Điều tra", title: "Bài phân tích", copy: "Kết luận, tuyến bằng chứng và chỗ tự kiểm", tags: "article bai dieu tra kết luận bằng chứng", tone: "article" },
+    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
+    { href: quickHref("bai/"), code: "01", kind: "Điều tra", title: "Tất cả bài viết", copy: "Tìm, lọc token và mở toàn bộ bài điều tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
     { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ sơ", tags: "token directory coverage logo", tone: "token" },
     { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
     { href: quickHref("facts/"), code: "03", kind: "Tự kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
@@ -208,7 +208,7 @@
   }
 
   // Reveal only major story beats. Reduced-motion users see everything immediately.
-  var revealItems = document.querySelectorAll(".finding-home,.article-verdict,.may-hero,.token-overview,.token-card,.numrow,.chart-card,.cred,.ho-so,.evidence,.than>h2,.than>figure,.ba-so,.fact-protocol,.facts-ledger-head,.fact-wow,.track-score,.track-ledger-head,.track-entry,.uni-vault,.uni-coverage,.uni-ledger-head,.uni-claim,.uni-articles,.home-articles,.data-protocol,.data-ledger-head,.data-file,.data-note");
+  var revealItems = document.querySelectorAll(".finding-home,.article-verdict,.may-hero,.token-overview,.token-card,.numrow,.chart-card,.cred,.ho-so,.evidence,.than>h2,.than>figure,.ba-so,.fact-protocol,.facts-ledger-head,.fact-wow,.track-score,.track-ledger-head,.track-entry,.uni-vault,.uni-coverage,.uni-ledger-head,.uni-claim,.uni-articles,.home-articles,.article-archive-head,.article-archive-card,.data-protocol,.data-ledger-head,.data-file,.data-note");
   if (!reduce && "IntersectionObserver" in window) {
     var revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -669,7 +669,7 @@
   var trackStatus = document.querySelector(".track-filter-status");
   var trackLedger = document.querySelector(".track-ledger");
   if (trackFilters.length && trackEntries.length) {
-    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "bị bác", sua: "đã sửa", cho: "chưa phân định" };
+    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác bỏ", sua: "đã sửa", cho: "chưa phân định" };
     trackFilters.forEach(function (button) {
       button.addEventListener("click", function () {
         var filter = button.dataset.trackFilter;
@@ -688,6 +688,80 @@
     });
   }
 
+  // Article archive: the homepage remains a concise preview; this page carries
+  // the complete index. Filtering never removes cards from the document, and
+  // "more" reveals a bounded batch so the same layout works at 12 or 120 posts.
+  var archiveCards = Array.prototype.slice.call(document.querySelectorAll("[data-article-card]"));
+  var archiveFilters = document.querySelectorAll("[data-article-filter]");
+  var archiveSearch = document.querySelector("[data-article-search]");
+  var archiveStatus = document.querySelector("[data-article-status]");
+  var archiveEmpty = document.querySelector("[data-article-empty]");
+  var archiveMore = document.querySelector("[data-article-more]");
+  if (archiveCards.length) {
+    var archiveActive = "all";
+    var archiveLimit = 12;
+    function archiveNormalise(value) {
+      return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+    }
+    function renderArticleArchive(resetLimit) {
+      if (resetLimit) archiveLimit = 12;
+      var query = archiveNormalise(archiveSearch ? archiveSearch.value : "");
+      var matches = archiveCards.filter(function (card) {
+        return (archiveActive === "all" || card.dataset.articleToken === archiveActive)
+          && (!query || archiveNormalise(card.dataset.articleText + " " + card.textContent).indexOf(query) !== -1);
+      });
+      archiveCards.forEach(function (card) {
+        var index = matches.indexOf(card);
+        card.hidden = index < 0 || index >= archiveLimit;
+      });
+      var shown = Math.min(matches.length, archiveLimit);
+      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + " / " + matches.length + " bài viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
+      if (archiveEmpty) archiveEmpty.hidden = matches.length !== 0;
+      if (archiveMore) {
+        archiveMore.hidden = matches.length <= archiveLimit;
+        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + " bài viết ↓";
+      }
+    }
+    function selectArchiveFilter(filter, updateUrl) {
+      archiveActive = filter;
+      archiveFilters.forEach(function (button) {
+        button.setAttribute("aria-pressed", String(button.dataset.articleFilter === filter));
+      });
+      if (updateUrl && history.replaceState) {
+        var url = new URL(location.href);
+        if (filter === "all") url.searchParams.delete("token"); else url.searchParams.set("token", filter);
+        history.replaceState(null, "", url.pathname + url.search + url.hash);
+      }
+      renderArticleArchive(true);
+    }
+    archiveFilters.forEach(function (button) {
+      button.addEventListener("click", function () { selectArchiveFilter(button.dataset.articleFilter, true); });
+    });
+    if (archiveSearch) {
+      archiveSearch.addEventListener("input", function () { renderArticleArchive(true); });
+      archiveSearch.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape") return;
+        archiveSearch.value = "";
+        renderArticleArchive(true);
+      });
+      document.addEventListener("keydown", function (event) {
+        var target = event.target;
+        var typing = target && (target.matches("input,textarea,select") || target.isContentEditable);
+        if (event.key === "/" && !typing) { event.preventDefault(); archiveSearch.focus(); }
+      });
+    }
+    if (archiveMore) archiveMore.addEventListener("click", function () {
+      archiveLimit += 12;
+      renderArticleArchive(false);
+    });
+    var requestedToken = new URLSearchParams(location.search).get("token")
+      || (location.hash.indexOf("#token-") === 0 ? location.hash.slice(7) : "");
+    var requestedButton = requestedToken && Array.prototype.slice.call(archiveFilters).find(function (button) {
+      return button.dataset.articleFilter === requestedToken.toLowerCase();
+    });
+    selectArchiveFilter(requestedButton ? requestedToken.toLowerCase() : "all", false);
+  }
+
   // UNI profile: one evidence vault, with local search and non-destructive lenses.
   var uniClaims = Array.prototype.slice.call(document.querySelectorAll("[data-uni-claim]"));
   var uniFilters = document.querySelectorAll("[data-uni-filter]");
@@ -696,7 +770,7 @@
   var uniEmpty = document.querySelector("[data-uni-empty]");
   if (uniClaims.length) {
     var uniActiveFilter = "all";
-    var uniLabels = { xac: "đã xác nhận", song: "đang đứng", sua: "đã sửa", bac: "bị bác", changed: "đã đổi trạng thái" };
+    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng vững", sua: "đã sửa", bac: "đã bị bác bỏ", changed: "đã đổi trạng thái" };
 
     function uniNormalise(value) {
       return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();

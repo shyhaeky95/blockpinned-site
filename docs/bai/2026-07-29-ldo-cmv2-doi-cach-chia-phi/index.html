@@ -1338,11 +1338,16 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
 /* ══════════════════════════════════════════════════════════════════════════
    UNI PROFILE — evidence vault. Semantic colour is a signal, never a panel.
    ══════════════════════════════════════════════════════════════════════════ */
-.page-token-uni main{padding-bottom:112px}.uni-hero{padding-bottom:18px}.uni-hero .subline{max-width:65ch;margin-bottom:38px}
+.page-token-uni main{padding-bottom:112px}.uni-hero{padding-bottom:30px}
+.uni-hero-grid{display:grid;grid-template-columns:minmax(0,.84fr) minmax(500px,1.16fr);gap:clamp(38px,5.5vw,88px);align-items:center}
+.uni-hero-copy{min-width:0}.uni-hero .subline{max-width:58ch;margin:0 0 28px}
 .uni-title-lockup{display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
 .uni-title-lockup img{width:84px;height:84px;border-radius:23px;box-shadow:0 0 0 1px var(--line),0 18px 40px -26px var(--ink)}
 .uni-title-lockup>div>span{display:block;margin:0 0 7px;font:750 10px/1 var(--mono);letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
 .uni-title-lockup h1{max-width:13ch;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-hero-jump{width:min(100%,420px);display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:15px 17px;border:1px solid var(--line);border-radius:13px;background:var(--card);box-shadow:var(--bong)}
+.uni-hero-jump span{font:650 9px/1.4 var(--mono);color:var(--faint)}.uni-hero-jump b{font:760 10px/1 var(--mono);color:var(--accent)}.uni-hero-jump i{font-style:normal;color:var(--accent);transition:transform .2s}
+.uni-hero-jump:hover,.uni-hero-jump:focus-visible{border-color:color-mix(in srgb,var(--accent) 38%,var(--line))}.uni-hero-jump:hover i{transform:translateY(2px)}
 
 .uni-vault{--mx:74%;--my:20%;display:grid;grid-template-columns:minmax(280px,.82fr) minmax(0,1.18fr);position:relative;overflow:hidden;isolation:isolate;
   border:1px solid var(--line);border-radius:24px;background:linear-gradient(145deg,color-mix(in srgb,var(--card) 92%,var(--bg)),var(--bg2));box-shadow:var(--bong)}
@@ -1374,6 +1379,9 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
 .uni-vault-rule{grid-column:1/-1;display:flex;align-items:center;gap:11px 17px;margin:0;padding:15px 26px;border-top:1px solid var(--line);
   background:color-mix(in srgb,var(--bg2) 72%,transparent);font:600 9.5px/1.5 var(--mono);color:var(--muted)}
 .uni-vault-rule b{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}.uni-vault-rule i{font-style:normal;color:var(--accent)}
+.uni-hero-grid .uni-vault{grid-template-columns:1fr}
+.uni-hero-grid .uni-vault-total{min-height:205px;border-right:0;border-bottom:1px solid var(--line)}
+.uni-hero-grid .uni-vault-state{min-height:190px;padding-block:32px}
 html.chuyen .uni-vault.is-visible .uni-status-bar>i{animation:uni-volume .8s cubic-bezier(.2,.8,.2,1) backwards}
 html.chuyen .uni-vault.is-visible .uni-status-bar>i:nth-child(2){animation-delay:.07s}html.chuyen .uni-vault.is-visible .uni-status-bar>i:nth-child(3){animation-delay:.14s}
 html.chuyen .uni-vault.is-visible .uni-status-bar>i:nth-child(4){animation-delay:.21s}
@@ -1468,7 +1476,10 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
 .article-priority .bai-heading{display:grid;gap:8px;max-width:70ch}.article-priority .bai-heading .section-code{margin:0;color:var(--accent)}
 .article-priority .bai-heading h2{margin:0;font:790 clamp(31px,4.4vw,50px)/1 var(--display);letter-spacing:-.05em}
 .article-priority .bai-heading>p:last-child{margin:0;max-width:64ch;font:520 13px/1.62 var(--body);color:var(--muted)}
-.article-priority .rail{grid-auto-columns:minmax(238px,27%);gap:12px;margin-top:0;padding-top:2px}
+.article-priority .bai-archive-link{min-width:158px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 13px;padding:13px 14px;border:1px solid color-mix(in srgb,var(--accent) 28%,var(--line));border-radius:12px;background:color-mix(in srgb,var(--accent) 6%,var(--card));color:var(--accent)}
+.article-priority .bai-archive-link span{font:650 8px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}.article-priority .bai-archive-link b{font:760 12px/1 var(--display)}
+.article-priority .bai-archive-link i{grid-column:2;grid-row:1/-1;font:700 13px/1 var(--mono);font-style:normal;transition:transform .2s}.article-priority .bai-archive-link:hover i{transform:translate(2px,-2px)}
+.article-priority .article-preview-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .article-priority .bai{min-height:230px;padding:21px;border-color:color-mix(in srgb,var(--accent) 12%,var(--line));position:relative;overflow:hidden}
 .article-priority .bai::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(300px circle at 100% 0,
   color-mix(in srgb,var(--accent) 8%,transparent),transparent 66%);opacity:0;transition:opacity .2s}
@@ -1483,14 +1494,17 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
 .article-priority .mini{position:relative;z-index:1;margin-top:25px}.article-priority .bai-foot{position:relative;z-index:1;display:flex;align-items:end;justify-content:space-between;gap:12px;margin-top:10px}
 .article-priority .bai-go{font:750 9px/1.3 var(--mono);color:var(--accent);white-space:nowrap}.article-priority .bai-go i{font-style:normal;transition:transform .2s}
 .article-priority .bai:hover .bai-go i,.article-priority .bai:focus-visible .bai-go i{display:inline-block;transform:translate(2px,-2px)}
-.article-priority .rail-goi{margin-top:9px;text-align:left;letter-spacing:.03em}
+.article-priority .article-preview-note{margin:14px 0 0;font:550 9px/1.5 var(--mono);letter-spacing:.03em;color:var(--faint)}
 
 @media(max-width:900px){
+  .uni-hero-grid{grid-template-columns:1fr;gap:40px}.uni-hero-copy{max-width:760px}.uni-hero-grid .uni-vault{grid-template-columns:1fr 1.15fr}.uni-hero-grid .uni-vault-total{border-right:1px solid var(--line);border-bottom:0}.uni-hero-grid .uni-vault-state{min-height:205px}
   .uni-vault{grid-template-columns:1fr}.uni-vault-total{min-height:205px;border-right:0;border-bottom:1px solid var(--line)}.uni-vault-state{padding:31px 34px}
   .uni-coverage{grid-template-columns:1fr 1fr 1fr}.uni-coverage-copy{grid-column:1/-1;min-height:145px}.uni-coverage article:first-of-type{border-left:0}
   .uni-tools{grid-template-columns:minmax(210px,.9fr) minmax(0,1.5fr)}.uni-open-tools{display:none}
+  .article-priority .article-preview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.article-priority .bai-lead{grid-column:1/-1}
 }
 @media(max-width:700px){
+  .uni-hero-grid{gap:30px}.uni-hero-grid .uni-vault{grid-template-columns:1fr}.uni-hero-grid .uni-vault-total{border-right:0;border-bottom:1px solid var(--line)}
   .uni-title-lockup{grid-template-columns:62px minmax(0,1fr);gap:16px}.uni-title-lockup img{width:62px;height:62px;border-radius:18px}
   .uni-title-lockup h1{font-size:clamp(34px,10vw,46px)}.uni-vault-total{padding:28px 24px}.uni-ring{width:108px;height:108px}.uni-ring::before{width:72px;height:72px}.uni-ring b{font-size:36px}
   .uni-vault-state{padding:28px 24px 25px}.uni-vault-rule{align-items:flex-start;flex-wrap:wrap;padding:15px 20px}.uni-vault-rule i{display:none}
@@ -1502,7 +1516,7 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   .uni-claim[data-uni-changed="1"] .mt{padding-right:0}.uni-claim .tu-mo{padding:0 16px 18px 19px}.uni-claim .dong{padding:15px;font-size:12.5px}
   .uni-articles{margin-top:65px}.uni-articles .rail{grid-auto-columns:minmax(270px,86%)}.uni-articles .dieu-rail{display:none}
   .article-priority{margin-inline:-5px;padding:23px 18px;border-radius:18px}.article-priority .khu-dau{display:grid;align-items:start}
-  .article-priority .dieu-rail{display:none}.article-priority .rail{grid-auto-columns:minmax(270px,86%)}
+  .article-priority .bai-archive-link{width:100%;grid-template-columns:1fr auto auto}.article-priority .bai-archive-link i{grid-column:3;grid-row:1}.article-priority .article-preview-grid{grid-template-columns:1fr}
   .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead::after{display:none}
   .article-priority .bai-lead .t{font-size:23px}.article-priority::after{font-size:100px;top:-.12em}
 }
@@ -1510,6 +1524,40 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   .uni-vault-total{display:grid;grid-template-columns:auto 1fr;gap:20px}.uni-ring{width:92px;height:92px}.uni-ring::before{width:62px;height:62px}.uni-ring b{font-size:31px}
   .uni-vault::after{display:none}.uni-legend{grid-template-columns:1fr}.uni-status-bar{height:44px}.uni-ledger-head{display:grid}
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ARTICLE ARCHIVE — preview hữu hạn ở trang chính, toàn bộ bài nằm ở đây.
+   ══════════════════════════════════════════════════════════════════════════ */
+.page-article-archive main{padding-bottom:110px}.article-archive-hero{padding-bottom:25px}.article-archive-hero h1{max-width:15ch}
+.article-archive-hero .subline{max-width:67ch}.article-archive-stats{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:30px;padding:16px 0;border-block:1px solid var(--line)}
+.article-archive-stats span{display:flex;align-items:baseline;gap:7px;font:600 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.article-archive-stats span::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent)}.article-archive-stats span:nth-child(2)::before{background:var(--c-song)}.article-archive-stats span:nth-child(3)::before{background:var(--c-xn)}
+.article-archive-stats b{font:800 18px/1 var(--display);letter-spacing:-.025em;color:var(--ink)}
+
+.article-archive{margin-top:42px}.article-archive-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:20px;padding-bottom:19px;border-bottom:1px solid var(--line)}
+.article-archive-head h2{margin:3px 0 0;font:790 clamp(31px,4vw,48px)/1 var(--display);letter-spacing:-.05em}.article-archive-head>p{margin:0;font:600 10px/1.5 var(--mono);color:var(--faint)}
+.article-archive-tools{position:sticky;top:55px;z-index:35;display:grid;grid-template-columns:minmax(250px,.75fr) minmax(0,1.25fr);gap:7px;margin-bottom:30px;padding:7px;border:1px solid var(--line);border-radius:15px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(18px);box-shadow:0 18px 48px -42px var(--ink)}
+.article-archive-search{height:44px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px;padding:0 11px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.article-archive-search>span{font:750 8px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}.article-archive-search input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:var(--ink);font:600 11px/1 var(--mono)}
+.article-archive-search input::placeholder{color:var(--faint)}.article-archive-search kbd{padding:4px 6px;border:1px solid var(--line);border-radius:5px;background:var(--bg2);font:600 8px/1 var(--mono);color:var(--faint)}
+.article-archive-filters{display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none}.article-archive-filters::-webkit-scrollbar{display:none}
+.article-archive-filters button{height:44px;flex:none;padding:0 12px;border:1px solid transparent;border-radius:9px;background:transparent;color:var(--faint);font:650 8.5px/1 var(--mono);cursor:pointer}
+.article-archive-filters button b{margin-left:5px;font-weight:800;color:var(--ink)}.article-archive-filters button:hover{background:var(--inset);color:var(--ink)}
+.article-archive-filters button[aria-pressed="true"]{border-color:color-mix(in srgb,var(--accent) 30%,var(--line));background:color-mix(in srgb,var(--accent) 7%,var(--card));color:var(--accent)}
+
+.article-archive-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.article-archive-card{min-height:255px;padding:20px;display:flex;flex-direction:column;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,var(--card),color-mix(in srgb,var(--inset) 62%,var(--card)));box-shadow:var(--bong);transition:transform .2s,border-color .2s}
+.article-archive-card::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(300px circle at 100% 0,color-mix(in srgb,var(--accent) 9%,transparent),transparent 65%);opacity:0;transition:opacity .2s}
+.article-archive-card:hover,.article-archive-card:focus-visible{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 36%,var(--line))}.article-archive-card:hover::before,.article-archive-card:focus-visible::before{opacity:1}
+.article-archive-card[hidden]{display:none!important}.article-archive-no{position:absolute;right:17px;top:16px;font:800 26px/1 var(--display);letter-spacing:-.04em;color:color-mix(in srgb,var(--accent) 18%,var(--faint))}
+.article-archive-meta{display:flex;align-items:center;gap:8px;padding-right:44px;font:650 8px/1.4 var(--mono);letter-spacing:.08em;color:var(--faint)}.article-archive-meta b{padding:5px 7px;border:1px solid color-mix(in srgb,var(--accent) 28%,var(--line));border-radius:999px;color:var(--accent)}
+.article-archive-card>strong{position:relative;z-index:1;margin:28px 0 auto;max-width:29ch;font:740 19px/1.34 var(--display);letter-spacing:-.022em;color:var(--ink)}
+.article-archive-card .mini{height:5px;display:flex;gap:2px;margin:26px 0 12px;border-radius:4px;overflow:hidden;background:var(--inset)}.article-archive-card .seg{height:100%}.article-archive-card .seg.xac{background:var(--c-xn)}.article-archive-card .seg.song{background:var(--c-song)}.article-archive-card .seg.sua{background:var(--c-sua)}.article-archive-card .seg.bac{background:var(--c-bac)}.article-archive-card .seg.cho{background:var(--c-cho)}
+.article-archive-foot{display:flex;align-items:end;justify-content:space-between;gap:12px}.article-archive-foot small{font:550 8.5px/1.5 var(--mono);color:var(--faint)}.article-archive-foot i{font:750 12px/1 var(--mono);font-style:normal;color:var(--accent);transition:transform .2s}.article-archive-card:hover .article-archive-foot i{transform:translate(2px,-2px)}
+.article-archive-empty{padding:48px;border:1px dashed var(--line);border-radius:17px;text-align:center;font:600 11px/1.5 var(--mono);color:var(--faint)}
+.article-archive-more{display:flex;justify-content:center;margin-top:25px}.article-archive-more button{min-height:44px;padding:0 18px;border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:11px;background:color-mix(in srgb,var(--accent) 6%,var(--card));font:750 9px/1 var(--mono);color:var(--accent);cursor:pointer}.article-archive-more button:hover{background:color-mix(in srgb,var(--accent) 11%,var(--card))}
+
+@media(max-width:900px){.article-archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.article-archive-tools{grid-template-columns:1fr}.article-archive-filters{padding:1px}}
+@media(max-width:620px){.article-archive-head{display:grid;align-items:start}.article-archive-tools{top:54px;margin-inline:-4px}.article-archive-grid{grid-template-columns:1fr}.article-archive-card{min-height:235px}.article-archive-hero h1{font-size:clamp(43px,13vw,62px)}}
 
 /* ══════════════════════════════════════════════════════════════════════════
    DATA ARCHIVE — file thô là evidence asset, không phải danh sách URL.
@@ -1696,13 +1744,13 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <header class="dau"><div class="khung">
   <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
   <a class="ten" href="../../">Block<span>Pinned</span></a>
-  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Sổ gốc</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
+  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Trang chủ</a><a href="../../bai/">Bài viết</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
 </div></header>
 <main class="khung"><section class="hero hero-article">
   <span class="ghost-num" aria-hidden="true">5</span>
   <span class="hero-code" aria-hidden="true">CLAIM C1 · ĐANG ĐỨNG</span>
   <div class="article-path" aria-label="Vị trí bài viết">
-    <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều tra</a><span>/</span><b>LDO</b><i><span class="dot song"></span>đang đứng</i>
+    <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều tra</a><span>/</span><b>LDO</b><i><span class="dot song"></span>vẫn đứng vững</i>
   </div>
   <p class="eyebrow"><span>LDO</span><span class="im">29/07/2026</span></p>
   <h1 class="display">Lido đổi cách chia phí ở module mới — nhưng gần <span class="nhan-manh">5</span> ngày sau, số dư được báo cáo vẫn là 0 ETH</h1>
@@ -1710,7 +1758,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   <div class="article-verdict"><div class="heronum article-ratio article-ledger-count">
       <p class="l">Sổ bằng chứng của bài</p>
       <p class="v">3<em> claim</em></p>
-      <p class="d">3 đang đứng hoặc đã xác nhận</p>
+      <p class="d">3 vẫn đứng vững hoặc đã xác nhận</p>
     </div><div class="case-path" role="img" aria-label="Tuyến bằng chứng: đối tượng, điều bác bỏ, trạng thái hiện tại">
       <div class="case-step file"><span>01 · ĐỐI TƯỢNG</span><strong>LDO</strong><small>hồ sơ được ghim theo token</small></div><i aria-hidden="true">→</i>
       <div class="case-step test"><span>02 · TỰ KIỂM</span><strong>3</strong><small>điều bác bỏ viết cùng claim</small></div><i aria-hidden="true">→</i>
@@ -1722,8 +1770,8 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   <summary>
     <span class="case-ledger-title"><span>Sổ claim của bài</span><b id="so-claim-title">3 khẳng định</b><small>đổi trạng thái tại chỗ · không xoá</small></span>
     <span class="case-ledger-viz">
-      <span class="case-ledger-bar" role="img" aria-label="3 đang đứng"><i class="song" style="--n:3"></i></span>
-      <span class="case-ledger-legend"><i><span class="dot song"></span><b>3</b> đang đứng</i></span>
+      <span class="case-ledger-bar" role="img" aria-label="3 vẫn đứng vững"><i class="song" style="--n:3"></i></span>
+      <span class="case-ledger-legend"><i><span class="dot song"></span><b>3</b> vẫn đứng vững</i></span>
     </span>
     <span class="mo">mở 3 claim</span>
   </summary>
@@ -1732,7 +1780,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <div class="case-claim-list"><article class="case-claim song" id="C1" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C1">C1</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>ĐANG ĐỨNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Module mới CMv2 của Lido chia phí khác module cũ: CMv1 là 350/650 bp (3,50% operator, 6,50% treasury), CMv2 là 400/600 bp (4,00% / 6,00%) — hai bảng đọc trực tiếp từ StakingRouter, không lấy từ slide.</p>
@@ -1746,7 +1794,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 </article><article class="case-claim song" id="C2" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C2">C2</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>ĐANG ĐỨNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Tại block đo, CMv2 có 43 registered operators nhưng 0 depositable keys, 0 deposited validators và 0 ETH reported balance — nên bảng phí mới có trọng số bằng 0 trong tỷ lệ fee gộp. Operator đăng ký không đồng nghĩa stake đã di cư.</p>
@@ -1760,7 +1808,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 </article><article class="case-claim song" id="C3" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C3">C3</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>ĐANG ĐỨNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Tỷ lệ phân bổ treasury gộp tại block đo là 6,2085170404% phần thưởng; nếu dịch toàn bộ balance từ CMv1 sang CMv2 và giữ mọi thứ khác không đổi, tỷ lệ này về 5,7594% — giảm 7,23%. Con số đó là bài toán giả định, KHÔNG phải doanh thu Lido vừa mất.</p>
@@ -1918,8 +1966,8 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var quickRoot = quickHome ? quickHome.href : new URL(".", location.href).href;
   function quickHref(path) { return new URL(path, quickRoot).href; }
   var quickRoutes = [
-    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Sổ gốc", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
-    { href: quickHref("bai/2026-07-27-defillama-uniswap-v4/"), code: "01", kind: "Điều tra", title: "Bài phân tích", copy: "Kết luận, tuyến bằng chứng và chỗ tự kiểm", tags: "article bai dieu tra kết luận bằng chứng", tone: "article" },
+    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
+    { href: quickHref("bai/"), code: "01", kind: "Điều tra", title: "Tất cả bài viết", copy: "Tìm, lọc token và mở toàn bộ bài điều tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
     { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ sơ", tags: "token directory coverage logo", tone: "token" },
     { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
     { href: quickHref("facts/"), code: "03", kind: "Tự kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
@@ -2090,7 +2138,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   }
 
   // Reveal only major story beats. Reduced-motion users see everything immediately.
-  var revealItems = document.querySelectorAll(".finding-home,.article-verdict,.may-hero,.token-overview,.token-card,.numrow,.chart-card,.cred,.ho-so,.evidence,.than>h2,.than>figure,.ba-so,.fact-protocol,.facts-ledger-head,.fact-wow,.track-score,.track-ledger-head,.track-entry,.uni-vault,.uni-coverage,.uni-ledger-head,.uni-claim,.uni-articles,.home-articles,.data-protocol,.data-ledger-head,.data-file,.data-note");
+  var revealItems = document.querySelectorAll(".finding-home,.article-verdict,.may-hero,.token-overview,.token-card,.numrow,.chart-card,.cred,.ho-so,.evidence,.than>h2,.than>figure,.ba-so,.fact-protocol,.facts-ledger-head,.fact-wow,.track-score,.track-ledger-head,.track-entry,.uni-vault,.uni-coverage,.uni-ledger-head,.uni-claim,.uni-articles,.home-articles,.article-archive-head,.article-archive-card,.data-protocol,.data-ledger-head,.data-file,.data-note");
   if (!reduce && "IntersectionObserver" in window) {
     var revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -2551,7 +2599,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var trackStatus = document.querySelector(".track-filter-status");
   var trackLedger = document.querySelector(".track-ledger");
   if (trackFilters.length && trackEntries.length) {
-    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "bị bác", sua: "đã sửa", cho: "chưa phân định" };
+    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác bỏ", sua: "đã sửa", cho: "chưa phân định" };
     trackFilters.forEach(function (button) {
       button.addEventListener("click", function () {
         var filter = button.dataset.trackFilter;
@@ -2570,6 +2618,80 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     });
   }
 
+  // Article archive: the homepage remains a concise preview; this page carries
+  // the complete index. Filtering never removes cards from the document, and
+  // "more" reveals a bounded batch so the same layout works at 12 or 120 posts.
+  var archiveCards = Array.prototype.slice.call(document.querySelectorAll("[data-article-card]"));
+  var archiveFilters = document.querySelectorAll("[data-article-filter]");
+  var archiveSearch = document.querySelector("[data-article-search]");
+  var archiveStatus = document.querySelector("[data-article-status]");
+  var archiveEmpty = document.querySelector("[data-article-empty]");
+  var archiveMore = document.querySelector("[data-article-more]");
+  if (archiveCards.length) {
+    var archiveActive = "all";
+    var archiveLimit = 12;
+    function archiveNormalise(value) {
+      return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+    }
+    function renderArticleArchive(resetLimit) {
+      if (resetLimit) archiveLimit = 12;
+      var query = archiveNormalise(archiveSearch ? archiveSearch.value : "");
+      var matches = archiveCards.filter(function (card) {
+        return (archiveActive === "all" || card.dataset.articleToken === archiveActive)
+          && (!query || archiveNormalise(card.dataset.articleText + " " + card.textContent).indexOf(query) !== -1);
+      });
+      archiveCards.forEach(function (card) {
+        var index = matches.indexOf(card);
+        card.hidden = index < 0 || index >= archiveLimit;
+      });
+      var shown = Math.min(matches.length, archiveLimit);
+      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + " / " + matches.length + " bài viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
+      if (archiveEmpty) archiveEmpty.hidden = matches.length !== 0;
+      if (archiveMore) {
+        archiveMore.hidden = matches.length <= archiveLimit;
+        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + " bài viết ↓";
+      }
+    }
+    function selectArchiveFilter(filter, updateUrl) {
+      archiveActive = filter;
+      archiveFilters.forEach(function (button) {
+        button.setAttribute("aria-pressed", String(button.dataset.articleFilter === filter));
+      });
+      if (updateUrl && history.replaceState) {
+        var url = new URL(location.href);
+        if (filter === "all") url.searchParams.delete("token"); else url.searchParams.set("token", filter);
+        history.replaceState(null, "", url.pathname + url.search + url.hash);
+      }
+      renderArticleArchive(true);
+    }
+    archiveFilters.forEach(function (button) {
+      button.addEventListener("click", function () { selectArchiveFilter(button.dataset.articleFilter, true); });
+    });
+    if (archiveSearch) {
+      archiveSearch.addEventListener("input", function () { renderArticleArchive(true); });
+      archiveSearch.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape") return;
+        archiveSearch.value = "";
+        renderArticleArchive(true);
+      });
+      document.addEventListener("keydown", function (event) {
+        var target = event.target;
+        var typing = target && (target.matches("input,textarea,select") || target.isContentEditable);
+        if (event.key === "/" && !typing) { event.preventDefault(); archiveSearch.focus(); }
+      });
+    }
+    if (archiveMore) archiveMore.addEventListener("click", function () {
+      archiveLimit += 12;
+      renderArticleArchive(false);
+    });
+    var requestedToken = new URLSearchParams(location.search).get("token")
+      || (location.hash.indexOf("#token-") === 0 ? location.hash.slice(7) : "");
+    var requestedButton = requestedToken && Array.prototype.slice.call(archiveFilters).find(function (button) {
+      return button.dataset.articleFilter === requestedToken.toLowerCase();
+    });
+    selectArchiveFilter(requestedButton ? requestedToken.toLowerCase() : "all", false);
+  }
+
   // UNI profile: one evidence vault, with local search and non-destructive lenses.
   var uniClaims = Array.prototype.slice.call(document.querySelectorAll("[data-uni-claim]"));
   var uniFilters = document.querySelectorAll("[data-uni-filter]");
@@ -2578,7 +2700,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var uniEmpty = document.querySelector("[data-uni-empty]");
   if (uniClaims.length) {
     var uniActiveFilter = "all";
-    var uniLabels = { xac: "đã xác nhận", song: "đang đứng", sua: "đã sửa", bac: "bị bác", changed: "đã đổi trạng thái" };
+    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng vững", sua: "đã sửa", bac: "đã bị bác bỏ", changed: "đã đổi trạng thái" };
 
     function uniNormalise(value) {
       return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();

@@ -1,22 +1,22 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8">
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HYPE Q2 2026 net issuance: +890,000 vs −412,960 — receipt</title>
-<meta name="description" content="Receipt for a Vietnamese write-up: the numbers, the exact Hyperliquid Info API calls, the falsifiers, and what the measurement does not cover.">
-<link rel="canonical" href="https://blockpinned.com/en/2026-08-07-hype-sai-so-lon-hon-ket-qua/">
+<title>Tất cả bài viết — BlockPinned</title>
+<meta name="description" content="Kho 11 bài điều tra BlockPinned, tìm theo tiêu đề, mốc ngày hoặc token; mỗi bài giữ nguyên sổ claim và đường tự kiểm.">
+<link rel="canonical" href="https://blockpinned.com/bai/">
 <meta property="og:site_name" content="BlockPinned">
 <meta property="og:locale" content="vi_VN">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Applying the report&#x27;s own circulating-supply definition consistently: HYPE Q2 net issuance is −412,960, not +890,000">
-<meta property="og:description" content="Receipt for a Vietnamese write-up: the numbers, the exact Hyperliquid Info API calls, the falsifiers, and what the measurement does not cover.">
-<meta property="og:url" content="https://blockpinned.com/en/2026-08-07-hype-sai-so-lon-hon-ket-qua/">
-<meta property="og:image" content="https://blockpinned.com/anh/card-hype-doi-dau-muc.png">
-<meta property="og:image:width" content="2400">
-<meta property="og:image:height" content="1350">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tất cả bài viết — BlockPinned">
+<meta property="og:description" content="Kho 11 bài điều tra BlockPinned, tìm theo tiêu đề, mốc ngày hoặc token; mỗi bài giữ nguyên sổ claim và đường tự kiểm.">
+<meta property="og:url" content="https://blockpinned.com/bai/">
+<meta property="og:image" content="https://blockpinned.com/anh/avatar-800.png">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="800">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../font/inter-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../font/inter-vietnamese.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../font/jetbrains-mono-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../font/jetbrains-mono-vietnamese.woff2">
-<link rel="icon" type="image/png" sizes="32x32" href="../../anh/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../../anh/favicon-16.png">
-<style>@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(../../font/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(../../font/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(../../font/inter-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(../../font/jetbrains-mono-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(../../font/jetbrains-mono-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(../../font/jetbrains-mono-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}:root{--bg:#faf7f2;--bg2:#f3efe7;--card:#fffdfa;--inset:#f5f1ea;--ink:#1a1512;--muted:#5f564b;--faint:#746b60;--line:#e6ded1;--line-soft:#efe9df;--accent:#b8412a;--c-xn:#0f8a3c;--c-song:#1d5fae;--c-sua:#a16207;--c-bac:#be123c;--c-cho:#64748b;--nut-nen:#1a1512;--nut-chu:#fffdfa;color-scheme:light;--cu:rgba(26,21,18,.34);--bong:0 1px 2px rgba(26,21,18,.05),0 24px 60px -36px rgba(26,21,18,.4);--display:'Inter',system-ui,sans-serif;--body:system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;--dw:800;--gian-ten:-.01em}
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../font/inter-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../font/inter-vietnamese.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../font/jetbrains-mono-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../font/jetbrains-mono-vietnamese.woff2">
+<link rel="icon" type="image/png" sizes="32x32" href="../anh/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../anh/favicon-16.png">
+<style>@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(../font/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(../font/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(../font/inter-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(../font/jetbrains-mono-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(../font/jetbrains-mono-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(../font/jetbrains-mono-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}:root{--bg:#faf7f2;--bg2:#f3efe7;--card:#fffdfa;--inset:#f5f1ea;--ink:#1a1512;--muted:#5f564b;--faint:#746b60;--line:#e6ded1;--line-soft:#efe9df;--accent:#b8412a;--c-xn:#0f8a3c;--c-song:#1d5fae;--c-sua:#a16207;--c-bac:#be123c;--c-cho:#64748b;--nut-nen:#1a1512;--nut-chu:#fffdfa;color-scheme:light;--cu:rgba(26,21,18,.34);--bong:0 1px 2px rgba(26,21,18,.05),0 24px 60px -36px rgba(26,21,18,.4);--display:'Inter',system-ui,sans-serif;--body:system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;--dw:800;--gian-ten:-.01em}
 @media (prefers-color-scheme:dark){:root:not([data-theme="sang"]){--bg:#100f0d;--bg2:#15130f;--card:#1b1815;--inset:#141210;--ink:#f2ede6;--muted:#b0a596;--faint:#918678;--line:#302a24;--line-soft:#241f1a;--accent:#ff7a5c;--c-xn:#35c46a;--c-song:#4d9fff;--c-sua:#f0b429;--c-bac:#ef4056;--c-cho:#94a3b8;--nut-nen:#faf7f2;--nut-chu:#1a1512;color-scheme:dark;--cu:rgba(242,237,230,.30);--bong:0 2px 4px rgba(0,0,0,.3),0 28px 70px -36px rgba(0,0,0,.85);}}
 :root[data-theme="toi"]{--bg:#100f0d;--bg2:#15130f;--card:#1b1815;--inset:#141210;--ink:#f2ede6;--muted:#b0a596;--faint:#918678;--line:#302a24;--line-soft:#241f1a;--accent:#ff7a5c;--c-xn:#35c46a;--c-song:#4d9fff;--c-sua:#f0b429;--c-bac:#ef4056;--c-cho:#94a3b8;--nut-nen:#faf7f2;--nut-chu:#1a1512;color-scheme:dark;--cu:rgba(242,237,230,.30);--bong:0 2px 4px rgba(0,0,0,.3),0 28px 70px -36px rgba(0,0,0,.85);}
 /* ════════════════════════════════════════════════ v3 — THÂN CSS HỆ TRÌNH BÀY
@@ -1739,81 +1739,109 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   if(!matchMedia('(prefers-reduced-motion:reduce)').matches)d.classList.add('chuyen');
   if(c==='toi'||c==='sang')d.setAttribute('data-theme',c);
 })();
-</script></head><body class="page-en">
+</script></head><body class="page-article-archive">
 <div id="bp-tien" aria-hidden="true"></div>
 <header class="dau"><div class="khung">
   <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
-  <a class="ten" href="../../">Block<span>Pinned</span></a>
-  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Trang chủ</a><a href="../../bai/">Bài viết</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
+  <a class="ten" href="../">Block<span>Pinned</span></a>
+  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../">Trang chủ</a><a href="../bai/" class="tai">Bài viết</a><a href="../token/">Token</a><a href="../track-record/">Track record</a><a href="../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
 </div></header>
-<main class="khung"><section class="hero hero-article receipt-hero">
-  <span class="ghost-num" aria-hidden="true">−412,960</span>
-  <span class="hero-code" aria-hidden="true">EVIDENCE RECEIPT · C1</span>
-  <div class="article-path" aria-label="Article location"><a href="../../">BlockPinned</a><span>/</span><b>Evidence receipt</b><span>/</span><b>HYPE</b><i><span class="dot song"></span>standing</i></div>
-  <p class="eyebrow"><span>English evidence layer</span><span class="im">2026-08-07</span></p>
-  <h1 class="display">Applying the report&#x27;s own circulating-supply definition consistently: HYPE Q2 net issuance is <span class="nhan-manh">−412,960</span>, not +890,000</h1>
-  <p class="subline">This is a receipt, not a translation. The full write-up is in Vietnamese; everything needed to verify or refute the claims is here in English: the figures, the exact API calls that produce them, what would falsify each claim, and what the measurement does not cover.</p>
-  <div class="article-verdict">
-    <div class="heronum article-ratio article-ledger-count"><p class="l">Public claim ledger</p><p class="v">4<em> claims</em></p><p class="d">4 standing or confirmed</p></div>
-    <div class="case-path" role="img" aria-label="Evidence path from source through checks to current state">
-      <div class="case-step file"><span>01 · SOURCE</span><strong>HYPE</strong><small>subject pinned in the record</small></div><i aria-hidden="true">→</i>
-      <div class="case-step test"><span>02 · CHECK</span><strong>4</strong><small>explicit falsifiers</small></div><i aria-hidden="true">→</i>
-      <div class="case-step state song"><span>03 · CURRENT</span><strong>4/4</strong><small>standing or confirmed</small></div>
-    </div>
-  </div>
+<main class="khung"><section class="hero article-archive-hero">
+  <span class="ghost-num" aria-hidden="true">11</span>
+  <span class="hero-code" aria-hidden="true">PUBLIC INVESTIGATION ARCHIVE</span>
+  <p class="eyebrow"><span>Kho bài viết</span><span class="im">mới nhất trước</span></p>
+  <h1 class="display">Chọn một câu hỏi. <span class="nhan-manh">Đi đến tận dữ liệu.</span></h1>
+  <p class="subline">Tìm theo tiêu đề, token hoặc ngày công bố. Mỗi bài dẫn từ câu hỏi ban đầu đến số đo, nguồn và những gì có thể làm kết luận thay đổi.</p>
+  <div class="article-archive-stats"><span><b>11</b> bài viết</span><span><b>50</b> claim</span><span><b>5</b> token</span></div>
 </section>
-<nav class="article-map" aria-label="Article sections"><span>Evidence first</span><a href="#so-claim">Claims</a><a href="#how-to-check">How to check</a><a href="#limits">Limits</a><a href="#sources">Sources</a></nav>
-<section class="article-ledger" aria-labelledby="so-claim-title">
-<details class="evidence case-evidence" id="so-claim">
-  <summary>
-    <span class="case-ledger-title"><span>Article claim ledger</span><b id="so-claim-title">4 claims</b><small>state changes stay visible</small></span>
-    <span class="case-ledger-viz"><span class="case-ledger-bar" role="img" aria-label="4 standing"><i class="song" style="--n:4"></i></span><span class="case-ledger-legend"><i><span class="dot song"></span><b>4</b> standing</i></span></span>
-    <span class="mo">open 4 claims</span>
-  </summary>
-  <div class="trong case-ledger-body"><p class="case-ledger-intro">Each claim carries its current state, pinned evidence and an explicit falsifier.</p><div class="case-claim-list"><article class="case-claim song" id="C1" data-article-claim data-st="song">
-  <header class="case-claim-head"><a class="case-claim-id" href="#C1">C1</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>STANDING</span>
-    <span class="case-claim-actions"></span></header>
-  <p class="case-claim-text">In Q2 2026 the wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 received 1,311,093 HYPE in staking emissions, 54.20% of the quarter&#x27;s 2,419,166 total. Hyperliquid&#x27;s Info API lists that wallet under nonCirculatingUserBalances, holding 241,150,943.99 at measurement time.</p>
-  <div class="case-claim-evidence">
-    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · nonCirculatingUserBalances has 4 entries · circulatingSupply 299,024,976.59 · totalSupply 999,049,594.42</p>
-    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Call delegatorRewards for that wallet and sum totalAmount over April, May and June 2026: anything other than 1,311,093 falsifies the figure. Check the series for gaps — record count, distinct-day count and span length must be equal, otherwise the quarterly total is a lower bound. For the classification: call tokenDetails and read nonCirculatingUserBalances. If the wallet is not in that list, the central premise loses its support.</p>
+<section class="article-archive" aria-labelledby="article-archive-title">
+  <header class="article-archive-head"><div><p class="section-code">READING DESK · FULL INDEX</p><h2 id="article-archive-title">Tất cả bài viết</h2></div><p data-article-status aria-live="polite">Đang hiện 11 bài viết</p></header>
+  <div class="article-archive-tools">
+    <label class="article-archive-search"><span>Tìm bài viết</span><input type="search" data-article-search placeholder="Tiêu đề, token, ngày…" autocomplete="off"><kbd>/</kbd></label>
+    <nav class="article-archive-filters" aria-label="Lọc bài theo token">
+      <button type="button" data-article-filter="all" aria-pressed="true">Tất cả <b>11</b></button><button type="button" id="token-uni" data-article-filter="uni" aria-pressed="false">UNI <b>5</b></button><button type="button" id="token-hype" data-article-filter="hype" aria-pressed="false">HYPE <b>2</b></button><button type="button" id="token-ldo" data-article-filter="ldo" aria-pressed="false">LDO <b>2</b></button><button type="button" id="token-cake" data-article-filter="cake" aria-pressed="false">CAKE <b>1</b></button><button type="button" id="token-pendle" data-article-filter="pendle" aria-pressed="false">PENDLE <b>1</b></button>
+    </nav>
   </div>
-</article><article class="case-claim song" id="C2" data-article-claim data-st="song">
-  <header class="case-claim-head"><a class="case-claim-id" href="#C2">C2</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>STANDING</span>
-    <span class="case-claim-actions"></span></header>
-  <p class="case-claim-text">In the same quarter the wallet sent out 1,288,966 HYPE across 58 transfers to 29 distinct addresses, and 0 of those 29 are in the non-circulating set at measurement time. There were 0 inbound token transfers. The outflow is therefore added back to circulation, and the addition term does not double count.</p>
-  <div class="case-claim-evidence">
-    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · userNonFundingLedgerUpdates scanned month by month, 0 of 3 months hit the row limit</p>
-    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Re-scan userNonFundingLedgerUpdates for Q2 month by month, take the HYPE rows where the wallet is the source, and match each destination against nonCirculatingUserBalances. If any recipient is in that set, the amount added back must be smaller than 1,288,967 — which makes the result more negative, not less. A month returning exactly 500, 1000 or 2000 rows has hit the row limit and the total becomes a lower bound. Before trusting the zero, check the test discriminates: query the same membership for this wallet, for 0xfefe…fefe and for the dead address — all three must return present.</p>
-  </div>
-</article><article class="case-claim song" id="C3" data-article-claim data-st="song">
-  <header class="case-claim-head"><a class="case-claim-id" href="#C3">C3</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>STANDING</span>
-    <span class="case-claim-actions"></span></header>
-  <p class="case-claim-text">Holding every other figure from the report unchanged and altering only the treatment of emissions accruing to the non-circulating wallet, Q2 2026 net issuance is −412,960 HYPE rather than the +890,000 the report concludes. Removing the 39,792 token-burn line entirely still leaves −373,168.</p>
-  <div class="case-claim-evidence">
-    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · 2,419,166 − 1,311,093 = 1,108,073; + 1,288,967 = 2,397,040; − 2,810,000 from the report (buyback 2,770,208 + burn 39,792) · circulating base 299,024,977</p>
-    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Add the four terms: 2,419,166 − 1,311,093 = 1,108,073; + 1,288,967 = 2,397,040; − 2,810,000 = −412,960. Any other result falsifies the arithmetic. This claim does not say the report is wrong about direction: its own next paragraph also concludes supply tightened, so reading this as a disagreement about direction is a misreading of the claim.</p>
-  </div>
-</article><article class="case-claim song" id="C4" data-article-claim data-st="song">
-  <header class="case-claim-head"><a class="case-claim-id" href="#C4">C4</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>STANDING</span>
-    <span class="case-claim-actions"></span></header>
-  <p class="case-claim-text">Emissions accruing to that wallet stay within a narrow band across six full quarters: 1,303,294 · 1,327,384 · 1,336,732 · 1,351,753 · 1,289,617 · 1,311,093, a 4.82% spread between highest and lowest. This series measures INFLOW TO THE WALLET. It does not show that earlier quarterly reports used the same treatment, because only the 2Q2026 report is in hand.</p>
-  <div class="case-claim-evidence">
-    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · delegatorRewards returns 587 records / 587 distinct days / 587-day span, 2024-12-29 to 2026-08-07, no missing day</p>
-    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Sum totalAmount per calendar quarter: a full quarter falling outside 1,289,617–1,351,753 means the narrow-band reading has to be rewritten. A complete calendar quarter after Q2 2026 recording below 1.0M HYPE falsifies it. This claim must not be quoted as an error repeated six times: that would require six quarterly reports and proof that each applied the same treatment, and only one is in hand.</p>
-  </div>
-</article></div></div>
-</details></section>
-<section class="than article-body receipt-body">
-  <div class="article-meta"><span><b>PIN</b>No block number anywhere. HyperCore is read through Hyperliquid&#x27;s Info API; the default public HyperEVM RPC does not serve reliable historical state (same block number twice, 20 s apart, returns two different values; a future block returns a number instead of an error; the official docs state it is &quot;not supported at this time on the default RPC implementation&quot;). Third-party paid endpoints were not tested. Every figure below is a wall-clock snapshot taken 2026-08-07.</span><span><b>DATE</b>2026-08-07</span><span class="article-meta-link"><a href="../../bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/">Full write-up in Vietnamese →</a></span></div>
-  <h2 id="how-to-check">How to check</h2><ul class="receipt-checks"><li><b>Wallet classification and supply</b> — <code>POST https://api.hyperliquid.xyz/info · {&quot;type&quot;:&quot;tokenDetails&quot;,&quot;tokenId&quot;:&quot;&lt;HYPE&gt;&quot;} — read nonCirculatingUserBalances, circulatingSupply, totalSupply. Get tokenId from {&quot;type&quot;:&quot;spotMetaAndAssetCtxs&quot;}.</code></li><li><b>Emissions accruing to the wallet</b> — <code>{&quot;type&quot;:&quot;delegatorRewards&quot;,&quot;user&quot;:&quot;0x43e9abea1910387c4292bca4b94de81462f8a251&quot;} — sum totalAmount per quarter. Check for gaps: record count, distinct-day count and span length must all be equal.</code></li><li><b>Outflows and their destinations</b> — <code>{&quot;type&quot;:&quot;userNonFundingLedgerUpdates&quot;,&quot;user&quot;:&quot;0x43e9abea…&quot;,&quot;startTime&quot;:…,&quot;endTime&quot;:…} — scan month by month so the row limit is never hit; match every destination against the non-circulating set above.</code></li><li><b>Total staked</b> — <code>{&quot;type&quot;:&quot;validatorSummaries&quot;} — sum the stake field, divide by 1e8.</code></li></ul>
-  <h2 id="limits">What this does not cover</h2><ul><li>The non-circulating classification is read at measurement time, not per day inside Q2. There is no historical source for that field.</li><li>The ~299M float base attributed to the report is an inference from its own subtraction, not a direct snapshot of the exclusion list during Q2.</li><li>Input data comes from an API published by Hyperliquid itself. That is one source, not two independent ones. The arithmetic on top of it is checkable.</li><li>Only the 2Q2026 report is in hand. The six-quarter series measures inflow to the wallet; it does not show that earlier reports used the same treatment.</li><li>The two paths measuring outflow differ by 1 HYPE (1,288,966 from the transfer ledger, 1,288,967 from finalised withdrawals). The difference sits entirely in April and is 0.00008%; the arithmetic uses the second. Using the first gives −412,961.</li></ul>
-  <h2 id="sources">Sources</h2><ul><li>Full write-up: <a href="../../bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/">/bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/</a></li><li>As posted on X: <a href="https://x.com/blockpinned/status/2085611015794995577">https://x.com/blockpinned/status/2085611015794995577</a></li></ul>
-  <p class="receipt-policy">Corrections are made in place and never deleted; every claim above carries its current status. <b>Not investment advice.</b></p>
+  <div class="article-archive-grid"><a class="article-archive-card" href="2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/" data-article-card
+  data-article-token="cake" data-article-text="PancakeSwap mất gần một nửa thị phần BSC trong sáu tuần, nhưng phí giao dịch trên sàn tăng 3,1 lần vì volume dời sang pool có mức phí cao gấp 100 lần CAKE 10/08/2026 6 vẫn đứng vững">
+  <span class="article-archive-no">01</span>
+  <span class="article-archive-meta"><b>CAKE</b>🟡 10/08/2026</span>
+  <strong>PancakeSwap mất gần một nửa thị phần BSC trong sáu tuần, nhưng phí giao dịch trên sàn tăng 3,1 lần vì volume dời sang pool có mức phí cao gấp 100 lần</strong>
+  <span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span>
+  <span class="article-archive-foot"><small>6 claim · 6 vẫn đứng vững</small><i aria-hidden="true">↗</i></span>
+</a><a class="article-archive-card" href="2026-08-07-hype-sai-so-lon-hon-ket-qua/" data-article-card
+  data-article-token="hype" data-article-text="Áp dụng nhất quán định nghĩa cung lưu thông của chính báo cáo, phát hành ròng HYPE quý II đổi từ +890.000 sang −412.960 HYPE 07/08/2026 4 vẫn đứng vững">
+  <span class="article-archive-no">02</span>
+  <span class="article-archive-meta"><b>HYPE</b>🟡 07/08/2026</span>
+  <strong>Áp dụng nhất quán định nghĩa cung lưu thông của chính báo cáo, phát hành ròng HYPE quý II đổi từ +890.000 sang −412.960</strong>
+  <span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span>
+  <span class="article-archive-foot"><small>4 claim · 4 vẫn đứng vững</small><i aria-hidden="true">↗</i></span>
+</a><a class="article-archive-card" href="2026-08-06-uni-burn-cham-gan-mot-tuan/" data-article-card
+  data-article-token="uni" data-article-text="Biểu đồ UNI burn trên Ethereum đang chậm gần một tuần so với Robinhood Chain UNI 06/08/2026 5 vẫn đứng vững">
+  <span class="article-archive-no">03</span>
+  <span class="article-archive-meta"><b>UNI</b>🟡 06/08/2026</span>
+  <strong>Biểu đồ UNI burn trên Ethereum đang chậm gần một tuần so với Robinhood Chain</strong>
+  <span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span>
+  <span class="article-archive-foot"><small>5 claim · 5 vẫn đứng vững</small><i aria-hidden="true">↗</i></span>
+</a><a class="article-archive-card" href="2026-08-04-lido-cmv2-220-validator-trong-so-0/" data-article-card
+  data-article-token="ldo" data-article-text="220 validator đã nạp, trọng số phí của module vẫn đúng 0,0000 ETH LDO 04/08/2026 5 vẫn đứng vững">
+  <span class="article-archive-no">04</span>
+  <span class="article-archive-meta"><b>LDO</b>🟡 04/08/2026</span>
+  <strong>220 validator đã nạp, trọng số phí của module vẫn đúng 0,0000 ETH</strong>
+  <span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span>
+  <span class="article-archive-foot"><small>5 claim · 5 vẫn đứng vững</small><i aria-hidden="true">↗</i></span>
+</a><a class="article-archive-card" href="2026-07-31-uni-100usd-phi-swap/" data-article-card
+  data-article-token="uni" data-article-text="Mỗi $100 phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64 UNI 31/07/2026 5 vẫn đứng vững">
+  <span class="article-archive-no">05</span>
+  <span class="article-archive-meta"><b>UNI</b>🔴 31/07/2026</span>
+  <strong>Mỗi $100 phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64</strong>
+  <span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span>
+  <span class="article-archive-foot"><small>5 claim · 5 vẫn đứng vững</small><i aria-hidden="true">↗</i></span>
+</a><a class="article-archive-card" href="2026-07-31-pendle-buyback-cot-bang-0/" data-article-card
+  data-article-token="pendle" data-article-text="Dashboard báo buyback bằng 0, hợp đồng đang giữ 144.388 PENDLE PENDLE 31/07/2026 1 xác nhận · 4 vẫn đứng vững">
+  <span class="article-archive-no">06</span>
+  <span class="article-archive-meta"><b>PENDLE</b>🟡 31/07/2026</span>
+  <strong>Dashboard báo buyback bằng 0, hợp đồng đang giữ 144.388 PENDLE</strong>
+  <span class="mini" aria-hidden="true"><span class="seg xac" style="width:20.00%"></span><span class="seg song" style="width:80.00%"></span></span>
+  <span class="article-archive-foot"><small>5 claim · 1 xác nhận · 4 vẫn đứng vững</small><i aria-hidden="true">↗</i></span>
+</a><a class="article-archive-card" href="2026-07-30-uni-v4-ai-dang-tra-protocol-fee/" data-article-card
+  data-article-token="uni" data-article-text="Ai đang trả protocol fee của Uniswap v4, và pool nào vẫn đang trả 0 UNI 30/07/2026 4 vẫn đứng vững">
+  <span class="article-archive-no">07</span>
+  <span class="article-archive-meta"><b>UNI</b>🔴 30/07/2026</span>
+  <strong>Ai đang trả protocol fee của Uniswap v4, và pool nào vẫn đang trả 0</strong>
+  <span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span>
+  <span class="article-archive-foot"><small>4 claim · 4 vẫn đứng vững</small><i aria-hidden="true">↗</i></span>
+</a><a class="article-archive-card" href="2026-07-29-ldo-cmv2-doi-cach-chia-phi/" data-article-card
+  data-article-token="ldo" data-article-text="Lido đổi cách chia phí ở module mới — nhưng gần 5 ngày sau, số dư được báo cáo vẫn là 0 ETH LDO 29/07/2026 3 vẫn đứng vững">
+  <span class="article-archive-no">08</span>
+  <span class="article-archive-meta"><b>LDO</b>🟡 29/07/2026</span>
+  <strong>Lido đổi cách chia phí ở module mới — nhưng gần 5 ngày sau, số dư được báo cáo vẫn là 0 ETH</strong>
+  <span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span>
+  <span class="article-archive-foot"><small>3 claim · 3 vẫn đứng vững</small><i aria-hidden="true">↗</i></span>
+</a><a class="article-archive-card" href="2026-07-29-hype-lich-unlock-va-dong-thuc-te/" data-article-card
+  data-article-token="hype" data-article-text="Lịch unlock không phải lượng HYPE thực sự đi vào lưu hành — ledger thấp hơn mô hình 29–38 lần HYPE 29/07/2026 3 vẫn đứng vững">
+  <span class="article-archive-no">09</span>
+  <span class="article-archive-meta"><b>HYPE</b>🟢 29/07/2026</span>
+  <strong>Lịch unlock không phải lượng HYPE thực sự đi vào lưu hành — ledger thấp hơn mô hình 29–38 lần</strong>
+  <span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span>
+  <span class="article-archive-foot"><small>3 claim · 3 vẫn đứng vững</small><i aria-hidden="true">↗</i></span>
+</a><a class="article-archive-card" href="2026-07-28-uni-v4-cong-tac-bat-tien-chay/" data-article-card
+  data-article-token="uni" data-article-text="Uniswap bật thu phí v4 — chỉ số giảm 53% sau một đêm, và nó không phải bộ đếm UNI 28/07/2026 3 vẫn đứng vững · 1 đã bị bác bỏ">
+  <span class="article-archive-no">10</span>
+  <span class="article-archive-meta"><b>UNI</b>🟡 28/07/2026</span>
+  <strong>Uniswap bật thu phí v4 — chỉ số giảm 53% sau một đêm, và nó không phải bộ đếm</strong>
+  <span class="mini" aria-hidden="true"><span class="seg song" style="width:75.00%"></span><span class="seg bac" style="width:25.00%"></span></span>
+  <span class="article-archive-foot"><small>4 claim · 3 vẫn đứng vững · 1 đã bị bác bỏ</small><i aria-hidden="true">↗</i></span>
+</a><a class="article-archive-card" href="2026-07-27-defillama-uniswap-v4/" data-article-card
+  data-article-token="uni" data-article-text="DefiLlama báo phí Uniswap v4 cao hơn 3,9 lần — và bản sửa mới chỉ chạy một chiều UNI 27/07/2026 1 xác nhận · 4 đã sửa · 1 đã bị bác bỏ">
+  <span class="article-archive-no">11</span>
+  <span class="article-archive-meta"><b>UNI</b>🟢 27/07/2026</span>
+  <strong>DefiLlama báo phí Uniswap v4 cao hơn 3,9 lần — và bản sửa mới chỉ chạy một chiều</strong>
+  <span class="mini" aria-hidden="true"><span class="seg xac" style="width:16.67%"></span><span class="seg sua" style="width:66.67%"></span><span class="seg bac" style="width:16.67%"></span></span>
+  <span class="article-archive-foot"><small>6 claim · 1 xác nhận · 4 đã sửa · 1 đã bị bác bỏ</small><i aria-hidden="true">↗</i></span>
+</a></div>
+  <p class="article-archive-empty" data-article-empty hidden>Không có bài viết khớp từ khoá và token này.</p>
+  <div class="article-archive-more"><button type="button" data-article-more>Mở thêm 12 bài viết ↓</button></div>
 </section></main>
 <div id="ch-tip"></div>
 <footer><div class="khung"><p>Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá. Không phải lời khuyên đầu tư. · <a href="https://x.com/blockpinned">@blockpinned</a></p></div></footer>

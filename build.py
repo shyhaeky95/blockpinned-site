@@ -89,6 +89,17 @@ TRANG_THAI = {
     "CHỜ SỐ":    ("cho",  "chưa đủ dữ liệu để nói đứng hay đổ"),
 }
 
+# Khóa ở trên là schema evidence đã phát hành, không đổi theo câu chữ UI. Nhãn dưới
+# đây là lớp đọc cho người ngoài: "vẫn đứng vững" chủ động nhưng vẫn thấp hơn mức
+# "đã xác nhận", còn "đã bị bác bỏ" nói trọn nghĩa hơn nhãn cụt "bị bác".
+TRANG_THAI_HIEN_THI = {
+    "ĐÃ XÁC NHẬN": "ĐÃ XÁC NHẬN",
+    "ĐANG ĐỨNG": "VẪN ĐỨNG VỮNG",
+    "ĐÃ SỬA": "ĐÃ SỬA",
+    "BỊ BÁC": "ĐÃ BỊ BÁC BỎ",
+    "CHỜ SỐ": "CHỜ SỐ",
+}
+
 THEMES = {
     # 🟢 HỆ ĐÃ CHỐT 06/08/2026 — bản D2, user duyệt tại /thu-d2/ trên chính tên miền.
     # Nguồn: ~/blockpinned/design-v2/implement-D2/ (bp.css + NOTES.md, có số đo).
@@ -1618,9 +1629,9 @@ TU_KINH_DUONG = f"token/{TU_KINH.lower()}/"
 #    thuộc đúng MỘT bài (#7), tức nó phủ 1/8 số bài mà lại đứng ngang hàng Facts và
 #    Track record — mục nav hứa nhiều hơn cái nó chở. Nay nó được dẫn từ chỗ nó thuộc
 #    về: ô Dữ liệu trong bản đồ trang chủ, và link trong chính bài #7.
-MUC_DIEU_HUONG = [("", "Sổ gốc"), ("token/", "Token"),
+MUC_DIEU_HUONG = [("", "Trang chủ"), ("bai/", "Bài viết"), ("token/", "Token"),
                   ("track-record/", "Track record"), ("facts/", "Facts")]
-CO_TRANG = {"facts/": False, "track-record/": False, "token/": False,
+CO_TRANG = {"bai/": False, "facts/": False, "track-record/": False, "token/": False,
             TU_KINH_DUONG: False, "du-lieu/": False}
 
 # Nút đổi nền. Trang KHÔNG phụ thuộc nó: mặc định đọc prefers-color-scheme của máy,
@@ -2165,9 +2176,9 @@ def cong_lien_ket(txt: str, o: str, goc: pathlib.Path, tep: pathlib.Path) -> Non
 
 TRANG_THAI_NGAN = {
     "ĐÃ XÁC NHẬN": "xác nhận",
-    "ĐANG ĐỨNG": "đang đứng",
+    "ĐANG ĐỨNG": "vẫn đứng vững",
     "ĐÃ SỬA": "đã sửa",
-    "BỊ BÁC": "bị bác",
+    "BỊ BÁC": "đã bị bác bỏ",
     "CHỜ SỐ": "chờ số",
 }
 
@@ -2230,7 +2241,7 @@ def _so_claim_v3(claims: list) -> str:
         ds.append(f'''<article class="case-claim {cls}" id="{c['id']}" data-article-claim data-st="{cls}">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#{c['id']}">{c['id']}</a>
-    <span class="case-claim-status {cls}"><i aria-hidden="true"></i>{ihtml.escape(c['status'])}</span>
+    <span class="case-claim-status {cls}"><i aria-hidden="true"></i>{ihtml.escape(TRANG_THAI_HIEN_THI[c['status']])}</span>
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">{ihtml.escape(c['text'])}</p>
@@ -2331,7 +2342,7 @@ def _hero_bai_v3(fm: dict, claims: list, trang_chu: dict) -> str:
         ty_so = f'''<div class="heronum article-ratio article-ledger-count">
       <p class="l">Sổ bằng chứng của bài</p>
       <p class="v">{len(claims)}<em> claim</em></p>
-      <p class="d">{dang} đang đứng hoặc đã xác nhận</p>
+      <p class="d">{dang} vẫn đứng vững hoặc đã xác nhận</p>
     </div>'''
         duong = f'''<div class="case-path" role="img" aria-label="Tuyến bằng chứng: đối tượng, điều bác bỏ, trạng thái hiện tại">
       <div class="case-step file"><span>01 · ĐỐI TƯỢNG</span><strong>{ihtml.escape(fm['token'])}</strong><small>hồ sơ được ghim theo token</small></div><i aria-hidden="true">→</i>
@@ -2393,7 +2404,7 @@ def so_claim(claims: list) -> str:
                 if c.get("thang_do") else "")
         out.append(f"""<article class="claim {cls}" id="{c['id']}" data-st="{cls}">
   <h3><a class="id" href="#{c['id']}">{c['id']}</a>
-      <span class="chip {cls}">{c['status']}</span></h3>
+      <span class="chip {cls}">{TRANG_THAI_HIEN_THI[c['status']]}</span></h3>
   <p style="margin:0">{ihtml.escape(c['text'])}</p>
   {hinh}
   <p class="dong"><span class="nhan">GHIM TẠI</span>{ihtml.escape(c['ghim'])}</p>
@@ -2442,7 +2453,7 @@ def bang_diem(moi: list) -> str:
         f'<li class="tt {TRANG_THAI[c["status"]][0]}" data-st="{TRANG_THAI[c["status"]][0]}" '
         f'data-doi="{0 if c["status"] == "ĐANG ĐỨNG" else 1}">'
         f'<a class="tt-hop" href="bai/{s}/#{c["id"]}">'
-        f'<span class="chip {TRANG_THAI[c["status"]][0]}">{c["status"]}</span>'
+        f'<span class="chip {TRANG_THAI[c["status"]][0]}">{TRANG_THAI_HIEN_THI[c["status"]]}</span>'
         f'<span class="tx">{ihtml.escape(c["text"])}</span>'
         f'<span class="mt">{vn_ngay(s[:10])} · {c["id"]} · {ihtml.escape(tieu)}</span>'
         f'</a></li>'
@@ -2491,7 +2502,7 @@ def ban_do(so_bai: int, so_token: int, gt: list, facts: list, so_hien_vat: int) 
     Số trên ô đọc từ nguồn của chính mục nó dẫn tới. Ô Dữ liệu nằm đây vì user gỡ nó
     khỏi thanh điều hướng — gỡ khỏi nav không có nghĩa là giấu.
     """
-    o = [("BÀI", so_bai, "sổ claim của từng bài", "#bai"),
+    o = [("BÀI VIẾT", so_bai, "sổ claim của từng bài", "#bai"),
          ("TOKEN", so_token, "hồ sơ theo đối tượng", "token/"),
          ("GHI TRƯỚC", len(gt), "dán số trước khi biết đáp án", "track-record/"),
          ("FACTS", len(facts), "một số, một block, một lệnh", "facts/"),
@@ -2530,16 +2541,16 @@ def trang_muc_token(tk: dict) -> str:
             f'<span class="n"><b>{v["bai"]}</b> bài<i></i><b>{v["claim"]}</b> khẳng định</span>'
             f'{thanh_mini(d_num, v["claim"])}'
             f'<span class="g">'
-            + (f'Mở tủ kính — mọi câu về {TOKEN_TEN[ma]} trên một trang, mỗi câu ghim '
-               f'tại block đã đo.' if co_tu else
-               f'Chưa mở tủ kính: cần {TU_KINH_SAN} bài, đang có {v["bai"]}'
+            + (f'Hồ sơ đã mở — mọi khẳng định về {TOKEN_TEN[ma]} nằm trên một trang, '
+               f'mỗi khẳng định giữ mốc block đã đo.' if co_tu else
+               f'Hồ sơ đang tích lũy: cần {TU_KINH_SAN} bài, đang có {v["bai"]}'
                f'{" — còn " + str(thieu) + " bài nữa" if thieu > 0 else ""}. '
                f'Vào thẳng bài mới nhất.')
             + f'</span><span class="mui" aria-hidden="true">→</span></a>')
     tong_b = sum(v["bai"] for v in tk.values())
     tong_c = sum(v["claim"] for v in tk.values())
     return (f'<p class="crumb">Hồ sơ theo đối tượng</p>'
-            f'<h1>Kênh này đã đo được gì, xếp theo token</h1>'
+            f'<h1>BlockPinned đã đo được gì, xếp theo token</h1>'
             f'<p class="dan">{len(tk)} token · {tong_b} bài · {tong_c} khẳng định. Token nào đủ '
             f'<b>{TU_KINH_SAN} bài</b> thì có một trang gom mọi câu về nó — mỗi câu giữ nguyên '
             f'trạng thái hiện tại, kể cả những câu đã đổ. Token chưa đủ thì vào thẳng bài, '
@@ -2568,8 +2579,7 @@ def trang_muc_token_v3(tk: dict) -> str:
     ]
     ty_le = []
     the = []
-    ten_tt = {"ĐÃ XÁC NHẬN": "đã xác nhận", "ĐANG ĐỨNG": "đang đứng",
-              "ĐÃ SỬA": "đã sửa", "BỊ BÁC": "bị bác", "CHỜ SỐ": "chờ số"}
+    ten_tt = {k: TRANG_THAI_NGAN[k] for k in TRANG_THAI}
     thu_tu_tt = ["ĐÃ XÁC NHẬN", "ĐANG ĐỨNG", "ĐÃ SỬA", "BỊ BÁC", "CHỜ SỐ"]
 
     for stt, (ma, v) in enumerate(ds, 1):
@@ -2597,9 +2607,9 @@ def trang_muc_token_v3(tk: dict) -> str:
         vach = "".join('<span></span>' if i < min(v["bai"], TU_KINH_SAN)
                        else '<span class="empty"></span>' for i in range(TU_KINH_SAN))
         trang_thai_the = "Hồ sơ đã mở" if co_tu else f"Còn {thieu} bài"
-        copy = (f'Mở tủ kính — mọi câu về {TOKEN_TEN[ma]} trên một trang, mỗi câu ghim '
-                f'tại block đã đo.' if co_tu else
-                'Chưa mở tủ kính: vào thẳng bài mới nhất trong lúc hồ sơ tiếp tục tích lũy.')
+        copy = (f'Hồ sơ đã mở — mọi khẳng định về {TOKEN_TEN[ma]} nằm trên một trang, '
+                f'mỗi khẳng định giữ mốc block đã đo.' if co_tu else
+                'Hồ sơ đang tích lũy — vào bài mới nhất trong lúc các phép đo tiếp tục được bổ sung.')
         the.append(
             f'<a class="token-card{" token-card-featured" if co_tu else ""}" '
             f'data-token-card data-token="{ma_nho}" data-profile="{profile}" '
@@ -2623,19 +2633,19 @@ def trang_muc_token_v3(tk: dict) -> str:
   <span class="ghost-num" aria-hidden="true">{len(ds):02d}</span>
   <span class="hero-code" aria-hidden="true">OBJECT INDEX · COVERAGE MAP</span>
   <p class="eyebrow"><span>Hồ sơ theo đối tượng</span><span class="im">độ phủ nhìn được · trạng thái không bị giấu</span></p>
-  <h1 class="display">Kênh này đã đo được gì, <span class="nhan-manh">xếp theo token.</span></h1>
+  <h1 class="display">BlockPinned đã đo được gì, <span class="nhan-manh">xếp theo token.</span></h1>
   <p class="subline">{len(ds)} token · {tong_b} bài · {tong_c} khẳng định. Token nào đủ <b>{TU_KINH_SAN} bài</b> thì có một trang gom mọi câu về nó — mỗi câu giữ nguyên trạng thái hiện tại, kể cả những câu đã đổ.</p>
 </section>
 <nav class="token-switcher" aria-label="Lọc nhanh theo token">
   <span class="token-switcher-label">Chọn đối tượng</span>{"".join(nut_nhanh)}
 </nav>
 <div class="token-overview">
-  <div class="token-overview-head"><span><b>{tong_c}</b><small>khẳng định đã được đặt vào đối tượng</small></span><i>độ rộng = số claim</i></div>
+  <div class="token-overview-head"><span><b>{tong_c}</b><small>khẳng định, chia theo {len(ds)} token</small></span><i>độ rộng = số claim</i></div>
   <div class="token-scale" role="img" aria-label="Phân bổ {tong_c} khẳng định: {doc_phan_bo}">{"".join(ty_le)}</div>
 </div>
 <section class="token-directory" aria-labelledby="token-directory-title">
   <div class="token-directory-head">
-    <div><p class="section-code">OBJECT COVERAGE</p><h2 id="token-directory-title">Mở đúng cửa theo độ phủ</h2></div>
+    <div><p class="section-code">OBJECT COVERAGE</p><h2 id="token-directory-title">Hồ sơ nào đã mở, hồ sơ nào đang tích lũy</h2></div>
     <div class="token-filters" role="group" aria-label="Lọc token theo trạng thái hồ sơ">
       <button type="button" data-token-filter="all" aria-pressed="true">Tất cả <b>{len(ds)}</b></button>
       <button type="button" data-token-filter="open" aria-pressed="false">Đã mở hồ sơ <b>{so_mo}</b></button>
@@ -2839,6 +2849,44 @@ def cong_facts(fs: list) -> None:
                                       f"chứng khoán chưa chạm crypto")
 
 
+_FACT_REPLY_WEB = re.compile(
+    r"^(?:Bằng chứng và cách tự kiểm|Cách tự kiểm riêng con số này):\s*"
+    r"ở reply ngay dưới\.?$", re.I)
+
+
+def cau_fact_web(f: dict) -> str:
+    """Thích nghi thân Fact từ bài đăng X sang trang web, không đổi dữ kiện.
+
+    `cau` là bản đã đăng và có thể còn mang câu dẫn sang reply. Trên web, lệnh tự
+    kiểm nằm ngay cuối thẻ nên câu dẫn đó sai ngữ cảnh. Nếu một đoạn thân bài trùng
+    nguyên văn `chan`, ô giới hạn bên dưới đã đảm nhiệm đúng vai trò của nó.
+    """
+    chan = str(f["chan"]).strip()
+    doan = [x.strip() for x in str(f["cau"]).split("\n\n") if x.strip()]
+    return "\n\n".join(x for x in doan if x != chan and not _FACT_REPLY_WEB.fullmatch(x))
+
+
+def cong_facts_web(html: str, fs: list) -> None:
+    """Cổng ⑪b — bản web không được mang chỉ dẫn của thread hoặc lặp ô giới hạn."""
+    if "reply ngay dưới" in html.lower():
+        raise LoiCong("Fact web còn trỏ người đọc tới 'reply ngay dưới' — web không có reply")
+    for f in fs:
+        chan = str(f["chan"]).strip()
+        if chan.upper() == "KHÔNG CÓ":
+            continue
+        fid = ihtml.escape(str(f["id"]))
+        moc = f'id="{fid}">'
+        bat = html.find(moc)
+        if bat < 0:
+            raise LoiCong(f"Fact web thiếu article cho id '{f['id']}'")
+        het = html.find("</article>", bat)
+        if het < 0:
+            raise LoiCong(f"Fact web không đóng article cho id '{f['id']}'")
+        if html[bat:het].count(ihtml.escape(chan)) != 1:
+            raise LoiCong(
+                f"Fact web '{f['id']}' lặp nguyên văn phần 'Fact này KHÔNG nói' trong thân bài")
+
+
 def trang_facts(fs: list) -> str:
     """Trang `/facts/` — KHUÔN RIÊNG, không mượn khuôn claim.
 
@@ -2852,11 +2900,10 @@ def trang_facts(fs: list) -> str:
     số trên web và số trên ảnh không thể trôi lệch nhau.
     """
     co = sorted(fs, key=lambda f: str(f.get("ngay", "")), reverse=True)
-    # 🔵 v3 KHÔNG viết lại một chữ nào của thẻ Fact — nó BỒI THÊM móc treo. Đây đúng
-    # cách `design-v3-wow/build_facts.py` đã làm và đo được: nó giữ nguyên TỪNG BYTE
-    # mỗi `<article class="fact">` của trang production rồi mới tiêm. Giữ đúng ranh
-    # giới đó ở đây nghĩa là nội dung Fact có một chủ duy nhất, và đổi bố cục không
-    # bao giờ đổi được câu chữ hay con số.
+    # 🔵 v3 giữ nguyên dữ kiện của Fact và chỉ thích nghi hai dấu vết thuộc KÊNH X khi
+    # đưa lên web: bỏ câu trỏ tới "reply ngay dưới", và không lặp lại trong thân bài
+    # một đoạn đã được đặt riêng ở ô "Fact này KHÔNG nói". `cong_facts_web` khóa đúng
+    # hai ranh giới này; số, block, lệnh và câu chặn vẫn có một chủ duy nhất là JSON.
     v3 = BO_CUC == "v3"
     hang, nhay = [], []
     for i, f in enumerate(co, 1):
@@ -2867,6 +2914,7 @@ def trang_facts(fs: list) -> str:
         figure = str(card.get("figure") or "").strip()
         label = str(card.get("label") or "").strip()
         chan = str(f["chan"]).strip()
+        cau_web = cau_fact_web(f)
         kc = f["khoang_cach"]
         dau = f'{ihtml.escape(kicker)}{" · " + vn_ngay(ng) if ng else ""}'
         # Fact chưa có card thì KHÔNG dựng panel rỗng — panel rỗng là một ô trống to
@@ -2906,7 +2954,7 @@ id="{ihtml.escape(str(f['id']))}">{bang}
     {fig}
     <div class="f-body">
       {'' if fig else f'<p class="f-kicker">{dau}</p>'}
-      <p class="f-cau">{ihtml.escape(str(f['cau']))}</p>
+      <p class="f-cau">{ihtml.escape(cau_web)}</p>
       <p class="f-so">{ihtml.escape(str(f['so']))}</p>
       <div class="f-grid">
         <div class="f-box vi"><span class="k">Vì sao đáng quan tâm</span>
@@ -2962,7 +3010,7 @@ id="{ihtml.escape(str(f['id']))}">{bang}
   <section class="facts-ledger" aria-label="{len(co)} fact có thể tự kiểm">
     <div class="facts-ledger-head">
       <div><p class="section-code">EVIDENCE LEDGER · {tong} ENTRIES</p><h2>Sổ phép đo</h2></div>
-      <p>Đọc từ số lớn xuống giới hạn của chính fact đó. Lệnh tự kiểm nằm ở cuối mỗi mục.</p>
+      <p>Mỗi mục đi từ con số xuống đến giới hạn của chính nó. Lệnh tự kiểm nằm ở cuối.</p>
     </div>
     {"".join(hang)}
   </section>''')
@@ -3042,7 +3090,7 @@ def trang_ghi_truoc(moi: list) -> str:
     for _, _, _, c in co:
         dem[TRANG_THAI[c["status"]][0]] += 1
     thu_tu = [TRANG_THAI[s][0] for s in ("ĐÃ XÁC NHẬN", "ĐANG ĐỨNG", "BỊ BÁC", "ĐÃ SỬA", "CHỜ SỐ")]
-    ten_tt = {"xac": "Đã xác nhận", "song": "Đang chờ", "bac": "Bị bác",
+    ten_tt = {"xac": "Đã xác nhận", "song": "Đang chờ", "bac": "Đã bị bác bỏ",
               "sua": "Đã sửa", "cho": "Chưa phân định"}
     doan = "".join(f'<i class="{s}" style="--n:{dem[s]}" title="{ten_tt[s]}: {dem[s]}"></i>'
                    for s in thu_tu if dem[s])
@@ -3059,7 +3107,7 @@ def trang_ghi_truoc(moi: list) -> str:
     <span class="hero-code">PUBLIC MEMORY · NO CHERRY-PICKING</span>
     <p class="subline">Mỗi dòng là một con số hoặc một ngưỡng được dán ra \
 <strong>trước khi biết đáp án</strong>. Khi kết quả đến, dòng đó vẫn ở lại — dù được xác nhận, \
-bị bác hay phải sửa.</p>
+đã bị bác bỏ hay phải sửa.</p>
 
     <section class="track-score" aria-label="Tổng quan {len(co)} lần ghi trước">
       <div class="track-total"><span>Tổng sổ</span><strong>{tong}</strong><small>lần ghi trước</small></div>
@@ -3088,14 +3136,19 @@ Bộ sinh trang chặn build nếu một dòng đã được phân định mà t
 
 
 def dai_bai(bai_list: list, tien_to: str, them_lop: str = "", *, uu_tien: bool = False,
-            tieu_de: str = "Bài", gioi_thieu: str = "") -> str:
-    """Dải bài cuộn NGANG — dùng chung cho trang chủ và tủ kính token.
+            tieu_de: str = "Bài", gioi_thieu: str = "", tong_bai: int | None = None,
+            xem_tat_ca: str = "") -> str:
+    """Preview bài hữu hạn cho v3; dải ngang cũ chỉ còn ở bố cục D2.
 
     Một khuôn, hai chỗ gọi: hai bản chép của cùng một thẻ là hai bản sẽ trôi lệch, và
     lần trôi đó sẽ lộ ra ở chỗ tệ nhất — thẻ bài, thứ người ta nhìn trước khi bấm.
     `tien_to` là đường về thư mục bài, khác nhau theo độ sâu trang gọi.
+
+    Trang chủ và hồ sơ token KHÔNG phải kho lưu trữ. Chúng chỉ đưa tối đa sáu bài vào
+    tầm mắt; `/bai/` mới chịu trách nhiệm tìm, lọc và mở thêm khi số bài lên ba chữ số.
     """
     v3_uu_tien = BO_CUC == "v3" and uu_tien
+    tong = len(bai_list) if tong_bai is None else tong_bai
     the = []
     for i, (f, s, n, sg, dm) in enumerate(bai_list, 1):
         lop = "bai bai-lead" if v3_uu_tien and i == 1 else "bai"
@@ -3116,9 +3169,18 @@ def dai_bai(bai_list: list, tien_to: str, them_lop: str = "", *, uu_tien: bool =
     nhan = ' aria-labelledby="bai"' if BO_CUC == "v3" else ""
     lop_uu_tien = " article-priority" if v3_uu_tien else ""
     dau_muc = (f'<div class="bai-heading"><p class="section-code">READING DESK · '
-               f'{len(bai_list)} INVESTIGATIONS</p><h2 id="bai">{ihtml.escape(tieu_de)}</h2>'
+               f'{tong} INVESTIGATIONS</p><h2 id="bai">{ihtml.escape(tieu_de)}</h2>'
                f'<p>{ihtml.escape(gioi_thieu)}</p></div>' if v3_uu_tien else
-               '<h2 id="bai">Bài</h2>')
+               '<h2 id="bai">Bài viết</h2>')
+    if v3_uu_tien:
+        den_kho = (f'<a class="bai-archive-link" href="{ihtml.escape(xem_tat_ca, quote=True)}">'
+                   f'<span>Xem tất cả</span><b>{tong} bài viết</b><i aria-hidden="true">↗</i></a>'
+                   if xem_tat_ca else "")
+        return (f'<section class="khu-bai{them_lop}{lop_uu_tien}" data-hien{nhan}>'
+                f'<div class="khu-dau">{dau_muc}{den_kho}</div>'
+                f'<div class="article-preview-grid">{"".join(the)}</div>'
+                f'<p class="article-preview-note">Đang giới thiệu {len(bai_list)} / {tong} bài viết · '
+                f'danh mục đầy đủ có tìm kiếm và lọc theo token</p></section>')
     return (f'<section class="khu-bai{them_lop}{lop_uu_tien}" data-hien{nhan}>'
             f'<div class="khu-dau">{dau_muc}'
             f'<div class="dieu-rail">'
@@ -3128,6 +3190,59 @@ def dai_bai(bai_list: list, tien_to: str, them_lop: str = "", *, uu_tien: bool =
             f'<div class="rail-boc"><div class="rail" id="rail" tabindex="0" role="region" '
             f'aria-label="Danh sách bài — cuộn ngang">{"".join(the)}</div></div>'
             f'<p class="rail-goi">{len(bai_list)} bài · vuốt ngang, hoặc bấm mũi tên</p></section>')
+
+
+def trang_muc_bai(bai: list) -> str:
+    """Kho bài riêng: chịu được 100+ bài mà không biến trang chủ thành một dải vô tận."""
+    if BO_CUC != "v3":
+        return (f'<h1>Tất cả bài viết</h1><p class="dan">{len(bai)} bài viết, mới nhất trước.</p>'
+                + dai_bai(bai, "../"))
+
+    dem_token: dict[str, int] = {}
+    for f, _, _, _, _ in bai:
+        ma = f.get("token", "").strip()
+        dem_token[ma] = dem_token.get(ma, 0) + 1
+    nut_token = "".join(
+        f'<button type="button" id="token-{ihtml.escape(ma.lower(), quote=True)}" data-article-filter="{ihtml.escape(ma.lower(), quote=True)}" '
+        f'aria-pressed="false">{ihtml.escape(ma)} <b>{n}</b></button>'
+        for ma, n in sorted(dem_token.items(), key=lambda x: (-x[1], x[0])))
+
+    the = []
+    tong_claim = 0
+    for i, (f, s, n, sg, dm) in enumerate(bai, 1):
+        tong_claim += n
+        ma = f.get("token", "").strip()
+        ngay = vn_ngay(str(f["date"])[:10])
+        tim = ihtml.escape(f'{f["title"]} {ma} {ngay} {sg}', quote=True)
+        the.append(f'''<a class="article-archive-card" href="{s}/" data-article-card
+  data-article-token="{ihtml.escape(ma.lower(), quote=True)}" data-article-text="{tim}">
+  <span class="article-archive-no">{i:02d}</span>
+  <span class="article-archive-meta"><b>{ihtml.escape(ma)}</b>{ihtml.escape(f["mau"])} {ngay}</span>
+  <strong>{ihtml.escape(f["title"])}</strong>
+  {thanh_mini(dm, n)}
+  <span class="article-archive-foot"><small>{n} claim · {ihtml.escape(sg)}</small><i aria-hidden="true">↗</i></span>
+</a>''')
+
+    return f'''<section class="hero article-archive-hero">
+  <span class="ghost-num" aria-hidden="true">{len(bai)}</span>
+  <span class="hero-code" aria-hidden="true">PUBLIC INVESTIGATION ARCHIVE</span>
+  <p class="eyebrow"><span>Kho bài viết</span><span class="im">mới nhất trước</span></p>
+  <h1 class="display">Chọn một câu hỏi. <span class="nhan-manh">Đi đến tận dữ liệu.</span></h1>
+  <p class="subline">Tìm theo tiêu đề, token hoặc ngày công bố. Mỗi bài dẫn từ câu hỏi ban đầu đến số đo, nguồn và những gì có thể làm kết luận thay đổi.</p>
+  <div class="article-archive-stats"><span><b>{len(bai)}</b> bài viết</span><span><b>{tong_claim}</b> claim</span><span><b>{len(dem_token)}</b> token</span></div>
+</section>
+<section class="article-archive" aria-labelledby="article-archive-title">
+  <header class="article-archive-head"><div><p class="section-code">READING DESK · FULL INDEX</p><h2 id="article-archive-title">Tất cả bài viết</h2></div><p data-article-status aria-live="polite">Đang hiện {len(bai)} bài viết</p></header>
+  <div class="article-archive-tools">
+    <label class="article-archive-search"><span>Tìm bài viết</span><input type="search" data-article-search placeholder="Tiêu đề, token, ngày…" autocomplete="off"><kbd>/</kbd></label>
+    <nav class="article-archive-filters" aria-label="Lọc bài theo token">
+      <button type="button" data-article-filter="all" aria-pressed="true">Tất cả <b>{len(bai)}</b></button>{nut_token}
+    </nav>
+  </div>
+  <div class="article-archive-grid">{"".join(the)}</div>
+  <p class="article-archive-empty" data-article-empty hidden>Không có bài viết khớp từ khoá và token này.</p>
+  <div class="article-archive-more"><button type="button" data-article-more>Mở thêm 12 bài viết ↓</button></div>
+</section>'''
 
 
 def trang_token(ma: str, bai_t: list, claims_t: list) -> str:
@@ -3173,7 +3288,7 @@ def trang_token(ma: str, bai_t: list, claims_t: list) -> str:
         # mỗi dòng cao 720px thay vì 161px, cả trang 15.652px. Trình duyệt không báo
         # gì; lộ ra ở ảnh chụp khổ điện thoại của cổng preview.
         f'<details class="tu-so"><summary><span class="tt-hop">'
-        f'<span class="chip {TRANG_THAI[c["status"]][0]}">{c["status"]}</span>'
+        f'<span class="chip {TRANG_THAI[c["status"]][0]}">{TRANG_THAI_HIEN_THI[c["status"]]}</span>'
         f'<span class="tx">{ihtml.escape(c["text"])}</span>'
         f'<span class="mt">{vn_ngay(s[:10])} · {c["id"]} · {ihtml.escape(tieu)}</span>'
         f'<span class="mui" aria-hidden="true">▾</span>'
@@ -3200,7 +3315,7 @@ def trang_token(ma: str, bai_t: list, claims_t: list) -> str:
         # dưới dạng biến trong chính hàm này (`len(claims_t)` · `len(bai_t)` · `doi`
         # · `d_num` · `n_do`/`n_kd`/`con`), nên dán cứng là tự chọn phiên bản sẽ nói
         # dối. Đo đối chiếu 10/08: cả mười một con số suy ra TRÙNG KHÍT bản codex.
-        ten_tt = {"xac": "Đã xác nhận", "song": "Đang đứng", "sua": "Đã sửa", "bac": "Bị bác"}
+        ten_tt = {"xac": "Đã xác nhận", "song": "Vẫn đứng vững", "sua": "Đã sửa", "bac": "Đã bị bác bỏ"}
         thu_tu = ["ĐÃ XÁC NHẬN", "ĐANG ĐỨNG", "ĐÃ SỬA", "BỊ BÁC"]
         thanh = "".join(f'<i class="{TRANG_THAI[k][0]}" style="--n:{d_num[k]}"></i>'
                         for k in thu_tu)
@@ -3211,32 +3326,38 @@ def trang_token(ma: str, bai_t: list, claims_t: list) -> str:
                       f'{ten_tt[TRANG_THAI[k][0]]} <b>{d_num[k]}</b></button>' for k in thu_tu)
         n = len(claims_t)
         khoi_bai = dai_bai(
-            bai_t, "../../", " uni-articles", uu_tien=True,
+            bai_t[:6], "../../", " uni-articles", uu_tien=True,
             tieu_de=f"Bài điều tra về {ma}",
-            gioi_thieu="Bắt đầu từ bài gốc để thấy câu hỏi, đường đo và giới hạn trước khi mở từng claim.")
+            gioi_thieu="Bắt đầu từ bài gốc để thấy câu hỏi, đường đo và giới hạn trước khi mở từng claim.",
+            tong_bai=len(bai_t), xem_tat_ca=f"../../bai/#token-{ma.lower()}")
         return (f'''<section class="hero uni-hero">
-    <p class="eyebrow">Token vault · {ma} <span class="im">public evidence file</span></p>
-    <div class="uni-title-lockup">
-      <img src="../../anh/token-{ma.lower()}.png" width="84" height="84" alt="Logo {ten}">
-      <div><span>{ten}</span><h1 class="display">Một hồ sơ. <em>Không câu sai nào biến mất.</em></h1></div>
-    </div>
-    <p class="subline">Mọi con số BlockPinned đã ghim về {ma} nằm trong cùng một tủ kính: \
-trạng thái hiện tại, mốc ghim, điều kiện bác bỏ và đường trở về bài gốc.</p>
+    <p class="eyebrow">Hồ sơ token · {ma} <span class="im">cập nhật theo bằng chứng</span></p>
+    <div class="uni-hero-grid">
+      <div class="uni-hero-copy">
+        <div class="uni-title-lockup">
+          <img src="../../anh/token-{ma.lower()}.png" width="84" height="84" alt="Logo {ten}">
+          <div><span>{ten}</span><h1 class="display">{ma}, qua từng lần <em>kiểm chứng.</em></h1></div>
+        </div>
+        <p class="subline">Các khẳng định BlockPinned đã công bố về {ma} được tập hợp tại đây — \
+kèm mốc đo, nguồn, điều có thể làm kết luận thay đổi và trạng thái hiện tại.</p>
+        <a class="uni-hero-jump" href="#bai"><span>Đọc bài viết về {ma}</span><b>{len(bai_t)} bài viết</b><i aria-hidden="true">↓</i></a>
+      </div>
 
-    <section class="uni-vault" data-spotlight aria-label="Tổng quan hồ sơ {ma}">
-      <div class="uni-vault-total">
-        <div class="uni-ring" aria-hidden="true"><span><b>{n}</b><small>CLAIM</small></span></div>
-        <div><span class="section-code">EVIDENCE FILE · {ma}</span><strong>{len(bai_t)} bài điều tra</strong>\
+      <section class="uni-vault" data-spotlight aria-label="Tổng quan hồ sơ {ma}">
+        <div class="uni-vault-total">
+          <div class="uni-ring" aria-hidden="true"><span><b>{n}</b><small>CLAIM</small></span></div>
+          <div><span class="section-code">EVIDENCE FILE · {ma}</span><strong>{len(bai_t)} bài điều tra</strong>\
 <small>{doi} claim đã đổi trạng thái</small></div>
-      </div>
-      <div class="uni-vault-state">
-        <div class="uni-vault-head"><b>Trạng thái hiện tại</b><span>đủ {n} / {n}</span></div>
-        <div class="uni-status-bar" aria-hidden="true">{thanh}</div>
-        <div class="uni-legend">{chu_giai}</div>
-      </div>
-      <p class="uni-vault-rule"><b>Audit rule</b><span>Sửa trạng thái, không xoá lịch sử.</span>\
+        </div>
+        <div class="uni-vault-state">
+          <div class="uni-vault-head"><b>Trạng thái hiện tại</b><span>đủ {n} / {n}</span></div>
+          <div class="uni-status-bar" aria-hidden="true">{thanh}</div>
+          <div class="uni-legend">{chu_giai}</div>
+        </div>
+        <p class="uni-vault-rule"><b>Audit rule</b><span>Sửa trạng thái, không xoá lịch sử.</span>\
 <i aria-hidden="true">→</i><span>Mở từng claim để thấy chính xác điều gì có thể bác bỏ nó.</span></p>
-    </section>
+      </section>
+    </div>
   </section>
 
   {khoi_bai}
@@ -3426,14 +3547,14 @@ def thanh_xep(dem: dict, tong: int) -> str:
     # sẵn trong HTML ⇒ tắt JS là thanh đứng yên ở đúng tỉ lệ thật, không phải ở 0.
     seg = "".join(
         f'<span class="seg {TRANG_THAI[k][0]}" style="width:{n / tong * 100:.2f}%;--i:{i}" '
-        f'data-loc="{TRANG_THAI[k][0]}" data-tip="{k} · {n}/{tong}"></span>'
+        f'data-loc="{TRANG_THAI[k][0]}" data-tip="{TRANG_THAI_HIEN_THI[k]} · {n}/{tong}"></span>'
         for i, (k, n) in enumerate(co))
     # 🔴 Chip là NÚT, không phải nhãn: nó vừa là chú giải của thanh (bắt buộc — năm
     # trạng thái không phân biệt nổi bằng hue, `NOTES §1`), vừa là bộ lọc của danh sách
     # claim đứng ngay dưới. Tắt JS thì nút không làm gì và chú giải vẫn đọc đủ.
     chip = "".join(
         f'<button class="lg {TRANG_THAI[k][0]}" type="button" data-loc="{TRANG_THAI[k][0]}" '
-        f'aria-pressed="false"><span class="sw"></span>{k} <span class="n">{n}</span></button>'
+        f'aria-pressed="false"><span class="sw"></span>{TRANG_THAI_HIEN_THI[k]} <span class="n">{n}</span></button>'
         for k, n in co)
     return (f'<div class="stack" aria-hidden="true">{seg}</div>'
             f'<div class="chu-thich">{chip}</div>')
@@ -4010,8 +4131,7 @@ def trang_chu_v3(bai: list, moi_claim: list, gt: list, tk: dict, khai: dict) -> 
     dem = {k: sum(1 for _, _, c in moi_claim if c["status"] == k) for k in TRANG_THAI}
     tong = len(moi_claim)
     thu_tu = ["ĐÃ XÁC NHẬN", "ĐANG ĐỨNG", "ĐÃ SỬA", "BỊ BÁC", "CHỜ SỐ"]
-    nhan_ng = {"ĐÃ XÁC NHẬN": "xác nhận", "ĐANG ĐỨNG": "đang đứng", "ĐÃ SỬA": "đã sửa",
-               "BỊ BÁC": "bị bác", "CHỜ SỐ": "chờ số"}
+    nhan_ng = {k: TRANG_THAI_NGAN[k] for k in TRANG_THAI}
     thanh = "".join(f'<i class="{TRANG_THAI[k][0]}" style="--n:{dem[k]}"></i>'
                     for k in thu_tu if dem[k])
     chu_giai = "".join(f'<span><i class="dot {TRANG_THAI[k][0]}"></i><b>{dem[k]}</b>'
@@ -4031,9 +4151,10 @@ def trang_chu_v3(bai: list, moi_claim: list, gt: list, tk: dict, khai: dict) -> 
         khoi_nb = khoi_noi_bat(nb, nb_slug, chuoi, hv["_doc_luc"])
 
     khoi_bai = dai_bai(
-        bai, "", " home-articles", uu_tien=True,
+        bai[:6], "", " home-articles", uu_tien=True,
         tieu_de="Bài điều tra mới nhất",
-        gioi_thieu="Đây là cửa vào chính: mở bài để thấy câu hỏi, phép đo và điều gì có thể chứng minh nó sai.")
+        gioi_thieu="Mỗi bài đi từ câu hỏi, qua phép đo, đến điều gì có thể chứng minh kết luận sai.",
+        tong_bai=len(bai), xem_tat_ca="bai/")
 
     return (f'''<section class="ledger-asset" id="so-goc" aria-labelledby="ledger-title">
   <div class="ledger-head">
@@ -4062,9 +4183,9 @@ những lần BlockPinned phải sửa mình.</p>
     <div class="home-promise">
       <p class="eyebrow"><span>Crypto research · evidence first</span>\
 <span class="im">không kèo · không nhận định giá</span></p>
-      <h1>Nghiên cứu crypto bằng <span class="nhan-manh">số có thể tự kiểm lại.</span></h1>
-      <p class="home-lede">BlockPinned đi từ một con số đáng ngờ về tận nguồn, ghi trước điều gì \
-sẽ bác bỏ nó, rồi cập nhật công khai khi kết quả thay đổi.</p>
+      <h1>Nghiên cứu crypto: <span class="nhan-manh">số nào cũng truy ngược được.</span></h1>
+      <p class="home-lede">BlockPinned soi những con số đang được thị trường trích dẫn — từ \
+dashboard, báo cáo đến dữ liệu on-chain — rồi đếm lại từ nguồn.</p>
       <div class="home-method" aria-label="Phương pháp BlockPinned">
         <span><b>01</b> đi tận nguồn</span><span><b>02</b> ghim điều bác bỏ</span>\
 <span><b>03</b> sửa tại chỗ</span>
@@ -4081,7 +4202,7 @@ sẽ bác bỏ nó, rồi cập nhật công khai khi kết quả thay đổi.</
 <span class="door-copy"><b>Facts</b><small>Một số · một block · một lệnh tự kiểm.</small></span>\
 <span class="door-go" aria-hidden="true">↗</span></a>
       <a class="home-door" href="track-record/"><span class="door-no">04</span>\
-<span class="door-copy"><b>Track record</b><small>Claim nào đang đứng, đã sửa hay bị bác.</small></span>\
+<span class="door-copy"><b>Track record</b><small>Claim nào vẫn đứng vững, đã sửa hay đã bị bác bỏ.</small></span>\
 <span class="door-go" aria-hidden="true">↗</span></a>
     </nav>
   </div>
@@ -4110,8 +4231,9 @@ def cong_bo_cuc(html_chu: str, html_token: str, so_bai: int, so_token: int) -> N
     if BO_CUC == "v3":
         moc_bai = 'class="khu-bai home-articles article-priority"'
         if (moc_bai not in html_chu
-                or html_chu.count('<a class="bai') != so_bai):
-            raise LoiCong("mục bài trang chủ v3 thiếu cấu trúc home-articles hoặc mất thẻ bài")
+                or len(re.findall(r'<a class="bai(?: bai-lead)?" href=', html_chu)) != min(6, so_bai)
+                or 'class="bai-archive-link" href="bai/"' not in html_chu):
+            raise LoiCong("preview bài trang chủ v3 thiếu cấu trúc, sai số thẻ hoặc mất lối vào kho bài")
         if html_chu.index(moc_bai) > html_chu.index('id="ho-so"'):
             raise LoiCong("mục bài trang chủ v3 đã tụt xuống sau hồ sơ — phải là cửa vào ở nửa đầu trang")
         if (not all(x in html_token for x in ('class="token-switcher"',
@@ -4134,10 +4256,25 @@ def cong_bai_token(html_tu: str, so_bai: int) -> None:
     if BO_CUC != "v3":
         return
     moc_bai = 'class="khu-bai uni-articles article-priority"'
-    if moc_bai not in html_tu or html_tu.count('<a class="bai') != so_bai:
-        raise LoiCong("mục bài token v3 thiếu article-priority hoặc mất thẻ bài")
+    if (moc_bai not in html_tu
+            or len(re.findall(r'<a class="bai(?: bai-lead)?" href=', html_tu)) != min(6, so_bai)
+            or 'class="bai-archive-link" href="../../bai/#token-' not in html_tu):
+        raise LoiCong("preview bài token v3 thiếu cấu trúc, sai số thẻ hoặc mất lối vào kho bài")
     if html_tu.index(moc_bai) > html_tu.index('class="uni-coverage"'):
         raise LoiCong("mục bài token v3 đã tụt xuống sau tủ claim — phải đứng ngay sau phần mở đầu")
+
+
+def cong_muc_bai(html_bai: str, so_bai: int, so_token: int) -> None:
+    """Kho bài là cửa mở rộng; mọi bài phải có mặt dù preview chỉ giữ sáu thẻ."""
+    if BO_CUC != "v3":
+        return
+    if (not all(x in html_bai for x in ('class="article-archive"',
+                                        'data-article-search',
+                                        'data-article-filter="all"',
+                                        'data-article-more'))
+            or html_bai.count(" data-article-card") != so_bai
+            or html_bai.count(" data-article-filter=") != so_token + 1):
+        raise LoiCong("kho bài v3 thiếu tìm/lọc/mở-thêm hoặc mất bài/token")
 
 
 def main() -> None:
@@ -4197,6 +4334,7 @@ def main() -> None:
         fm0, _ = front(p.read_text(encoding="utf-8"), f"content/posts/{p.name}")
         dem_token[fm0.get("token", "")] = dem_token.get(fm0.get("token", ""), 0) + 1
     CO_TRANG[TU_KINH_DUONG] = dem_token.get(TU_KINH, 0) >= TU_KINH_SAN
+    CO_TRANG["bai/"] = bool([k for k in dem_token if k])
     # Mục lục token có mặt khi có BẤT KỲ token nào — nó là bản đồ, không phải tủ kính,
     # nên nó không có sàn. Sàn chỉ chặn việc MỞ MỘT TRANG RIÊNG cho token mỏng.
     CO_TRANG["token/"] = bool([k for k in dem_token if k])
@@ -4286,7 +4424,7 @@ def main() -> None:
         # ⇒ đọc ra như 3/4 đã đổ. Lỗi này chỉ xuất hiện khi có claim ở trạng thái thứ ba;
         # với N=1 bài toàn "đang đứng" thì công thức cũ trông đúng. Nay in ĐỦ PHỔ.
         dem = {k: sum(1 for c in claims if c["status"] == k) for k in TRANG_THAI}
-        tom = " · ".join(f"{n} {k.lower()}" for k, n in dem.items() if n)
+        tom = " · ".join(f"{n} {TRANG_THAI_NGAN[k]}" for k, n in dem.items() if n)
         bai.append((fm, slug_, len(claims), tom, dem))
         for c in claims:
             moi_claim.append((slug_, fm["title"], c))
@@ -4314,6 +4452,21 @@ def main() -> None:
             v["dem"][k] = v["dem"].get(k, 0) + x
         if str(f["date"]) > v["ngay"]:
             v["ngay"], v["slug_moi"] = str(f["date"]), s
+
+    # `/bai/` là kho riêng, không phải dải thứ ba trên trang chủ. Preview ở trang chủ
+    # và hồ sơ token chỉ giữ sáu bài; tại đây mọi bài vẫn có mặt và có thể tìm/lọc.
+    d_bai = OUT / "bai"
+    d_bai.mkdir(parents=True, exist_ok=True)
+    html_bai = trang(
+        "Tất cả bài viết — BlockPinned", trang_muc_bai(bai), t, "..",
+        muc="bai/", mat="page-article-archive",
+        meta={"mo_ta": f"Kho {len(bai)} bài điều tra BlockPinned, tìm theo tiêu đề, "
+                       f"mốc ngày hoặc token; mỗi bài giữ nguyên sổ claim và đường tự kiểm.",
+              "duong": "/bai/", "anh": "avatar-800.png", "loai": "website",
+              "tieu_de_og": "Tất cả bài viết — BlockPinned"})
+    cong_muc_bai(html_bai, len(bai), len(tk))
+    (d_bai / "index.html").write_text(html_bai, encoding="utf-8")
+    print(f"  ✓ bai/  ·  kho {len(bai)} bài · {len(tk)} token")
 
     # 🔴 THỨ TỰ TRANG CHỦ, vòng 3: bản đồ ĐỨNG ĐẦU (người lạ phải thấy site có gì
     # trước khi phải cuộn), rồi bảng điểm, rồi BÀI, rồi mốc chờ. Bài dời lên trên
@@ -4350,7 +4503,7 @@ def main() -> None:
         meta={"mo_ta": f"Mọi token BlockPinned đã đo, kèm số bài và số khẳng định của "
                        f"từng cái: {ds_tk}. Token đủ {TU_KINH_SAN} bài thì có trang hồ sơ riêng.",
               "duong": "/token/", "anh": "avatar-800.png", "loai": "website",
-              "tieu_de_og": "Kênh này đã đo được gì, xếp theo token"})
+              "tieu_de_og": "BlockPinned đã đo được gì, xếp theo token"})
     cong_bo_cuc(html_chu, html_token, len(bai), len(tk))
     (d_mt / "index.html").write_text(html_token, encoding="utf-8")
     print(f"  ✓ token/  ·  mục lục {len(tk)} token")
@@ -4419,8 +4572,10 @@ def main() -> None:
     if facts:
         d_f = OUT / "facts"
         d_f.mkdir(parents=True, exist_ok=True)
+        noi_facts = trang_facts(facts)
+        cong_facts_web(noi_facts, facts)
         (d_f / "index.html").write_text(trang(
-            "Facts — BlockPinned", trang_facts(facts), t, "..", muc="facts/", mat="page-facts",
+            "Facts — BlockPinned", noi_facts, t, "..", muc="facts/", mat="page-facts",
             meta={"mo_ta": "Mỗi mục là một sự thật đúng tại một block, kèm một lệnh để bạn "
                            "tự đọc lại con số đó. Không phân tích, không nhận định giá.",
                   "duong": "/facts/", "anh": "avatar-800.png", "loai": "website",

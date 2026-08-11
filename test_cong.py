@@ -249,6 +249,20 @@ CA = [
     ("⑪ FACT · control DƯƠNG — facts.json hợp lệ phải BUILD ĐƯỢC",
      lambda r: sua_facts(r, lambda f: None),
      None),
+    # ── BẢN WEB — `cau` đã đăng có thể mang dấu vết riêng của thread X ──────────
+    # Hai ca bẻ lớp thích nghi để chứng minh cổng ⑪b bắt được chính hai lỗi từng
+    # xuất hiện live: trỏ tới một reply không tồn tại và lặp nguyên văn ô giới hạn.
+    ("⑪b FACT WEB · còn câu 'reply ngay dưới' phải NỔ",
+     lambda r: (
+         sua_facts(r, lambda f: f.update(
+             cau=f["cau"] + "\n\nBằng chứng và cách tự kiểm: ở reply ngay dưới.")),
+         sua_builder(r, "cau_web = cau_fact_web(f)", "cau_web = str(f['cau'])")),
+     "còn trỏ người đọc tới 'reply ngay dưới'"),
+    ("⑪b FACT WEB · lặp nguyên văn ô giới hạn phải NỔ",
+     lambda r: (
+         sua_facts(r, lambda f: f.update(cau=f["cau"] + "\n\n" + f["chan"])),
+         sua_builder(r, "cau_web = cau_fact_web(f)", "cau_web = str(f['cau'])")),
+     "lặp nguyên văn phần 'Fact này KHÔNG nói'"),
 
     # ── BỐ CỤC v3 + lượt bóc <script> của cổng ⑪ (10/08) ─────────────────────────
     # Bốn ca dưới đi thành BỘ. Ca ① một mình không đủ: nó xanh cả khi cổng ⑪ đã chết
@@ -268,14 +282,18 @@ CA = [
      lambda r: sua_builder(r, '<div class="token-grid" id="token-grid">',
                            '<div class="token-grid-hong" id="token-grid">'),
      "mục token v3 thiếu cấu trúc"),
-    ("BỐ CỤC v3 · dải bài trang chủ mất component phải NỔ",
-     lambda r: sua_builder(r, 'bai, "", " home-articles", uu_tien=True,',
-                           'bai, "", uu_tien=True,'),
-     "mục bài trang chủ v3 thiếu cấu trúc"),
-    ("BỐ CỤC v3 · dải bài token mất ưu tiên phải NỔ",
-     lambda r: sua_builder(r, 'bai_t, "../../", " uni-articles", uu_tien=True,',
-                           'bai_t, "../../", uu_tien=True,'),
-     "mục bài token v3 thiếu article-priority"),
+    ("BỐ CỤC v3 · preview bài trang chủ mất component phải NỔ",
+     lambda r: sua_builder(r, 'bai[:6], "", " home-articles", uu_tien=True,',
+                           'bai[:6], "", uu_tien=True,'),
+     "preview bài trang chủ v3 thiếu cấu trúc"),
+    ("BỐ CỤC v3 · preview bài token mất ưu tiên phải NỔ",
+     lambda r: sua_builder(r, 'bai_t[:6], "../../", " uni-articles", uu_tien=True,',
+                           'bai_t[:6], "../../", uu_tien=True,'),
+     "preview bài token v3 thiếu cấu trúc"),
+    ("BỐ CỤC v3 · kho bài mất component phải NỔ",
+     lambda r: sua_builder(r, '<section class="article-archive"',
+                           '<section class="article-archive-hong"'),
+     "kho bài v3 thiếu tìm/lọc/mở-thêm"),
     ("VISUAL · marker còn nhưng cấu hình bị xoá phải NỔ",
      lambda r: sua_json_bai(r, PENDLE_CJ, lambda d: d["visuals"].pop(0)),
      "marker visual và cấu hình không khớp"),
@@ -300,8 +318,9 @@ THEM_ARGV = {ten: ca[3] for ca in CA if len(ca) > 3 for ten in [ca[0]]}
 for _t in ("BỐ CỤC v3 · thiếu v3.css phải NỔ — trang đủ chữ mà không có hình là hỏng im nhất",
            "BỐ CỤC v3 · thiếu v3.js phải NỔ",
            "BỐ CỤC v3 · token rơi về chữ trần phải NỔ",
-           "BỐ CỤC v3 · dải bài trang chủ mất component phải NỔ",
-           "BỐ CỤC v3 · dải bài token mất ưu tiên phải NỔ"):
+           "BỐ CỤC v3 · preview bài trang chủ mất component phải NỔ",
+           "BỐ CỤC v3 · preview bài token mất ưu tiên phải NỔ",
+           "BỐ CỤC v3 · kho bài mất component phải NỔ"):
     THEM_ARGV[_t] = ["--bo-cuc", "v3"]
 
 
