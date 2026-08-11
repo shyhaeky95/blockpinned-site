@@ -38,7 +38,7 @@ BAI = "bai/2026-07-27-defillama-uniswap-v4/index.html"
 # khổ hẹp hơn thì đo bằng do_tran() (gói overflow:auto), không đo bằng mắt.
 RONG = 500
 KHUNG = [("dau", BAI, 1740, None),
-         ("soclaim", BAI, 1620, "so"),      # cắt riêng sổ claim, không dựa vào cuộn theo neo
+         ("soclaim", BAI, 1900, "article-ledger"),  # cắt riêng sổ claim WOW, không cuộn theo neo
          ("chu", "index.html", 1180, None),
          # 🔴 06/08: MỌI trang phục vụ đều phải nằm ở đây. Trang nào không có trong
          # danh sách này thì cổng đo tràn KHÔNG nhìn tới, và một trang hỏng ở khổ điện
@@ -80,13 +80,13 @@ KHUNG_V3 = [("clock", "index.html", 900, "clock-khu"),
 # scrollWidth phản ánh tràn thật. Kèm thủ phạm rộng nhất để báo động chỉ ra chỗ sửa.
 # 🔴 VÙNG CUỘN NGANG CÓ CHỦ Ý — danh sách này là chỗ dễ biến phép đo thành phép đo mù
 # nhất, nên mỗi tên phải MUA được chỗ của nó bằng một khai báo `overflow` trong CSS.
-# Đã kiểm 10/08 bằng máy, không bằng trí nhớ: cả sáu tên v3 dưới đây đều khai
+# Đã kiểm bằng máy, không bằng trí nhớ: các tên v3 dưới đây đều khai
 # `overflow:auto` trong `v3.css`. Tên nào KHÔNG khai thì KHÔNG được vào đây — nó tràn
 # thật, và cho vào là tự tay bịt mắt cổng. (`.uni-tools` đã bị loại đúng theo luật đó.)
 #
 # Thêm một tên vào đây mà không mở CSS ra xem = biến "không tràn" thành một câu vô nghĩa.
-VUNG_CUON = ("'.cuon,pre,"                       # D2
-             ".chart-cuon,.fact-switcher,.track-filters,.uni-filters,.rail,.token-switcher'")
+VUNG_CUON = ("'.cuon,pre,"                       # D2 + khối code của cả hai bố cục
+             ".bang,.chart-cuon,.fact-switcher,.track-filters,.uni-filters,.rail,.token-switcher'")
 
 DO_TRAN = """<script>addEventListener('load',()=>{document.fonts.ready.then(()=>{
  const w=document.createElement('div');
@@ -159,7 +159,13 @@ def cat_muc(html: str, cls: str) -> str:
     if not m:
         sys.exit(f"không tìm thấy <section class=\"{cls}\"> — khuôn đã đổi?")
     body = re.search(r'<main class="khung">(.*?)</main>', html, re.S)
-    return html.replace(body.group(1), m.group(0))
+    khoi = m.group(0)
+    # Sổ claim WOW gấp mặc định trên trang thật. Ảnh kiểm phải mở nó; chụp riêng một
+    # summary đóng chỉ chứng minh vỏ tồn tại, không nhìn được claim card bên trong.
+    if cls == "article-ledger":
+        khoi = khoi.replace('<details class="evidence case-evidence"',
+                            '<details open class="evidence case-evidence"', 1)
+    return html.replace(body.group(1), khoi)
 
 
 def do_tran(html: str, tmp: pathlib.Path, nhan: str) -> bool:

@@ -205,12 +205,18 @@
         entry.target.classList.add("is-visible");
         revealObserver.unobserve(entry.target);
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -5%" });
+    }, { threshold: 0, rootMargin: "0px 0px -5%" });
     revealItems.forEach(function (item, index) {
       item.classList.add("reveal-ready");
       item.style.transitionDelay = Math.min(index % 4, 2) * 45 + "ms";
       revealObserver.observe(item);
     });
+    // A reveal is decoration, never a visibility gate. Large blocks can be taller
+    // than the viewport and headless/static captures may not deliver observer events.
+    // The fallback makes every story beat visible even when that happens.
+    setTimeout(function () {
+      revealItems.forEach(function (item) { item.classList.add("is-visible"); });
+    }, 1400);
   }
 
   // A very soft local glow makes the primary data surface feel alive.
@@ -580,6 +586,27 @@
     actions.classList.add("has-evidence-link");
     actions.insertBefore(makeEvidenceLinkButton(claim.id, "Sao chép link claim " + claim.dataset.uniIndex), actions.firstChild);
   });
+
+  // Article claims live inside a collapsed evidence ledger. A permalink must open
+  // that ledger before scrolling; otherwise the URL points to real evidence that
+  // remains invisible. The copy button uses the same canonical-aware path as Facts.
+  var articleClaims = Array.prototype.slice.call(document.querySelectorAll("[data-article-claim][id]"));
+  articleClaims.forEach(function (claim) {
+    var actions = claim.querySelector(".case-claim-actions");
+    if (!actions) return;
+    actions.appendChild(makeEvidenceLinkButton(claim.id, "Sao chép link claim " + claim.id));
+  });
+  function openArticleClaim() {
+    if (!location.hash || location.hash === "#so-claim") return;
+    var claim;
+    try { claim = document.querySelector(location.hash); } catch (ignore) { return; }
+    if (!claim || !claim.matches("[data-article-claim]")) return;
+    var ledger = claim.closest("details.case-evidence");
+    if (ledger) ledger.open = true;
+    requestAnimationFrame(function () { claim.scrollIntoView({ block: "start" }); });
+  }
+  openArticleClaim();
+  addEventListener("hashchange", openArticleClaim);
 
   // A copy control exists only when JavaScript can actually copy the command.
   document.querySelectorAll(".fact-wow details.lenh").forEach(function (details) {

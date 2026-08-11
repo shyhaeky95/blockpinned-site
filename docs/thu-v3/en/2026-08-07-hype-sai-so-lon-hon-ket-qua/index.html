@@ -1,4 +1,4 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HYPE Q2 2026 net issuance: +890,000 vs −412,960 — receipt</title>
 <meta name="description" content="Receipt for a Vietnamese write-up: the numbers, the exact Hyperliquid Info API calls, the falsifiers, and what the measurement does not cover.">
@@ -483,8 +483,11 @@ html.chuyen .hero::before{animation:grid-drift 16s linear infinite}
 @keyframes grid-drift{to{background-position:44px 22px}}
 html.chuyen h1.display{animation:title-lock .8s cubic-bezier(.2,.75,.2,1) both}
 html.chuyen .heronum .v{animation:data-lock .85s cubic-bezier(.16,.8,.22,1) .18s both}
-@keyframes title-lock{from{opacity:0;transform:translateY(16px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
-@keyframes data-lock{from{clip-path:inset(0 100% 0 0);transform:translateY(8px)}to{clip-path:inset(0);transform:none}}
+/* Tiêu đề không bao giờ về opacity 0: lượt ảnh light đầu tiên bắt đúng khung animation
+   và mất sạch h1 trong khi nền dark tình cờ chụp sau đó. Motion được phép dịch/chuyển nét,
+   không được làm mất nội dung quan trọng nhất của trang. */
+@keyframes title-lock{from{transform:translateY(16px)}to{transform:none}}
+@keyframes data-lock{from{transform:translateY(8px)}to{transform:none}}
 
 /* Bản đồ tái hiệu chỉnh: cùng ba con số cũ, nay thành một quan hệ nhìn được. */
 .recalibration{margin:13px 0 19px;padding:13px 14px 11px;border:1px solid var(--line-soft);border-radius:12px;
@@ -700,6 +703,8 @@ html.chuyen .finding-home.is-visible .finding-title .nhan-manh::after{animation:
   border:1px solid color-mix(in srgb,var(--c-xn) 40%,var(--line));border-radius:999px;
   background:color-mix(in srgb,var(--c-xn) 7%,transparent);font-style:normal;color:var(--c-xn)}
 .article-path .dot{width:7px;height:7px;border-radius:2px;background:var(--c-xn)}
+.article-path .dot.song{background:var(--c-song)}.article-path .dot.sua{background:var(--c-sua)}
+.article-path .dot.bac{background:var(--c-bac)}.article-path .dot.cho{background:var(--c-cho)}
 .article-verdict{display:grid;grid-template-columns:minmax(210px,.68fr) minmax(0,1.8fr);gap:clamp(28px,4vw,56px);
   align-items:stretch;margin:0 0 52px;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .article-ratio{display:flex;flex-direction:column;justify-content:center}
@@ -718,6 +723,12 @@ html.chuyen .finding-home.is-visible .finding-title .nhan-manh::after{animation:
 .case-step.chain{color:var(--c-song);background:color-mix(in srgb,var(--c-song) 4%,var(--card))}
 .case-step.fixed{color:var(--c-xn);background:color-mix(in srgb,var(--c-xn) 5%,var(--card));
   box-shadow:0 0 36px color-mix(in srgb,var(--c-xn) 7%,transparent)}
+.case-step.file{color:var(--accent);background:color-mix(in srgb,var(--accent) 4%,var(--card))}
+.case-step.test{color:var(--c-song);background:color-mix(in srgb,var(--c-song) 4%,var(--card))}
+.case-step.state{color:var(--c-xn);background:color-mix(in srgb,var(--c-xn) 5%,var(--card))}
+.case-step.state.song{color:var(--c-song)}.case-step.state.sua{color:var(--c-sua)}
+.case-step.state.bac{color:var(--c-bac)}.case-step.state.cho{color:var(--c-cho)}
+.article-ledger-count .v em{font:700 .22em/1 var(--mono);letter-spacing:.04em;text-transform:uppercase}
 html.chuyen .article-verdict.is-visible .case-step{animation:case-lock .55s cubic-bezier(.2,.8,.2,1) backwards}
 html.chuyen .article-verdict.is-visible .case-step.chain{animation-delay:.1s}
 html.chuyen .article-verdict.is-visible .case-step.fixed{animation-delay:.2s}
@@ -740,25 +751,102 @@ html.chuyen .article-verdict.is-visible .case-step.fixed{animation-delay:.2s}
 .case-ledger-viz{display:grid;gap:10px}
 .case-ledger-bar{height:10px;display:flex;gap:2px;padding:1px;border:1px solid var(--line);border-radius:5px;background:var(--bg);overflow:hidden}
 .case-ledger-bar>i{flex:var(--n);border-radius:3px}.case-ledger-bar .xn,.case-ledger-bar .xac{background:var(--c-xn)}
-.case-ledger-bar .sua{background:var(--c-sua)}.case-ledger-bar .bac{background:var(--c-bac)}
+.case-ledger-bar .song{background:var(--c-song)}.case-ledger-bar .sua{background:var(--c-sua)}
+.case-ledger-bar .bac{background:var(--c-bac)}.case-ledger-bar .cho{background:var(--c-cho)}
 .case-ledger-legend{display:flex;gap:9px 18px;flex-wrap:wrap}
 .case-ledger-legend>i{display:inline-flex;gap:6px;align-items:center;font:550 10px/1 var(--mono);font-style:normal;color:var(--muted)}
 .case-ledger-legend .dot{width:7px;height:7px;border-radius:2px}.case-ledger-legend .dot.xn,.case-ledger-legend .dot.xac{background:var(--c-xn)}
-.case-ledger-legend .dot.sua{background:var(--c-sua)}.case-ledger-legend .dot.bac{background:var(--c-bac)}
+.case-ledger-legend .dot.song{background:var(--c-song)}.case-ledger-legend .dot.sua{background:var(--c-sua)}
+.case-ledger-legend .dot.bac{background:var(--c-bac)}.case-ledger-legend .dot.cho{background:var(--c-cho)}
 .case-evidence>summary .mo{font:700 10.5px/1 var(--mono);white-space:nowrap;color:var(--ink)}
 .case-evidence>summary .mo::after{content:" ↓"}.case-evidence[open]>summary .mo::after{content:" ↑"}
 .case-evidence[open]>summary{border-bottom:1px solid var(--line)}
 
+/* Sổ claim của trang bài: dữ liệu cũ, markup mới. Mọi màu lấy từ trạng thái thật. */
+.article-ledger{scroll-margin-top:118px}.case-ledger-body{padding:24px!important}
+.case-ledger-intro{max-width:72ch;margin:0 0 22px;color:var(--muted)}
+.case-claim-list{display:grid;gap:16px}
+.case-claim{--st:var(--accent);position:relative;padding:22px 22px 20px;border:1px solid var(--line);
+  border-radius:15px;background:color-mix(in srgb,var(--card) 86%,var(--bg));overflow:hidden;scroll-margin-top:124px}
+.case-claim::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:0 3px 3px 0;background:var(--st)}
+.case-claim.xac{--st:var(--c-xn)}.case-claim.song{--st:var(--c-song)}.case-claim.sua{--st:var(--c-sua)}
+.case-claim.bac{--st:var(--c-bac)}.case-claim.cho{--st:var(--c-cho)}
+.case-claim:target{border-color:color-mix(in srgb,var(--st) 58%,var(--line));
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--st) 10%,transparent),var(--bong)}
+.case-claim-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+.case-claim-id{font:800 13px/1 var(--mono);letter-spacing:.06em;color:var(--ink)}
+.case-claim-id:hover{color:var(--st)}
+.case-claim-status{display:inline-flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid color-mix(in srgb,var(--st) 35%,var(--line));
+  border-radius:999px;background:color-mix(in srgb,var(--st) 7%,transparent);font:750 9px/1 var(--mono);letter-spacing:.08em;color:var(--st)}
+.case-claim-status i{width:7px;height:7px;border-radius:2px;background:var(--st)}
+.case-claim-status.xac{--st:var(--c-xn)}.case-claim-status.song{--st:var(--c-song)}
+.case-claim-status.sua{--st:var(--c-sua)}.case-claim-status.bac{--st:var(--c-bac)}
+.case-claim-status.cho{--st:var(--c-cho)}
+.case-claim-actions{margin-left:auto;min-height:34px}
+.case-claim-text{max-width:78ch;margin:0 0 18px;font:650 clamp(15px,1.6vw,17px)/1.62 var(--display);color:var(--ink)}
+.case-claim-evidence{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px}
+.case-pin,.case-falsifier{margin:0;padding:14px 15px;border:1px solid var(--line-soft);border-radius:10px;
+  background:var(--inset);font:500 12.5px/1.65 var(--body);color:var(--muted);overflow-wrap:anywhere}
+.case-pin>span,.case-falsifier>span{display:block;margin-bottom:6px;font:800 8.5px/1.3 var(--mono);
+  letter-spacing:.14em;color:var(--faint)}
+.case-falsifier{border-left:3px solid color-mix(in srgb,var(--c-bac) 55%,var(--line));background:transparent}
+.case-falsifier>span{color:var(--c-bac)}
+.case-log{margin-top:12px;border-top:1px solid var(--line-soft)}
+.case-log>summary{padding:13px 0 0;cursor:pointer;list-style:none;font:700 10px/1 var(--mono);letter-spacing:.09em;color:var(--muted)}
+.case-log>summary::-webkit-details-marker{display:none}.case-log>summary::after{content:" ↓";color:var(--st)}
+.case-log[open]>summary::after{content:" ↑"}.case-log ol{list-style:none;padding:8px 0 0;margin:0}
+.case-log li{display:grid;grid-template-columns:minmax(86px,auto) 1fr;gap:10px;padding:8px 0;border-top:1px solid var(--line-soft);
+  font:500 12.5px/1.6 var(--body);color:var(--muted)}
+.case-log-date{font:700 10.5px/1.5 var(--mono);color:var(--ink)}
+.case-log .nguon-tro{display:block;opacity:.75;font-style:italic}.case-log a{color:var(--st);text-decoration:underline}
+
+/* Thanh đo đặc biệt của C1 và nút đo-lại vẫn sinh từ dữ liệu claim hiện có. */
+.case-claim-scale{margin:4px 0 18px}.case-claim-scale .hang{margin-bottom:12px}
+.case-claim-scale .nh{display:flex;justify-content:space-between;gap:12px;font:550 11.5px/1.5 var(--mono);color:var(--muted)}
+.case-claim-scale .nh b{color:var(--ink);white-space:nowrap}.case-claim-scale .ray{position:relative;height:12px;border-radius:4px;background:var(--inset);overflow:hidden}
+.case-claim-scale .ray.tr{height:9px;background:none;overflow:visible}.case-claim-scale .cot{display:block;height:100%;border-radius:0 4px 4px 0;background:var(--muted)}
+.case-claim-scale .cot.toi{background:var(--accent)}.case-claim-scale .cot.cu{background:color-mix(in srgb,var(--ink) 23%,transparent)}
+.case-claim-scale .vung{position:absolute;top:0;height:9px;border-radius:3px;background:var(--accent)}
+.case-claim-scale .nk2{margin-top:5px;color:var(--faint)}.case-claim-scale figcaption{margin-top:8px;font:500 10.5px/1.5 var(--mono);color:var(--faint)}
+.dolai-o{display:grid;gap:8px;margin:12px 0}.dolai{justify-self:start;min-height:38px;padding:0 13px;border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));
+  border-radius:9px;background:color-mix(in srgb,var(--accent) 6%,var(--card));font:750 10px/1 var(--mono);color:var(--accent);cursor:pointer}
+.dolai:hover{background:color-mix(in srgb,var(--accent) 11%,var(--card))}.dolai:disabled{opacity:.55;cursor:wait}
+.ketqua{padding:10px 12px;border-left:3px solid var(--line);background:var(--inset);font:500 11.5px/1.6 var(--mono);color:var(--muted);overflow-wrap:anywhere}
+.ketqua.khop{border-left-color:var(--c-xn)}.ketqua.lech{border-left-color:var(--c-sua)}.ketqua.loi{border-left-color:var(--c-bac)}
+.ketqua.khop b{color:var(--c-xn)}.ketqua.lech b{color:var(--c-sua)}.ketqua.loi b{color:var(--c-bac)}
+.ketqua .nguon{display:block;margin-top:3px;color:var(--faint)}
+.case-claim .dong.khongdo{margin:12px 0;padding:12px 14px;border:1px dashed var(--line);border-radius:9px;
+  font:500 12px/1.65 var(--body);color:var(--muted)}
+.case-claim .dong.khongdo .nhan{display:block;margin-bottom:5px;font:800 8.5px/1.3 var(--mono);letter-spacing:.12em;color:var(--faint)}
+
+.article-meta{display:grid;grid-template-columns:minmax(0,2fr) minmax(150px,.55fr);gap:12px 26px;
+  margin:0 0 38px;padding:17px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.article-meta>span{display:grid;grid-template-columns:auto 1fr;gap:8px;font:500 11.5px/1.65 var(--mono);color:var(--muted);overflow-wrap:anywhere}
+.article-meta b{font-size:8.5px;letter-spacing:.14em;color:var(--faint)}
+.article-meta-link{grid-column:1/-1!important;display:flex!important;gap:14px!important}.article-meta-link a,.article-token-link{color:var(--accent)}
+.article-token-link{font:700 10.5px/1.4 var(--mono)}
+.article-body{padding-top:30px}.article-body>p,.article-body>ul,.article-body>ol{max-width:68ch}
+.article-body ul,.article-body ol{padding-left:1.35em}.article-body li{margin:7px 0}
+.article-body .bang{overflow-x:auto;margin:26px 0 30px}.article-body .bang table{border-collapse:collapse;min-width:620px;width:100%;font-size:14px}
+.article-body .bang th{padding:0 18px 10px 0;border-bottom:1px solid var(--line);font:650 9.5px/1.45 var(--mono);letter-spacing:.11em;text-transform:uppercase;text-align:left;color:var(--faint)}
+.article-body .bang td{padding:12px 18px 12px 0;border-bottom:1px solid var(--line-soft);vertical-align:top;font-variant-numeric:tabular-nums}
+.article-body .bang tr:last-child td{border-bottom:0}.article-body pre{max-width:100%;margin:24px 0;padding:17px 18px;overflow-x:auto;border:1px solid var(--line-soft);border-radius:11px;background:var(--inset)}
+.article-body pre code{padding:0;border:0;background:none;word-break:normal;white-space:pre;font-size:12px;line-height:1.65}
+.receipt-body a{overflow-wrap:anywhere;word-break:break-word}
+
 @media(max-width:820px){
   .article-verdict{grid-template-columns:1fr}.article-ratio{max-width:360px}
   .case-evidence>summary{grid-template-columns:1fr auto}.case-ledger-viz{grid-column:1/-1;grid-row:2}
+  .case-claim-evidence{grid-template-columns:1fr}.article-meta{grid-template-columns:1fr}
 }
 @media(max-width:640px){
   .article-path{margin-bottom:20px}.article-verdict{margin-bottom:40px;padding-top:20px}
   .case-path{grid-template-columns:1fr;gap:7px}.case-path>i{transform:rotate(90deg);justify-self:center;font-size:14px}
   .case-step{min-height:94px}.article-map{top:54px;margin-inline:-4px}
   .case-evidence{margin-inline:-4px}.case-evidence>summary{padding:18px 16px;grid-template-columns:1fr}
-  .case-evidence>summary .mo{grid-row:3}.case-ledger-viz{grid-row:2}.case-ledger-legend{display:grid;grid-template-columns:repeat(3,1fr)}
+  .case-evidence>summary .mo{grid-row:3}.case-ledger-viz{grid-row:2}.case-ledger-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .case-ledger-body{padding:16px!important}.case-claim{padding:18px 16px 17px 18px}.case-claim-actions{width:100%;margin-left:0}
+  .case-claim-text{font-size:15px}.case-log li{grid-template-columns:1fr;gap:2px}.article-meta{margin-bottom:26px}
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -1405,377 +1493,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   .clock-hang{grid-template-columns:auto auto;gap:4px 12px}
   .clock-hua{grid-column:1/-1;margin-top:5px;font-size:13px}
 }
-
-:where(body.page-article,body.page-en) main a{text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--accent) 55%,transparent);
-  text-underline-offset:3px;text-decoration-thickness:1.5px}
-:where(body.page-article,body.page-en) main a:hover,:where(body.page-article,body.page-en) footer a:hover{color:var(--accent);text-decoration-color:var(--accent)}
-:where(body.page-article,body.page-en) li,:where(body.page-article,body.page-en) td,:where(body.page-article,body.page-en) th,:where(body.page-article,body.page-en) h1,:where(body.page-article,body.page-en) h2,:where(body.page-article,body.page-en) h3,:where(body.page-article,body.page-en) figcaption{overflow-wrap:break-word}
-:where(body.page-article,body.page-en) .tag{font:500 11px/1 var(--mono);letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
-:where(body.page-article,body.page-en) h1{font:var(--dw) clamp(28px,5.2vw,40px)/1.14 var(--display);letter-spacing:-.025em;margin:0 0 16px;text-wrap:balance}
-:where(body.page-article,body.page-en) h1+p{font:400 18.5px/1.66 var(--body);color:var(--muted);max-width:64ch}
-:where(body.page-article,body.page-en) h1+p strong{color:var(--ink);font-weight:650}
-:where(body.page-article,body.page-en) main>p,:where(body.page-article,body.page-en) main>ul,:where(body.page-article,body.page-en) main>ol{max-width:72ch}
-:where(body.page-article,body.page-en) h2{font:750 23px/1.28 var(--display);letter-spacing:-.018em;margin:46px 0 14px;text-wrap:balance}
-:where(body.page-article,body.page-en) h2::before{content:"";display:block;width:34px;height:3px;border-radius:2px;background:var(--accent);margin-bottom:12px;opacity:.9}
-:where(body.page-article,body.page-en) h3{font:650 16.5px/1.45 var(--body);margin:26px 0 8px}
-:where(body.page-article,body.page-en) strong{font-weight:680}
-:where(body.page-article,body.page-en) hr{border:0;border-top:1px solid var(--line);margin:34px 0}
-:where(body.page-article,body.page-en) ul,:where(body.page-article,body.page-en) ol{margin:0 0 18px;padding-left:21px}
-:where(body.page-article,body.page-en) li{margin-bottom:7px}
-:where(body.page-article,body.page-en) pre{background:var(--inset);border:1px solid var(--line-soft);border-radius:10px;padding:14px 16px;
-  overflow-x:auto;margin:0 0 18px}
-:where(body.page-article,body.page-en) pre code{background:none;border:0;padding:0;font-size:12.5px;line-height:1.62}
-:where(body.page-article,body.page-en) .cuon{overflow-x:auto;margin:0 0 19px;-webkit-overflow-scrolling:touch;
-  border:1px solid var(--line);border-radius:12px;background:var(--card)}
-:where(body.page-article,body.page-en) table{border-collapse:collapse;font-size:14.5px;min-width:100%}
-:where(body.page-article,body.page-en) th,:where(body.page-article,body.page-en) td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line-soft);white-space:nowrap}
-:where(body.page-article,body.page-en) tr:last-child td{border-bottom:0}
-:where(body.page-article,body.page-en) th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;
-  color:var(--muted);border-bottom:1px solid var(--line)}
-:where(body.page-article,body.page-en) .meta{font:500 12.5px/1.7 var(--mono);color:var(--muted);margin:0 0 26px;
-  background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
-  border-radius:10px;padding:11px 16px}
-:where(body.page-article,body.page-en) .meta b{color:var(--ink);font-weight:600}
-:where(body.page-article,body.page-en) .dai,:where(body.page-article,body.page-en) .board{background:var(--card);border:1px solid var(--line);border-radius:14px;
-  padding:16px 18px 14px;margin:0 0 28px;
-  box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 26px -18px rgba(0,0,0,.5)}
-:where(body.page-article,body.page-en) .bh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-:where(body.page-article,body.page-en) .bh b{font:700 13px/1.4 var(--body);letter-spacing:.01em}
-:where(body.page-article,body.page-en) .bh span{font:500 11.5px/1.5 var(--mono);color:var(--faint)}
-:where(body.page-article,body.page-en) .stack{display:flex;gap:2px;height:22px;border-radius:6px;overflow:hidden;background:var(--inset)}
-:where(body.page-article,body.page-en) .seg{background:var(--st);min-width:3px;transition:opacity .16s}
-:where(body.page-article,body.page-en) .seg.xac{--st:var(--c-xn)}
-:where(body.page-article,body.page-en) .seg.song{--st:var(--c-song)}
-:where(body.page-article,body.page-en) .seg.sua{--st:var(--c-sua)}
-:where(body.page-article,body.page-en) .seg.bac{--st:var(--c-bac)}
-:where(body.page-article,body.page-en) .seg.cho{--st:var(--c-cho)}
-:where(body.page-article,body.page-en) html.chuyen .stack .seg{transform:scaleX(0);transform-origin:left;
-  transition:transform .7s cubic-bezier(.22,.75,.3,1) calc(var(--i,0)*90ms),opacity .16s}
-:where(body.page-article,body.page-en) html.chuyen .stack.chay .seg{transform:none}
-:where(body.page-article,body.page-en) html.js .stack .seg{cursor:pointer}
-:where(body.page-article,body.page-en) .stack:hover .seg{opacity:.38}
-:where(body.page-article,body.page-en) .stack .seg:hover{opacity:1}
-:where(body.page-article,body.page-en) .stack[data-noi="xac"] .seg:not(.xac),:where(body.page-article,body.page-en) .stack[data-noi="song"] .seg:not(.song),:where(body.page-article,body.page-en) .stack[data-noi="sua"] .seg:not(.sua),:where(body.page-article,body.page-en) .stack[data-noi="bac"] .seg:not(.bac),:where(body.page-article,body.page-en) .stack[data-noi="cho"] .seg:not(.cho){opacity:.3}
-:where(body.page-article,body.page-en) .roi{opacity:.4;transition:opacity .16s}
-:where(body.page-article,body.page-en) #bp-tip{position:fixed;z-index:60;left:0;top:0;pointer-events:none;opacity:0;
-  font:600 11.5px/1 var(--mono);color:var(--ink);background:var(--card);
-  border:1px solid var(--line);border-radius:8px;padding:7px 10px;white-space:nowrap;
-  box-shadow:0 10px 26px -14px rgba(0,0,0,.65);transition:opacity .13s}
-:where(body.page-article,body.page-en) #bp-tip.hien{opacity:1}
-:where(body.page-article,body.page-en) .chu-thich{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-:where(body.page-article,body.page-en) .lg{display:inline-flex;align-items:center;gap:7px;font:600 12px/1 var(--body);
-  padding:7px 11px 7px 9px;border-radius:999px;border:1px solid var(--line);
-  background:var(--inset);color:var(--muted);text-decoration:none;cursor:default;
-  transition:border-color .16s,background .16s,color .16s,box-shadow .16s}
-:where(body.page-article,body.page-en) html.js .lg{cursor:pointer}
-:where(body.page-article,body.page-en) .lg .sw{width:9px;height:9px;border-radius:2px;background:var(--st);flex:none}
-:where(body.page-article,body.page-en) .lg .n{font:700 12px var(--mono);color:var(--ink)}
-:where(body.page-article,body.page-en) .lg.xac{--st:var(--c-xn)}
-:where(body.page-article,body.page-en) .lg.song{--st:var(--c-song)}
-:where(body.page-article,body.page-en) .lg.sua{--st:var(--c-sua)}
-:where(body.page-article,body.page-en) .lg.bac{--st:var(--c-bac)}
-:where(body.page-article,body.page-en) .lg.cho{--st:var(--c-cho)}
-:where(body.page-article,body.page-en) .lg:hover{border-color:var(--st);color:var(--ink)}
-:where(body.page-article,body.page-en) .lg[aria-pressed="true"]{border-color:var(--st);color:var(--ink);
-  background:color-mix(in srgb,var(--st) 16%,var(--inset));
-  box-shadow:0 0 0 3px color-mix(in srgb,var(--st) 15%,transparent)}
-:where(body.page-article,body.page-en) .khi{font:500 12px/1.65 var(--mono);color:var(--faint);margin-top:11px}
-:where(body.page-article,body.page-en) .toi{display:inline-block;margin-top:12px;font:700 12.5px/1 var(--mono);letter-spacing:.05em;
-  text-decoration:none;color:var(--ink);background:var(--nut-nen);color:var(--nut-chu);
-  padding:9px 13px;border-radius:8px}
-:where(body.page-article,body.page-en) .toi:hover{filter:brightness(1.1)}
-:where(body.page-article,body.page-en) .dem{font:500 15px/1.55 var(--body);color:var(--muted)}
-:where(body.page-article,body.page-en) .dem .to{font:700 30px/1 var(--mono);color:var(--ink);vertical-align:-4px;margin-right:4px;letter-spacing:-.02em}
-:where(body.page-article,body.page-en) .dem b{font-weight:700}
-:where(body.page-article,body.page-en) .dem b.xac{color:var(--c-xn)}
-:where(body.page-article,body.page-en) .dem b.song{color:var(--c-song)}
-:where(body.page-article,body.page-en) .dem b.sua{color:var(--c-sua)}
-:where(body.page-article,body.page-en) .dem b.bac{color:var(--c-bac)}
-:where(body.page-article,body.page-en) .dem b.cho{color:var(--c-cho)}
-:where(body.page-article,body.page-en) .dem .phu{font:500 12.5px/1.65 var(--body);color:var(--faint);margin-top:8px;
-  text-transform:none;letter-spacing:0}
-:where(body.page-article,body.page-en) .tt-khu{margin:0 0 30px}
-:where(body.page-article,body.page-en) .tt-dau{display:flex;align-items:center;justify-content:space-between;gap:12px;
-  flex-wrap:wrap;margin:0 0 13px}
-:where(body.page-article,body.page-en) .nhom-loc{display:flex;gap:6px;flex-wrap:wrap}
-:where(body.page-article,body.page-en) .lg-loc{font:600 12px/1 var(--body);padding:8px 13px;border-radius:999px;
-  border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:default;
-  transition:border-color .16s,color .16s,background .16s}
-:where(body.page-article,body.page-en) html.js .lg-loc{cursor:pointer}
-:where(body.page-article,body.page-en) .lg-loc .n{font:700 12px var(--mono);color:var(--ink);margin-left:4px}
-:where(body.page-article,body.page-en) .lg-loc:hover{color:var(--ink);border-color:var(--muted)}
-:where(body.page-article,body.page-en) .lg-loc[aria-pressed="true"]{color:var(--nut-chu);background:var(--nut-nen);border-color:transparent}
-:where(body.page-article,body.page-en) .lg-loc[aria-pressed="true"] .n{color:var(--nut-chu)}
-:where(body.page-article,body.page-en) .tt-dau .lo{font:500 12px/1.6 var(--mono);color:var(--faint)}
-:where(body.page-article,body.page-en) .mo-them{margin-top:10px;width:100%;justify-content:center}
-:where(body.page-article,body.page-en) .mo-them[hidden]{display:none}
-:where(body.page-article,body.page-en) ol.tt-ds{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
-:where(body.page-article,body.page-en) ol.tt-ds li{--st:var(--accent)}
-:where(body.page-article,body.page-en) ol.tt-ds li.xac{--st:var(--c-xn)}
-:where(body.page-article,body.page-en) ol.tt-ds li.song{--st:var(--c-song)}
-:where(body.page-article,body.page-en) ol.tt-ds li.sua{--st:var(--c-sua)}
-:where(body.page-article,body.page-en) ol.tt-ds li.bac{--st:var(--c-bac)}
-:where(body.page-article,body.page-en) ol.tt-ds li.cho{--st:var(--c-cho)}
-:where(body.page-article,body.page-en) .tt-hop{display:grid;grid-template-columns:auto minmax(0,1fr);gap:5px 14px;align-items:start;
-  background:var(--card);border:1px solid var(--line);border-left:3px solid var(--st);
-  border-radius:12px;padding:13px 16px;text-decoration:none;list-style:none;
-  transition:transform .16s,border-color .16s,box-shadow .16s}
-:where(body.page-article,body.page-en) .tt-hop::-webkit-details-marker{display:none}
-:where(body.page-article,body.page-en) .tt-hop:hover{transform:translateY(-1px);text-decoration:none;
-  border-color:color-mix(in srgb,var(--st) 45%,var(--line));
-  box-shadow:0 1px 2px rgba(0,0,0,.05),0 12px 28px -20px rgba(0,0,0,.6)}
-:where(body.page-article,body.page-en) ol.tt-ds .chip{grid-row:1/3;align-self:start;margin-top:1px}
-:where(body.page-article,body.page-en) ol.tt-ds .tx{font:500 15px/1.6 var(--body);color:var(--ink);
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-:where(body.page-article,body.page-en) ol.tt-ds .mt{font:500 11.5px/1.55 var(--mono);color:var(--faint)}
-:where(body.page-article,body.page-en) .crumb{font:700 10.5px/1.5 var(--mono);letter-spacing:.16em;text-transform:uppercase;
-  color:var(--accent);margin:0 0 10px}
-:where(body.page-article,body.page-en) details.tu-so>summary{cursor:pointer;list-style:none;display:block}
-:where(body.page-article,body.page-en) details.tu-so>summary::-webkit-details-marker{display:none}
-:where(body.page-article,body.page-en) details.tu-so .tt-hop{grid-template-columns:auto minmax(0,1fr) 15px}
-:where(body.page-article,body.page-en) details.tu-so .mui{grid-row:1/3;grid-column:3;align-self:center;color:var(--faint);
-  font:400 12px/1 var(--mono);transition:transform .2s}
-:where(body.page-article,body.page-en) details.tu-so[open] .mui{transform:rotate(180deg)}
-:where(body.page-article,body.page-en) details.tu-so[open] .tt-hop{border-bottom-left-radius:0;border-bottom-right-radius:0;
-  transform:none;box-shadow:none}
-:where(body.page-article,body.page-en) details.tu-so[open] .tx{-webkit-line-clamp:9}
-:where(body.page-article,body.page-en) .tu-mo{background:var(--card);border:1px solid var(--line);border-top:0;
-  border-left:3px solid var(--st);border-radius:0 0 12px 12px;padding:12px 16px 14px}
-:where(body.page-article,body.page-en) .tu-mo .dong:last-of-type{margin-bottom:11px}
-:where(body.page-article,body.page-en) .tu-mo .tro{margin:0;font:600 12.5px/1.6 var(--mono)}
-:where(body.page-article,body.page-en) .ban-do{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 8px}
-:where(body.page-article,body.page-en) .o-map{position:relative;flex:1 1 235px;display:flex;flex-direction:column;gap:3px;
-  overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:14px;
-  padding:15px 17px 14px;text-decoration:none;
-  transition:transform .18s,border-color .18s,box-shadow .18s}
-:where(body.page-article,body.page-en) .o-map::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--accent)}
-:where(body.page-article,body.page-en) .o-map::after{content:"";position:absolute;inset:0;pointer-events:none;background:
-  radial-gradient(320px 120px at 85% -26px,color-mix(in srgb,var(--accent) 13%,transparent),transparent 72%)}
-:where(body.page-article,body.page-en) .o-map:hover{transform:translateY(-2px);text-decoration:none;color:var(--ink);
-  border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
-  box-shadow:0 2px 4px rgba(0,0,0,.05),0 16px 34px -24px rgba(0,0,0,.7)}
-:where(body.page-article,body.page-en) .o-map>*{position:relative}
-:where(body.page-article,body.page-en) .o-map .k{font:700 10.5px/1.5 var(--mono);letter-spacing:.16em;color:var(--accent)}
-:where(body.page-article,body.page-en) .o-map .v{font:700 27px/1.15 var(--mono);letter-spacing:-.03em;color:var(--ink)}
-:where(body.page-article,body.page-en) .o-map .g{font:400 12.5px/1.5 var(--body);color:var(--muted);padding-right:22px}
-:where(body.page-article,body.page-en) .o-map .mui{position:absolute;right:15px;bottom:12px;font-size:17px;color:var(--muted);
-  transition:transform .18s,color .18s}
-:where(body.page-article,body.page-en) .o-map:hover .mui{transform:translateX(4px);color:var(--accent)}
-:where(body.page-article,body.page-en) .cua{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0 0}
-:where(body.page-article,body.page-en) .cua-3{grid-template-columns:repeat(auto-fit,minmax(262px,1fr))}
-:where(body.page-article,body.page-en) .cua-o .mini{margin:3px 0 0;display:flex;gap:2px;height:6px;border-radius:3px;
-  overflow:hidden;background:var(--inset)}
-:where(body.page-article,body.page-en) .cua-o.tok .t{font-size:clamp(17px,2vw,19px)}
-:where(body.page-article,body.page-en) .cua-o.tok .n{margin:0;padding:0;border-top:0}
-:where(body.page-article,body.page-en) .cua-o.tok .g{margin-top:auto;padding:11px 30px 0 0;border-top:1px solid var(--line-soft)}
-:where(body.page-article,body.page-en) .cua-o{position:relative;display:flex;flex-direction:column;gap:9px;overflow:hidden;
-  background:var(--card);border:1px solid var(--line);border-radius:16px;
-  padding:20px 22px 18px;text-decoration:none;
-  transition:transform .18s,border-color .18s,box-shadow .18s}
-:where(body.page-article,body.page-en) .cua-o::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--accent)}
-:where(body.page-article,body.page-en) .cua-o::after{content:"";position:absolute;inset:0;pointer-events:none;background:
-  radial-gradient(420px 160px at 88% -34px,color-mix(in srgb,var(--accent) 15%,transparent),transparent 72%)}
-:where(body.page-article,body.page-en) .cua-o:hover{transform:translateY(-2px);text-decoration:none;color:var(--ink);
-  border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
-  box-shadow:0 2px 4px rgba(0,0,0,.05),0 18px 40px -26px rgba(0,0,0,.7)}
-:where(body.page-article,body.page-en) .cua-o>*{position:relative}
-:where(body.page-article,body.page-en) .cua-o .k{font:700 10.5px/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
-:where(body.page-article,body.page-en) .cua-o .t{font:700 clamp(18px,2.2vw,21px)/1.32 var(--display);letter-spacing:-.015em;text-wrap:balance}
-:where(body.page-article,body.page-en) .cua-o .g{font:400 13.5px/1.62 var(--body);color:var(--muted)}
-:where(body.page-article,body.page-en) .cua-o .n{margin-top:auto;padding:11px 36px 0 0;border-top:1px solid var(--line-soft);
-  font:500 12px/1.7 var(--mono);color:var(--faint);display:flex;flex-wrap:wrap;
-  align-items:baseline;gap:7px}
-:where(body.page-article,body.page-en) .cua-o .n b{font:700 17px var(--mono);color:var(--ink);letter-spacing:-.02em}
-:where(body.page-article,body.page-en) .cua-o .n i{display:inline-block;width:3px;height:3px;border-radius:50%;
-  background:var(--muted);margin:0 3px;vertical-align:middle}
-:where(body.page-article,body.page-en) .cua-o .mui{position:absolute;right:20px;bottom:15px;font-size:19px;color:var(--muted);
-  transition:transform .18s,color .18s}
-:where(body.page-article,body.page-en) .cua-o:hover .mui{transform:translateX(4px);color:var(--accent)}
-:where(body.page-article,body.page-en) .so{margin:48px 0 0}
-:where(body.page-article,body.page-en) .so>p.dan{font-size:14.5px;color:var(--muted);margin:0 0 20px;max-width:74ch}
-:where(body.page-article,body.page-en) .claim{--st:var(--accent);background:var(--card);border:1px solid var(--line);
-  border-left:4px solid var(--st);border-radius:14px;padding:18px 20px;margin-bottom:14px;
-  scroll-margin-top:82px;transition:box-shadow .18s,border-color .18s}
-:where(body.page-article,body.page-en) .claim.xac{--st:var(--c-xn)}
-:where(body.page-article,body.page-en) .claim.song{--st:var(--c-song)}
-:where(body.page-article,body.page-en) .claim.sua{--st:var(--c-sua)}
-:where(body.page-article,body.page-en) .claim.bac{--st:var(--c-bac)}
-:where(body.page-article,body.page-en) .claim.cho{--st:var(--c-cho)}
-:where(body.page-article,body.page-en) .claim.sua{border-left-style:double;border-left-width:6px}
-:where(body.page-article,body.page-en) .claim.cho{border-left-style:dashed}
-:where(body.page-article,body.page-en) .claim:hover{box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 26px -18px rgba(0,0,0,.5)}
-:where(body.page-article,body.page-en) .claim:target{border-color:var(--st);box-shadow:0 0 0 3px color-mix(in srgb,var(--st) 20%,transparent)}
-:where(body.page-article,body.page-en) .claim h3{margin:0 0 11px;font:700 15px/1.5 var(--body);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-:where(body.page-article,body.page-en) .claim .id{font:700 15px var(--mono);color:var(--ink);text-decoration:none}
-:where(body.page-article,body.page-en) .claim .id:hover{color:var(--accent)}
-:where(body.page-article,body.page-en) .claim>p{margin:0 0 13px;font-size:15.5px;line-height:1.66}
-:where(body.page-article,body.page-en) .chip{--st:var(--accent);display:inline-flex;align-items:center;gap:7px;
-  font:700 11.5px/1 var(--mono);letter-spacing:.055em;padding:5px 11px;border-radius:999px;
-  color:var(--st);border:1.5px solid var(--st);background:color-mix(in srgb,var(--st) 13%,transparent);
-  white-space:nowrap}
-:where(body.page-article,body.page-en) .chip::before{font-size:11px;line-height:1}
-:where(body.page-article,body.page-en) .chip.xac{--st:var(--c-xn)}
-:where(body.page-article,body.page-en) .chip.xac::before{content:"✓"}
-:where(body.page-article,body.page-en) .chip.song{--st:var(--c-song)}
-:where(body.page-article,body.page-en) .chip.song::before{content:"●"}
-:where(body.page-article,body.page-en) .chip.sua{--st:var(--c-sua)}
-:where(body.page-article,body.page-en) .chip.sua::before{content:"✎"}
-:where(body.page-article,body.page-en) .chip.cho{--st:var(--c-cho);border-style:dashed}
-:where(body.page-article,body.page-en) .chip.cho::before{content:"○"}
-:where(body.page-article,body.page-en) .chip.bac{--st:var(--c-bac);background:var(--c-bac);color:var(--card);border-color:var(--c-bac)}
-:where(body.page-article,body.page-en) .chip.bac::before{content:"✕"}
-:where(body.page-article,body.page-en) .dong{font-size:14px;margin:0 0 11px;background:var(--inset);border:1px solid var(--line-soft);
-  border-left:2px solid var(--muted);border-radius:9px;padding:10px 13px;line-height:1.65}
-:where(body.page-article,body.page-en) .dong .nhan{font:700 10px var(--mono);letter-spacing:.09em;color:var(--muted);
-  display:block;margin-bottom:4px;text-transform:uppercase}
-:where(body.page-article,body.page-en) .dong code{font-size:11.5px;background:none;border:0;padding:0;display:block;
-  white-space:pre-wrap;color:var(--muted)}
-:where(body.page-article,body.page-en) .dong.bac{background:transparent;border:0;border-left:2px solid color-mix(in srgb,var(--c-bac) 45%,transparent);
-  border-radius:0;padding:2px 0 2px 12px;font-size:14px;color:var(--muted)}
-:where(body.page-article,body.page-en) .dong.bac .nhan{color:var(--c-bac)}
-:where(body.page-article,body.page-en) .dong.khongdo{background:transparent;border:1px dashed var(--line);border-radius:9px;
-  color:var(--faint);font-size:13px}
-:where(body.page-article,body.page-en) .claim .moc{font:500 12.5px/1.7 var(--mono);color:var(--faint);letter-spacing:.02em}
-:where(body.page-article,body.page-en) .tro{margin:12px 0 0;font:500 12.5px/1.6 var(--mono)}
-:where(body.page-article,body.page-en) .nk{list-style:none;padding:0;margin:14px 0 0;font-size:13.5px}
-:where(body.page-article,body.page-en) .nk li{position:relative;padding:7px 0 7px 22px;margin:0;color:var(--muted);line-height:1.6}
-:where(body.page-article,body.page-en) .nk li::before{content:"";position:absolute;left:0;top:14px;width:9px;height:9px;border-radius:50%;
-  background:var(--st);box-shadow:0 0 0 3px color-mix(in srgb,var(--st) 18%,transparent)}
-:where(body.page-article,body.page-en) .nk .d{font:700 11.5px var(--mono);color:var(--ink);margin-right:8px}
-:where(body.page-article,body.page-en) .nk .nguon-tro{opacity:.72;font-size:.92em;font-style:italic}
-:where(body.page-article,body.page-en) .hinh{margin:0 0 13px;padding:0}
-:where(body.page-article,body.page-en) .thang .hang{margin-bottom:13px}
-:where(body.page-article,body.page-en) .thang .nh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
-  font:500 12px/1.5 var(--mono);color:var(--muted);margin-bottom:4px}
-:where(body.page-article,body.page-en) .thang .nh b{font:700 14px var(--mono);color:var(--ink);white-space:nowrap}
-:where(body.page-article,body.page-en) .thang .ray{position:relative;height:14px;background:var(--inset);border-radius:4px;overflow:hidden}
-:where(body.page-article,body.page-en) .thang .ray.tr{height:9px;background:none;overflow:visible}
-:where(body.page-article,body.page-en) .thang .cot{display:block;height:100%;background:var(--muted);border-radius:0 4px 4px 0}
-:where(body.page-article,body.page-en) .thang .cot.toi{background:var(--accent)}
-:where(body.page-article,body.page-en) .thang .cot.cu{background:color-mix(in srgb,var(--ink) 22%,transparent)}
-:where(body.page-article,body.page-en) .thang .vung{position:absolute;top:0;height:9px;background:var(--accent);
-  border-left:2px solid var(--accent);border-right:2px solid var(--accent);opacity:.45}
-:where(body.page-article,body.page-en) .thang .nk2{margin:4px 0 0;font-size:11.5px;color:var(--faint)}
-:where(body.page-article,body.page-en) .thang .nk2 b{font-size:12px;color:var(--accent)}
-:where(body.page-article,body.page-en) .hinh figcaption{font:500 11px/1.5 var(--mono);color:var(--faint);margin-top:8px;
-  padding-top:7px;border-top:1px solid var(--line-soft)}
-:where(body.page-article,body.page-en) .dan-gt{margin:14px 0 0;font-size:15px}
-:where(body.page-article,body.page-en) ul.han{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-:where(body.page-article,body.page-en) ul.han li{background:var(--card);border:1px solid var(--line);border-left:4px dashed var(--c-cho);
-  border-radius:12px;padding:13px 16px;font-size:14.5px}
-:where(body.page-article,body.page-en) ul.han .ngay{font:700 13px/1.7 var(--mono);letter-spacing:.03em;color:var(--ink);display:block;margin-bottom:3px}
-:where(body.page-article,body.page-en) ul.han .con{font-weight:600;color:var(--c-cho);margin-left:9px;font-family:var(--mono);font-size:11.5px}
-:where(body.page-article,body.page-en) ul.han .con.qua{color:var(--c-sua)}
-:where(body.page-article,body.page-en) .dolai-o{margin:0 0 12px;display:flex;flex-direction:column;gap:9px;
-  background:var(--inset);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
-:where(body.page-article,body.page-en) button.dolai{align-self:flex-start;font:700 12.5px/1 var(--body);letter-spacing:.02em;
-  color:var(--nut-chu);background:var(--nut-nen);border:0;border-radius:8px;
-  padding:10px 15px;cursor:pointer}
-:where(body.page-article,body.page-en) button.dolai:hover{transform:translateY(-1px)}
-:where(body.page-article,body.page-en) button.dolai[disabled]{opacity:.6;cursor:progress;transform:none}
-:where(body.page-article,body.page-en) .ketqua{font:500 12.5px/1.65 var(--mono);color:var(--muted);
-  border-left:2px solid var(--line);padding:2px 0 2px 10px}
-:where(body.page-article,body.page-en) .ketqua b{color:var(--ink);font-weight:700}
-:where(body.page-article,body.page-en) .ketqua.khop{border-left-color:var(--c-xn)}
-:where(body.page-article,body.page-en) .ketqua.khop b{color:var(--c-xn)}
-:where(body.page-article,body.page-en) .ketqua.lech{border-left-color:var(--c-sua)}
-:where(body.page-article,body.page-en) .ketqua.lech b{color:var(--c-sua)}
-:where(body.page-article,body.page-en) .ketqua.loi{border-left-color:var(--c-bac)}
-:where(body.page-article,body.page-en) .ketqua.loi b{color:var(--c-bac)}
-:where(body.page-article,body.page-en) .ketqua .nguon{display:block;font-size:11px;color:var(--faint);margin-top:3px}
-:where(body.page-article,body.page-en) .bandaydu{margin-top:56px;padding-top:8px;border-top:1px solid var(--line)}
-:where(body.page-article,body.page-en) .bandaydu>p,:where(body.page-article,body.page-en) .bandaydu>ul,:where(body.page-article,body.page-en) .bandaydu>ol{max-width:72ch}
-:where(body.page-article,body.page-en) .bandaydu h2{margin-top:34px}
-:where(body.page-article,body.page-en) .khu-bai{margin-top:52px}
-:where(body.page-article,body.page-en) .khu-dau{display:flex;align-items:flex-end;gap:14px}
-:where(body.page-article,body.page-en) .khu-dau h2{margin:0}
-:where(body.page-article,body.page-en) .dieu-rail{margin-left:auto;display:flex;gap:7px;padding-bottom:3px}
-:where(body.page-article,body.page-en) button.rn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);
-  background:var(--card);color:var(--muted);font:600 15px/1 var(--body);cursor:pointer;
-  transition:color .16s,border-color .16s,transform .16s}
-:where(body.page-article,body.page-en) button.rn:hover:not([disabled]){color:var(--ink);border-color:var(--muted);transform:translateY(-1px)}
-:where(body.page-article,body.page-en) button.rn[disabled]{opacity:.32;cursor:default}
-:where(body.page-article,body.page-en) .rail-boc{position:relative}
-:where(body.page-article,body.page-en) .rail-boc::after{content:"";position:absolute;right:0;top:0;bottom:16px;width:52px;
-  pointer-events:none;background:linear-gradient(90deg,transparent,var(--bg));
-  transition:opacity .22s}
-:where(body.page-article,body.page-en) .rail-boc.het::after{opacity:0}
-:where(body.page-article,body.page-en) .rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,1fr);gap:14px;
-  margin-top:16px;padding:3px 2px 16px;overflow-x:auto;overscroll-behavior-x:contain;
-  scroll-snap-type:x proximity;scroll-padding-left:2px;-webkit-overflow-scrolling:touch;
-  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
-:where(body.page-article,body.page-en) .rail::-webkit-scrollbar{height:8px}
-:where(body.page-article,body.page-en) .rail::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
-:where(body.page-article,body.page-en) .rail::-webkit-scrollbar-thumb:hover{background:var(--muted)}
-:where(body.page-article,body.page-en) .rail:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:12px}
-:where(body.page-article,body.page-en) .bai{scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;
-  background:var(--card);border:1px solid var(--line);border-radius:14px;
-  padding:16px 18px 15px;text-decoration:none;
-  transition:border-color .16s,transform .16s,box-shadow .16s}
-:where(body.page-article,body.page-en) .bai:hover{border-color:var(--muted);transform:translateY(-2px);text-decoration:none;
-  color:var(--ink);box-shadow:0 2px 4px rgba(0,0,0,.05),0 16px 34px -24px rgba(0,0,0,.65)}
-:where(body.page-article,body.page-en) .bai .d{font:500 11.5px/1.5 var(--mono);color:var(--faint)}
-:where(body.page-article,body.page-en) .bai .t{font:650 16.5px/1.42 var(--body);letter-spacing:-.01em;
-  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-:where(body.page-article,body.page-en) .bai .mini{display:flex;gap:2px;height:6px;border-radius:3px;overflow:hidden;
-  background:var(--inset);margin-top:auto}
-:where(body.page-article,body.page-en) .bai .s{font:500 11.5px/1.55 var(--mono);color:var(--faint)}
-:where(body.page-article,body.page-en) .rail-goi{margin:2px 0 0;font:500 11.5px/1.6 var(--mono);color:var(--faint)}
-:where(body.page-article,body.page-en) .fact{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;
-  margin-bottom:16px;scroll-margin-top:82px;
-  box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 26px -18px rgba(0,0,0,.5)}
-:where(body.page-article,body.page-en) .fact:target{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
-:where(body.page-article,body.page-en) .f-top.mot-cot{grid-template-columns:1fr}
-:where(body.page-article,body.page-en) .f-top.co-fig .f-body{border-left:1px solid var(--line)}
-:where(body.page-article,body.page-en) .f-box.vi .k{color:var(--accent)}
-:where(body.page-article,body.page-en) details.lenh{margin:0 21px 16px}
-:where(body.page-article,body.page-en) details.lenh summary{cursor:pointer;font:500 11.5px var(--mono);color:var(--muted);padding:7px 0}
-:where(body.page-article,body.page-en) details.lenh summary:hover,:where(body.page-article,body.page-en) details.lenh[open] summary{color:var(--ink)}
-:where(body.page-article,body.page-en) .cmd{background:var(--inset);border:1px solid var(--line-soft);border-radius:9px;padding:10px 12px;
-  font:400 11.5px/1.6 var(--mono);color:var(--muted);overflow-x:auto;white-space:pre;margin:0}
-:where(body.page-article,body.page-en) .tr{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--st);
-  border-radius:14px;overflow:hidden;margin-bottom:15px;--st:var(--accent);
-  box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 26px -18px rgba(0,0,0,.5)}
-:where(body.page-article,body.page-en) .tr.xac{--st:var(--c-xn)}
-:where(body.page-article,body.page-en) .tr.song{--st:var(--c-song)}
-:where(body.page-article,body.page-en) .tr.sua{--st:var(--c-sua)}
-:where(body.page-article,body.page-en) .tr.bac{--st:var(--c-bac)}
-:where(body.page-article,body.page-en) .tr.cho{--st:var(--c-cho)}
-:where(body.page-article,body.page-en) .tr.song{border-left-style:dashed}
-:where(body.page-article,body.page-en) .tr.sua{border-left-style:double;border-left-width:6px}
-:where(body.page-article,body.page-en) html.chuyen [data-hien]{opacity:0;transform:translateY(16px);
-  transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.3,1)}
-:where(body.page-article,body.page-en) html.chuyen [data-hien].hien{opacity:1;transform:none}
-@media(max-width:760px){
-:where(body.page-article,body.page-en) .tag{display:none}
-:where(body.page-article,body.page-en) .cua{grid-template-columns:1fr}
-}
-@media(max-width:640px){
-:where(body.page-article,body.page-en) nav.dieu::-webkit-scrollbar{display:none}
-}
-@media(max-width:620px){
-:where(body.page-article,body.page-en) .tt-hop{grid-template-columns:minmax(0,1fr)}
-:where(body.page-article,body.page-en) ol.tt-ds .chip{grid-row:auto;justify-self:start;margin-bottom:3px}
-:where(body.page-article,body.page-en) ol.tt-ds .mt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-:where(body.page-article,body.page-en) details.tu-so .tt-hop{grid-template-columns:minmax(0,1fr) 15px}
-:where(body.page-article,body.page-en) details.tu-so .chip,:where(body.page-article,body.page-en) details.tu-so .tx,:where(body.page-article,body.page-en) details.tu-so .mt{grid-column:1}
-:where(body.page-article,body.page-en) details.tu-so .mui{grid-row:1;grid-column:2;align-self:start}
-:where(body.page-article,body.page-en) .ban-do{gap:9px}
-:where(body.page-article,body.page-en) .o-map{flex:1 1 calc(50% - 5px);padding:13px 14px 12px}
-:where(body.page-article,body.page-en) .o-map .v{font-size:23px}
-:where(body.page-article,body.page-en) .o-map .g{font-size:11.5px;padding-right:16px}
-:where(body.page-article,body.page-en) .o-map .mui{right:12px;bottom:10px;font-size:15px}
-:where(body.page-article,body.page-en) .o-map:last-child:nth-child(odd){flex-basis:100%}
-}
-@media(max-width:560px){
-:where(body.page-article,body.page-en) .dieu-rail{display:none}
-}
-@media(min-width:760px){
-:where(body.page-article,body.page-en) .rail{grid-auto-columns:minmax(272px,300px)}
-}
-@media(max-width:820px){
-:where(body.page-article,body.page-en) .f-top.co-fig .f-body{border-left:0}
-}</style>
+</style>
 <script>
 (function(){
   var d=document.documentElement,c=localStorage.getItem('bp-nen');
@@ -1791,7 +1509,75 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   <a class="ten" href="../../">Block<span>Pinned</span></a>
   <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Sổ gốc</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
 </div></header>
-<main class="khung"><h1>Applying the report&#x27;s own circulating-supply definition consistently: HYPE Q2 net issuance is −412,960, not +890,000</h1><p class="dan">This is a receipt, not a translation. The full write-up is in Vietnamese; everything needed to verify or refute the claims is here in English: the figures, the exact API calls that produce them, what would falsify each claim, and what the measurement does not cover.</p><p class="meta">🟡 2026-08-07 &nbsp;·&nbsp; No block number anywhere. HyperCore is read through Hyperliquid&#x27;s Info API; the default public HyperEVM RPC does not serve reliable historical state (same block number twice, 20 s apart, returns two different values; a future block returns a number instead of an error; the official docs state it is &quot;not supported at this time on the default RPC implementation&quot;). Third-party paid endpoints were not tested. Every figure below is a wall-clock snapshot taken 2026-08-07.</p><h2>Claims</h2><article class="claim song"><h3>C1 <span class="tt">STANDING</span></h3><p class="ct">In Q2 2026 the wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 received 1,311,093 HYPE in staking emissions, 54.20% of the quarter&#x27;s 2,419,166 total. Hyperliquid&#x27;s Info API lists that wallet under nonCirculatingUserBalances, holding 241,150,943.99 at measurement time.</p><p class="ghim"><b>Pinned at:</b> Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · nonCirculatingUserBalances has 4 entries · circulatingSupply 299,024,976.59 · totalSupply 999,049,594.42</p><p class="fal"><b>What would falsify it:</b> Call delegatorRewards for that wallet and sum totalAmount over April, May and June 2026: anything other than 1,311,093 falsifies the figure. Check the series for gaps — record count, distinct-day count and span length must be equal, otherwise the quarterly total is a lower bound. For the classification: call tokenDetails and read nonCirculatingUserBalances. If the wallet is not in that list, the central premise loses its support.</p></article><article class="claim song"><h3>C2 <span class="tt">STANDING</span></h3><p class="ct">In the same quarter the wallet sent out 1,288,966 HYPE across 58 transfers to 29 distinct addresses, and 0 of those 29 are in the non-circulating set at measurement time. There were 0 inbound token transfers. The outflow is therefore added back to circulation, and the addition term does not double count.</p><p class="ghim"><b>Pinned at:</b> Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · userNonFundingLedgerUpdates scanned month by month, 0 of 3 months hit the row limit</p><p class="fal"><b>What would falsify it:</b> Re-scan userNonFundingLedgerUpdates for Q2 month by month, take the HYPE rows where the wallet is the source, and match each destination against nonCirculatingUserBalances. If any recipient is in that set, the amount added back must be smaller than 1,288,967 — which makes the result more negative, not less. A month returning exactly 500, 1000 or 2000 rows has hit the row limit and the total becomes a lower bound. Before trusting the zero, check the test discriminates: query the same membership for this wallet, for 0xfefe…fefe and for the dead address — all three must return present.</p></article><article class="claim song"><h3>C3 <span class="tt">STANDING</span></h3><p class="ct">Holding every other figure from the report unchanged and altering only the treatment of emissions accruing to the non-circulating wallet, Q2 2026 net issuance is −412,960 HYPE rather than the +890,000 the report concludes. Removing the 39,792 token-burn line entirely still leaves −373,168.</p><p class="ghim"><b>Pinned at:</b> Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · 2,419,166 − 1,311,093 = 1,108,073; + 1,288,967 = 2,397,040; − 2,810,000 from the report (buyback 2,770,208 + burn 39,792) · circulating base 299,024,977</p><p class="fal"><b>What would falsify it:</b> Add the four terms: 2,419,166 − 1,311,093 = 1,108,073; + 1,288,967 = 2,397,040; − 2,810,000 = −412,960. Any other result falsifies the arithmetic. This claim does not say the report is wrong about direction: its own next paragraph also concludes supply tightened, so reading this as a disagreement about direction is a misreading of the claim.</p></article><article class="claim song"><h3>C4 <span class="tt">STANDING</span></h3><p class="ct">Emissions accruing to that wallet stay within a narrow band across six full quarters: 1,303,294 · 1,327,384 · 1,336,732 · 1,351,753 · 1,289,617 · 1,311,093, a 4.82% spread between highest and lowest. This series measures INFLOW TO THE WALLET. It does not show that earlier quarterly reports used the same treatment, because only the 2Q2026 report is in hand.</p><p class="ghim"><b>Pinned at:</b> Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · delegatorRewards returns 587 records / 587 distinct days / 587-day span, 2024-12-29 to 2026-08-07, no missing day</p><p class="fal"><b>What would falsify it:</b> Sum totalAmount per calendar quarter: a full quarter falling outside 1,289,617–1,351,753 means the narrow-band reading has to be rewritten. A complete calendar quarter after Q2 2026 recording below 1.0M HYPE falsifies it. This claim must not be quoted as an error repeated six times: that would require six quarterly reports and proof that each applied the same treatment, and only one is in hand.</p></article><h2>How to check</h2><ul class="cach"><li><b>Wallet classification and supply</b> — <code>POST https://api.hyperliquid.xyz/info · {&quot;type&quot;:&quot;tokenDetails&quot;,&quot;tokenId&quot;:&quot;&lt;HYPE&gt;&quot;} — read nonCirculatingUserBalances, circulatingSupply, totalSupply. Get tokenId from {&quot;type&quot;:&quot;spotMetaAndAssetCtxs&quot;}.</code></li><li><b>Emissions accruing to the wallet</b> — <code>{&quot;type&quot;:&quot;delegatorRewards&quot;,&quot;user&quot;:&quot;0x43e9abea1910387c4292bca4b94de81462f8a251&quot;} — sum totalAmount per quarter. Check for gaps: record count, distinct-day count and span length must all be equal.</code></li><li><b>Outflows and their destinations</b> — <code>{&quot;type&quot;:&quot;userNonFundingLedgerUpdates&quot;,&quot;user&quot;:&quot;0x43e9abea…&quot;,&quot;startTime&quot;:…,&quot;endTime&quot;:…} — scan month by month so the row limit is never hit; match every destination against the non-circulating set above.</code></li><li><b>Total staked</b> — <code>{&quot;type&quot;:&quot;validatorSummaries&quot;} — sum the stake field, divide by 1e8.</code></li></ul><h2>What this does not cover</h2><ul class="gh"><li>The non-circulating classification is read at measurement time, not per day inside Q2. There is no historical source for that field.</li><li>The ~299M float base attributed to the report is an inference from its own subtraction, not a direct snapshot of the exclusion list during Q2.</li><li>Input data comes from an API published by Hyperliquid itself. That is one source, not two independent ones. The arithmetic on top of it is checkable.</li><li>Only the 2Q2026 report is in hand. The six-quarter series measures inflow to the wallet; it does not show that earlier reports used the same treatment.</li><li>The two paths measuring outflow differ by 1 HYPE (1,288,966 from the transfer ledger, 1,288,967 from finalised withdrawals). The difference sits entirely in April and is 0.00008%; the arithmetic uses the second. Using the first gives −412,961.</li></ul><h2>Sources</h2><ul class="cach"><li>Full write-up (<b>in Vietnamese</b>): <a href="../../bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/">/bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/</a></li><li>As posted on X: <a href="https://x.com/blockpinned/status/2085611015794995577">https://x.com/blockpinned/status/2085611015794995577</a></li></ul><p class="dan" style="margin-top:2.5rem">Corrections are made in place and never deleted; every claim above carries its current status. <b>Not investment advice.</b></p></main>
+<main class="khung"><section class="hero hero-article receipt-hero">
+  <span class="ghost-num" aria-hidden="true">−412,960</span>
+  <span class="hero-code" aria-hidden="true">EVIDENCE RECEIPT · C1</span>
+  <div class="article-path" aria-label="Article location"><a href="../../">BlockPinned</a><span>/</span><b>Evidence receipt</b><span>/</span><b>HYPE</b><i><span class="dot song"></span>standing</i></div>
+  <p class="eyebrow"><span>English evidence layer</span><span class="im">2026-08-07</span></p>
+  <h1 class="display">Applying the report&#x27;s own circulating-supply definition consistently: HYPE Q2 net issuance is <span class="nhan-manh">−412,960</span>, not +890,000</h1>
+  <p class="subline">This is a receipt, not a translation. The full write-up is in Vietnamese; everything needed to verify or refute the claims is here in English: the figures, the exact API calls that produce them, what would falsify each claim, and what the measurement does not cover.</p>
+  <div class="article-verdict">
+    <div class="heronum article-ratio article-ledger-count"><p class="l">Public claim ledger</p><p class="v">4<em> claims</em></p><p class="d">4 standing or confirmed</p></div>
+    <div class="case-path" role="img" aria-label="Evidence path from source through checks to current state">
+      <div class="case-step file"><span>01 · SOURCE</span><strong>HYPE</strong><small>subject pinned in the record</small></div><i aria-hidden="true">→</i>
+      <div class="case-step test"><span>02 · CHECK</span><strong>4</strong><small>explicit falsifiers</small></div><i aria-hidden="true">→</i>
+      <div class="case-step state song"><span>03 · CURRENT</span><strong>4/4</strong><small>standing or confirmed</small></div>
+    </div>
+  </div>
+</section>
+<nav class="article-map" aria-label="Article sections"><span>Evidence first</span><a href="#so-claim">Claims</a><a href="#how-to-check">How to check</a><a href="#limits">Limits</a><a href="#sources">Sources</a></nav>
+<section class="article-ledger" aria-labelledby="so-claim-title">
+<details class="evidence case-evidence" id="so-claim">
+  <summary>
+    <span class="case-ledger-title"><span>Article claim ledger</span><b id="so-claim-title">4 claims</b><small>state changes stay visible</small></span>
+    <span class="case-ledger-viz"><span class="case-ledger-bar" role="img" aria-label="4 standing"><i class="song" style="--n:4"></i></span><span class="case-ledger-legend"><i><span class="dot song"></span><b>4</b> standing</i></span></span>
+    <span class="mo">open 4 claims</span>
+  </summary>
+  <div class="trong case-ledger-body"><p class="case-ledger-intro">Each claim carries its current state, pinned evidence and an explicit falsifier.</p><div class="case-claim-list"><article class="case-claim song" id="C1" data-article-claim data-st="song">
+  <header class="case-claim-head"><a class="case-claim-id" href="#C1">C1</a>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>STANDING</span>
+    <span class="case-claim-actions"></span></header>
+  <p class="case-claim-text">In Q2 2026 the wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 received 1,311,093 HYPE in staking emissions, 54.20% of the quarter&#x27;s 2,419,166 total. Hyperliquid&#x27;s Info API lists that wallet under nonCirculatingUserBalances, holding 241,150,943.99 at measurement time.</p>
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · nonCirculatingUserBalances has 4 entries · circulatingSupply 299,024,976.59 · totalSupply 999,049,594.42</p>
+    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Call delegatorRewards for that wallet and sum totalAmount over April, May and June 2026: anything other than 1,311,093 falsifies the figure. Check the series for gaps — record count, distinct-day count and span length must be equal, otherwise the quarterly total is a lower bound. For the classification: call tokenDetails and read nonCirculatingUserBalances. If the wallet is not in that list, the central premise loses its support.</p>
+  </div>
+</article><article class="case-claim song" id="C2" data-article-claim data-st="song">
+  <header class="case-claim-head"><a class="case-claim-id" href="#C2">C2</a>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>STANDING</span>
+    <span class="case-claim-actions"></span></header>
+  <p class="case-claim-text">In the same quarter the wallet sent out 1,288,966 HYPE across 58 transfers to 29 distinct addresses, and 0 of those 29 are in the non-circulating set at measurement time. There were 0 inbound token transfers. The outflow is therefore added back to circulation, and the addition term does not double count.</p>
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · userNonFundingLedgerUpdates scanned month by month, 0 of 3 months hit the row limit</p>
+    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Re-scan userNonFundingLedgerUpdates for Q2 month by month, take the HYPE rows where the wallet is the source, and match each destination against nonCirculatingUserBalances. If any recipient is in that set, the amount added back must be smaller than 1,288,967 — which makes the result more negative, not less. A month returning exactly 500, 1000 or 2000 rows has hit the row limit and the total becomes a lower bound. Before trusting the zero, check the test discriminates: query the same membership for this wallet, for 0xfefe…fefe and for the dead address — all three must return present.</p>
+  </div>
+</article><article class="case-claim song" id="C3" data-article-claim data-st="song">
+  <header class="case-claim-head"><a class="case-claim-id" href="#C3">C3</a>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>STANDING</span>
+    <span class="case-claim-actions"></span></header>
+  <p class="case-claim-text">Holding every other figure from the report unchanged and altering only the treatment of emissions accruing to the non-circulating wallet, Q2 2026 net issuance is −412,960 HYPE rather than the +890,000 the report concludes. Removing the 39,792 token-burn line entirely still leaves −373,168.</p>
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · 2,419,166 − 1,311,093 = 1,108,073; + 1,288,967 = 2,397,040; − 2,810,000 from the report (buyback 2,770,208 + burn 39,792) · circulating base 299,024,977</p>
+    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Add the four terms: 2,419,166 − 1,311,093 = 1,108,073; + 1,288,967 = 2,397,040; − 2,810,000 = −412,960. Any other result falsifies the arithmetic. This claim does not say the report is wrong about direction: its own next paragraph also concludes supply tightened, so reading this as a disagreement about direction is a misreading of the claim.</p>
+  </div>
+</article><article class="case-claim song" id="C4" data-article-claim data-st="song">
+  <header class="case-claim-head"><a class="case-claim-id" href="#C4">C4</a>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>STANDING</span>
+    <span class="case-claim-actions"></span></header>
+  <p class="case-claim-text">Emissions accruing to that wallet stay within a narrow band across six full quarters: 1,303,294 · 1,327,384 · 1,336,732 · 1,351,753 · 1,289,617 · 1,311,093, a 4.82% spread between highest and lowest. This series measures INFLOW TO THE WALLET. It does not show that earlier quarterly reports used the same treatment, because only the 2Q2026 report is in hand.</p>
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · delegatorRewards returns 587 records / 587 distinct days / 587-day span, 2024-12-29 to 2026-08-07, no missing day</p>
+    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Sum totalAmount per calendar quarter: a full quarter falling outside 1,289,617–1,351,753 means the narrow-band reading has to be rewritten. A complete calendar quarter after Q2 2026 recording below 1.0M HYPE falsifies it. This claim must not be quoted as an error repeated six times: that would require six quarterly reports and proof that each applied the same treatment, and only one is in hand.</p>
+  </div>
+</article></div></div>
+</details></section>
+<section class="than article-body receipt-body">
+  <div class="article-meta"><span><b>PIN</b>No block number anywhere. HyperCore is read through Hyperliquid&#x27;s Info API; the default public HyperEVM RPC does not serve reliable historical state (same block number twice, 20 s apart, returns two different values; a future block returns a number instead of an error; the official docs state it is &quot;not supported at this time on the default RPC implementation&quot;). Third-party paid endpoints were not tested. Every figure below is a wall-clock snapshot taken 2026-08-07.</span><span><b>DATE</b>2026-08-07</span><span class="article-meta-link"><a href="../../bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/">Full write-up in Vietnamese →</a></span></div>
+  <h2 id="how-to-check">How to check</h2><ul class="receipt-checks"><li><b>Wallet classification and supply</b> — <code>POST https://api.hyperliquid.xyz/info · {&quot;type&quot;:&quot;tokenDetails&quot;,&quot;tokenId&quot;:&quot;&lt;HYPE&gt;&quot;} — read nonCirculatingUserBalances, circulatingSupply, totalSupply. Get tokenId from {&quot;type&quot;:&quot;spotMetaAndAssetCtxs&quot;}.</code></li><li><b>Emissions accruing to the wallet</b> — <code>{&quot;type&quot;:&quot;delegatorRewards&quot;,&quot;user&quot;:&quot;0x43e9abea1910387c4292bca4b94de81462f8a251&quot;} — sum totalAmount per quarter. Check for gaps: record count, distinct-day count and span length must all be equal.</code></li><li><b>Outflows and their destinations</b> — <code>{&quot;type&quot;:&quot;userNonFundingLedgerUpdates&quot;,&quot;user&quot;:&quot;0x43e9abea…&quot;,&quot;startTime&quot;:…,&quot;endTime&quot;:…} — scan month by month so the row limit is never hit; match every destination against the non-circulating set above.</code></li><li><b>Total staked</b> — <code>{&quot;type&quot;:&quot;validatorSummaries&quot;} — sum the stake field, divide by 1e8.</code></li></ul>
+  <h2 id="limits">What this does not cover</h2><ul><li>The non-circulating classification is read at measurement time, not per day inside Q2. There is no historical source for that field.</li><li>The ~299M float base attributed to the report is an inference from its own subtraction, not a direct snapshot of the exclusion list during Q2.</li><li>Input data comes from an API published by Hyperliquid itself. That is one source, not two independent ones. The arithmetic on top of it is checkable.</li><li>Only the 2Q2026 report is in hand. The six-quarter series measures inflow to the wallet; it does not show that earlier reports used the same treatment.</li><li>The two paths measuring outflow differ by 1 HYPE (1,288,966 from the transfer ledger, 1,288,967 from finalised withdrawals). The difference sits entirely in April and is 0.00008%; the arithmetic uses the second. Using the first gives −412,961.</li></ul>
+  <h2 id="sources">Sources</h2><ul><li>Full write-up: <a href="../../bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/">/bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/</a></li><li>As posted on X: <a href="https://x.com/blockpinned/status/2085611015794995577">https://x.com/blockpinned/status/2085611015794995577</a></li></ul>
+  <p class="receipt-policy">Corrections are made in place and never deleted; every claim above carries its current status. <b>Not investment advice.</b></p>
+</section></main>
 <div id="ch-tip"></div>
 <footer><div class="khung"><p>Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá. Không phải lời khuyên đầu tư. · <a href="https://x.com/blockpinned">@blockpinned</a></p></div></footer>
 <script>
@@ -2059,12 +1845,18 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         entry.target.classList.add("is-visible");
         revealObserver.unobserve(entry.target);
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -5%" });
+    }, { threshold: 0, rootMargin: "0px 0px -5%" });
     revealItems.forEach(function (item, index) {
       item.classList.add("reveal-ready");
       item.style.transitionDelay = Math.min(index % 4, 2) * 45 + "ms";
       revealObserver.observe(item);
     });
+    // A reveal is decoration, never a visibility gate. Large blocks can be taller
+    // than the viewport and headless/static captures may not deliver observer events.
+    // The fallback makes every story beat visible even when that happens.
+    setTimeout(function () {
+      revealItems.forEach(function (item) { item.classList.add("is-visible"); });
+    }, 1400);
   }
 
   // A very soft local glow makes the primary data surface feel alive.
@@ -2434,6 +2226,27 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     actions.classList.add("has-evidence-link");
     actions.insertBefore(makeEvidenceLinkButton(claim.id, "Sao chép link claim " + claim.dataset.uniIndex), actions.firstChild);
   });
+
+  // Article claims live inside a collapsed evidence ledger. A permalink must open
+  // that ledger before scrolling; otherwise the URL points to real evidence that
+  // remains invisible. The copy button uses the same canonical-aware path as Facts.
+  var articleClaims = Array.prototype.slice.call(document.querySelectorAll("[data-article-claim][id]"));
+  articleClaims.forEach(function (claim) {
+    var actions = claim.querySelector(".case-claim-actions");
+    if (!actions) return;
+    actions.appendChild(makeEvidenceLinkButton(claim.id, "Sao chép link claim " + claim.id));
+  });
+  function openArticleClaim() {
+    if (!location.hash || location.hash === "#so-claim") return;
+    var claim;
+    try { claim = document.querySelector(location.hash); } catch (ignore) { return; }
+    if (!claim || !claim.matches("[data-article-claim]")) return;
+    var ledger = claim.closest("details.case-evidence");
+    if (ledger) ledger.open = true;
+    requestAnimationFrame(function () { claim.scrollIntoView({ block: "start" }); });
+  }
+  openArticleClaim();
+  addEventListener("hashchange", openArticleClaim);
 
   // A copy control exists only when JavaScript can actually copy the command.
   document.querySelectorAll(".fact-wow details.lenh").forEach(function (details) {

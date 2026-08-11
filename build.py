@@ -1217,7 +1217,11 @@ def than_css() -> str:
     if BO_CUC == "d2":
         return CSS_THAN
     rieng = _doc_ben_canh(f"{BO_CUC}.css", "không có hình")
-    return rieng + "\n" + nen_than_bai(rieng)
+    # Đường A đã chuyển cả trang bài VN lẫn biên lai EN sang markup WOW. Không còn
+    # mặt nào của v3 cần mượn CSS D2; ghép nền cũ ở đây sẽ vừa tăng payload vừa cho
+    # hai bộ selector cùng tranh một phần tử. `nen_than_bai()` giữ dưới dạng hồ sơ
+    # cho phép đối chiếu vòng tích hợp 11/08, nhưng không còn đi ra production.
+    return rieng
 
 
 # Hai loại trang dựng bằng markup THÂN BÀI của D2 và chưa có bản thiết kế riêng ở bố
@@ -1697,7 +1701,7 @@ def kich_thuoc_png(p: pathlib.Path) -> tuple:
 
 
 def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None,
-          muc: str = "", mat: str = "") -> str:
+          muc: str = "", mat: str = "", lang: str = "vi") -> str:
     # Thẻ xem trước: khi link được dán vào Telegram · Discord · forum · tin nhắn riêng,
     # KHÔNG có bộ thẻ này thì nó hiện ra một dòng chữ trơn và không ai bấm. Ảnh dùng lại
     # đúng card đã dựng cho bài trên kênh (2400×1350) — không dựng ảnh riêng cho web.
@@ -1733,7 +1737,7 @@ def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None,
     dai = "\n" + DAI_BAN_THU if BAN_THU else ""
     nap = "".join(f'<link rel="preload" as="font" type="font/woff2" crossorigin '
                   f'href="{g}/font/{f}">' for f in FONT_NAP_TRUOC)
-    dau_chung = f"""<!doctype html><html lang="vi"><head><meta charset="utf-8">
+    dau_chung = f"""<!doctype html><html lang="{ihtml.escape(lang, quote=True)}"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{ihtml.escape(tieu_de)}</title>
 {xt}
@@ -1988,6 +1992,221 @@ def cong_lien_ket(txt: str, o: str, goc: pathlib.Path, tep: pathlib.Path) -> Non
         if dich.is_file() or (dich / "index.html").is_file():
             continue
         raise LoiCong(f'href nội bộ không tới đâu: "{h}" — {o}')
+
+
+TRANG_THAI_NGAN = {
+    "ĐÃ XÁC NHẬN": "xác nhận",
+    "ĐANG ĐỨNG": "đang đứng",
+    "ĐÃ SỬA": "đã sửa",
+    "BỊ BÁC": "bị bác",
+    "CHỜ SỐ": "chờ số",
+}
+
+
+def _metric_tieu_de(tieu_de: str) -> str:
+    """Lấy một đại lượng ĐÃ CÓ trong tiêu đề làm ghost number của hero.
+
+    Đây chỉ là lựa chọn trình bày: không tính số mới và không diễn giải lại claim.
+    Không có đại lượng thì dùng mã token, thay vì bịa một con số trang trí.
+    """
+    # Không bắt số nằm trong tên phiên/viết tắt (`v4`, `Q2`): đó là mã, không phải
+    # nhân vật số của tiêu đề. Ca thật đầu tiên cho ghost `4` thay vì `3,9×` và EN
+    # cho `2` thay vì `−412.960`.
+    m = re.search(
+        r"(?<![A-Za-z])[−+-]?\d+(?:[.,]\d+)*(?:\s*(?:%|×|lần|USD|ETH|HYPE|UNI|PENDLE|CAKE|validator))?(?![A-Za-z])",
+        tieu_de, re.I)
+    return m.group(0) if m else ""
+
+
+def _tieu_de_nhan(tieu_de: str) -> str:
+    """Nhấn đúng đại lượng ghost trong tiêu đề; escape từng mảnh trước khi ghép."""
+    metric = _metric_tieu_de(tieu_de)
+    if not metric:
+        return ihtml.escape(tieu_de)
+    truoc, sau = tieu_de.split(metric, 1)
+    return (ihtml.escape(truoc) + '<span class="nhan-manh">'
+            + ihtml.escape(metric) + "</span>" + ihtml.escape(sau))
+
+
+def _dem_trang_thai(claims: list) -> dict:
+    return {k: sum(1 for c in claims if c["status"] == k) for k in TRANG_THAI}
+
+
+def _so_claim_v3(claims: list) -> str:
+    """Sổ claim theo đúng cấu trúc evidence của mockup WOW.
+
+    Không đọc lại văn xuôi để suy claim: câu, trạng thái, ghim, falsifier và log đều
+    đi thẳng từ `claims.json`. Tỷ trọng trong thanh là `flex: số claim`, nên đổi một
+    trạng thái thì cả chữ lẫn hình đi theo trong cùng lượt build.
+    """
+    dem = _dem_trang_thai(claims)
+    co = [(k, dem[k]) for k in TRANG_THAI if dem[k]]
+    thanh = "".join(
+        f'<i class="{TRANG_THAI[k][0]}" style="--n:{n}"></i>' for k, n in co)
+    chu_giai = "".join(
+        f'<i><span class="dot {TRANG_THAI[k][0]}"></span><b>{n}</b> '
+        f'{TRANG_THAI_NGAN[k]}</i>' for k, n in co)
+    aria = ", ".join(f"{n} {TRANG_THAI_NGAN[k]}" for k, n in co)
+
+    ds = []
+    for c in claims:
+        cls, _ = TRANG_THAI[c["status"]]
+        nk = "".join(
+            f'<li><span class="case-log-date">{ihtml.escape(e["ngay"])}</span>'
+            f'<span>{ihtml.escape(e["ghi"])}{nguon_html(e.get("nguon"))}</span></li>'
+            for e in c["log"])
+        hinh = (f'<figure class="hinh case-claim-scale">{ve_thang(c["thang_do"])}'
+                f'<figcaption>{ihtml.escape(c["thang_do"]["nhan"])}</figcaption></figure>'
+                if c.get("thang_do") else "")
+        ds.append(f'''<article class="case-claim {cls}" id="{c['id']}" data-article-claim data-st="{cls}">
+  <header class="case-claim-head">
+    <a class="case-claim-id" href="#{c['id']}">{c['id']}</a>
+    <span class="case-claim-status {cls}"><i aria-hidden="true"></i>{ihtml.escape(c['status'])}</span>
+    <span class="case-claim-actions"></span>
+  </header>
+  <p class="case-claim-text">{ihtml.escape(c['text'])}</p>
+  {hinh}
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>GHIM TẠI</span>{ihtml.escape(c['ghim'])}</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>{ihtml.escape(c['falsifier'])}</p>
+  </div>
+  {khoi_do_lai(c)}
+  <details class="case-log"><summary>Lịch sử · {len(c['log'])} mốc</summary><ol>{nk}</ol></details>
+</article>''')
+
+    return f'''<section class="article-ledger" aria-labelledby="so-claim-title">
+<details class="evidence case-evidence" id="so-claim">
+  <summary>
+    <span class="case-ledger-title"><span>Sổ claim của bài</span><b id="so-claim-title">{len(claims)} khẳng định</b><small>đổi trạng thái tại chỗ · không xoá</small></span>
+    <span class="case-ledger-viz">
+      <span class="case-ledger-bar" role="img" aria-label="{ihtml.escape(aria, quote=True)}">{thanh}</span>
+      <span class="case-ledger-legend">{chu_giai}</span>
+    </span>
+    <span class="mo">mở {len(claims)} claim</span>
+  </summary>
+  <div class="trong case-ledger-body">
+    <p class="case-ledger-intro">Mỗi claim kèm điều có thể bác bỏ nó, mốc ghim và toàn bộ lịch sử đổi trạng thái.</p>
+    <div class="case-claim-list">{"".join(ds)}</div>
+  </div>
+</details>
+</section>'''
+
+
+def _chart_bai_v3(nb: dict) -> str:
+    """Chart của bài phân định DefiLlama, đọc lại từ hiện vật pin như homepage."""
+    hv = json.loads((kho_hien_vat() / nb["chart"]["hien_vat"]).read_text(encoding="utf-8"))
+    chuoi = [(d["ngay"], int(d["usd"])) for d in hv["chuoi"]]
+    svg, du_lieu = ve_chart_hero(chuoi, nb)
+    cu, chain, sua = nb["so_cu"], nb["so_chain"], nb["so_sua"]
+    lo, hi = nb["khoang"]
+    pc = lambda v: v / cu * 100
+    trieu = lambda v: f"{v / 1e6:.3f}".replace(".", ",")
+    ch = nb["chart"]
+    return f'''<figure class="chart chart-card" data-spotlight>
+    <div class="chart-dau">
+      <b>Phí swap Uniswap v4 — Robinhood chain</b>
+      <span class="don-vi">USD/ngày · {chuoi[0][0]} → {chuoi[-1][0]}</span>
+      <span class="cach-doc"><i><span class="sw"></span>chuỗi đã tính lại</i><i><span class="sw cu"></span>số cũ đã chết</i></span>
+    </div>
+    <div class="recalibration" role="img" aria-label="Ngày {ihtml.escape(nb['moc_ngay'])}: số cũ {so_vn_nguyen(cu)} đô; đếm on-chain {so_vn_nguyen(chain)} đô; số tính lại {so_vn_nguyen(sua)} đô">
+      <div class="rc-head"><span>Bản đồ tái hiệu chỉnh · {ihtml.escape(nb['moc_ngay'])}</span><em>tỷ lệ so với số cũ = 100%</em></div>
+      <div class="rc-track">
+        <span class="rc-axis"></span>
+        <span class="rc-band" style="--left:{pc(lo):.2f}%;--width:{pc(hi) - pc(lo):.2f}%"></span>
+        <i class="rc-pin chain" style="--x:{pc(chain):.2f}%;--delay:.48s"><span class="rc-label"><b>${trieu(chain)}M</b>đếm on-chain</span></i>
+        <i class="rc-pin fixed" style="--x:{pc(sua):.2f}%;--delay:.64s"><span class="rc-label"><b>${trieu(sua)}M</b>họ tính lại</span></i>
+        <i class="rc-pin old" style="--x:100%;--delay:.8s"><span class="rc-label"><b>${trieu(cu)}M</b>số cũ</span></i>
+      </div>
+    </div>
+    <div class="chart-mobile-nav" aria-label="Đi tới mốc trên biểu đồ"><span>ĐIỂM XEM</span><button type="button" data-chart-jump="pin">{ihtml.escape(nb['moc_ngay'])}</button><button type="button" data-chart-jump="end">Mới nhất →</button></div>
+    <div class="chart-cuon">{svg}</div>
+    <div class="provenance">
+      <svg class="pmark" viewBox="0 0 240 240" aria-hidden="true">{mark_path()}</svg>
+      <span class="f"><span class="k">GHIM</span><span>{inline(ch['ghim'], 'trang_chu.chart.ghim')}</span></span>
+      <span class="f"><span class="k">NGUỒN</span><span>{inline(ch['nguon'], 'trang_chu.chart.nguon')}</span></span>
+      <span class="f"><span class="k">ĐỌC</span><span><b>{vn_ngay(hv['_doc_luc'])}</b></span></span>
+      <a class="chay" href="#tu-kiem">tự chạy lại được</a>
+    </div>
+  </figure><script>window.BP_CHART_DATA={du_lieu};</script>'''
+
+
+def _hero_bai_v3(fm: dict, claims: list, trang_chu: dict) -> str:
+    """Hero article WOW; bài #1 giữ tuyến ba số, các bài khác dùng tuyến claim thật."""
+    c0 = claims[0]
+    cls0, _ = TRANG_THAI[c0["status"]]
+    metric = _metric_tieu_de(fm["title"]) or fm["token"]
+    ngay = vn_ngay(str(fm["date"])[:10])
+    cap_nhat = (f" · {ihtml.escape(fm['doc_lai'].split('—', 1)[0].strip())}"
+                if fm.get("doc_lai") else "")
+    nb = trang_chu.get("noi_bat") if trang_chu else None
+
+    if nb:
+        cu, chain, sua = nb["so_cu"], nb["so_chain"], nb["so_sua"]
+        lan = f"{cu / chain:.1f}".replace(".", ",")
+        lech = f"{abs(sua - chain) / chain * 100:.2f}".replace(".", ",")
+        ty_so = f'''<div class="heronum article-ratio">
+      <p class="l">Chênh lệch ngày {ihtml.escape(nb['moc_ngay'])}</p>
+      <p class="v">{lan}<em>×</em></p>
+      <p class="d">đã phân định · số tính lại lệch {lech}%</p>
+    </div>'''
+        duong = f'''<div class="case-path" role="img" aria-label="Tuyến phân định từ số dashboard, qua phép đếm on-chain, tới số đã tính lại">
+      <div class="case-step old"><span>01 · DASHBOARD</span><strong>${so_vn_nguyen(cu)}</strong><small>số mở ra điều tra</small></div><i aria-hidden="true">→</i>
+      <div class="case-step chain"><span>02 · ON-CHAIN</span><strong>${so_vn_nguyen(chain)}</strong><small>{ihtml.escape(nb['dem_swap'])} swap được đếm</small></div><i aria-hidden="true">→</i>
+      <div class="case-step fixed"><span>03 · PHÂN ĐỊNH</span><strong>${so_vn_nguyen(sua)}</strong><small>chuỗi đã được tính lại</small></div>
+    </div>'''
+        chart = _chart_bai_v3(nb)
+    else:
+        dem = _dem_trang_thai(claims)
+        dang = dem.get("ĐANG ĐỨNG", 0) + dem.get("ĐÃ XÁC NHẬN", 0)
+        log = sum(len(c["log"]) for c in claims)
+        ty_so = f'''<div class="heronum article-ratio article-ledger-count">
+      <p class="l">Sổ bằng chứng của bài</p>
+      <p class="v">{len(claims)}<em> claim</em></p>
+      <p class="d">{dang} đang đứng hoặc đã xác nhận</p>
+    </div>'''
+        duong = f'''<div class="case-path" role="img" aria-label="Tuyến bằng chứng: đối tượng, điều bác bỏ, trạng thái hiện tại">
+      <div class="case-step file"><span>01 · ĐỐI TƯỢNG</span><strong>{ihtml.escape(fm['token'])}</strong><small>hồ sơ được ghim theo token</small></div><i aria-hidden="true">→</i>
+      <div class="case-step test"><span>02 · TỰ KIỂM</span><strong>{len(claims)}</strong><small>điều bác bỏ viết cùng claim</small></div><i aria-hidden="true">→</i>
+      <div class="case-step state {cls0}"><span>03 · SỔ SỐNG</span><strong>{log} mốc</strong><small>lịch sử đổi trạng thái công khai</small></div>
+    </div>'''
+        chart = ""
+
+    return f'''<section class="hero hero-article">
+  <span class="ghost-num" aria-hidden="true">{ihtml.escape(metric)}</span>
+  <span class="hero-code" aria-hidden="true">CLAIM {ihtml.escape(c0['id'])} · {ihtml.escape(c0['status'])}</span>
+  <div class="article-path" aria-label="Vị trí bài viết">
+    <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều tra</a><span>/</span><b>{ihtml.escape(fm['token'])}</b><i><span class="dot {cls0}"></span>{ihtml.escape(TRANG_THAI_NGAN[c0['status']])}</i>
+  </div>
+  <p class="eyebrow"><span>{ihtml.escape(fm['token'])}</span><span class="im">{ngay}{cap_nhat}</span></p>
+  <h1 class="display">{_tieu_de_nhan(fm['title'])}</h1>
+  <p class="subline">{ihtml.escape(fm['mo_ta'])}</p>
+  <div class="article-verdict">{ty_so}{duong}</div>
+{chart}
+</section>'''
+
+
+def trang_bai_v3(fm: dict, claims: list, body_md: str, o: str, ho_so: str,
+                  trang_chu: dict) -> str:
+    """Dựng trang bài bằng markup WOW, không dùng `.dai/.so/.claim` của D2."""
+    muc = []
+    for h in re.findall(r"^##\s+(.+)$", body_md, re.M)[:3]:
+        nhan = re.sub(r"[*_`]", "", h).strip()
+        muc.append(f'<a href="#{slug(h)}">{ihtml.escape(nhan)}</a>')
+    ban_dang = (f'<a href="{fm["kenh_x"]}">bản đăng trên X ↗</a>' if fm.get("kenh_x")
+                else '<i>chưa đăng trên kênh</i>')
+    than = render(body_md, o).replace('<div class="cuon"><table>', '<div class="bang"><table>')
+    return (_hero_bai_v3(fm, claims, trang_chu)
+            + '<nav class="article-map" aria-label="Điều hướng trong bài"><span>Đọc theo bằng chứng</span>'
+            + '<a href="#so-claim">Sổ claim</a>' + "".join(muc) + '</nav>'
+            + _so_claim_v3(claims)
+            + f'''<section class="than article-body" id="ban-day-du">
+  <div class="article-meta">
+    <span><b>GHIM</b>{ihtml.escape(fm['ghim'])}</span>
+    <span><b>NGÀY</b>{vn_ngay(str(fm['date'])[:10])}</span>
+    <span class="article-meta-link">{ban_dang}</span>{ho_so}
+  </div>
+  {than}
+</section>''')
 
 
 def so_claim(claims: list) -> str:
@@ -2972,6 +3191,76 @@ def _so_trong(txt: str, toi_thieu: int = 4) -> set:
     return ra
 
 
+def _bien_lai_en_v3(fm: dict, claims: list, en: dict, slug_: str) -> str:
+    """Evidence receipt dùng cùng vocabulary WOW với trang bài, không giả làm bản dịch."""
+    esc = ihtml.escape
+    dem = _dem_trang_thai(claims)
+    co = [(k, dem[k]) for k in TRANG_THAI if dem[k]]
+    thanh = "".join(f'<i class="{TRANG_THAI[k][0]}" style="--n:{n}"></i>' for k, n in co)
+    chu_giai = "".join(
+        f'<i><span class="dot {TRANG_THAI[k][0]}"></span><b>{n}</b> '
+        f'{esc(TRANG_THAI_EN.get(k, k).lower())}</i>' for k, n in co)
+    aria = ", ".join(f"{n} {TRANG_THAI_EN.get(k, k).lower()}" for k, n in co)
+    cards = []
+    for c in claims:
+        cls, _ = TRANG_THAI[c["status"]]
+        cards.append(f'''<article class="case-claim {cls}" id="{c['id']}" data-article-claim data-st="{cls}">
+  <header class="case-claim-head"><a class="case-claim-id" href="#{c['id']}">{c['id']}</a>
+    <span class="case-claim-status {cls}"><i aria-hidden="true"></i>{esc(TRANG_THAI_EN.get(c['status'], c['status']))}</span>
+    <span class="case-claim-actions"></span></header>
+  <p class="case-claim-text">{esc(c['en']['text'])}</p>
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>PINNED AT</span>{esc(c['en']['ghim'])}</p>
+    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>{esc(c['en']['falsifier'])}</p>
+  </div>
+</article>''')
+
+    c0 = claims[0]
+    cls0, _ = TRANG_THAI[c0["status"]]
+    metric = _metric_tieu_de(en["og_title"]) or fm["token"]
+    active = dem.get("ĐANG ĐỨNG", 0) + dem.get("ĐÃ XÁC NHẬN", 0)
+    claim_ledger = f'''<section class="article-ledger" aria-labelledby="so-claim-title">
+<details class="evidence case-evidence" id="so-claim">
+  <summary>
+    <span class="case-ledger-title"><span>Article claim ledger</span><b id="so-claim-title">{len(claims)} claims</b><small>state changes stay visible</small></span>
+    <span class="case-ledger-viz"><span class="case-ledger-bar" role="img" aria-label="{esc(aria, quote=True)}">{thanh}</span><span class="case-ledger-legend">{chu_giai}</span></span>
+    <span class="mo">open {len(claims)} claims</span>
+  </summary>
+  <div class="trong case-ledger-body"><p class="case-ledger-intro">Each claim carries its current state, pinned evidence and an explicit falsifier.</p><div class="case-claim-list">{"".join(cards)}</div></div>
+</details></section>'''
+
+    how = "".join(f"<li><b>{esc(a)}</b> — <code>{esc(b)}</code></li>"
+                  for a, b in en.get("how_to_check", []))
+    limits = "".join(f"<li>{esc(x)}</li>" for x in en.get("limits", []))
+    source_x = (f'<li>As posted on X: <a href="{fm["kenh_x"]}">{esc(fm["kenh_x"])}</a></li>'
+                if fm.get("kenh_x") else "")
+    return f'''<section class="hero hero-article receipt-hero">
+  <span class="ghost-num" aria-hidden="true">{esc(metric)}</span>
+  <span class="hero-code" aria-hidden="true">EVIDENCE RECEIPT · {esc(c0['id'])}</span>
+  <div class="article-path" aria-label="Article location"><a href="../../">BlockPinned</a><span>/</span><b>Evidence receipt</b><span>/</span><b>{esc(fm['token'])}</b><i><span class="dot {cls0}"></span>{esc(TRANG_THAI_EN.get(c0['status'], c0['status']).lower())}</i></div>
+  <p class="eyebrow"><span>English evidence layer</span><span class="im">{esc(str(fm['date']))}</span></p>
+  <h1 class="display">{_tieu_de_nhan(en['og_title'])}</h1>
+  <p class="subline">{esc(en['intro'])}</p>
+  <div class="article-verdict">
+    <div class="heronum article-ratio article-ledger-count"><p class="l">Public claim ledger</p><p class="v">{len(claims)}<em> claims</em></p><p class="d">{active} standing or confirmed</p></div>
+    <div class="case-path" role="img" aria-label="Evidence path from source through checks to current state">
+      <div class="case-step file"><span>01 · SOURCE</span><strong>{esc(fm['token'])}</strong><small>subject pinned in the record</small></div><i aria-hidden="true">→</i>
+      <div class="case-step test"><span>02 · CHECK</span><strong>{len(claims)}</strong><small>explicit falsifiers</small></div><i aria-hidden="true">→</i>
+      <div class="case-step state {cls0}"><span>03 · CURRENT</span><strong>{active}/{len(claims)}</strong><small>standing or confirmed</small></div>
+    </div>
+  </div>
+</section>
+<nav class="article-map" aria-label="Article sections"><span>Evidence first</span><a href="#so-claim">Claims</a><a href="#how-to-check">How to check</a><a href="#limits">Limits</a><a href="#sources">Sources</a></nav>
+{claim_ledger}
+<section class="than article-body receipt-body">
+  <div class="article-meta"><span><b>PIN</b>{esc(en['pin'])}</span><span><b>DATE</b>{esc(str(fm['date']))}</span><span class="article-meta-link"><a href="../../bai/{slug_}/">Full write-up in Vietnamese →</a></span></div>
+  <h2 id="how-to-check">How to check</h2><ul class="receipt-checks">{how}</ul>
+  <h2 id="limits">What this does not cover</h2><ul>{limits}</ul>
+  <h2 id="sources">Sources</h2><ul><li>Full write-up: <a href="../../bai/{slug_}/">/bai/{slug_}/</a></li>{source_x}</ul>
+  <p class="receipt-policy">Corrections are made in place and never deleted; every claim above carries its current status. <b>Not investment advice.</b></p>
+</section>'''
+
+
 def bien_lai_en(fm: dict, claims: list, body_md: str, slug_: str, t: dict, o: str):
     """Sinh /en/<slug>/ nếu claims.json có khối `en`. Không có ⇒ bỏ qua (opt-in).
 
@@ -3022,30 +3311,32 @@ def bien_lai_en(fm: dict, claims: list, body_md: str, slug_: str, t: dict, o: st
     cach = "".join(f"<li><b>{esc(a)}</b> — <code>{esc(b)}</code></li>"
                    for a, b in en.get("how_to_check", []))
     gh = "".join(f"<li>{esc(x)}</li>" for x in en.get("limits", []))
-    than = (f"<h1>{esc(en['og_title'])}</h1>"
-            f'<p class="dan">{esc(en["intro"])}</p>'
-            f'<p class="meta">{fm["mau"]} {fm["date"]} &nbsp;·&nbsp; {esc(en["pin"])}</p>'
-            f'<h2>Claims</h2>{muc}'
-            f'<h2>How to check</h2><ul class="cach">{cach}</ul>'
-            f'<h2>What this does not cover</h2><ul class="gh">{gh}</ul>'
-            f'<h2>Sources</h2><ul class="cach">'
-            f'<li>Full write-up (<b>in Vietnamese</b>): '
-            f'<a href="../../bai/{slug_}/">/bai/{slug_}/</a></li>'
-            + (f'<li>As posted on X: <a href="{fm["kenh_x"]}">{esc(fm["kenh_x"])}</a></li>'
-               if fm.get("kenh_x") else "")
-            + '</ul>'
-            # 🔴 Chrome của site (nav + footer) là tiếng Việt và DÙNG CHUNG cho 10 trang —
-            #    không sửa nó cho một trang. Nhưng footer chở HAI câu CÓ NGHĨA với người đọc:
-            #    chính sách đính chính và disclaimer. Để chúng chỉ-tiếng-Việt trên một trang
-            #    biên lai gửi ra ngoài là bỏ sót đúng thứ trang này sinh ra để phục vụ ⇒ đưa
-            #    bản EN vào THÂN, chỗ trang này kiểm soát. Chrome còn lại thuần thẩm mỹ.
-            + '<p class="dan" style="margin-top:2.5rem">Corrections are made in place and '
-              'never deleted; every claim above carries its current status. '
-              '<b>Not investment advice.</b></p>')
+    than = (_bien_lai_en_v3(fm, claims, en, slug_) if BO_CUC == "v3" else
+            (f"<h1>{esc(en['og_title'])}</h1>"
+             f'<p class="dan">{esc(en["intro"])}</p>'
+             f'<p class="meta">{fm["mau"]} {fm["date"]} &nbsp;·&nbsp; {esc(en["pin"])}</p>'
+             f'<h2>Claims</h2>{muc}'
+             f'<h2>How to check</h2><ul class="cach">{cach}</ul>'
+             f'<h2>What this does not cover</h2><ul class="gh">{gh}</ul>'
+             f'<h2>Sources</h2><ul class="cach">'
+             f'<li>Full write-up (<b>in Vietnamese</b>): '
+             f'<a href="../../bai/{slug_}/">/bai/{slug_}/</a></li>'
+             + (f'<li>As posted on X: <a href="{fm["kenh_x"]}">{esc(fm["kenh_x"])}</a></li>'
+                if fm.get("kenh_x") else "")
+             + '</ul>'
+             # 🔴 Chrome của site (nav + footer) là tiếng Việt và DÙNG CHUNG cho 10 trang —
+             #    không sửa nó cho một trang. Nhưng footer chở HAI câu CÓ NGHĨA với người đọc:
+             #    chính sách đính chính và disclaimer. Để chúng chỉ-tiếng-Việt trên một trang
+             #    biên lai gửi ra ngoài là bỏ sót đúng thứ trang này sinh ra để phục vụ ⇒ đưa
+             #    bản EN vào THÂN, chỗ trang này kiểm soát. Chrome còn lại thuần thẩm mỹ.
+             + '<p class="dan" style="margin-top:2.5rem">Corrections are made in place and '
+               'never deleted; every claim above carries its current status. '
+               '<b>Not investment advice.</b></p>'))
     d = OUT / "en" / slug_
     d.mkdir(parents=True, exist_ok=True)
     (d / "index.html").write_text(
         trang(en["title"], than, t, "../..", mat="page-en",
+              lang="en" if BO_CUC == "v3" else "vi",
               meta={"mo_ta": en["mo_ta"].strip(), "duong": f"/en/{slug_}/",
                     "anh": fm.get("anh"), "loai": "article",
                     "tieu_de_og": en["og_title"]}),
@@ -3539,26 +3830,32 @@ def main() -> None:
                           f"Đang biết: {', '.join(sorted(TOKEN_TEN))}. Token mới thì "
                           f"thêm vào TOKEN_TEN kèm tên đầy đủ, đừng viết tắt tuỳ ý")
         token_cua[slug_] = tk
-        ho_so = (f'<a class="toi phu" href="../../{TU_KINH_DUONG}">Hồ sơ {TOKEN_TEN[tk]} →</a>'
-                 if tk == TU_KINH and CO_TRANG[TU_KINH_DUONG] else "")
+        if tk == TU_KINH and CO_TRANG[TU_KINH_DUONG]:
+            ho_so = (f'<a class="article-token-link" href="../../{TU_KINH_DUONG}">'
+                     f'Hồ sơ {TOKEN_TEN[tk]} →</a>' if BO_CUC == "v3" else
+                     f'<a class="toi phu" href="../../{TU_KINH_DUONG}">Hồ sơ {TOKEN_TEN[tk]} →</a>')
+        else:
+            ho_so = ""
         # 🔴 THỨ TỰ TRANG LÀ CÓ CHỦ Ý, đừng đảo lại: sổ claim ĐỨNG TRƯỚC bài viết.
         # Bản đầu đặt bài lên trước và màn hình đầu tiên giống hệt Telegram — người
         # bấm vào từ X/TG đã đọc bài rồi, đưa lại bài là không cho họ lý do ở lại.
         # Bài vẫn đăng đủ dạng native trên X/TG (LAUNCH.md:152), ở đây nó là THAM CHIẾU.
-        than = (f"<h1>{ihtml.escape(fm['title'])}</h1>"
-                + dai_trang_thai(claims, fm.get("doc_lai", ""), ho_so)
-                + so_claim(claims)
-                + f'<section class="bandaydu"><h2 id="ban-day-du">Bài đầy đủ</h2>'
-                  f'<p class="meta">{fm["mau"]} {fm["date"]} &nbsp;·&nbsp; '
-                  f'GHIM TẠI {ihtml.escape(fm["ghim"])}'
-                  # kenh_x KHÔNG bắt buộc: web là sổ gốc, X/TG là phân phối
-                  # (LAUNCH.md:155) ⇒ bản chuẩn phải tồn tại được TRƯỚC lúc đăng.
-                  # Bản đầu bắt buộc trường này, tức bắt sổ gốc phải đợi kênh phân
-                  # phối — ngược đúng chiều kiến trúc, và nó chỉ lộ ở bài thứ hai.
-                  + (f' &nbsp;·&nbsp; <a href="{fm["kenh_x"]}">bản đăng trên X</a>'
-                     if fm.get("kenh_x") else
-                     ' &nbsp;·&nbsp; <i>chưa đăng trên kênh</i>') + '</p>'
-                + render(body_md, o) + "</section>")
+        than = (trang_bai_v3(fm, claims, body_md, o, ho_so, _cj.get("trang_chu", {}))
+                if BO_CUC == "v3" else
+                (f"<h1>{ihtml.escape(fm['title'])}</h1>"
+                 + dai_trang_thai(claims, fm.get("doc_lai", ""), ho_so)
+                 + so_claim(claims)
+                 + f'<section class="bandaydu"><h2 id="ban-day-du">Bài đầy đủ</h2>'
+                   f'<p class="meta">{fm["mau"]} {fm["date"]} &nbsp;·&nbsp; '
+                   f'GHIM TẠI {ihtml.escape(fm["ghim"])}'
+                   # kenh_x KHÔNG bắt buộc: web là sổ gốc, X/TG là phân phối
+                   # (LAUNCH.md:155) ⇒ bản chuẩn phải tồn tại được TRƯỚC lúc đăng.
+                   # Bản đầu bắt buộc trường này, tức bắt sổ gốc phải đợi kênh phân
+                   # phối — ngược đúng chiều kiến trúc, và nó chỉ lộ ở bài thứ hai.
+                   + (f' &nbsp;·&nbsp; <a href="{fm["kenh_x"]}">bản đăng trên X</a>'
+                      if fm.get("kenh_x") else
+                      ' &nbsp;·&nbsp; <i>chưa đăng trên kênh</i>') + '</p>'
+                 + render(body_md, o) + "</section>"))
         d = OUT / "bai" / slug_
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(

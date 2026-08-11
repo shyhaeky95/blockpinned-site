@@ -483,8 +483,11 @@ html.chuyen .hero::before{animation:grid-drift 16s linear infinite}
 @keyframes grid-drift{to{background-position:44px 22px}}
 html.chuyen h1.display{animation:title-lock .8s cubic-bezier(.2,.75,.2,1) both}
 html.chuyen .heronum .v{animation:data-lock .85s cubic-bezier(.16,.8,.22,1) .18s both}
-@keyframes title-lock{from{opacity:0;transform:translateY(16px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
-@keyframes data-lock{from{clip-path:inset(0 100% 0 0);transform:translateY(8px)}to{clip-path:inset(0);transform:none}}
+/* Tiêu đề không bao giờ về opacity 0: lượt ảnh light đầu tiên bắt đúng khung animation
+   và mất sạch h1 trong khi nền dark tình cờ chụp sau đó. Motion được phép dịch/chuyển nét,
+   không được làm mất nội dung quan trọng nhất của trang. */
+@keyframes title-lock{from{transform:translateY(16px)}to{transform:none}}
+@keyframes data-lock{from{transform:translateY(8px)}to{transform:none}}
 
 /* Bản đồ tái hiệu chỉnh: cùng ba con số cũ, nay thành một quan hệ nhìn được. */
 .recalibration{margin:13px 0 19px;padding:13px 14px 11px;border:1px solid var(--line-soft);border-radius:12px;
@@ -700,6 +703,8 @@ html.chuyen .finding-home.is-visible .finding-title .nhan-manh::after{animation:
   border:1px solid color-mix(in srgb,var(--c-xn) 40%,var(--line));border-radius:999px;
   background:color-mix(in srgb,var(--c-xn) 7%,transparent);font-style:normal;color:var(--c-xn)}
 .article-path .dot{width:7px;height:7px;border-radius:2px;background:var(--c-xn)}
+.article-path .dot.song{background:var(--c-song)}.article-path .dot.sua{background:var(--c-sua)}
+.article-path .dot.bac{background:var(--c-bac)}.article-path .dot.cho{background:var(--c-cho)}
 .article-verdict{display:grid;grid-template-columns:minmax(210px,.68fr) minmax(0,1.8fr);gap:clamp(28px,4vw,56px);
   align-items:stretch;margin:0 0 52px;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .article-ratio{display:flex;flex-direction:column;justify-content:center}
@@ -718,6 +723,12 @@ html.chuyen .finding-home.is-visible .finding-title .nhan-manh::after{animation:
 .case-step.chain{color:var(--c-song);background:color-mix(in srgb,var(--c-song) 4%,var(--card))}
 .case-step.fixed{color:var(--c-xn);background:color-mix(in srgb,var(--c-xn) 5%,var(--card));
   box-shadow:0 0 36px color-mix(in srgb,var(--c-xn) 7%,transparent)}
+.case-step.file{color:var(--accent);background:color-mix(in srgb,var(--accent) 4%,var(--card))}
+.case-step.test{color:var(--c-song);background:color-mix(in srgb,var(--c-song) 4%,var(--card))}
+.case-step.state{color:var(--c-xn);background:color-mix(in srgb,var(--c-xn) 5%,var(--card))}
+.case-step.state.song{color:var(--c-song)}.case-step.state.sua{color:var(--c-sua)}
+.case-step.state.bac{color:var(--c-bac)}.case-step.state.cho{color:var(--c-cho)}
+.article-ledger-count .v em{font:700 .22em/1 var(--mono);letter-spacing:.04em;text-transform:uppercase}
 html.chuyen .article-verdict.is-visible .case-step{animation:case-lock .55s cubic-bezier(.2,.8,.2,1) backwards}
 html.chuyen .article-verdict.is-visible .case-step.chain{animation-delay:.1s}
 html.chuyen .article-verdict.is-visible .case-step.fixed{animation-delay:.2s}
@@ -740,25 +751,102 @@ html.chuyen .article-verdict.is-visible .case-step.fixed{animation-delay:.2s}
 .case-ledger-viz{display:grid;gap:10px}
 .case-ledger-bar{height:10px;display:flex;gap:2px;padding:1px;border:1px solid var(--line);border-radius:5px;background:var(--bg);overflow:hidden}
 .case-ledger-bar>i{flex:var(--n);border-radius:3px}.case-ledger-bar .xn,.case-ledger-bar .xac{background:var(--c-xn)}
-.case-ledger-bar .sua{background:var(--c-sua)}.case-ledger-bar .bac{background:var(--c-bac)}
+.case-ledger-bar .song{background:var(--c-song)}.case-ledger-bar .sua{background:var(--c-sua)}
+.case-ledger-bar .bac{background:var(--c-bac)}.case-ledger-bar .cho{background:var(--c-cho)}
 .case-ledger-legend{display:flex;gap:9px 18px;flex-wrap:wrap}
 .case-ledger-legend>i{display:inline-flex;gap:6px;align-items:center;font:550 10px/1 var(--mono);font-style:normal;color:var(--muted)}
 .case-ledger-legend .dot{width:7px;height:7px;border-radius:2px}.case-ledger-legend .dot.xn,.case-ledger-legend .dot.xac{background:var(--c-xn)}
-.case-ledger-legend .dot.sua{background:var(--c-sua)}.case-ledger-legend .dot.bac{background:var(--c-bac)}
+.case-ledger-legend .dot.song{background:var(--c-song)}.case-ledger-legend .dot.sua{background:var(--c-sua)}
+.case-ledger-legend .dot.bac{background:var(--c-bac)}.case-ledger-legend .dot.cho{background:var(--c-cho)}
 .case-evidence>summary .mo{font:700 10.5px/1 var(--mono);white-space:nowrap;color:var(--ink)}
 .case-evidence>summary .mo::after{content:" ↓"}.case-evidence[open]>summary .mo::after{content:" ↑"}
 .case-evidence[open]>summary{border-bottom:1px solid var(--line)}
 
+/* Sổ claim của trang bài: dữ liệu cũ, markup mới. Mọi màu lấy từ trạng thái thật. */
+.article-ledger{scroll-margin-top:118px}.case-ledger-body{padding:24px!important}
+.case-ledger-intro{max-width:72ch;margin:0 0 22px;color:var(--muted)}
+.case-claim-list{display:grid;gap:16px}
+.case-claim{--st:var(--accent);position:relative;padding:22px 22px 20px;border:1px solid var(--line);
+  border-radius:15px;background:color-mix(in srgb,var(--card) 86%,var(--bg));overflow:hidden;scroll-margin-top:124px}
+.case-claim::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:0 3px 3px 0;background:var(--st)}
+.case-claim.xac{--st:var(--c-xn)}.case-claim.song{--st:var(--c-song)}.case-claim.sua{--st:var(--c-sua)}
+.case-claim.bac{--st:var(--c-bac)}.case-claim.cho{--st:var(--c-cho)}
+.case-claim:target{border-color:color-mix(in srgb,var(--st) 58%,var(--line));
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--st) 10%,transparent),var(--bong)}
+.case-claim-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+.case-claim-id{font:800 13px/1 var(--mono);letter-spacing:.06em;color:var(--ink)}
+.case-claim-id:hover{color:var(--st)}
+.case-claim-status{display:inline-flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid color-mix(in srgb,var(--st) 35%,var(--line));
+  border-radius:999px;background:color-mix(in srgb,var(--st) 7%,transparent);font:750 9px/1 var(--mono);letter-spacing:.08em;color:var(--st)}
+.case-claim-status i{width:7px;height:7px;border-radius:2px;background:var(--st)}
+.case-claim-status.xac{--st:var(--c-xn)}.case-claim-status.song{--st:var(--c-song)}
+.case-claim-status.sua{--st:var(--c-sua)}.case-claim-status.bac{--st:var(--c-bac)}
+.case-claim-status.cho{--st:var(--c-cho)}
+.case-claim-actions{margin-left:auto;min-height:34px}
+.case-claim-text{max-width:78ch;margin:0 0 18px;font:650 clamp(15px,1.6vw,17px)/1.62 var(--display);color:var(--ink)}
+.case-claim-evidence{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px}
+.case-pin,.case-falsifier{margin:0;padding:14px 15px;border:1px solid var(--line-soft);border-radius:10px;
+  background:var(--inset);font:500 12.5px/1.65 var(--body);color:var(--muted);overflow-wrap:anywhere}
+.case-pin>span,.case-falsifier>span{display:block;margin-bottom:6px;font:800 8.5px/1.3 var(--mono);
+  letter-spacing:.14em;color:var(--faint)}
+.case-falsifier{border-left:3px solid color-mix(in srgb,var(--c-bac) 55%,var(--line));background:transparent}
+.case-falsifier>span{color:var(--c-bac)}
+.case-log{margin-top:12px;border-top:1px solid var(--line-soft)}
+.case-log>summary{padding:13px 0 0;cursor:pointer;list-style:none;font:700 10px/1 var(--mono);letter-spacing:.09em;color:var(--muted)}
+.case-log>summary::-webkit-details-marker{display:none}.case-log>summary::after{content:" ↓";color:var(--st)}
+.case-log[open]>summary::after{content:" ↑"}.case-log ol{list-style:none;padding:8px 0 0;margin:0}
+.case-log li{display:grid;grid-template-columns:minmax(86px,auto) 1fr;gap:10px;padding:8px 0;border-top:1px solid var(--line-soft);
+  font:500 12.5px/1.6 var(--body);color:var(--muted)}
+.case-log-date{font:700 10.5px/1.5 var(--mono);color:var(--ink)}
+.case-log .nguon-tro{display:block;opacity:.75;font-style:italic}.case-log a{color:var(--st);text-decoration:underline}
+
+/* Thanh đo đặc biệt của C1 và nút đo-lại vẫn sinh từ dữ liệu claim hiện có. */
+.case-claim-scale{margin:4px 0 18px}.case-claim-scale .hang{margin-bottom:12px}
+.case-claim-scale .nh{display:flex;justify-content:space-between;gap:12px;font:550 11.5px/1.5 var(--mono);color:var(--muted)}
+.case-claim-scale .nh b{color:var(--ink);white-space:nowrap}.case-claim-scale .ray{position:relative;height:12px;border-radius:4px;background:var(--inset);overflow:hidden}
+.case-claim-scale .ray.tr{height:9px;background:none;overflow:visible}.case-claim-scale .cot{display:block;height:100%;border-radius:0 4px 4px 0;background:var(--muted)}
+.case-claim-scale .cot.toi{background:var(--accent)}.case-claim-scale .cot.cu{background:color-mix(in srgb,var(--ink) 23%,transparent)}
+.case-claim-scale .vung{position:absolute;top:0;height:9px;border-radius:3px;background:var(--accent)}
+.case-claim-scale .nk2{margin-top:5px;color:var(--faint)}.case-claim-scale figcaption{margin-top:8px;font:500 10.5px/1.5 var(--mono);color:var(--faint)}
+.dolai-o{display:grid;gap:8px;margin:12px 0}.dolai{justify-self:start;min-height:38px;padding:0 13px;border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));
+  border-radius:9px;background:color-mix(in srgb,var(--accent) 6%,var(--card));font:750 10px/1 var(--mono);color:var(--accent);cursor:pointer}
+.dolai:hover{background:color-mix(in srgb,var(--accent) 11%,var(--card))}.dolai:disabled{opacity:.55;cursor:wait}
+.ketqua{padding:10px 12px;border-left:3px solid var(--line);background:var(--inset);font:500 11.5px/1.6 var(--mono);color:var(--muted);overflow-wrap:anywhere}
+.ketqua.khop{border-left-color:var(--c-xn)}.ketqua.lech{border-left-color:var(--c-sua)}.ketqua.loi{border-left-color:var(--c-bac)}
+.ketqua.khop b{color:var(--c-xn)}.ketqua.lech b{color:var(--c-sua)}.ketqua.loi b{color:var(--c-bac)}
+.ketqua .nguon{display:block;margin-top:3px;color:var(--faint)}
+.case-claim .dong.khongdo{margin:12px 0;padding:12px 14px;border:1px dashed var(--line);border-radius:9px;
+  font:500 12px/1.65 var(--body);color:var(--muted)}
+.case-claim .dong.khongdo .nhan{display:block;margin-bottom:5px;font:800 8.5px/1.3 var(--mono);letter-spacing:.12em;color:var(--faint)}
+
+.article-meta{display:grid;grid-template-columns:minmax(0,2fr) minmax(150px,.55fr);gap:12px 26px;
+  margin:0 0 38px;padding:17px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.article-meta>span{display:grid;grid-template-columns:auto 1fr;gap:8px;font:500 11.5px/1.65 var(--mono);color:var(--muted);overflow-wrap:anywhere}
+.article-meta b{font-size:8.5px;letter-spacing:.14em;color:var(--faint)}
+.article-meta-link{grid-column:1/-1!important;display:flex!important;gap:14px!important}.article-meta-link a,.article-token-link{color:var(--accent)}
+.article-token-link{font:700 10.5px/1.4 var(--mono)}
+.article-body{padding-top:30px}.article-body>p,.article-body>ul,.article-body>ol{max-width:68ch}
+.article-body ul,.article-body ol{padding-left:1.35em}.article-body li{margin:7px 0}
+.article-body .bang{overflow-x:auto;margin:26px 0 30px}.article-body .bang table{border-collapse:collapse;min-width:620px;width:100%;font-size:14px}
+.article-body .bang th{padding:0 18px 10px 0;border-bottom:1px solid var(--line);font:650 9.5px/1.45 var(--mono);letter-spacing:.11em;text-transform:uppercase;text-align:left;color:var(--faint)}
+.article-body .bang td{padding:12px 18px 12px 0;border-bottom:1px solid var(--line-soft);vertical-align:top;font-variant-numeric:tabular-nums}
+.article-body .bang tr:last-child td{border-bottom:0}.article-body pre{max-width:100%;margin:24px 0;padding:17px 18px;overflow-x:auto;border:1px solid var(--line-soft);border-radius:11px;background:var(--inset)}
+.article-body pre code{padding:0;border:0;background:none;word-break:normal;white-space:pre;font-size:12px;line-height:1.65}
+.receipt-body a{overflow-wrap:anywhere;word-break:break-word}
+
 @media(max-width:820px){
   .article-verdict{grid-template-columns:1fr}.article-ratio{max-width:360px}
   .case-evidence>summary{grid-template-columns:1fr auto}.case-ledger-viz{grid-column:1/-1;grid-row:2}
+  .case-claim-evidence{grid-template-columns:1fr}.article-meta{grid-template-columns:1fr}
 }
 @media(max-width:640px){
   .article-path{margin-bottom:20px}.article-verdict{margin-bottom:40px;padding-top:20px}
   .case-path{grid-template-columns:1fr;gap:7px}.case-path>i{transform:rotate(90deg);justify-self:center;font-size:14px}
   .case-step{min-height:94px}.article-map{top:54px;margin-inline:-4px}
   .case-evidence{margin-inline:-4px}.case-evidence>summary{padding:18px 16px;grid-template-columns:1fr}
-  .case-evidence>summary .mo{grid-row:3}.case-ledger-viz{grid-row:2}.case-ledger-legend{display:grid;grid-template-columns:repeat(3,1fr)}
+  .case-evidence>summary .mo{grid-row:3}.case-ledger-viz{grid-row:2}.case-ledger-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .case-ledger-body{padding:16px!important}.case-claim{padding:18px 16px 17px 18px}.case-claim-actions{width:100%;margin-left:0}
+  .case-claim-text{font-size:15px}.case-log li{grid-template-columns:1fr;gap:2px}.article-meta{margin-bottom:26px}
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -1405,377 +1493,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   .clock-hang{grid-template-columns:auto auto;gap:4px 12px}
   .clock-hua{grid-column:1/-1;margin-top:5px;font-size:13px}
 }
-
-:where(body.page-article,body.page-en) main a{text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--accent) 55%,transparent);
-  text-underline-offset:3px;text-decoration-thickness:1.5px}
-:where(body.page-article,body.page-en) main a:hover,:where(body.page-article,body.page-en) footer a:hover{color:var(--accent);text-decoration-color:var(--accent)}
-:where(body.page-article,body.page-en) li,:where(body.page-article,body.page-en) td,:where(body.page-article,body.page-en) th,:where(body.page-article,body.page-en) h1,:where(body.page-article,body.page-en) h2,:where(body.page-article,body.page-en) h3,:where(body.page-article,body.page-en) figcaption{overflow-wrap:break-word}
-:where(body.page-article,body.page-en) .tag{font:500 11px/1 var(--mono);letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
-:where(body.page-article,body.page-en) h1{font:var(--dw) clamp(28px,5.2vw,40px)/1.14 var(--display);letter-spacing:-.025em;margin:0 0 16px;text-wrap:balance}
-:where(body.page-article,body.page-en) h1+p{font:400 18.5px/1.66 var(--body);color:var(--muted);max-width:64ch}
-:where(body.page-article,body.page-en) h1+p strong{color:var(--ink);font-weight:650}
-:where(body.page-article,body.page-en) main>p,:where(body.page-article,body.page-en) main>ul,:where(body.page-article,body.page-en) main>ol{max-width:72ch}
-:where(body.page-article,body.page-en) h2{font:750 23px/1.28 var(--display);letter-spacing:-.018em;margin:46px 0 14px;text-wrap:balance}
-:where(body.page-article,body.page-en) h2::before{content:"";display:block;width:34px;height:3px;border-radius:2px;background:var(--accent);margin-bottom:12px;opacity:.9}
-:where(body.page-article,body.page-en) h3{font:650 16.5px/1.45 var(--body);margin:26px 0 8px}
-:where(body.page-article,body.page-en) strong{font-weight:680}
-:where(body.page-article,body.page-en) hr{border:0;border-top:1px solid var(--line);margin:34px 0}
-:where(body.page-article,body.page-en) ul,:where(body.page-article,body.page-en) ol{margin:0 0 18px;padding-left:21px}
-:where(body.page-article,body.page-en) li{margin-bottom:7px}
-:where(body.page-article,body.page-en) pre{background:var(--inset);border:1px solid var(--line-soft);border-radius:10px;padding:14px 16px;
-  overflow-x:auto;margin:0 0 18px}
-:where(body.page-article,body.page-en) pre code{background:none;border:0;padding:0;font-size:12.5px;line-height:1.62}
-:where(body.page-article,body.page-en) .cuon{overflow-x:auto;margin:0 0 19px;-webkit-overflow-scrolling:touch;
-  border:1px solid var(--line);border-radius:12px;background:var(--card)}
-:where(body.page-article,body.page-en) table{border-collapse:collapse;font-size:14.5px;min-width:100%}
-:where(body.page-article,body.page-en) th,:where(body.page-article,body.page-en) td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line-soft);white-space:nowrap}
-:where(body.page-article,body.page-en) tr:last-child td{border-bottom:0}
-:where(body.page-article,body.page-en) th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;
-  color:var(--muted);border-bottom:1px solid var(--line)}
-:where(body.page-article,body.page-en) .meta{font:500 12.5px/1.7 var(--mono);color:var(--muted);margin:0 0 26px;
-  background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
-  border-radius:10px;padding:11px 16px}
-:where(body.page-article,body.page-en) .meta b{color:var(--ink);font-weight:600}
-:where(body.page-article,body.page-en) .dai,:where(body.page-article,body.page-en) .board{background:var(--card);border:1px solid var(--line);border-radius:14px;
-  padding:16px 18px 14px;margin:0 0 28px;
-  box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 26px -18px rgba(0,0,0,.5)}
-:where(body.page-article,body.page-en) .bh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-:where(body.page-article,body.page-en) .bh b{font:700 13px/1.4 var(--body);letter-spacing:.01em}
-:where(body.page-article,body.page-en) .bh span{font:500 11.5px/1.5 var(--mono);color:var(--faint)}
-:where(body.page-article,body.page-en) .stack{display:flex;gap:2px;height:22px;border-radius:6px;overflow:hidden;background:var(--inset)}
-:where(body.page-article,body.page-en) .seg{background:var(--st);min-width:3px;transition:opacity .16s}
-:where(body.page-article,body.page-en) .seg.xac{--st:var(--c-xn)}
-:where(body.page-article,body.page-en) .seg.song{--st:var(--c-song)}
-:where(body.page-article,body.page-en) .seg.sua{--st:var(--c-sua)}
-:where(body.page-article,body.page-en) .seg.bac{--st:var(--c-bac)}
-:where(body.page-article,body.page-en) .seg.cho{--st:var(--c-cho)}
-:where(body.page-article,body.page-en) html.chuyen .stack .seg{transform:scaleX(0);transform-origin:left;
-  transition:transform .7s cubic-bezier(.22,.75,.3,1) calc(var(--i,0)*90ms),opacity .16s}
-:where(body.page-article,body.page-en) html.chuyen .stack.chay .seg{transform:none}
-:where(body.page-article,body.page-en) html.js .stack .seg{cursor:pointer}
-:where(body.page-article,body.page-en) .stack:hover .seg{opacity:.38}
-:where(body.page-article,body.page-en) .stack .seg:hover{opacity:1}
-:where(body.page-article,body.page-en) .stack[data-noi="xac"] .seg:not(.xac),:where(body.page-article,body.page-en) .stack[data-noi="song"] .seg:not(.song),:where(body.page-article,body.page-en) .stack[data-noi="sua"] .seg:not(.sua),:where(body.page-article,body.page-en) .stack[data-noi="bac"] .seg:not(.bac),:where(body.page-article,body.page-en) .stack[data-noi="cho"] .seg:not(.cho){opacity:.3}
-:where(body.page-article,body.page-en) .roi{opacity:.4;transition:opacity .16s}
-:where(body.page-article,body.page-en) #bp-tip{position:fixed;z-index:60;left:0;top:0;pointer-events:none;opacity:0;
-  font:600 11.5px/1 var(--mono);color:var(--ink);background:var(--card);
-  border:1px solid var(--line);border-radius:8px;padding:7px 10px;white-space:nowrap;
-  box-shadow:0 10px 26px -14px rgba(0,0,0,.65);transition:opacity .13s}
-:where(body.page-article,body.page-en) #bp-tip.hien{opacity:1}
-:where(body.page-article,body.page-en) .chu-thich{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-:where(body.page-article,body.page-en) .lg{display:inline-flex;align-items:center;gap:7px;font:600 12px/1 var(--body);
-  padding:7px 11px 7px 9px;border-radius:999px;border:1px solid var(--line);
-  background:var(--inset);color:var(--muted);text-decoration:none;cursor:default;
-  transition:border-color .16s,background .16s,color .16s,box-shadow .16s}
-:where(body.page-article,body.page-en) html.js .lg{cursor:pointer}
-:where(body.page-article,body.page-en) .lg .sw{width:9px;height:9px;border-radius:2px;background:var(--st);flex:none}
-:where(body.page-article,body.page-en) .lg .n{font:700 12px var(--mono);color:var(--ink)}
-:where(body.page-article,body.page-en) .lg.xac{--st:var(--c-xn)}
-:where(body.page-article,body.page-en) .lg.song{--st:var(--c-song)}
-:where(body.page-article,body.page-en) .lg.sua{--st:var(--c-sua)}
-:where(body.page-article,body.page-en) .lg.bac{--st:var(--c-bac)}
-:where(body.page-article,body.page-en) .lg.cho{--st:var(--c-cho)}
-:where(body.page-article,body.page-en) .lg:hover{border-color:var(--st);color:var(--ink)}
-:where(body.page-article,body.page-en) .lg[aria-pressed="true"]{border-color:var(--st);color:var(--ink);
-  background:color-mix(in srgb,var(--st) 16%,var(--inset));
-  box-shadow:0 0 0 3px color-mix(in srgb,var(--st) 15%,transparent)}
-:where(body.page-article,body.page-en) .khi{font:500 12px/1.65 var(--mono);color:var(--faint);margin-top:11px}
-:where(body.page-article,body.page-en) .toi{display:inline-block;margin-top:12px;font:700 12.5px/1 var(--mono);letter-spacing:.05em;
-  text-decoration:none;color:var(--ink);background:var(--nut-nen);color:var(--nut-chu);
-  padding:9px 13px;border-radius:8px}
-:where(body.page-article,body.page-en) .toi:hover{filter:brightness(1.1)}
-:where(body.page-article,body.page-en) .dem{font:500 15px/1.55 var(--body);color:var(--muted)}
-:where(body.page-article,body.page-en) .dem .to{font:700 30px/1 var(--mono);color:var(--ink);vertical-align:-4px;margin-right:4px;letter-spacing:-.02em}
-:where(body.page-article,body.page-en) .dem b{font-weight:700}
-:where(body.page-article,body.page-en) .dem b.xac{color:var(--c-xn)}
-:where(body.page-article,body.page-en) .dem b.song{color:var(--c-song)}
-:where(body.page-article,body.page-en) .dem b.sua{color:var(--c-sua)}
-:where(body.page-article,body.page-en) .dem b.bac{color:var(--c-bac)}
-:where(body.page-article,body.page-en) .dem b.cho{color:var(--c-cho)}
-:where(body.page-article,body.page-en) .dem .phu{font:500 12.5px/1.65 var(--body);color:var(--faint);margin-top:8px;
-  text-transform:none;letter-spacing:0}
-:where(body.page-article,body.page-en) .tt-khu{margin:0 0 30px}
-:where(body.page-article,body.page-en) .tt-dau{display:flex;align-items:center;justify-content:space-between;gap:12px;
-  flex-wrap:wrap;margin:0 0 13px}
-:where(body.page-article,body.page-en) .nhom-loc{display:flex;gap:6px;flex-wrap:wrap}
-:where(body.page-article,body.page-en) .lg-loc{font:600 12px/1 var(--body);padding:8px 13px;border-radius:999px;
-  border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:default;
-  transition:border-color .16s,color .16s,background .16s}
-:where(body.page-article,body.page-en) html.js .lg-loc{cursor:pointer}
-:where(body.page-article,body.page-en) .lg-loc .n{font:700 12px var(--mono);color:var(--ink);margin-left:4px}
-:where(body.page-article,body.page-en) .lg-loc:hover{color:var(--ink);border-color:var(--muted)}
-:where(body.page-article,body.page-en) .lg-loc[aria-pressed="true"]{color:var(--nut-chu);background:var(--nut-nen);border-color:transparent}
-:where(body.page-article,body.page-en) .lg-loc[aria-pressed="true"] .n{color:var(--nut-chu)}
-:where(body.page-article,body.page-en) .tt-dau .lo{font:500 12px/1.6 var(--mono);color:var(--faint)}
-:where(body.page-article,body.page-en) .mo-them{margin-top:10px;width:100%;justify-content:center}
-:where(body.page-article,body.page-en) .mo-them[hidden]{display:none}
-:where(body.page-article,body.page-en) ol.tt-ds{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
-:where(body.page-article,body.page-en) ol.tt-ds li{--st:var(--accent)}
-:where(body.page-article,body.page-en) ol.tt-ds li.xac{--st:var(--c-xn)}
-:where(body.page-article,body.page-en) ol.tt-ds li.song{--st:var(--c-song)}
-:where(body.page-article,body.page-en) ol.tt-ds li.sua{--st:var(--c-sua)}
-:where(body.page-article,body.page-en) ol.tt-ds li.bac{--st:var(--c-bac)}
-:where(body.page-article,body.page-en) ol.tt-ds li.cho{--st:var(--c-cho)}
-:where(body.page-article,body.page-en) .tt-hop{display:grid;grid-template-columns:auto minmax(0,1fr);gap:5px 14px;align-items:start;
-  background:var(--card);border:1px solid var(--line);border-left:3px solid var(--st);
-  border-radius:12px;padding:13px 16px;text-decoration:none;list-style:none;
-  transition:transform .16s,border-color .16s,box-shadow .16s}
-:where(body.page-article,body.page-en) .tt-hop::-webkit-details-marker{display:none}
-:where(body.page-article,body.page-en) .tt-hop:hover{transform:translateY(-1px);text-decoration:none;
-  border-color:color-mix(in srgb,var(--st) 45%,var(--line));
-  box-shadow:0 1px 2px rgba(0,0,0,.05),0 12px 28px -20px rgba(0,0,0,.6)}
-:where(body.page-article,body.page-en) ol.tt-ds .chip{grid-row:1/3;align-self:start;margin-top:1px}
-:where(body.page-article,body.page-en) ol.tt-ds .tx{font:500 15px/1.6 var(--body);color:var(--ink);
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-:where(body.page-article,body.page-en) ol.tt-ds .mt{font:500 11.5px/1.55 var(--mono);color:var(--faint)}
-:where(body.page-article,body.page-en) .crumb{font:700 10.5px/1.5 var(--mono);letter-spacing:.16em;text-transform:uppercase;
-  color:var(--accent);margin:0 0 10px}
-:where(body.page-article,body.page-en) details.tu-so>summary{cursor:pointer;list-style:none;display:block}
-:where(body.page-article,body.page-en) details.tu-so>summary::-webkit-details-marker{display:none}
-:where(body.page-article,body.page-en) details.tu-so .tt-hop{grid-template-columns:auto minmax(0,1fr) 15px}
-:where(body.page-article,body.page-en) details.tu-so .mui{grid-row:1/3;grid-column:3;align-self:center;color:var(--faint);
-  font:400 12px/1 var(--mono);transition:transform .2s}
-:where(body.page-article,body.page-en) details.tu-so[open] .mui{transform:rotate(180deg)}
-:where(body.page-article,body.page-en) details.tu-so[open] .tt-hop{border-bottom-left-radius:0;border-bottom-right-radius:0;
-  transform:none;box-shadow:none}
-:where(body.page-article,body.page-en) details.tu-so[open] .tx{-webkit-line-clamp:9}
-:where(body.page-article,body.page-en) .tu-mo{background:var(--card);border:1px solid var(--line);border-top:0;
-  border-left:3px solid var(--st);border-radius:0 0 12px 12px;padding:12px 16px 14px}
-:where(body.page-article,body.page-en) .tu-mo .dong:last-of-type{margin-bottom:11px}
-:where(body.page-article,body.page-en) .tu-mo .tro{margin:0;font:600 12.5px/1.6 var(--mono)}
-:where(body.page-article,body.page-en) .ban-do{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 8px}
-:where(body.page-article,body.page-en) .o-map{position:relative;flex:1 1 235px;display:flex;flex-direction:column;gap:3px;
-  overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:14px;
-  padding:15px 17px 14px;text-decoration:none;
-  transition:transform .18s,border-color .18s,box-shadow .18s}
-:where(body.page-article,body.page-en) .o-map::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--accent)}
-:where(body.page-article,body.page-en) .o-map::after{content:"";position:absolute;inset:0;pointer-events:none;background:
-  radial-gradient(320px 120px at 85% -26px,color-mix(in srgb,var(--accent) 13%,transparent),transparent 72%)}
-:where(body.page-article,body.page-en) .o-map:hover{transform:translateY(-2px);text-decoration:none;color:var(--ink);
-  border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
-  box-shadow:0 2px 4px rgba(0,0,0,.05),0 16px 34px -24px rgba(0,0,0,.7)}
-:where(body.page-article,body.page-en) .o-map>*{position:relative}
-:where(body.page-article,body.page-en) .o-map .k{font:700 10.5px/1.5 var(--mono);letter-spacing:.16em;color:var(--accent)}
-:where(body.page-article,body.page-en) .o-map .v{font:700 27px/1.15 var(--mono);letter-spacing:-.03em;color:var(--ink)}
-:where(body.page-article,body.page-en) .o-map .g{font:400 12.5px/1.5 var(--body);color:var(--muted);padding-right:22px}
-:where(body.page-article,body.page-en) .o-map .mui{position:absolute;right:15px;bottom:12px;font-size:17px;color:var(--muted);
-  transition:transform .18s,color .18s}
-:where(body.page-article,body.page-en) .o-map:hover .mui{transform:translateX(4px);color:var(--accent)}
-:where(body.page-article,body.page-en) .cua{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0 0}
-:where(body.page-article,body.page-en) .cua-3{grid-template-columns:repeat(auto-fit,minmax(262px,1fr))}
-:where(body.page-article,body.page-en) .cua-o .mini{margin:3px 0 0;display:flex;gap:2px;height:6px;border-radius:3px;
-  overflow:hidden;background:var(--inset)}
-:where(body.page-article,body.page-en) .cua-o.tok .t{font-size:clamp(17px,2vw,19px)}
-:where(body.page-article,body.page-en) .cua-o.tok .n{margin:0;padding:0;border-top:0}
-:where(body.page-article,body.page-en) .cua-o.tok .g{margin-top:auto;padding:11px 30px 0 0;border-top:1px solid var(--line-soft)}
-:where(body.page-article,body.page-en) .cua-o{position:relative;display:flex;flex-direction:column;gap:9px;overflow:hidden;
-  background:var(--card);border:1px solid var(--line);border-radius:16px;
-  padding:20px 22px 18px;text-decoration:none;
-  transition:transform .18s,border-color .18s,box-shadow .18s}
-:where(body.page-article,body.page-en) .cua-o::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--accent)}
-:where(body.page-article,body.page-en) .cua-o::after{content:"";position:absolute;inset:0;pointer-events:none;background:
-  radial-gradient(420px 160px at 88% -34px,color-mix(in srgb,var(--accent) 15%,transparent),transparent 72%)}
-:where(body.page-article,body.page-en) .cua-o:hover{transform:translateY(-2px);text-decoration:none;color:var(--ink);
-  border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
-  box-shadow:0 2px 4px rgba(0,0,0,.05),0 18px 40px -26px rgba(0,0,0,.7)}
-:where(body.page-article,body.page-en) .cua-o>*{position:relative}
-:where(body.page-article,body.page-en) .cua-o .k{font:700 10.5px/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
-:where(body.page-article,body.page-en) .cua-o .t{font:700 clamp(18px,2.2vw,21px)/1.32 var(--display);letter-spacing:-.015em;text-wrap:balance}
-:where(body.page-article,body.page-en) .cua-o .g{font:400 13.5px/1.62 var(--body);color:var(--muted)}
-:where(body.page-article,body.page-en) .cua-o .n{margin-top:auto;padding:11px 36px 0 0;border-top:1px solid var(--line-soft);
-  font:500 12px/1.7 var(--mono);color:var(--faint);display:flex;flex-wrap:wrap;
-  align-items:baseline;gap:7px}
-:where(body.page-article,body.page-en) .cua-o .n b{font:700 17px var(--mono);color:var(--ink);letter-spacing:-.02em}
-:where(body.page-article,body.page-en) .cua-o .n i{display:inline-block;width:3px;height:3px;border-radius:50%;
-  background:var(--muted);margin:0 3px;vertical-align:middle}
-:where(body.page-article,body.page-en) .cua-o .mui{position:absolute;right:20px;bottom:15px;font-size:19px;color:var(--muted);
-  transition:transform .18s,color .18s}
-:where(body.page-article,body.page-en) .cua-o:hover .mui{transform:translateX(4px);color:var(--accent)}
-:where(body.page-article,body.page-en) .so{margin:48px 0 0}
-:where(body.page-article,body.page-en) .so>p.dan{font-size:14.5px;color:var(--muted);margin:0 0 20px;max-width:74ch}
-:where(body.page-article,body.page-en) .claim{--st:var(--accent);background:var(--card);border:1px solid var(--line);
-  border-left:4px solid var(--st);border-radius:14px;padding:18px 20px;margin-bottom:14px;
-  scroll-margin-top:82px;transition:box-shadow .18s,border-color .18s}
-:where(body.page-article,body.page-en) .claim.xac{--st:var(--c-xn)}
-:where(body.page-article,body.page-en) .claim.song{--st:var(--c-song)}
-:where(body.page-article,body.page-en) .claim.sua{--st:var(--c-sua)}
-:where(body.page-article,body.page-en) .claim.bac{--st:var(--c-bac)}
-:where(body.page-article,body.page-en) .claim.cho{--st:var(--c-cho)}
-:where(body.page-article,body.page-en) .claim.sua{border-left-style:double;border-left-width:6px}
-:where(body.page-article,body.page-en) .claim.cho{border-left-style:dashed}
-:where(body.page-article,body.page-en) .claim:hover{box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 26px -18px rgba(0,0,0,.5)}
-:where(body.page-article,body.page-en) .claim:target{border-color:var(--st);box-shadow:0 0 0 3px color-mix(in srgb,var(--st) 20%,transparent)}
-:where(body.page-article,body.page-en) .claim h3{margin:0 0 11px;font:700 15px/1.5 var(--body);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-:where(body.page-article,body.page-en) .claim .id{font:700 15px var(--mono);color:var(--ink);text-decoration:none}
-:where(body.page-article,body.page-en) .claim .id:hover{color:var(--accent)}
-:where(body.page-article,body.page-en) .claim>p{margin:0 0 13px;font-size:15.5px;line-height:1.66}
-:where(body.page-article,body.page-en) .chip{--st:var(--accent);display:inline-flex;align-items:center;gap:7px;
-  font:700 11.5px/1 var(--mono);letter-spacing:.055em;padding:5px 11px;border-radius:999px;
-  color:var(--st);border:1.5px solid var(--st);background:color-mix(in srgb,var(--st) 13%,transparent);
-  white-space:nowrap}
-:where(body.page-article,body.page-en) .chip::before{font-size:11px;line-height:1}
-:where(body.page-article,body.page-en) .chip.xac{--st:var(--c-xn)}
-:where(body.page-article,body.page-en) .chip.xac::before{content:"✓"}
-:where(body.page-article,body.page-en) .chip.song{--st:var(--c-song)}
-:where(body.page-article,body.page-en) .chip.song::before{content:"●"}
-:where(body.page-article,body.page-en) .chip.sua{--st:var(--c-sua)}
-:where(body.page-article,body.page-en) .chip.sua::before{content:"✎"}
-:where(body.page-article,body.page-en) .chip.cho{--st:var(--c-cho);border-style:dashed}
-:where(body.page-article,body.page-en) .chip.cho::before{content:"○"}
-:where(body.page-article,body.page-en) .chip.bac{--st:var(--c-bac);background:var(--c-bac);color:var(--card);border-color:var(--c-bac)}
-:where(body.page-article,body.page-en) .chip.bac::before{content:"✕"}
-:where(body.page-article,body.page-en) .dong{font-size:14px;margin:0 0 11px;background:var(--inset);border:1px solid var(--line-soft);
-  border-left:2px solid var(--muted);border-radius:9px;padding:10px 13px;line-height:1.65}
-:where(body.page-article,body.page-en) .dong .nhan{font:700 10px var(--mono);letter-spacing:.09em;color:var(--muted);
-  display:block;margin-bottom:4px;text-transform:uppercase}
-:where(body.page-article,body.page-en) .dong code{font-size:11.5px;background:none;border:0;padding:0;display:block;
-  white-space:pre-wrap;color:var(--muted)}
-:where(body.page-article,body.page-en) .dong.bac{background:transparent;border:0;border-left:2px solid color-mix(in srgb,var(--c-bac) 45%,transparent);
-  border-radius:0;padding:2px 0 2px 12px;font-size:14px;color:var(--muted)}
-:where(body.page-article,body.page-en) .dong.bac .nhan{color:var(--c-bac)}
-:where(body.page-article,body.page-en) .dong.khongdo{background:transparent;border:1px dashed var(--line);border-radius:9px;
-  color:var(--faint);font-size:13px}
-:where(body.page-article,body.page-en) .claim .moc{font:500 12.5px/1.7 var(--mono);color:var(--faint);letter-spacing:.02em}
-:where(body.page-article,body.page-en) .tro{margin:12px 0 0;font:500 12.5px/1.6 var(--mono)}
-:where(body.page-article,body.page-en) .nk{list-style:none;padding:0;margin:14px 0 0;font-size:13.5px}
-:where(body.page-article,body.page-en) .nk li{position:relative;padding:7px 0 7px 22px;margin:0;color:var(--muted);line-height:1.6}
-:where(body.page-article,body.page-en) .nk li::before{content:"";position:absolute;left:0;top:14px;width:9px;height:9px;border-radius:50%;
-  background:var(--st);box-shadow:0 0 0 3px color-mix(in srgb,var(--st) 18%,transparent)}
-:where(body.page-article,body.page-en) .nk .d{font:700 11.5px var(--mono);color:var(--ink);margin-right:8px}
-:where(body.page-article,body.page-en) .nk .nguon-tro{opacity:.72;font-size:.92em;font-style:italic}
-:where(body.page-article,body.page-en) .hinh{margin:0 0 13px;padding:0}
-:where(body.page-article,body.page-en) .thang .hang{margin-bottom:13px}
-:where(body.page-article,body.page-en) .thang .nh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
-  font:500 12px/1.5 var(--mono);color:var(--muted);margin-bottom:4px}
-:where(body.page-article,body.page-en) .thang .nh b{font:700 14px var(--mono);color:var(--ink);white-space:nowrap}
-:where(body.page-article,body.page-en) .thang .ray{position:relative;height:14px;background:var(--inset);border-radius:4px;overflow:hidden}
-:where(body.page-article,body.page-en) .thang .ray.tr{height:9px;background:none;overflow:visible}
-:where(body.page-article,body.page-en) .thang .cot{display:block;height:100%;background:var(--muted);border-radius:0 4px 4px 0}
-:where(body.page-article,body.page-en) .thang .cot.toi{background:var(--accent)}
-:where(body.page-article,body.page-en) .thang .cot.cu{background:color-mix(in srgb,var(--ink) 22%,transparent)}
-:where(body.page-article,body.page-en) .thang .vung{position:absolute;top:0;height:9px;background:var(--accent);
-  border-left:2px solid var(--accent);border-right:2px solid var(--accent);opacity:.45}
-:where(body.page-article,body.page-en) .thang .nk2{margin:4px 0 0;font-size:11.5px;color:var(--faint)}
-:where(body.page-article,body.page-en) .thang .nk2 b{font-size:12px;color:var(--accent)}
-:where(body.page-article,body.page-en) .hinh figcaption{font:500 11px/1.5 var(--mono);color:var(--faint);margin-top:8px;
-  padding-top:7px;border-top:1px solid var(--line-soft)}
-:where(body.page-article,body.page-en) .dan-gt{margin:14px 0 0;font-size:15px}
-:where(body.page-article,body.page-en) ul.han{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-:where(body.page-article,body.page-en) ul.han li{background:var(--card);border:1px solid var(--line);border-left:4px dashed var(--c-cho);
-  border-radius:12px;padding:13px 16px;font-size:14.5px}
-:where(body.page-article,body.page-en) ul.han .ngay{font:700 13px/1.7 var(--mono);letter-spacing:.03em;color:var(--ink);display:block;margin-bottom:3px}
-:where(body.page-article,body.page-en) ul.han .con{font-weight:600;color:var(--c-cho);margin-left:9px;font-family:var(--mono);font-size:11.5px}
-:where(body.page-article,body.page-en) ul.han .con.qua{color:var(--c-sua)}
-:where(body.page-article,body.page-en) .dolai-o{margin:0 0 12px;display:flex;flex-direction:column;gap:9px;
-  background:var(--inset);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
-:where(body.page-article,body.page-en) button.dolai{align-self:flex-start;font:700 12.5px/1 var(--body);letter-spacing:.02em;
-  color:var(--nut-chu);background:var(--nut-nen);border:0;border-radius:8px;
-  padding:10px 15px;cursor:pointer}
-:where(body.page-article,body.page-en) button.dolai:hover{transform:translateY(-1px)}
-:where(body.page-article,body.page-en) button.dolai[disabled]{opacity:.6;cursor:progress;transform:none}
-:where(body.page-article,body.page-en) .ketqua{font:500 12.5px/1.65 var(--mono);color:var(--muted);
-  border-left:2px solid var(--line);padding:2px 0 2px 10px}
-:where(body.page-article,body.page-en) .ketqua b{color:var(--ink);font-weight:700}
-:where(body.page-article,body.page-en) .ketqua.khop{border-left-color:var(--c-xn)}
-:where(body.page-article,body.page-en) .ketqua.khop b{color:var(--c-xn)}
-:where(body.page-article,body.page-en) .ketqua.lech{border-left-color:var(--c-sua)}
-:where(body.page-article,body.page-en) .ketqua.lech b{color:var(--c-sua)}
-:where(body.page-article,body.page-en) .ketqua.loi{border-left-color:var(--c-bac)}
-:where(body.page-article,body.page-en) .ketqua.loi b{color:var(--c-bac)}
-:where(body.page-article,body.page-en) .ketqua .nguon{display:block;font-size:11px;color:var(--faint);margin-top:3px}
-:where(body.page-article,body.page-en) .bandaydu{margin-top:56px;padding-top:8px;border-top:1px solid var(--line)}
-:where(body.page-article,body.page-en) .bandaydu>p,:where(body.page-article,body.page-en) .bandaydu>ul,:where(body.page-article,body.page-en) .bandaydu>ol{max-width:72ch}
-:where(body.page-article,body.page-en) .bandaydu h2{margin-top:34px}
-:where(body.page-article,body.page-en) .khu-bai{margin-top:52px}
-:where(body.page-article,body.page-en) .khu-dau{display:flex;align-items:flex-end;gap:14px}
-:where(body.page-article,body.page-en) .khu-dau h2{margin:0}
-:where(body.page-article,body.page-en) .dieu-rail{margin-left:auto;display:flex;gap:7px;padding-bottom:3px}
-:where(body.page-article,body.page-en) button.rn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);
-  background:var(--card);color:var(--muted);font:600 15px/1 var(--body);cursor:pointer;
-  transition:color .16s,border-color .16s,transform .16s}
-:where(body.page-article,body.page-en) button.rn:hover:not([disabled]){color:var(--ink);border-color:var(--muted);transform:translateY(-1px)}
-:where(body.page-article,body.page-en) button.rn[disabled]{opacity:.32;cursor:default}
-:where(body.page-article,body.page-en) .rail-boc{position:relative}
-:where(body.page-article,body.page-en) .rail-boc::after{content:"";position:absolute;right:0;top:0;bottom:16px;width:52px;
-  pointer-events:none;background:linear-gradient(90deg,transparent,var(--bg));
-  transition:opacity .22s}
-:where(body.page-article,body.page-en) .rail-boc.het::after{opacity:0}
-:where(body.page-article,body.page-en) .rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,1fr);gap:14px;
-  margin-top:16px;padding:3px 2px 16px;overflow-x:auto;overscroll-behavior-x:contain;
-  scroll-snap-type:x proximity;scroll-padding-left:2px;-webkit-overflow-scrolling:touch;
-  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
-:where(body.page-article,body.page-en) .rail::-webkit-scrollbar{height:8px}
-:where(body.page-article,body.page-en) .rail::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
-:where(body.page-article,body.page-en) .rail::-webkit-scrollbar-thumb:hover{background:var(--muted)}
-:where(body.page-article,body.page-en) .rail:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:12px}
-:where(body.page-article,body.page-en) .bai{scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;
-  background:var(--card);border:1px solid var(--line);border-radius:14px;
-  padding:16px 18px 15px;text-decoration:none;
-  transition:border-color .16s,transform .16s,box-shadow .16s}
-:where(body.page-article,body.page-en) .bai:hover{border-color:var(--muted);transform:translateY(-2px);text-decoration:none;
-  color:var(--ink);box-shadow:0 2px 4px rgba(0,0,0,.05),0 16px 34px -24px rgba(0,0,0,.65)}
-:where(body.page-article,body.page-en) .bai .d{font:500 11.5px/1.5 var(--mono);color:var(--faint)}
-:where(body.page-article,body.page-en) .bai .t{font:650 16.5px/1.42 var(--body);letter-spacing:-.01em;
-  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-:where(body.page-article,body.page-en) .bai .mini{display:flex;gap:2px;height:6px;border-radius:3px;overflow:hidden;
-  background:var(--inset);margin-top:auto}
-:where(body.page-article,body.page-en) .bai .s{font:500 11.5px/1.55 var(--mono);color:var(--faint)}
-:where(body.page-article,body.page-en) .rail-goi{margin:2px 0 0;font:500 11.5px/1.6 var(--mono);color:var(--faint)}
-:where(body.page-article,body.page-en) .fact{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;
-  margin-bottom:16px;scroll-margin-top:82px;
-  box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 26px -18px rgba(0,0,0,.5)}
-:where(body.page-article,body.page-en) .fact:target{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
-:where(body.page-article,body.page-en) .f-top.mot-cot{grid-template-columns:1fr}
-:where(body.page-article,body.page-en) .f-top.co-fig .f-body{border-left:1px solid var(--line)}
-:where(body.page-article,body.page-en) .f-box.vi .k{color:var(--accent)}
-:where(body.page-article,body.page-en) details.lenh{margin:0 21px 16px}
-:where(body.page-article,body.page-en) details.lenh summary{cursor:pointer;font:500 11.5px var(--mono);color:var(--muted);padding:7px 0}
-:where(body.page-article,body.page-en) details.lenh summary:hover,:where(body.page-article,body.page-en) details.lenh[open] summary{color:var(--ink)}
-:where(body.page-article,body.page-en) .cmd{background:var(--inset);border:1px solid var(--line-soft);border-radius:9px;padding:10px 12px;
-  font:400 11.5px/1.6 var(--mono);color:var(--muted);overflow-x:auto;white-space:pre;margin:0}
-:where(body.page-article,body.page-en) .tr{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--st);
-  border-radius:14px;overflow:hidden;margin-bottom:15px;--st:var(--accent);
-  box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 26px -18px rgba(0,0,0,.5)}
-:where(body.page-article,body.page-en) .tr.xac{--st:var(--c-xn)}
-:where(body.page-article,body.page-en) .tr.song{--st:var(--c-song)}
-:where(body.page-article,body.page-en) .tr.sua{--st:var(--c-sua)}
-:where(body.page-article,body.page-en) .tr.bac{--st:var(--c-bac)}
-:where(body.page-article,body.page-en) .tr.cho{--st:var(--c-cho)}
-:where(body.page-article,body.page-en) .tr.song{border-left-style:dashed}
-:where(body.page-article,body.page-en) .tr.sua{border-left-style:double;border-left-width:6px}
-:where(body.page-article,body.page-en) html.chuyen [data-hien]{opacity:0;transform:translateY(16px);
-  transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.3,1)}
-:where(body.page-article,body.page-en) html.chuyen [data-hien].hien{opacity:1;transform:none}
-@media(max-width:760px){
-:where(body.page-article,body.page-en) .tag{display:none}
-:where(body.page-article,body.page-en) .cua{grid-template-columns:1fr}
-}
-@media(max-width:640px){
-:where(body.page-article,body.page-en) nav.dieu::-webkit-scrollbar{display:none}
-}
-@media(max-width:620px){
-:where(body.page-article,body.page-en) .tt-hop{grid-template-columns:minmax(0,1fr)}
-:where(body.page-article,body.page-en) ol.tt-ds .chip{grid-row:auto;justify-self:start;margin-bottom:3px}
-:where(body.page-article,body.page-en) ol.tt-ds .mt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-:where(body.page-article,body.page-en) details.tu-so .tt-hop{grid-template-columns:minmax(0,1fr) 15px}
-:where(body.page-article,body.page-en) details.tu-so .chip,:where(body.page-article,body.page-en) details.tu-so .tx,:where(body.page-article,body.page-en) details.tu-so .mt{grid-column:1}
-:where(body.page-article,body.page-en) details.tu-so .mui{grid-row:1;grid-column:2;align-self:start}
-:where(body.page-article,body.page-en) .ban-do{gap:9px}
-:where(body.page-article,body.page-en) .o-map{flex:1 1 calc(50% - 5px);padding:13px 14px 12px}
-:where(body.page-article,body.page-en) .o-map .v{font-size:23px}
-:where(body.page-article,body.page-en) .o-map .g{font-size:11.5px;padding-right:16px}
-:where(body.page-article,body.page-en) .o-map .mui{right:12px;bottom:10px;font-size:15px}
-:where(body.page-article,body.page-en) .o-map:last-child:nth-child(odd){flex-basis:100%}
-}
-@media(max-width:560px){
-:where(body.page-article,body.page-en) .dieu-rail{display:none}
-}
-@media(min-width:760px){
-:where(body.page-article,body.page-en) .rail{grid-auto-columns:minmax(272px,300px)}
-}
-@media(max-width:820px){
-:where(body.page-article,body.page-en) .f-top.co-fig .f-body{border-left:0}
-}</style>
+</style>
 <script>
 (function(){
   var d=document.documentElement,c=localStorage.getItem('bp-nen');
@@ -1791,64 +1509,114 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   <a class="ten" href="../../">Block<span>Pinned</span></a>
   <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Sổ gốc</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
 </div></header>
-<main class="khung"><h1>Uniswap bật thu phí v4 — chỉ số giảm 53% sau một đêm, và nó không phải bộ đếm</h1><section class="dai" data-hien>
-  <div class="bh"><b>Sổ claim của bài này</b><span>4 khẳng định · trạng thái đổi thì ghi thêm, không xoá</span></div>
-  <div class="stack" aria-hidden="true"><span class="seg song" style="width:75.00%;--i:0" data-loc="song" data-tip="ĐANG ĐỨNG · 3/4"></span><span class="seg bac" style="width:25.00%;--i:1" data-loc="bac" data-tip="BỊ BÁC · 1/4"></span></div><div class="chu-thich"><button class="lg song" type="button" data-loc="song" aria-pressed="false"><span class="sw"></span>ĐANG ĐỨNG <span class="n">3</span></button><button class="lg bac" type="button" data-loc="bac" aria-pressed="false"><span class="sw"></span>BỊ BÁC <span class="n">1</span></button></div>
-  <div class="khi"></div>
-  <a class="toi" href="#so-claim">Xem sổ claim ↓</a><a class="toi phu" href="../../token/uni/">Hồ sơ Uniswap →</a>
-</section><section class="so" data-loc-vung="het"><h2 id="so-claim">Sổ claim</h2>
-<p class="dan">Mỗi khẳng định của bài này một dòng, kèm điều gì sẽ bác bỏ nó. Trạng thái đổi thì sửa tại đây, và ghi lại ngày. Không dòng nào bị xoá.</p>
-<article class="claim song" id="C1" data-st="song">
-  <h3><a class="id" href="#C1">C1</a>
-      <span class="chip song">ĐANG ĐỨNG</span></h3>
-  <p style="margin:0">Chỉ số tích luỹ phí của Uniswap v4 là SỐ DƯ còn nằm trong hợp đồng, không phải bộ đếm cộng dồn — nên mức giảm 53% (ETH) và 61% (USDC) trên Ethereum không đọc được thành phí đã ngừng phát sinh.</p>
+<main class="khung"><section class="hero hero-article">
+  <span class="ghost-num" aria-hidden="true">53%</span>
+  <span class="hero-code" aria-hidden="true">CLAIM C1 · ĐANG ĐỨNG</span>
+  <div class="article-path" aria-label="Vị trí bài viết">
+    <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều tra</a><span>/</span><b>UNI</b><i><span class="dot song"></span>đang đứng</i>
+  </div>
+  <p class="eyebrow"><span>UNI</span><span class="im">28/07/2026</span></p>
+  <h1 class="display">Uniswap bật thu phí v4 — chỉ số giảm <span class="nhan-manh">53%</span> sau một đêm, và nó không phải bộ đếm</h1>
+  <p class="subline">Một chỉ số phí v4 giảm 53% sau một đêm. Nhưng nó là SỐ DƯ còn trong hợp đồng, không phải bộ đếm cộng dồn — và cùng cửa sổ đó vẫn có 4.382,57 đô phí mới chảy vào.</p>
+  <div class="article-verdict"><div class="heronum article-ratio article-ledger-count">
+      <p class="l">Sổ bằng chứng của bài</p>
+      <p class="v">4<em> claim</em></p>
+      <p class="d">3 đang đứng hoặc đã xác nhận</p>
+    </div><div class="case-path" role="img" aria-label="Tuyến bằng chứng: đối tượng, điều bác bỏ, trạng thái hiện tại">
+      <div class="case-step file"><span>01 · ĐỐI TƯỢNG</span><strong>UNI</strong><small>hồ sơ được ghim theo token</small></div><i aria-hidden="true">→</i>
+      <div class="case-step test"><span>02 · TỰ KIỂM</span><strong>4</strong><small>điều bác bỏ viết cùng claim</small></div><i aria-hidden="true">→</i>
+      <div class="case-step state song"><span>03 · SỔ SỐNG</span><strong>5 mốc</strong><small>lịch sử đổi trạng thái công khai</small></div>
+    </div></div>
+
+</section><nav class="article-map" aria-label="Điều hướng trong bài"><span>Đọc theo bằng chứng</span><a href="#so-claim">Sổ claim</a><a href="#bon-lan-do-bon-moc-thoi-gian">Bốn lần đo, bốn mốc thời gian</a><a href="#ai-bat-pool-va-mau-so-nao-moi-dung">Ai bật pool, và mẫu số nào mới đúng</a><a href="#cai-bay-do-la-so-du-khong-phai-bo-dem">Cái bẫy: đó là SỐ DƯ, không phải bộ đếm</a></nav><section class="article-ledger" aria-labelledby="so-claim-title">
+<details class="evidence case-evidence" id="so-claim">
+  <summary>
+    <span class="case-ledger-title"><span>Sổ claim của bài</span><b id="so-claim-title">4 khẳng định</b><small>đổi trạng thái tại chỗ · không xoá</small></span>
+    <span class="case-ledger-viz">
+      <span class="case-ledger-bar" role="img" aria-label="3 đang đứng, 1 bị bác"><i class="song" style="--n:3"></i><i class="bac" style="--n:1"></i></span>
+      <span class="case-ledger-legend"><i><span class="dot song"></span><b>3</b> đang đứng</i><i><span class="dot bac"></span><b>1</b> bị bác</i></span>
+    </span>
+    <span class="mo">mở 4 claim</span>
+  </summary>
+  <div class="trong case-ledger-body">
+    <p class="case-ledger-intro">Mỗi claim kèm điều có thể bác bỏ nó, mốc ghim và toàn bộ lịch sử đổi trạng thái.</p>
+    <div class="case-claim-list"><article class="case-claim song" id="C1" data-article-claim data-st="song">
+  <header class="case-claim-head">
+    <a class="case-claim-id" href="#C1">C1</a>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>ĐANG ĐỨNG</span>
+    <span class="case-claim-actions"></span>
+  </header>
+  <p class="case-claim-text">Chỉ số tích luỹ phí của Uniswap v4 là SỐ DƯ còn nằm trong hợp đồng, không phải bộ đếm cộng dồn — nên mức giảm 53% (ETH) và 61% (USDC) trên Ethereum không đọc được thành phí đã ngừng phát sinh.</p>
   
-  <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum · hai lượt đọc protocolFeesAccrued lúc 14:51Z ngày 27/07 và 01:48Z ngày 28/07 · cùng cửa sổ block 25.624.853 → 25.628.131</p>
-  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Có bằng chứng cho thấy protocolFeesAccrued đã bao gồm cả phần phí đã được chuyển khỏi hợp đồng — khi đó công thức khép cửa sổ trong bài sai, và cả bài phải viết lại. Cách tự kiểm nằm ngay trong bài: đọc chỉ số hai lần cách nhau vài giờ, rồi đối chiếu log FeesCollected trong cùng cửa sổ để xem phần giảm có đúng là số dư đã rời hợp đồng.</p>
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>GHIM TẠI</span>Ethereum · hai lượt đọc protocolFeesAccrued lúc 14:51Z ngày 27/07 và 01:48Z ngày 28/07 · cùng cửa sổ block 25.624.853 → 25.628.131</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Có bằng chứng cho thấy protocolFeesAccrued đã bao gồm cả phần phí đã được chuyển khỏi hợp đồng — khi đó công thức khép cửa sổ trong bài sai, và cả bài phải viết lại. Cách tự kiểm nằm ngay trong bài: đọc chỉ số hai lần cách nhau vài giờ, rồi đối chiếu log FeesCollected trong cùng cửa sổ để xem phần giảm có đúng là số dư đã rời hợp đồng.</p>
+  </div>
   <div class="dolai-o"><button class="dolai" type="button" data-to="0x000000000004444c5dc75cB358380D2e3dE08A90" data-data="0x97e8cd4e0000000000000000000000000000000000000000000000000000000000000000" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="18" data-chu-so="4" data-don-vi="ETH" data-ghim="0.0159">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>protocolFeesAccrued(address)</code> trên <code>0x00000000…8A90</code></div></div>
-  <ul class="nk"><li><span class="d">2026-07-28</span>Đăng cùng bốn lượt đo. Lượt bốn cho hai token trên CÙNG một chain đi hai hướng ngược nhau (Ethereum ETH −92%, USDC +76%) nên luận điểm &#x27;số dư không phải bộ đếm&#x27; chứng minh được trong một chain, không cần mượn chain khác làm đối chứng. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></li></ul>
-</article>
-<article class="claim song" id="C2" data-st="song">
-  <h3><a class="id" href="#C2">C2</a>
-      <span class="chip song">ĐANG ĐỨNG</span></h3>
-  <p style="margin:0">Cửa sổ 10,97 giờ đầu tiên khép được dòng phí v4 trên Ethereum: 4.382,57 đô, tính bằng (số dư sau − số dư trước) + tổng đã chuyển khỏi hợp đồng. Đây là mức sàn — mới định giá được 10 trong 28 loại token, và mới 1 trong 6 chain quy được ra tiền.</p>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-28</span><span>Đăng cùng bốn lượt đo. Lượt bốn cho hai token trên CÙNG một chain đi hai hướng ngược nhau (Ethereum ETH −92%, USDC +76%) nên luận điểm &#x27;số dư không phải bộ đếm&#x27; chứng minh được trong một chain, không cần mượn chain khác làm đối chứng. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></span></li></ol></details>
+</article><article class="case-claim song" id="C2" data-article-claim data-st="song">
+  <header class="case-claim-head">
+    <a class="case-claim-id" href="#C2">C2</a>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>ĐANG ĐỨNG</span>
+    <span class="case-claim-actions"></span>
+  </header>
+  <p class="case-claim-text">Cửa sổ 10,97 giờ đầu tiên khép được dòng phí v4 trên Ethereum: 4.382,57 đô, tính bằng (số dư sau − số dư trước) + tổng đã chuyển khỏi hợp đồng. Đây là mức sàn — mới định giá được 10 trong 28 loại token, và mới 1 trong 6 chain quy được ra tiền.</p>
   
-  <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum · block 25.624.853 → 25.628.131 (21h50 ngày 27/07 → 08h48 ngày 28/07, tức 14:50Z → 01:48Z)</p>
-  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Khép lại đúng cửa sổ này trên Ethereum, cộng đủ phần đã chuyển, mà ra lệch quá 5% so với 4.382,57 đô ⇒ BlockPinned kiểm lại phía mình trước. Ngưỡng 5% được ghi trước ngay trong bài, thay cho chữ &#x27;khác đáng kể&#x27; của bản nháp — một điều bác bỏ phải ghi trước cả ngưỡng lẫn cách tính.</p>
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>GHIM TẠI</span>Ethereum · block 25.624.853 → 25.628.131 (21h50 ngày 27/07 → 08h48 ngày 28/07, tức 14:50Z → 01:48Z)</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Khép lại đúng cửa sổ này trên Ethereum, cộng đủ phần đã chuyển, mà ra lệch quá 5% so với 4.382,57 đô ⇒ BlockPinned kiểm lại phía mình trước. Ngưỡng 5% được ghi trước ngay trong bài, thay cho chữ &#x27;khác đáng kể&#x27; của bản nháp — một điều bác bỏ phải ghi trước cả ngưỡng lẫn cách tính.</p>
+  </div>
   
-  <ul class="nk"><li><span class="d">2026-07-28</span>Đăng ở mức này. Con số ghim block hai đầu nên nó không già theo giờ: đọc lại lúc nào cũng phải ra đúng cặp block đó. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></li></ul>
-</article>
-<article class="claim song" id="C3" data-st="song">
-  <h3><a class="id" href="#C3">C3</a>
-      <span class="chip song">ĐANG ĐỨNG</span></h3>
-  <p style="margin:0">Phần giá trị cuối cùng quy về UNI vẫn chưa tách được riêng cho v4: phí của v2, v3 và v4 vào chung một kho rồi kho mới được dùng để mua và đốt UNI, và bước đó bài này chưa đo được.</p>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-28</span><span>Đăng ở mức này. Con số ghim block hai đầu nên nó không già theo giờ: đọc lại lúc nào cũng phải ra đúng cặp block đó. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></span></li></ol></details>
+</article><article class="case-claim song" id="C3" data-article-claim data-st="song">
+  <header class="case-claim-head">
+    <a class="case-claim-id" href="#C3">C3</a>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>ĐANG ĐỨNG</span>
+    <span class="case-claim-actions"></span>
+  </header>
+  <p class="case-claim-text">Phần giá trị cuối cùng quy về UNI vẫn chưa tách được riêng cho v4: phí của v2, v3 và v4 vào chung một kho rồi kho mới được dùng để mua và đốt UNI, và bước đó bài này chưa đo được.</p>
   
-  <p class="dong"><span class="nhan">GHIM TẠI</span>Trên rổ định giá được, v4 chiếm 17,71% giá trị dòng vào kho trong những giờ đầu · cùng cửa sổ block 25.624.853 → 25.628.131</p>
-  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Ai chỉ ra được một đường tiền từ phí v4 tới cơ chế mua và đốt UNI mà bài chưa đo ⇒ phần &#x27;chưa tách được&#x27; phải viết lại. Đây là giới hạn tự khai, không phải kết luận rằng đường tiền đó không tồn tại.</p>
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>GHIM TẠI</span>Trên rổ định giá được, v4 chiếm 17,71% giá trị dòng vào kho trong những giờ đầu · cùng cửa sổ block 25.624.853 → 25.628.131</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Ai chỉ ra được một đường tiền từ phí v4 tới cơ chế mua và đốt UNI mà bài chưa đo ⇒ phần &#x27;chưa tách được&#x27; phải viết lại. Đây là giới hạn tự khai, không phải kết luận rằng đường tiền đó không tồn tại.</p>
+  </div>
   
-  <ul class="nk"><li><span class="d">2026-07-28</span>Đăng ở trạng thái chưa tách được, kèm tỉ lệ 17,71% để người đọc thấy độ lớn của phần v4 trong dòng vào kho — không dùng nó thay cho phép đo còn thiếu. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></li></ul>
-</article>
-<article class="claim bac" id="C4" data-st="bac">
-  <h3><a class="id" href="#C4">C4</a>
-      <span class="chip bac">BỊ BÁC</span></h3>
-  <p style="margin:0">Nhịp bật pool đã giảm mạnh: đợt đầu bật 36.523 pool trong 7,7 giờ, rồi 23,5 giờ sau chỉ thêm 273 pool và tổng vẫn chưa qua 36.800.</p>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-28</span><span>Đăng ở trạng thái chưa tách được, kèm tỉ lệ 17,71% để người đọc thấy độ lớn của phần v4 trong dòng vào kho — không dùng nó thay cho phép đo còn thiếu. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></span></li></ol></details>
+</article><article class="case-claim bac" id="C4" data-article-claim data-st="bac">
+  <header class="case-claim-head">
+    <a class="case-claim-id" href="#C4">C4</a>
+    <span class="case-claim-status bac"><i aria-hidden="true"></i>BỊ BÁC</span>
+    <span class="case-claim-actions"></span>
+  </header>
+  <p class="case-claim-text">Nhịp bật pool đã giảm mạnh: đợt đầu bật 36.523 pool trong 7,7 giờ, rồi 23,5 giờ sau chỉ thêm 273 pool và tổng vẫn chưa qua 36.800.</p>
   
-  <p class="dong"><span class="nhan">GHIM TẠI</span>Ethereum · 15:06Z ngày 27/07 (36.523 pool) → 02:24Z ngày 28/07 (blk 25.628.338) → 14:35Z ngày 28/07 (blk 25.631.951)</p>
-  <p class="dong bac"><span class="nhan">ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Nếu từ 21h05 ngày 28/07 (14:05Z) đến 23h59 ngày 04/08/2026 số pool được bật trên Ethereum tăng thêm từ 5.000 trở lên, BlockPinned rút câu này và sửa tại đây. Điều này không bác bỏ ba claim còn lại của bài.</p>
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>GHIM TẠI</span>Ethereum · 15:06Z ngày 27/07 (36.523 pool) → 02:24Z ngày 28/07 (blk 25.628.338) → 14:35Z ngày 28/07 (blk 25.631.951)</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Nếu từ 21h05 ngày 28/07 (14:05Z) đến 23h59 ngày 04/08/2026 số pool được bật trên Ethereum tăng thêm từ 5.000 trở lên, BlockPinned rút câu này và sửa tại đây. Điều này không bác bỏ ba claim còn lại của bài.</p>
+  </div>
   
-  <ul class="nk"><li><span class="d">2026-07-28</span>Đăng kèm hạn 04/08/2026 — đây là claim duy nhất của bài có ngày hết hạn tự đặt, nên nó sẽ được phân định bằng một phép đếm log, không bằng cảm nhận về nhịp. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></li><li><span class="d">2026-08-03</span>Điều-bác-bỏ bị vượt. Thước đo giữ nguyên cách bài gốc đếm: poolId duy nhất trong sự kiện ProtocolFeeUpdated. Nền 36.788 poolId quét từ block tạo hợp đồng, giao với tập 51.651 của khoảng sau bằng rỗng. Bốn phép kiểm phá số đã chạy: 0 log đặt phí về 0; một giao dịch phát tối đa 150 sự kiện nên khoá loại trùng là cặp mã giao dịch cộng chỉ số log; 0 sự kiện trong 3.911.671 block trước nền; log thô không có poolId lặp. Ba cách sắp thứ tự cho cùng phần tử thứ 5.000. <span class="nguon-tro">nguồn: UNI/data/v4_pool_delta_recheck_2026-08-03.json · v4_fee_event_semantics_2026-08-03.json · v4_fee_history_full_2026-08-03.json · v4_fee_thu5000_2026-08-03.json</span></li></ul>
-</article></section><section class="bandaydu"><h2 id="ban-day-du">Bài đầy đủ</h2><p class="meta">🟡 2026-07-28 &nbsp;·&nbsp; GHIM TẠI Ethereum · cửa sổ 10,97 giờ ghim block hai đầu #25.624.853 → #25.628.131 (21h50 ngày 27/07 → 08h48 ngày 28/07, tức 14:50Z → 01:48Z) &nbsp;·&nbsp; <a href="https://x.com/blockpinned/status/2082128396382023921">bản đăng trên X</a></p><p>Uniswap vừa bật thu phí v4. Một chỉ số phí của v4 trên Ethereum đã giảm 53% sau một đêm — <strong>mức giảm đó không chứng minh doanh thu giảm.</strong> Trang này ghim lại hơn 30 giờ đầu bằng bốn lần đo trực tiếp, và vì sao chỉ số kia sắp bị đọc ngược.</p>
+  <details class="case-log"><summary>Lịch sử · 2 mốc</summary><ol><li><span class="case-log-date">2026-07-28</span><span>Đăng kèm hạn 04/08/2026 — đây là claim duy nhất của bài có ngày hết hạn tự đặt, nên nó sẽ được phân định bằng một phép đếm log, không bằng cảm nhận về nhịp. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></span></li><li><span class="case-log-date">2026-08-03</span><span>Điều-bác-bỏ bị vượt. Thước đo giữ nguyên cách bài gốc đếm: poolId duy nhất trong sự kiện ProtocolFeeUpdated. Nền 36.788 poolId quét từ block tạo hợp đồng, giao với tập 51.651 của khoảng sau bằng rỗng. Bốn phép kiểm phá số đã chạy: 0 log đặt phí về 0; một giao dịch phát tối đa 150 sự kiện nên khoá loại trùng là cặp mã giao dịch cộng chỉ số log; 0 sự kiện trong 3.911.671 block trước nền; log thô không có poolId lặp. Ba cách sắp thứ tự cho cùng phần tử thứ 5.000. <span class="nguon-tro">nguồn: UNI/data/v4_pool_delta_recheck_2026-08-03.json · v4_fee_event_semantics_2026-08-03.json · v4_fee_history_full_2026-08-03.json · v4_fee_thu5000_2026-08-03.json</span></span></li></ol></details>
+</article></div>
+  </div>
+</details>
+</section><section class="than article-body" id="ban-day-du">
+  <div class="article-meta">
+    <span><b>GHIM</b>Ethereum · cửa sổ 10,97 giờ ghim block hai đầu #25.624.853 → #25.628.131 (21h50 ngày 27/07 → 08h48 ngày 28/07, tức 14:50Z → 01:48Z)</span>
+    <span><b>NGÀY</b>28/07/2026</span>
+    <span class="article-meta-link"><a href="https://x.com/blockpinned/status/2082128396382023921">bản đăng trên X ↗</a></span><a class="article-token-link" href="../../token/uni/">Hồ sơ Uniswap →</a>
+  </div>
+  <p>Uniswap vừa bật thu phí v4. Một chỉ số phí của v4 trên Ethereum đã giảm 53% sau một đêm — <strong>mức giảm đó không chứng minh doanh thu giảm.</strong> Trang này ghim lại hơn 30 giờ đầu bằng bốn lần đo trực tiếp, và vì sao chỉ số kia sắp bị đọc ngược.</p>
 <p><em>(Mọi giờ là giờ Việt Nam, UTC để trong ngoặc.)</em></p>
 <h2 id="bon-lan-do-bon-moc-thoi-gian">Bốn lần đo, bốn mốc thời gian</h2>
 <p>Hai đề xuất #99 và #100 được thực thi lúc 14h16 ngày 27/07 (07:16Z) — cả 8 cấu hình thu phí lật đúng đích như calldata đã ghim trước.</p>
-<div class="cuon"><table><thead><tr><th>#</th><th>Lúc</th><th>Đo được</th></tr></thead><tbody><tr><td>1</td><td>15h28 ngày 27/07 (08:28Z)</td><td>phí tích luỹ <strong>bằng 0</strong> trên toàn bộ 11 cặp chain–token</td></tr><tr><td>2</td><td>21h51 ngày 27/07 (14:51Z)</td><td><strong>10/11 cặp khác 0</strong> — lần đầu quan sát được số dư phí khác 0</td></tr><tr><td>3</td><td>08h48 ngày 28/07 (01:48Z)</td><td>Ethereum: ETH <strong>−53%</strong>, USDC <strong>−61%</strong></td></tr><tr><td>4</td><td>21h05 ngày 28/07 (14:05Z)</td><td>cùng một chain, hai token đi <strong>hai hướng ngược nhau</strong></td></tr></tbody></table></div>
+<div class="bang"><table><thead><tr><th>#</th><th>Lúc</th><th>Đo được</th></tr></thead><tbody><tr><td>1</td><td>15h28 ngày 27/07 (08:28Z)</td><td>phí tích luỹ <strong>bằng 0</strong> trên toàn bộ 11 cặp chain–token</td></tr><tr><td>2</td><td>21h51 ngày 27/07 (14:51Z)</td><td><strong>10/11 cặp khác 0</strong> — lần đầu quan sát được số dư phí khác 0</td></tr><tr><td>3</td><td>08h48 ngày 28/07 (01:48Z)</td><td>Ethereum: ETH <strong>−53%</strong>, USDC <strong>−61%</strong></td></tr><tr><td>4</td><td>21h05 ngày 28/07 (14:05Z)</td><td>cùng một chain, hai token đi <strong>hai hướng ngược nhau</strong></td></tr></tbody></table></div>
 <p>Lượt đầu bằng 0 không phải lỗi đo: lúc đó mới 10 pool được bật thu phí, và cả 10 chưa có giao dịch nào kể từ lúc bật.</p>
 <p>Lượt hai chạy lại đúng phép đo đó, đúng bộ cặp đó:</p>
-<div class="cuon"><table><thead><tr><th>Chain</th><th>Số dư phí</th></tr></thead><tbody><tr><td>Ethereum</td><td>0,4018 ETH + 207,88 USDC</td></tr><tr><td>Arbitrum</td><td>0,0288 ETH + 21,92 USDC</td></tr><tr><td>Optimism</td><td>0,0091 ETH + 21,51 USDC</td></tr><tr><td>Base</td><td>0,000027 ETH (USDC còn 0 — cặp duy nhất)</td></tr><tr><td>Polygon</td><td>66,48 POL + 22,31 USDC</td></tr></tbody></table></div>
+<div class="bang"><table><thead><tr><th>Chain</th><th>Số dư phí</th></tr></thead><tbody><tr><td>Ethereum</td><td>0,4018 ETH + 207,88 USDC</td></tr><tr><td>Arbitrum</td><td>0,0288 ETH + 21,92 USDC</td></tr><tr><td>Optimism</td><td>0,0091 ETH + 21,51 USDC</td></tr><tr><td>Base</td><td>0,000027 ETH (USDC còn 0 — cặp duy nhất)</td></tr><tr><td>Polygon</td><td>66,48 POL + 22,31 USDC</td></tr></tbody></table></div>
 <h2 id="ai-bat-pool-va-mau-so-nao-moi-dung">Ai bật pool, và mẫu số nào mới đúng</h2>
 <p>Cùng buổi chiều, số pool được bật nhảy từ 10 lên <strong>36.523</strong> trong chưa đầy 8 giờ, qua 273 giao dịch trên Ethereum — và cả 273 giao dịch đó đều có <code>tx.from</code> là <strong>một</strong> địa chỉ (<code>0x2cf8e5b1…ce43</code>), gọi thẳng adapter phí.</p>
 <p>Mẫu bật pool không phải quét toàn bộ: trong 36.523 pool đã bật khi đó, chỉ <strong>2 pool gắn hook</strong>, trong khi hook chiếm 23,56% số pool v4 trên Ethereum — nhóm mà chính sách hiện tại cho thu 0 phí. Vậy muốn tính tỉ lệ phủ theo chính sách hiện tại, mẫu số phải loại đúng nhóm đó:</p>
-<div class="cuon"><table><thead><tr><th>Mẫu số</th><th>Pool</th><th>Độ phủ</th></tr></thead><tbody><tr><td>toàn bộ pool từng mở</td><td>112.527</td><td>32,60%</td></tr><tr><td><strong>loại 26.512 pool gắn hook</strong></td><td><strong>86.015</strong></td><td><strong>42,65%</strong></td></tr></tbody></table></div>
+<div class="bang"><table><thead><tr><th>Mẫu số</th><th>Pool</th><th>Độ phủ</th></tr></thead><tbody><tr><td>toàn bộ pool từng mở</td><td>112.527</td><td>32,60%</td></tr><tr><td><strong>loại 26.512 pool gắn hook</strong></td><td><strong>86.015</strong></td><td><strong>42,65%</strong></td></tr></tbody></table></div>
 <p>Đối chiếu tại block 25.628.131 cho 36.684 pool trùng nhau giữa danh sách không-hook và danh sách đã bật.</p>
 <p>Sau đó nhịp bật pool giảm mạnh: từ 22h06 ngày 27/07 (15:06Z, 36.523 pool) đến 09h24 ngày 28/07 (02:24Z, blk 25.628.338) thêm 170 pool, rồi tới 21h35 ngày 28/07 (14:35Z, blk 25.631.951) thêm 103 pool nữa. Tổng 23,5 giờ thêm 273 pool — so với 36.523 pool trong 7,7 giờ của đợt đầu.</p>
 <p>🔴 <strong>SỬA 03/08 — câu ngay trên đã bị RÚT.</strong> Điều-bác-bỏ ghi kèm bài này đã bị chính số liệu vượt qua: ngưỡng là thêm 5.000 poolId trong khoảng 21h05 ngày 28/07 đến hết ngày 04/08, đo được <strong>51.651</strong> — gấp 10,3 lần — tính tới block 25.672.390. Ngưỡng bị vượt từ block 25.637.495, lúc 16h08 ngày 29/07, tức 17 giờ 31 phút sau khi bài lên. Câu &quot;nhịp bật pool giảm mạnh&quot; <strong>không còn hiệu lực</strong>. Bốn con số trong câu đó — 36.523 · 170 · 103 · 273 — <strong>vẫn đúng trong đúng cửa sổ của chúng</strong>; cái bị rút là kết luận về nhịp rút ra từ một cửa sổ 23,5 giờ. Ba claim còn lại của bài không bị đụng. Số đo đầy đủ và cách tự kiểm: https://x.com/blockpinned/status/2084196432089878872</p>
@@ -1857,20 +1625,21 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <p>Lượt ba: trên Ethereum số dư tụt từ 0,4018 xuống 0,1887 ETH (−53%) và 207,88 xuống 80,72 USDC (−61%). Trong đúng cửa sổ đó có giao dịch từ hai địa chỉ gọi hàm chuyển phí về kho — hàm công khai, ai gọi cũng được — và cùng cửa sổ đó vẫn có <strong>4.382,57 đô phí mới chảy vào</strong>. Mức giảm vì vậy không đọc được thành phí đã ngừng phát sinh.</p>
 <p>Hai địa chỉ chuyển phí không trùng địa chỉ bật pool; chừng đó chưa đủ kết luận chúng thuộc những chủ thể khác nhau. Bốn chain còn lại cùng lúc vẫn đi lên, và trong cùng cửa sổ không thấy giao dịch chuyển phí nào trên bốn chain đó.</p>
 <p>Lượt bốn thì ngay trong một chain nó cũng tách đôi:</p>
-<div class="cuon"><table><thead><tr><th>Cặp</th><th>Trước → sau</th></tr></thead><tbody><tr><td>Ethereum ETH</td><td>0,1887 → 0,0159 (<strong>−92%</strong>)</td></tr><tr><td>Ethereum USDC</td><td>80,72 → 142,11 (<strong>+76%</strong>)</td></tr><tr><td>Arbitrum ETH</td><td>0,0497 → 0,0048 (−90%) — cửa sổ này Arbitrum cũng có giao dịch chuyển phí</td></tr><tr><td>Optimism · Base · Polygon</td><td>vẫn đi lên</td></tr></tbody></table></div>
+<div class="bang"><table><thead><tr><th>Cặp</th><th>Trước → sau</th></tr></thead><tbody><tr><td>Ethereum ETH</td><td>0,1887 → 0,0159 (<strong>−92%</strong>)</td></tr><tr><td>Ethereum USDC</td><td>80,72 → 142,11 (<strong>+76%</strong>)</td></tr><tr><td>Arbitrum ETH</td><td>0,0497 → 0,0048 (−90%) — cửa sổ này Arbitrum cũng có giao dịch chuyển phí</td></tr><tr><td>Optimism · Base · Polygon</td><td>vẫn đi lên</td></tr></tbody></table></div>
 <p>Cùng một loại số dư, trên cùng một chain, trong cùng một buổi chiều, hai token đi hai hướng ngược nhau — và không hướng nào tự nó là doanh thu.</p>
 <h2 id="do-dung-thi-do-the-nao">Đo đúng thì đo thế nào</h2>
 <p>Số dư chỉ nói còn lại bao nhiêu, nên phải cộng thêm phần đã bị lấy đi mới ra phần đã sinh ra. Với từng token, trên cùng một hợp đồng, sau khi cộng đủ các giao dịch chuyển phí:</p>
 <p><strong>phí phát sinh trong cửa sổ = (số dư sau − số dư trước) + tổng đã được chuyển khỏi hợp đồng</strong></p>
 <p>Cửa sổ đầu tiên khép được là <strong>10,97 giờ</strong>, block ghim hai đầu 25.624.853 → 25.628.131, riêng Ethereum <strong>4.382,57 đô</strong>:</p>
-<div class="cuon"><table><thead><tr><th>Token</th><th>USD</th></tr></thead><tbody><tr><td>ETH</td><td>2.117,64</td></tr><tr><td>USDC</td><td>817,49</td></tr><tr><td>LINK</td><td>569,29</td></tr><tr><td>USDT</td><td>448,72</td></tr><tr><td><em>cộng 6 loại nữa</em></td><td></td></tr></tbody></table></div>
+<div class="bang"><table><thead><tr><th>Token</th><th>USD</th></tr></thead><tbody><tr><td>ETH</td><td>2.117,64</td></tr><tr><td>USDC</td><td>817,49</td></tr><tr><td>LINK</td><td>569,29</td></tr><tr><td>USDT</td><td>448,72</td></tr><tr><td><em>cộng 6 loại nữa</em></td><td></td></tr></tbody></table></div>
 <p>Đây là <strong>mức sàn</strong>: mới định giá được 10/28 loại token — 18 loại còn lại có lượng thật nhưng chưa quy đô được — và mới 1/6 chain quy được ra tiền. Là con số gần <em>&quot;doanh thu v4&quot;</em> nhất trang này đo được, không phải chính nó.</p>
 <h2 id="pham-vi-noi-du-de-khong-ai-doc-qua-tay">Phạm vi — nói đủ để không ai đọc quá tay</h2>
 <ul><li><strong>Không được nhân thành con số năm.</strong> Đây là một cửa sổ 11 giờ ngay trong đợt triển khai, khi độ phủ còn đang đổi từng giờ.</li><li><strong>Phần giá trị cuối cùng quy về UNI vẫn chưa tách được riêng cho v4.</strong> Phí của v2, v3 và v4 vào chung một kho — trên rổ định giá được, v4 chiếm 17,71% giá trị dòng vào kho trong những giờ đầu — rồi kho mới được dùng để mua và đốt UNI, và bước đó chưa đo được.</li><li><strong>Robinhood chưa nằm trong con số đô.</strong> 118.221 pool đã được bật ở đó, nhiều nhất trong sáu chain, và 168 lượt thu phí trên 47 loại token — nhưng ở đó không có nguồn giá neo theo block nên chỉ đọc được bằng đơn vị token. Địa chỉ nói trên có mặt ở cả sáu chain, nhưng riêng Robinhood mới truy được người gửi của 400 trong 786 lượt bật (397 lượt là của nó); 386 lượt còn lại chưa biết ai, nên <strong>không</strong> được đọc thành <em>&quot;một địa chỉ bật 118 nghìn pool&quot;</em>.</li></ul>
 <h2 id="tu-kiem">Tự kiểm</h2>
 <p>Số lượng token, giao dịch và block đọc từ hợp đồng v4 và log on-chain; phần quy ra đô dùng một nguồn giá riêng, đọc tại đúng block chốt cửa sổ.</p>
 <ol><li><strong>Hợp đồng PoolManager v4 trên Ethereum:</strong> <code>0x000000000004444c5dc75cB358380D2e3dE08A90</code></li><li><strong>Đọc <code>protocolFeesAccrued(địa_chỉ_token)</code> hai lần cách nhau vài giờ.</strong> Nếu nó đi xuống trong lúc pool vẫn giao dịch, bạn đã tự chứng minh nó không phải bộ đếm chỉ tăng.</li><li><strong>Đối chiếu log <code>FeesCollected</code></strong> trong cùng cửa sổ, để xem phần giảm có đúng là số dư đã rời hợp đồng không.</li><li><strong>Số pool được bật:</strong> đếm log <code>ProtocolFeeUpdated</code> từ block 25.622.594 — block thực thi đề xuất #99.</li></ol>
-<p>Không phải lời khuyên đầu tư. Cửa sổ đo: 15h28 ngày 27/07 → 21h05 ngày 28/07 giờ Việt Nam (08:28Z 27/07 → 14:05Z 28/07), block ghim theo từng phép đo.</p></section></main>
+<p>Không phải lời khuyên đầu tư. Cửa sổ đo: 15h28 ngày 27/07 → 21h05 ngày 28/07 giờ Việt Nam (08:28Z 27/07 → 14:05Z 28/07), block ghim theo từng phép đo.</p>
+</section></main>
 <div id="ch-tip"></div>
 <footer><div class="khung"><p>Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá. Không phải lời khuyên đầu tư. · <a href="https://x.com/blockpinned">@blockpinned</a></p></div></footer>
 <script>
@@ -2138,12 +1907,18 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         entry.target.classList.add("is-visible");
         revealObserver.unobserve(entry.target);
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -5%" });
+    }, { threshold: 0, rootMargin: "0px 0px -5%" });
     revealItems.forEach(function (item, index) {
       item.classList.add("reveal-ready");
       item.style.transitionDelay = Math.min(index % 4, 2) * 45 + "ms";
       revealObserver.observe(item);
     });
+    // A reveal is decoration, never a visibility gate. Large blocks can be taller
+    // than the viewport and headless/static captures may not deliver observer events.
+    // The fallback makes every story beat visible even when that happens.
+    setTimeout(function () {
+      revealItems.forEach(function (item) { item.classList.add("is-visible"); });
+    }, 1400);
   }
 
   // A very soft local glow makes the primary data surface feel alive.
@@ -2513,6 +2288,27 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     actions.classList.add("has-evidence-link");
     actions.insertBefore(makeEvidenceLinkButton(claim.id, "Sao chép link claim " + claim.dataset.uniIndex), actions.firstChild);
   });
+
+  // Article claims live inside a collapsed evidence ledger. A permalink must open
+  // that ledger before scrolling; otherwise the URL points to real evidence that
+  // remains invisible. The copy button uses the same canonical-aware path as Facts.
+  var articleClaims = Array.prototype.slice.call(document.querySelectorAll("[data-article-claim][id]"));
+  articleClaims.forEach(function (claim) {
+    var actions = claim.querySelector(".case-claim-actions");
+    if (!actions) return;
+    actions.appendChild(makeEvidenceLinkButton(claim.id, "Sao chép link claim " + claim.id));
+  });
+  function openArticleClaim() {
+    if (!location.hash || location.hash === "#so-claim") return;
+    var claim;
+    try { claim = document.querySelector(location.hash); } catch (ignore) { return; }
+    if (!claim || !claim.matches("[data-article-claim]")) return;
+    var ledger = claim.closest("details.case-evidence");
+    if (ledger) ledger.open = true;
+    requestAnimationFrame(function () { claim.scrollIntoView({ block: "start" }); });
+  }
+  openArticleClaim();
+  addEventListener("hashchange", openArticleClaim);
 
   // A copy control exists only when JavaScript can actually copy the command.
   document.querySelectorAll(".fact-wow details.lenh").forEach(function (details) {
