@@ -233,12 +233,39 @@ CA = [
     ("⑪ FACT · control DƯƠNG — facts.json hợp lệ phải BUILD ĐƯỢC",
      lambda r: sua_facts(r, lambda f: None),
      None),
+
+    # ── BỐ CỤC v3 + lượt bóc <script> của cổng ⑪ (10/08) ─────────────────────────
+    # Bốn ca dưới đi thành BỘ. Ca ① một mình không đủ: nó xanh cả khi cổng ⑪ đã chết
+    # hẳn. Ca ④ là cặp đối chứng của nó — cùng chuỗi `href="…"` không giải được, chỉ
+    # khác chỗ đứng (trong <script> hay trong thân trang), và hai ca phải cho hai kết
+    # quả NGƯỢC nhau. Một mình ca ④ cũng không đủ, vì nó xanh cả khi cổng chưa hề
+    # được nới. Phải có cả hai mới phân biệt được "cổng hẹp đúng chỗ" với "cổng thủng".
+    ("BỐ CỤC v3 · control DƯƠNG — dựng được, và href trong <script> KHÔNG bị chặn",
+     None, None, ["--bo-cuc", "v3"]),
+    ("BỐ CỤC v3 · thiếu v3.css phải NỔ — trang đủ chữ mà không có hình là hỏng im nhất",
+     lambda r: (r / "site" / "v3.css").unlink(),
+     "cần v3.css"),
+    ("BỐ CỤC v3 · thiếu v3.js phải NỔ",
+     lambda r: (r / "site" / "v3.js").unlink(),
+     "cần v3.js"),
+    ("⑪ LIÊN KẾT · href hỏng trong THÂN TRANG vẫn phải chặn — cặp đối chứng của ca trên",
+     lambda r: sua_md(r, lambda s: s.replace(
+         "## Tự kiểm", "Xem [chỗ này](/khong-he-ton-tai/) đã.\n\n## Tự kiểm", 1)),
+     "href nội bộ không tới đâu"),
 ]
+
+# Ca nào cần cờ riêng thì khai ở đây, không nhét thêm cột vào mọi tuple: 44 ca cũ
+# không có lý do gì phải mọc thêm một ô rỗng vì bốn ca mới.
+THEM_ARGV = {ten: ca[3] for ca in CA if len(ca) > 3 for ten in [ca[0]]}
+# Ba ca v3 dưới đây cần cờ nhưng khai ở dạng tuple 3 phần tử cho gọn — nối cờ ở đây.
+for _t in ("BỐ CỤC v3 · thiếu v3.css phải NỔ — trang đủ chữ mà không có hình là hỏng im nhất",
+           "BỐ CỤC v3 · thiếu v3.js phải NỔ"):
+    THEM_ARGV[_t] = ["--bo-cuc", "v3"]
 
 
 def main():
     dat = sai = 0
-    for ten, be, mong in CA:
+    for ten, be, mong, *_ in CA:
         with tempfile.TemporaryDirectory() as td:
             root = pathlib.Path(td)
             shutil.copytree(SITE, root / "site")
@@ -270,7 +297,8 @@ def main():
                         shutil.copy2(f, root / "data" / f.name)
             if be:
                 be(root)
-            r = subprocess.run([sys.executable, str(root / "site" / "build.py")],
+            r = subprocess.run([sys.executable, str(root / "site" / "build.py")]
+                               + THEM_ARGV.get(ten, []),
                                capture_output=True, text=True)
             ra = (r.stdout or "") + (r.stderr or "")
             if mong is None:

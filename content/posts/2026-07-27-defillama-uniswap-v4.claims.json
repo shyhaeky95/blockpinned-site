@@ -193,5 +193,27 @@
         }
       ]
     }
-  ]
+  ],
+  "trang_chu": {
+    "noi_bat": {
+      "ma": "CASE 01 · VERIFIED",
+      "moc": "28/07/2026 · UNI · Robinhood chain",
+      "so_cu": 5014570,
+      "so_chain": 1286386,
+      "so_sua": 1311164,
+      "khoang": [
+        1157000,
+        1415000
+      ],
+      "moc_ngay": "16/07",
+      "dem_swap": "931.772",
+      "chart": {
+        "hien_vat": "uni_v4_rh_dailyfees_2026-08-09.json",
+        "moc_sua": "24/07",
+        "nhan_moc": "bản sửa merge · 24/07",
+        "ghim": "block **#10.808.643 → #11.671.782** · 16/07 UTC",
+        "nguon": "**api.llama.fi** — lệnh curl in trong bài"
+      }
+    }
+  }
 }

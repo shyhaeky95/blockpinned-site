@@ -23,7 +23,11 @@ SITE = pathlib.Path(__file__).parent
 # cổng đo tràn khổ điện thoại chạy trên một hệ ĐÃ KHAI TỬ, và mọi dòng "✓ không tràn"
 # nó in ra là nói về một trang không ai truy cập. Đúng cái bẫy docstring dưới cảnh báo.
 sys.path.insert(0, str(SITE))
-from build import HE_MAC_DINH  # noqa: E402  (phải sau SITE, vì nó dựng đường dẫn)
+# 🔴 BỐ CỤC cũng đọc từ chính build.py, CÙNG LÝ DO như HE_MAC_DINH ngay trên: file này
+# đã HAI LẦN giữ bản sao một cái tên và hai lần đo nhầm cái hình (29/07 vá tay thành
+# `benchmark`; 06/08 site sang `d2` mà dòng này đứng nguyên). Trục thứ hai không được
+# lặp lại lỗi đó ngay ở dòng đầu tiên của nó.
+from build import HE_MAC_DINH, BO_CUC_MAC_DINH, BO_CUC_CO  # noqa: E402
 OUT = SITE / "out"
 SHOT = SITE / "preview"; SHOT.mkdir(exist_ok=True)
 BAI = "bai/2026-07-27-defillama-uniswap-v4/index.html"
@@ -56,6 +60,16 @@ KHUNG = [("dau", BAI, 1740, None),
          # khổ điện thoại. Bảng là ứng viên tràn số một; thêm ngay lượt dựng đầu.
          ("cakebang", "bai/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/index.html", 2100, None)]
 
+# 🔴 Khung CHỈ có ở bố cục v3 — mỗi khung là một khối KHÔNG tồn tại ở D2, nên danh sách
+# trên không đại diện cho chúng. Đây đúng là cảnh báo ở đầu `KHUNG` áp cho một trục mới:
+# khối nào không có trong danh sách thì cổng đo tràn KHÔNG nhìn tới.
+# `clock` xếp đầu có lý do: nó là khối DUY NHẤT của bố cục v3 do desk tự vẽ (bản codex
+# không có nó), tức khối duy nhất chưa từng qua mắt ai ngoài chính người viết ra nó.
+KHUNG_V3 = [("clock", "index.html", 900, "clock-khu"),
+            ("hosokhu", "index.html", 1500, "inv-khu"),
+            ("sogoc", "index.html", 700, "ledger-asset"),
+            ("phandinh", "index.html", 1900, "hero finding-home")]
+
 # 🔴 Hai cách đo SAI đã thử và bị bác, ghi lại để không ai dựng lại:
 #   ① documentElement.scrollWidth — không bao giờ nhỏ hơn viewport ⇒ là chặn dưới
 #      của phép đo, không phải bề rộng trang.
@@ -64,6 +78,16 @@ KHUNG = [("dau", BAI, 1740, None),
 #      chính nó và báo PASS ở mọi cấu hình (luật bằng chứng của desk §2).
 # Cách đúng: gói nội dung vào một div có overflow:auto — nó CÓ hộp cuộn thật, nên
 # scrollWidth phản ánh tràn thật. Kèm thủ phạm rộng nhất để báo động chỉ ra chỗ sửa.
+# 🔴 VÙNG CUỘN NGANG CÓ CHỦ Ý — danh sách này là chỗ dễ biến phép đo thành phép đo mù
+# nhất, nên mỗi tên phải MUA được chỗ của nó bằng một khai báo `overflow` trong CSS.
+# Đã kiểm 10/08 bằng máy, không bằng trí nhớ: cả sáu tên v3 dưới đây đều khai
+# `overflow:auto` trong `v3.css`. Tên nào KHÔNG khai thì KHÔNG được vào đây — nó tràn
+# thật, và cho vào là tự tay bịt mắt cổng. (`.uni-tools` đã bị loại đúng theo luật đó.)
+#
+# Thêm một tên vào đây mà không mở CSS ra xem = biến "không tràn" thành một câu vô nghĩa.
+VUNG_CUON = ("'.cuon,pre,"                       # D2
+             ".chart-cuon,.fact-switcher,.track-filters,.uni-filters,.rail,.token-switcher'")
+
 DO_TRAN = """<script>addEventListener('load',()=>{document.fonts.ready.then(()=>{
  const w=document.createElement('div');
  w.style.cssText='width:'+WW+'px;overflow:auto';
@@ -71,7 +95,7 @@ DO_TRAN = """<script>addEventListener('load',()=>{document.fonts.ready.then(()=>
  document.body.appendChild(w);
  let mx=0,who='';
  for(const e of w.querySelectorAll('*')){
-   if(e.closest('.cuon,pre'))continue;          // vùng cuộn ngang có CHỦ Ý, không tính
+   if(e.closest(VUNG_CUON))continue;             // vùng cuộn ngang có CHỦ Ý, không tính
    const r=e.getBoundingClientRect();
    if(r.width&&r.right>mx){mx=r.right;who=e.tagName.toLowerCase()+(e.className?'.'+String(e.className).split(' ')[0]:'')}
  }
@@ -103,10 +127,29 @@ def neo_font(html: str) -> str:
     return re.sub(r"url\((?:\./|(?:\.\./)+)font/", f"url({goc}/", html)
 
 
-def chrome(args, timeout=150):
-    return subprocess.run([CHROME, "--headless=new", "--hide-scrollbars", "--disable-gpu",
-                           "--virtual-time-budget=9000"] + args,
-                          capture_output=True, text=True, timeout=timeout)
+def chrome(args, timeout=150, lan=3):
+    """🔴 THỬ LẠI, vì Chrome headless treo HẲN (không phải chậm) ở ~1/6 lượt chụp.
+
+    Đo 11/08: cùng một trang, chạy riêng thì xong trong 4–8s; chạy trong loạt thì
+    thỉnh thoảng không bao giờ trả về — để tới 420s vẫn treo, nên nới `timeout` là
+    vô ích. Với 14 khung × 2 nền = 28 lượt chụp mỗi lần chạy, tỷ lệ 1/6 nghĩa là cổng
+    GẦN NHƯ KHÔNG BAO GIỜ chạy hết: bốn lượt liên tiếp chết ở đúng khung `token`.
+    Một cổng không chạy tới cuối được thì không phải cổng.
+
+    ⛔ ĐÃ THỬ VÀ BỊ BÁC — đừng dựng lại: giả thuyết "kẹt khoá hồ sơ vì dùng chung
+    user-data-dir với Chrome đang mở". Đo A/B 6 lượt mỗi bên: KHÔNG khai
+    `--user-data-dir` treo 1/6; khai hồ sơ riêng treo **6/6**. Hồ sơ mới làm Chrome
+    chạy first-run và treo hẳn ⇒ vá theo giả thuyết đó là làm cổng hỏng 100%.
+    """
+    for con in range(lan, 0, -1):
+        try:
+            return subprocess.run([CHROME, "--headless=new", "--hide-scrollbars",
+                                   "--disable-gpu", "--virtual-time-budget=9000"] + args,
+                                  capture_output=True, text=True, timeout=timeout)
+        except subprocess.TimeoutExpired:
+            if con == 1:
+                raise
+            print(f"    ↻ Chrome treo, thử lại (còn {con - 1} lượt)")
 
 
 def cat_muc(html: str, cls: str) -> str:
@@ -128,13 +171,32 @@ def do_tran(html: str, tmp: pathlib.Path, nhan: str) -> bool:
     Giới hạn còn lại, khai ra: media query vẫn đánh giá theo cửa sổ 500px, không
     theo 360px ép. Ở đây vô hại vì mọi breakpoint của site đều ≥540px nên 360 và
     500 rơi cùng một nhánh — nhưng thêm breakpoint dưới 500 thì phép đo này mù lại.
+
+    🔴 11/08: giới hạn ấy còn một VẾ THỨ HAI không ghi ra, và nó vừa cắn. Nhánh
+    breakpoint thì đúng, nhưng mọi độ dài tính bằng `vw` vẫn đánh theo cửa sổ 520px
+    chứ không theo 360px ép ⇒ số tràn in ra KHÔNG phải số của máy thật. Ca cụ thể:
+    `.hero::before` tràn 7px theo phép đo này, còn trên máy 360px thật là 12px
+    (`.khung` padding `clamp(18px,4.5vw,40px)` ra 23,4px ở cửa sổ 520, ra 18px ở
+    360 thật). Chọn số vá theo con số cổng in ra là vá hụt 5px mà cổng vẫn XANH.
+    ⇒ Luật: bản vá phải đúng ở MỌI khổ theo lập luận, không được chỉnh cho vừa
+    con số cổng in.
+
+    🔴 THÊM KHỔ RỘNG — 11/08. Suốt đời file này chỉ đo 360/430, nên một lỗi tràn
+    lớn hơn nhiều đã sống ngay dưới mũi: cùng `.hero::before` ấy làm trang cuộn
+    ngang **suốt dải 360→1190px**, nặng nhất 46px ở đúng 1080 (mốc `max-width`
+    của `.khung`) — gấp sáu lần cái đuôi 7px mà cổng nhìn thấy. Khổ rộng thì cửa
+    sổ đặt được THẬT, nên ở đó `vw` và media query đều đúng, không còn sai lệch
+    trên. 1080 chọn theo số học chứ không theo cảm giác: dưới mốc ấy tràn tăng
+    theo bề rộng, trên mốc ấy `.khung` thôi giãn nên tràn giảm dần về 0 ở ~1190.
     """
     tran = False
-    for w in (360, 430):
+    for w in (360, 430, 1080):
         f = tmp / f"ovf{w}.html"
         f.write_text(neo_font(html).replace(
-            "</body>", f"<script>WW={w}</script>" + DO_TRAN + "</body>"), encoding="utf-8")
-        r = chrome(["--dump-dom", "--window-size=520,900", f.as_uri()], timeout=90)
+            "</body>", f"<script>WW={w};VUNG_CUON={VUNG_CUON}</script>" + DO_TRAN + "</body>"), encoding="utf-8")
+        # Khổ ≥500 đặt được cửa sổ THẬT ⇒ đo đúng; khổ hẹp hơn vẫn phải ép bằng CSS
+        # trong cửa sổ 520 vì macOS kẹp (xem trên).
+        r = chrome(["--dump-dom", f"--window-size={max(520, w)},900", f.as_uri()], timeout=90)
         m = re.search(r'<i id="ovf">(\d+)\|(\d+)\|(\d+)\|([^|]*)\|([\w-]+)</i>', r.stdout)
         if not m:
             print(f"  ⚠ {nhan} @{w}px: không đo được — phép đo MÙ, đừng đọc là 'không tràn'")
@@ -172,24 +234,37 @@ def main() -> None:
     # site sang "d2" mà dòng này đứng nguyên) — vì bản vá hôm đó chép một cái TÊN sang
     # đây thay vì đọc tên từ chủ của nó. Nay đọc `build.HE_MAC_DINH`: đổi hệ ở một chỗ
     # là cổng đi theo, không có lượt vá tay nào để quên.
-    hes = [sys.argv[1]] if len(sys.argv) > 1 else [HE_MAC_DINH]
+    # `--bo-cuc <ten>` chọn hệ trình bày; đối số trần còn lại (nếu có) là hệ MÀU, giữ
+    # nguyên cách gọi cũ. Tách hai trục ở đây y như build.py tách chúng — gộp lại thì
+    # không lượt nào đo được "đổi hình mà giữ màu", đúng câu hỏi /thu-v3/ sinh ra để hỏi.
+    argv = sys.argv[1:]
+    bo_cuc = BO_CUC_MAC_DINH
+    if "--bo-cuc" in argv:
+        i = argv.index("--bo-cuc")
+        bo_cuc = argv[i + 1]
+        if bo_cuc not in BO_CUC_CO:
+            sys.exit(f"🔴 bố cục lạ {bo_cuc!r} — chỉ có {list(BO_CUC_CO)}")
+        del argv[i:i + 2]
+    khung = KHUNG + (KHUNG_V3 if bo_cuc == "v3" else [])
+    hes = [argv[0]] if argv else [HE_MAC_DINH]
     tran = 0
     with tempfile.TemporaryDirectory() as td:
         tmp = pathlib.Path(td)
         tu_kiem((OUT / BAI).read_text(encoding="utf-8"), tmp)
         for he in hes:
-            cmd = [sys.executable, str(SITE / "build.py"), "--theme", he]
+            cmd = [sys.executable, str(SITE / "build.py"), "--theme", he,
+                   "--bo-cuc", bo_cuc]
             b = subprocess.run(cmd, capture_output=True, text=True)
             if b.returncode:
                 sys.exit(f"build hệ '{he}' hỏng:\n{b.stdout}{b.stderr}")
-            for hau, duong, cao, cat in KHUNG:
+            for hau, duong, cao, cat in khung:
                 src = OUT / duong
                 html = src.read_text(encoding="utf-8")
                 if cat:
                     html = cat_muc(html, cat)
                     src = tmp / f"{he}-{hau}.html"
                     src.write_text(html, encoding="utf-8")
-                tran += do_tran(html, tmp, f"{he}/{hau}")
+                tran += do_tran(html, tmp, f"{he}·{bo_cuc}/{hau}")
                 # Chrome headless dựng theo prefers-color-scheme của máy. Chụp CẢ HAI
                 # nền: hệ nhận diện là "giấy audit" (nền sáng), nhưng phần lớn người
                 # đọc crypto để máy ở nền tối — không được chỉ nhìn một bên rồi chốt.
