@@ -294,6 +294,17 @@ CA = [
      lambda r: sua_builder(r, '<section class="article-archive"',
                            '<section class="article-archive-hong"'),
      "kho bài v3 thiếu tìm/lọc/mở-thêm"),
+    ("BỐ CỤC v3 · bỏ helper khóa xuống dòng phải NỔ",
+     lambda r: sua_builder(r, "html = khoa_xuong_dong(html)", "html = html"),
+     "còn khoảng trắng có thể bị bẻ"),
+    ("BỐ CỤC v3 · kho 11 bài mà nút mở thêm còn hiện phải NỔ",
+     lambda r: sua_builder(r, 'an_mo_them = " hidden" if not con_lai else ""',
+                           'an_mo_them = ""'),
+     "đã hiện đủ mà nút mở thêm vẫn hiện"),
+    ("BỐ CỤC v3 · menu đổi riêng Trang chủ thành Sổ gốc phải NỔ",
+     lambda r: sua_builder(r, 'MUC_DIEU_HUONG = [("", "Trang chủ"),',
+                           'MUC_DIEU_HUONG = [("", "Sổ gốc"),'),
+     "menu phải dùng chung"),
     ("VISUAL · marker còn nhưng cấu hình bị xoá phải NỔ",
      lambda r: sua_json_bai(r, PENDLE_CJ, lambda d: d["visuals"].pop(0)),
      "marker visual và cấu hình không khớp"),
@@ -320,7 +331,10 @@ for _t in ("BỐ CỤC v3 · thiếu v3.css phải NỔ — trang đủ chữ m�
            "BỐ CỤC v3 · token rơi về chữ trần phải NỔ",
            "BỐ CỤC v3 · preview bài trang chủ mất component phải NỔ",
            "BỐ CỤC v3 · preview bài token mất ưu tiên phải NỔ",
-           "BỐ CỤC v3 · kho bài mất component phải NỔ"):
+           "BỐ CỤC v3 · kho bài mất component phải NỔ",
+           "BỐ CỤC v3 · bỏ helper khóa xuống dòng phải NỔ",
+           "BỐ CỤC v3 · kho 11 bài mà nút mở thêm còn hiện phải NỔ",
+           "BỐ CỤC v3 · menu đổi riêng Trang chủ thành Sổ gốc phải NỔ"):
     THEM_ARGV[_t] = ["--bo-cuc", "v3"]
 
 

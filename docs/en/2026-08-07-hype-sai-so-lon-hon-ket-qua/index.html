@@ -53,6 +53,8 @@ body{margin:0;color:var(--ink);font-family:var(--body);font-size:16.5px;line-hei
 .khung{max-width:1080px;margin:0 auto;padding:0 var(--gut)}
 a{color:var(--ink);text-decoration:none}
 p{margin:0 0 18px;overflow-wrap:break-word}
+h1,h2{text-wrap:balance}
+.khong-ngat,.cum-tieu-de{white-space:nowrap}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 ::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
 
@@ -1341,10 +1343,11 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
 .page-token-uni main{padding-bottom:112px}.uni-hero{padding-bottom:30px}
 .uni-hero-grid{display:grid;grid-template-columns:minmax(0,.84fr) minmax(500px,1.16fr);gap:clamp(38px,5.5vw,88px);align-items:center}
 .uni-hero-copy{min-width:0}.uni-hero .subline{max-width:58ch;margin:0 0 28px}
-.uni-title-lockup{display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
+.uni-title-lockup{container-type:inline-size;display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
 .uni-title-lockup img{width:84px;height:84px;border-radius:23px;box-shadow:0 0 0 1px var(--line),0 18px 40px -26px var(--ink)}
 .uni-title-lockup>div>span{display:block;margin:0 0 7px;font:750 10px/1 var(--mono);letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
-.uni-title-lockup h1{max-width:13ch;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1{max-width:none;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1 .cum-tieu-de{display:block}
 .uni-hero-jump{width:min(100%,420px);display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:15px 17px;border:1px solid var(--line);border-radius:13px;background:var(--card);box-shadow:var(--bong)}
 .uni-hero-jump span{font:650 9px/1.4 var(--mono);color:var(--faint)}.uni-hero-jump b{font:760 10px/1 var(--mono);color:var(--accent)}.uni-hero-jump i{font-style:normal;color:var(--accent);transition:transform .2s}
 .uni-hero-jump:hover,.uni-hero-jump:focus-visible{border-color:color-mix(in srgb,var(--accent) 38%,var(--line))}.uni-hero-jump:hover i{transform:translateY(2px)}
@@ -1520,6 +1523,12 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead::after{display:none}
   .article-priority .bai-lead .t{font-size:23px}.article-priority::after{font-size:100px;top:-.12em}
 }
+@media(max-width:600px){
+  .uni-title-lockup{grid-template-columns:1fr;gap:14px}.uni-title-lockup h1{font-size:clamp(27px,8vw,40px)}
+}
+@container (max-width:520px){
+  .uni-title-lockup h1{font-size:clamp(22px,7.5cqw,36px)}
+}
 @media(max-width:420px){
   .uni-vault-total{display:grid;grid-template-columns:auto 1fr;gap:20px}.uni-ring{width:92px;height:92px}.uni-ring::before{width:62px;height:62px}.uni-ring b{font-size:31px}
   .uni-vault::after{display:none}.uni-legend{grid-template-columns:1fr}.uni-status-bar{height:44px}.uni-ledger-head{display:grid}
@@ -1529,6 +1538,7 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
    ARTICLE ARCHIVE — preview hữu hạn ở trang chính, toàn bộ bài nằm ở đây.
    ══════════════════════════════════════════════════════════════════════════ */
 .page-article-archive main{padding-bottom:110px}.article-archive-hero{padding-bottom:25px}.article-archive-hero h1{max-width:15ch}
+.article-archive-hero h1 .nhan-manh{white-space:normal}
 .article-archive-hero .subline{max-width:67ch}.article-archive-stats{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:30px;padding:16px 0;border-block:1px solid var(--line)}
 .article-archive-stats span{display:flex;align-items:baseline;gap:7px;font:600 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .article-archive-stats span::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent)}.article-archive-stats span:nth-child(2)::before{background:var(--c-song)}.article-archive-stats span:nth-child(3)::before{background:var(--c-xn)}
@@ -1744,21 +1754,21 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <header class="dau"><div class="khung">
   <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
   <a class="ten" href="../../">Block<span>Pinned</span></a>
-  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Trang chủ</a><a href="../../bai/">Bài viết</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
+  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Trang&nbsp;chủ</a><a href="../../bai/">Bài&nbsp;viết</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
 </div></header>
 <main class="khung"><section class="hero hero-article receipt-hero">
-  <span class="ghost-num" aria-hidden="true">−412,960</span>
+  <span class="ghost-num" aria-hidden="true"><span class="khong-ngat">−412,960</span></span>
   <span class="hero-code" aria-hidden="true">EVIDENCE RECEIPT · C1</span>
   <div class="article-path" aria-label="Article location"><a href="../../">BlockPinned</a><span>/</span><b>Evidence receipt</b><span>/</span><b>HYPE</b><i><span class="dot song"></span>standing</i></div>
-  <p class="eyebrow"><span>English evidence layer</span><span class="im">2026-08-07</span></p>
-  <h1 class="display">Applying the report&#x27;s own circulating-supply definition consistently: HYPE Q2 net issuance is <span class="nhan-manh">−412,960</span>, not +890,000</h1>
+  <p class="eyebrow"><span>English evidence layer</span><span class="im"><span class="khong-ngat">2026-08</span>-<span class="khong-ngat">07</span></span></p>
+  <h1 class="display">Applying the report&#x27;s own circulating-supply definition consistently: HYPE Q2 net issuance is <span class="nhan-manh"><span class="khong-ngat">−412,960</span></span>, not <span class="khong-ngat">+890,000</span></h1>
   <p class="subline">This is a receipt, not a translation. The full write-up is in Vietnamese; everything needed to verify or refute the claims is here in English: the figures, the exact API calls that produce them, what would falsify each claim, and what the measurement does not cover.</p>
   <div class="article-verdict">
-    <div class="heronum article-ratio article-ledger-count"><p class="l">Public claim ledger</p><p class="v">4<em> claims</em></p><p class="d">4 standing or confirmed</p></div>
+    <div class="heronum article-ratio article-ledger-count"><p class="l">Public claim ledger</p><p class="v"><span class="khong-ngat">4</span><em> claims</em></p><p class="d"><span class="khong-ngat">4</span> standing or confirmed</p></div>
     <div class="case-path" role="img" aria-label="Evidence path from source through checks to current state">
-      <div class="case-step file"><span>01 · SOURCE</span><strong>HYPE</strong><small>subject pinned in the record</small></div><i aria-hidden="true">→</i>
-      <div class="case-step test"><span>02 · CHECK</span><strong>4</strong><small>explicit falsifiers</small></div><i aria-hidden="true">→</i>
-      <div class="case-step state song"><span>03 · CURRENT</span><strong>4/4</strong><small>standing or confirmed</small></div>
+      <div class="case-step file"><span><span class="khong-ngat">01</span> · SOURCE</span><strong>HYPE</strong><small>subject pinned in the record</small></div><i aria-hidden="true">→</i>
+      <div class="case-step test"><span><span class="khong-ngat">02</span> · CHECK</span><strong><span class="khong-ngat">4</span></strong><small>explicit falsifiers</small></div><i aria-hidden="true">→</i>
+      <div class="case-step state song"><span><span class="khong-ngat">03</span> · CURRENT</span><strong><span class="khong-ngat">4/4</span></strong><small>standing or confirmed</small></div>
     </div>
   </div>
 </section>
@@ -1766,53 +1776,53 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <section class="article-ledger" aria-labelledby="so-claim-title">
 <details class="evidence case-evidence" id="so-claim">
   <summary>
-    <span class="case-ledger-title"><span>Article claim ledger</span><b id="so-claim-title">4 claims</b><small>state changes stay visible</small></span>
-    <span class="case-ledger-viz"><span class="case-ledger-bar" role="img" aria-label="4 standing"><i class="song" style="--n:4"></i></span><span class="case-ledger-legend"><i><span class="dot song"></span><b>4</b> standing</i></span></span>
-    <span class="mo">open 4 claims</span>
+    <span class="case-ledger-title"><span>Article claim ledger</span><b id="so-claim-title"><span class="khong-ngat">4</span> claims</b><small>state changes stay visible</small></span>
+    <span class="case-ledger-viz"><span class="case-ledger-bar" role="img" aria-label="4 standing"><i class="song" style="--n:4"></i></span><span class="case-ledger-legend"><i><span class="dot song"></span><b><span class="khong-ngat">4</span></b> standing</i></span></span>
+    <span class="mo">open <span class="khong-ngat">4</span> claims</span>
   </summary>
   <div class="trong case-ledger-body"><p class="case-ledger-intro">Each claim carries its current state, pinned evidence and an explicit falsifier.</p><div class="case-claim-list"><article class="case-claim song" id="C1" data-article-claim data-st="song">
   <header class="case-claim-head"><a class="case-claim-id" href="#C1">C1</a>
     <span class="case-claim-status song"><i aria-hidden="true"></i>STANDING</span>
     <span class="case-claim-actions"></span></header>
-  <p class="case-claim-text">In Q2 2026 the wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 received 1,311,093 HYPE in staking emissions, 54.20% of the quarter&#x27;s 2,419,166 total. Hyperliquid&#x27;s Info API lists that wallet under nonCirculatingUserBalances, holding 241,150,943.99 at measurement time.</p>
+  <p class="case-claim-text">In Q2 <span class="khong-ngat">2026</span> the wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 received <span class="khong-ngat">1,311</span>,<span class="khong-ngat">093</span> HYPE in staking emissions, <span class="khong-ngat">54.20%</span> of the quarter&#x27;s <span class="khong-ngat">2,419</span>,<span class="khong-ngat">166</span> total. Hyperliquid&#x27;s Info API lists that wallet under nonCirculatingUserBalances, holding <span class="khong-ngat">241,150</span>,<span class="khong-ngat">943.99</span> at measurement time.</p>
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · nonCirculatingUserBalances has 4 entries · circulatingSupply 299,024,976.59 · totalSupply 999,049,594.42</p>
-    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Call delegatorRewards for that wallet and sum totalAmount over April, May and June 2026: anything other than 1,311,093 falsifies the figure. Check the series for gaps — record count, distinct-day count and span length must be equal, otherwise the quarterly total is a lower bound. For the classification: call tokenDetails and read nonCirculatingUserBalances. If the wallet is not in that list, the central premise loses its support.</p>
+    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot <span class="khong-ngat">2026-08</span>-<span class="khong-ngat">07</span> · nonCirculatingUserBalances has <span class="khong-ngat">4</span> entries · circulatingSupply <span class="khong-ngat">299,024</span>,<span class="khong-ngat">976.59</span> · totalSupply <span class="khong-ngat">999,049</span>,<span class="khong-ngat">594.42</span></p>
+    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Call delegatorRewards for that wallet and sum totalAmount over April, May and June <span class="khong-ngat">2026</span>: anything other than <span class="khong-ngat">1,311</span>,<span class="khong-ngat">093</span> falsifies the figure. Check the series for gaps — record count, distinct-day count and span length must be equal, otherwise the quarterly total is a lower bound. For the classification: call tokenDetails and read nonCirculatingUserBalances. If the wallet is not in that list, the central premise loses its support.</p>
   </div>
 </article><article class="case-claim song" id="C2" data-article-claim data-st="song">
   <header class="case-claim-head"><a class="case-claim-id" href="#C2">C2</a>
     <span class="case-claim-status song"><i aria-hidden="true"></i>STANDING</span>
     <span class="case-claim-actions"></span></header>
-  <p class="case-claim-text">In the same quarter the wallet sent out 1,288,966 HYPE across 58 transfers to 29 distinct addresses, and 0 of those 29 are in the non-circulating set at measurement time. There were 0 inbound token transfers. The outflow is therefore added back to circulation, and the addition term does not double count.</p>
+  <p class="case-claim-text">In the same quarter the wallet sent out <span class="khong-ngat">1,288</span>,<span class="khong-ngat">966</span> HYPE across <span class="khong-ngat">58</span> transfers to <span class="khong-ngat">29</span> distinct addresses, and <span class="khong-ngat">0</span> of those <span class="khong-ngat">29</span> are in the non-circulating set at measurement time. There were <span class="khong-ngat">0</span> inbound token transfers. The outflow is therefore added back to circulation, and the addition term does not double count.</p>
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · userNonFundingLedgerUpdates scanned month by month, 0 of 3 months hit the row limit</p>
-    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Re-scan userNonFundingLedgerUpdates for Q2 month by month, take the HYPE rows where the wallet is the source, and match each destination against nonCirculatingUserBalances. If any recipient is in that set, the amount added back must be smaller than 1,288,967 — which makes the result more negative, not less. A month returning exactly 500, 1000 or 2000 rows has hit the row limit and the total becomes a lower bound. Before trusting the zero, check the test discriminates: query the same membership for this wallet, for 0xfefe…fefe and for the dead address — all three must return present.</p>
+    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot <span class="khong-ngat">2026-08</span>-<span class="khong-ngat">07</span> · userNonFundingLedgerUpdates scanned month by month, <span class="khong-ngat">0</span> of <span class="khong-ngat">3</span> months hit the row limit</p>
+    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Re-scan userNonFundingLedgerUpdates for Q2 month by month, take the HYPE rows where the wallet is the source, and match each destination against nonCirculatingUserBalances. If any recipient is in that set, the amount added back must be smaller than <span class="khong-ngat">1,288</span>,<span class="khong-ngat">967</span> — which makes the result more negative, not less. A month returning exactly <span class="khong-ngat">500</span>, <span class="khong-ngat">1000</span> or <span class="khong-ngat">2000</span> rows has hit the row limit and the total becomes a lower bound. Before trusting the zero, check the test discriminates: query the same membership for this wallet, for <span class="khong-ngat">0xfefe…fefe</span> and for the dead address — all three must return present.</p>
   </div>
 </article><article class="case-claim song" id="C3" data-article-claim data-st="song">
   <header class="case-claim-head"><a class="case-claim-id" href="#C3">C3</a>
     <span class="case-claim-status song"><i aria-hidden="true"></i>STANDING</span>
     <span class="case-claim-actions"></span></header>
-  <p class="case-claim-text">Holding every other figure from the report unchanged and altering only the treatment of emissions accruing to the non-circulating wallet, Q2 2026 net issuance is −412,960 HYPE rather than the +890,000 the report concludes. Removing the 39,792 token-burn line entirely still leaves −373,168.</p>
+  <p class="case-claim-text">Holding every other figure from the report unchanged and altering only the treatment of emissions accruing to the non-circulating wallet, Q2 <span class="khong-ngat">2026</span> net issuance is <span class="khong-ngat">−412,960</span> HYPE rather than the <span class="khong-ngat">+890,000</span> the report concludes. Removing the <span class="khong-ngat">39,792</span> token-burn line entirely still leaves <span class="khong-ngat">−373,168</span>.</p>
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · 2,419,166 − 1,311,093 = 1,108,073; + 1,288,967 = 2,397,040; − 2,810,000 from the report (buyback 2,770,208 + burn 39,792) · circulating base 299,024,977</p>
-    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Add the four terms: 2,419,166 − 1,311,093 = 1,108,073; + 1,288,967 = 2,397,040; − 2,810,000 = −412,960. Any other result falsifies the arithmetic. This claim does not say the report is wrong about direction: its own next paragraph also concludes supply tightened, so reading this as a disagreement about direction is a misreading of the claim.</p>
+    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot <span class="khong-ngat">2026-08</span>-<span class="khong-ngat">07</span> · <span class="khong-ngat">2,419</span>,<span class="khong-ngat">166 − 1,311</span>,<span class="khong-ngat">093</span> = <span class="khong-ngat">1,108</span>,<span class="khong-ngat">073</span>; + <span class="khong-ngat">1,288</span>,<span class="khong-ngat">967</span> = <span class="khong-ngat">2,397</span>,<span class="khong-ngat">040</span>; − <span class="khong-ngat">2,810</span>,<span class="khong-ngat">000</span> from the report (buyback <span class="khong-ngat">2,770</span>,<span class="khong-ngat">208</span> + burn <span class="khong-ngat">39,792</span>) · circulating base <span class="khong-ngat">299,024</span>,<span class="khong-ngat">977</span></p>
+    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Add the four terms: <span class="khong-ngat">2,419</span>,<span class="khong-ngat">166 − 1,311</span>,<span class="khong-ngat">093</span> = <span class="khong-ngat">1,108</span>,<span class="khong-ngat">073</span>; + <span class="khong-ngat">1,288</span>,<span class="khong-ngat">967</span> = <span class="khong-ngat">2,397</span>,<span class="khong-ngat">040</span>; − <span class="khong-ngat">2,810</span>,<span class="khong-ngat">000</span> = <span class="khong-ngat">−412,960</span>. Any other result falsifies the arithmetic. This claim does not say the report is wrong about direction: its own next paragraph also concludes supply tightened, so reading this as a disagreement about direction is a misreading of the claim.</p>
   </div>
 </article><article class="case-claim song" id="C4" data-article-claim data-st="song">
   <header class="case-claim-head"><a class="case-claim-id" href="#C4">C4</a>
     <span class="case-claim-status song"><i aria-hidden="true"></i>STANDING</span>
     <span class="case-claim-actions"></span></header>
-  <p class="case-claim-text">Emissions accruing to that wallet stay within a narrow band across six full quarters: 1,303,294 · 1,327,384 · 1,336,732 · 1,351,753 · 1,289,617 · 1,311,093, a 4.82% spread between highest and lowest. This series measures INFLOW TO THE WALLET. It does not show that earlier quarterly reports used the same treatment, because only the 2Q2026 report is in hand.</p>
+  <p class="case-claim-text">Emissions accruing to that wallet stay within a narrow band across six full quarters: <span class="khong-ngat">1,303</span>,<span class="khong-ngat">294</span> · <span class="khong-ngat">1,327</span>,<span class="khong-ngat">384</span> · <span class="khong-ngat">1,336</span>,<span class="khong-ngat">732</span> · <span class="khong-ngat">1,351</span>,<span class="khong-ngat">753</span> · <span class="khong-ngat">1,289</span>,<span class="khong-ngat">617</span> · <span class="khong-ngat">1,311</span>,<span class="khong-ngat">093</span>, a <span class="khong-ngat">4.82%</span> spread between highest and lowest. This series measures INFLOW TO THE WALLET. It does not show that earlier quarterly reports used the same treatment, because only the 2Q2026 report is in hand.</p>
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot 2026-08-07 · delegatorRewards returns 587 records / 587 distinct days / 587-day span, 2024-12-29 to 2026-08-07, no missing day</p>
-    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Sum totalAmount per calendar quarter: a full quarter falling outside 1,289,617–1,351,753 means the narrow-band reading has to be rewritten. A complete calendar quarter after Q2 2026 recording below 1.0M HYPE falsifies it. This claim must not be quoted as an error repeated six times: that would require six quarterly reports and proof that each applied the same treatment, and only one is in hand.</p>
+    <p class="case-pin"><span>PINNED AT</span>Wallet 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API is self-published by Hyperliquid · NO BLOCK NUMBER — wall-clock snapshot <span class="khong-ngat">2026-08</span>-<span class="khong-ngat">07</span> · delegatorRewards returns <span class="khong-ngat">587</span> records / <span class="khong-ngat">587</span> distinct days / <span class="khong-ngat">587</span>-day span, <span class="khong-ngat">2024-12</span>-<span class="khong-ngat">29</span> to <span class="khong-ngat">2026-08</span>-<span class="khong-ngat">07</span>, no missing day</p>
+    <p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>Sum totalAmount per calendar quarter: a full quarter falling outside <span class="khong-ngat">1,289</span>,<span class="khong-ngat">617–1,351</span>,<span class="khong-ngat">753</span> means the narrow-band reading has to be rewritten. A complete calendar quarter after Q2 <span class="khong-ngat">2026</span> recording below <span class="khong-ngat">1.0M</span> HYPE falsifies it. This claim must not be quoted as an error repeated six times: that would require six quarterly reports and proof that each applied the same treatment, and only one is in hand.</p>
   </div>
 </article></div></div>
 </details></section>
 <section class="than article-body receipt-body">
-  <div class="article-meta"><span><b>PIN</b>No block number anywhere. HyperCore is read through Hyperliquid&#x27;s Info API; the default public HyperEVM RPC does not serve reliable historical state (same block number twice, 20 s apart, returns two different values; a future block returns a number instead of an error; the official docs state it is &quot;not supported at this time on the default RPC implementation&quot;). Third-party paid endpoints were not tested. Every figure below is a wall-clock snapshot taken 2026-08-07.</span><span><b>DATE</b>2026-08-07</span><span class="article-meta-link"><a href="../../bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/">Full write-up in Vietnamese →</a></span></div>
+  <div class="article-meta"><span><b>PIN</b>No block number anywhere. HyperCore is read through Hyperliquid&#x27;s Info API; the default public HyperEVM RPC does not serve reliable historical state (same block number twice, <span class="khong-ngat">20</span> s apart, returns two different values; a future block returns a number instead of an error; the official docs state it is &quot;not supported at this time on the default RPC implementation&quot;). Third-party paid endpoints were not tested. Every figure below is a wall-clock snapshot taken <span class="khong-ngat">2026-08</span>-<span class="khong-ngat">07</span>.</span><span><b>DATE</b><span class="khong-ngat">2026-08</span>-<span class="khong-ngat">07</span></span><span class="article-meta-link"><a href="../../bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/">Full write-up in Vietnamese →</a></span></div>
   <h2 id="how-to-check">How to check</h2><ul class="receipt-checks"><li><b>Wallet classification and supply</b> — <code>POST https://api.hyperliquid.xyz/info · {&quot;type&quot;:&quot;tokenDetails&quot;,&quot;tokenId&quot;:&quot;&lt;HYPE&gt;&quot;} — read nonCirculatingUserBalances, circulatingSupply, totalSupply. Get tokenId from {&quot;type&quot;:&quot;spotMetaAndAssetCtxs&quot;}.</code></li><li><b>Emissions accruing to the wallet</b> — <code>{&quot;type&quot;:&quot;delegatorRewards&quot;,&quot;user&quot;:&quot;0x43e9abea1910387c4292bca4b94de81462f8a251&quot;} — sum totalAmount per quarter. Check for gaps: record count, distinct-day count and span length must all be equal.</code></li><li><b>Outflows and their destinations</b> — <code>{&quot;type&quot;:&quot;userNonFundingLedgerUpdates&quot;,&quot;user&quot;:&quot;0x43e9abea…&quot;,&quot;startTime&quot;:…,&quot;endTime&quot;:…} — scan month by month so the row limit is never hit; match every destination against the non-circulating set above.</code></li><li><b>Total staked</b> — <code>{&quot;type&quot;:&quot;validatorSummaries&quot;} — sum the stake field, divide by 1e8.</code></li></ul>
-  <h2 id="limits">What this does not cover</h2><ul><li>The non-circulating classification is read at measurement time, not per day inside Q2. There is no historical source for that field.</li><li>The ~299M float base attributed to the report is an inference from its own subtraction, not a direct snapshot of the exclusion list during Q2.</li><li>Input data comes from an API published by Hyperliquid itself. That is one source, not two independent ones. The arithmetic on top of it is checkable.</li><li>Only the 2Q2026 report is in hand. The six-quarter series measures inflow to the wallet; it does not show that earlier reports used the same treatment.</li><li>The two paths measuring outflow differ by 1 HYPE (1,288,966 from the transfer ledger, 1,288,967 from finalised withdrawals). The difference sits entirely in April and is 0.00008%; the arithmetic uses the second. Using the first gives −412,961.</li></ul>
-  <h2 id="sources">Sources</h2><ul><li>Full write-up: <a href="../../bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/">/bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/</a></li><li>As posted on X: <a href="https://x.com/blockpinned/status/2085611015794995577">https://x.com/blockpinned/status/2085611015794995577</a></li></ul>
+  <h2 id="limits">What this does not cover</h2><ul><li>The non-circulating classification is read at measurement time, not per day inside Q2. There is no historical source for that field.</li><li>The ~<span class="khong-ngat">299M</span> float base attributed to the report is an inference from its own subtraction, not a direct snapshot of the exclusion list during Q2.</li><li>Input data comes from an API published by Hyperliquid itself. That is one source, not two independent ones. The arithmetic on top of it is checkable.</li><li>Only the 2Q2026 report is in hand. The six-quarter series measures inflow to the wallet; it does not show that earlier reports used the same treatment.</li><li>The two paths measuring outflow differ by <span class="khong-ngat">1</span> HYPE (<span class="khong-ngat">1,288</span>,<span class="khong-ngat">966</span> from the transfer ledger, <span class="khong-ngat">1,288</span>,<span class="khong-ngat">967</span> from finalised withdrawals). The difference sits entirely in April and is <span class="khong-ngat">0.00008%</span>; the arithmetic uses the second. Using the first gives <span class="khong-ngat">−412,961</span>.</li></ul>
+  <h2 id="sources">Sources</h2><ul><li>Full write-up: <a href="../../bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/">/bai/<span class="khong-ngat">2026-08</span>-<span class="khong-ngat">07</span>-hype-sai-so-lon-hon-ket-qua/</a></li><li>As posted on X: <a href="https://x.com/blockpinned/status/2085611015794995577">https://x.com/blockpinned/status/<span class="khong-ngat">2085611015794995577</span></a></li></ul>
   <p class="receipt-policy">Corrections are made in place and never deleted; every claim above carries its current status. <b>Not investment advice.</b></p>
 </section></main>
 <div id="ch-tip"></div>
@@ -1913,12 +1923,12 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var quickRoot = quickHome ? quickHome.href : new URL(".", location.href).href;
   function quickHref(path) { return new URL(path, quickRoot).href; }
   var quickRoutes = [
-    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
-    { href: quickHref("bai/"), code: "01", kind: "Điều tra", title: "Tất cả bài viết", copy: "Tìm, lọc token và mở toàn bộ bài điều tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
-    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ sơ", tags: "token directory coverage logo", tone: "token" },
-    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
-    { href: quickHref("facts/"), code: "03", kind: "Tự kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
-    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
+    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang\u00a0chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
+    { href: quickHref("bai/"), code: "01", kind: "Điều\u00a0tra", title: "Tất cả bài\u00a0viết", copy: "Tìm, lọc token và mở toàn bộ bài\u00a0điều\u00a0tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
+    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ\u00a0sơ", tags: "token directory coverage logo", tone: "token" },
+    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ\u00a0sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
+    { href: quickHref("facts/"), code: "03", kind: "Tự\u00a0kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
+    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi\u00a0trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
     { href: quickHref("du-lieu/"), code: "05", kind: "Hiện vật", title: "Dữ liệu thô", copy: "JSON, SHA-256 và lệnh tải để tự đếm lại", tags: "du lieu data json hash sha curl hien vat", tone: "data" }
   ];
   var quickHost = themeButton && themeButton.parentNode;
@@ -1986,8 +1996,8 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
           + '<span class="quick-find-copy"><small>' + route.kind + '</small><b>' + route.title + '</b><em>' + route.copy + '</em></span>'
           + (here ? '<span class="quick-find-here">Đang xem</span>' : '<span class="quick-find-go" aria-hidden="true">↗</span>')
           + '</a>';
-      }).join("") : '<p class="quick-find-empty"><b>Không có đích phù hợp.</b><span>Thử “token”, “fact”, “tự kiểm” hoặc “track”.</span></p>';
-      quickCount.textContent = (quickVisible.length < 10 ? "0" : "") + quickVisible.length + " đích";
+      }).join("") : '<p class="quick-find-empty"><b>Không có đích phù hợp.</b><span>Thử “token”, “fact”, “tự\u00a0kiểm” hoặc “track”.</span></p>';
+      quickCount.textContent = (quickVisible.length < 10 ? "0" : "") + quickVisible.length + "\u00a0đích";
       paintQuickSelection();
     }
     function openQuickFind() {
@@ -2334,7 +2344,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         card.hidden = !visible;
         if (visible) shown++;
       });
-      if (tokenFilterStatus) tokenFilterStatus.textContent = "Đang hiện " + shown + " token" + (label ? " · " + label : "");
+      if (tokenFilterStatus) tokenFilterStatus.textContent = "Đang hiện " + shown + "\u00a0token" + (label ? " · " + label : "");
     }
     tokenFilterButtons.forEach(function (button) {
       button.addEventListener("click", function () {
@@ -2436,7 +2446,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     copyPlainText(url).then(function (copied) {
       button.classList.toggle("da-chep", copied);
       button.querySelector("span").textContent = copied ? "Đã sao chép ✓" : "Hãy sao chép thủ công";
-      button.setAttribute("aria-label", copied ? "Đã sao chép link bằng chứng" : "Không thể tự sao chép link bằng chứng");
+      button.setAttribute("aria-label", copied ? "Đã sao chép link bằng\u00a0chứng" : "Không thể tự sao chép link bằng\u00a0chứng");
       setTimeout(function () {
         button.classList.remove("da-chep");
         button.querySelector("span").textContent = idleLabel;
@@ -2525,7 +2535,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     copy.type = "button";
     copy.className = "command-copy";
     copy.textContent = "Sao chép lệnh";
-    copy.setAttribute("aria-label", "Sao chép lệnh tự kiểm");
+    copy.setAttribute("aria-label", "Sao chép lệnh tự\u00a0kiểm");
     details.insertBefore(copy, command);
 
     copy.addEventListener("click", function () {
@@ -2546,7 +2556,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var trackStatus = document.querySelector(".track-filter-status");
   var trackLedger = document.querySelector(".track-ledger");
   if (trackFilters.length && trackEntries.length) {
-    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác bỏ", sua: "đã sửa", cho: "chưa phân định" };
+    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác\u00a0bỏ", sua: "đã sửa", cho: "chưa phân\u00a0định" };
     trackFilters.forEach(function (button) {
       button.addEventListener("click", function () {
         var filter = button.dataset.trackFilter;
@@ -2557,7 +2567,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
           entry.hidden = !visible;
           if (visible) shown++;
         });
-        if (trackStatus) trackStatus.textContent = "Đang hiện " + shown + " dòng" + (filter === "all" ? "" : " · " + trackLabels[filter]);
+        if (trackStatus) trackStatus.textContent = "Đang hiện " + shown + "\u00a0dòng" + (filter === "all" ? "" : " · " + trackLabels[filter]);
         if (trackLedger) requestAnimationFrame(function () {
           trackLedger.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
         });
@@ -2592,11 +2602,11 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         card.hidden = index < 0 || index >= archiveLimit;
       });
       var shown = Math.min(matches.length, archiveLimit);
-      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + " / " + matches.length + " bài viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
+      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + "\u00a0/\u00a0" + matches.length + "\u00a0bài\u00a0viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
       if (archiveEmpty) archiveEmpty.hidden = matches.length !== 0;
       if (archiveMore) {
         archiveMore.hidden = matches.length <= archiveLimit;
-        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + " bài viết ↓";
+        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + "\u00a0bài\u00a0viết ↓";
       }
     }
     function selectArchiveFilter(filter, updateUrl) {
@@ -2647,7 +2657,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var uniEmpty = document.querySelector("[data-uni-empty]");
   if (uniClaims.length) {
     var uniActiveFilter = "all";
-    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng vững", sua: "đã sửa", bac: "đã bị bác bỏ", changed: "đã đổi trạng thái" };
+    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng\u00a0vững", sua: "đã sửa", bac: "đã bị bác\u00a0bỏ", changed: "đã đổi trạng thái" };
 
     function uniNormalise(value) {
       return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -2666,7 +2676,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
       });
       if (uniStatus) {
         var lens = uniActiveFilter === "all" ? "" : " · " + uniLabels[uniActiveFilter];
-        uniStatus.textContent = "Đang hiện " + shown + " claim" + lens + (query ? " · có từ khoá" : "");
+        uniStatus.textContent = "Đang hiện " + shown + "\u00a0claim" + lens + (query ? " · có từ khoá" : "");
       }
       if (uniEmpty) uniEmpty.hidden = shown !== 0;
     }

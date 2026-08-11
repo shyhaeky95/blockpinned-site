@@ -53,6 +53,8 @@ body{margin:0;color:var(--ink);font-family:var(--body);font-size:16.5px;line-hei
 .khung{max-width:1080px;margin:0 auto;padding:0 var(--gut)}
 a{color:var(--ink);text-decoration:none}
 p{margin:0 0 18px;overflow-wrap:break-word}
+h1,h2{text-wrap:balance}
+.khong-ngat,.cum-tieu-de{white-space:nowrap}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 ::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
 
@@ -1341,10 +1343,11 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
 .page-token-uni main{padding-bottom:112px}.uni-hero{padding-bottom:30px}
 .uni-hero-grid{display:grid;grid-template-columns:minmax(0,.84fr) minmax(500px,1.16fr);gap:clamp(38px,5.5vw,88px);align-items:center}
 .uni-hero-copy{min-width:0}.uni-hero .subline{max-width:58ch;margin:0 0 28px}
-.uni-title-lockup{display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
+.uni-title-lockup{container-type:inline-size;display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
 .uni-title-lockup img{width:84px;height:84px;border-radius:23px;box-shadow:0 0 0 1px var(--line),0 18px 40px -26px var(--ink)}
 .uni-title-lockup>div>span{display:block;margin:0 0 7px;font:750 10px/1 var(--mono);letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
-.uni-title-lockup h1{max-width:13ch;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1{max-width:none;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1 .cum-tieu-de{display:block}
 .uni-hero-jump{width:min(100%,420px);display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:15px 17px;border:1px solid var(--line);border-radius:13px;background:var(--card);box-shadow:var(--bong)}
 .uni-hero-jump span{font:650 9px/1.4 var(--mono);color:var(--faint)}.uni-hero-jump b{font:760 10px/1 var(--mono);color:var(--accent)}.uni-hero-jump i{font-style:normal;color:var(--accent);transition:transform .2s}
 .uni-hero-jump:hover,.uni-hero-jump:focus-visible{border-color:color-mix(in srgb,var(--accent) 38%,var(--line))}.uni-hero-jump:hover i{transform:translateY(2px)}
@@ -1520,6 +1523,12 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead::after{display:none}
   .article-priority .bai-lead .t{font-size:23px}.article-priority::after{font-size:100px;top:-.12em}
 }
+@media(max-width:600px){
+  .uni-title-lockup{grid-template-columns:1fr;gap:14px}.uni-title-lockup h1{font-size:clamp(27px,8vw,40px)}
+}
+@container (max-width:520px){
+  .uni-title-lockup h1{font-size:clamp(22px,7.5cqw,36px)}
+}
 @media(max-width:420px){
   .uni-vault-total{display:grid;grid-template-columns:auto 1fr;gap:20px}.uni-ring{width:92px;height:92px}.uni-ring::before{width:62px;height:62px}.uni-ring b{font-size:31px}
   .uni-vault::after{display:none}.uni-legend{grid-template-columns:1fr}.uni-status-bar{height:44px}.uni-ledger-head{display:grid}
@@ -1529,6 +1538,7 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
    ARTICLE ARCHIVE — preview hữu hạn ở trang chính, toàn bộ bài nằm ở đây.
    ══════════════════════════════════════════════════════════════════════════ */
 .page-article-archive main{padding-bottom:110px}.article-archive-hero{padding-bottom:25px}.article-archive-hero h1{max-width:15ch}
+.article-archive-hero h1 .nhan-manh{white-space:normal}
 .article-archive-hero .subline{max-width:67ch}.article-archive-stats{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:30px;padding:16px 0;border-block:1px solid var(--line)}
 .article-archive-stats span{display:flex;align-items:baseline;gap:7px;font:600 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .article-archive-stats span::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent)}.article-archive-stats span:nth-child(2)::before{background:var(--c-song)}.article-archive-stats span:nth-child(3)::before{background:var(--c-xn)}
@@ -1744,120 +1754,120 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <header class="dau"><div class="khung">
   <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
   <a class="ten" href="../">Block<span>Pinned</span></a>
-  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../">Trang chủ</a><a href="../bai/">Bài viết</a><a href="../token/">Token</a><a href="../track-record/" class="tai">Track record</a><a href="../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
+  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../">Trang&nbsp;chủ</a><a href="../bai/">Bài&nbsp;viết</a><a href="../token/">Token</a><a href="../track-record/" class="tai">Track record</a><a href="../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
 </div></header>
 <main class="khung"><section class="hero track-hero">
     <p class="eyebrow">Track record <span class="im">prediction → resolution</span></p>
-    <h1 class="display">Ghi trước. Để <span class="nhan-manh">kết quả</span> phán quyết.</h1>
-    <span class="ghost-num" aria-hidden="true">07</span>
+    <h1 class="display">Ghi&nbsp;trước. Để <span class="nhan-manh">kết quả</span> phán quyết.</h1>
+    <span class="ghost-num" aria-hidden="true"><span class="khong-ngat">07</span></span>
     <span class="hero-code">PUBLIC MEMORY · NO CHERRY-PICKING</span>
-    <p class="subline">Mỗi dòng là một con số hoặc một ngưỡng được dán ra <strong>trước khi biết đáp án</strong>. Khi kết quả đến, dòng đó vẫn ở lại — dù được xác nhận, đã bị bác bỏ hay phải sửa.</p>
+    <p class="subline">Mỗi dòng là một con số hoặc một ngưỡng được dán ra <strong>trước khi biết đáp án</strong>. Khi kết quả đến, dòng đó vẫn ở lại — dù được xác nhận, đã bị bác&nbsp;bỏ hay phải sửa.</p>
 
     <section class="track-score" aria-label="Tổng quan 7 lần ghi trước">
-      <div class="track-total"><span>Tổng sổ</span><strong>07</strong><small>lần ghi trước</small></div>
+      <div class="track-total"><span>Tổng sổ</span><strong><span class="khong-ngat">07</span></strong><small>lần ghi&nbsp;trước</small></div>
       <div class="track-distribution">
-        <div class="track-distribution-head"><b>Trạng thái phân định</b><span>mới nhất trước</span></div>
+        <div class="track-distribution-head"><b>Trạng thái phân&nbsp;định</b><span>mới nhất trước</span></div>
         <div class="track-bar"><i class="xac" style="--n:2" title="Đã xác nhận: 2"></i><i class="song" style="--n:2" title="Đang chờ: 2"></i><i class="bac" style="--n:2" title="Đã bị bác bỏ: 2"></i><i class="sua" style="--n:1" title="Đã sửa: 1"></i></div>
-        <div class="track-legend"><span><i class="dot xac"></i><b>2</b> Đã xác nhận</span><span><i class="dot song"></i><b>2</b> Đang chờ</span><span><i class="dot bac"></i><b>2</b> Đã bị bác bỏ</span><span><i class="dot sua"></i><b>1</b> Đã sửa</span></div>
+        <div class="track-legend"><span><i class="dot xac"></i><b><span class="khong-ngat">2</span></b> Đã xác nhận</span><span><i class="dot song"></i><b><span class="khong-ngat">2</span></b> Đang chờ</span><span><i class="dot bac"></i><b><span class="khong-ngat">2</span></b> Đã bị bác&nbsp;bỏ</span><span><i class="dot sua"></i><b><span class="khong-ngat">1</span></b> Đã sửa</span></div>
       </div>
-      <div class="track-rule"><span>01</span><b>Ghi trước</b><i>→</i><span>02</span><b>Chờ dữ liệu</b><i>→</i><span>03</span><b>Giữ nguyên kết quả</b></div>
+      <div class="track-rule"><span><span class="khong-ngat">01</span></span><b>Ghi&nbsp;trước</b><i>→</i><span><span class="khong-ngat">02</span></span><b>Chờ dữ&nbsp;liệu</b><i>→</i><span><span class="khong-ngat">03</span></span><b>Giữ nguyên kết quả</b></div>
     </section>
-    <p class="track-integrity"><b>Integrity rule</b><span>Sổ giữ cả những lần sai và chưa có kết quả. Bộ sinh trang chặn build nếu một dòng đã được phân định mà thiếu kết quả.</span></p>
+    <p class="track-integrity"><b>Integrity rule</b><span>Sổ giữ cả những lần sai và chưa có kết quả. Bộ sinh trang chặn build nếu một dòng đã được phân&nbsp;định mà thiếu kết quả.</span></p>
   </section>
 
   <nav class="track-filters" aria-label="Lọc Track record theo trạng thái">
     <span>Lọc sổ</span>
-    <button type="button" data-track-filter="all" aria-pressed="true">Tất cả <b>7</b></button>
-    <button type="button" data-track-filter="xac" aria-pressed="false"><i class="dot xac"></i>Đã xác nhận <b>2</b></button><button type="button" data-track-filter="song" aria-pressed="false"><i class="dot song"></i>Đang chờ <b>2</b></button><button type="button" data-track-filter="bac" aria-pressed="false"><i class="dot bac"></i>Đã bị bác bỏ <b>2</b></button><button type="button" data-track-filter="sua" aria-pressed="false"><i class="dot sua"></i>Đã sửa <b>1</b></button>
+    <button type="button" data-track-filter="all" aria-pressed="true">Tất cả <b><span class="khong-ngat">7</span></b></button>
+    <button type="button" data-track-filter="xac" aria-pressed="false"><i class="dot xac"></i>Đã xác nhận <b><span class="khong-ngat">2</span></b></button><button type="button" data-track-filter="song" aria-pressed="false"><i class="dot song"></i>Đang chờ <b><span class="khong-ngat">2</span></b></button><button type="button" data-track-filter="bac" aria-pressed="false"><i class="dot bac"></i>Đã bị bác&nbsp;bỏ <b><span class="khong-ngat">2</span></b></button><button type="button" data-track-filter="sua" aria-pressed="false"><i class="dot sua"></i>Đã sửa <b><span class="khong-ngat">1</span></b></button>
   </nav>
 
   <section class="track-ledger" aria-label="7 lần ghi trước và kết quả">
-    <div class="track-ledger-head"><div><p class="section-code">PUBLIC LEDGER · 07 ENTRIES</p><h2>Trước và sau</h2></div>
-      <p class="track-filter-status" aria-live="polite">Đang hiện 7 dòng</p></div>
-    <article class="tr track-entry song" id="track-01" data-track data-track-state="song" data-track-index="01"><span class="track-index" aria-hidden="true">01</span>
+    <div class="track-ledger-head"><div><p class="section-code">PUBLIC LEDGER · <span class="khong-ngat">07</span> ENTRIES</p><h2>Trước và sau</h2></div>
+      <p class="track-filter-status" aria-live="polite">Đang hiện <span class="khong-ngat">7</span> dòng</p></div>
+    <article class="tr track-entry song" id="track-01" data-track data-track-state="song" data-track-index="01"><span class="track-index" aria-hidden="true"><span class="khong-ngat">01</span></span>
   <div class="tr-head"><span class="chip song">ĐANG CHỜ</span>
-    <span class="moc">10/08/2026 → hạn 12/08/2026</span></div>
+    <span class="moc"><span class="khong-ngat">10/08/2026</span> → hạn <span class="khong-ngat">12/08/2026</span></span></div>
   <div class="tr-body">
-    <div class="col truoc"><span class="k">Tôi ghi trước</span>
-      <span class="ngay">10/08/2026</span>
-      <span class="txt">hiệu tổng cung trừ số dư địa chỉ đốt phải rơi xuống không cao hơn 339.823.371,96 CAKE</span>
-      <span class="noi">bài đăng trên X lúc 14h ngày 10/08/2026, và trang này, đều ghi cận trên trước khi lệnh đốt tuần chạy</span></div>
+    <div class="col truoc"><span class="k">Tôi ghi&nbsp;trước</span>
+      <span class="ngay"><span class="khong-ngat">10/08/2026</span></span>
+      <span class="txt">hiệu tổng cung trừ số dư địa chỉ đốt phải rơi xuống không cao hơn <span class="khong-ngat">339.823.371,96 CAKE</span></span>
+      <span class="noi">bài đăng trên X lúc 14h ngày <span class="khong-ngat">10/08/2026</span>, và trang này, đều ghi cận trên trước khi lệnh đốt tuần chạy</span></div>
     <div class="mui">→</div>
-    <div class="col sau"><span class="k">Chưa tới ngày</span><span class="ngay">hạn 12/08/2026</span><span class="txt">Dòng này nằm đây từ trước khi biết đáp án. Tới hạn thì nó có kết quả, dù kết quả là tôi sai.</span></div>
+    <div class="col sau"><span class="k">Chưa tới ngày</span><span class="ngay">hạn <span class="khong-ngat">12/08/2026</span></span><span class="txt">Dòng này nằm đây từ trước khi biết đáp án. Tới hạn thì nó có kết quả, dù kết quả là tôi sai.</span></div>
   </div>
-  <div class="tr-foot"><a href="../bai/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/#C6">10/08/2026 · C6 — PancakeSwap mất gần một nửa thị phần BSC trong sáu tuần, nhưng phí giao dịch trên sàn tăng 3,1 lần vì volume dời sang pool có mức phí cao gấp 100 lần</a></div>
-</article><article class="tr track-entry xac" id="track-02" data-track data-track-state="xac" data-track-index="02"><span class="track-index" aria-hidden="true">02</span>
+  <div class="tr-foot"><a href="../bai/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/#C6"><span class="khong-ngat">10/08/2026</span> · C6 — PancakeSwap mất gần một nửa thị phần BSC trong sáu tuần, nhưng phí giao dịch trên sàn tăng <span class="khong-ngat">3,1 lần</span> vì volume dời sang pool có mức phí cao gấp <span class="khong-ngat">100 lần</span></a></div>
+</article><article class="tr track-entry xac" id="track-02" data-track data-track-state="xac" data-track-index="02"><span class="track-index" aria-hidden="true"><span class="khong-ngat">02</span></span>
   <div class="tr-head"><span class="chip xac">ĐÃ XÁC NHẬN</span>
-    <span class="moc">31/07/2026 → 03/08/2026</span></div>
+    <span class="moc"><span class="khong-ngat">31/07/2026</span> → <span class="khong-ngat">03/08/2026</span></span></div>
   <div class="tr-body">
-    <div class="col truoc"><span class="k">Tôi ghi trước</span>
-      <span class="ngay">31/07/2026</span>
-      <span class="txt">lượt chuyển kế tiếp xảy ra trước 2026-08-03T18:42:47Z, tức trước 01:42:47 ngày 04/08/2026 giờ VN</span>
-      <span class="noi">https://x.com/blockpinned/status/2083065438943244720 (bản đầu, hai ngày) và https://x.com/blockpinned/status/2083111195654103262 (chốt lại thành một mốc, 31/07) và trang này</span></div>
+    <div class="col truoc"><span class="k">Tôi ghi&nbsp;trước</span>
+      <span class="ngay"><span class="khong-ngat">31/07/2026</span></span>
+      <span class="txt">lượt chuyển kế tiếp xảy ra trước <span class="khong-ngat">2026-08-03T18:42:47Z</span>, tức trước <span class="khong-ngat">01:42:47</span> ngày <span class="khong-ngat">04/08/2026</span> giờ VN</span>
+      <span class="noi">https://x.com/blockpinned/status/<span class="khong-ngat">2083065438943244720</span> (bản đầu, hai ngày) và https://x.com/blockpinned/status/<span class="khong-ngat">2083111195654103262</span> (chốt lại thành một mốc, <span class="khong-ngat">31/07</span>) và trang này</span></div>
     <div class="mui">→</div>
-    <div class="col sau"><span class="k">Kết quả</span><span class="ngay">03/08/2026</span><span class="txt">Lượt chuyển thứ 13 xảy ra 20h04 ngày 31/07 (13:04:47Z) tại block 25.653.024 — sớm hơn hạn 77 giờ 38 phút. Chuyển 144.388,016375 PENDLE, đúng bằng toàn bộ phần đã gom; số dư hợp đồng về 0; số lượt đi tới đích khác sPendle: 0. Điều kiện thứ hai của falsifier cũng đã đo, không nổ.</span><span class="noi">ai phán định: phép đo của tôi trên sổ cái Ethereum tại block 25.671.347, kèm bộ đối chứng tái lập con số đã đăng</span></div>
+    <div class="col sau"><span class="k">Kết quả</span><span class="ngay"><span class="khong-ngat">03/08/2026</span></span><span class="txt">Lượt chuyển thứ <span class="khong-ngat">13</span> xảy ra 20h04 ngày <span class="khong-ngat">31/07</span> (<span class="khong-ngat">13:04:47Z</span>) tại <span class="khong-ngat">block 25.653.024</span> — sớm hơn hạn <span class="khong-ngat">77 giờ 38 phút</span>. Chuyển <span class="khong-ngat">144.388,016375 PENDLE</span>, đúng bằng toàn bộ phần đã gom; số dư hợp đồng về <span class="khong-ngat">0</span>; số lượt đi tới đích khác sPendle: <span class="khong-ngat">0</span>. Điều kiện thứ hai của falsifier cũng đã đo, không nổ.</span><span class="noi">ai phán định: phép đo của tôi trên sổ cái Ethereum tại <span class="khong-ngat">block 25.671.347</span>, kèm bộ đối chứng tái lập con số đã đăng</span></div>
   </div>
-  <div class="tr-foot"><a href="../bai/2026-07-31-pendle-buyback-cot-bang-0/#C5">31/07/2026 · C5 — Dashboard báo buyback bằng 0, hợp đồng đang giữ 144.388 PENDLE</a></div>
-</article><article class="tr track-entry song" id="track-03" data-track data-track-state="song" data-track-index="03"><span class="track-index" aria-hidden="true">03</span>
+  <div class="tr-foot"><a href="../bai/2026-07-31-pendle-buyback-cot-bang-0/#C5"><span class="khong-ngat">31/07/2026</span> · C5 — Dashboard báo buyback bằng <span class="khong-ngat">0</span>, hợp đồng đang giữ <span class="khong-ngat">144.388 PENDLE</span></a></div>
+</article><article class="tr track-entry song" id="track-03" data-track data-track-state="song" data-track-index="03"><span class="track-index" aria-hidden="true"><span class="khong-ngat">03</span></span>
   <div class="tr-head"><span class="chip song">ĐANG CHỜ</span>
-    <span class="moc">29/07/2026 → hạn 18/09/2026</span></div>
+    <span class="moc"><span class="khong-ngat">29/07/2026</span> → hạn <span class="khong-ngat">18/09/2026</span></span></div>
   <div class="tr-body">
-    <div class="col truoc"><span class="k">Tôi ghi trước</span>
-      <span class="ngay">29/07/2026</span>
-      <span class="txt">ngưỡng: tới 18/09/2026 CMv2 vẫn dưới 1% tổng balance module ⇒ hạ mức ưu tiên theo dõi</span>
+    <div class="col truoc"><span class="k">Tôi ghi&nbsp;trước</span>
+      <span class="ngay"><span class="khong-ngat">29/07/2026</span></span>
+      <span class="txt">ngưỡng: tới <span class="khong-ngat">18/09/2026</span> CMv2 vẫn dưới <span class="khong-ngat">1%</span> tổng balance module ⇒ hạ mức ưu tiên theo dõi</span>
       <span class="noi">in kèm chính bài</span></div>
     <div class="mui">→</div>
-    <div class="col sau"><span class="k">Chưa tới ngày</span><span class="ngay">hạn 18/09/2026</span><span class="txt">Dòng này nằm đây từ trước khi biết đáp án. Tới hạn thì nó có kết quả, dù kết quả là tôi sai.</span></div>
+    <div class="col sau"><span class="k">Chưa tới ngày</span><span class="ngay">hạn <span class="khong-ngat">18/09/2026</span></span><span class="txt">Dòng này nằm đây từ trước khi biết đáp án. Tới hạn thì nó có kết quả, dù kết quả là tôi sai.</span></div>
   </div>
-  <div class="tr-foot"><a href="../bai/2026-07-29-ldo-cmv2-doi-cach-chia-phi/#C2">29/07/2026 · C2 — Lido đổi cách chia phí ở module mới — nhưng gần 5 ngày sau, số dư được báo cáo vẫn là 0 ETH</a></div>
-</article><article class="tr track-entry bac" id="track-04" data-track data-track-state="bac" data-track-index="04"><span class="track-index" aria-hidden="true">04</span>
+  <div class="tr-foot"><a href="../bai/2026-07-29-ldo-cmv2-doi-cach-chia-phi/#C2"><span class="khong-ngat">29/07/2026</span> · C2 — Lido đổi cách chia phí ở module mới — nhưng gần <span class="khong-ngat">5 ngày</span> sau, số dư được báo cáo vẫn là <span class="khong-ngat">0 ETH</span></a></div>
+</article><article class="tr track-entry bac" id="track-04" data-track data-track-state="bac" data-track-index="04"><span class="track-index" aria-hidden="true"><span class="khong-ngat">04</span></span>
   <div class="tr-head"><span class="chip bac">BỊ BÁC</span>
-    <span class="moc">28/07/2026 → 03/08/2026</span></div>
+    <span class="moc"><span class="khong-ngat">28/07/2026</span> → <span class="khong-ngat">03/08/2026</span></span></div>
   <div class="tr-body">
-    <div class="col truoc"><span class="k">Tôi ghi trước</span>
-      <span class="ngay">28/07/2026</span>
-      <span class="txt">ngưỡng: thêm từ 5.000 pool trở lên trên Ethereum, từ 14:05Z ngày 28/07 đến 23h59 ngày 04/08 ⇒ rút câu “nhịp bật pool đã giảm mạnh”</span>
+    <div class="col truoc"><span class="k">Tôi ghi&nbsp;trước</span>
+      <span class="ngay"><span class="khong-ngat">28/07/2026</span></span>
+      <span class="txt">ngưỡng: thêm từ <span class="khong-ngat">5.000 pool</span> trở lên trên Ethereum, từ <span class="khong-ngat">14:05Z</span> ngày <span class="khong-ngat">28/07</span> đến 23h59 ngày <span class="khong-ngat">04/08</span> ⇒ rút câu “nhịp bật pool đã giảm mạnh”</span>
       <span class="noi">điều-bác-bỏ in kèm chính bài</span></div>
     <div class="mui">→</div>
-    <div class="col sau"><span class="k">Kết quả</span><span class="ngay">03/08/2026</span><span class="txt">51.651 poolId trong khoảng đã ghi trước, gấp 10,3 lần ngưỡng 5.000. Ngưỡng bị vượt từ block 25.637.495 lúc 16h08 ngày 29/07, tức 17 giờ 31 phút sau khi bài lên. BlockPinned rút câu về nhịp; ba claim còn lại của bài không nằm trong phạm vi điều-bác-bỏ này.</span><span class="noi">ai phán định: phép đo trên sổ cái Ethereum tại block 25.672.390, quét từ block tạo hợp đồng PoolManager 21.688.329</span></div>
+    <div class="col sau"><span class="k">Kết quả</span><span class="ngay"><span class="khong-ngat">03/08/2026</span></span><span class="txt"><span class="khong-ngat">51.651 poolId</span> trong khoảng đã ghi&nbsp;trước, gấp <span class="khong-ngat">10,3 lần</span> ngưỡng <span class="khong-ngat">5.000</span>. Ngưỡng bị vượt từ <span class="khong-ngat">block 25.637.495</span> lúc 16h08 ngày <span class="khong-ngat">29/07</span>, tức <span class="khong-ngat">17 giờ 31 phút</span> sau khi bài lên. BlockPinned rút câu về nhịp; ba claim còn lại của bài không nằm trong phạm vi điều-bác-bỏ này.</span><span class="noi">ai phán định: phép đo trên sổ cái Ethereum tại <span class="khong-ngat">block 25.672.390</span>, quét từ block tạo hợp đồng PoolManager <span class="khong-ngat">21.688.329</span></span></div>
   </div>
-  <div class="tr-foot"><a href="../bai/2026-07-28-uni-v4-cong-tac-bat-tien-chay/#C4">28/07/2026 · C4 — Uniswap bật thu phí v4 — chỉ số giảm 53% sau một đêm, và nó không phải bộ đếm</a></div>
-</article><article class="tr track-entry bac" id="track-05" data-track data-track-state="bac" data-track-index="05"><span class="track-index" aria-hidden="true">05</span>
+  <div class="tr-foot"><a href="../bai/2026-07-28-uni-v4-cong-tac-bat-tien-chay/#C4"><span class="khong-ngat">28/07/2026</span> · C4 — Uniswap bật thu phí v4 — chỉ số giảm <span class="khong-ngat">53%</span> sau một đêm, và nó không phải bộ đếm</a></div>
+</article><article class="tr track-entry bac" id="track-05" data-track data-track-state="bac" data-track-index="05"><span class="track-index" aria-hidden="true"><span class="khong-ngat">05</span></span>
   <div class="tr-head"><span class="chip bac">BỊ BÁC</span>
-    <span class="moc">28/07/2026 → 28/07/2026</span></div>
+    <span class="moc"><span class="khong-ngat">28/07/2026</span> → <span class="khong-ngat">28/07/2026</span></span></div>
   <div class="tr-body">
-    <div class="col truoc"><span class="k">Tôi ghi trước</span>
-      <span class="ngay">28/07/2026</span>
-      <span class="txt">ngưỡng: trung vị (số cũ ÷ số mới) nhóm 17–23/07 ≤1,1× ⇒ claim ĐỔ · ≥1,3× ⇒ claim đứng</span>
-      <span class="noi">điều-bác-bỏ in kèm chính bài, bản thay ngày 28/07</span></div>
+    <div class="col truoc"><span class="k">Tôi ghi&nbsp;trước</span>
+      <span class="ngay"><span class="khong-ngat">28/07/2026</span></span>
+      <span class="txt">ngưỡng: trung vị (số cũ ÷ số mới) nhóm <span class="khong-ngat">17–23/07</span> ≤<span class="khong-ngat">1,1×</span> ⇒ claim ĐỔ · ≥<span class="khong-ngat">1,3×</span> ⇒ claim đứng</span>
+      <span class="noi">điều-bác-bỏ in kèm chính bài, bản thay ngày <span class="khong-ngat">28/07</span></span></div>
     <div class="mui">→</div>
-    <div class="col sau"><span class="k">Kết quả</span><span class="ngay">28/07/2026</span><span class="txt">trung vị 0,93 trên cả 7/7 ngày ⇒ ĐỔ. Tôi rút nhận định công khai cùng ngày.</span><span class="noi">ai phán định: phép đo của tôi trên chuỗi họ vừa tính lại</span></div>
+    <div class="col sau"><span class="k">Kết quả</span><span class="ngay"><span class="khong-ngat">28/07/2026</span></span><span class="txt">trung vị <span class="khong-ngat">0,93</span> trên cả <span class="khong-ngat">7/7 ngày</span> ⇒ ĐỔ. Tôi rút nhận định công khai cùng ngày.</span><span class="noi">ai phán định: phép đo của tôi trên chuỗi họ vừa tính lại</span></div>
   </div>
-  <div class="tr-foot"><a href="../bai/2026-07-27-defillama-uniswap-v4/#C2">27/07/2026 · C2 — DefiLlama báo phí Uniswap v4 cao hơn 3,9 lần — và bản sửa mới chỉ chạy một chiều</a></div>
-</article><article class="tr track-entry sua" id="track-06" data-track data-track-state="sua" data-track-index="06"><span class="track-index" aria-hidden="true">06</span>
+  <div class="tr-foot"><a href="../bai/2026-07-27-defillama-uniswap-v4/#C2"><span class="khong-ngat">27/07/2026</span> · C2 — DefiLlama báo phí Uniswap v4 cao hơn <span class="khong-ngat">3,9 lần</span> — và bản sửa mới chỉ chạy một chiều</a></div>
+</article><article class="tr track-entry sua" id="track-06" data-track data-track-state="sua" data-track-index="06"><span class="track-index" aria-hidden="true"><span class="khong-ngat">06</span></span>
   <div class="tr-head"><span class="chip sua">ĐÃ SỬA</span>
-    <span class="moc">28/07/2026 → 28/07/2026</span></div>
+    <span class="moc"><span class="khong-ngat">28/07/2026</span> → <span class="khong-ngat">28/07/2026</span></span></div>
   <div class="tr-body">
-    <div class="col truoc"><span class="k">Tôi ghi trước</span>
-      <span class="ngay">28/07/2026</span>
-      <span class="txt">ngưỡng: từ 2 ngày trở lên trong khoảng 08→24/07 đổi số ⇒ câu “mới sửa được một ngày” hết hạn</span>
+    <div class="col truoc"><span class="k">Tôi ghi&nbsp;trước</span>
+      <span class="ngay"><span class="khong-ngat">28/07/2026</span></span>
+      <span class="txt">ngưỡng: từ <span class="khong-ngat">2 ngày</span> trở lên trong khoảng <span class="khong-ngat">08</span>→<span class="khong-ngat">24/07</span> đổi số ⇒ câu “mới sửa được một ngày” hết hạn</span>
       <span class="noi">điều-bác-bỏ in kèm chính bài</span></div>
     <div class="mui">→</div>
-    <div class="col sau"><span class="k">Kết quả</span><span class="ngay">28/07/2026</span><span class="txt">17/17 ngày đã đổi ⇒ hết hạn. Ghi ngày và sửa dòng đó.</span><span class="noi">ai phán định: đọc lại chuỗi công khai lúc 09:36Z</span></div>
+    <div class="col sau"><span class="k">Kết quả</span><span class="ngay"><span class="khong-ngat">28/07/2026</span></span><span class="txt"><span class="khong-ngat">17/17 ngày</span> đã đổi ⇒ hết hạn. Ghi ngày và sửa dòng đó.</span><span class="noi">ai phán định: đọc lại chuỗi công khai lúc <span class="khong-ngat">09:36Z</span></span></div>
   </div>
-  <div class="tr-foot"><a href="../bai/2026-07-27-defillama-uniswap-v4/#C5">27/07/2026 · C5 — DefiLlama báo phí Uniswap v4 cao hơn 3,9 lần — và bản sửa mới chỉ chạy một chiều</a></div>
-</article><article class="tr track-entry xac" id="track-07" data-track data-track-state="xac" data-track-index="07"><span class="track-index" aria-hidden="true">07</span>
+  <div class="tr-foot"><a href="../bai/2026-07-27-defillama-uniswap-v4/#C5"><span class="khong-ngat">27/07/2026</span> · C5 — DefiLlama báo phí Uniswap v4 cao hơn <span class="khong-ngat">3,9 lần</span> — và bản sửa mới chỉ chạy một chiều</a></div>
+</article><article class="tr track-entry xac" id="track-07" data-track data-track-state="xac" data-track-index="07"><span class="track-index" aria-hidden="true"><span class="khong-ngat">07</span></span>
   <div class="tr-head"><span class="chip xac">ĐÃ XÁC NHẬN</span>
-    <span class="moc">26/07/2026 → 28/07/2026</span></div>
+    <span class="moc"><span class="khong-ngat">26/07/2026</span> → <span class="khong-ngat">28/07/2026</span></span></div>
   <div class="tr-body">
-    <div class="col truoc"><span class="k">Tôi ghi trước</span>
-      <span class="ngay">26/07/2026</span>
-      <span class="txt">$1.286.386 — khoảng chấp nhận $1,157M–$1,415M (±10%)</span>
-      <span class="noi">dán công khai trong thread issue #8242 của DefiLlama, 13:46Z</span></div>
+    <div class="col truoc"><span class="k">Tôi ghi&nbsp;trước</span>
+      <span class="ngay"><span class="khong-ngat">26/07/2026</span></span>
+      <span class="txt"><span class="khong-ngat">$1.286.386</span> — khoảng chấp nhận <span class="khong-ngat">$1,157M–$1,415M</span> (<span class="khong-ngat">±10%</span>)</span>
+      <span class="noi">dán công khai trong thread issue <span class="khong-ngat">#8242</span> của DefiLlama, <span class="khong-ngat">13:46Z</span></span></div>
     <div class="mui">→</div>
-    <div class="col sau"><span class="k">Kết quả</span><span class="ngay">28/07/2026</span><span class="txt">$1.311.164 — lệch 1,93%, nằm trong khoảng đã ghi trước</span><span class="noi">ai phán định: chính DefiLlama chạy lại adapter</span></div>
+    <div class="col sau"><span class="k">Kết quả</span><span class="ngay"><span class="khong-ngat">28/07/2026</span></span><span class="txt"><span class="khong-ngat">$1.311.164</span> — lệch <span class="khong-ngat">1,93%</span>, nằm trong khoảng đã ghi&nbsp;trước</span><span class="noi">ai phán định: chính DefiLlama chạy lại adapter</span></div>
   </div>
-  <div class="tr-foot"><a href="../bai/2026-07-27-defillama-uniswap-v4/#C1">27/07/2026 · C1 — DefiLlama báo phí Uniswap v4 cao hơn 3,9 lần — và bản sửa mới chỉ chạy một chiều</a></div>
+  <div class="tr-foot"><a href="../bai/2026-07-27-defillama-uniswap-v4/#C1"><span class="khong-ngat">27/07/2026</span> · C1 — DefiLlama báo phí Uniswap v4 cao hơn <span class="khong-ngat">3,9 lần</span> — và bản sửa mới chỉ chạy một chiều</a></div>
 </article>
   </section></main>
 <div id="ch-tip"></div>
@@ -1958,12 +1968,12 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var quickRoot = quickHome ? quickHome.href : new URL(".", location.href).href;
   function quickHref(path) { return new URL(path, quickRoot).href; }
   var quickRoutes = [
-    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
-    { href: quickHref("bai/"), code: "01", kind: "Điều tra", title: "Tất cả bài viết", copy: "Tìm, lọc token và mở toàn bộ bài điều tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
-    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ sơ", tags: "token directory coverage logo", tone: "token" },
-    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
-    { href: quickHref("facts/"), code: "03", kind: "Tự kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
-    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
+    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang\u00a0chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
+    { href: quickHref("bai/"), code: "01", kind: "Điều\u00a0tra", title: "Tất cả bài\u00a0viết", copy: "Tìm, lọc token và mở toàn bộ bài\u00a0điều\u00a0tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
+    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ\u00a0sơ", tags: "token directory coverage logo", tone: "token" },
+    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ\u00a0sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
+    { href: quickHref("facts/"), code: "03", kind: "Tự\u00a0kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
+    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi\u00a0trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
     { href: quickHref("du-lieu/"), code: "05", kind: "Hiện vật", title: "Dữ liệu thô", copy: "JSON, SHA-256 và lệnh tải để tự đếm lại", tags: "du lieu data json hash sha curl hien vat", tone: "data" }
   ];
   var quickHost = themeButton && themeButton.parentNode;
@@ -2031,8 +2041,8 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
           + '<span class="quick-find-copy"><small>' + route.kind + '</small><b>' + route.title + '</b><em>' + route.copy + '</em></span>'
           + (here ? '<span class="quick-find-here">Đang xem</span>' : '<span class="quick-find-go" aria-hidden="true">↗</span>')
           + '</a>';
-      }).join("") : '<p class="quick-find-empty"><b>Không có đích phù hợp.</b><span>Thử “token”, “fact”, “tự kiểm” hoặc “track”.</span></p>';
-      quickCount.textContent = (quickVisible.length < 10 ? "0" : "") + quickVisible.length + " đích";
+      }).join("") : '<p class="quick-find-empty"><b>Không có đích phù hợp.</b><span>Thử “token”, “fact”, “tự\u00a0kiểm” hoặc “track”.</span></p>';
+      quickCount.textContent = (quickVisible.length < 10 ? "0" : "") + quickVisible.length + "\u00a0đích";
       paintQuickSelection();
     }
     function openQuickFind() {
@@ -2379,7 +2389,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         card.hidden = !visible;
         if (visible) shown++;
       });
-      if (tokenFilterStatus) tokenFilterStatus.textContent = "Đang hiện " + shown + " token" + (label ? " · " + label : "");
+      if (tokenFilterStatus) tokenFilterStatus.textContent = "Đang hiện " + shown + "\u00a0token" + (label ? " · " + label : "");
     }
     tokenFilterButtons.forEach(function (button) {
       button.addEventListener("click", function () {
@@ -2481,7 +2491,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     copyPlainText(url).then(function (copied) {
       button.classList.toggle("da-chep", copied);
       button.querySelector("span").textContent = copied ? "Đã sao chép ✓" : "Hãy sao chép thủ công";
-      button.setAttribute("aria-label", copied ? "Đã sao chép link bằng chứng" : "Không thể tự sao chép link bằng chứng");
+      button.setAttribute("aria-label", copied ? "Đã sao chép link bằng\u00a0chứng" : "Không thể tự sao chép link bằng\u00a0chứng");
       setTimeout(function () {
         button.classList.remove("da-chep");
         button.querySelector("span").textContent = idleLabel;
@@ -2570,7 +2580,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     copy.type = "button";
     copy.className = "command-copy";
     copy.textContent = "Sao chép lệnh";
-    copy.setAttribute("aria-label", "Sao chép lệnh tự kiểm");
+    copy.setAttribute("aria-label", "Sao chép lệnh tự\u00a0kiểm");
     details.insertBefore(copy, command);
 
     copy.addEventListener("click", function () {
@@ -2591,7 +2601,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var trackStatus = document.querySelector(".track-filter-status");
   var trackLedger = document.querySelector(".track-ledger");
   if (trackFilters.length && trackEntries.length) {
-    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác bỏ", sua: "đã sửa", cho: "chưa phân định" };
+    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác\u00a0bỏ", sua: "đã sửa", cho: "chưa phân\u00a0định" };
     trackFilters.forEach(function (button) {
       button.addEventListener("click", function () {
         var filter = button.dataset.trackFilter;
@@ -2602,7 +2612,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
           entry.hidden = !visible;
           if (visible) shown++;
         });
-        if (trackStatus) trackStatus.textContent = "Đang hiện " + shown + " dòng" + (filter === "all" ? "" : " · " + trackLabels[filter]);
+        if (trackStatus) trackStatus.textContent = "Đang hiện " + shown + "\u00a0dòng" + (filter === "all" ? "" : " · " + trackLabels[filter]);
         if (trackLedger) requestAnimationFrame(function () {
           trackLedger.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
         });
@@ -2637,11 +2647,11 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         card.hidden = index < 0 || index >= archiveLimit;
       });
       var shown = Math.min(matches.length, archiveLimit);
-      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + " / " + matches.length + " bài viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
+      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + "\u00a0/\u00a0" + matches.length + "\u00a0bài\u00a0viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
       if (archiveEmpty) archiveEmpty.hidden = matches.length !== 0;
       if (archiveMore) {
         archiveMore.hidden = matches.length <= archiveLimit;
-        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + " bài viết ↓";
+        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + "\u00a0bài\u00a0viết ↓";
       }
     }
     function selectArchiveFilter(filter, updateUrl) {
@@ -2692,7 +2702,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var uniEmpty = document.querySelector("[data-uni-empty]");
   if (uniClaims.length) {
     var uniActiveFilter = "all";
-    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng vững", sua: "đã sửa", bac: "đã bị bác bỏ", changed: "đã đổi trạng thái" };
+    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng\u00a0vững", sua: "đã sửa", bac: "đã bị bác\u00a0bỏ", changed: "đã đổi trạng thái" };
 
     function uniNormalise(value) {
       return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -2711,7 +2721,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
       });
       if (uniStatus) {
         var lens = uniActiveFilter === "all" ? "" : " · " + uniLabels[uniActiveFilter];
-        uniStatus.textContent = "Đang hiện " + shown + " claim" + lens + (query ? " · có từ khoá" : "");
+        uniStatus.textContent = "Đang hiện " + shown + "\u00a0claim" + lens + (query ? " · có từ khoá" : "");
       }
       if (uniEmpty) uniEmpty.hidden = shown !== 0;
     }

@@ -11,8 +11,8 @@ thoại là trang hỏng, mà không cổng nào của build.py nhìn tới tầ
 (đúng họ với 5 ca "tầng kênh hiển thị" ở LAUNCH.md:144 — *"cả năm đều kiểm
 bằng máy được"*). Nay đo bằng scrollWidth thật trong trình duyệt thật.
 
-Chạy:  python3 site/preview.py            → cả hai hệ màu, kèm phép đo tràn
-       python3 site/preview.py verdigris  → một hệ
+Chạy:  python3 site/preview.py              → dựng ảnh + đo tràn
+       python3 site/preview.py --check-only → chỉ đo, không ghi ảnh
 """
 import pathlib, re, shutil, subprocess, sys, tempfile
 
@@ -40,6 +40,7 @@ RONG = 500
 KHUNG = [("dau", BAI, 1740, None),
          ("soclaim", BAI, 1900, "article-ledger"),  # cắt riêng sổ claim WOW, không cuộn theo neo
          ("chu", "index.html", 1180, None),
+         ("bai", "bai/index.html", 1500, None),
          # 🔴 06/08: MỌI trang phục vụ đều phải nằm ở đây. Trang nào không có trong
          # danh sách này thì cổng đo tràn KHÔNG nhìn tới, và một trang hỏng ở khổ điện
          # thoại đi ra ngoài không báo gì cả. Trước lượt này chỉ có 3 khuôn: `/facts/`,
@@ -73,7 +74,7 @@ KHUNG_V3 = [("clock", "index.html", 900, "clock-khu"),
             ("phandinh", "index.html", 1900, "hero finding-home"),
             # Ca hồi quy 11/08: dải bài vẫn đủ 11 link nhưng mất toàn bộ định dạng,
             # nên không tràn và bốn ảnh trang chủ phía trên đều không nhìn tới nó.
-            ("baichu", "index.html", 760, "khu-bai home-articles")]
+            ("baichu", "index.html", 760, "khu-bai home-articles article-priority")]
 
 # 🔴 Hai cách đo SAI đã thử và bị bác, ghi lại để không ai dựng lại:
 #   ① documentElement.scrollWidth — không bao giờ nhỏ hơn viewport ⇒ là chặn dưới
@@ -104,8 +105,13 @@ DO_TRAN = """<script>addEventListener('load',()=>{document.fonts.ready.then(()=>
    const r=e.getBoundingClientRect();
    if(r.width&&r.right>mx){mx=r.right;who=e.tagName.toLowerCase()+(e.className?'.'+String(e.className).split(' ')[0]:'')}
  }
+ let split=0,splitWho='';
+ for(const e of w.querySelectorAll('.khong-ngat,.cum-tieu-de')){
+   const q=document.createRange();q.selectNodeContents(e);
+   if(q.getClientRects().length>1){split++;if(!splitWho)splitWho=e.className}
+ }
  const f=document.fonts.check('16px Inter')&&document.fonts.check('12px "JetBrains Mono"');
- document.body.insertAdjacentHTML('beforeend','<i id=ovf>'+w.scrollWidth+'|'+WW+'|'+Math.round(mx)+'|'+who+'|'+(f?'font':'KHONG-FONT')+'</i>');
+ document.body.insertAdjacentHTML('beforeend','<i id=ovf>'+w.scrollWidth+'|'+WW+'|'+Math.round(mx)+'|'+who+'|'+(f?'font':'KHONG-FONT')+'|'+split+'|'+splitWho+'</i>');
 })})</script>"""
 
 
@@ -201,14 +207,14 @@ def do_tran(html: str, tmp: pathlib.Path, nhan: str) -> bool:
     theo bề rộng, trên mốc ấy `.khung` thôi giãn nên tràn giảm dần về 0 ở ~1190.
     """
     tran = False
-    for w in (360, 430, 1080):
+    for w in (360, 380, 768, 1080):
         f = tmp / f"ovf{w}.html"
         f.write_text(neo_font(html).replace(
             "</body>", f"<script>WW={w};VUNG_CUON={VUNG_CUON}</script>" + DO_TRAN + "</body>"), encoding="utf-8")
         # Khổ ≥500 đặt được cửa sổ THẬT ⇒ đo đúng; khổ hẹp hơn vẫn phải ép bằng CSS
         # trong cửa sổ 520 vì macOS kẹp (xem trên).
         r = chrome(["--dump-dom", f"--window-size={max(520, w)},900", f.as_uri()], timeout=90)
-        m = re.search(r'<i id="ovf">(\d+)\|(\d+)\|(\d+)\|([^|]*)\|([\w-]+)</i>', r.stdout)
+        m = re.search(r'<i id="ovf">(\d+)\|(\d+)\|(\d+)\|([^|]*)\|([\w-]+)\|(\d+)\|([^<]*)</i>', r.stdout)
         if not m:
             print(f"  ⚠ {nhan} @{w}px: không đo được — phép đo MÙ, đừng đọc là 'không tràn'")
             continue
@@ -216,6 +222,9 @@ def do_tran(html: str, tmp: pathlib.Path, nhan: str) -> bool:
         if m.group(5) != "font":
             sys.exit(f"🔴 {nhan} @{w}px: trang dựng KHÔNG CÓ font thật — bề rộng chữ đo được "
                      f"là của font hệ thống, không phải của bản sắp ship. Sửa neo_font().")
+        if int(m.group(6)):
+            print(f"  🔴 {nhan} @{w}px: {m.group(6)} cụm khóa vẫn bị bẻ dòng · {m.group(7)}")
+            tran = True
         if sw > lim:
             print(f"  🔴 {nhan} @{w}px: TRÀN {sw}px > {lim}px · rộng nhất: <{who}> tới {mx}px")
             tran = True
@@ -249,6 +258,9 @@ def main() -> None:
     # nguyên cách gọi cũ. Tách hai trục ở đây y như build.py tách chúng — gộp lại thì
     # không lượt nào đo được "đổi hình mà giữ màu"; đó vẫn là đường rollback D2 cần giữ.
     argv = sys.argv[1:]
+    check_only = "--check-only" in argv
+    if check_only:
+        argv.remove("--check-only")
     bo_cuc = BO_CUC_MAC_DINH
     if "--bo-cuc" in argv:
         i = argv.index("--bo-cuc")
@@ -276,6 +288,8 @@ def main() -> None:
                     src = tmp / f"{he}-{hau}.html"
                     src.write_text(html, encoding="utf-8")
                 tran += do_tran(html, tmp, f"{he}·{bo_cuc}/{hau}")
+                if check_only:
+                    continue
                 # Chrome headless dựng theo prefers-color-scheme của máy. Chụp CẢ HAI
                 # nền: hệ nhận diện là "giấy audit" (nền sáng), nhưng phần lớn người
                 # đọc crypto để máy ở nền tối — không được chỉ nhìn một bên rồi chốt.

@@ -53,6 +53,8 @@ body{margin:0;color:var(--ink);font-family:var(--body);font-size:16.5px;line-hei
 .khung{max-width:1080px;margin:0 auto;padding:0 var(--gut)}
 a{color:var(--ink);text-decoration:none}
 p{margin:0 0 18px;overflow-wrap:break-word}
+h1,h2{text-wrap:balance}
+.khong-ngat,.cum-tieu-de{white-space:nowrap}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 ::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
 
@@ -1341,10 +1343,11 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
 .page-token-uni main{padding-bottom:112px}.uni-hero{padding-bottom:30px}
 .uni-hero-grid{display:grid;grid-template-columns:minmax(0,.84fr) minmax(500px,1.16fr);gap:clamp(38px,5.5vw,88px);align-items:center}
 .uni-hero-copy{min-width:0}.uni-hero .subline{max-width:58ch;margin:0 0 28px}
-.uni-title-lockup{display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
+.uni-title-lockup{container-type:inline-size;display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
 .uni-title-lockup img{width:84px;height:84px;border-radius:23px;box-shadow:0 0 0 1px var(--line),0 18px 40px -26px var(--ink)}
 .uni-title-lockup>div>span{display:block;margin:0 0 7px;font:750 10px/1 var(--mono);letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
-.uni-title-lockup h1{max-width:13ch;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1{max-width:none;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1 .cum-tieu-de{display:block}
 .uni-hero-jump{width:min(100%,420px);display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:15px 17px;border:1px solid var(--line);border-radius:13px;background:var(--card);box-shadow:var(--bong)}
 .uni-hero-jump span{font:650 9px/1.4 var(--mono);color:var(--faint)}.uni-hero-jump b{font:760 10px/1 var(--mono);color:var(--accent)}.uni-hero-jump i{font-style:normal;color:var(--accent);transition:transform .2s}
 .uni-hero-jump:hover,.uni-hero-jump:focus-visible{border-color:color-mix(in srgb,var(--accent) 38%,var(--line))}.uni-hero-jump:hover i{transform:translateY(2px)}
@@ -1520,6 +1523,12 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead::after{display:none}
   .article-priority .bai-lead .t{font-size:23px}.article-priority::after{font-size:100px;top:-.12em}
 }
+@media(max-width:600px){
+  .uni-title-lockup{grid-template-columns:1fr;gap:14px}.uni-title-lockup h1{font-size:clamp(27px,8vw,40px)}
+}
+@container (max-width:520px){
+  .uni-title-lockup h1{font-size:clamp(22px,7.5cqw,36px)}
+}
 @media(max-width:420px){
   .uni-vault-total{display:grid;grid-template-columns:auto 1fr;gap:20px}.uni-ring{width:92px;height:92px}.uni-ring::before{width:62px;height:62px}.uni-ring b{font-size:31px}
   .uni-vault::after{display:none}.uni-legend{grid-template-columns:1fr}.uni-status-bar{height:44px}.uni-ledger-head{display:grid}
@@ -1529,6 +1538,7 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
    ARTICLE ARCHIVE — preview hữu hạn ở trang chính, toàn bộ bài nằm ở đây.
    ══════════════════════════════════════════════════════════════════════════ */
 .page-article-archive main{padding-bottom:110px}.article-archive-hero{padding-bottom:25px}.article-archive-hero h1{max-width:15ch}
+.article-archive-hero h1 .nhan-manh{white-space:normal}
 .article-archive-hero .subline{max-width:67ch}.article-archive-stats{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:30px;padding:16px 0;border-block:1px solid var(--line)}
 .article-archive-stats span{display:flex;align-items:baseline;gap:7px;font:600 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .article-archive-stats span::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent)}.article-archive-stats span:nth-child(2)::before{background:var(--c-song)}.article-archive-stats span:nth-child(3)::before{background:var(--c-xn)}
@@ -1744,129 +1754,129 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <header class="dau"><div class="khung">
   <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
   <a class="ten" href="../../">Block<span>Pinned</span></a>
-  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Trang chủ</a><a href="../../bai/">Bài viết</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
+  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Trang&nbsp;chủ</a><a href="../../bai/">Bài&nbsp;viết</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
 </div></header>
 <main class="khung"><section class="hero hero-article">
-  <span class="ghost-num" aria-hidden="true">5</span>
+  <span class="ghost-num" aria-hidden="true"><span class="khong-ngat">5</span></span>
   <span class="hero-code" aria-hidden="true">CLAIM C1 · ĐANG ĐỨNG</span>
   <div class="article-path" aria-label="Vị trí bài viết">
-    <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều tra</a><span>/</span><b>LDO</b><i><span class="dot song"></span>vẫn đứng vững</i>
+    <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều&nbsp;tra</a><span>/</span><b>LDO</b><i><span class="dot song"></span>vẫn đứng&nbsp;vững</i>
   </div>
-  <p class="eyebrow"><span>LDO</span><span class="im">29/07/2026</span></p>
-  <h1 class="display">Lido đổi cách chia phí ở module mới — nhưng gần <span class="nhan-manh">5</span> ngày sau, số dư được báo cáo vẫn là 0 ETH</h1>
-  <p class="subline">Module mới của Lido đổi chia phí từ 350/650 sang 400/600 bp. Nhưng tại block 25.637.121 nó có 0 ETH reported balance, nên bảng phí mới đang có trọng số bằng 0.</p>
+  <p class="eyebrow"><span>LDO</span><span class="im"><span class="khong-ngat">29/07/2026</span></span></p>
+  <h1 class="display">Lido đổi cách chia phí ở module mới — nhưng gần <span class="nhan-manh"><span class="khong-ngat">5</span></span> ngày sau, số dư được báo cáo vẫn là <span class="khong-ngat">0 ETH</span></h1>
+  <p class="subline">Module mới của Lido đổi chia phí từ <span class="khong-ngat">350/650</span> sang <span class="khong-ngat">400/600</span> bp. Nhưng tại <span class="khong-ngat">block 25.637.121</span> nó có <span class="khong-ngat">0 ETH</span> reported balance, nên bảng phí mới đang có trọng số bằng <span class="khong-ngat">0</span>.</p>
   <div class="article-verdict"><div class="heronum article-ratio article-ledger-count">
-      <p class="l">Sổ bằng chứng của bài</p>
-      <p class="v">3<em> claim</em></p>
-      <p class="d">3 vẫn đứng vững hoặc đã xác nhận</p>
+      <p class="l">Sổ bằng&nbsp;chứng của bài</p>
+      <p class="v"><span class="khong-ngat">3</span><em> claim</em></p>
+      <p class="d"><span class="khong-ngat">3</span> vẫn đứng&nbsp;vững hoặc đã xác nhận</p>
     </div><div class="case-path" role="img" aria-label="Tuyến bằng chứng: đối tượng, điều bác bỏ, trạng thái hiện tại">
-      <div class="case-step file"><span>01 · ĐỐI TƯỢNG</span><strong>LDO</strong><small>hồ sơ được ghim theo token</small></div><i aria-hidden="true">→</i>
-      <div class="case-step test"><span>02 · TỰ KIỂM</span><strong>3</strong><small>điều bác bỏ viết cùng claim</small></div><i aria-hidden="true">→</i>
-      <div class="case-step state song"><span>03 · SỔ SỐNG</span><strong>3 mốc</strong><small>lịch sử đổi trạng thái công khai</small></div>
+      <div class="case-step file"><span><span class="khong-ngat">01</span> · ĐỐI TƯỢNG</span><strong>LDO</strong><small>hồ&nbsp;sơ được ghim theo token</small></div><i aria-hidden="true">→</i>
+      <div class="case-step test"><span><span class="khong-ngat">02</span> · TỰ&nbsp;KIỂM</span><strong><span class="khong-ngat">3</span></strong><small>điều&nbsp;bác&nbsp;bỏ viết cùng claim</small></div><i aria-hidden="true">→</i>
+      <div class="case-step state song"><span><span class="khong-ngat">03</span> · SỔ SỐNG</span><strong><span class="khong-ngat">3</span> mốc</strong><small>lịch sử đổi trạng thái công khai</small></div>
     </div></div>
 
-</section><nav class="article-map" aria-label="Điều hướng trong bài"><span>Đọc theo bằng chứng</span><a href="#so-claim">Sổ claim</a><a href="#hai-bang-phi-doc-tu-contract-chu-khong-tu-slide">Hai bảng phí, đọc từ contract chứ không từ slide</a><a href="#nhung-doi-trong-contract-chua-dong-nghia-da-co-eth-tao-trong">Nhưng đổi trong contract chưa đồng nghĩa đã có ETH tạo trọng số</a><a href="#dieu-gi-xay-ra-khi-eth-bat-dau-chuyen-sang-cmv2">Điều gì xảy ra khi ETH bắt đầu chuyển sang CMv2</a></nav><section class="article-ledger" aria-labelledby="so-claim-title">
+</section><nav class="article-map" aria-label="Điều hướng trong bài"><span>Đọc theo bằng&nbsp;chứng</span><a href="#so-claim">Sổ claim</a><a href="#hai-bang-phi-doc-tu-contract-chu-khong-tu-slide">Hai bảng phí, đọc từ contract chứ không từ slide</a><a href="#nhung-doi-trong-contract-chua-dong-nghia-da-co-eth-tao-trong">Nhưng đổi trong contract chưa đồng nghĩa đã có ETH tạo trọng số</a><a href="#dieu-gi-xay-ra-khi-eth-bat-dau-chuyen-sang-cmv2">Điều gì xảy ra khi ETH bắt đầu chuyển sang CMv2</a></nav><section class="article-ledger" aria-labelledby="so-claim-title">
 <details class="evidence case-evidence" id="so-claim">
   <summary>
-    <span class="case-ledger-title"><span>Sổ claim của bài</span><b id="so-claim-title">3 khẳng định</b><small>đổi trạng thái tại chỗ · không xoá</small></span>
+    <span class="case-ledger-title"><span>Sổ claim của bài</span><b id="so-claim-title"><span class="khong-ngat">3</span> khẳng&nbsp;định</b><small>đổi trạng thái tại chỗ · không xoá</small></span>
     <span class="case-ledger-viz">
       <span class="case-ledger-bar" role="img" aria-label="3 vẫn đứng vững"><i class="song" style="--n:3"></i></span>
-      <span class="case-ledger-legend"><i><span class="dot song"></span><b>3</b> vẫn đứng vững</i></span>
+      <span class="case-ledger-legend"><i><span class="dot song"></span><b><span class="khong-ngat">3</span></b> vẫn đứng&nbsp;vững</i></span>
     </span>
-    <span class="mo">mở 3 claim</span>
+    <span class="mo">mở <span class="khong-ngat">3 claim</span></span>
   </summary>
   <div class="trong case-ledger-body">
-    <p class="case-ledger-intro">Mỗi claim kèm điều có thể bác bỏ nó, mốc ghim và toàn bộ lịch sử đổi trạng thái.</p>
+    <p class="case-ledger-intro">Mỗi claim kèm điều có thể bác&nbsp;bỏ nó, mốc ghim và toàn bộ lịch sử đổi trạng thái.</p>
     <div class="case-claim-list"><article class="case-claim song" id="C1" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C1">C1</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Module mới CMv2 của Lido chia phí khác module cũ: CMv1 là 350/650 bp (3,50% operator, 6,50% treasury), CMv2 là 400/600 bp (4,00% / 6,00%) — hai bảng đọc trực tiếp từ StakingRouter, không lấy từ slide.</p>
+  <p class="case-claim-text">Module mới CMv2 của Lido chia phí khác module cũ: CMv1 là <span class="khong-ngat">350/650</span> bp (<span class="khong-ngat">3,50%</span> operator, <span class="khong-ngat">6,50%</span> treasury), CMv2 là <span class="khong-ngat">400/600</span> bp (<span class="khong-ngat">4,00%</span> / <span class="khong-ngat">6,00%</span>) — hai bảng đọc trực tiếp từ StakingRouter, không lấy từ slide.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Ethereum block 25.637.121 (29/07/2026 07:53:59 UTC) · StakingRouter 0xfddf38947afb03c621c71b06c9c70bce73f12999 · CMv1 0x55032650b14df07b85bf18a3a3ec8e0af2e028d5 · CMv2 0xda5f930ce326eb5205085d66c72a4e79d60cb8c1</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Gọi lại cùng các getter ở đúng block 25.637.121. Nếu hai bảng phí trả về khác 350/650 và 400/600 bp thì phép đo này sai. Tổng hai cột của từng module phải cộng đúng 1.000 bp — lệch khỏi đó cũng là dấu hiệu đọc sai getter.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Ethereum <span class="khong-ngat">block 25.637.121</span> (<span class="khong-ngat">29/07/2026</span> <span class="khong-ngat">07:53:59</span> UTC) · StakingRouter 0xfddf38947afb03c621c71b06c9c70bce73f12999 · CMv1 0x55032650b14df07b85bf18a3a3ec8e0af2e028d5 · CMv2 0xda5f930ce326eb5205085d66c72a4e79d60cb8c1</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Gọi lại cùng các getter ở đúng <span class="khong-ngat">block 25.637.121</span>. Nếu hai bảng phí trả về khác <span class="khong-ngat">350/650</span> và <span class="khong-ngat">400/600</span> bp thì phép đo này sai. Tổng hai cột của từng module phải cộng đúng <span class="khong-ngat">1.000</span> bp — lệch khỏi đó cũng là dấu hiệu đọc sai getter.</p>
   </div>
-  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Bảng phí của từng module nằm trong một mảng struct do getStakingModules() trả về; bộ giải mã nhỏ của trang này chỉ đọc được kiểu tĩnh nên không tự đọc nó. Tự kiểm được: gọi getStakingModules() trên StakingRouter tại block 25.637.121 và đọc hai trường stakingModuleFee / treasuryFee của module 1 và 4.</p>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-29</span><span>Đăng. Điểm của claim này là cách chia phí đổi ở tầng contract, đọc được tại một block cố định — nên nó kiểm ngược được bất cứ lúc nào, không phụ thuộc trạng thái hiện tại. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></span></li></ol></details>
+  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Bảng phí của từng module nằm trong một mảng struct do getStakingModules() trả về; bộ giải mã nhỏ của trang này chỉ đọc được kiểu tĩnh nên không tự đọc nó. Tự&nbsp;kiểm được: gọi getStakingModules() trên StakingRouter tại <span class="khong-ngat">block 25.637.121</span> và đọc hai trường stakingModuleFee / treasuryFee của module <span class="khong-ngat">1</span> và <span class="khong-ngat">4</span>.</p>
+  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">29</span></span><span>Đăng. Điểm của claim này là cách chia phí đổi ở tầng contract, đọc được tại một block cố định — nên nó kiểm ngược được bất cứ lúc nào, không phụ thuộc trạng thái hiện tại. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C2" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C2">C2</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Tại block đo, CMv2 có 43 registered operators nhưng 0 depositable keys, 0 deposited validators và 0 ETH reported balance — nên bảng phí mới có trọng số bằng 0 trong tỷ lệ fee gộp. Operator đăng ký không đồng nghĩa stake đã di cư.</p>
+  <p class="case-claim-text">Tại block đo, CMv2 có <span class="khong-ngat">43</span> registered operators nhưng <span class="khong-ngat">0</span> depositable keys, <span class="khong-ngat">0</span> deposited validators và <span class="khong-ngat">0 ETH</span> reported balance — nên bảng phí mới có trọng số bằng <span class="khong-ngat">0</span> trong tỷ lệ fee gộp. Operator đăng ký không đồng nghĩa stake đã di cư.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Ethereum block 25.637.121 · getStakingModuleSummary(4) và getModuleValidatorsBalance(4) · share CMv1 tại block đo 89,8307%</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Chỉ cần một trong bốn số 43/0/0/0 khác đi khi gọi lại ở đúng block 25.637.121 là phép đo này sai. Và khi reported balance của CMv2 đổi khỏi 0 ở block sau, claim này hết hiệu lực theo thời gian — phải chạy lại phép tính tỷ lệ gộp, chứ không giữ nguyên câu cũ.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Ethereum <span class="khong-ngat">block 25.637.121</span> · getStakingModuleSummary(<span class="khong-ngat">4</span>) và getModuleValidatorsBalance(<span class="khong-ngat">4</span>) · share CMv1 tại block đo <span class="khong-ngat">89,8307%</span></p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Chỉ cần một trong bốn số <span class="khong-ngat">43/0</span>/<span class="khong-ngat">0/0</span> khác đi khi gọi lại ở đúng <span class="khong-ngat">block 25.637.121</span> là phép đo này sai. Và khi reported balance của CMv2 đổi khỏi <span class="khong-ngat">0</span> ở block sau, claim này hết hiệu lực theo thời gian — phải chạy lại phép tính tỷ lệ gộp, chứ không giữ nguyên câu cũ.</p>
   </div>
-  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0xbdaf4e770000000000000000000000000000000000000000000000000000000000000004" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="18" data-chu-so="4" data-don-vi="ETH" data-ghim="0">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getModuleValidatorsBalance(uint256)</code> trên <code>0xfddf3894…2999</code></div></div>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-29</span><span>Đăng. Đây là claim quyết định độ nghiêm trọng của cả bài: bảng phí mới đã tồn tại trên chain nhưng chưa có ETH nào tạo trọng số cho nó tại block đo. Ngưỡng theo dõi tự đặt: tới 18/09/2026, nếu CMv2 vẫn dưới 1% tổng balance module thì hạ mức ưu tiên — đó là quyết định biên tập, không bác snapshot. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></span></li></ol></details>
+  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0xbdaf4e770000000000000000000000000000000000000000000000000000000000000004" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="18" data-chu-so="4" data-don-vi="ETH" data-ghim="0">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getModuleValidatorsBalance(uint256)</code> trên <code><span class="khong-ngat">0xfddf3894…2999</span></code></div></div>
+  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">29</span></span><span>Đăng. Đây là claim quyết định độ nghiêm trọng của cả bài: bảng phí mới đã tồn tại trên chain nhưng chưa có ETH nào tạo trọng số cho nó tại block đo. Ngưỡng theo dõi tự đặt: tới <span class="khong-ngat">18/09/2026</span>, nếu CMv2 vẫn dưới <span class="khong-ngat">1%</span> tổng balance module thì hạ mức ưu tiên — đó là quyết định biên tập, không bác snapshot. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C3" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C3">C3</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Tỷ lệ phân bổ treasury gộp tại block đo là 6,2085170404% phần thưởng; nếu dịch toàn bộ balance từ CMv1 sang CMv2 và giữ mọi thứ khác không đổi, tỷ lệ này về 5,7594% — giảm 7,23%. Con số đó là bài toán giả định, KHÔNG phải doanh thu Lido vừa mất.</p>
+  <p class="case-claim-text">Tỷ lệ phân bổ treasury gộp tại block đo là <span class="khong-ngat">6,2085170404%</span> phần thưởng; nếu dịch toàn bộ balance từ CMv1 sang CMv2 và giữ mọi thứ khác không đổi, tỷ lệ này về <span class="khong-ngat">5,7594%</span> — giảm <span class="khong-ngat">7,23%</span>. Con số đó là bài toán giả định, KHÔNG phải doanh thu Lido vừa mất.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Ethereum block 25.637.121 · getStakingFeeAggregateDistribution() bản đầy đủ (bản E4Precision chỉ trả 6,20%) · bảng 0/25/50/75/100% dựng trên share CMv1 89,8307%</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Dựng lại bảng 0/25/50/75/100% từ chính hai bảng phí và share 89,8307% tại block 25.637.121 mà không ra chuỗi 6,2085 → 6,0962 → 5,9839 → 5,8717 → 5,7594 ⇒ bảng này sai. Nếu ai chỉ ra getter đang dùng thực chất đo lượng ETH đã chuyển vào treasury chứ không phải một tỷ lệ phân bổ, thì cách diễn giải cả mục này sai. Tổng balance hoặc cơ cấu balance giữa các module đổi, hoặc DAO thay fee CMv2 ⇒ bảng phải tính lại.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Ethereum <span class="khong-ngat">block 25.637.121</span> · getStakingFeeAggregateDistribution() bản đầy đủ (bản E4Precision chỉ trả <span class="khong-ngat">6,20%</span>) · bảng <span class="khong-ngat">0/25</span>/<span class="khong-ngat">50/75</span>/<span class="khong-ngat">100%</span> dựng trên share CMv1 <span class="khong-ngat">89,8307%</span></p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Dựng lại bảng <span class="khong-ngat">0/25</span>/<span class="khong-ngat">50/75</span>/<span class="khong-ngat">100%</span> từ chính hai bảng phí và share <span class="khong-ngat">89,8307%</span> tại <span class="khong-ngat">block 25.637.121</span> mà không ra chuỗi <span class="khong-ngat">6,2085</span> → <span class="khong-ngat">6,0962</span> → <span class="khong-ngat">5,9839</span> → <span class="khong-ngat">5,8717</span> → <span class="khong-ngat">5,7594</span> ⇒ bảng này sai. Nếu ai chỉ ra getter đang dùng thực chất đo lượng ETH đã chuyển vào treasury chứ không phải một tỷ lệ phân bổ, thì cách diễn giải cả mục này sai. Tổng balance hoặc cơ cấu balance giữa các module đổi, hoặc DAO thay fee CMv2 ⇒ bảng phải tính lại.</p>
   </div>
-  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0xfa5093eb" data-tu="1" data-chia="2" data-nhan="100" data-thap-phan="0" data-chu-so="10" data-don-vi="%" data-ghim="6.2085170404">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getStakingFeeAggregateDistribution()</code> trên <code>0xfddf3894…2999</code></div></div>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-29</span><span>Đăng kèm chữ &#x27;giả định&#x27; ngay trong claim, vì đây đúng chỗ một con số dễ bị trích thành &#x27;Lido mất 7,23% doanh thu&#x27;. Getter trả tỷ lệ trong công thức, không đo ETH thực nhận — muốn biết treasury nhận bao nhiêu phải đo phần thưởng phát sinh theo từng module trong kỳ. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></span></li></ol></details>
+  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0xfa5093eb" data-tu="1" data-chia="2" data-nhan="100" data-thap-phan="0" data-chu-so="10" data-don-vi="%" data-ghim="6.2085170404">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getStakingFeeAggregateDistribution()</code> trên <code><span class="khong-ngat">0xfddf3894…2999</span></code></div></div>
+  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">29</span></span><span>Đăng kèm chữ &#x27;giả định&#x27; ngay trong claim, vì đây đúng chỗ một con số dễ bị trích thành &#x27;Lido mất <span class="khong-ngat">7,23%</span> doanh thu&#x27;. Getter trả tỷ lệ trong công thức, không đo ETH thực nhận — muốn biết treasury nhận bao nhiêu phải đo phần thưởng phát sinh theo từng module trong kỳ. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></span></li></ol></details>
 </article></div>
   </div>
 </details>
 </section><section class="than article-body" id="ban-day-du">
   <div class="article-meta">
-    <span><b>GHIM</b>Ethereum · block #25.637.121, timestamp 29/07/2026 07:53:59 UTC</span>
-    <span><b>NGÀY</b>29/07/2026</span>
+    <span><b>GHIM</b>Ethereum · <span class="khong-ngat">block #25.637.121</span>, timestamp <span class="khong-ngat">29/07/2026</span> <span class="khong-ngat">07:53:59</span> UTC</span>
+    <span><b>NGÀY</b><span class="khong-ngat">29/07/2026</span></span>
     <span class="article-meta-link"><a href="https://x.com/blockpinned/status/2082421671152218340">bản đăng trên X ↗</a></span>
   </div>
-  <p>Lido vừa nâng cấp Staking Router v3. CMv2 đổi cách chia phí — nhưng gần 5 ngày sau, số dư được báo cáo vẫn là <strong>0 ETH</strong>.</p>
-<p>Đây là snapshot tại Ethereum block <strong>25.637.121</strong> — không phải kết luận về mọi block kể từ ngày upgrade.</p>
+  <p>Lido vừa nâng cấp Staking Router v3. CMv2 đổi cách chia phí — nhưng gần <span class="khong-ngat">5 ngày</span> sau, số dư được báo cáo vẫn là <strong><span class="khong-ngat">0 ETH</span></strong>.</p>
+<p>Đây là snapshot tại Ethereum block <strong><span class="khong-ngat">25.637.121</span></strong> — không phải kết luận về mọi block kể từ ngày upgrade.</p>
 <h2 id="hai-bang-phi-doc-tu-contract-chu-khong-tu-slide">Hai bảng phí, đọc từ contract chứ không từ slide</h2>
 <p>Trong bản nâng cấp này, StakingRouter có thêm module thứ tư: <strong>Curated Module v2 (CMv2)</strong>. Điểm kinh tế dễ bị bỏ qua là CMv2 dùng một cách chia phí khác module cũ.</p>
-<p>Ở hai module đang được so sánh, 10% phần thưởng staking được chia giữa operator và treasury. Lido tổ chức validator thành các staking module; mỗi module có tỷ lệ chia riêng.</p>
-<div class="bang"><table><thead><tr><th>Mỗi 100 ETH phần thưởng</th><th>CMv1 (cũ)</th><th>CMv2 (mới)</th></tr></thead><tbody><tr><td>operator — bên vận hành validator</td><td>3,50 ETH</td><td><strong>4,00 ETH</strong></td></tr><tr><td>treasury — quỹ của DAO</td><td>6,50 ETH</td><td><strong>6,00 ETH</strong></td></tr><tr><td>tổng</td><td>10%</td><td>10%</td></tr></tbody></table></div>
-<p>Với mỗi 100 ETH phần thưởng được phân bổ theo CMv2 thay vì CMv1, operator được thêm 0,5 ETH, còn treasury bớt 0,5 ETH. Hai bảng phí này đọc trực tiếp từ StakingRouter tại block đo.</p>
-<p><em>(Các tỷ lệ trên là phần trăm trực tiếp của phần thưởng, không phải phần trăm của riêng khoản phí 10%.)</em></p>
+<p>Ở hai module đang được so sánh, <span class="khong-ngat">10%</span> phần thưởng staking được chia giữa operator và treasury. Lido tổ chức validator thành các staking module; mỗi module có tỷ lệ chia riêng.</p>
+<div class="bang"><table><thead><tr><th>Mỗi <span class="khong-ngat">100 ETH</span> phần thưởng</th><th>CMv1 (cũ)</th><th>CMv2 (mới)</th></tr></thead><tbody><tr><td>operator — bên vận hành validator</td><td><span class="khong-ngat">3,50 ETH</span></td><td><strong><span class="khong-ngat">4,00 ETH</span></strong></td></tr><tr><td>treasury — quỹ của DAO</td><td><span class="khong-ngat">6,50 ETH</span></td><td><strong><span class="khong-ngat">6,00 ETH</span></strong></td></tr><tr><td>tổng</td><td><span class="khong-ngat">10%</span></td><td><span class="khong-ngat">10%</span></td></tr></tbody></table></div>
+<p>Với mỗi <span class="khong-ngat">100 ETH</span> phần thưởng được phân bổ theo CMv2 thay vì CMv1, operator được thêm <span class="khong-ngat">0,5 ETH</span>, còn treasury bớt <span class="khong-ngat">0,5 ETH</span>. Hai bảng phí này đọc trực tiếp từ StakingRouter tại block đo.</p>
+<p><em>(Các tỷ lệ trên là phần trăm trực tiếp của phần thưởng, không phải phần trăm của riêng khoản phí <span class="khong-ngat">10%</span>.)</em></p>
 <h2 id="nhung-doi-trong-contract-chua-dong-nghia-da-co-eth-tao-trong">Nhưng đổi trong contract chưa đồng nghĩa đã có ETH tạo trọng số</h2>
 <p>Tại block đo, CMv2 có:</p>
-<div class="bang"><table><thead><tr><th>Trạng thái</th><th>Giá trị</th></tr></thead><tbody><tr><td>registered operators</td><td><strong>43</strong></td></tr><tr><td>depositable keys</td><td>0</td></tr><tr><td>deposited validators</td><td>0</td></tr><tr><td>reported balance</td><td><strong>0 ETH</strong></td></tr></tbody></table></div>
-<p>43 operator cho thấy đã có người đăng ký vận hành. <strong>Nó không có nghĩa stake đã di cư.</strong> Bốn trạng thái này phải đọc riêng — operator đăng ký là một chuyện, còn biến đi vào công thức gộp fee là <em>reported balance</em>.</p>
-<p>Tỷ lệ fee chung được tính theo balance của từng module: module giữ nhiều ETH hơn thì bảng phí của module đó có ảnh hưởng lớn hơn. CMv2 có 0 ETH reported balance, nên <strong>tại block đo, bảng phí mới có trọng số bằng 0</strong> trong phép tính này.</p>
+<div class="bang"><table><thead><tr><th>Trạng thái</th><th>Giá trị</th></tr></thead><tbody><tr><td>registered operators</td><td><strong><span class="khong-ngat">43</span></strong></td></tr><tr><td>depositable keys</td><td><span class="khong-ngat">0</span></td></tr><tr><td>deposited validators</td><td><span class="khong-ngat">0</span></td></tr><tr><td>reported balance</td><td><strong><span class="khong-ngat">0 ETH</span></strong></td></tr></tbody></table></div>
+<p><span class="khong-ngat">43</span> operator cho thấy đã có người đăng ký vận hành. <strong>Nó không có nghĩa stake đã di cư.</strong> Bốn trạng thái này phải đọc riêng — operator đăng ký là một chuyện, còn biến đi vào công thức gộp fee là <em>reported balance</em>.</p>
+<p>Tỷ lệ fee chung được tính theo balance của từng module: module giữ nhiều ETH hơn thì bảng phí của module đó có ảnh hưởng lớn hơn. CMv2 có <span class="khong-ngat">0 ETH</span> reported balance, nên <strong>tại block đo, bảng phí mới có trọng số bằng <span class="khong-ngat">0</span></strong> trong phép tính này.</p>
 <h2 id="dieu-gi-xay-ra-khi-eth-bat-dau-chuyen-sang-cmv2">Điều gì xảy ra khi ETH bắt đầu chuyển sang CMv2</h2>
-<p>StakingRouter trả tỷ lệ phân bổ treasury gộp tại block đo là <strong>6,2085170404%</strong> phần thưởng staking. Đây là tỷ lệ <strong>trong công thức</strong>, không phải số ETH thực tế đã được chuyển vào treasury.</p>
+<p>StakingRouter trả tỷ lệ phân bổ treasury gộp tại block đo là <strong><span class="khong-ngat">6,2085170404%</span></strong> phần thưởng staking. Đây là tỷ lệ <strong>trong công thức</strong>, không phải số ETH thực tế đã được chuyển vào treasury.</p>
 <p>Giữ nguyên tổng balance và fee của các module khác, rồi chỉ dịch balance từ CMv1 sang CMv2:</p>
-<div class="bang"><table><thead><tr><th>Kịch bản chuyển</th><th>Treasury</th><th>Giảm</th></tr></thead><tbody><tr><td>0%</td><td>6,2085%</td><td>—</td></tr><tr><td>25%</td><td>6,0962%</td><td>1,81%</td></tr><tr><td>50%</td><td>5,9839%</td><td>3,62%</td></tr><tr><td>75%</td><td>5,8717%</td><td>5,43%</td></tr><tr><td><strong>100%</strong></td><td><strong>5,7594%</strong></td><td><strong>7,23%</strong></td></tr></tbody></table></div>
-<p><strong>Con số −7,23% không phải doanh thu Lido vừa mất.</strong> Đó là kết quả của một bài toán giả định: toàn bộ balance hiện tại của module cũ chuyển sang bảng phí mới, trong khi các yếu tố còn lại giữ nguyên.</p>
-<p>Với người nắm LDO, đây là một cược tăng trưởng: DAO nhường 0,5 ETH trên mỗi 100 ETH phần thưởng cho operator. Giữ các yếu tố khác không đổi, quy mô phần thưởng tương ứng phải tăng <strong>ít nhất 8,33%</strong> mới bù được phần treasury giảm từ 6,50 xuống 6,00 ETH.</p>
+<div class="bang"><table><thead><tr><th>Kịch bản chuyển</th><th>Treasury</th><th>Giảm</th></tr></thead><tbody><tr><td><span class="khong-ngat">0%</span></td><td><span class="khong-ngat">6,2085%</span></td><td>—</td></tr><tr><td><span class="khong-ngat">25%</span></td><td><span class="khong-ngat">6,0962%</span></td><td><span class="khong-ngat">1,81%</span></td></tr><tr><td><span class="khong-ngat">50%</span></td><td><span class="khong-ngat">5,9839%</span></td><td><span class="khong-ngat">3,62%</span></td></tr><tr><td><span class="khong-ngat">75%</span></td><td><span class="khong-ngat">5,8717%</span></td><td><span class="khong-ngat">5,43%</span></td></tr><tr><td><strong><span class="khong-ngat">100%</span></strong></td><td><strong><span class="khong-ngat">5,7594%</span></strong></td><td><strong><span class="khong-ngat">7,23%</span></strong></td></tr></tbody></table></div>
+<p><strong>Con số <span class="khong-ngat">−7,23%</span> không phải doanh thu Lido vừa mất.</strong> Đó là kết quả của một bài toán giả định: toàn bộ balance hiện tại của module cũ chuyển sang bảng phí mới, trong khi các yếu tố còn lại giữ nguyên.</p>
+<p>Với người nắm LDO, đây là một cược tăng trưởng: DAO nhường <span class="khong-ngat">0,5 ETH</span> trên mỗi <span class="khong-ngat">100 ETH</span> phần thưởng cho operator. Giữ các yếu tố khác không đổi, quy mô phần thưởng tương ứng phải tăng <strong>ít nhất <span class="khong-ngat">8,33%</span></strong> mới bù được phần treasury giảm từ <span class="khong-ngat">6,50</span> xuống <span class="khong-ngat">6,00 ETH</span>.</p>
 <p>Người nắm LDO <strong>không</strong> tự động nhận khoản fee này. Tác động tới holder đi qua sức khoẻ DAO treasury, không phải một khoản trả trực tiếp.</p>
 <p>Thực tế có thể đi theo hướng khác: nếu CMv2 hút thêm ETH mới và số ETH đó tạo đủ phần thưởng, treasury có thể nhận tỷ lệ thấp hơn trên mỗi ETH phần thưởng nhưng vẫn thu nhiều ETH hơn về tổng lượng. Muốn biết treasury thực nhận bao nhiêu ETH, phải đo phần thưởng phát sinh theo từng module trong kỳ.</p>
-<p>Thông báo ngày 27/07 của Lido nói về lợi ích kinh tế cho operator và khả năng tuỳ chỉnh phí. Hai bảng số cụ thể ở trên đến từ StakingRouter.</p>
+<p>Thông báo ngày <span class="khong-ngat">27/07</span> của Lido nói về lợi ích kinh tế cho operator và khả năng tuỳ chỉnh phí. Hai bảng số cụ thể ở trên đến từ StakingRouter.</p>
 <h2 id="phu-luc-dia-chi-va-getter">Phụ lục — địa chỉ và getter</h2>
 <div class="bang"><table><thead><tr><th></th><th>Địa chỉ</th></tr></thead><tbody><tr><td>StakingRouter</td><td><code>0xfddf38947afb03c621c71b06c9c70bce73f12999</code></td></tr><tr><td>CMv1 — curated-onchain-v1</td><td><code>0x55032650b14df07b85bf18a3a3ec8e0af2e028d5</code></td></tr><tr><td>CMv2 — curated-onchain-v2</td><td><code>0xda5f930ce326eb5205085d66c72a4e79d60cb8c1</code></td></tr></tbody></table></div>
-<p>Share của CMv1 tại block đo: <strong>89,8307%</strong> số dư validator được báo cáo qua các module.</p>
-<p>Trạng thái CMv2 đọc bằng <code>getStakingModuleSummary(4)</code> và <code>getModuleValidatorsBalance(4)</code>.</p>
-<p>Tỷ lệ gộp đọc bằng <code>getStakingFeeAggregateDistribution()</code>. Bản <code>…E4Precision()</code> chỉ trả 6,20%; bài dùng bản đầy đủ rồi mới làm tròn. <strong>Getter này trả một tỷ lệ phân bổ, không đo lượng ETH đã chuyển vào treasury.</strong></p>
-<h2 id="phu-luc-kiem-them-so-0">Phụ lục — kiểm thêm số 0</h2>
+<p>Share của CMv1 tại block đo: <strong><span class="khong-ngat">89,8307%</span></strong> số dư validator được báo cáo qua các module.</p>
+<p>Trạng thái CMv2 đọc bằng <code>getStakingModuleSummary(<span class="khong-ngat">4</span>)</code> và <code>getModuleValidatorsBalance(<span class="khong-ngat">4</span>)</code>.</p>
+<p>Tỷ lệ gộp đọc bằng <code>getStakingFeeAggregateDistribution()</code>. Bản <code>…E4Precision()</code> chỉ trả <span class="khong-ngat">6,20%</span>; bài dùng bản đầy đủ rồi mới làm tròn. <strong>Getter này trả một tỷ lệ phân bổ, không đo lượng ETH đã chuyển vào treasury.</strong></p>
+<h2 id="phu-luc-kiem-them-so-0">Phụ lục — kiểm thêm số <span class="khong-ngat">0</span></h2>
 <p>Bốn contract consolidation và top-up được kiểm:</p>
 <div class="bang"><table><thead><tr><th>Contract</th><th>Địa chỉ</th></tr></thead><tbody><tr><td>ConsolidationGateway</td><td><code>0x17be979344f2c2cc806229a532d92f8742c10462</code></td></tr><tr><td>TopUpGateway</td><td><code>0x3fc2c71579d80790aaa3fc7be8b66ac39dc57374</code></td></tr><tr><td>ConsolidationBus</td><td><code>0xd907ce33b4be423823d1cffe80bd147e8b8554c8</code></td></tr><tr><td>ConsolidationMigrator</td><td><code>0x9dc70b5a4f4f5e4af9058c983d560564f031f1d7</code></td></tr></tbody></table></div>
-<p>Trên Ethereum, cùng bộ lọc trả <strong>0/0/0/0</strong> log trong dải block 25.603.297–25.637.121. Mở rộng từ block 0 đến block đo trả <strong>8/14/11/8</strong> — tức công cụ và bộ lọc chạy được, số 0 kia là về dải block chứ không phải về công cụ. Kết quả này chỉ kiểm loại log đã chọn, không đại diện cho mọi hoạt động của bốn contract.</p>
+<p>Trên Ethereum, cùng bộ lọc trả <strong><span class="khong-ngat">0/0</span>/<span class="khong-ngat">0/0</span></strong> log trong dải <span class="khong-ngat">block 25.603.297</span>–<span class="khong-ngat">25.637.121</span>. Mở rộng từ <span class="khong-ngat">block 0</span> đến block đo trả <strong><span class="khong-ngat">8/14</span>/<span class="khong-ngat">11/8</span></strong> — tức công cụ và bộ lọc chạy được, số <span class="khong-ngat">0</span> kia là về dải block chứ không phải về công cụ. Kết quả này chỉ kiểm loại log đã chọn, không đại diện cho mọi hoạt động của bốn contract.</p>
 <h2 id="khi-nao-phai-do-lai">Khi nào phải đo lại</h2>
-<ul><li>Balance được báo cáo của CMv2 đổi khỏi 0.</li><li>DAO thay fee của CMv2.</li><li>Tổng balance hoặc cơ cấu balance giữa các module thay đổi.</li></ul>
+<ul><li>Balance được báo cáo của CMv2 đổi khỏi <span class="khong-ngat">0</span>.</li><li>DAO thay fee của CMv2.</li><li>Tổng balance hoặc cơ cấu balance giữa các module thay đổi.</li></ul>
 <p>Đây là <strong>trigger cập nhật</strong>, không phải cách bác snapshot cũ.</p>
-<p><em>Ngưỡng dừng theo dõi: đến 18/09/2026, nếu CMv2 vẫn dưới 1% tổng balance module, BlockPinned hạ mức ưu tiên theo dõi chủ đề này trong năm 2026. Đây là quyết định biên tập, không bác bỏ snapshot tại block đo.</em></p>
-<h2 id="tu-kiem">Tự kiểm</h2>
-<p>Gọi lại cùng các getter ở <strong>đúng block 25.637.121</strong>. Nếu kết quả khác <strong>43 registered operators, 0 depositable keys, 0 deposited validators hoặc 0 ETH reported balance</strong> — chỉ cần một trong bốn số khác đi — thì phép đo này sai.</p>
-<p>Bảng giả định dựng lại được bằng chính hai bảng phí và share 89,8307%: chỉ dịch balance từ CMv1 sang CMv2 theo từng mức 0/25/50/75/100%, giữ mọi module khác không đổi.</p>
-<p>Không phải lời khuyên đầu tư. Mọi số động đo tại Ethereum block 25.637.121, timestamp 29/07/2026 07:53:59 UTC.</p>
+<p><em>Ngưỡng dừng theo dõi: đến <span class="khong-ngat">18/09/2026</span>, nếu CMv2 vẫn dưới <span class="khong-ngat">1%</span> tổng balance module, BlockPinned hạ mức ưu tiên theo dõi chủ đề này trong năm <span class="khong-ngat">2026</span>. Đây là quyết định biên tập, không bác&nbsp;bỏ snapshot tại block đo.</em></p>
+<h2 id="tu-kiem">Tự&nbsp;kiểm</h2>
+<p>Gọi lại cùng các getter ở <strong>đúng <span class="khong-ngat">block 25.637.121</span></strong>. Nếu kết quả khác <strong><span class="khong-ngat">43</span> registered operators, <span class="khong-ngat">0</span> depositable keys, <span class="khong-ngat">0</span> deposited validators hoặc <span class="khong-ngat">0 ETH</span> reported balance</strong> — chỉ cần một trong bốn số khác đi — thì phép đo này sai.</p>
+<p>Bảng giả định dựng lại được bằng chính hai bảng phí và share <span class="khong-ngat">89,8307%</span>: chỉ dịch balance từ CMv1 sang CMv2 theo từng mức <span class="khong-ngat">0/25</span>/<span class="khong-ngat">50/75</span>/<span class="khong-ngat">100%</span>, giữ mọi module khác không đổi.</p>
+<p>Không phải lời khuyên đầu tư. Mọi số động đo tại Ethereum <span class="khong-ngat">block 25.637.121</span>, timestamp <span class="khong-ngat">29/07/2026</span> <span class="khong-ngat">07:53:59</span> UTC.</p>
 </section></main>
 <div id="ch-tip"></div>
 <footer><div class="khung"><p>Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá. Không phải lời khuyên đầu tư. · <a href="https://x.com/blockpinned">@blockpinned</a></p></div></footer>
@@ -1966,12 +1976,12 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var quickRoot = quickHome ? quickHome.href : new URL(".", location.href).href;
   function quickHref(path) { return new URL(path, quickRoot).href; }
   var quickRoutes = [
-    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
-    { href: quickHref("bai/"), code: "01", kind: "Điều tra", title: "Tất cả bài viết", copy: "Tìm, lọc token và mở toàn bộ bài điều tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
-    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ sơ", tags: "token directory coverage logo", tone: "token" },
-    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
-    { href: quickHref("facts/"), code: "03", kind: "Tự kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
-    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
+    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang\u00a0chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
+    { href: quickHref("bai/"), code: "01", kind: "Điều\u00a0tra", title: "Tất cả bài\u00a0viết", copy: "Tìm, lọc token và mở toàn bộ bài\u00a0điều\u00a0tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
+    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ\u00a0sơ", tags: "token directory coverage logo", tone: "token" },
+    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ\u00a0sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
+    { href: quickHref("facts/"), code: "03", kind: "Tự\u00a0kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
+    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi\u00a0trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
     { href: quickHref("du-lieu/"), code: "05", kind: "Hiện vật", title: "Dữ liệu thô", copy: "JSON, SHA-256 và lệnh tải để tự đếm lại", tags: "du lieu data json hash sha curl hien vat", tone: "data" }
   ];
   var quickHost = themeButton && themeButton.parentNode;
@@ -2039,8 +2049,8 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
           + '<span class="quick-find-copy"><small>' + route.kind + '</small><b>' + route.title + '</b><em>' + route.copy + '</em></span>'
           + (here ? '<span class="quick-find-here">Đang xem</span>' : '<span class="quick-find-go" aria-hidden="true">↗</span>')
           + '</a>';
-      }).join("") : '<p class="quick-find-empty"><b>Không có đích phù hợp.</b><span>Thử “token”, “fact”, “tự kiểm” hoặc “track”.</span></p>';
-      quickCount.textContent = (quickVisible.length < 10 ? "0" : "") + quickVisible.length + " đích";
+      }).join("") : '<p class="quick-find-empty"><b>Không có đích phù hợp.</b><span>Thử “token”, “fact”, “tự\u00a0kiểm” hoặc “track”.</span></p>';
+      quickCount.textContent = (quickVisible.length < 10 ? "0" : "") + quickVisible.length + "\u00a0đích";
       paintQuickSelection();
     }
     function openQuickFind() {
@@ -2387,7 +2397,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         card.hidden = !visible;
         if (visible) shown++;
       });
-      if (tokenFilterStatus) tokenFilterStatus.textContent = "Đang hiện " + shown + " token" + (label ? " · " + label : "");
+      if (tokenFilterStatus) tokenFilterStatus.textContent = "Đang hiện " + shown + "\u00a0token" + (label ? " · " + label : "");
     }
     tokenFilterButtons.forEach(function (button) {
       button.addEventListener("click", function () {
@@ -2489,7 +2499,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     copyPlainText(url).then(function (copied) {
       button.classList.toggle("da-chep", copied);
       button.querySelector("span").textContent = copied ? "Đã sao chép ✓" : "Hãy sao chép thủ công";
-      button.setAttribute("aria-label", copied ? "Đã sao chép link bằng chứng" : "Không thể tự sao chép link bằng chứng");
+      button.setAttribute("aria-label", copied ? "Đã sao chép link bằng\u00a0chứng" : "Không thể tự sao chép link bằng\u00a0chứng");
       setTimeout(function () {
         button.classList.remove("da-chep");
         button.querySelector("span").textContent = idleLabel;
@@ -2578,7 +2588,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     copy.type = "button";
     copy.className = "command-copy";
     copy.textContent = "Sao chép lệnh";
-    copy.setAttribute("aria-label", "Sao chép lệnh tự kiểm");
+    copy.setAttribute("aria-label", "Sao chép lệnh tự\u00a0kiểm");
     details.insertBefore(copy, command);
 
     copy.addEventListener("click", function () {
@@ -2599,7 +2609,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var trackStatus = document.querySelector(".track-filter-status");
   var trackLedger = document.querySelector(".track-ledger");
   if (trackFilters.length && trackEntries.length) {
-    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác bỏ", sua: "đã sửa", cho: "chưa phân định" };
+    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác\u00a0bỏ", sua: "đã sửa", cho: "chưa phân\u00a0định" };
     trackFilters.forEach(function (button) {
       button.addEventListener("click", function () {
         var filter = button.dataset.trackFilter;
@@ -2610,7 +2620,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
           entry.hidden = !visible;
           if (visible) shown++;
         });
-        if (trackStatus) trackStatus.textContent = "Đang hiện " + shown + " dòng" + (filter === "all" ? "" : " · " + trackLabels[filter]);
+        if (trackStatus) trackStatus.textContent = "Đang hiện " + shown + "\u00a0dòng" + (filter === "all" ? "" : " · " + trackLabels[filter]);
         if (trackLedger) requestAnimationFrame(function () {
           trackLedger.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
         });
@@ -2645,11 +2655,11 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         card.hidden = index < 0 || index >= archiveLimit;
       });
       var shown = Math.min(matches.length, archiveLimit);
-      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + " / " + matches.length + " bài viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
+      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + "\u00a0/\u00a0" + matches.length + "\u00a0bài\u00a0viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
       if (archiveEmpty) archiveEmpty.hidden = matches.length !== 0;
       if (archiveMore) {
         archiveMore.hidden = matches.length <= archiveLimit;
-        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + " bài viết ↓";
+        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + "\u00a0bài\u00a0viết ↓";
       }
     }
     function selectArchiveFilter(filter, updateUrl) {
@@ -2700,7 +2710,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var uniEmpty = document.querySelector("[data-uni-empty]");
   if (uniClaims.length) {
     var uniActiveFilter = "all";
-    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng vững", sua: "đã sửa", bac: "đã bị bác bỏ", changed: "đã đổi trạng thái" };
+    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng\u00a0vững", sua: "đã sửa", bac: "đã bị bác\u00a0bỏ", changed: "đã đổi trạng thái" };
 
     function uniNormalise(value) {
       return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -2719,7 +2729,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
       });
       if (uniStatus) {
         var lens = uniActiveFilter === "all" ? "" : " · " + uniLabels[uniActiveFilter];
-        uniStatus.textContent = "Đang hiện " + shown + " claim" + lens + (query ? " · có từ khoá" : "");
+        uniStatus.textContent = "Đang hiện " + shown + "\u00a0claim" + lens + (query ? " · có từ khoá" : "");
       }
       if (uniEmpty) uniEmpty.hidden = shown !== 0;
     }

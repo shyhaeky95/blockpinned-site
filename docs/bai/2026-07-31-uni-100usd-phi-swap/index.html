@@ -53,6 +53,8 @@ body{margin:0;color:var(--ink);font-family:var(--body);font-size:16.5px;line-hei
 .khung{max-width:1080px;margin:0 auto;padding:0 var(--gut)}
 a{color:var(--ink);text-decoration:none}
 p{margin:0 0 18px;overflow-wrap:break-word}
+h1,h2{text-wrap:balance}
+.khong-ngat,.cum-tieu-de{white-space:nowrap}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 ::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
 
@@ -1341,10 +1343,11 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
 .page-token-uni main{padding-bottom:112px}.uni-hero{padding-bottom:30px}
 .uni-hero-grid{display:grid;grid-template-columns:minmax(0,.84fr) minmax(500px,1.16fr);gap:clamp(38px,5.5vw,88px);align-items:center}
 .uni-hero-copy{min-width:0}.uni-hero .subline{max-width:58ch;margin:0 0 28px}
-.uni-title-lockup{display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
+.uni-title-lockup{container-type:inline-size;display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
 .uni-title-lockup img{width:84px;height:84px;border-radius:23px;box-shadow:0 0 0 1px var(--line),0 18px 40px -26px var(--ink)}
 .uni-title-lockup>div>span{display:block;margin:0 0 7px;font:750 10px/1 var(--mono);letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
-.uni-title-lockup h1{max-width:13ch;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1{max-width:none;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1 .cum-tieu-de{display:block}
 .uni-hero-jump{width:min(100%,420px);display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:15px 17px;border:1px solid var(--line);border-radius:13px;background:var(--card);box-shadow:var(--bong)}
 .uni-hero-jump span{font:650 9px/1.4 var(--mono);color:var(--faint)}.uni-hero-jump b{font:760 10px/1 var(--mono);color:var(--accent)}.uni-hero-jump i{font-style:normal;color:var(--accent);transition:transform .2s}
 .uni-hero-jump:hover,.uni-hero-jump:focus-visible{border-color:color-mix(in srgb,var(--accent) 38%,var(--line))}.uni-hero-jump:hover i{transform:translateY(2px)}
@@ -1520,6 +1523,12 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead::after{display:none}
   .article-priority .bai-lead .t{font-size:23px}.article-priority::after{font-size:100px;top:-.12em}
 }
+@media(max-width:600px){
+  .uni-title-lockup{grid-template-columns:1fr;gap:14px}.uni-title-lockup h1{font-size:clamp(27px,8vw,40px)}
+}
+@container (max-width:520px){
+  .uni-title-lockup h1{font-size:clamp(22px,7.5cqw,36px)}
+}
 @media(max-width:420px){
   .uni-vault-total{display:grid;grid-template-columns:auto 1fr;gap:20px}.uni-ring{width:92px;height:92px}.uni-ring::before{width:62px;height:62px}.uni-ring b{font-size:31px}
   .uni-vault::after{display:none}.uni-legend{grid-template-columns:1fr}.uni-status-bar{height:44px}.uni-ledger-head{display:grid}
@@ -1529,6 +1538,7 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
    ARTICLE ARCHIVE — preview hữu hạn ở trang chính, toàn bộ bài nằm ở đây.
    ══════════════════════════════════════════════════════════════════════════ */
 .page-article-archive main{padding-bottom:110px}.article-archive-hero{padding-bottom:25px}.article-archive-hero h1{max-width:15ch}
+.article-archive-hero h1 .nhan-manh{white-space:normal}
 .article-archive-hero .subline{max-width:67ch}.article-archive-stats{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:30px;padding:16px 0;border-block:1px solid var(--line)}
 .article-archive-stats span{display:flex;align-items:baseline;gap:7px;font:600 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .article-archive-stats span::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent)}.article-archive-stats span:nth-child(2)::before{background:var(--c-song)}.article-archive-stats span:nth-child(3)::before{background:var(--c-xn)}
@@ -1744,145 +1754,145 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <header class="dau"><div class="khung">
   <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
   <a class="ten" href="../../">Block<span>Pinned</span></a>
-  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Trang chủ</a><a href="../../bai/">Bài viết</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
+  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Trang&nbsp;chủ</a><a href="../../bai/">Bài&nbsp;viết</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
 </div></header>
 <main class="khung"><section class="hero hero-article">
-  <span class="ghost-num" aria-hidden="true">100</span>
+  <span class="ghost-num" aria-hidden="true"><span class="khong-ngat">100</span></span>
   <span class="hero-code" aria-hidden="true">CLAIM C1 · ĐANG ĐỨNG</span>
   <div class="article-path" aria-label="Vị trí bài viết">
-    <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều tra</a><span>/</span><b>UNI</b><i><span class="dot song"></span>vẫn đứng vững</i>
+    <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều&nbsp;tra</a><span>/</span><b>UNI</b><i><span class="dot song"></span>vẫn đứng&nbsp;vững</i>
   </div>
-  <p class="eyebrow"><span>UNI</span><span class="im">31/07/2026</span></p>
-  <h1 class="display">Mỗi $<span class="nhan-manh">100</span> phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64</h1>
-  <p class="subline">Đo trọn một ngày UTC trên Robinhood Chain: mỗi $100 phí swap thì $85,36 ở lại với người cấp thanh khoản, $14,64 về giao thức. Và v4 lấy tỷ lệ thấp nhất trong ba phiên bản.</p>
+  <p class="eyebrow"><span>UNI</span><span class="im"><span class="khong-ngat">31/07/2026</span></span></p>
+  <h1 class="display">Mỗi $<span class="nhan-manh"><span class="khong-ngat">100</span></span> phí swap trên Robinhood Chain, Uniswap ghi nhận <span class="khong-ngat">$14,64</span></h1>
+  <p class="subline">Đo trọn một ngày UTC trên Robinhood Chain: mỗi <span class="khong-ngat">$100</span> phí swap thì <span class="khong-ngat">$85,36</span> ở lại với người cấp thanh khoản, <span class="khong-ngat">$14,64</span> về giao thức. Và v4 lấy tỷ lệ thấp nhất trong ba phiên bản.</p>
   <div class="article-verdict"><div class="heronum article-ratio article-ledger-count">
-      <p class="l">Sổ bằng chứng của bài</p>
-      <p class="v">5<em> claim</em></p>
-      <p class="d">5 vẫn đứng vững hoặc đã xác nhận</p>
+      <p class="l">Sổ bằng&nbsp;chứng của bài</p>
+      <p class="v"><span class="khong-ngat">5</span><em> claim</em></p>
+      <p class="d"><span class="khong-ngat">5</span> vẫn đứng&nbsp;vững hoặc đã xác nhận</p>
     </div><div class="case-path" role="img" aria-label="Tuyến bằng chứng: đối tượng, điều bác bỏ, trạng thái hiện tại">
-      <div class="case-step file"><span>01 · ĐỐI TƯỢNG</span><strong>UNI</strong><small>hồ sơ được ghim theo token</small></div><i aria-hidden="true">→</i>
-      <div class="case-step test"><span>02 · TỰ KIỂM</span><strong>5</strong><small>điều bác bỏ viết cùng claim</small></div><i aria-hidden="true">→</i>
-      <div class="case-step state song"><span>03 · SỔ SỐNG</span><strong>5 mốc</strong><small>lịch sử đổi trạng thái công khai</small></div>
+      <div class="case-step file"><span><span class="khong-ngat">01</span> · ĐỐI TƯỢNG</span><strong>UNI</strong><small>hồ&nbsp;sơ được ghim theo token</small></div><i aria-hidden="true">→</i>
+      <div class="case-step test"><span><span class="khong-ngat">02</span> · TỰ&nbsp;KIỂM</span><strong><span class="khong-ngat">5</span></strong><small>điều&nbsp;bác&nbsp;bỏ viết cùng claim</small></div><i aria-hidden="true">→</i>
+      <div class="case-step state song"><span><span class="khong-ngat">03</span> · SỔ SỐNG</span><strong><span class="khong-ngat">5</span> mốc</strong><small>lịch sử đổi trạng thái công khai</small></div>
     </div></div>
 
-</section><nav class="article-map" aria-label="Điều hướng trong bài"><span>Đọc theo bằng chứng</span><a href="#so-claim">Sổ claim</a><a href="#phien-ban-moi-nhat-lay-ty-le-thap-nhat">Phiên bản mới nhất lấy tỷ lệ thấp nhất</a><a href="#ba-thu-phai-do-de-ra-duoc-14-64">Ba thứ phải đo để ra được $14,64</a><a href="#con-burn-thi-sao">Còn burn thì sao</a></nav><section class="article-ledger" aria-labelledby="so-claim-title">
+</section><nav class="article-map" aria-label="Điều hướng trong bài"><span>Đọc theo bằng&nbsp;chứng</span><a href="#so-claim">Sổ claim</a><a href="#phien-ban-moi-nhat-lay-ty-le-thap-nhat">Phiên bản mới nhất lấy tỷ lệ thấp nhất</a><a href="#ba-thu-phai-do-de-ra-duoc-14-64">Ba thứ phải đo để ra được <span class="khong-ngat">$14,64</span></a><a href="#con-burn-thi-sao">Còn burn thì sao</a></nav><section class="article-ledger" aria-labelledby="so-claim-title">
 <details class="evidence case-evidence" id="so-claim">
   <summary>
-    <span class="case-ledger-title"><span>Sổ claim của bài</span><b id="so-claim-title">5 khẳng định</b><small>đổi trạng thái tại chỗ · không xoá</small></span>
+    <span class="case-ledger-title"><span>Sổ claim của bài</span><b id="so-claim-title"><span class="khong-ngat">5</span> khẳng&nbsp;định</b><small>đổi trạng thái tại chỗ · không xoá</small></span>
     <span class="case-ledger-viz">
       <span class="case-ledger-bar" role="img" aria-label="5 vẫn đứng vững"><i class="song" style="--n:5"></i></span>
-      <span class="case-ledger-legend"><i><span class="dot song"></span><b>5</b> vẫn đứng vững</i></span>
+      <span class="case-ledger-legend"><i><span class="dot song"></span><b><span class="khong-ngat">5</span></b> vẫn đứng&nbsp;vững</i></span>
     </span>
-    <span class="mo">mở 5 claim</span>
+    <span class="mo">mở <span class="khong-ngat">5 claim</span></span>
   </summary>
   <div class="trong case-ledger-body">
-    <p class="case-ledger-intro">Mỗi claim kèm điều có thể bác bỏ nó, mốc ghim và toàn bộ lịch sử đổi trạng thái.</p>
+    <p class="case-ledger-intro">Mỗi claim kèm điều có thể bác&nbsp;bỏ nó, mốc ghim và toàn bộ lịch sử đổi trạng thái.</p>
     <div class="case-claim-list"><article class="case-claim song" id="C1" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C1">C1</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Trong trọn ngày UTC 29/07/2026 trên Robinhood Chain, người dùng trả tổng $2.521.197 phí swap và Uniswap ghi nhận $369.178 phí giao thức — tức 14,64%, tương đương $14,64 trên mỗi $100.</p>
+  <p class="case-claim-text">Trong trọn ngày UTC <span class="khong-ngat">29/07/2026</span> trên Robinhood Chain, người dùng trả tổng <span class="khong-ngat">$2.521.197</span> phí swap và Uniswap ghi nhận <span class="khong-ngat">$369.178</span> phí giao thức — tức <span class="khong-ngat">14,64%</span>, tương đương <span class="khong-ngat">$14,64</span> trên mỗi <span class="khong-ngat">$100</span>.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Robinhood Chain · block 22.006.019 → 22.867.791 (2026-07-29T00:00:00Z → 23:59:59Z) · factory v2 0x8bceaa40b9acdfaedf85adf4ff01f5ad6517937f · factory v3 0x1f7d7550b1b028f7571e69a784071f0205fd2efa · PoolManager v4 0x8366a39cc670b4001a1121b8f6a443a643e40951 · giá quy đổi cuối ngày UTC 29/07</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Dựng lại tập pool từ log tạo pool của ba factory (25.472 pair v2 · 334.102 pool v3 · 209.478 pool v4), quét log Swap của đúng tập đó trong cửa sổ block trên, rồi cộng phí theo tỷ lệ protocol fee của từng pool. Nếu tổng phí lệch quá 0,5% so với $2.521.197, hoặc phần giao thức lệch quá 0,5% so với $369.178, claim này sai.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Robinhood Chain · <span class="khong-ngat">block 22.006.019 → 22.867.791</span> (<span class="khong-ngat">2026-07-29T00:00:00Z</span> → <span class="khong-ngat">23:59:59Z</span>) · factory v2 0x8bceaa40b9acdfaedf85adf4ff01f5ad6517937f · factory v3 0x1f7d7550b1b028f7571e69a784071f0205fd2efa · PoolManager v4 0x8366a39cc670b4001a1121b8f6a443a643e40951 · giá quy đổi cuối ngày UTC <span class="khong-ngat">29/07</span></p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Dựng lại tập pool từ log tạo pool của ba factory (<span class="khong-ngat">25.472</span> pair v2 · <span class="khong-ngat">334.102 pool</span> v3 · <span class="khong-ngat">209.478 pool</span> v4), quét log Swap của đúng tập đó trong cửa sổ block trên, rồi cộng phí theo tỷ lệ protocol fee của từng pool. Nếu tổng phí lệch quá <span class="khong-ngat">0,5%</span> so với <span class="khong-ngat">$2.521.197</span>, hoặc phần giao thức lệch quá <span class="khong-ngat">0,5%</span> so với <span class="khong-ngat">$369.178</span>, claim này sai.</p>
   </div>
   
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Đăng. Phép cộng theo tỷ lệ thật từng pool được bắt phải tái lập đúng tổng phí đã đo trước đó: v3 ra đúng $1.723.901,73 (lệch 0,0%), v4 lệch 5 xu do làm tròn. Truy vấn đối chứng với mã sự kiện không tồn tại trả 0 kết quả; không khoảng block nào bị bỏ sót trong 4,09 triệu log. Lượt tính ĐẦU đã bị chính cổng này chặn vì lệch 49% — nguyên nhân là hàm tra giá thiếu một dòng gán giá ETH gốc bằng giá WETH, làm 3.708 pool mất giá.</span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">31</span></span><span>Đăng. Phép cộng theo tỷ lệ thật từng pool được bắt phải tái lập đúng tổng phí đã đo trước đó: v3 ra đúng <span class="khong-ngat">$1.723.901,73</span> (lệch <span class="khong-ngat">0,0%</span>), v4 lệch <span class="khong-ngat">5</span> xu do làm tròn. Truy vấn đối chứng với mã sự kiện không tồn tại trả <span class="khong-ngat">0</span> kết quả; không khoảng block nào bị bỏ sót trong <span class="khong-ngat">4,09</span> triệu log. Lượt tính ĐẦU đã bị chính cổng này chặn vì lệch <span class="khong-ngat">49%</span> — nguyên nhân là hàm tra giá thiếu một dòng gán giá ETH gốc bằng giá WETH, làm <span class="khong-ngat">3.708 pool</span> mất giá.</span></li></ol></details>
 </article><article class="case-claim song" id="C2" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C2">C2</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Phiên bản v4 lấy tỷ lệ thấp nhất trong ba phiên bản: 7,81% bình quân gia quyền theo phí của các pool v4 đã bật, so với 16,67% ở v2 và 16,78% ở v3.</p>
+  <p class="case-claim-text">Phiên bản v4 lấy tỷ lệ thấp nhất trong ba phiên bản: <span class="khong-ngat">7,81%</span> bình quân gia quyền theo phí của các pool v4 đã bật, so với <span class="khong-ngat">16,67%</span> ở v2 và <span class="khong-ngat">16,78%</span> ở v3.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Cùng cửa sổ block. v2 $198.383 phí → $33.064 · v3 $1.723.902 → $289.353 · v4 $598.913 → $46.762. Tỷ lệ v4 tính từ trường fee của từng log Swap và protocolFee của đúng pool.</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Một phép dựng độc lập đọc từng log Swap cùng cấu hình protocol fee của đúng pool tại đúng block. Nếu tỷ lệ v4 lệch quá 2 điểm phần trăm so với 7,81%, claim này sai và câu &#x27;phiên bản mới nhất lấy tỷ lệ thấp nhất&#x27; phải sửa công khai.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Cùng cửa sổ block. v2 <span class="khong-ngat">$198.383</span> phí → <span class="khong-ngat">$33.064</span> · v3 <span class="khong-ngat">$1.723.902</span> → <span class="khong-ngat">$289.353</span> · v4 <span class="khong-ngat">$598.913</span> → <span class="khong-ngat">$46.762</span>. Tỷ lệ v4 tính từ trường fee của từng log Swap và protocolFee của đúng pool.</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Một phép dựng độc lập đọc từng log Swap cùng cấu hình protocol fee của đúng pool tại đúng block. Nếu tỷ lệ v4 lệch quá <span class="khong-ngat">2</span> điểm phần trăm so với <span class="khong-ngat">7,81%</span>, claim này sai và câu &#x27;phiên bản mới nhất lấy tỷ lệ thấp nhất&#x27; phải sửa công khai.</p>
   </div>
   
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Đăng. Tỷ lệ 7,81% là bình quân gia quyền theo phí của các pool v4 đã bật, tính từ trường fee của từng log Swap và protocolFee của đúng pool — không phải trung bình số học giữa các pool. Con số này thay cho phép áp đồng loạt một phần sáu ở bản nháp đầu, vốn cho kết quả cao hơn 5,69%.</span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">31</span></span><span>Đăng. Tỷ lệ <span class="khong-ngat">7,81%</span> là bình quân gia quyền theo phí của các pool v4 đã bật, tính từ trường fee của từng log Swap và protocolFee của đúng pool — không phải trung bình số học giữa các pool. Con số này thay cho phép áp đồng loạt một phần sáu ở bản nháp đầu, vốn cho kết quả cao hơn <span class="khong-ngat">5,69%</span>.</span></li></ol></details>
 </article><article class="case-claim song" id="C3" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C3">C3</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Công tắc protocol fee không bật ở mọi pool: tính theo giá trị phí, 92,9% phát sinh ở pool đã bật; $7,15 trên mỗi $100 phát sinh ở pool chưa bật, giao thức nhận $0.</p>
+  <p class="case-claim-text">Công tắc protocol fee không bật ở mọi pool: tính theo giá trị phí, <span class="khong-ngat">92,9%</span> phát sinh ở pool đã bật; <span class="khong-ngat">$7,15</span> trên mỗi <span class="khong-ngat">$100</span> phát sinh ở pool chưa bật, giao thức nhận <span class="khong-ngat">$0</span>.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Tập pool đã bật dựng từ event SetFeeProtocol (v3) và ProtocolFeeUpdated trên PoolManager (v4), quét từ block 1 tới 22.867.791. v2 là công tắc toàn cục feeTo() trên factory.</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Quét lại hai event trên tới hết block 22.867.791 rồi cân theo giá trị phí của từng pool trong cửa sổ đo. Nếu độ phủ lệch quá 3 điểm phần trăm so với 92,9%, claim này sai.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Tập pool đã bật dựng từ event SetFeeProtocol (v3) và ProtocolFeeUpdated trên PoolManager (v4), quét từ <span class="khong-ngat">block 1</span> tới <span class="khong-ngat">22.867.791</span>. v2 là công tắc toàn cục feeTo() trên factory.</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Quét lại hai event trên tới hết <span class="khong-ngat">block 22.867.791</span> rồi cân theo giá trị phí của từng pool trong cửa sổ đo. Nếu độ phủ lệch quá <span class="khong-ngat">3</span> điểm phần trăm so với <span class="khong-ngat">92,9%</span>, claim này sai.</p>
   </div>
   
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Đăng. Độ phủ đọc bằng EVENT chứ không bằng trạng thái pool: node công khai của chain này trả lỗi cho truy vấn trạng thái tại block cũ. v2 là công tắc toàn cục, đọc feeTo() trên factory và nó trỏ đúng contract giữ tiền đã ghim.</span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">31</span></span><span>Đăng. Độ phủ đọc bằng EVENT chứ không bằng trạng thái pool: node công khai của chain này trả lỗi cho truy vấn trạng thái tại block cũ. v2 là công tắc toàn cục, đọc feeTo() trên factory và nó trỏ đúng contract giữ tiền đã ghim.</span></li></ol></details>
 </article><article class="case-claim song" id="C4" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C4">C4</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Trong 30 pool v4 sinh phí nhiều nhất ngày hôm đó, cả 15 pool gắn hook đều không bật protocol fee. 15 pool còn lại trong nhóm không gắn hook.</p>
+  <p class="case-claim-text">Trong <span class="khong-ngat">30 pool</span> v4 sinh phí nhiều nhất ngày hôm đó, cả <span class="khong-ngat">15 pool</span> gắn hook đều không bật protocol fee. <span class="khong-ngat">15 pool</span> còn lại trong nhóm không gắn hook.</p>
   
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Cùng cửa sổ block. Trường hook đọc từ event Initialize trên PoolManager v4; trạng thái công tắc đọc từ event ProtocolFeeUpdated.</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Lấy 30 pool v4 có phí cao nhất trong cửa sổ, đọc trường hook của từng pool và kiểm từng poolId có trong tập đã bật hay không. Nếu có bất kỳ pool gắn hook nào đã bật, claim này sai.</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Lấy <span class="khong-ngat">30 pool</span> v4 có phí cao nhất trong cửa sổ, đọc trường hook của từng pool và kiểm từng poolId có trong tập đã bật hay không. Nếu có bất kỳ pool gắn hook nào đã bật, claim này sai.</p>
   </div>
   
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Đăng. Kết quả này nối tiếp bài đăng ngày 30/07 của kênh, vốn đã cho thấy một lớp pool trả 0; lần này đếm được lớp đó lớn cỡ nào trong nhóm sinh phí mạnh nhất.</span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">31</span></span><span>Đăng. Kết quả này nối tiếp bài đăng ngày <span class="khong-ngat">30/07</span> của kênh, vốn đã cho thấy một lớp pool trả <span class="khong-ngat">0</span>; lần này đếm được lớp đó lớn cỡ nào trong nhóm sinh phí mạnh nhất.</span></li></ol></details>
 </article><article class="case-claim song" id="C5" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C5">C5</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Phần chênh giữa phí giao thức ghi nhận và giá trị UNI đem burn trong cùng ngày KHÔNG nằm trong contract giữ tiền: dòng vào và dòng ra khớp nhau tới từng xu trên phần định giá được ($206.158,02 cả hai chiều), tồn ròng bằng 0.</p>
+  <p class="case-claim-text">Phần chênh giữa phí giao thức ghi nhận và giá trị UNI đem burn trong cùng ngày KHÔNG nằm trong contract giữ tiền: dòng vào và dòng ra khớp nhau tới từng xu trên phần định giá được (<span class="khong-ngat">$206.158,02</span> cả hai chiều), tồn ròng bằng <span class="khong-ngat">0</span>.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Cùng cửa sổ block. TokenJar 0x2ac03e14cfe755426daaee0a4994184ce81482f8 · contract burn 0x7a8f74c2585f84c781f951b7f2ff21337d5b630b · UNI trên Robinhood 0xf177d86a28b520e3e396e4f3b96cd8e72d7dabd8. Giới hạn: 420 trên 472 token vào kho không có trong bộ giá đang dùng, nên $206.158 chỉ là phần định giá được.</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Quét log Transfer có đích là TokenJar và có nguồn là TokenJar trong cùng cửa sổ, cộng theo từng token. Nếu tồn ròng khác 0 trên phần định giá được, claim này sai. Control dương: UNI vào contract burn trong cửa sổ phải đúng 62.000 (31 lượt × 2.000).</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Cùng cửa sổ block. TokenJar 0x2ac03e14cfe755426daaee0a4994184ce81482f8 · contract burn 0x7a8f74c2585f84c781f951b7f2ff21337d5b630b · UNI trên Robinhood 0xf177d86a28b520e3e396e4f3b96cd8e72d7dabd8. Giới hạn: <span class="khong-ngat">420</span> trên <span class="khong-ngat">472</span> token vào kho không có trong bộ giá đang dùng, nên <span class="khong-ngat">$206.158</span> chỉ là phần định giá được.</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Quét log Transfer có đích là TokenJar và có nguồn là TokenJar trong cùng cửa sổ, cộng theo từng token. Nếu tồn ròng khác <span class="khong-ngat">0</span> trên phần định giá được, claim này sai. Control dương: UNI vào contract burn trong cửa sổ phải đúng <span class="khong-ngat">62.000</span> (<span class="khong-ngat">31</span> lượt × <span class="khong-ngat">2.000</span>).</p>
   </div>
   
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Đăng. Phép đo này được chạy vì một câu hỏi của người đọc bản nháp: phần chênh giữa phí ghi nhận và UNI đã burn thì đi đâu. Nó BÁC giả thuyết &#x27;còn nằm trong kho&#x27;, và chính vì thế bài bỏ trục cũ (tỷ lệ burn trên phí) trước khi đăng. Giới hạn nặng: 420 trên 472 token vào kho không có trong bộ giá đang dùng.</span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">31</span></span><span>Đăng. Phép đo này được chạy vì một câu hỏi của người đọc bản nháp: phần chênh giữa phí ghi nhận và UNI đã burn thì đi đâu. Nó BÁC giả thuyết &#x27;còn nằm trong kho&#x27;, và chính vì thế bài bỏ trục cũ (tỷ lệ burn trên phí) trước khi đăng. Giới hạn nặng: <span class="khong-ngat">420</span> trên <span class="khong-ngat">472</span> token vào kho không có trong bộ giá đang dùng.</span></li></ol></details>
 </article></div>
   </div>
 </details>
 </section><section class="than article-body" id="ban-day-du">
   <div class="article-meta">
-    <span><b>GHIM</b>Robinhood Chain · block #22.006.019 → #22.867.791 (trọn ngày UTC 29/07/2026) · giá quy đổi lấy tại 23:59:59 UTC 29/07</span>
-    <span><b>NGÀY</b>31/07/2026</span>
-    <span class="article-meta-link"><a href="https://x.com/blockpinned/status/2083199069892272255">bản đăng trên X ↗</a></span><a class="article-token-link" href="../../token/uni/">Hồ sơ Uniswap →</a>
+    <span><b>GHIM</b>Robinhood Chain · <span class="khong-ngat">block #22.006.019 → #22.867.791</span> (trọn ngày UTC <span class="khong-ngat">29/07/2026</span>) · giá quy đổi lấy tại <span class="khong-ngat">23:59:59</span> UTC <span class="khong-ngat">29/07</span></span>
+    <span><b>NGÀY</b><span class="khong-ngat">31/07/2026</span></span>
+    <span class="article-meta-link"><a href="https://x.com/blockpinned/status/2083199069892272255">bản đăng trên X ↗</a></span><a class="article-token-link" href="../../token/uni/">Hồ&nbsp;sơ Uniswap →</a>
   </div>
   <p>Uniswap đã bật thu phí trên Robinhood Chain. Câu hỏi ai cũng hỏi là giao thức lấy được bao nhiêu — nhưng chưa thấy nơi nào tách ra.</p>
-<p>Đo trọn một ngày UTC, mỗi <strong>$100</strong> người dùng trả phí swap:</p>
-<p><strong>$85,36</strong> ở lại với người cấp thanh khoản. <strong>$14,64</strong> Uniswap ghi nhận là phí giao thức.</p>
+<p>Đo trọn một ngày UTC, mỗi <strong><span class="khong-ngat">$100</span></strong> người dùng trả phí swap:</p>
+<p><strong><span class="khong-ngat">$85,36</span></strong> ở lại với người cấp thanh khoản. <strong><span class="khong-ngat">$14,64</span></strong> Uniswap ghi nhận là phí giao thức.</p>
 <h2 id="phien-ban-moi-nhat-lay-ty-le-thap-nhat">Phiên bản mới nhất lấy tỷ lệ thấp nhất</h2>
-<p>Trong $100 phí đó, v4 chiếm <strong>$23,76</strong> — gần một phần tư. Nhưng v4 chỉ nộp về <strong>$1,85</strong>, tức <strong>7,81%</strong>. Cùng lúc, v2 nộp <strong>16,67%</strong> và v3 nộp <strong>16,78%</strong>.</p>
+<p>Trong <span class="khong-ngat">$100</span> phí đó, v4 chiếm <strong><span class="khong-ngat">$23,76</span></strong> — gần một phần tư. Nhưng v4 chỉ nộp về <strong><span class="khong-ngat">$1,85</span></strong>, tức <strong><span class="khong-ngat">7,81%</span></strong>. Cùng lúc, v2 nộp <strong><span class="khong-ngat">16,67%</span></strong> và v3 nộp <strong><span class="khong-ngat">16,78%</span></strong>.</p>
 <p>Nếu bạn đang là LP hoặc đang giữ UNI, khác biệt đó đổi hai thứ ngược nhau. Với LP thì v4 dễ chịu hơn — ở v2 và v3, phí giao thức <strong>trừ vào phần LP</strong>; ở v4 nó <strong>cộng thêm</strong> vào phí người swap trả, nên LP vẫn nhận đủ. Với người giữ UNI thì ngược lại: dòng tiền càng dồn sang v4, phần chảy về giao thức càng mỏng.</p>
-<p>Lý do là cơ chế, không phải chính sách. Ở v2 và v3, phí giao thức là một <strong>phân số của phí pool</strong> — một phần sáu, hoặc một phần tư. Ở v4 nó không phải phân số, mà là một <strong>mức tối đa 0,1%</strong>. Khi đã chạm mức đó, pool thu phí càng cao thì phần giao thức càng chiếm tỷ trọng nhỏ. Với pool fee 1% và protocol fee 0,1%, giao thức nhận khoảng <strong>9%</strong> trên tổng 1,1% mà người swap trả — không phải 16,7%.</p>
-<p>Tỷ lệ thấp không tự nó là xấu, và bài này không đo được chiều đó. Nếu v4 nộp theo tỷ lệ như v2 và v3 <strong>mà nền phí giữ nguyên</strong>, mỗi $100 sẽ có thêm khoảng <strong>$2,11</strong> về giao thức. Nhưng nền phí có giữ nguyên hay không thì chưa ai đo: một lát mỏng của cái bánh to hơn vẫn có thể là nhiều tiền hơn. Muốn trả lời phải đo thị phần v4 qua nhiều ngày — bài này chỉ có một ngày.</p>
-<h2 id="ba-thu-phai-do-de-ra-duoc-14-64">Ba thứ phải đo để ra được $14,64</h2>
-<p><strong>Một — không phải pool nào cũng bật.</strong> Tính theo giá trị phí, <strong>92,9%</strong> phát sinh ở pool đã bật. Còn <strong>$7,15</strong> trên mỗi $100 phát sinh ở pool chưa bật, giao thức nhận <strong>$0</strong>.</p>
-<p>Trong đó có một nhóm đáng chỉ tên: <strong>30 pool v4 sinh phí nhiều nhất</strong> ngày hôm đó có <strong>15 pool gắn hook, và cả 15 đều không bật</strong> protocol fee. 15 pool còn lại trong nhóm không gắn hook.</p>
-<p><strong>Hai — pool đã bật lấy tỷ lệ khác nhau.</strong> Đọc thẳng trên chain, không lấy từ tài liệu: <strong>328.376 pool v3 khai một phần sáu</strong>, <strong>5.564 pool khai một phần tư</strong>.</p>
-<p><strong>Ba — tỷ lệ của v4 phải tính từ từng giao dịch</strong>, vì nó phụ thuộc mức phí của chính pool đó. Bình quân gia quyền theo phí của các pool v4 đã bật: <strong>7,81%</strong>.</p>
-<p>Áp chung một tỷ lệ một phần sáu cho tất cả — cách làm ở bản nháp đầu — cho ra con số cao hơn <strong>5,69%</strong> so với phép cộng theo cấu hình từng pool.</p>
+<p>Lý do là cơ chế, không phải chính sách. Ở v2 và v3, phí giao thức là một <strong>phân số của phí pool</strong> — một phần sáu, hoặc một phần tư. Ở v4 nó không phải phân số, mà là một <strong>mức tối đa <span class="khong-ngat">0,1%</span></strong>. Khi đã chạm mức đó, pool thu phí càng cao thì phần giao thức càng chiếm tỷ trọng nhỏ. Với pool fee <span class="khong-ngat">1%</span> và protocol fee <span class="khong-ngat">0,1%</span>, giao thức nhận khoảng <strong><span class="khong-ngat">9%</span></strong> trên tổng <span class="khong-ngat">1,1%</span> mà người swap trả — không phải <span class="khong-ngat">16,7%</span>.</p>
+<p>Tỷ lệ thấp không tự nó là xấu, và bài này không đo được chiều đó. Nếu v4 nộp theo tỷ lệ như v2 và v3 <strong>mà nền phí giữ nguyên</strong>, mỗi <span class="khong-ngat">$100</span> sẽ có thêm khoảng <strong><span class="khong-ngat">$2,11</span></strong> về giao thức. Nhưng nền phí có giữ nguyên hay không thì chưa ai đo: một lát mỏng của cái bánh to hơn vẫn có thể là nhiều tiền hơn. Muốn trả lời phải đo thị phần v4 qua nhiều ngày — bài này chỉ có một ngày.</p>
+<h2 id="ba-thu-phai-do-de-ra-duoc-14-64">Ba thứ phải đo để ra được <span class="khong-ngat">$14,64</span></h2>
+<p><strong>Một — không phải pool nào cũng bật.</strong> Tính theo giá trị phí, <strong><span class="khong-ngat">92,9%</span></strong> phát sinh ở pool đã bật. Còn <strong><span class="khong-ngat">$7,15</span></strong> trên mỗi <span class="khong-ngat">$100</span> phát sinh ở pool chưa bật, giao thức nhận <strong><span class="khong-ngat">$0</span></strong>.</p>
+<p>Trong đó có một nhóm đáng chỉ tên: <strong><span class="khong-ngat">30 pool</span> v4 sinh phí nhiều nhất</strong> ngày hôm đó có <strong><span class="khong-ngat">15 pool</span> gắn hook, và cả <span class="khong-ngat">15</span> đều không bật</strong> protocol fee. <span class="khong-ngat">15 pool</span> còn lại trong nhóm không gắn hook.</p>
+<p><strong>Hai — pool đã bật lấy tỷ lệ khác nhau.</strong> Đọc thẳng trên chain, không lấy từ tài liệu: <strong><span class="khong-ngat">328.376 pool</span> v3 khai một phần sáu</strong>, <strong><span class="khong-ngat">5.564 pool</span> khai một phần tư</strong>.</p>
+<p><strong>Ba — tỷ lệ của v4 phải tính từ từng giao dịch</strong>, vì nó phụ thuộc mức phí của chính pool đó. Bình quân gia quyền theo phí của các pool v4 đã bật: <strong><span class="khong-ngat">7,81%</span></strong>.</p>
+<p>Áp chung một tỷ lệ một phần sáu cho tất cả — cách làm ở bản nháp đầu — cho ra con số cao hơn <strong><span class="khong-ngat">5,69%</span></strong> so với phép cộng theo cấu hình từng pool.</p>
 <h2 id="con-burn-thi-sao">Còn burn thì sao</h2>
-<p>Trong <strong>$14,64</strong> giao thức ghi nhận, <strong>$9,80</strong> đã xuất hiện dưới dạng UNI đem burn trong cùng ngày.</p>
-<p>Phần chênh <strong>không nằm trong kho</strong> — đã kiểm: dòng vào và dòng ra của contract giữ tiền khớp nhau tới từng xu trên phần định giá được, tồn ròng bằng <strong>0</strong>. Nó ở đâu thì chưa nói được, và bài này không đoán.</p>
-<p>Điều đáng biết hơn con số đó là <strong>cách burn xảy ra</strong>: phí giao thức <strong>không mua UNI</strong>. Phí vào contract giữ tiền dưới dạng các token khác nhau, rồi <strong>bất kỳ ai</strong> cũng có thể nộp <strong>2.000 UNI</strong> để lấy ra tối đa 20 asset trong đó — và số UNI ấy bị burn. Người đi gom chỉ làm khi có lời. Burn của UNI không tự động.</p>
-<h2 id="tu-kiem-lai">Tự kiểm lại</h2>
-<p>Ba số gốc, mọi tỷ lệ ở trên đều quy ra từ đây. Trong khoảng block <strong>22.006.019 → 22.867.791</strong> của Robinhood Chain, đúng một ngày UTC:</p>
-<ul><li>người dùng trả tổng <strong>$2.521.197</strong> phí swap</li><li>giao thức ghi nhận <strong>$369.178</strong></li><li>UNI đem burn <strong>62.000 UNI</strong>, tương đương <strong>$247.122</strong></li></ul>
-<p>Tách theo phiên bản: v2 trả $198.383 → ghi nhận $33.064 · v3 trả $1.723.902 → ghi nhận $289.353 · v4 trả $598.913 → ghi nhận $46.762.</p>
-<p>Các số đếm on-chain đọc lại lúc nào cũng ra như vậy; các số USD dùng giá cuối ngày UTC 29/07.</p>
-<p>Bài này thay cho bài đăng ngày 29/07 đã được gỡ khỏi cả hai kênh cùng ngày, sau khi điều kiện tự bác bỏ in kèm nó xảy ra.</p>
-<h2 id="dieu-gi-se-bac-bo-bai-nay">Điều gì sẽ bác bỏ bài này</h2>
-<p>Nếu một phép dựng độc lập — đọc từng log Swap cùng cấu hình protocol fee của đúng pool tại đúng block — cho tỷ lệ v4 lệch quá 2 điểm phần trăm so với <strong>7,81%</strong>, thì câu &quot;phiên bản mới nhất lấy tỷ lệ thấp nhất&quot; phải sửa công khai.</p>
-<p>Không phải lời khuyên đầu tư. Các số đếm on-chain tại khoảng block 22.006.019 → 22.867.791 là mốc cố định, không đổi khi có block mới. Các số USD phụ thuộc nguồn giá cuối ngày UTC 29/07 và sẽ khác nếu dùng giá tại từng lượt swap.</p>
+<p>Trong <strong><span class="khong-ngat">$14,64</span></strong> giao thức ghi nhận, <strong><span class="khong-ngat">$9,80</span></strong> đã xuất hiện dưới dạng UNI đem burn trong cùng ngày.</p>
+<p>Phần chênh <strong>không nằm trong kho</strong> — đã kiểm: dòng vào và dòng ra của contract giữ tiền khớp nhau tới từng xu trên phần định giá được, tồn ròng bằng <strong><span class="khong-ngat">0</span></strong>. Nó ở đâu thì chưa nói được, và bài này không đoán.</p>
+<p>Điều đáng biết hơn con số đó là <strong>cách burn xảy ra</strong>: phí giao thức <strong>không mua UNI</strong>. Phí vào contract giữ tiền dưới dạng các token khác nhau, rồi <strong>bất kỳ ai</strong> cũng có thể nộp <strong><span class="khong-ngat">2.000 UNI</span></strong> để lấy ra tối đa <span class="khong-ngat">20</span> asset trong đó — và số UNI ấy bị burn. Người đi gom chỉ làm khi có lời. Burn của UNI không tự động.</p>
+<h2 id="tu-kiem-lai">Tự&nbsp;kiểm lại</h2>
+<p>Ba số gốc, mọi tỷ lệ ở trên đều quy ra từ đây. Trong khoảng block <strong><span class="khong-ngat">22.006.019</span> → <span class="khong-ngat">22.867.791</span></strong> của Robinhood Chain, đúng một ngày UTC:</p>
+<ul><li>người dùng trả tổng <strong><span class="khong-ngat">$2.521.197</span></strong> phí swap</li><li>giao thức ghi nhận <strong><span class="khong-ngat">$369.178</span></strong></li><li>UNI đem burn <strong><span class="khong-ngat">62.000 UNI</span></strong>, tương đương <strong><span class="khong-ngat">$247.122</span></strong></li></ul>
+<p>Tách theo phiên bản: v2 trả <span class="khong-ngat">$198.383</span> → ghi nhận <span class="khong-ngat">$33.064</span> · v3 trả <span class="khong-ngat">$1.723.902</span> → ghi nhận <span class="khong-ngat">$289.353</span> · v4 trả <span class="khong-ngat">$598.913</span> → ghi nhận <span class="khong-ngat">$46.762</span>.</p>
+<p>Các số đếm on-chain đọc lại lúc nào cũng ra như vậy; các số USD dùng giá cuối ngày UTC <span class="khong-ngat">29/07</span>.</p>
+<p>Bài này thay cho bài đăng ngày <span class="khong-ngat">29/07</span> đã được gỡ khỏi cả hai kênh cùng ngày, sau khi điều kiện tự bác&nbsp;bỏ in kèm nó xảy ra.</p>
+<h2 id="dieu-gi-se-bac-bo-bai-nay">Điều gì sẽ bác&nbsp;bỏ bài này</h2>
+<p>Nếu một phép dựng độc lập — đọc từng log Swap cùng cấu hình protocol fee của đúng pool tại đúng block — cho tỷ lệ v4 lệch quá <span class="khong-ngat">2</span> điểm phần trăm so với <strong><span class="khong-ngat">7,81%</span></strong>, thì câu &quot;phiên bản mới nhất lấy tỷ lệ thấp nhất&quot; phải sửa công khai.</p>
+<p>Không phải lời khuyên đầu tư. Các số đếm on-chain tại khoảng <span class="khong-ngat">block 22.006.019 → 22.867.791</span> là mốc cố định, không đổi khi có block mới. Các số USD phụ thuộc nguồn giá cuối ngày UTC <span class="khong-ngat">29/07</span> và sẽ khác nếu dùng giá tại từng lượt swap.</p>
 </section></main>
 <div id="ch-tip"></div>
 <footer><div class="khung"><p>Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá. Không phải lời khuyên đầu tư. · <a href="https://x.com/blockpinned">@blockpinned</a></p></div></footer>
@@ -1982,12 +1992,12 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var quickRoot = quickHome ? quickHome.href : new URL(".", location.href).href;
   function quickHref(path) { return new URL(path, quickRoot).href; }
   var quickRoutes = [
-    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
-    { href: quickHref("bai/"), code: "01", kind: "Điều tra", title: "Tất cả bài viết", copy: "Tìm, lọc token và mở toàn bộ bài điều tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
-    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ sơ", tags: "token directory coverage logo", tone: "token" },
-    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
-    { href: quickHref("facts/"), code: "03", kind: "Tự kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
-    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
+    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang\u00a0chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
+    { href: quickHref("bai/"), code: "01", kind: "Điều\u00a0tra", title: "Tất cả bài\u00a0viết", copy: "Tìm, lọc token và mở toàn bộ bài\u00a0điều\u00a0tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
+    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ\u00a0sơ", tags: "token directory coverage logo", tone: "token" },
+    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ\u00a0sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
+    { href: quickHref("facts/"), code: "03", kind: "Tự\u00a0kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
+    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi\u00a0trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
     { href: quickHref("du-lieu/"), code: "05", kind: "Hiện vật", title: "Dữ liệu thô", copy: "JSON, SHA-256 và lệnh tải để tự đếm lại", tags: "du lieu data json hash sha curl hien vat", tone: "data" }
   ];
   var quickHost = themeButton && themeButton.parentNode;
@@ -2055,8 +2065,8 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
           + '<span class="quick-find-copy"><small>' + route.kind + '</small><b>' + route.title + '</b><em>' + route.copy + '</em></span>'
           + (here ? '<span class="quick-find-here">Đang xem</span>' : '<span class="quick-find-go" aria-hidden="true">↗</span>')
           + '</a>';
-      }).join("") : '<p class="quick-find-empty"><b>Không có đích phù hợp.</b><span>Thử “token”, “fact”, “tự kiểm” hoặc “track”.</span></p>';
-      quickCount.textContent = (quickVisible.length < 10 ? "0" : "") + quickVisible.length + " đích";
+      }).join("") : '<p class="quick-find-empty"><b>Không có đích phù hợp.</b><span>Thử “token”, “fact”, “tự\u00a0kiểm” hoặc “track”.</span></p>';
+      quickCount.textContent = (quickVisible.length < 10 ? "0" : "") + quickVisible.length + "\u00a0đích";
       paintQuickSelection();
     }
     function openQuickFind() {
@@ -2403,7 +2413,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         card.hidden = !visible;
         if (visible) shown++;
       });
-      if (tokenFilterStatus) tokenFilterStatus.textContent = "Đang hiện " + shown + " token" + (label ? " · " + label : "");
+      if (tokenFilterStatus) tokenFilterStatus.textContent = "Đang hiện " + shown + "\u00a0token" + (label ? " · " + label : "");
     }
     tokenFilterButtons.forEach(function (button) {
       button.addEventListener("click", function () {
@@ -2505,7 +2515,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     copyPlainText(url).then(function (copied) {
       button.classList.toggle("da-chep", copied);
       button.querySelector("span").textContent = copied ? "Đã sao chép ✓" : "Hãy sao chép thủ công";
-      button.setAttribute("aria-label", copied ? "Đã sao chép link bằng chứng" : "Không thể tự sao chép link bằng chứng");
+      button.setAttribute("aria-label", copied ? "Đã sao chép link bằng\u00a0chứng" : "Không thể tự sao chép link bằng\u00a0chứng");
       setTimeout(function () {
         button.classList.remove("da-chep");
         button.querySelector("span").textContent = idleLabel;
@@ -2594,7 +2604,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     copy.type = "button";
     copy.className = "command-copy";
     copy.textContent = "Sao chép lệnh";
-    copy.setAttribute("aria-label", "Sao chép lệnh tự kiểm");
+    copy.setAttribute("aria-label", "Sao chép lệnh tự\u00a0kiểm");
     details.insertBefore(copy, command);
 
     copy.addEventListener("click", function () {
@@ -2615,7 +2625,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var trackStatus = document.querySelector(".track-filter-status");
   var trackLedger = document.querySelector(".track-ledger");
   if (trackFilters.length && trackEntries.length) {
-    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác bỏ", sua: "đã sửa", cho: "chưa phân định" };
+    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác\u00a0bỏ", sua: "đã sửa", cho: "chưa phân\u00a0định" };
     trackFilters.forEach(function (button) {
       button.addEventListener("click", function () {
         var filter = button.dataset.trackFilter;
@@ -2626,7 +2636,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
           entry.hidden = !visible;
           if (visible) shown++;
         });
-        if (trackStatus) trackStatus.textContent = "Đang hiện " + shown + " dòng" + (filter === "all" ? "" : " · " + trackLabels[filter]);
+        if (trackStatus) trackStatus.textContent = "Đang hiện " + shown + "\u00a0dòng" + (filter === "all" ? "" : " · " + trackLabels[filter]);
         if (trackLedger) requestAnimationFrame(function () {
           trackLedger.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
         });
@@ -2661,11 +2671,11 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         card.hidden = index < 0 || index >= archiveLimit;
       });
       var shown = Math.min(matches.length, archiveLimit);
-      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + " / " + matches.length + " bài viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
+      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + "\u00a0/\u00a0" + matches.length + "\u00a0bài\u00a0viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
       if (archiveEmpty) archiveEmpty.hidden = matches.length !== 0;
       if (archiveMore) {
         archiveMore.hidden = matches.length <= archiveLimit;
-        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + " bài viết ↓";
+        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + "\u00a0bài\u00a0viết ↓";
       }
     }
     function selectArchiveFilter(filter, updateUrl) {
@@ -2716,7 +2726,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var uniEmpty = document.querySelector("[data-uni-empty]");
   if (uniClaims.length) {
     var uniActiveFilter = "all";
-    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng vững", sua: "đã sửa", bac: "đã bị bác bỏ", changed: "đã đổi trạng thái" };
+    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng\u00a0vững", sua: "đã sửa", bac: "đã bị bác\u00a0bỏ", changed: "đã đổi trạng thái" };
 
     function uniNormalise(value) {
       return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -2735,7 +2745,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
       });
       if (uniStatus) {
         var lens = uniActiveFilter === "all" ? "" : " · " + uniLabels[uniActiveFilter];
-        uniStatus.textContent = "Đang hiện " + shown + " claim" + lens + (query ? " · có từ khoá" : "");
+        uniStatus.textContent = "Đang hiện " + shown + "\u00a0claim" + lens + (query ? " · có từ khoá" : "");
       }
       if (uniEmpty) uniEmpty.hidden = shown !== 0;
     }

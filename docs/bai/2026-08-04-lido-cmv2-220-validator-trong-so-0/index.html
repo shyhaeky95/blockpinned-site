@@ -53,6 +53,8 @@ body{margin:0;color:var(--ink);font-family:var(--body);font-size:16.5px;line-hei
 .khung{max-width:1080px;margin:0 auto;padding:0 var(--gut)}
 a{color:var(--ink);text-decoration:none}
 p{margin:0 0 18px;overflow-wrap:break-word}
+h1,h2{text-wrap:balance}
+.khong-ngat,.cum-tieu-de{white-space:nowrap}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 ::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
 
@@ -1341,10 +1343,11 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
 .page-token-uni main{padding-bottom:112px}.uni-hero{padding-bottom:30px}
 .uni-hero-grid{display:grid;grid-template-columns:minmax(0,.84fr) minmax(500px,1.16fr);gap:clamp(38px,5.5vw,88px);align-items:center}
 .uni-hero-copy{min-width:0}.uni-hero .subline{max-width:58ch;margin:0 0 28px}
-.uni-title-lockup{display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
+.uni-title-lockup{container-type:inline-size;display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
 .uni-title-lockup img{width:84px;height:84px;border-radius:23px;box-shadow:0 0 0 1px var(--line),0 18px 40px -26px var(--ink)}
 .uni-title-lockup>div>span{display:block;margin:0 0 7px;font:750 10px/1 var(--mono);letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
-.uni-title-lockup h1{max-width:13ch;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1{max-width:none;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1 .cum-tieu-de{display:block}
 .uni-hero-jump{width:min(100%,420px);display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:15px 17px;border:1px solid var(--line);border-radius:13px;background:var(--card);box-shadow:var(--bong)}
 .uni-hero-jump span{font:650 9px/1.4 var(--mono);color:var(--faint)}.uni-hero-jump b{font:760 10px/1 var(--mono);color:var(--accent)}.uni-hero-jump i{font-style:normal;color:var(--accent);transition:transform .2s}
 .uni-hero-jump:hover,.uni-hero-jump:focus-visible{border-color:color-mix(in srgb,var(--accent) 38%,var(--line))}.uni-hero-jump:hover i{transform:translateY(2px)}
@@ -1520,6 +1523,12 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead::after{display:none}
   .article-priority .bai-lead .t{font-size:23px}.article-priority::after{font-size:100px;top:-.12em}
 }
+@media(max-width:600px){
+  .uni-title-lockup{grid-template-columns:1fr;gap:14px}.uni-title-lockup h1{font-size:clamp(27px,8vw,40px)}
+}
+@container (max-width:520px){
+  .uni-title-lockup h1{font-size:clamp(22px,7.5cqw,36px)}
+}
 @media(max-width:420px){
   .uni-vault-total{display:grid;grid-template-columns:auto 1fr;gap:20px}.uni-ring{width:92px;height:92px}.uni-ring::before{width:62px;height:62px}.uni-ring b{font-size:31px}
   .uni-vault::after{display:none}.uni-legend{grid-template-columns:1fr}.uni-status-bar{height:44px}.uni-ledger-head{display:grid}
@@ -1529,6 +1538,7 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
    ARTICLE ARCHIVE — preview hữu hạn ở trang chính, toàn bộ bài nằm ở đây.
    ══════════════════════════════════════════════════════════════════════════ */
 .page-article-archive main{padding-bottom:110px}.article-archive-hero{padding-bottom:25px}.article-archive-hero h1{max-width:15ch}
+.article-archive-hero h1 .nhan-manh{white-space:normal}
 .article-archive-hero .subline{max-width:67ch}.article-archive-stats{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:30px;padding:16px 0;border-block:1px solid var(--line)}
 .article-archive-stats span{display:flex;align-items:baseline;gap:7px;font:600 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .article-archive-stats span::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent)}.article-archive-stats span:nth-child(2)::before{background:var(--c-song)}.article-archive-stats span:nth-child(3)::before{background:var(--c-xn)}
@@ -1744,145 +1754,145 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <header class="dau"><div class="khung">
   <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
   <a class="ten" href="../../">Block<span>Pinned</span></a>
-  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Trang chủ</a><a href="../../bai/">Bài viết</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
+  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Trang&nbsp;chủ</a><a href="../../bai/">Bài&nbsp;viết</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
 </div></header>
 <main class="khung"><section class="hero hero-article">
-  <span class="ghost-num" aria-hidden="true">220 validator</span>
+  <span class="ghost-num" aria-hidden="true"><span class="khong-ngat">220</span> validator</span>
   <span class="hero-code" aria-hidden="true">CLAIM C1 · ĐANG ĐỨNG</span>
   <div class="article-path" aria-label="Vị trí bài viết">
-    <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều tra</a><span>/</span><b>LDO</b><i><span class="dot song"></span>vẫn đứng vững</i>
+    <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều&nbsp;tra</a><span>/</span><b>LDO</b><i><span class="dot song"></span>vẫn đứng&nbsp;vững</i>
   </div>
-  <p class="eyebrow"><span>LDO</span><span class="im">04/08/2026</span></p>
-  <h1 class="display"><span class="nhan-manh">220 validator</span> đã nạp, trọng số phí của module vẫn đúng 0,0000 ETH</h1>
-  <p class="subline">Module staking mới của Lido có 220 validator đã nạp tiền thật, nhưng số dư đi vào công thức chia phần thưởng vẫn bằng 0 — và số 0 đó đúng theo cách trường dữ liệu được thiết kế.</p>
+  <p class="eyebrow"><span>LDO</span><span class="im"><span class="khong-ngat">04/08/2026</span></span></p>
+  <h1 class="display"><span class="nhan-manh"><span class="khong-ngat">220</span> validator</span> đã nạp, trọng số phí của module vẫn đúng <span class="khong-ngat">0,0000 ETH</span></h1>
+  <p class="subline">Module staking mới của Lido có <span class="khong-ngat">220</span> validator đã nạp tiền thật, nhưng số dư đi vào công thức chia phần thưởng vẫn bằng <span class="khong-ngat">0</span> — và số <span class="khong-ngat">0</span> đó đúng theo cách trường dữ&nbsp;liệu được thiết kế.</p>
   <div class="article-verdict"><div class="heronum article-ratio article-ledger-count">
-      <p class="l">Sổ bằng chứng của bài</p>
-      <p class="v">5<em> claim</em></p>
-      <p class="d">5 vẫn đứng vững hoặc đã xác nhận</p>
+      <p class="l">Sổ bằng&nbsp;chứng của bài</p>
+      <p class="v"><span class="khong-ngat">5</span><em> claim</em></p>
+      <p class="d"><span class="khong-ngat">5</span> vẫn đứng&nbsp;vững hoặc đã xác nhận</p>
     </div><div class="case-path" role="img" aria-label="Tuyến bằng chứng: đối tượng, điều bác bỏ, trạng thái hiện tại">
-      <div class="case-step file"><span>01 · ĐỐI TƯỢNG</span><strong>LDO</strong><small>hồ sơ được ghim theo token</small></div><i aria-hidden="true">→</i>
-      <div class="case-step test"><span>02 · TỰ KIỂM</span><strong>5</strong><small>điều bác bỏ viết cùng claim</small></div><i aria-hidden="true">→</i>
-      <div class="case-step state song"><span>03 · SỔ SỐNG</span><strong>5 mốc</strong><small>lịch sử đổi trạng thái công khai</small></div>
+      <div class="case-step file"><span><span class="khong-ngat">01</span> · ĐỐI TƯỢNG</span><strong>LDO</strong><small>hồ&nbsp;sơ được ghim theo token</small></div><i aria-hidden="true">→</i>
+      <div class="case-step test"><span><span class="khong-ngat">02</span> · TỰ&nbsp;KIỂM</span><strong><span class="khong-ngat">5</span></strong><small>điều&nbsp;bác&nbsp;bỏ viết cùng claim</small></div><i aria-hidden="true">→</i>
+      <div class="case-step state song"><span><span class="khong-ngat">03</span> · SỔ SỐNG</span><strong><span class="khong-ngat">5</span> mốc</strong><small>lịch sử đổi trạng thái công khai</small></div>
     </div></div>
 
-</section><nav class="article-map" aria-label="Điều hướng trong bài"><span>Đọc theo bằng chứng</span><a href="#so-claim">Sổ claim</a><a href="#so-0-nay-phu-hop-voi-cach-truong-so-du-duoc-thiet-ke">Số 0 này phù hợp với cách trường số dư được thiết kế</a><a href="#220-validator-do-dang-nam-trong-hang-cho-kich-hoat">220 validator đó đang nằm trong hàng chờ kích hoạt</a><a href="#va-day-la-cai-bay-that-su-cua-viec-dem-validator">Và đây là cái bẫy thật sự của việc đếm validator</a></nav><section class="article-ledger" aria-labelledby="so-claim-title">
+</section><nav class="article-map" aria-label="Điều hướng trong bài"><span>Đọc theo bằng&nbsp;chứng</span><a href="#so-claim">Sổ claim</a><a href="#so-0-nay-phu-hop-voi-cach-truong-so-du-duoc-thiet-ke">Số <span class="khong-ngat">0</span> này phù hợp với cách trường số dư được thiết kế</a><a href="#220-validator-do-dang-nam-trong-hang-cho-kich-hoat"><span class="khong-ngat">220</span> validator đó đang nằm trong hàng chờ kích hoạt</a><a href="#va-day-la-cai-bay-that-su-cua-viec-dem-validator">Và đây là cái bẫy thật sự của việc đếm validator</a></nav><section class="article-ledger" aria-labelledby="so-claim-title">
 <details class="evidence case-evidence" id="so-claim">
   <summary>
-    <span class="case-ledger-title"><span>Sổ claim của bài</span><b id="so-claim-title">5 khẳng định</b><small>đổi trạng thái tại chỗ · không xoá</small></span>
+    <span class="case-ledger-title"><span>Sổ claim của bài</span><b id="so-claim-title"><span class="khong-ngat">5</span> khẳng&nbsp;định</b><small>đổi trạng thái tại chỗ · không xoá</small></span>
     <span class="case-ledger-viz">
       <span class="case-ledger-bar" role="img" aria-label="5 vẫn đứng vững"><i class="song" style="--n:5"></i></span>
-      <span class="case-ledger-legend"><i><span class="dot song"></span><b>5</b> vẫn đứng vững</i></span>
+      <span class="case-ledger-legend"><i><span class="dot song"></span><b><span class="khong-ngat">5</span></b> vẫn đứng&nbsp;vững</i></span>
     </span>
-    <span class="mo">mở 5 claim</span>
+    <span class="mo">mở <span class="khong-ngat">5 claim</span></span>
   </summary>
   <div class="trong case-ledger-body">
-    <p class="case-ledger-intro">Mỗi claim kèm điều có thể bác bỏ nó, mốc ghim và toàn bộ lịch sử đổi trạng thái.</p>
+    <p class="case-ledger-intro">Mỗi claim kèm điều có thể bác&nbsp;bỏ nó, mốc ghim và toàn bộ lịch sử đổi trạng thái.</p>
     <div class="case-claim-list"><article class="case-claim song" id="C1" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C1">C1</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Tại Ethereum block 25.680.251, số dư mà oracle báo về cho module staking thứ tư của Lido — đại lượng dùng làm trọng số chia phần thưởng giữa các module — bằng đúng 0,0000 ETH, trong khi module đó đã có 220 validator nạp tiền thật.</p>
+  <p class="case-claim-text">Tại Ethereum <span class="khong-ngat">block 25.680.251</span>, số dư mà oracle báo về cho module staking thứ tư của Lido — đại lượng dùng làm trọng số chia phần thưởng giữa các module — bằng đúng <span class="khong-ngat">0,0000 ETH</span>, trong khi module đó đã có <span class="khong-ngat">220</span> validator nạp tiền thật.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Ethereum block 25.680.251 · StakingRouter 0xfddf38947afb03c621c71b06c9c70bce73f12999 · getModuleValidatorsBalance(4) và getStakingModuleSummary(4)</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Gọi lại getModuleValidatorsBalance(4) trên StakingRouter tại đúng block 25.680.251. Trả về khác 0 thì claim này sai. Chiều thứ hai: đọc dữ liệu đầu vào của các giao dịch báo cáo oracle trong cửa sổ đó — nếu có lượt nào gửi giá trị khác 0 cho module 4 thì câu &#x27;oracle gửi 0 ở cả 10 lượt&#x27; sai. Sự kiện xảy ra SAU block 25.680.251 không bác claim này; nó chỉ làm trạng thái đổi.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Ethereum <span class="khong-ngat">block 25.680.251</span> · StakingRouter 0xfddf38947afb03c621c71b06c9c70bce73f12999 · getModuleValidatorsBalance(<span class="khong-ngat">4</span>) và getStakingModuleSummary(<span class="khong-ngat">4</span>)</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Gọi lại getModuleValidatorsBalance(<span class="khong-ngat">4</span>) trên StakingRouter tại đúng <span class="khong-ngat">block 25.680.251</span>. Trả về khác <span class="khong-ngat">0</span> thì claim này sai. Chiều thứ hai: đọc dữ&nbsp;liệu đầu vào của các giao dịch báo cáo oracle trong cửa sổ đó — nếu có lượt nào gửi giá trị khác <span class="khong-ngat">0</span> cho module <span class="khong-ngat">4</span> thì câu &#x27;oracle gửi <span class="khong-ngat">0</span> ở cả <span class="khong-ngat">10</span> lượt&#x27; sai. Sự kiện xảy ra SAU <span class="khong-ngat">block 25.680.251</span> không bác claim này; nó chỉ làm trạng thái đổi.</p>
   </div>
-  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0xbdaf4e770000000000000000000000000000000000000000000000000000000000000004" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="9" data-chu-so="4" data-don-vi="ETH" data-ghim="0">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getModuleValidatorsBalance(uint256)</code> trên <code>0xfddf3894…2999</code></div></div>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-04</span><span>Đăng. Đây là claim quyết định của bài: nó nói số 0 là KẾT QUẢ ĐÚNG của cách trường dữ liệu được định nghĩa, không phải dấu hiệu module bị bỏ qua. Bằng chứng cơ chế nằm ở chú thích trong source contract — tiền đang chờ kích hoạt bị loại khỏi số dư báo cáo — cộng với việc bốn lượt báo cáo SAU khi 220 validator đã nạp vẫn gửi 0. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></span></li></ol></details>
+  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0xbdaf4e770000000000000000000000000000000000000000000000000000000000000004" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="9" data-chu-so="4" data-don-vi="ETH" data-ghim="0">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getModuleValidatorsBalance(uint256)</code> trên <code><span class="khong-ngat">0xfddf3894…2999</span></code></div></div>
+  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-08</span>-<span class="khong-ngat">04</span></span><span>Đăng. Đây là claim quyết định của bài: nó nói số <span class="khong-ngat">0</span> là KẾT QUẢ ĐÚNG của cách trường dữ&nbsp;liệu được định nghĩa, không phải dấu hiệu module bị bỏ qua. Bằng&nbsp;chứng cơ chế nằm ở chú thích trong source contract — tiền đang chờ kích hoạt bị loại khỏi số dư báo cáo — cộng với việc bốn lượt báo cáo SAU khi <span class="khong-ngat">220</span> validator đã nạp vẫn gửi <span class="khong-ngat">0</span>. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C2" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C2">C2</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Tại Ethereum block 25.680.251, module thứ tư có 220 validator đã nạp và 3.059 key sẵn sàng nạp. Sáu ngày trước, tại block 25.637.121, hai con số đó là 0 và 0.</p>
+  <p class="case-claim-text">Tại Ethereum <span class="khong-ngat">block 25.680.251</span>, module thứ tư có <span class="khong-ngat">220</span> validator đã nạp và <span class="khong-ngat">3.059</span> key sẵn sàng nạp. Sáu ngày trước, tại <span class="khong-ngat">block 25.637.121</span>, hai con số đó là <span class="khong-ngat">0</span> và <span class="khong-ngat">0</span>.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Ethereum block 25.680.251 · getStakingModuleSummary(4) trả (exited, deposited, depositable) = (0, 220, 3.059) · mốc so sánh: block 25.637.121, đã đăng ngày 29/07/2026</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Gọi lại getStakingModuleSummary(4) tại đúng block 25.680.251. Word thứ hai khác 220 hoặc word thứ ba khác 3.059 thì claim này sai. Con số ở block 25.637.121 đã được công bố ngày 29/07 và kiểm lại được tại đúng block đó.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Ethereum <span class="khong-ngat">block 25.680.251</span> · getStakingModuleSummary(<span class="khong-ngat">4</span>) trả (exited, deposited, depositable) = (<span class="khong-ngat">0</span>, <span class="khong-ngat">220</span>, <span class="khong-ngat">3.059</span>) · mốc so sánh: <span class="khong-ngat">block 25.637.121</span>, đã đăng ngày <span class="khong-ngat">29/07/2026</span></p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Gọi lại getStakingModuleSummary(<span class="khong-ngat">4</span>) tại đúng <span class="khong-ngat">block 25.680.251</span>. Word thứ hai khác <span class="khong-ngat">220</span> hoặc word thứ ba khác <span class="khong-ngat">3.059</span> thì claim này sai. Con số ở <span class="khong-ngat">block 25.637.121</span> đã được công bố ngày <span class="khong-ngat">29/07</span> và kiểm lại được tại đúng block đó.</p>
   </div>
-  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0x07e203ac0000000000000000000000000000000000000000000000000000000000000004" data-tu="1" data-chia="" data-nhan="1" data-thap-phan="0" data-chu-so="0" data-don-vi="validator" data-ghim="220">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getStakingModuleSummary(uint256)</code> trên <code>0xfddf3894…2999</code></div></div>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-04</span><span>Đăng. Nút đo lại đọc trạng thái HIỆN TẠI, nên con số nó trả về sẽ trôi khỏi 220 khi module nhận thêm validator — đó là hành vi đúng, không phải lỗi. Con số ghim là giá trị tại block 25.680.251. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></span></li></ol></details>
+  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0x07e203ac0000000000000000000000000000000000000000000000000000000000000004" data-tu="1" data-chia="" data-nhan="1" data-thap-phan="0" data-chu-so="0" data-don-vi="validator" data-ghim="220">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getStakingModuleSummary(uint256)</code> trên <code><span class="khong-ngat">0xfddf3894…2999</span></code></div></div>
+  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-08</span>-<span class="khong-ngat">04</span></span><span>Đăng. Nút đo lại đọc trạng thái HIỆN TẠI, nên con số nó trả về sẽ trôi khỏi <span class="khong-ngat">220</span> khi module nhận thêm validator — đó là hành vi đúng, không phải lỗi. Con số ghim là giá trị tại <span class="khong-ngat">block 25.680.251</span>. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C3" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C3">C3</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Module thứ tư dùng loại credential có mức ETH tối đa 2.048 cho mỗi validator; ba module còn lại dùng loại có mức tối đa 32. Chênh lệch 64 lần này là lý do việc đếm validator không cho biết quy mô ETH của module.</p>
+  <p class="case-claim-text">Module thứ tư dùng loại credential có mức ETH tối đa <span class="khong-ngat">2.048</span> cho mỗi validator; ba module còn lại dùng loại có mức tối đa <span class="khong-ngat">32</span>. Chênh lệch <span class="khong-ngat">64 lần</span> này là lý do việc đếm validator không cho biết quy mô ETH của module.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Ethereum block 25.680.251 · StakingRouter · MAX_EFFECTIVE_BALANCE_WC_TYPE_01() = 32 ETH · MAX_EFFECTIVE_BALANCE_WC_TYPE_02() = 2.048 ETH · trường withdrawalCredentialsType trong getStakingModule(i): module 1·2·3 = 1, module 4 = 2</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Gọi hai hàm hằng trên StakingRouter tại block 25.680.251: trả về khác 32e18 và 2.048e18 wei thì claim này sai. Chiều thứ hai, độc lập: đọc trường withdrawalCredentialsType trong struct do getStakingModule(i) trả về cho từng module — nếu module 4 không mang giá trị 2, hoặc một trong ba module còn lại không mang giá trị 1, claim này sai.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Ethereum <span class="khong-ngat">block 25.680.251</span> · StakingRouter · MAX_EFFECTIVE_BALANCE_WC_TYPE_01() = <span class="khong-ngat">32 ETH</span> · MAX_EFFECTIVE_BALANCE_WC_TYPE_02() = <span class="khong-ngat">2.048 ETH</span> · trường withdrawalCredentialsType trong getStakingModule(i): module <span class="khong-ngat">1</span>·<span class="khong-ngat">2</span>·<span class="khong-ngat">3</span> = <span class="khong-ngat">1</span>, module <span class="khong-ngat">4</span> = <span class="khong-ngat">2</span></p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Gọi hai hàm hằng trên StakingRouter tại <span class="khong-ngat">block 25.680.251</span>: trả về khác 32e18 và <span class="khong-ngat">2</span>.048e18 wei thì claim này sai. Chiều thứ hai, độc lập: đọc trường withdrawalCredentialsType trong struct do getStakingModule(i) trả về cho từng module — nếu module <span class="khong-ngat">4</span> không mang giá trị <span class="khong-ngat">2</span>, hoặc một trong ba module còn lại không mang giá trị <span class="khong-ngat">1</span>, claim này sai.</p>
   </div>
-  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0x833bcd51" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="18" data-chu-so="0" data-don-vi="ETH" data-ghim="2048">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>MAX_EFFECTIVE_BALANCE_WC_TYPE_02()</code> trên <code>0xfddf3894…2999</code></div></div>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-04</span><span>Đăng. Hai hàm hằng này trả WEI, không phải gwei. Lượt tính đầu của desk chia 10^9 và in ra &#x27;32.000.000.000 ETH&#x27;; nó chỉ lộ ra vì con số vô nghĩa — nếu hàm trả gwei thật thì cùng một lỗi sẽ cho 2.048.000 và trông hoàn toàn hợp lý. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></span></li></ol></details>
+  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0x833bcd51" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="18" data-chu-so="0" data-don-vi="ETH" data-ghim="2048">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>MAX_EFFECTIVE_BALANCE_WC_TYPE_02()</code> trên <code><span class="khong-ngat">0xfddf3894…2999</span></code></div></div>
+  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-08</span>-<span class="khong-ngat">04</span></span><span>Đăng. Hai hàm hằng này trả WEI, không phải gwei. Lượt tính đầu của desk chia <span class="khong-ngat">10</span>^<span class="khong-ngat">9</span> và in ra &#x27;<span class="khong-ngat">32.000.000.000 ETH</span>&#x27;; nó chỉ lộ ra vì con số vô nghĩa — nếu hàm trả gwei thật thì cùng một lỗi sẽ cho <span class="khong-ngat">2.048.000</span> và trông hoàn toàn hợp lý. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C4" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C4">C4</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Tại consensus slot 14.917.257, hàng chờ gửi tiền của Ethereum có 39.020 lượt chở 2.521.416 ETH. Phép lọc theo credential nhận diện 20.343 lượt là Lido Core — 52,13% số lượt nhưng 25,82% lượng ETH — và cả 20.343 lượt đó đều mang đúng 32,0 ETH.</p>
+  <p class="case-claim-text">Tại consensus slot <span class="khong-ngat">14.917.257</span>, hàng chờ gửi tiền của Ethereum có <span class="khong-ngat">39.020</span> lượt chở <span class="khong-ngat">2.521.416 ETH</span>. Phép lọc theo credential nhận diện <span class="khong-ngat">20.343</span> lượt là Lido Core — <span class="khong-ngat">52,13%</span> số lượt nhưng <span class="khong-ngat">25,82%</span> lượng ETH — và cả <span class="khong-ngat">20.343</span> lượt đó đều mang đúng <span class="khong-ngat">32,0 ETH</span>.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Consensus slot 14.917.257 · 15h11 ngày 04/08/2026 (08:11Z) · lọc theo withdrawal_credentials đọc từ StakingRouter.getWithdrawalCredentials() tại Ethereum block 25.680.251, không hardcode</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Đọc lại danh sách pending_deposits của beacon state, lọc theo credential lấy từ chính contract, rồi đếm hai lần — một lần theo lượt, một lần theo ETH. Nếu tỉ lệ theo lượt và tỉ lệ theo ETH không chênh nhau khoảng gấp đôi, hoặc nếu xuất hiện lượt Lido Core mang mệnh giá khác 32,0 ETH, thì cách đọc của bài này sai. Đối chứng bắt buộc đi kèm: cùng truy vấn phải tìm được các lượt lớn hơn 32 ETH ở phần còn lại của mạng — không tìm được thì số 0 kia nói về công cụ chứ không về hệ thống.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Consensus slot <span class="khong-ngat">14.917.257</span> · 15h11 ngày <span class="khong-ngat">04/08/2026</span> (<span class="khong-ngat">08:11Z</span>) · lọc theo withdrawal_credentials đọc từ StakingRouter.getWithdrawalCredentials() tại Ethereum <span class="khong-ngat">block 25.680.251</span>, không hardcode</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Đọc lại danh sách pending_deposits của beacon state, lọc theo credential lấy từ chính contract, rồi đếm hai lần — một lần theo lượt, một lần theo ETH. Nếu tỉ lệ theo lượt và tỉ lệ theo ETH không chênh nhau khoảng gấp đôi, hoặc nếu xuất hiện lượt Lido Core mang mệnh giá khác <span class="khong-ngat">32,0 ETH</span>, thì cách đọc của bài này sai. Đối chứng bắt buộc đi kèm: cùng truy vấn phải tìm được các lượt lớn hơn <span class="khong-ngat">32 ETH</span> ở phần còn lại của mạng — không tìm được thì số <span class="khong-ngat">0</span> kia nói về công cụ chứ không về hệ thống.</p>
   </div>
-  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Số này nằm ở tầng đồng thuận, không phải trên EVM, nên nút đo lại của trang không gọi tới được. Nặng hơn: endpoint công khai dùng cho phép đo chỉ trả trạng thái HIỆN TẠI và trả lỗi khi hỏi một slot cũ, nên chính snapshot tại slot 14.917.257 không gọi lại được bằng đường đó. Ai đọc lại sẽ đọc một ảnh chụp khác của cùng hàng chờ.</p>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-04</span><span>Đăng. Hồ sơ nội bộ trước đó ghi tỉ trọng là &#x27;26,0%&#x27; nhưng trích kèm một phân số đếm LƯỢT — 26,0 là tỉ lệ theo ETH, phân số kia ra 52,3%. Hai mẫu số khác nhau ghép vào một câu; cả hai số đều đúng, chỉ phép ghép là sai. Bài tách hẳn hai đại lượng vì lý do đó. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></span></li></ol></details>
+  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Số này nằm ở tầng đồng thuận, không phải trên EVM, nên nút đo lại của trang không gọi tới được. Nặng hơn: endpoint công khai dùng cho phép đo chỉ trả trạng thái HIỆN TẠI và trả lỗi khi hỏi một slot cũ, nên chính snapshot tại slot <span class="khong-ngat">14.917.257</span> không gọi lại được bằng đường đó. Ai đọc lại sẽ đọc một ảnh chụp khác của cùng hàng chờ.</p>
+  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-08</span>-<span class="khong-ngat">04</span></span><span>Đăng. Hồ&nbsp;sơ nội bộ trước đó ghi tỉ trọng là &#x27;<span class="khong-ngat">26,0%</span>&#x27; nhưng trích kèm một phân số đếm LƯỢT — <span class="khong-ngat">26,0</span> là tỉ lệ theo ETH, phân số kia ra <span class="khong-ngat">52,3%</span>. Hai mẫu số khác nhau ghép vào một câu; cả hai số đều đúng, chỉ phép ghép là sai. Bài tách hẳn hai đại lượng vì lý do đó. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C5" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C5">C5</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG VỮNG</span>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Ngưỡng 1% tổng số dư Lido Core là 87.030,64 ETH. Với giả định validator loại mới được nạp đủ 2.048 ETH, ngưỡng đó cần 43 validator; đếm theo loại 32 ETH thì cần 2.720 — chênh khoảng 63,3 lần.</p>
+  <p class="case-claim-text">Ngưỡng <span class="khong-ngat">1%</span> tổng số dư Lido Core là <span class="khong-ngat">87.030,64 ETH</span>. Với giả định validator loại mới được nạp đủ <span class="khong-ngat">2.048 ETH</span>, ngưỡng đó cần <span class="khong-ngat">43</span> validator; đếm theo loại <span class="khong-ngat">32 ETH</span> thì cần <span class="khong-ngat">2.720</span> — chênh khoảng <span class="khong-ngat">63,3 lần</span>.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Ethereum block 25.680.251 · tổng số dư bốn module 8.703.064,3492 ETH (v1 7.820.581,5167 · CSM 722.470,1193 · SimpleDVT 160.012,7132 · module 4 0,0000)</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>Cộng số dư bốn module đọc tại block 25.680.251; nếu tổng khác 8.703.064,3492 ETH thì ngưỡng 87.030,64 sai. Chia ngưỡng cho hai mức tối đa: 87.030,64 / 2.048 = 42,50 và 87.030,64 / 32 = 2.719,71, làm tròn lên thành 43 và 2.720; ra khác hai số đó thì phép tính của bài sai. Con số 43 chỉ đúng dưới giả định nạp đủ 2.048 ETH mỗi validator — giả định này được in kèm, không giấu.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Ethereum <span class="khong-ngat">block 25.680.251</span> · tổng số dư bốn module <span class="khong-ngat">8.703.064,3492 ETH</span> (v1 <span class="khong-ngat">7.820.581,5167</span> · CSM <span class="khong-ngat">722.470,1193</span> · SimpleDVT <span class="khong-ngat">160.012,7132</span> · module <span class="khong-ngat">4</span> <span class="khong-ngat">0,0000</span>)</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Cộng số dư bốn module đọc tại <span class="khong-ngat">block 25.680.251</span>; nếu tổng khác <span class="khong-ngat">8.703.064,3492 ETH</span> thì ngưỡng <span class="khong-ngat">87.030,64</span> sai. Chia ngưỡng cho hai mức tối đa: <span class="khong-ngat">87.030,64 / 2.048</span> = <span class="khong-ngat">42,50</span> và <span class="khong-ngat">87.030,64 / 32</span> = <span class="khong-ngat">2.719,71</span>, làm tròn lên thành <span class="khong-ngat">43</span> và <span class="khong-ngat">2.720</span>; ra khác hai số đó thì phép tính của bài sai. Con số <span class="khong-ngat">43</span> chỉ đúng dưới giả định nạp đủ <span class="khong-ngat">2.048 ETH</span> mỗi validator — giả định này được in kèm, không giấu.</p>
   </div>
-  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Đây là phép chia trên TỔNG số dư của bốn module, mà nút đo lại của trang chỉ gọi được một hàm trong một lượt nên không dựng được tổng bốn module. Từng số dư thành phần đọc lại được bằng getModuleValidatorsBalance(i) cho i = 1..4 tại đúng block ghim.</p>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-04</span><span>Đăng. Con số 63,3 lần là 2.720 chia 43 = 63,256, không làm tròn thành 63 — với một kênh lấy khả năng truy ngược làm điểm tựa thì một lần làm tròn im lặng cũng là một chỗ không kiểm lại được. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></span></li></ol></details>
+  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Đây là phép chia trên TỔNG số dư của bốn module, mà nút đo lại của trang chỉ gọi được một hàm trong một lượt nên không dựng được tổng bốn module. Từng số dư thành phần đọc lại được bằng getModuleValidatorsBalance(i) cho i = <span class="khong-ngat">1</span>..<span class="khong-ngat">4</span> tại đúng block ghim.</p>
+  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-08</span>-<span class="khong-ngat">04</span></span><span>Đăng. Con số <span class="khong-ngat">63,3 lần</span> là <span class="khong-ngat">2.720</span> chia <span class="khong-ngat">43</span> = <span class="khong-ngat">63,256</span>, không làm tròn thành <span class="khong-ngat">63</span> — với một kênh lấy khả năng truy ngược làm điểm tựa thì một lần làm tròn im lặng cũng là một chỗ không kiểm lại được. <a href="https://x.com/blockpinned/status/2084586520129024148">nguồn</a></span></li></ol></details>
 </article></div>
   </div>
 </details>
 </section><section class="than article-body" id="ban-day-du">
   <div class="article-meta">
-    <span><b>GHIM</b>Ethereum block #25.680.251 · hàng chờ deposit đọc tại consensus slot 14.917.257, 15h11 ngày 04/08/2026 (08:11Z)</span>
-    <span><b>NGÀY</b>04/08/2026</span>
+    <span><b>GHIM</b>Ethereum <span class="khong-ngat">block #25.680.251</span> · hàng chờ deposit đọc tại consensus slot <span class="khong-ngat">14.917.257</span>, 15h11 ngày <span class="khong-ngat">04/08/2026</span> (<span class="khong-ngat">08:11Z</span>)</span>
+    <span><b>NGÀY</b><span class="khong-ngat">04/08/2026</span></span>
     <span class="article-meta-link"><a href="https://x.com/blockpinned/status/2084586520129024148">bản đăng trên X ↗</a></span>
   </div>
-  <p><strong>220 validator đã gửi tiền thật vào module staking mới của Lido. Số dư đi vào công thức phân bổ phần thưởng của module đó vẫn đúng 0,0000 ETH.</strong></p>
-<p>Sáu ngày trước, BlockPinned ghi nhận module này có 43 node operator, <strong>0 validator đã nạp</strong> và số dư oracle báo về là 0 ETH. Một trong hai con số đã đổi.</p>
-<p>Nếu bạn dùng riêng số dư oracle để hỏi &quot;module mới đã được dùng chưa&quot;, số 0 kia sẽ đọc thành &quot;chưa ai dùng&quot;. Chỗ sai không nằm ở số 0. Nó nằm ở việc dùng số dư oracle để kết luận module đã nhận deposit hay chưa — trong khi trường này loại tiền đang chờ kích hoạt.</p>
-<h2 id="so-0-nay-phu-hop-voi-cach-truong-so-du-duoc-thiet-ke">Số 0 này phù hợp với cách trường số dư được thiết kế</h2>
-<p>Trong công thức phân bổ phần thưởng giữa các staking module mà bài này kiểm, trọng số lấy từ <strong>số dư do oracle báo về</strong>, không lấy từ số validator. Contract không tự tính số dư ấy: oracle đọc dữ liệu ở tầng đồng thuận của Ethereum rồi đưa con số vào báo cáo on-chain. Và phần chú thích ngay tại trường dữ liệu đó trong source contract ghi rõ — tiền đang chờ kích hoạt bị loại khỏi số dư báo cáo.</p>
-<p>Trong 10 lượt báo cáo gần nhất tính tới Ethereum block <strong>25.680.251</strong>, con số oracle thật sự đưa vào cho module mới đều là <strong>0 gwei</strong>. Bốn lượt trong số đó xảy ra <strong>sau</strong> khi số validator đã nạp của module đạt 220.</p>
-<p>Nói cách khác: ETH của 220 validator đã được gửi, nhưng chưa đi vào số dư oracle. Vậy tại thời điểm đo, nó đang ở đâu?</p>
-<h2 id="220-validator-do-dang-nam-trong-hang-cho-kich-hoat">220 validator đó đang nằm trong hàng chờ kích hoạt</h2>
+  <p><strong><span class="khong-ngat">220</span> validator đã gửi tiền thật vào module staking mới của Lido. Số dư đi vào công thức phân bổ phần thưởng của module đó vẫn đúng <span class="khong-ngat">0,0000 ETH</span>.</strong></p>
+<p>Sáu ngày trước, BlockPinned ghi nhận module này có <span class="khong-ngat">43</span> node operator, <strong><span class="khong-ngat">0</span> validator đã nạp</strong> và số dư oracle báo về là <span class="khong-ngat">0 ETH</span>. Một trong hai con số đã đổi.</p>
+<p>Nếu bạn dùng riêng số dư oracle để hỏi &quot;module mới đã được dùng chưa&quot;, số <span class="khong-ngat">0</span> kia sẽ đọc thành &quot;chưa ai dùng&quot;. Chỗ sai không nằm ở số <span class="khong-ngat">0</span>. Nó nằm ở việc dùng số dư oracle để kết luận module đã nhận deposit hay chưa — trong khi trường này loại tiền đang chờ kích hoạt.</p>
+<h2 id="so-0-nay-phu-hop-voi-cach-truong-so-du-duoc-thiet-ke">Số <span class="khong-ngat">0</span> này phù hợp với cách trường số dư được thiết kế</h2>
+<p>Trong công thức phân bổ phần thưởng giữa các staking module mà bài này kiểm, trọng số lấy từ <strong>số dư do oracle báo về</strong>, không lấy từ số validator. Contract không tự tính số dư ấy: oracle đọc dữ&nbsp;liệu ở tầng đồng thuận của Ethereum rồi đưa con số vào báo cáo on-chain. Và phần chú thích ngay tại trường dữ&nbsp;liệu đó trong source contract ghi rõ — tiền đang chờ kích hoạt bị loại khỏi số dư báo cáo.</p>
+<p>Trong <span class="khong-ngat">10</span> lượt báo cáo gần nhất tính tới Ethereum block <strong><span class="khong-ngat">25.680.251</span></strong>, con số oracle thật sự đưa vào cho module mới đều là <strong><span class="khong-ngat">0</span> gwei</strong>. Bốn lượt trong số đó xảy ra <strong>sau</strong> khi số validator đã nạp của module đạt <span class="khong-ngat">220</span>.</p>
+<p>Nói cách khác: ETH của <span class="khong-ngat">220</span> validator đã được gửi, nhưng chưa đi vào số dư oracle. Vậy tại thời điểm đo, nó đang ở đâu?</p>
+<h2 id="220-validator-do-dang-nam-trong-hang-cho-kich-hoat"><span class="khong-ngat">220</span> validator đó đang nằm trong hàng chờ kích hoạt</h2>
 <p>Và quy mô của hàng chờ mới là chỗ đáng nhìn.</p>
-<p>Tại consensus slot <strong>14.917.257</strong>, lúc 15h11 ngày 04/08 (08:11Z), hàng chờ gửi tiền của Ethereum có <strong>39.020 lượt, chở 2.521.416 ETH</strong>. Trong cùng ảnh chụp, Lido Core — bốn staking module, không tính stVaults — chiếm <strong>52,13% số lượt</strong> nhưng <strong>25,82% lượng ETH</strong>.</p>
-<p>Hai con số cho cùng một chỗ đứng, chênh nhau gấp đôi. Lý do đo được: tại cùng slot đó, cả <strong>20.343 lượt</strong> mà phép lọc credential nhận diện là Lido Core đều mang đúng <strong>32,0 ETH</strong>, trong khi phần còn lại của mạng có lượt mang tới <strong>1.920 ETH</strong>.</p>
-<p>Cả hai con số đều đúng. Đại lượng cần dùng thì phụ thuộc câu hỏi: số lượt, hay lượng ETH. Hàng chờ này được xử lý theo lượng ETH — nên để đo phần tiền đang đứng chờ của bốn module Lido Core, tỉ lệ là <strong>25,82%</strong>.</p>
-<p>Hỏi về <strong>toàn bộ Lido</strong> thì con số cao hơn, và nó là mức tối thiểu: stVaults tự đặt credential riêng nên nằm ngoài phép lọc. Một stVault đã đo có 5 lượt / <strong>5.090 ETH</strong> trong hàng — cộng riêng nó đã thành <strong>26,02%</strong>, và chưa quét hết stVaults.</p>
-<p>Phép lọc có nhìn sót lượt lớn không? Tại cùng slot đó, truy vấn trả <strong>1.648</strong> lượt lớn hơn 32 ETH trên toàn hàng chờ (thường gặp 1.920 · 1.888 · 1.024 · 1.800) và <strong>0</strong> lượt như vậy trong 20.343 lượt được nhận diện là Lido Core.</p>
-<p>Hàng dài đến mức nào: cũng tại slot đó, lượt đứng đầu <strong>đã chờ 50,23 ngày</strong> và vẫn chưa tới lượt. 220 validator của module mới nằm rải trong dải vị trí <strong>38.145–38.846</strong> trên tổng 39.020 lượt.</p>
+<p>Tại consensus slot <strong><span class="khong-ngat">14.917.257</span></strong>, lúc 15h11 ngày <span class="khong-ngat">04/08</span> (<span class="khong-ngat">08:11Z</span>), hàng chờ gửi tiền của Ethereum có <strong><span class="khong-ngat">39.020</span> lượt, chở <span class="khong-ngat">2.521.416 ETH</span></strong>. Trong cùng ảnh chụp, Lido Core — bốn staking module, không tính stVaults — chiếm <strong><span class="khong-ngat">52,13%</span> số lượt</strong> nhưng <strong><span class="khong-ngat">25,82%</span> lượng ETH</strong>.</p>
+<p>Hai con số cho cùng một chỗ đứng, chênh nhau gấp đôi. Lý do đo được: tại cùng slot đó, cả <strong><span class="khong-ngat">20.343</span> lượt</strong> mà phép lọc credential nhận diện là Lido Core đều mang đúng <strong><span class="khong-ngat">32,0 ETH</span></strong>, trong khi phần còn lại của mạng có lượt mang tới <strong><span class="khong-ngat">1.920 ETH</span></strong>.</p>
+<p>Cả hai con số đều đúng. Đại lượng cần dùng thì phụ thuộc câu hỏi: số lượt, hay lượng ETH. Hàng chờ này được xử lý theo lượng ETH — nên để đo phần tiền đang đứng chờ của bốn module Lido Core, tỉ lệ là <strong><span class="khong-ngat">25,82%</span></strong>.</p>
+<p>Hỏi về <strong>toàn bộ Lido</strong> thì con số cao hơn, và nó là mức tối thiểu: stVaults tự đặt credential riêng nên nằm ngoài phép lọc. Một stVault đã đo có <span class="khong-ngat">5</span> lượt / <strong><span class="khong-ngat">5.090 ETH</span></strong> trong hàng — cộng riêng nó đã thành <strong><span class="khong-ngat">26,02%</span></strong>, và chưa quét hết stVaults.</p>
+<p>Phép lọc có nhìn sót lượt lớn không? Tại cùng slot đó, truy vấn trả <strong><span class="khong-ngat">1.648</span></strong> lượt lớn hơn <span class="khong-ngat">32 ETH</span> trên toàn hàng chờ (thường gặp <span class="khong-ngat">1.920</span> · <span class="khong-ngat">1.888</span> · <span class="khong-ngat">1.024</span> · <span class="khong-ngat">1.800</span>) và <strong><span class="khong-ngat">0</span></strong> lượt như vậy trong <span class="khong-ngat">20.343</span> lượt được nhận diện là Lido Core.</p>
+<p>Hàng dài đến mức nào: cũng tại slot đó, lượt đứng đầu <strong>đã chờ <span class="khong-ngat">50,23 ngày</span></strong> và vẫn chưa tới lượt. <span class="khong-ngat">220</span> validator của module mới nằm rải trong dải vị trí <strong><span class="khong-ngat">38.145–38.846</span></strong> trên tổng <span class="khong-ngat">39.020</span> lượt.</p>
 <h2 id="va-day-la-cai-bay-that-su-cua-viec-dem-validator">Và đây là cái bẫy thật sự của việc đếm validator</h2>
-<p><strong>Credential</strong> — đoạn dữ liệu gắn với mỗi validator, quy định nơi rút tiền và loại validator — của module mới thuộc loại khác ba module cũ. Và chính loại đó quyết định <strong>mức ETH tối đa</strong> được tính cho một validator: loại cũ <strong>32 ETH</strong>, loại module mới dùng <strong>2.048 ETH</strong>.</p>
-<p>Nghĩa là mức ETH tối đa của một validator loại mới bằng 64 validator loại cũ. Lấy số validator để suy ra lượng ETH mà không xét loại credential và mức nạp, quy mô ước tính có thể lệch tới ngần ấy lần.</p>
-<p>Cụ thể, với ngưỡng 1% tổng số dư Lido Core — <strong>87.030,64 ETH</strong>: giả định validator loại mới đều được nạp đủ 2.048 ETH thì cần <strong>43</strong> cái, thay vì <strong>2.720</strong> validator loại 32 ETH.</p>
-<p>Cùng một cột mốc, số validator cần thiết chênh khoảng <strong>63,3 lần</strong>. Khác biệt đến từ loại credential, từ mức nạp mà bạn giả định, và từ việc phải làm tròn lên số validator nguyên đủ để vượt ngưỡng.</p>
-<h2 id="tu-kiem-lai">Tự kiểm lại</h2>
-<p>Số tầng thực thi ghim tại Ethereum block <strong>25.680.251</strong>, đọc lại được bằng RPC có hỗ trợ trạng thái lịch sử tại đúng block đó:</p>
-<ul><li>số dư module mới <strong>0,0000 ETH</strong></li><li>validator đã nạp <strong>220</strong>, key sẵn sàng nạp <strong>3.059</strong></li><li>mức ETH tối đa của hai loại credential: <strong>32</strong> và <strong>2.048</strong></li></ul>
-<p>Số hàng chờ đọc tại consensus slot <strong>14.917.257</strong> lúc 15h11 ngày 04/08; endpoint dùng ở đây chỉ trả trạng thái hiện tại nên không gọi lại được chính ảnh chụp đó.</p>
-<p>Mốc BlockPinned ghi trước từ 29/07 không đổi: tới <strong>18/09</strong>, nếu số dư module mới vẫn dưới 1% tổng số dư Lido Core thì hạ mức ưu tiên theo dõi. Nó vẫn được kiểm bằng số dư module. Bài này không rút mốc đó và cũng không đoán trước kết quả. Một biến quan trọng là tốc độ hàng chờ xử lý lượng ETH đứng trước 220 validator này, trong một hàng mà lượt đứng đầu đã đợi 50,23 ngày tại ảnh chụp trên — nhưng không phải biến duy nhất: kết quả còn phụ thuộc lượng deposit mới, mức ETH thực nạp trên mỗi validator, và phân bổ giữa các module.</p>
-<p>Bài này đo tiền <strong>đang ở đâu</strong>, không đo tiền <strong>đến từ đâu</strong>. Việc 220 validator này được tạo bằng tiền mới hay bằng tiền dịch sang từ ba module cũ là một câu hỏi khác, cần phép đo khác, và không câu nào trong bài trả lời nó.</p>
-<p><em>Không phải lời khuyên đầu tư. Số tầng thực thi đo tại Ethereum block 25.680.251; số hàng chờ đọc tại consensus slot 14.917.257, lúc 15h11 ngày 04/08/2026 (08:11Z), và sẽ đổi.</em></p>
+<p><strong>Credential</strong> — đoạn dữ&nbsp;liệu gắn với mỗi validator, quy định nơi rút tiền và loại validator — của module mới thuộc loại khác ba module cũ. Và chính loại đó quyết định <strong>mức ETH tối đa</strong> được tính cho một validator: loại cũ <strong><span class="khong-ngat">32 ETH</span></strong>, loại module mới dùng <strong><span class="khong-ngat">2.048 ETH</span></strong>.</p>
+<p>Nghĩa là mức ETH tối đa của một validator loại mới bằng <span class="khong-ngat">64</span> validator loại cũ. Lấy số validator để suy ra lượng ETH mà không xét loại credential và mức nạp, quy mô ước tính có thể lệch tới ngần ấy lần.</p>
+<p>Cụ thể, với ngưỡng <span class="khong-ngat">1%</span> tổng số dư Lido Core — <strong><span class="khong-ngat">87.030,64 ETH</span></strong>: giả định validator loại mới đều được nạp đủ <span class="khong-ngat">2.048 ETH</span> thì cần <strong><span class="khong-ngat">43</span></strong> cái, thay vì <strong><span class="khong-ngat">2.720</span></strong> validator loại <span class="khong-ngat">32 ETH</span>.</p>
+<p>Cùng một cột mốc, số validator cần thiết chênh khoảng <strong><span class="khong-ngat">63,3 lần</span></strong>. Khác biệt đến từ loại credential, từ mức nạp mà bạn giả định, và từ việc phải làm tròn lên số validator nguyên đủ để vượt ngưỡng.</p>
+<h2 id="tu-kiem-lai">Tự&nbsp;kiểm lại</h2>
+<p>Số tầng thực thi ghim tại Ethereum block <strong><span class="khong-ngat">25.680.251</span></strong>, đọc lại được bằng RPC có hỗ trợ trạng thái lịch sử tại đúng block đó:</p>
+<ul><li>số dư module mới <strong><span class="khong-ngat">0,0000 ETH</span></strong></li><li>validator đã nạp <strong><span class="khong-ngat">220</span></strong>, key sẵn sàng nạp <strong><span class="khong-ngat">3.059</span></strong></li><li>mức ETH tối đa của hai loại credential: <strong><span class="khong-ngat">32</span></strong> và <strong><span class="khong-ngat">2.048</span></strong></li></ul>
+<p>Số hàng chờ đọc tại consensus slot <strong><span class="khong-ngat">14.917.257</span></strong> lúc 15h11 ngày <span class="khong-ngat">04/08</span>; endpoint dùng ở đây chỉ trả trạng thái hiện tại nên không gọi lại được chính ảnh chụp đó.</p>
+<p>Mốc BlockPinned ghi&nbsp;trước từ <span class="khong-ngat">29/07</span> không đổi: tới <strong><span class="khong-ngat">18/09</span></strong>, nếu số dư module mới vẫn dưới <span class="khong-ngat">1%</span> tổng số dư Lido Core thì hạ mức ưu tiên theo dõi. Nó vẫn được kiểm bằng số dư module. Bài này không rút mốc đó và cũng không đoán trước kết quả. Một biến quan trọng là tốc độ hàng chờ xử lý lượng ETH đứng trước <span class="khong-ngat">220</span> validator này, trong một hàng mà lượt đứng đầu đã đợi <span class="khong-ngat">50,23 ngày</span> tại ảnh chụp trên — nhưng không phải biến duy nhất: kết quả còn phụ thuộc lượng deposit mới, mức ETH thực nạp trên mỗi validator, và phân bổ giữa các module.</p>
+<p>Bài này đo tiền <strong>đang ở đâu</strong>, không đo tiền <strong>đến từ đâu</strong>. Việc <span class="khong-ngat">220</span> validator này được tạo bằng tiền mới hay bằng tiền dịch sang từ ba module cũ là một câu hỏi khác, cần phép đo khác, và không câu nào trong bài trả lời nó.</p>
+<p><em>Không phải lời khuyên đầu tư. Số tầng thực thi đo tại Ethereum <span class="khong-ngat">block 25.680.251</span>; số hàng chờ đọc tại consensus slot <span class="khong-ngat">14.917.257</span>, lúc 15h11 ngày <span class="khong-ngat">04/08/2026</span> (<span class="khong-ngat">08:11Z</span>), và sẽ đổi.</em></p>
 </section></main>
 <div id="ch-tip"></div>
 <footer><div class="khung"><p>Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá. Không phải lời khuyên đầu tư. · <a href="https://x.com/blockpinned">@blockpinned</a></p></div></footer>
@@ -1982,12 +1992,12 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var quickRoot = quickHome ? quickHome.href : new URL(".", location.href).href;
   function quickHref(path) { return new URL(path, quickRoot).href; }
   var quickRoutes = [
-    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
-    { href: quickHref("bai/"), code: "01", kind: "Điều tra", title: "Tất cả bài viết", copy: "Tìm, lọc token và mở toàn bộ bài điều tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
-    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ sơ", tags: "token directory coverage logo", tone: "token" },
-    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
-    { href: quickHref("facts/"), code: "03", kind: "Tự kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
-    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
+    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang\u00a0chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
+    { href: quickHref("bai/"), code: "01", kind: "Điều\u00a0tra", title: "Tất cả bài\u00a0viết", copy: "Tìm, lọc token và mở toàn bộ bài\u00a0điều\u00a0tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
+    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ\u00a0sơ", tags: "token directory coverage logo", tone: "token" },
+    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ\u00a0sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
+    { href: quickHref("facts/"), code: "03", kind: "Tự\u00a0kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
+    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi\u00a0trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
     { href: quickHref("du-lieu/"), code: "05", kind: "Hiện vật", title: "Dữ liệu thô", copy: "JSON, SHA-256 và lệnh tải để tự đếm lại", tags: "du lieu data json hash sha curl hien vat", tone: "data" }
   ];
   var quickHost = themeButton && themeButton.parentNode;
@@ -2055,8 +2065,8 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
           + '<span class="quick-find-copy"><small>' + route.kind + '</small><b>' + route.title + '</b><em>' + route.copy + '</em></span>'
           + (here ? '<span class="quick-find-here">Đang xem</span>' : '<span class="quick-find-go" aria-hidden="true">↗</span>')
           + '</a>';
-      }).join("") : '<p class="quick-find-empty"><b>Không có đích phù hợp.</b><span>Thử “token”, “fact”, “tự kiểm” hoặc “track”.</span></p>';
-      quickCount.textContent = (quickVisible.length < 10 ? "0" : "") + quickVisible.length + " đích";
+      }).join("") : '<p class="quick-find-empty"><b>Không có đích phù hợp.</b><span>Thử “token”, “fact”, “tự\u00a0kiểm” hoặc “track”.</span></p>';
+      quickCount.textContent = (quickVisible.length < 10 ? "0" : "") + quickVisible.length + "\u00a0đích";
       paintQuickSelection();
     }
     function openQuickFind() {
@@ -2403,7 +2413,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         card.hidden = !visible;
         if (visible) shown++;
       });
-      if (tokenFilterStatus) tokenFilterStatus.textContent = "Đang hiện " + shown + " token" + (label ? " · " + label : "");
+      if (tokenFilterStatus) tokenFilterStatus.textContent = "Đang hiện " + shown + "\u00a0token" + (label ? " · " + label : "");
     }
     tokenFilterButtons.forEach(function (button) {
       button.addEventListener("click", function () {
@@ -2505,7 +2515,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     copyPlainText(url).then(function (copied) {
       button.classList.toggle("da-chep", copied);
       button.querySelector("span").textContent = copied ? "Đã sao chép ✓" : "Hãy sao chép thủ công";
-      button.setAttribute("aria-label", copied ? "Đã sao chép link bằng chứng" : "Không thể tự sao chép link bằng chứng");
+      button.setAttribute("aria-label", copied ? "Đã sao chép link bằng\u00a0chứng" : "Không thể tự sao chép link bằng\u00a0chứng");
       setTimeout(function () {
         button.classList.remove("da-chep");
         button.querySelector("span").textContent = idleLabel;
@@ -2594,7 +2604,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     copy.type = "button";
     copy.className = "command-copy";
     copy.textContent = "Sao chép lệnh";
-    copy.setAttribute("aria-label", "Sao chép lệnh tự kiểm");
+    copy.setAttribute("aria-label", "Sao chép lệnh tự\u00a0kiểm");
     details.insertBefore(copy, command);
 
     copy.addEventListener("click", function () {
@@ -2615,7 +2625,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var trackStatus = document.querySelector(".track-filter-status");
   var trackLedger = document.querySelector(".track-ledger");
   if (trackFilters.length && trackEntries.length) {
-    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác bỏ", sua: "đã sửa", cho: "chưa phân định" };
+    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác\u00a0bỏ", sua: "đã sửa", cho: "chưa phân\u00a0định" };
     trackFilters.forEach(function (button) {
       button.addEventListener("click", function () {
         var filter = button.dataset.trackFilter;
@@ -2626,7 +2636,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
           entry.hidden = !visible;
           if (visible) shown++;
         });
-        if (trackStatus) trackStatus.textContent = "Đang hiện " + shown + " dòng" + (filter === "all" ? "" : " · " + trackLabels[filter]);
+        if (trackStatus) trackStatus.textContent = "Đang hiện " + shown + "\u00a0dòng" + (filter === "all" ? "" : " · " + trackLabels[filter]);
         if (trackLedger) requestAnimationFrame(function () {
           trackLedger.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
         });
@@ -2661,11 +2671,11 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         card.hidden = index < 0 || index >= archiveLimit;
       });
       var shown = Math.min(matches.length, archiveLimit);
-      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + " / " + matches.length + " bài viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
+      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + "\u00a0/\u00a0" + matches.length + "\u00a0bài\u00a0viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
       if (archiveEmpty) archiveEmpty.hidden = matches.length !== 0;
       if (archiveMore) {
         archiveMore.hidden = matches.length <= archiveLimit;
-        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + " bài viết ↓";
+        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + "\u00a0bài\u00a0viết ↓";
       }
     }
     function selectArchiveFilter(filter, updateUrl) {
@@ -2716,7 +2726,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var uniEmpty = document.querySelector("[data-uni-empty]");
   if (uniClaims.length) {
     var uniActiveFilter = "all";
-    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng vững", sua: "đã sửa", bac: "đã bị bác bỏ", changed: "đã đổi trạng thái" };
+    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng\u00a0vững", sua: "đã sửa", bac: "đã bị bác\u00a0bỏ", changed: "đã đổi trạng thái" };
 
     function uniNormalise(value) {
       return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -2735,7 +2745,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
       });
       if (uniStatus) {
         var lens = uniActiveFilter === "all" ? "" : " · " + uniLabels[uniActiveFilter];
-        uniStatus.textContent = "Đang hiện " + shown + " claim" + lens + (query ? " · có từ khoá" : "");
+        uniStatus.textContent = "Đang hiện " + shown + "\u00a0claim" + lens + (query ? " · có từ khoá" : "");
       }
       if (uniEmpty) uniEmpty.hidden = shown !== 0;
     }

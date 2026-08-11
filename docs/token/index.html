@@ -53,6 +53,8 @@ body{margin:0;color:var(--ink);font-family:var(--body);font-size:16.5px;line-hei
 .khung{max-width:1080px;margin:0 auto;padding:0 var(--gut)}
 a{color:var(--ink);text-decoration:none}
 p{margin:0 0 18px;overflow-wrap:break-word}
+h1,h2{text-wrap:balance}
+.khong-ngat,.cum-tieu-de{white-space:nowrap}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 ::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
 
@@ -1341,10 +1343,11 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
 .page-token-uni main{padding-bottom:112px}.uni-hero{padding-bottom:30px}
 .uni-hero-grid{display:grid;grid-template-columns:minmax(0,.84fr) minmax(500px,1.16fr);gap:clamp(38px,5.5vw,88px);align-items:center}
 .uni-hero-copy{min-width:0}.uni-hero .subline{max-width:58ch;margin:0 0 28px}
-.uni-title-lockup{display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
+.uni-title-lockup{container-type:inline-size;display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
 .uni-title-lockup img{width:84px;height:84px;border-radius:23px;box-shadow:0 0 0 1px var(--line),0 18px 40px -26px var(--ink)}
 .uni-title-lockup>div>span{display:block;margin:0 0 7px;font:750 10px/1 var(--mono);letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
-.uni-title-lockup h1{max-width:13ch;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1{max-width:none;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1 .cum-tieu-de{display:block}
 .uni-hero-jump{width:min(100%,420px);display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:15px 17px;border:1px solid var(--line);border-radius:13px;background:var(--card);box-shadow:var(--bong)}
 .uni-hero-jump span{font:650 9px/1.4 var(--mono);color:var(--faint)}.uni-hero-jump b{font:760 10px/1 var(--mono);color:var(--accent)}.uni-hero-jump i{font-style:normal;color:var(--accent);transition:transform .2s}
 .uni-hero-jump:hover,.uni-hero-jump:focus-visible{border-color:color-mix(in srgb,var(--accent) 38%,var(--line))}.uni-hero-jump:hover i{transform:translateY(2px)}
@@ -1520,6 +1523,12 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead::after{display:none}
   .article-priority .bai-lead .t{font-size:23px}.article-priority::after{font-size:100px;top:-.12em}
 }
+@media(max-width:600px){
+  .uni-title-lockup{grid-template-columns:1fr;gap:14px}.uni-title-lockup h1{font-size:clamp(27px,8vw,40px)}
+}
+@container (max-width:520px){
+  .uni-title-lockup h1{font-size:clamp(22px,7.5cqw,36px)}
+}
 @media(max-width:420px){
   .uni-vault-total{display:grid;grid-template-columns:auto 1fr;gap:20px}.uni-ring{width:92px;height:92px}.uni-ring::before{width:62px;height:62px}.uni-ring b{font-size:31px}
   .uni-vault::after{display:none}.uni-legend{grid-template-columns:1fr}.uni-status-bar{height:44px}.uni-ledger-head{display:grid}
@@ -1529,6 +1538,7 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
    ARTICLE ARCHIVE — preview hữu hạn ở trang chính, toàn bộ bài nằm ở đây.
    ══════════════════════════════════════════════════════════════════════════ */
 .page-article-archive main{padding-bottom:110px}.article-archive-hero{padding-bottom:25px}.article-archive-hero h1{max-width:15ch}
+.article-archive-hero h1 .nhan-manh{white-space:normal}
 .article-archive-hero .subline{max-width:67ch}.article-archive-stats{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:30px;padding:16px 0;border-block:1px solid var(--line)}
 .article-archive-stats span{display:flex;align-items:baseline;gap:7px;font:600 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .article-archive-stats span::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent)}.article-archive-stats span:nth-child(2)::before{background:var(--c-song)}.article-archive-stats span:nth-child(3)::before{background:var(--c-xn)}
@@ -1744,33 +1754,33 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <header class="dau"><div class="khung">
   <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
   <a class="ten" href="../">Block<span>Pinned</span></a>
-  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../">Trang chủ</a><a href="../bai/">Bài viết</a><a href="../token/" class="tai">Token</a><a href="../track-record/">Track record</a><a href="../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
+  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../">Trang&nbsp;chủ</a><a href="../bai/">Bài&nbsp;viết</a><a href="../token/" class="tai">Token</a><a href="../track-record/">Track record</a><a href="../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
 </div></header>
 <main class="khung"><section class="hero token-index-hero">
-  <span class="ghost-num" aria-hidden="true">05</span>
+  <span class="ghost-num" aria-hidden="true"><span class="khong-ngat">05</span></span>
   <span class="hero-code" aria-hidden="true">OBJECT INDEX · COVERAGE MAP</span>
-  <p class="eyebrow"><span>Hồ sơ theo đối tượng</span><span class="im">độ phủ nhìn được · trạng thái không bị giấu</span></p>
+  <p class="eyebrow"><span>Hồ&nbsp;sơ theo đối tượng</span><span class="im">độ phủ nhìn được · trạng thái không bị giấu</span></p>
   <h1 class="display">BlockPinned đã đo được gì, <span class="nhan-manh">xếp theo token.</span></h1>
-  <p class="subline">5 token · 11 bài · 50 khẳng định. Token nào đủ <b>3 bài</b> thì có một trang gom mọi câu về nó — mỗi câu giữ nguyên trạng thái hiện tại, kể cả những câu đã đổ.</p>
+  <p class="subline"><span class="khong-ngat">5</span> token · <span class="khong-ngat">11 bài</span> · <span class="khong-ngat">50</span> khẳng&nbsp;định. Token nào đủ <b><span class="khong-ngat">3 bài</span></b> thì có một trang gom mọi câu về nó — mỗi câu giữ nguyên trạng thái hiện tại, kể cả những câu đã đổ.</p>
 </section>
 <nav class="token-switcher" aria-label="Lọc nhanh theo token">
-  <span class="token-switcher-label">Chọn đối tượng</span><button type="button" data-token-tag="all" aria-pressed="true"><span class="token-logo token-logo-all" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="token-switch-copy"><b>Tất cả</b><small>50 claim</small></span></button><button type="button" data-token-tag="uni" aria-pressed="false"><span class="token-logo"><img src="../anh/token-uni.png" width="32" height="32" alt="" decoding="async"></span><span class="token-switch-copy"><b>UNI</b><small>24 claim</small></span></button><button type="button" data-token-tag="ldo" aria-pressed="false"><span class="token-logo"><img src="../anh/token-ldo.png" width="32" height="32" alt="" decoding="async"></span><span class="token-switch-copy"><b>LDO</b><small>8 claim</small></span></button><button type="button" data-token-tag="hype" aria-pressed="false"><span class="token-logo"><img src="../anh/token-hype.png" width="32" height="32" alt="" decoding="async"></span><span class="token-switch-copy"><b>HYPE</b><small>7 claim</small></span></button><button type="button" data-token-tag="cake" aria-pressed="false"><span class="token-logo"><img src="../anh/token-cake.png" width="32" height="32" alt="" decoding="async"></span><span class="token-switch-copy"><b>CAKE</b><small>6 claim</small></span></button><button type="button" data-token-tag="pendle" aria-pressed="false"><span class="token-logo"><img src="../anh/token-pendle.png" width="32" height="32" alt="" decoding="async"></span><span class="token-switch-copy"><b>PENDLE</b><small>5 claim</small></span></button>
+  <span class="token-switcher-label">Chọn đối tượng</span><button type="button" data-token-tag="all" aria-pressed="true"><span class="token-logo token-logo-all" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="token-switch-copy"><b>Tất cả</b><small><span class="khong-ngat">50 claim</span></small></span></button><button type="button" data-token-tag="uni" aria-pressed="false"><span class="token-logo"><img src="../anh/token-uni.png" width="32" height="32" alt="" decoding="async"></span><span class="token-switch-copy"><b>UNI</b><small><span class="khong-ngat">24 claim</span></small></span></button><button type="button" data-token-tag="ldo" aria-pressed="false"><span class="token-logo"><img src="../anh/token-ldo.png" width="32" height="32" alt="" decoding="async"></span><span class="token-switch-copy"><b>LDO</b><small><span class="khong-ngat">8 claim</span></small></span></button><button type="button" data-token-tag="hype" aria-pressed="false"><span class="token-logo"><img src="../anh/token-hype.png" width="32" height="32" alt="" decoding="async"></span><span class="token-switch-copy"><b>HYPE</b><small><span class="khong-ngat">7 claim</span></small></span></button><button type="button" data-token-tag="cake" aria-pressed="false"><span class="token-logo"><img src="../anh/token-cake.png" width="32" height="32" alt="" decoding="async"></span><span class="token-switch-copy"><b>CAKE</b><small><span class="khong-ngat">6 claim</span></small></span></button><button type="button" data-token-tag="pendle" aria-pressed="false"><span class="token-logo"><img src="../anh/token-pendle.png" width="32" height="32" alt="" decoding="async"></span><span class="token-switch-copy"><b>PENDLE</b><small><span class="khong-ngat">5 claim</span></small></span></button>
 </nav>
 <div class="token-overview">
-  <div class="token-overview-head"><span><b>50</b><small>khẳng định, chia theo 5 token</small></span><i>độ rộng = số claim</i></div>
-  <div class="token-scale" role="img" aria-label="Phân bổ 50 khẳng định: UNI 24, LDO 8, HYPE 7, CAKE 6, PENDLE 5"><span class="uni" style="--claims:24"><b>UNI</b><i>24</i></span><span class="ldo" style="--claims:8"><b>LDO</b><i>8</i></span><span class="hype" style="--claims:7"><b>HYPE</b><i>7</i></span><span class="cake" style="--claims:6"><b>CAKE</b><i>6</i></span><span class="pendle" style="--claims:5"><b>PENDLE</b><i>5</i></span></div>
+  <div class="token-overview-head"><span><b><span class="khong-ngat">50</span></b><small>khẳng&nbsp;định, chia theo <span class="khong-ngat">5</span> token</small></span><i>độ rộng = số claim</i></div>
+  <div class="token-scale" role="img" aria-label="Phân bổ 50 khẳng định: UNI 24, LDO 8, HYPE 7, CAKE 6, PENDLE 5"><span class="uni" style="--claims:24"><b>UNI</b><i><span class="khong-ngat">24</span></i></span><span class="ldo" style="--claims:8"><b>LDO</b><i><span class="khong-ngat">8</span></i></span><span class="hype" style="--claims:7"><b>HYPE</b><i><span class="khong-ngat">7</span></i></span><span class="cake" style="--claims:6"><b>CAKE</b><i><span class="khong-ngat">6</span></i></span><span class="pendle" style="--claims:5"><b>PENDLE</b><i><span class="khong-ngat">5</span></i></span></div>
 </div>
 <section class="token-directory" aria-labelledby="token-directory-title">
   <div class="token-directory-head">
-    <div><p class="section-code">OBJECT COVERAGE</p><h2 id="token-directory-title">Hồ sơ nào đã mở, hồ sơ nào đang tích lũy</h2></div>
+    <div><p class="section-code">OBJECT COVERAGE</p><h2 id="token-directory-title">Hồ&nbsp;sơ nào đã mở, hồ&nbsp;sơ nào đang tích lũy</h2></div>
     <div class="token-filters" role="group" aria-label="Lọc token theo trạng thái hồ sơ">
-      <button type="button" data-token-filter="all" aria-pressed="true">Tất cả <b>5</b></button>
-      <button type="button" data-token-filter="open" aria-pressed="false">Đã mở hồ sơ <b>1</b></button>
-      <button type="button" data-token-filter="building" aria-pressed="false">Đang tích lũy <b>4</b></button>
+      <button type="button" data-token-filter="all" aria-pressed="true">Tất cả <b><span class="khong-ngat">5</span></b></button>
+      <button type="button" data-token-filter="open" aria-pressed="false">Đã mở hồ&nbsp;sơ <b><span class="khong-ngat">1</span></b></button>
+      <button type="button" data-token-filter="building" aria-pressed="false">Đang tích lũy <b><span class="khong-ngat">4</span></b></button>
     </div>
   </div>
-  <p class="token-filter-status" aria-live="polite">Đang hiện 5 token</p>
-  <div class="token-grid" id="token-grid"><a class="token-card token-card-featured" data-token-card data-token="uni" data-profile="open" data-claim-ghost="24" data-spotlight href="uni/"><span class="token-card-no">01</span><span class="token-card-state open"><i></i>Hồ sơ đã mở</span><span class="token-symbol">UNI</span><strong>Uniswap</strong><span class="token-count"><b>5</b> bài<i></i><b>24</b> khẳng định</span><span class="token-status-bar" aria-label="1 xác nhận, 17 vẫn đứng vững, 4 đã sửa, 2 đã bị bác bỏ"><i class="xac" style="--n:1"></i><i class="song" style="--n:17"></i><i class="sua" style="--n:4"></i><i class="bac" style="--n:2"></i></span><span class="token-threshold"><i>Độ phủ hồ sơ</i><b><span></span><span></span><span></span> 5/3 bài</b></span><span class="token-card-copy">Hồ sơ đã mở — mọi khẳng định về Uniswap nằm trên một trang, mỗi khẳng định giữ mốc block đã đo.</span><span class="token-card-go">Mở hồ sơ<i>→</i></span></a><a class="token-card" data-token-card data-token="ldo" data-profile="building" data-claim-ghost="08" data-spotlight href="../bai/2026-08-04-lido-cmv2-220-validator-trong-so-0/"><span class="token-card-no">02</span><span class="token-card-state"><i></i>Còn 1 bài</span><span class="token-symbol">LDO</span><strong>Lido</strong><span class="token-count"><b>2</b> bài<i></i><b>8</b> khẳng định</span><span class="token-status-bar" aria-label="8 vẫn đứng vững"><i class="song" style="--n:8"></i></span><span class="token-threshold"><i>Độ phủ hồ sơ</i><b><span></span><span></span><span class="empty"></span> 2/3 bài</b></span><span class="token-card-copy">Hồ sơ đang tích lũy — vào bài mới nhất trong lúc các phép đo tiếp tục được bổ sung.</span><span class="token-card-go">Mở bài mới nhất<i>→</i></span></a><a class="token-card" data-token-card data-token="hype" data-profile="building" data-claim-ghost="07" data-spotlight href="../bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/"><span class="token-card-no">03</span><span class="token-card-state"><i></i>Còn 1 bài</span><span class="token-symbol">HYPE</span><strong>Hyperliquid</strong><span class="token-count"><b>2</b> bài<i></i><b>7</b> khẳng định</span><span class="token-status-bar" aria-label="7 vẫn đứng vững"><i class="song" style="--n:7"></i></span><span class="token-threshold"><i>Độ phủ hồ sơ</i><b><span></span><span></span><span class="empty"></span> 2/3 bài</b></span><span class="token-card-copy">Hồ sơ đang tích lũy — vào bài mới nhất trong lúc các phép đo tiếp tục được bổ sung.</span><span class="token-card-go">Mở bài mới nhất<i>→</i></span></a><a class="token-card" data-token-card data-token="cake" data-profile="building" data-claim-ghost="06" data-spotlight href="../bai/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/"><span class="token-card-no">04</span><span class="token-card-state"><i></i>Còn 2 bài</span><span class="token-symbol">CAKE</span><strong>PancakeSwap</strong><span class="token-count"><b>1</b> bài<i></i><b>6</b> khẳng định</span><span class="token-status-bar" aria-label="6 vẫn đứng vững"><i class="song" style="--n:6"></i></span><span class="token-threshold"><i>Độ phủ hồ sơ</i><b><span></span><span class="empty"></span><span class="empty"></span> 1/3 bài</b></span><span class="token-card-copy">Hồ sơ đang tích lũy — vào bài mới nhất trong lúc các phép đo tiếp tục được bổ sung.</span><span class="token-card-go">Mở bài mới nhất<i>→</i></span></a><a class="token-card" data-token-card data-token="pendle" data-profile="building" data-claim-ghost="05" data-spotlight href="../bai/2026-07-31-pendle-buyback-cot-bang-0/"><span class="token-card-no">05</span><span class="token-card-state"><i></i>Còn 2 bài</span><span class="token-symbol">PENDLE</span><strong>Pendle</strong><span class="token-count"><b>1</b> bài<i></i><b>5</b> khẳng định</span><span class="token-status-bar" aria-label="1 xác nhận, 4 vẫn đứng vững"><i class="xac" style="--n:1"></i><i class="song" style="--n:4"></i></span><span class="token-threshold"><i>Độ phủ hồ sơ</i><b><span></span><span class="empty"></span><span class="empty"></span> 1/3 bài</b></span><span class="token-card-copy">Hồ sơ đang tích lũy — vào bài mới nhất trong lúc các phép đo tiếp tục được bổ sung.</span><span class="token-card-go">Mở bài mới nhất<i>→</i></span></a></div>
+  <p class="token-filter-status" aria-live="polite">Đang hiện <span class="khong-ngat">5</span> token</p>
+  <div class="token-grid" id="token-grid"><a class="token-card token-card-featured" data-token-card data-token="uni" data-profile="open" data-claim-ghost="24" data-spotlight href="uni/"><span class="token-card-no"><span class="khong-ngat">01</span></span><span class="token-card-state open"><i></i>Hồ&nbsp;sơ đã mở</span><span class="token-symbol">UNI</span><strong>Uniswap</strong><span class="token-count"><b><span class="khong-ngat">5</span></b> bài<i></i><b><span class="khong-ngat">24</span></b> khẳng&nbsp;định</span><span class="token-status-bar" aria-label="1 xác nhận, 17 vẫn đứng vững, 4 đã sửa, 2 đã bị bác bỏ"><i class="xac" style="--n:1"></i><i class="song" style="--n:17"></i><i class="sua" style="--n:4"></i><i class="bac" style="--n:2"></i></span><span class="token-threshold"><i>Độ phủ hồ&nbsp;sơ</i><b><span></span><span></span><span></span> <span class="khong-ngat">5/3 bài</span></b></span><span class="token-card-copy">Hồ&nbsp;sơ đã mở — mọi khẳng&nbsp;định về Uniswap nằm trên một trang, mỗi khẳng&nbsp;định giữ mốc block đã đo.</span><span class="token-card-go">Mở hồ&nbsp;sơ<i>→</i></span></a><a class="token-card" data-token-card data-token="ldo" data-profile="building" data-claim-ghost="08" data-spotlight href="../bai/2026-08-04-lido-cmv2-220-validator-trong-so-0/"><span class="token-card-no"><span class="khong-ngat">02</span></span><span class="token-card-state"><i></i>Còn <span class="khong-ngat">1 bài</span></span><span class="token-symbol">LDO</span><strong>Lido</strong><span class="token-count"><b><span class="khong-ngat">2</span></b> bài<i></i><b><span class="khong-ngat">8</span></b> khẳng&nbsp;định</span><span class="token-status-bar" aria-label="8 vẫn đứng vững"><i class="song" style="--n:8"></i></span><span class="token-threshold"><i>Độ phủ hồ&nbsp;sơ</i><b><span></span><span></span><span class="empty"></span> <span class="khong-ngat">2/3 bài</span></b></span><span class="token-card-copy">Hồ&nbsp;sơ đang tích lũy — vào bài mới nhất trong lúc các phép đo tiếp tục được bổ sung.</span><span class="token-card-go">Mở bài mới nhất<i>→</i></span></a><a class="token-card" data-token-card data-token="hype" data-profile="building" data-claim-ghost="07" data-spotlight href="../bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/"><span class="token-card-no"><span class="khong-ngat">03</span></span><span class="token-card-state"><i></i>Còn <span class="khong-ngat">1 bài</span></span><span class="token-symbol">HYPE</span><strong>Hyperliquid</strong><span class="token-count"><b><span class="khong-ngat">2</span></b> bài<i></i><b><span class="khong-ngat">7</span></b> khẳng&nbsp;định</span><span class="token-status-bar" aria-label="7 vẫn đứng vững"><i class="song" style="--n:7"></i></span><span class="token-threshold"><i>Độ phủ hồ&nbsp;sơ</i><b><span></span><span></span><span class="empty"></span> <span class="khong-ngat">2/3 bài</span></b></span><span class="token-card-copy">Hồ&nbsp;sơ đang tích lũy — vào bài mới nhất trong lúc các phép đo tiếp tục được bổ sung.</span><span class="token-card-go">Mở bài mới nhất<i>→</i></span></a><a class="token-card" data-token-card data-token="cake" data-profile="building" data-claim-ghost="06" data-spotlight href="../bai/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/"><span class="token-card-no"><span class="khong-ngat">04</span></span><span class="token-card-state"><i></i>Còn <span class="khong-ngat">2 bài</span></span><span class="token-symbol">CAKE</span><strong>PancakeSwap</strong><span class="token-count"><b><span class="khong-ngat">1</span></b> bài<i></i><b><span class="khong-ngat">6</span></b> khẳng&nbsp;định</span><span class="token-status-bar" aria-label="6 vẫn đứng vững"><i class="song" style="--n:6"></i></span><span class="token-threshold"><i>Độ phủ hồ&nbsp;sơ</i><b><span></span><span class="empty"></span><span class="empty"></span> <span class="khong-ngat">1/3 bài</span></b></span><span class="token-card-copy">Hồ&nbsp;sơ đang tích lũy — vào bài mới nhất trong lúc các phép đo tiếp tục được bổ sung.</span><span class="token-card-go">Mở bài mới nhất<i>→</i></span></a><a class="token-card" data-token-card data-token="pendle" data-profile="building" data-claim-ghost="05" data-spotlight href="../bai/2026-07-31-pendle-buyback-cot-bang-0/"><span class="token-card-no"><span class="khong-ngat">05</span></span><span class="token-card-state"><i></i>Còn <span class="khong-ngat">2 bài</span></span><span class="token-symbol">PENDLE</span><strong>Pendle</strong><span class="token-count"><b><span class="khong-ngat">1</span></b> bài<i></i><b><span class="khong-ngat">5</span></b> khẳng&nbsp;định</span><span class="token-status-bar" aria-label="1 xác nhận, 4 vẫn đứng vững"><i class="xac" style="--n:1"></i><i class="song" style="--n:4"></i></span><span class="token-threshold"><i>Độ phủ hồ&nbsp;sơ</i><b><span></span><span class="empty"></span><span class="empty"></span> <span class="khong-ngat">1/3 bài</span></b></span><span class="token-card-copy">Hồ&nbsp;sơ đang tích lũy — vào bài mới nhất trong lúc các phép đo tiếp tục được bổ sung.</span><span class="token-card-go">Mở bài mới nhất<i>→</i></span></a></div>
 </section></main>
 <div id="ch-tip"></div>
 <footer><div class="khung"><p>Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá. Không phải lời khuyên đầu tư. · <a href="https://x.com/blockpinned">@blockpinned</a></p></div></footer>
@@ -1870,12 +1880,12 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var quickRoot = quickHome ? quickHome.href : new URL(".", location.href).href;
   function quickHref(path) { return new URL(path, quickRoot).href; }
   var quickRoutes = [
-    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
-    { href: quickHref("bai/"), code: "01", kind: "Điều tra", title: "Tất cả bài viết", copy: "Tìm, lọc token và mở toàn bộ bài điều tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
-    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ sơ", tags: "token directory coverage logo", tone: "token" },
-    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
-    { href: quickHref("facts/"), code: "03", kind: "Tự kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
-    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
+    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang\u00a0chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
+    { href: quickHref("bai/"), code: "01", kind: "Điều\u00a0tra", title: "Tất cả bài\u00a0viết", copy: "Tìm, lọc token và mở toàn bộ bài\u00a0điều\u00a0tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
+    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ\u00a0sơ", tags: "token directory coverage logo", tone: "token" },
+    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ\u00a0sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
+    { href: quickHref("facts/"), code: "03", kind: "Tự\u00a0kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
+    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi\u00a0trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
     { href: quickHref("du-lieu/"), code: "05", kind: "Hiện vật", title: "Dữ liệu thô", copy: "JSON, SHA-256 và lệnh tải để tự đếm lại", tags: "du lieu data json hash sha curl hien vat", tone: "data" }
   ];
   var quickHost = themeButton && themeButton.parentNode;
@@ -1943,8 +1953,8 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
           + '<span class="quick-find-copy"><small>' + route.kind + '</small><b>' + route.title + '</b><em>' + route.copy + '</em></span>'
           + (here ? '<span class="quick-find-here">Đang xem</span>' : '<span class="quick-find-go" aria-hidden="true">↗</span>')
           + '</a>';
-      }).join("") : '<p class="quick-find-empty"><b>Không có đích phù hợp.</b><span>Thử “token”, “fact”, “tự kiểm” hoặc “track”.</span></p>';
-      quickCount.textContent = (quickVisible.length < 10 ? "0" : "") + quickVisible.length + " đích";
+      }).join("") : '<p class="quick-find-empty"><b>Không có đích phù hợp.</b><span>Thử “token”, “fact”, “tự\u00a0kiểm” hoặc “track”.</span></p>';
+      quickCount.textContent = (quickVisible.length < 10 ? "0" : "") + quickVisible.length + "\u00a0đích";
       paintQuickSelection();
     }
     function openQuickFind() {
@@ -2291,7 +2301,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         card.hidden = !visible;
         if (visible) shown++;
       });
-      if (tokenFilterStatus) tokenFilterStatus.textContent = "Đang hiện " + shown + " token" + (label ? " · " + label : "");
+      if (tokenFilterStatus) tokenFilterStatus.textContent = "Đang hiện " + shown + "\u00a0token" + (label ? " · " + label : "");
     }
     tokenFilterButtons.forEach(function (button) {
       button.addEventListener("click", function () {
@@ -2393,7 +2403,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     copyPlainText(url).then(function (copied) {
       button.classList.toggle("da-chep", copied);
       button.querySelector("span").textContent = copied ? "Đã sao chép ✓" : "Hãy sao chép thủ công";
-      button.setAttribute("aria-label", copied ? "Đã sao chép link bằng chứng" : "Không thể tự sao chép link bằng chứng");
+      button.setAttribute("aria-label", copied ? "Đã sao chép link bằng\u00a0chứng" : "Không thể tự sao chép link bằng\u00a0chứng");
       setTimeout(function () {
         button.classList.remove("da-chep");
         button.querySelector("span").textContent = idleLabel;
@@ -2482,7 +2492,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     copy.type = "button";
     copy.className = "command-copy";
     copy.textContent = "Sao chép lệnh";
-    copy.setAttribute("aria-label", "Sao chép lệnh tự kiểm");
+    copy.setAttribute("aria-label", "Sao chép lệnh tự\u00a0kiểm");
     details.insertBefore(copy, command);
 
     copy.addEventListener("click", function () {
@@ -2503,7 +2513,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var trackStatus = document.querySelector(".track-filter-status");
   var trackLedger = document.querySelector(".track-ledger");
   if (trackFilters.length && trackEntries.length) {
-    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác bỏ", sua: "đã sửa", cho: "chưa phân định" };
+    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác\u00a0bỏ", sua: "đã sửa", cho: "chưa phân\u00a0định" };
     trackFilters.forEach(function (button) {
       button.addEventListener("click", function () {
         var filter = button.dataset.trackFilter;
@@ -2514,7 +2524,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
           entry.hidden = !visible;
           if (visible) shown++;
         });
-        if (trackStatus) trackStatus.textContent = "Đang hiện " + shown + " dòng" + (filter === "all" ? "" : " · " + trackLabels[filter]);
+        if (trackStatus) trackStatus.textContent = "Đang hiện " + shown + "\u00a0dòng" + (filter === "all" ? "" : " · " + trackLabels[filter]);
         if (trackLedger) requestAnimationFrame(function () {
           trackLedger.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
         });
@@ -2549,11 +2559,11 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         card.hidden = index < 0 || index >= archiveLimit;
       });
       var shown = Math.min(matches.length, archiveLimit);
-      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + " / " + matches.length + " bài viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
+      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + "\u00a0/\u00a0" + matches.length + "\u00a0bài\u00a0viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
       if (archiveEmpty) archiveEmpty.hidden = matches.length !== 0;
       if (archiveMore) {
         archiveMore.hidden = matches.length <= archiveLimit;
-        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + " bài viết ↓";
+        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + "\u00a0bài\u00a0viết ↓";
       }
     }
     function selectArchiveFilter(filter, updateUrl) {
@@ -2604,7 +2614,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var uniEmpty = document.querySelector("[data-uni-empty]");
   if (uniClaims.length) {
     var uniActiveFilter = "all";
-    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng vững", sua: "đã sửa", bac: "đã bị bác bỏ", changed: "đã đổi trạng thái" };
+    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng\u00a0vững", sua: "đã sửa", bac: "đã bị bác\u00a0bỏ", changed: "đã đổi trạng thái" };
 
     function uniNormalise(value) {
       return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -2623,7 +2633,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
       });
       if (uniStatus) {
         var lens = uniActiveFilter === "all" ? "" : " · " + uniLabels[uniActiveFilter];
-        uniStatus.textContent = "Đang hiện " + shown + " claim" + lens + (query ? " · có từ khoá" : "");
+        uniStatus.textContent = "Đang hiện " + shown + "\u00a0claim" + lens + (query ? " · có từ khoá" : "");
       }
       if (uniEmpty) uniEmpty.hidden = shown !== 0;
     }

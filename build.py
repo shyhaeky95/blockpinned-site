@@ -1880,6 +1880,93 @@ def kich_thuoc_png(p: pathlib.Path) -> tuple:
     return int.from_bytes(b[16:20], "big"), int.from_bytes(b[20:24], "big")
 
 
+# Những cụm dưới đây mang một nghĩa khi đứng cùng nhau. Trình duyệt vốn xem khoảng
+# trắng giữa hai tiếng Việt là một điểm ngắt hợp lệ, nên `text-wrap:balance` một mình
+# vẫn có thể bẻ "kiểm / chứng" hoặc "bác / bỏ". Danh sách có MỘT chủ ở builder;
+# sửa từng heading/card chỉ tạo ra nhiều bản sẽ trôi lệch khi thêm bài mới.
+CUM_KHONG_NGAT = (
+    "qua từng lần kiểm chứng", "điều bác bỏ", "kiểm chứng", "khẳng định",
+    "bác bỏ", "đứng vững", "phân định", "điều tra", "bằng chứng", "hồ sơ",
+    "tự kiểm", "ghi trước", "đường về", "trang chủ", "bài viết", "dữ liệu",
+)
+_RE_CUM_KHONG_NGAT = tuple(
+    re.compile(r"(?<!\w)" + re.escape(cum).replace(r"\ ", r"[ \t\r\n]+") + r"(?!\w)", re.I)
+    for cum in sorted(CUM_KHONG_NGAT, key=len, reverse=True)
+)
+_SO = r"(?:\d{1,3}(?:\.\d{3})+(?:,\d+)?|\d+(?:[.,]\d+)?)(?:[KMBT])?"
+_RE_SO_KHONG_NGAT = re.compile(
+    rf"(?<![\w#])(?:"
+    rf"(?:block|blk)\s*#?{_SO}(?:\s*→\s*#?{_SO})?"
+    rf"|#\s*{_SO}(?:\s*→\s*#\s*{_SO})?"
+    rf"|\d{{4}}-\d{{2}}-\d{{2}}T\d{{2}}:\d{{2}}:\d{{2}}Z"
+    rf"|\d{{2}}/\d{{2}}/\d{{4}}"
+    rf"|\d{{2}}:\d{{2}}(?::\d{{2}})?Z?"
+    rf"|0x[0-9a-f]{{4,}}(?:…|\.\.\.)[0-9a-f]{{3,}}"
+    rf"|{_SO}\s*(?:giờ|GIỜ)\s+{_SO}\s*(?:phút|PHÚT)"
+    rf"|(?:[$€]\s*)?[+\-−±]?{_SO}"
+    rf"(?:\s*[–—−-]\s*(?:[$€]\s*)?{_SO})?"
+    rf"(?:\s*/\s*(?:[$€]\s*)?{_SO})?"
+    rf"(?:\s*×\s*10[⁰¹²³⁴⁵⁶⁷⁸⁹]+|\s*[×x])?"
+    rf"(?:\s*(?:%|WETH|ETH|UNI|PENDLE|CAKE|USDC|USD|swap(?:s)?|poolId|pool|"
+    rf"bài(?:\s+viết)?|khẳng định|claim|fact|ngày|NGÀY|giờ|GIỜ|phút|PHÚT|lần))?"
+    rf")(?!\w)", re.I)
+_RE_THANH_PHAN_HTML = re.compile(
+    r"(<script\b[^>]*>.*?</script>|<style\b[^>]*>.*?</style>|"
+    r"<pre\b[^>]*>.*?</pre>|<textarea\b[^>]*>.*?</textarea>|"
+    r"<svg\b[^>]*>.*?</svg>|<[^>]+>)", re.I | re.S)
+
+
+def _map_text_body(html: str, fn, bo_qua_khoa: bool = False) -> str:
+    """Áp `fn` chỉ lên text node trong body, không đụng script/style/pre/attribute."""
+    m = re.search(r"(<body\b[^>]*>)(.*?)(</body>)", html, re.I | re.S)
+    if not m:
+        raise LoiCong("HTML không có <body> hoàn chỉnh — không thể khóa xuống dòng")
+    phan, khoa = [], 0
+    for x in _RE_THANH_PHAN_HTML.split(m.group(2)):
+        if not x:
+            continue
+        if x.startswith("<"):
+            nho = x.lower()
+            if bo_qua_khoa and re.match(r'<span\b[^>]*class="[^"]*\bkhong-ngat\b', nho):
+                khoa += 1
+            elif bo_qua_khoa and khoa and re.match(r"</span\s*>", nho):
+                khoa -= 1
+            phan.append(x)
+        else:
+            phan.append(x if khoa else fn(x))
+    return html[:m.start()] + m.group(1) + "".join(phan) + m.group(3) + html[m.end():]
+
+
+def khoa_xuong_dong(html: str) -> str:
+    """Giữ cụm tiếng Việt và số–đơn vị trên một dòng ở mọi mặt production v3."""
+    def sua(txt: str) -> str:
+        for mau in _RE_CUM_KHONG_NGAT:
+            txt = mau.sub(lambda m: re.sub(r"[ \t\r\n]+", "&nbsp;", m.group(0)), txt)
+        return _RE_SO_KHONG_NGAT.sub(
+            lambda m: f'<span class="khong-ngat">{m.group(0)}</span>', txt)
+    return _map_text_body(html, sua)
+
+
+def cong_xuong_dong(html: str) -> None:
+    """Cổng bố cục chữ: helper bị bỏ qua thì build phải nổ, không chờ ảnh chụp."""
+    for _, ruot in re.findall(r"<h([12])\b[^>]*>(.*?)</h\1>", html, re.I | re.S):
+        if re.search(r"<br\b", ruot, re.I):
+            raise LoiCong("heading h1/h2 còn <br> cứng — chỉ được ngắt theo cụm")
+    loi = []
+    def soi(txt: str) -> str:
+        for cum, mau in zip(sorted(CUM_KHONG_NGAT, key=len, reverse=True), _RE_CUM_KHONG_NGAT):
+            if mau.search(txt):
+                loi.append(f"cụm '{cum}' còn khoảng trắng có thể bị bẻ")
+                break
+        m = _RE_SO_KHONG_NGAT.search(txt)
+        if m:
+            loi.append(f"số/đơn vị chưa khóa: {m.group(0)!r}")
+        return txt
+    _map_text_body(html, soi, bo_qua_khoa=True)
+    if loi:
+        raise LoiCong("; ".join(loi[:3]))
+
+
 def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None,
           muc: str = "", mat: str = "", lang: str = "vi") -> str:
     # Thẻ xem trước: khi link được dán vào Telegram · Discord · forum · tin nhắn riêng,
@@ -1959,7 +2046,7 @@ def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None,
     # cổng ⑧ canh nó, còn `v3.js` đo được là không đụng gì tới nút đó. `JS_HIEU_UNG`
     # thì BỎ — `v3.js` tự cầm tầng hiệu ứng, và `v3.css` không có luật nào cho
     # `[data-hien]`/`.stack` nên bỏ đi không làm mất chữ nào (đã kiểm, 0 luật khớp).
-    return dau_chung + f"""
+    html = dau_chung + f"""
 <script>{JS_NEN_V3}</script></head><body class="{mat}">{dai}
 <div id="bp-tien" aria-hidden="true"></div>
 <header class="dau"><div class="khung">
@@ -1974,6 +2061,9 @@ Không phải lời khuyên đầu tư. · <a href="https://x.com/blockpinned">@
 <script>{JS_DO_LAI}</script>
 <script>{than_js()}</script>
 </body></html>"""
+    html = khoa_xuong_dong(html)
+    cong_xuong_dong(html)
+    return html
 
 
 def so_vn(v: float, n: int = 3) -> str:
@@ -3223,6 +3313,11 @@ def trang_muc_bai(bai: list) -> str:
   <span class="article-archive-foot"><small>{n} claim · {ihtml.escape(sg)}</small><i aria-hidden="true">↗</i></span>
 </a>''')
 
+    con_lai = max(0, len(bai) - 12)
+    nhan_mo_them = (f"Mở thêm {min(12, con_lai)} bài viết ↓"
+                    if con_lai else "Mở thêm bài viết ↓")
+    an_mo_them = " hidden" if not con_lai else ""
+
     return f'''<section class="hero article-archive-hero">
   <span class="ghost-num" aria-hidden="true">{len(bai)}</span>
   <span class="hero-code" aria-hidden="true">PUBLIC INVESTIGATION ARCHIVE</span>
@@ -3241,7 +3336,7 @@ def trang_muc_bai(bai: list) -> str:
   </div>
   <div class="article-archive-grid">{"".join(the)}</div>
   <p class="article-archive-empty" data-article-empty hidden>Không có bài viết khớp từ khoá và token này.</p>
-  <div class="article-archive-more"><button type="button" data-article-more>Mở thêm 12 bài viết ↓</button></div>
+  <div class="article-archive-more"><button type="button" data-article-more{an_mo_them}>{nhan_mo_them}</button></div>
 </section>'''
 
 
@@ -3336,7 +3431,7 @@ def trang_token(ma: str, bai_t: list, claims_t: list) -> str:
       <div class="uni-hero-copy">
         <div class="uni-title-lockup">
           <img src="../../anh/token-{ma.lower()}.png" width="84" height="84" alt="Logo {ten}">
-          <div><span>{ten}</span><h1 class="display">{ma}, qua từng lần <em>kiểm chứng.</em></h1></div>
+          <div><span>{ten}</span><h1 class="display">{ma},<em class="cum-tieu-de">qua từng lần kiểm chứng.</em></h1></div>
         </div>
         <p class="subline">Các khẳng định BlockPinned đã công bố về {ma} được tập hợp tại đây — \
 kèm mốc đo, nguồn, điều có thể làm kết luận thay đổi và trạng thái hiện tại.</p>
@@ -4229,6 +4324,19 @@ def cong_bo_cuc(html_chu: str, html_token: str, so_bai: int, so_token: int) -> N
     Component bắt buộc + số item mới là hợp đồng giữa builder với CSS/JS.
     """
     if BO_CUC == "v3":
+        nhan_nav = ["Trang chủ", "Bài viết", "Token", "Track record", "Facts"]
+        if [nhan for _, nhan in MUC_DIEU_HUONG] != nhan_nav:
+            raise LoiCong("menu phải dùng chung: " + " · ".join(nhan_nav))
+        for ten_mat, html in (("trang chủ", html_chu), ("token", html_token)):
+            nav = re.search(r'<nav class="dieu"[^>]*>(.*?)</nav>', html, re.S)
+            if not nav:
+                raise LoiCong(f"{ten_mat} mất thanh điều hướng dùng chung")
+            nhan_thuc = [
+                ihtml.unescape(re.sub(r"<[^>]+>", "", x)).replace("\xa0", " ").strip()
+                for x in re.findall(r"<a\b[^>]*>(.*?)</a>", nav.group(1), re.S)
+            ]
+            if nhan_thuc != nhan_nav:
+                raise LoiCong(f"menu {ten_mat} không dùng chung: {nhan_thuc!r}")
         moc_bai = 'class="khu-bai home-articles article-priority"'
         if (moc_bai not in html_chu
                 or len(re.findall(r'<a class="bai(?: bai-lead)?" href=', html_chu)) != min(6, so_bai)
@@ -4275,6 +4383,19 @@ def cong_muc_bai(html_bai: str, so_bai: int, so_token: int) -> None:
             or html_bai.count(" data-article-card") != so_bai
             or html_bai.count(" data-article-filter=") != so_token + 1):
         raise LoiCong("kho bài v3 thiếu tìm/lọc/mở-thêm hoặc mất bài/token")
+    nut = re.search(r'<button\b([^>]*)data-article-more([^>]*)>(.*?)</button>',
+                    html_bai, re.S)
+    if not nut:
+        raise LoiCong("kho bài v3 mất nút mở thêm")
+    thuoc_tinh = nut.group(1) + nut.group(2)
+    nhan = ihtml.unescape(re.sub(r"<[^>]+>", "", nut.group(3))).replace("\xa0", " ").strip()
+    if so_bai <= 12:
+        if "hidden" not in thuoc_tinh or re.search(r"Mở thêm\s+\d+", nhan):
+            raise LoiCong("kho bài đã hiện đủ mà nút mở thêm vẫn hiện hoặc còn mang số nháp")
+    else:
+        con_lai = min(12, so_bai - 12)
+        if "hidden" in thuoc_tinh or f"Mở thêm {con_lai} bài viết" not in nhan:
+            raise LoiCong("nút mở thêm của kho bài không khớp số bài còn lại")
 
 
 def main() -> None:

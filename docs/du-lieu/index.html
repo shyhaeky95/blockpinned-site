@@ -53,6 +53,8 @@ body{margin:0;color:var(--ink);font-family:var(--body);font-size:16.5px;line-hei
 .khung{max-width:1080px;margin:0 auto;padding:0 var(--gut)}
 a{color:var(--ink);text-decoration:none}
 p{margin:0 0 18px;overflow-wrap:break-word}
+h1,h2{text-wrap:balance}
+.khong-ngat,.cum-tieu-de{white-space:nowrap}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 ::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
 
@@ -1341,10 +1343,11 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
 .page-token-uni main{padding-bottom:112px}.uni-hero{padding-bottom:30px}
 .uni-hero-grid{display:grid;grid-template-columns:minmax(0,.84fr) minmax(500px,1.16fr);gap:clamp(38px,5.5vw,88px);align-items:center}
 .uni-hero-copy{min-width:0}.uni-hero .subline{max-width:58ch;margin:0 0 28px}
-.uni-title-lockup{display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
+.uni-title-lockup{container-type:inline-size;display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
 .uni-title-lockup img{width:84px;height:84px;border-radius:23px;box-shadow:0 0 0 1px var(--line),0 18px 40px -26px var(--ink)}
 .uni-title-lockup>div>span{display:block;margin:0 0 7px;font:750 10px/1 var(--mono);letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
-.uni-title-lockup h1{max-width:13ch;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1{max-width:none;margin:0}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1 .cum-tieu-de{display:block}
 .uni-hero-jump{width:min(100%,420px);display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:15px 17px;border:1px solid var(--line);border-radius:13px;background:var(--card);box-shadow:var(--bong)}
 .uni-hero-jump span{font:650 9px/1.4 var(--mono);color:var(--faint)}.uni-hero-jump b{font:760 10px/1 var(--mono);color:var(--accent)}.uni-hero-jump i{font-style:normal;color:var(--accent);transition:transform .2s}
 .uni-hero-jump:hover,.uni-hero-jump:focus-visible{border-color:color-mix(in srgb,var(--accent) 38%,var(--line))}.uni-hero-jump:hover i{transform:translateY(2px)}
@@ -1520,6 +1523,12 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead::after{display:none}
   .article-priority .bai-lead .t{font-size:23px}.article-priority::after{font-size:100px;top:-.12em}
 }
+@media(max-width:600px){
+  .uni-title-lockup{grid-template-columns:1fr;gap:14px}.uni-title-lockup h1{font-size:clamp(27px,8vw,40px)}
+}
+@container (max-width:520px){
+  .uni-title-lockup h1{font-size:clamp(22px,7.5cqw,36px)}
+}
 @media(max-width:420px){
   .uni-vault-total{display:grid;grid-template-columns:auto 1fr;gap:20px}.uni-ring{width:92px;height:92px}.uni-ring::before{width:62px;height:62px}.uni-ring b{font-size:31px}
   .uni-vault::after{display:none}.uni-legend{grid-template-columns:1fr}.uni-status-bar{height:44px}.uni-ledger-head{display:grid}
@@ -1529,6 +1538,7 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
    ARTICLE ARCHIVE — preview hữu hạn ở trang chính, toàn bộ bài nằm ở đây.
    ══════════════════════════════════════════════════════════════════════════ */
 .page-article-archive main{padding-bottom:110px}.article-archive-hero{padding-bottom:25px}.article-archive-hero h1{max-width:15ch}
+.article-archive-hero h1 .nhan-manh{white-space:normal}
 .article-archive-hero .subline{max-width:67ch}.article-archive-stats{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:30px;padding:16px 0;border-block:1px solid var(--line)}
 .article-archive-stats span{display:flex;align-items:baseline;gap:7px;font:600 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .article-archive-stats span::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent)}.article-archive-stats span:nth-child(2)::before{background:var(--c-song)}.article-archive-stats span:nth-child(3)::before{background:var(--c-xn)}
@@ -1744,93 +1754,93 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <header class="dau"><div class="khung">
   <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
   <a class="ten" href="../">Block<span>Pinned</span></a>
-  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../">Trang chủ</a><a href="../bai/">Bài viết</a><a href="../token/">Token</a><a href="../track-record/">Track record</a><a href="../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
+  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../">Trang&nbsp;chủ</a><a href="../bai/">Bài&nbsp;viết</a><a href="../token/">Token</a><a href="../track-record/">Track record</a><a href="../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
 </div></header>
 <main class="khung"><section class="hero data-hero">
-  <span class="ghost-num" aria-hidden="true">3</span>
+  <span class="ghost-num" aria-hidden="true"><span class="khong-ngat">3</span></span>
   <span class="hero-code" aria-hidden="true">PUBLIC EVIDENCE ARCHIVE</span>
   <p class="eyebrow"><span>KHO HIỆN VẬT</span><span class="im">JSON · TỰ HOST</span></p>
-  <h1 class="display">Dữ liệu thô <span class="nhan-manh">đứng sau bài</span></h1>
+  <h1 class="display">Dữ&nbsp;liệu thô <span class="nhan-manh">đứng sau bài</span></h1>
   <p class="subline">Tải file gốc, kiểm hash, rồi đếm lại. Trường <code>_doc</code> trong mỗi file nói nó là gì và vòng đo nào của nó đã hỏng.</p>
   <div class="data-protocol">
-    <div class="heronum"><p class="l">Hiện vật đang phát hành</p><p class="v">3<em> file</em></p><p class="d">đọc và tải trực tiếp</p></div>
+    <div class="heronum"><p class="l">Hiện vật đang phát hành</p><p class="v"><span class="khong-ngat">3</span><em> file</em></p><p class="d">đọc và tải trực tiếp</p></div>
     <div class="data-path" role="img" aria-label="Tuyến kiểm hiện vật: đọc mô tả gốc, đối chiếu SHA-256, tải về đếm lại">
-      <div><span>01 · ĐỌC</span><b>_doc</b><small>mô tả nằm trong file</small></div><i>→</i>
-      <div><span>02 · ĐỐI CHIẾU</span><b>SHA-256</b><small>hash từ đúng byte phát hành</small></div><i>→</i>
-      <div><span>03 · DỰNG LẠI</span><b>curl</b><small>tải về và tự đếm</small></div>
+      <div><span><span class="khong-ngat">01</span> · ĐỌC</span><b>_doc</b><small>mô tả nằm trong file</small></div><i>→</i>
+      <div><span><span class="khong-ngat">02</span> · ĐỐI CHIẾU</span><b>SHA-<span class="khong-ngat">256</span></b><small>hash từ đúng byte phát hành</small></div><i>→</i>
+      <div><span><span class="khong-ngat">03</span> · DỰNG LẠI</span><b>curl</b><small>tải về và tự đếm</small></div>
     </div>
   </div>
-  <div class="data-stats"><span><b>26,9 KB</b> tổng dung lượng</span><span><b>3</b> hash công khai</span><span><b>0</b> tài sản ngoài miền</span></div>
+  <div class="data-stats"><span><b><span class="khong-ngat">26,9</span> KB</b> tổng dung lượng</span><span><b><span class="khong-ngat">3</span></b> hash công khai</span><span><b><span class="khong-ngat">0</span></b> tài sản ngoài miền</span></div>
 </section>
-<nav class="data-map" aria-label="Chỉ mục hiện vật"><span>CHỈ MỤC FILE</span><a href="#file-01"><span>01</span>verify_post07_2026-07-31.json</a><a href="#file-02"><span>02</span>pendle_buy_source_2026-07-31.json</a><a href="#file-03"><span>03</span>pendle_buy_tie_2026-07-31.json</a></nav>
+<nav class="data-map" aria-label="Chỉ mục hiện vật"><span>CHỈ MỤC FILE</span><a href="#file-01"><span><span class="khong-ngat">01</span></span>verify_post07_2026-<span class="khong-ngat">07-31</span>.json</a><a href="#file-02"><span><span class="khong-ngat">02</span></span>pendle_buy_source_2026-<span class="khong-ngat">07-31</span>.json</a><a href="#file-03"><span><span class="khong-ngat">03</span></span>pendle_buy_tie_2026-<span class="khong-ngat">07-31</span>.json</a></nav>
 <section class="data-ledger" aria-labelledby="data-ledger-title">
-  <header class="data-ledger-head"><div><span>PUBLIC DATA LEDGER</span><h2 id="data-ledger-title">3 hiện vật tải được</h2></div><p>Mỗi dòng dưới đây có mô tả gốc, hash và lệnh tải của chính byte đang phục vụ.</p></header>
+  <header class="data-ledger-head"><div><span>PUBLIC DATA LEDGER</span><h2 id="data-ledger-title"><span class="khong-ngat">3</span> hiện vật tải được</h2></div><p>Mỗi dòng dưới đây có mô tả gốc, hash và lệnh tải của chính byte đang phục vụ.</p></header>
   <article class="data-file" id="file-01" data-data-file data-file-index="01">
   <header class="data-file-head">
-    <span class="data-file-index">FILE 01</span>
-    <span class="data-file-format">JSON · 2,9 KB</span>
+    <span class="data-file-index">FILE <span class="khong-ngat">01</span></span>
+    <span class="data-file-format">JSON · <span class="khong-ngat">2,9</span> KB</span>
     <span class="data-file-actions"></span>
   </header>
-  <h2><a href="verify_post07_2026-07-31.json" download>verify_post07_2026-07-31.json</a></h2>
-  <p class="data-file-role">bài #7 — 9/9 kiểm sau đăng</p>
-  <div class="data-file-doc"><span>_doc</span><p>verify bài #7 PENDLE — LAUNCH §6c</p></div>
+  <h2><a href="verify_post07_2026-07-31.json" download>verify_post07_2026-<span class="khong-ngat">07-31</span>.json</a></h2>
+  <p class="data-file-role">bài <span class="khong-ngat">#7</span> — <span class="khong-ngat">9/9</span> kiểm sau đăng</p>
+  <div class="data-file-doc"><span>_doc</span><p>verify bài <span class="khong-ngat">#7</span> PENDLE — LAUNCH §6c</p></div>
   <dl class="data-file-facts">
-    <div><dt>Kích thước</dt><dd>2,9 KB</dd></div>
-    <div><dt>Trường gốc</dt><dd>8</dd></div>
+    <div><dt>Kích thước</dt><dd><span class="khong-ngat">2,9</span> KB</dd></div>
+    <div><dt>Trường gốc</dt><dd><span class="khong-ngat">8</span></dd></div>
     <div><dt>Định dạng</dt><dd>JSON</dd></div>
   </dl>
-  <div class="data-hash"><span>SHA-256</span><code>5bf579e0452ae945af9e62f0af9213ed900b2633ef35d7bf0006d2dc103f9717</code>
+  <div class="data-hash"><span>SHA-<span class="khong-ngat">256</span></span><code>5bf579e0452ae945af9e62f0af9213ed900b2633ef35d7bf0006d2dc103f9717</code>
     <button type="button" data-copy-text="5bf579e0452ae945af9e62f0af9213ed900b2633ef35d7bf0006d2dc103f9717" data-copy-idle="Sao chép hash">Sao chép hash</button></div>
   <div class="data-download">
-    <code>curl -sO https://blockpinned.com/du-lieu/verify_post07_2026-07-31.json</code>
+    <code>curl -sO https://blockpinned.com/du-lieu/verify_post07_2026-<span class="khong-ngat">07-31</span>.json</code>
     <button type="button" data-copy-text="curl -sO https://blockpinned.com/du-lieu/verify_post07_2026-07-31.json" data-copy-idle="Sao chép lệnh">Sao chép lệnh</button>
     <a href="verify_post07_2026-07-31.json" download>Tải JSON ↓</a>
   </div>
 </article><article class="data-file" id="file-02" data-data-file data-file-index="02">
   <header class="data-file-head">
-    <span class="data-file-index">FILE 02</span>
-    <span class="data-file-format">JSON · 21,4 KB</span>
+    <span class="data-file-index">FILE <span class="khong-ngat">02</span></span>
+    <span class="data-file-format">JSON · <span class="khong-ngat">21,4</span> KB</span>
     <span class="data-file-actions"></span>
   </header>
-  <h2><a href="pendle_buy_source_2026-07-31.json" download>pendle_buy_source_2026-07-31.json</a></h2>
-  <p class="data-file-role">bài #7 — 65 tx hash + chi tiết từng tx</p>
-  <div class="data-file-doc"><span>_doc</span><p>VÒNG 2 — nguồn của 65 transfer vào 0x9e08. Vòng 1 (H_KHÔNG) là DƯƠNG TÍNH GIẢ: phép thử hỏi người GỬI có phát log Swap không, mà log Swap do POOL phát. Số 0 đó nói về phép thử.</p></div>
+  <h2><a href="pendle_buy_source_2026-07-31.json" download>pendle_buy_source_2026-<span class="khong-ngat">07-31</span>.json</a></h2>
+  <p class="data-file-role">bài <span class="khong-ngat">#7</span> — <span class="khong-ngat">65</span> tx hash + chi tiết từng tx</p>
+  <div class="data-file-doc"><span>_doc</span><p>VÒNG <span class="khong-ngat">2</span> — nguồn của <span class="khong-ngat">65</span> transfer vào 0x9e08. Vòng <span class="khong-ngat">1</span> (H_KHÔNG) là DƯƠNG TÍNH GIẢ: phép thử hỏi người GỬI có phát log Swap không, mà log Swap do POOL phát. Số <span class="khong-ngat">0</span> đó nói về phép thử.</p></div>
   <dl class="data-file-facts">
-    <div><dt>Kích thước</dt><dd>21,4 KB</dd></div>
-    <div><dt>Trường gốc</dt><dd>19</dd></div>
+    <div><dt>Kích thước</dt><dd><span class="khong-ngat">21,4</span> KB</dd></div>
+    <div><dt>Trường gốc</dt><dd><span class="khong-ngat">19</span></dd></div>
     <div><dt>Định dạng</dt><dd>JSON</dd></div>
   </dl>
-  <div class="data-hash"><span>SHA-256</span><code>fdeabbb1f3c2d56f314000fc68742ecd8423eebf71e1cfe8f3dbff8ec59df408</code>
+  <div class="data-hash"><span>SHA-<span class="khong-ngat">256</span></span><code>fdeabbb1f3c2d56f314000fc68742ecd8423eebf71e1cfe8f3dbff8ec59df408</code>
     <button type="button" data-copy-text="fdeabbb1f3c2d56f314000fc68742ecd8423eebf71e1cfe8f3dbff8ec59df408" data-copy-idle="Sao chép hash">Sao chép hash</button></div>
   <div class="data-download">
-    <code>curl -sO https://blockpinned.com/du-lieu/pendle_buy_source_2026-07-31.json</code>
+    <code>curl -sO https://blockpinned.com/du-lieu/pendle_buy_source_2026-<span class="khong-ngat">07-31</span>.json</code>
     <button type="button" data-copy-text="curl -sO https://blockpinned.com/du-lieu/pendle_buy_source_2026-07-31.json" data-copy-idle="Sao chép lệnh">Sao chép lệnh</button>
     <a href="pendle_buy_source_2026-07-31.json" download>Tải JSON ↓</a>
   </div>
 </article><article class="data-file" id="file-03" data-data-file data-file-index="03">
   <header class="data-file-head">
-    <span class="data-file-index">FILE 03</span>
-    <span class="data-file-format">JSON · 2,6 KB</span>
+    <span class="data-file-index">FILE <span class="khong-ngat">03</span></span>
+    <span class="data-file-format">JSON · <span class="khong-ngat">2,6</span> KB</span>
     <span class="data-file-actions"></span>
   </header>
-  <h2><a href="pendle_buy_tie_2026-07-31.json" download>pendle_buy_tie_2026-07-31.json</a></h2>
-  <p class="data-file-role">bài #7 — lượt nối swap→hợp đồng, 82,44%</p>
+  <h2><a href="pendle_buy_tie_2026-07-31.json" download>pendle_buy_tie_2026-<span class="khong-ngat">07-31</span>.json</a></h2>
+  <p class="data-file-role">bài <span class="khong-ngat">#7</span> — lượt nối swap→hợp đồng, <span class="khong-ngat">82,44%</span></p>
   <div class="data-file-doc"><span>_doc</span><p>Nối swap output → PENDLE vào 0x9e08. Đóng cú bác &#x27;đồng thời ≠ nhân quả&#x27;.</p></div>
   <dl class="data-file-facts">
-    <div><dt>Kích thước</dt><dd>2,6 KB</dd></div>
-    <div><dt>Trường gốc</dt><dd>14</dd></div>
+    <div><dt>Kích thước</dt><dd><span class="khong-ngat">2,6</span> KB</dd></div>
+    <div><dt>Trường gốc</dt><dd><span class="khong-ngat">14</span></dd></div>
     <div><dt>Định dạng</dt><dd>JSON</dd></div>
   </dl>
-  <div class="data-hash"><span>SHA-256</span><code>0d44526449574a74b829553aa3ac2bcc578955ed44ed31b95f09d5293d22bb42</code>
+  <div class="data-hash"><span>SHA-<span class="khong-ngat">256</span></span><code>0d44526449574a74b829553aa3ac2bcc578955ed44ed31b95f09d5293d22bb42</code>
     <button type="button" data-copy-text="0d44526449574a74b829553aa3ac2bcc578955ed44ed31b95f09d5293d22bb42" data-copy-idle="Sao chép hash">Sao chép hash</button></div>
   <div class="data-download">
-    <code>curl -sO https://blockpinned.com/du-lieu/pendle_buy_tie_2026-07-31.json</code>
+    <code>curl -sO https://blockpinned.com/du-lieu/pendle_buy_tie_2026-<span class="khong-ngat">07-31</span>.json</code>
     <button type="button" data-copy-text="curl -sO https://blockpinned.com/du-lieu/pendle_buy_tie_2026-07-31.json" data-copy-idle="Sao chép lệnh">Sao chép lệnh</button>
     <a href="pendle_buy_tie_2026-07-31.json" download>Tải JSON ↓</a>
   </div>
 </article>
 </section>
-<aside class="data-note"><span>PHẠM VI</span><p>Không phải bài nào cũng có file ở đây. Phép quét qua nhiều log và nhiều vòng đối chứng mới cần hiện vật thô; phép gọi một hàm tại một block có đường tự kiểm ngắn hơn, nằm ngay trong sổ claim của bài.</p></aside></main>
+<aside class="data-note"><span>PHẠM VI</span><p>Không phải bài nào cũng có file ở đây. Phép quét qua nhiều log và nhiều vòng đối chứng mới cần hiện vật thô; phép gọi một hàm tại một block có đường tự&nbsp;kiểm ngắn hơn, nằm ngay trong sổ claim của bài.</p></aside></main>
 <div id="ch-tip"></div>
 <footer><div class="khung"><p>Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá. Không phải lời khuyên đầu tư. · <a href="https://x.com/blockpinned">@blockpinned</a></p></div></footer>
 <script>
@@ -1929,12 +1939,12 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var quickRoot = quickHome ? quickHome.href : new URL(".", location.href).href;
   function quickHref(path) { return new URL(path, quickRoot).href; }
   var quickRoutes = [
-    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
-    { href: quickHref("bai/"), code: "01", kind: "Điều tra", title: "Tất cả bài viết", copy: "Tìm, lọc token và mở toàn bộ bài điều tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
-    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ sơ", tags: "token directory coverage logo", tone: "token" },
-    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
-    { href: quickHref("facts/"), code: "03", kind: "Tự kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
-    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
+    { href: quickHref(""), code: "00", kind: "Bắt đầu", title: "Trang\u00a0chủ", copy: "Bản đồ nội dung và tài sản công khai của BlockPinned", tags: "home so goc bản đồ trang chủ", tone: "home" },
+    { href: quickHref("bai/"), code: "01", kind: "Điều\u00a0tra", title: "Tất cả bài\u00a0viết", copy: "Tìm, lọc token và mở toàn bộ bài\u00a0điều\u00a0tra", tags: "article bai viet dieu tra kho tìm kiếm kết luận bằng chứng", tone: "article" },
+    { href: quickHref("token/"), code: "02", kind: "Token", title: "Token Directory", copy: "Bản đồ độ phủ và lối vào từng hồ\u00a0sơ", tags: "token directory coverage logo", tone: "token" },
+    { href: quickHref("token/uni/"), code: "UNI", kind: "Hồ\u00a0sơ", title: "Uniswap · UNI", copy: "Claim ledger, trạng thái và lịch sử hiệu chỉnh", tags: "uniswap uni claim hồ sơ", tone: "uni" },
+    { href: quickHref("facts/"), code: "03", kind: "Tự\u00a0kiểm", title: "Facts", copy: "Con số, block và lệnh để đọc lại", tags: "facts con số block lệnh proof", tone: "facts" },
+    { href: quickHref("track-record/"), code: "04", kind: "Sổ công khai", title: "Track record", copy: "Những gì được ghi\u00a0trước đặt cạnh kết quả đến sau", tags: "track record ghi trước kết quả", tone: "track" },
     { href: quickHref("du-lieu/"), code: "05", kind: "Hiện vật", title: "Dữ liệu thô", copy: "JSON, SHA-256 và lệnh tải để tự đếm lại", tags: "du lieu data json hash sha curl hien vat", tone: "data" }
   ];
   var quickHost = themeButton && themeButton.parentNode;
@@ -2002,8 +2012,8 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
           + '<span class="quick-find-copy"><small>' + route.kind + '</small><b>' + route.title + '</b><em>' + route.copy + '</em></span>'
           + (here ? '<span class="quick-find-here">Đang xem</span>' : '<span class="quick-find-go" aria-hidden="true">↗</span>')
           + '</a>';
-      }).join("") : '<p class="quick-find-empty"><b>Không có đích phù hợp.</b><span>Thử “token”, “fact”, “tự kiểm” hoặc “track”.</span></p>';
-      quickCount.textContent = (quickVisible.length < 10 ? "0" : "") + quickVisible.length + " đích";
+      }).join("") : '<p class="quick-find-empty"><b>Không có đích phù hợp.</b><span>Thử “token”, “fact”, “tự\u00a0kiểm” hoặc “track”.</span></p>';
+      quickCount.textContent = (quickVisible.length < 10 ? "0" : "") + quickVisible.length + "\u00a0đích";
       paintQuickSelection();
     }
     function openQuickFind() {
@@ -2350,7 +2360,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         card.hidden = !visible;
         if (visible) shown++;
       });
-      if (tokenFilterStatus) tokenFilterStatus.textContent = "Đang hiện " + shown + " token" + (label ? " · " + label : "");
+      if (tokenFilterStatus) tokenFilterStatus.textContent = "Đang hiện " + shown + "\u00a0token" + (label ? " · " + label : "");
     }
     tokenFilterButtons.forEach(function (button) {
       button.addEventListener("click", function () {
@@ -2452,7 +2462,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     copyPlainText(url).then(function (copied) {
       button.classList.toggle("da-chep", copied);
       button.querySelector("span").textContent = copied ? "Đã sao chép ✓" : "Hãy sao chép thủ công";
-      button.setAttribute("aria-label", copied ? "Đã sao chép link bằng chứng" : "Không thể tự sao chép link bằng chứng");
+      button.setAttribute("aria-label", copied ? "Đã sao chép link bằng\u00a0chứng" : "Không thể tự sao chép link bằng\u00a0chứng");
       setTimeout(function () {
         button.classList.remove("da-chep");
         button.querySelector("span").textContent = idleLabel;
@@ -2541,7 +2551,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     copy.type = "button";
     copy.className = "command-copy";
     copy.textContent = "Sao chép lệnh";
-    copy.setAttribute("aria-label", "Sao chép lệnh tự kiểm");
+    copy.setAttribute("aria-label", "Sao chép lệnh tự\u00a0kiểm");
     details.insertBefore(copy, command);
 
     copy.addEventListener("click", function () {
@@ -2562,7 +2572,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var trackStatus = document.querySelector(".track-filter-status");
   var trackLedger = document.querySelector(".track-ledger");
   if (trackFilters.length && trackEntries.length) {
-    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác bỏ", sua: "đã sửa", cho: "chưa phân định" };
+    var trackLabels = { xac: "đã xác nhận", song: "đang chờ", bac: "đã bị bác\u00a0bỏ", sua: "đã sửa", cho: "chưa phân\u00a0định" };
     trackFilters.forEach(function (button) {
       button.addEventListener("click", function () {
         var filter = button.dataset.trackFilter;
@@ -2573,7 +2583,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
           entry.hidden = !visible;
           if (visible) shown++;
         });
-        if (trackStatus) trackStatus.textContent = "Đang hiện " + shown + " dòng" + (filter === "all" ? "" : " · " + trackLabels[filter]);
+        if (trackStatus) trackStatus.textContent = "Đang hiện " + shown + "\u00a0dòng" + (filter === "all" ? "" : " · " + trackLabels[filter]);
         if (trackLedger) requestAnimationFrame(function () {
           trackLedger.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
         });
@@ -2608,11 +2618,11 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
         card.hidden = index < 0 || index >= archiveLimit;
       });
       var shown = Math.min(matches.length, archiveLimit);
-      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + " / " + matches.length + " bài viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
+      if (archiveStatus) archiveStatus.textContent = "Đang hiện " + shown + "\u00a0/\u00a0" + matches.length + "\u00a0bài\u00a0viết" + (archiveActive === "all" ? "" : " · " + archiveActive.toUpperCase());
       if (archiveEmpty) archiveEmpty.hidden = matches.length !== 0;
       if (archiveMore) {
         archiveMore.hidden = matches.length <= archiveLimit;
-        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + " bài viết ↓";
+        archiveMore.textContent = "Mở thêm " + Math.min(12, Math.max(0, matches.length - archiveLimit)) + "\u00a0bài\u00a0viết ↓";
       }
     }
     function selectArchiveFilter(filter, updateUrl) {
@@ -2663,7 +2673,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   var uniEmpty = document.querySelector("[data-uni-empty]");
   if (uniClaims.length) {
     var uniActiveFilter = "all";
-    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng vững", sua: "đã sửa", bac: "đã bị bác bỏ", changed: "đã đổi trạng thái" };
+    var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng\u00a0vững", sua: "đã sửa", bac: "đã bị bác\u00a0bỏ", changed: "đã đổi trạng thái" };
 
     function uniNormalise(value) {
       return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -2682,7 +2692,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
       });
       if (uniStatus) {
         var lens = uniActiveFilter === "all" ? "" : " · " + uniLabels[uniActiveFilter];
-        uniStatus.textContent = "Đang hiện " + shown + " claim" + lens + (query ? " · có từ khoá" : "");
+        uniStatus.textContent = "Đang hiện " + shown + "\u00a0claim" + lens + (query ? " · có từ khoá" : "");
       }
       if (uniEmpty) uniEmpty.hidden = shown !== 0;
     }
