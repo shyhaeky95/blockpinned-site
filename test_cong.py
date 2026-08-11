@@ -15,6 +15,7 @@ import json, pathlib, re, shutil, subprocess, sys, tempfile
 SITE = pathlib.Path(__file__).parent
 MD = "content/posts/2026-07-27-defillama-uniswap-v4.md"
 CJ = "content/posts/2026-07-27-defillama-uniswap-v4.claims.json"
+PENDLE_CJ = "content/posts/2026-07-31-pendle-buyback-cot-bang-0.claims.json"
 
 
 def sua_md(root, fn):
@@ -26,6 +27,13 @@ def sua_claims(root, fn):
     p = root / "site" / CJ
     d = json.loads(p.read_text(encoding="utf-8"))
     fn(d["claims"])
+    p.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def sua_json_bai(root, path, fn):
+    p = root / "site" / path
+    d = json.loads(p.read_text(encoding="utf-8"))
+    fn(d)
     p.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
@@ -264,14 +272,25 @@ CA = [
      lambda r: sua_builder(r, 'dai_bai(bai, "", " home-articles")',
                            'dai_bai(bai, "")'),
      "mục bài trang chủ v3 thiếu cấu trúc"),
+    ("VISUAL · marker còn nhưng cấu hình bị xoá phải NỔ",
+     lambda r: sua_json_bai(r, PENDLE_CJ, lambda d: d["visuals"].pop(0)),
+     "marker visual và cấu hình không khớp"),
+    ("VISUAL · type ngoài bộ template phải NỔ",
+     lambda r: sua_json_bai(r, PENDLE_CJ,
+                            lambda d: d["visuals"][0].update(type="pie")),
+     "type lạ"),
+    ("VISUAL · renderer làm rơi figure phải NỔ",
+     lambda r: sua_builder(r, '<figure class="article-viz article-viz-{loai}"',
+                           '<figure class="article-viz-hong article-viz-{loai}"'),
+     "visual v3 dựng thiếu figure"),
     ("⑪ LIÊN KẾT · href hỏng trong THÂN TRANG vẫn phải chặn — cặp đối chứng của ca trên",
      lambda r: sua_md(r, lambda s: s.replace(
          "## Tự kiểm", "Xem [chỗ này](/khong-he-ton-tai/) đã.\n\n## Tự kiểm", 1)),
      "href nội bộ không tới đâu"),
 ]
 
-# Ca nào cần cờ riêng thì khai ở đây, không nhét thêm cột vào mọi tuple: 44 ca cũ
-# không có lý do gì phải mọc thêm một ô rỗng vì bốn ca mới.
+# Ca nào cần cờ riêng thì khai ở đây, không nhét thêm cột vào mọi tuple cũ:
+# chúng không có lý do gì phải mọc thêm một ô rỗng vì vài ca cần cờ riêng.
 THEM_ARGV = {ten: ca[3] for ca in CA if len(ca) > 3 for ten in [ca[0]]}
 # Ba ca v3 dưới đây cần cờ nhưng khai ở dạng tuple 3 phần tử cho gọn — nối cờ ở đây.
 for _t in ("BỐ CỤC v3 · thiếu v3.css phải NỔ — trang đủ chữ mà không có hình là hỏng im nhất",

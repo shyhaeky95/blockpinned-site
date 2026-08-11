@@ -25,6 +25,8 @@ Tại block **25.650.178** (10h34 ngày 31/07, 03:34:35 UTC), cửa sổ từ bl
 - **0** lượt chuyển ra
 - số dư hợp đồng bằng đúng vào trừ ra, **khớp tới wei**
 
+{{visual:money-path}}
+
 ## 144.388 PENDLE đó có thật sự được mua không?
 
 Token nằm trong ví không tự chứng minh nó được mua. Nên mở cả 65 giao dịch ra đọc: cả 65 đều gọi **cùng một hàm** của hợp đồng đó, đều có **USDT đi ra**, **PENDLE đi vào**, và ít nhất một **sự kiện swap** trong cùng giao dịch.
@@ -33,34 +35,19 @@ Nhưng đồng thời chưa phải nhân quả. Nên nối thêm một bước: 
 
 Phần **17,56%** còn lại **chưa nối được bằng phép thử này**. Nhiều khả năng vì danh sách loại pool chưa phủ hết — log của các giao dịch này chứa ít nhất sáu topic AMM mà bộ lọc bốn loại không nhận diện được — nhưng "nhiều khả năng" không phải một phép đo. Nên con số đúng để nhớ là: **ít nhất 82,44% lượng PENDLE này đến thẳng từ một lượt swap** — con số sàn, không phải toàn phần.
 
-| phép thử | hỏi gì | kết quả |
-|---|---|---|
-| vòng 1 | địa chỉ **gửi** token có tự phát sự kiện swap không | **0/65** — hỏi sai chỗ: sự kiện swap do **pool** phát, người gửi là router |
-| vòng 2 | trong cùng giao dịch có swap không, hợp đồng có chi tài sản khác không | **65/65** — nhưng đây mới là **đồng thời** |
-| vòng 3 | PENDLE có rời một địa chỉ vừa phát swap rồi tới hợp đồng không | **82,44%** lượng · **1/65** giao dịch nối kín |
+{{visual:proof-ladder}}
 
 ## Còn ô 0 kia đang bỏ sót cái gì
 
 Đếm bước thứ hai từ block 0: endpoint trả về **12** lượt chuyển sang sPendle; truy vấn trang kế tiếp trả về **0** kết quả, thử ở cả cỡ trang 1.000 lẫn 50. Khoảng cách giữa các lần: **11,473–17,121 ngày**, trung vị **13,924**, trung bình **14,021** — và **9 trên 11** khoảng nằm gọn trong dải 13,4 đến 14,5 ngày.
 
-| ngày | block | PENDLE | cách lần trước |
-|---|---|---|---|
-| 13/02 | 24.447.170 | 256.295,28 | — |
-| 27/02 | 24.547.032 | 173.301,79 | 13,9 |
-| 13/03 | 24.647.427 | 196.891,65 | 14,0 |
-| 27/03 | 24.746.717 | 140.582,29 | 13,9 |
-| 10/04 | 24.846.394 | 196.115,03 | 13,9 |
-| 27/04 | 24.969.306 | 287.935,30 | **17,1** |
-| 08/05 | 25.051.665 | 110.443,77 | **11,5** |
-| 22/05 | 25.148.172 | 142.392,18 | 13,4 |
-| 05/06 | 25.249.416 | 218.235,05 | 14,1 |
-| 19/06 | 25.350.280 | 131.832,08 | 14,1 |
-| 03/07 | 25.449.465 | 239.840,40 | 13,8 |
-| 17/07 | 25.553.407 | 149.086,56 | 14,5 |
+{{visual:bridge-timeline}}
 
 Bảng lịch sử trên trang dữ liệu cũng có **12 ô**. Hai ô mới nhất bằng 0. **Chín** ô ghép được với một lượt chuyển on-chain theo khối lượng. **Một** ô không ghép được với lượt nào — nhãn 24/02, giá trị 203.883,65; chỗ đó tôi chưa giải thích được, và ghi ra đây thay vì bỏ qua cho bảng đẹp.
 
 Trong chín cặp đã ghép, tính theo ngày UTC, ngày trên bảng đứng **trước** ngày chuyển **17 ngày ở tám cặp, 20 ngày ở một cặp**.
+
+{{visual:epoch-map}}
 
 Nếu kỳ này lệch như chín kỳ kia, nhãn **14/07** ứng với một lượt chuyển rơi vào **31/07 đến 03/08**. Vậy ô 0 chưa đủ để kết luận không có PENDLE đang chờ: tại block đo, hợp đồng vẫn giữ 144.388,02 và chưa chuyển đi đâu.
 

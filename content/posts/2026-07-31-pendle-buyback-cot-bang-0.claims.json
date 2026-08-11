@@ -115,6 +115,107 @@
       ]
     }
   ],
+  "visuals": [
+    {
+      "id": "money-path",
+      "type": "flow",
+      "eyebrow": "SỔ CÂN BẰNG · CÙNG MỘT CỬA SỔ",
+      "title": "Từ 65 lượt vào tới số dư khớp tới wei",
+      "aria": "65 lượt đưa PENDLE vào hợp đồng, tạo tổng số dư 144.388,02 PENDLE, trong khi không có lượt chuyển ra nào trong cửa sổ đo.",
+      "caption": "Ảnh chụp cố định tại block 25.650.178; đây là phép cân sổ trong đúng cửa sổ của bài.",
+      "claims": ["C1"],
+      "steps": [
+        {
+          "label": "PENDLE ĐI VÀO",
+          "value": "65 lượt",
+          "note": "từ block 25.553.408",
+          "tone": "info"
+        },
+        {
+          "label": "HỢP ĐỒNG ĐANG GIỮ",
+          "value": "144.388,02",
+          "note": "PENDLE tại block đo",
+          "tone": "accent"
+        },
+        {
+          "label": "PENDLE ĐI RA",
+          "value": "0 lượt",
+          "note": "trong cùng cửa sổ",
+          "tone": "muted"
+        }
+      ]
+    },
+    {
+      "id": "proof-ladder",
+      "type": "proof",
+      "eyebrow": "BA VÒNG SIẾT BẰNG CHỨNG",
+      "title": "Mỗi vòng trả lời một câu hẹp hơn",
+      "aria": "Vòng một trả 0 trên 65 vì hỏi sai nơi phát sự kiện. Vòng hai thấy 65 trên 65 giao dịch có swap nhưng mới chứng minh đồng thời. Vòng ba nối được ít nhất 82,44 phần trăm lượng PENDLE tới swap.",
+      "caption": "Con số cuối nói rằng đã nối được ít nhất chừng ấy, không phải toàn bộ lượng mua.",
+      "claims": ["C2"],
+      "steps": [
+        {
+          "label": "VÒNG 1",
+          "question": "địa chỉ gửi có tự phát sự kiện swap không",
+          "value": "0/65",
+          "note": "hỏi sai nơi phát log",
+          "tone": "bad"
+        },
+        {
+          "label": "VÒNG 2",
+          "question": "cùng giao dịch có swap và có tài sản đi ra không",
+          "value": "65/65",
+          "note": "mới chứng minh đồng thời",
+          "tone": "warn"
+        },
+        {
+          "label": "VÒNG 3",
+          "question": "PENDLE có nối được trực tiếp từ pool tới hợp đồng không",
+          "value": "82,44%",
+          "note": "đã nối được ít nhất",
+          "tone": "good"
+        }
+      ]
+    },
+    {
+      "id": "bridge-timeline",
+      "type": "timeline",
+      "eyebrow": "12 LƯỢT CHUYỂN · 11 KHOẢNG",
+      "title": "Nhịp gần hai tuần, nhưng không đều tuyệt đối",
+      "aria": "Mười hai lượt chuyển PENDLE từ tháng Hai tới tháng Bảy, với khoảng cách từ 11,5 tới 17,1 ngày và phần lớn nằm quanh 14 ngày.",
+      "caption": "Chiều cao là lượng PENDLE; dòng cuối mỗi cột là số ngày cách lượt trước tại thời điểm bài được ghim.",
+      "claims": ["C3"],
+      "unit": "PENDLE",
+      "events": [
+        {"label": "13/02", "value": "256.295,28", "gap": "—", "magnitude": 256295.28, "tone": "info"},
+        {"label": "27/02", "value": "173.301,79", "gap": "13,9 ngày", "magnitude": 173301.79, "tone": "info"},
+        {"label": "13/03", "value": "196.891,65", "gap": "14,0 ngày", "magnitude": 196891.65, "tone": "info"},
+        {"label": "27/03", "value": "140.582,29", "gap": "13,9 ngày", "magnitude": 140582.29, "tone": "info"},
+        {"label": "10/04", "value": "196.115,03", "gap": "13,9 ngày", "magnitude": 196115.03, "tone": "info"},
+        {"label": "27/04", "value": "287.935,30", "gap": "17,1 ngày", "magnitude": 287935.30, "tone": "warn"},
+        {"label": "08/05", "value": "110.443,77", "gap": "11,5 ngày", "magnitude": 110443.77, "tone": "warn"},
+        {"label": "22/05", "value": "142.392,18", "gap": "13,4 ngày", "magnitude": 142392.18, "tone": "info"},
+        {"label": "05/06", "value": "218.235,05", "gap": "14,1 ngày", "magnitude": 218235.05, "tone": "info"},
+        {"label": "19/06", "value": "131.832,08", "gap": "14,1 ngày", "magnitude": 131832.08, "tone": "info"},
+        {"label": "03/07", "value": "239.840,40", "gap": "13,8 ngày", "magnitude": 239840.40, "tone": "info"},
+        {"label": "17/07", "value": "149.086,56", "gap": "14,5 ngày", "magnitude": 149086.56, "tone": "info"}
+      ]
+    },
+    {
+      "id": "epoch-map",
+      "type": "distribution",
+      "eyebrow": "12 Ô TRÊN TRANG DỮ LIỆU",
+      "title": "Không phải cả 12 ô đều được phân định như nhau",
+      "aria": "Trong mười hai ô dữ liệu, hai ô bằng không, chín ô ghép được với một lượt chuyển on-chain, và một ô chưa ghép được.",
+      "caption": "Phân nhóm theo phép ghép khối lượng có dung sai 2 PENDLE; không suy ra cách hệ thống của Pendle tính từng ô.",
+      "claims": ["C4"],
+      "segments": [
+        {"label": "ô bằng 0", "count": 2, "note": "hai nhãn mới nhất", "tone": "muted"},
+        {"label": "ghép được", "count": 9, "note": "với lượt chuyển on-chain", "tone": "good"},
+        {"label": "chưa ghép được", "count": 1, "note": "giữ nguyên phần chưa giải thích", "tone": "warn"}
+      ]
+    }
+  ],
   "trang_chu": {
     "the": {
       "viz": {

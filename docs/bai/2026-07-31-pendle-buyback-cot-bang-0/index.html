@@ -320,6 +320,78 @@ code{font:500 .875em var(--mono);background:var(--inset);border:1px solid var(--
 .bang tbody tr{transition:background .13s}
 .bang tbody tr:hover{background:color-mix(in srgb,var(--inset) 60%,transparent)}
 
+/* ── VISUAL GRAMMAR CHO BÀI: một schema sinh cả hình và bảng kiểm ─────── */
+.article-viz{--mx:50%;--my:20%;margin:36px 0 42px;padding:clamp(20px,3vw,30px);border:1px solid var(--line);
+  border-radius:20px;background:linear-gradient(145deg,color-mix(in srgb,var(--card) 88%,var(--bg)),var(--bg2));
+  box-shadow:var(--bong);position:relative;overflow:hidden;isolation:isolate}
+.article-viz::before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(420px circle at var(--mx) var(--my),
+  color-mix(in srgb,var(--accent) 10%,transparent),transparent 72%)}
+.article-viz-head{display:grid;grid-template-columns:minmax(110px,.34fr) minmax(0,1fr);gap:20px;align-items:end;
+  margin-bottom:25px;padding-bottom:17px;border-bottom:1px solid var(--line)}
+.article-viz-head>p{margin:0;font:750 9px/1.5 var(--mono);letter-spacing:.18em;color:var(--accent)}
+.than .article-viz-head>h3{margin:0;font:760 clamp(22px,3vw,31px)/1.12 var(--display);letter-spacing:-.035em}
+.article-viz figcaption{display:flex;justify-content:space-between;gap:10px 24px;flex-wrap:wrap;margin-top:20px;
+  padding-top:14px;border-top:1px solid var(--line-soft);font:520 9.5px/1.55 var(--mono);color:var(--faint)}
+.article-viz figcaption>span:first-child{max-width:70ch}.article-viz figcaption a{font-weight:700;color:var(--muted)}
+.tone-accent{--vt:var(--accent)}.tone-good{--vt:var(--c-xn)}.tone-warn{--vt:var(--c-sua)}
+.tone-bad{--vt:var(--c-bac)}.tone-info{--vt:var(--c-song)}.tone-muted{--vt:var(--faint)}
+
+.av-flow{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:22px}
+.av-node{--vt:var(--accent);min-height:154px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);
+  border-top:3px solid var(--vt);border-radius:13px;background:color-mix(in srgb,var(--vt) 4%,var(--card));position:relative}
+.av-node:not(:last-child)::after{content:"→";position:absolute;right:-18px;top:50%;transform:translateY(-50%);
+  font:600 13px/1 var(--mono);color:var(--faint)}
+.av-node>span{font:750 8.5px/1.4 var(--mono);letter-spacing:.12em;color:var(--vt);text-transform:uppercase}
+.av-node>strong{margin:18px 0 9px;font:780 clamp(24px,3.3vw,38px)/.95 var(--display);letter-spacing:-.045em;color:var(--ink)}
+.av-node>small{margin-top:auto;font:520 10px/1.5 var(--mono);color:var(--faint)}
+
+.av-proof{list-style:none!important;margin:0!important;padding:0!important;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.av-proof li{--vt:var(--accent);min-width:0;padding:17px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:13px;
+  border:1px solid var(--line);border-radius:13px;background:color-mix(in srgb,var(--vt) 4%,var(--card));position:relative}
+.av-proof li>span{width:28px;height:28px;display:grid;place-items:center;border:1px solid color-mix(in srgb,var(--vt) 48%,var(--line));
+  border-radius:50%;font:750 9px/1 var(--mono);color:var(--vt)}
+.av-proof li small{display:block;font:750 8px/1.35 var(--mono);letter-spacing:.12em;color:var(--vt);text-transform:uppercase}
+.av-proof li strong{display:block;margin:12px 0 8px;font:780 clamp(23px,3vw,34px)/1 var(--display);letter-spacing:-.04em}
+.av-proof li p{margin:0;font:520 10px/1.5 var(--mono);color:var(--faint)}
+
+.av-timeline{height:250px;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(105px,1fr);gap:5px;align-items:end;
+  overflow-x:auto;padding:8px 3px 14px;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.av-time{--vt:var(--c-song);height:100%;min-width:0;display:grid;grid-template-rows:minmax(75px,1fr) auto auto auto;align-items:end;
+  padding:0 7px 9px;border-bottom:2px solid var(--line);scroll-snap-align:start;position:relative}
+.av-time>i{width:100%;height:var(--m);min-height:12px;align-self:end;border-radius:5px 5px 1px 1px;
+  background:linear-gradient(180deg,var(--vt),color-mix(in srgb,var(--vt) 48%,transparent));opacity:.72}
+.av-time>b{margin-top:9px;font:750 9px/1.3 var(--mono);color:var(--ink)}
+.av-time>strong{margin-top:5px;font:700 10px/1.2 var(--mono);color:var(--vt);white-space:nowrap}
+.av-time>small{margin-top:5px;font:520 8.5px/1.2 var(--mono);color:var(--faint);white-space:nowrap}
+
+.av-dist-bar{height:48px;display:flex;gap:3px;padding:3px;border:1px solid var(--line);border-radius:10px;background:var(--bg);overflow:hidden}
+.av-dist-bar>i{--vt:var(--accent);flex:var(--n);min-width:12px;border-radius:6px;background:var(--vt);opacity:.78}
+.av-dist-legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:15px}
+.av-dist-legend>span{--vt:var(--accent);display:grid;grid-template-columns:auto auto 1fr;gap:7px;align-items:center;
+  font:550 9.5px/1.4 var(--mono);color:var(--faint)}
+.av-dist-legend>span>i{width:8px;height:8px;border-radius:2px;background:var(--vt)}
+.av-dist-legend>span>b{font-size:15px;color:var(--ink)}
+.article-viz-data{margin-top:16px;border-top:1px solid var(--line-soft)}
+.article-viz-data>summary{padding:14px 0 0;display:flex;justify-content:space-between;gap:14px;cursor:pointer;list-style:none;
+  font:700 9.5px/1.4 var(--mono);letter-spacing:.08em;color:var(--muted)}
+.article-viz-data>summary::-webkit-details-marker{display:none}.article-viz-data>summary span{color:var(--accent)}
+.article-viz-data[open]>summary span{font-size:0}.article-viz-data[open]>summary span::after{content:"đóng bảng ↑";font-size:9.5px}
+.article-viz-data .bang{margin:14px 0 0}.article-viz-data .bang table{font-size:13px;background:color-mix(in srgb,var(--bg) 45%,transparent)}
+html.chuyen .article-viz.is-visible .av-node,html.chuyen .article-viz.is-visible .av-proof li,
+html.chuyen .article-viz.is-visible .av-time>i,html.chuyen .article-viz.is-visible .av-dist-bar>i{
+  animation:av-lock .58s cubic-bezier(.2,.8,.2,1) backwards}
+html.chuyen .article-viz.is-visible :is(.av-node,.av-proof li,.av-time>i,.av-dist-bar>i):nth-child(2){animation-delay:.08s}
+html.chuyen .article-viz.is-visible :is(.av-node,.av-proof li,.av-time>i,.av-dist-bar>i):nth-child(3){animation-delay:.16s}
+@keyframes av-lock{from{opacity:.18;transform:scaleY(.45);transform-origin:bottom}to{opacity:1;transform:none}}
+
+@media(max-width:700px){
+  .article-viz{margin-inline:-4px;padding:20px 17px;border-radius:17px}.article-viz-head{grid-template-columns:1fr;gap:5px}
+  .av-flow{grid-auto-flow:row;grid-auto-rows:auto;gap:19px}.av-node{min-height:125px}.av-node:not(:last-child)::after{right:50%;top:auto;
+    bottom:-17px;transform:translateX(50%) rotate(90deg)}
+  .av-proof{grid-template-columns:1fr}.av-proof li{min-height:118px}.av-timeline{margin-inline:-3px;grid-auto-columns:112px}
+  .article-viz figcaption{display:grid}.article-viz-data>summary{letter-spacing:.03em}
+}
+
 /* ── TOKEN PRIMER (thể loại: sống theo ĐỐI TƯỢNG, không theo ngày) ─────── */
 .than h3{font:700 19px/1.35 var(--display);letter-spacing:-.015em;margin:40px 0 12px;text-wrap:balance}
 .than .trich{border-left:3px solid var(--accent);margin:26px 0;padding:4px 0 4px 22px;max-width:66ch}
@@ -1711,16 +1783,38 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <p>Cột trên trang dữ liệu phản ánh bước thứ hai. Bước thứ nhất thì không ai nhìn — nên đo nó.</p>
 <p>Tại block <strong>25.650.178</strong> (10h34 ngày 31/07, 03:34:35 UTC), cửa sổ từ block <strong>25.553.408</strong>, ngay sau lần chuyển gần nhất:</p>
 <ul><li><strong>65</strong> giao dịch đưa PENDLE vào hợp đồng — tổng <strong>144.388,016375</strong></li><li><strong>0</strong> lượt chuyển ra</li><li>số dư hợp đồng bằng đúng vào trừ ra, <strong>khớp tới wei</strong></li></ul>
+<figure class="article-viz article-viz-flow" id="visual-money-path" data-spotlight>
+  <div class="article-viz-head"><p>SỔ CÂN BẰNG · CÙNG MỘT CỬA SỔ</p><h3>Từ 65 lượt vào tới số dư khớp tới wei</h3></div>
+  <div class="av-flow" role="img" aria-label="65 lượt đưa PENDLE vào hợp đồng, tạo tổng số dư 144.388,02 PENDLE, trong khi không có lượt chuyển ra nào trong cửa sổ đo."><article class="av-node tone-info"><span>PENDLE ĐI VÀO</span><strong>65 lượt</strong><small>từ block 25.553.408</small></article><article class="av-node tone-accent"><span>HỢP ĐỒNG ĐANG GIỮ</span><strong>144.388,02</strong><small>PENDLE tại block đo</small></article><article class="av-node tone-muted"><span>PENDLE ĐI RA</span><strong>0 lượt</strong><small>trong cùng cửa sổ</small></article></div>
+  <figcaption><span>Ảnh chụp cố định tại block 25.650.178; đây là phép cân sổ trong đúng cửa sổ của bài.</span><span>neo vào claim <a href="#C1">C1</a></span></figcaption>
+  <details class="article-viz-data"><summary>Dữ liệu đứng sau hình <span>mở bảng ↓</span></summary><div class="bang"><table><thead><tr><th>chặng</th><th>số đọc</th><th>ý nghĩa tại mốc</th></tr></thead><tbody><tr><td>PENDLE ĐI VÀO</td><td>65 lượt</td><td>từ block 25.553.408</td></tr><tr><td>HỢP ĐỒNG ĐANG GIỮ</td><td>144.388,02</td><td>PENDLE tại block đo</td></tr><tr><td>PENDLE ĐI RA</td><td>0 lượt</td><td>trong cùng cửa sổ</td></tr></tbody></table></div></details>
+</figure>
 <h2 id="144-388-pendle-do-co-that-su-duoc-mua-khong">144.388 PENDLE đó có thật sự được mua không?</h2>
 <p>Token nằm trong ví không tự chứng minh nó được mua. Nên mở cả 65 giao dịch ra đọc: cả 65 đều gọi <strong>cùng một hàm</strong> của hợp đồng đó, đều có <strong>USDT đi ra</strong>, <strong>PENDLE đi vào</strong>, và ít nhất một <strong>sự kiện swap</strong> trong cùng giao dịch.</p>
 <p>Nhưng đồng thời chưa phải nhân quả. Nên nối thêm một bước: PENDLE rời một địa chỉ vừa phát sự kiện swap, rồi tới hợp đồng, trong chính giao dịch đó. Nối được <strong>119.039,61 PENDLE — 82,44%</strong>.</p>
 <p>Phần <strong>17,56%</strong> còn lại <strong>chưa nối được bằng phép thử này</strong>. Nhiều khả năng vì danh sách loại pool chưa phủ hết — log của các giao dịch này chứa ít nhất sáu topic AMM mà bộ lọc bốn loại không nhận diện được — nhưng &quot;nhiều khả năng&quot; không phải một phép đo. Nên con số đúng để nhớ là: <strong>ít nhất 82,44% lượng PENDLE này đến thẳng từ một lượt swap</strong> — con số sàn, không phải toàn phần.</p>
-<div class="bang"><table><thead><tr><th>phép thử</th><th>hỏi gì</th><th>kết quả</th></tr></thead><tbody><tr><td>vòng 1</td><td>địa chỉ <strong>gửi</strong> token có tự phát sự kiện swap không</td><td><strong>0/65</strong> — hỏi sai chỗ: sự kiện swap do <strong>pool</strong> phát, người gửi là router</td></tr><tr><td>vòng 2</td><td>trong cùng giao dịch có swap không, hợp đồng có chi tài sản khác không</td><td><strong>65/65</strong> — nhưng đây mới là <strong>đồng thời</strong></td></tr><tr><td>vòng 3</td><td>PENDLE có rời một địa chỉ vừa phát swap rồi tới hợp đồng không</td><td><strong>82,44%</strong> lượng · <strong>1/65</strong> giao dịch nối kín</td></tr></tbody></table></div>
+<figure class="article-viz article-viz-proof" id="visual-proof-ladder" data-spotlight>
+  <div class="article-viz-head"><p>BA VÒNG SIẾT BẰNG CHỨNG</p><h3>Mỗi vòng trả lời một câu hẹp hơn</h3></div>
+  <ol class="av-proof" aria-label="Vòng một trả 0 trên 65 vì hỏi sai nơi phát sự kiện. Vòng hai thấy 65 trên 65 giao dịch có swap nhưng mới chứng minh đồng thời. Vòng ba nối được ít nhất 82,44 phần trăm lượng PENDLE tới swap."><li class="tone-bad"><span>01</span><div><small>VÒNG 1</small><strong>0/65</strong><p>hỏi sai nơi phát log</p></div></li><li class="tone-warn"><span>02</span><div><small>VÒNG 2</small><strong>65/65</strong><p>mới chứng minh đồng thời</p></div></li><li class="tone-good"><span>03</span><div><small>VÒNG 3</small><strong>82,44%</strong><p>đã nối được ít nhất</p></div></li></ol>
+  <figcaption><span>Con số cuối nói rằng đã nối được ít nhất chừng ấy, không phải toàn bộ lượng mua.</span><span>neo vào claim <a href="#C2">C2</a></span></figcaption>
+  <details class="article-viz-data"><summary>Dữ liệu đứng sau hình <span>mở bảng ↓</span></summary><div class="bang"><table><thead><tr><th>phép thử</th><th>hỏi gì</th><th>kết quả</th></tr></thead><tbody><tr><td>VÒNG 1</td><td>địa chỉ gửi có tự phát sự kiện swap không</td><td>0/65 — hỏi sai nơi phát log</td></tr><tr><td>VÒNG 2</td><td>cùng giao dịch có swap và có tài sản đi ra không</td><td>65/65 — mới chứng minh đồng thời</td></tr><tr><td>VÒNG 3</td><td>PENDLE có nối được trực tiếp từ pool tới hợp đồng không</td><td>82,44% — đã nối được ít nhất</td></tr></tbody></table></div></details>
+</figure>
 <h2 id="con-o-0-kia-dang-bo-sot-cai-gi">Còn ô 0 kia đang bỏ sót cái gì</h2>
 <p>Đếm bước thứ hai từ block 0: endpoint trả về <strong>12</strong> lượt chuyển sang sPendle; truy vấn trang kế tiếp trả về <strong>0</strong> kết quả, thử ở cả cỡ trang 1.000 lẫn 50. Khoảng cách giữa các lần: <strong>11,473–17,121 ngày</strong>, trung vị <strong>13,924</strong>, trung bình <strong>14,021</strong> — và <strong>9 trên 11</strong> khoảng nằm gọn trong dải 13,4 đến 14,5 ngày.</p>
-<div class="bang"><table><thead><tr><th>ngày</th><th>block</th><th>PENDLE</th><th>cách lần trước</th></tr></thead><tbody><tr><td>13/02</td><td>24.447.170</td><td>256.295,28</td><td>—</td></tr><tr><td>27/02</td><td>24.547.032</td><td>173.301,79</td><td>13,9</td></tr><tr><td>13/03</td><td>24.647.427</td><td>196.891,65</td><td>14,0</td></tr><tr><td>27/03</td><td>24.746.717</td><td>140.582,29</td><td>13,9</td></tr><tr><td>10/04</td><td>24.846.394</td><td>196.115,03</td><td>13,9</td></tr><tr><td>27/04</td><td>24.969.306</td><td>287.935,30</td><td><strong>17,1</strong></td></tr><tr><td>08/05</td><td>25.051.665</td><td>110.443,77</td><td><strong>11,5</strong></td></tr><tr><td>22/05</td><td>25.148.172</td><td>142.392,18</td><td>13,4</td></tr><tr><td>05/06</td><td>25.249.416</td><td>218.235,05</td><td>14,1</td></tr><tr><td>19/06</td><td>25.350.280</td><td>131.832,08</td><td>14,1</td></tr><tr><td>03/07</td><td>25.449.465</td><td>239.840,40</td><td>13,8</td></tr><tr><td>17/07</td><td>25.553.407</td><td>149.086,56</td><td>14,5</td></tr></tbody></table></div>
+<figure class="article-viz article-viz-timeline" id="visual-bridge-timeline" data-spotlight>
+  <div class="article-viz-head"><p>12 LƯỢT CHUYỂN · 11 KHOẢNG</p><h3>Nhịp gần hai tuần, nhưng không đều tuyệt đối</h3></div>
+  <div class="av-timeline" tabindex="0" role="img" aria-label="Mười hai lượt chuyển PENDLE từ tháng Hai tới tháng Bảy, với khoảng cách từ 11,5 tới 17,1 ngày và phần lớn nằm quanh 14 ngày."><span class="av-time tone-info"><i style="--m:89.01%"></i><b>13/02</b><strong>256.295,28</strong><small>—</small></span><span class="av-time tone-info"><i style="--m:60.19%"></i><b>27/02</b><strong>173.301,79</strong><small>13,9 ngày</small></span><span class="av-time tone-info"><i style="--m:68.38%"></i><b>13/03</b><strong>196.891,65</strong><small>14,0 ngày</small></span><span class="av-time tone-info"><i style="--m:48.82%"></i><b>27/03</b><strong>140.582,29</strong><small>13,9 ngày</small></span><span class="av-time tone-info"><i style="--m:68.11%"></i><b>10/04</b><strong>196.115,03</strong><small>13,9 ngày</small></span><span class="av-time tone-warn"><i style="--m:100.00%"></i><b>27/04</b><strong>287.935,30</strong><small>17,1 ngày</small></span><span class="av-time tone-warn"><i style="--m:38.36%"></i><b>08/05</b><strong>110.443,77</strong><small>11,5 ngày</small></span><span class="av-time tone-info"><i style="--m:49.45%"></i><b>22/05</b><strong>142.392,18</strong><small>13,4 ngày</small></span><span class="av-time tone-info"><i style="--m:75.79%"></i><b>05/06</b><strong>218.235,05</strong><small>14,1 ngày</small></span><span class="av-time tone-info"><i style="--m:45.79%"></i><b>19/06</b><strong>131.832,08</strong><small>14,1 ngày</small></span><span class="av-time tone-info"><i style="--m:83.30%"></i><b>03/07</b><strong>239.840,40</strong><small>13,8 ngày</small></span><span class="av-time tone-info"><i style="--m:51.78%"></i><b>17/07</b><strong>149.086,56</strong><small>14,5 ngày</small></span></div>
+  <figcaption><span>Chiều cao là lượng PENDLE; dòng cuối mỗi cột là số ngày cách lượt trước tại thời điểm bài được ghim.</span><span>neo vào claim <a href="#C3">C3</a></span></figcaption>
+  <details class="article-viz-data"><summary>Dữ liệu đứng sau hình <span>mở bảng ↓</span></summary><div class="bang"><table><thead><tr><th>ngày</th><th>PENDLE</th><th>cách lần trước</th></tr></thead><tbody><tr><td>13/02</td><td>256.295,28</td><td>—</td></tr><tr><td>27/02</td><td>173.301,79</td><td>13,9 ngày</td></tr><tr><td>13/03</td><td>196.891,65</td><td>14,0 ngày</td></tr><tr><td>27/03</td><td>140.582,29</td><td>13,9 ngày</td></tr><tr><td>10/04</td><td>196.115,03</td><td>13,9 ngày</td></tr><tr><td>27/04</td><td>287.935,30</td><td>17,1 ngày</td></tr><tr><td>08/05</td><td>110.443,77</td><td>11,5 ngày</td></tr><tr><td>22/05</td><td>142.392,18</td><td>13,4 ngày</td></tr><tr><td>05/06</td><td>218.235,05</td><td>14,1 ngày</td></tr><tr><td>19/06</td><td>131.832,08</td><td>14,1 ngày</td></tr><tr><td>03/07</td><td>239.840,40</td><td>13,8 ngày</td></tr><tr><td>17/07</td><td>149.086,56</td><td>14,5 ngày</td></tr></tbody></table></div></details>
+</figure>
 <p>Bảng lịch sử trên trang dữ liệu cũng có <strong>12 ô</strong>. Hai ô mới nhất bằng 0. <strong>Chín</strong> ô ghép được với một lượt chuyển on-chain theo khối lượng. <strong>Một</strong> ô không ghép được với lượt nào — nhãn 24/02, giá trị 203.883,65; chỗ đó tôi chưa giải thích được, và ghi ra đây thay vì bỏ qua cho bảng đẹp.</p>
 <p>Trong chín cặp đã ghép, tính theo ngày UTC, ngày trên bảng đứng <strong>trước</strong> ngày chuyển <strong>17 ngày ở tám cặp, 20 ngày ở một cặp</strong>.</p>
+<figure class="article-viz article-viz-distribution" id="visual-epoch-map" data-spotlight>
+  <div class="article-viz-head"><p>12 Ô TRÊN TRANG DỮ LIỆU</p><h3>Không phải cả 12 ô đều được phân định như nhau</h3></div>
+  <div class="av-distribution" role="img" aria-label="Trong mười hai ô dữ liệu, hai ô bằng không, chín ô ghép được với một lượt chuyển on-chain, và một ô chưa ghép được."><div class="av-dist-bar"><i class="tone-muted" style="--n:2"></i><i class="tone-good" style="--n:9"></i><i class="tone-warn" style="--n:1"></i></div><div class="av-dist-legend"><span class="tone-muted"><i></i><b>2</b><small>ô bằng 0</small></span><span class="tone-good"><i></i><b>9</b><small>ghép được</small></span><span class="tone-warn"><i></i><b>1</b><small>chưa ghép được</small></span></div></div>
+  <figcaption><span>Phân nhóm theo phép ghép khối lượng có dung sai 2 PENDLE; không suy ra cách hệ thống của Pendle tính từng ô.</span><span>neo vào claim <a href="#C4">C4</a></span></figcaption>
+  <details class="article-viz-data"><summary>Dữ liệu đứng sau hình <span>mở bảng ↓</span></summary><div class="bang"><table><thead><tr><th>nhóm</th><th>số mục</th><th>đọc là</th></tr></thead><tbody><tr><td>ô bằng 0</td><td>2</td><td>hai nhãn mới nhất</td></tr><tr><td>ghép được</td><td>9</td><td>với lượt chuyển on-chain</td></tr><tr><td>chưa ghép được</td><td>1</td><td>giữ nguyên phần chưa giải thích</td></tr></tbody></table></div></details>
+</figure>
 <p>Nếu kỳ này lệch như chín kỳ kia, nhãn <strong>14/07</strong> ứng với một lượt chuyển rơi vào <strong>31/07 đến 03/08</strong>. Vậy ô 0 chưa đủ để kết luận không có PENDLE đang chờ: tại block đo, hợp đồng vẫn giữ 144.388,02 và chưa chuyển đi đâu.</p>
 <p>Chu kỳ ngay trước có cùng chuỗi sự kiện: <strong>63</strong> giao dịch đưa PENDLE vào từ 14/07 tới 17/07, không lượt ra nào trong lúc gom, rồi <strong>một</strong> giao dịch chuyển toàn bộ phần đã gom sang sPendle — vào bằng ra, khớp tuyệt đối.</p>
 <h2 id="mot-cau-da-bi-chan-truoc-khi-len-bai">Một câu đã bị chặn trước khi lên bài</h2>

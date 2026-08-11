@@ -14,15 +14,17 @@ chịu cùng luật đó — nên nó ở đây, chạy lại được, và **c�
 ## Dựng lại
 
 ```bash
-python3 build.py            # sinh docs/ — 8 cổng, cổng nào chặn thì KHÔNG có trang
-python3 test_cong.py        # 22 ca ép từng cổng phải nổ, kèm control âm
+python3 build.py            # sinh docs/ — cổng nào chặn thì KHÔNG có trang
+python3 test_cong.py        # ép từng cổng phải nổ, kèm control âm
 python3 preview.py          # ảnh chụp khổ hẹp + phép đo tràn tự kiểm
 ```
+
+Bốn mẫu visual cho bài dài và cấu hình copy-paste nằm tại [`VISUALS.md`](VISUALS.md).
 
 `docs/` là thứ GitHub Pages phục vụ. Nó là **bản sinh ra** — sửa nội dung ở
 `content/`, đừng sửa `docs/`.
 
-## Tám cổng CHẶN build
+## Các cổng CHẶN build
 
 Không cổng nào chỉ cảnh báo. Cảnh báo là thứ người ta quen mắt bỏ qua.
 
@@ -36,6 +38,12 @@ Không cổng nào chỉ cảnh báo. Cảnh báo là thứ người ta quen m�
 | ⑥ | thuộc tính số | toạ độ/số trong HTML sinh ra phải là số hợp lệ |
 | ⑦ | xem trước | bài thiếu dòng mô tả, hoặc ảnh xem trước trỏ vào file không có |
 | ⑧ | đo lại | nút "đo lại ngay" khai thiếu, hoặc claim không đo được mà không nói vì sao |
+| ⑨ | hạn | ngày phân định không có mốc và ý nghĩa rõ ràng |
+| ⑩ | ghi trước | kết quả hoặc nơi ghi trước bị bỏ trống |
+| ⑪ | liên kết | href nội bộ không trỏ tới trang/neo có thật |
+| ⑫ | fact | Fact thiếu số, block, lệnh tự kiểm hoặc khoảng cách đáng kể |
+| ⑬ | bố cục | component v3 bắt buộc bị rơi khỏi HTML |
+| ⑭ | visual | marker, schema, claim nguồn, hình và bảng dữ liệu không khớp một-một |
 
 Cổng ③ là bản máy của một lỗi thật: một claim suýt đăng khi đã bị cắt mất điều
 bác bỏ, mà ô tick "có điều bác bỏ?" vẫn nguyên vì nó thừa kế từ bản trước.

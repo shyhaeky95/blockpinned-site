@@ -224,7 +224,7 @@ HIEN_VAT = {
 
 TEN_CONG = ["ngôn ngữ", "cấu trúc", "claim", "ngôi xưng", "đánh dấu",
             "thuộc tính số", "xem trước", "đo lại", "hạn", "ghi trước", "liên kết",
-            "fact", "bố cục"]
+            "fact", "bố cục", "visual"]
 
 # chữ ký hàm hợp lệ: tên + danh sách kiểu, vd `balanceOf(address)` · `x()` · `f(uint256,address)`
 RE_KY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*\((|[a-z0-9\[\],]+)\)$")
@@ -268,7 +268,87 @@ def inline(s: str, o: str) -> str:
     return s
 
 
-def render(md: str, o: str) -> str:
+RE_VISUAL = re.compile(r"^\{\{visual:([a-z0-9-]+)\}\}$")
+VISUAL_TYPES = {"flow", "proof", "timeline", "distribution"}
+VISUAL_TONES = {"accent", "good", "warn", "bad", "info", "muted"}
+
+
+def _bang_visual(headers: list[str], rows: list[list[str]]) -> str:
+    head = "".join(f"<th>{ihtml.escape(str(c))}</th>" for c in headers)
+    body = "".join("<tr>" + "".join(f"<td>{ihtml.escape(str(c))}</td>" for c in row)
+                   + "</tr>" for row in rows)
+    return f'<div class="bang"><table><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>'
+
+
+def _du_lieu_visual(v: dict) -> tuple[list[str], list[list[str]]]:
+    """Một cấu hình sinh CẢ visual lẫn bảng kiểm — không có bản số thứ hai để trôi."""
+    if v["type"] == "flow":
+        return (["chặng", "số đọc", "ý nghĩa tại mốc"],
+                [[x["label"], x["value"], x["note"]] for x in v["steps"]])
+    if v["type"] == "proof":
+        return (["phép thử", "hỏi gì", "kết quả"],
+                [[x["label"], x["question"], f'{x["value"]} — {x["note"]}']
+                 for x in v["steps"]])
+    if v["type"] == "timeline":
+        return (["ngày", v.get("unit", "giá trị"), "cách lần trước"],
+                [[x["label"], x["value"], x.get("gap", "—")] for x in v["events"]])
+    return (["nhóm", "số mục", "đọc là"],
+            [[x["label"], str(x["count"]), x["note"]] for x in v["segments"]])
+
+
+def render_visual(v: dict) -> str:
+    headers, rows = _du_lieu_visual(v)
+    bang_html = _bang_visual(headers, rows)
+    # D2 là đường rollback: không mượn CSS v3, nhưng dữ liệu không được biến mất.
+    # Cùng cấu hình vì thế rơi về bảng đầy đủ thay vì để lộ directive hoặc chữ trần.
+    if BO_CUC != "v3":
+        return bang_html
+
+    vid, loai = v["id"], v["type"]
+    if loai == "flow":
+        than = '<div class="av-flow" role="img" aria-label="{}">{}</div>'.format(
+            ihtml.escape(v["aria"], quote=True), "".join(
+                f'<article class="av-node tone-{x.get("tone", "accent")}">'
+                f'<span>{ihtml.escape(x["label"])}</span><strong>{ihtml.escape(x["value"])}</strong>'
+                f'<small>{ihtml.escape(x["note"])}</small></article>' for x in v["steps"]))
+    elif loai == "proof":
+        than = '<ol class="av-proof" aria-label="{}">{}</ol>'.format(
+            ihtml.escape(v["aria"], quote=True), "".join(
+                f'<li class="tone-{x.get("tone", "accent")}"><span>{n:02d}</span><div>'
+                f'<small>{ihtml.escape(x["label"])}</small><strong>{ihtml.escape(x["value"])}</strong>'
+                f'<p>{ihtml.escape(x["note"])}</p></div></li>'
+                for n, x in enumerate(v["steps"], 1)))
+    elif loai == "timeline":
+        lon = max(float(x["magnitude"]) for x in v["events"])
+        diem = []
+        for x in v["events"]:
+            cao = max(12.0, float(x["magnitude"]) / lon * 100)
+            diem.append(
+                f'<span class="av-time tone-{x.get("tone", "info")}">'
+                f'<i style="--m:{cao:.2f}%"></i><b>{ihtml.escape(x["label"])}</b>'
+                f'<strong>{ihtml.escape(x["value"])}</strong><small>{ihtml.escape(x.get("gap", "—"))}</small></span>')
+        than = (f'<div class="av-timeline" tabindex="0" role="img" '
+                f'aria-label="{ihtml.escape(v["aria"], quote=True)}">{"".join(diem)}</div>')
+    else:
+        than = '<div class="av-distribution" role="img" aria-label="{}"><div class="av-dist-bar">{}</div><div class="av-dist-legend">{}</div></div>'.format(
+            ihtml.escape(v["aria"], quote=True),
+            "".join(f'<i class="tone-{x.get("tone", "accent")}" style="--n:{x["count"]}"></i>'
+                    for x in v["segments"]),
+            "".join(f'<span class="tone-{x.get("tone", "accent")}"><i></i><b>{x["count"]}</b>'
+                    f'<small>{ihtml.escape(x["label"])}</small></span>' for x in v["segments"]))
+
+    claims = " · ".join(f'<a href="#{ihtml.escape(cid, quote=True)}">{ihtml.escape(cid)}</a>'
+                         for cid in v["claims"])
+    return f'''<figure class="article-viz article-viz-{loai}" id="visual-{vid}" data-spotlight>
+  <div class="article-viz-head"><p>{ihtml.escape(v.get("eyebrow", loai).upper())}</p><h3>{ihtml.escape(v["title"])}</h3></div>
+  {than}
+  <figcaption><span>{ihtml.escape(v["caption"])}</span><span>neo vào claim {claims}</span></figcaption>
+  <details class="article-viz-data"><summary>Dữ liệu đứng sau hình <span>mở bảng ↓</span></summary>{bang_html}</details>
+</figure>'''
+
+
+def render(md: str, o: str, visuals: list | None = None) -> str:
+    visual_map = {v["id"]: v for v in (visuals or [])}
     lines, out, i = md.split("\n"), [], 0
     while i < len(lines):
         ln = lines[i]
@@ -276,6 +356,12 @@ def render(md: str, o: str) -> str:
         if not ln.strip():
             i += 1
             continue
+
+        vm = RE_VISUAL.fullmatch(ln.strip())
+        if vm:
+            if vm.group(1) not in visual_map:
+                raise LoiCong(f"visual '{vm.group(1)}' có marker nhưng thiếu cấu hình — {o}")
+            out.append(render_visual(visual_map[vm.group(1)])); i += 1; continue
 
         if ln.startswith("```"):                                    # khối code
             lang_ = ln[3:].strip()
@@ -326,7 +412,7 @@ def render(md: str, o: str) -> str:
         para = [ln]                                                 # đoạn văn
         i += 1
         while i < len(lines) and lines[i].strip() and not re.match(
-                r"^(```|#{1,3}\s|\||-\s|\d+\.\s|---$)", lines[i].lstrip()):
+                r"^(```|#{1,3}\s|\||-\s|\d+\.\s|---$|\{\{visual:)", lines[i].lstrip()):
             para.append(lines[i]); i += 1
         out.append(f'<p>{inline(" ".join(x.strip() for x in para), o)}</p>')
 
@@ -369,6 +455,87 @@ def front(raw: str, o: str) -> tuple[dict, str]:
 
 
 # ═══════════════════════════════════════════════════════════════════════ CỔNG
+
+def cong_visuals(body: str, visuals, claims: list, o: str) -> None:
+    """Cổng visual — marker, cấu hình, claim nguồn và hình dạng phải khớp một-một.
+
+    Một visual đẹp nhưng mất claim nguồn là infographic; một marker không cấu hình
+    là chữ lạ lọt ra trang; hai cấu hình cùng id làm lần dựng phụ thuộc thứ tự. Cả ba
+    đều phải nổ trước khi HTML được viết.
+    """
+    visuals = visuals or []
+    if not isinstance(visuals, list):
+        raise LoiCong(f"'visuals' phải là danh sách — {o}")
+    marker = re.findall(r"^\{\{visual:([a-z0-9-]+)\}\}$", body, re.M)
+    if len(marker) != len(set(marker)):
+        raise LoiCong(f"marker visual bị lặp — mỗi visual chỉ được đặt một chỗ — {o}")
+    ids_claim = {c["id"] for c in claims}
+    ids = []
+    for v in visuals:
+        if not isinstance(v, dict):
+            raise LoiCong(f"mỗi visual phải là object — {o}")
+        for k in ("id", "type", "title", "aria", "caption", "claims"):
+            if not v.get(k):
+                raise LoiCong(f"visual thiếu '{k}' — {o}")
+        vid = str(v["id"])
+        if not re.fullmatch(r"[a-z0-9-]+", vid):
+            raise LoiCong(f"id visual phải dạng a-z/0-9/gạch ngang — {o}: {vid!r}")
+        ids.append(vid)
+        if v["type"] not in VISUAL_TYPES:
+            raise LoiCong(f"visual {vid} có type lạ {v['type']!r}; chỉ nhận {sorted(VISUAL_TYPES)} — {o}")
+        if len(str(v["aria"]).strip()) < 20 or len(str(v["caption"]).strip()) < 12:
+            raise LoiCong(f"visual {vid} thiếu mô tả đọc màn hình/caption có nghĩa — {o}")
+        if not isinstance(v["claims"], list) or not v["claims"]:
+            raise LoiCong(f"visual {vid} phải neo vào ít nhất một claim — {o}")
+        la = sorted(set(v["claims"]) - ids_claim)
+        if la:
+            raise LoiCong(f"visual {vid} neo vào claim không tồn tại: {la} — {o}")
+
+        khoa = "events" if v["type"] == "timeline" else ("segments" if v["type"] == "distribution" else "steps")
+        ds = v.get(khoa)
+        gioi_han = (3, 16) if khoa == "events" else (2, 6)
+        if not isinstance(ds, list) or not gioi_han[0] <= len(ds) <= gioi_han[1]:
+            raise LoiCong(f"visual {vid}.{khoa} phải có {gioi_han[0]}–{gioi_han[1]} mục — {o}")
+        for x in ds:
+            if not isinstance(x, dict):
+                raise LoiCong(f"visual {vid}.{khoa} phải chứa object — {o}")
+            bat_buoc = ({"label", "value", "note"} if v["type"] == "flow" else
+                        {"label", "value", "question", "note"} if v["type"] == "proof" else
+                        {"label", "value", "magnitude"} if v["type"] == "timeline" else
+                        {"label", "count", "note"})
+            thieu = sorted(k for k in bat_buoc if x.get(k) in (None, ""))
+            if thieu:
+                raise LoiCong(f"visual {vid}.{khoa} thiếu {thieu} — {o}")
+            if x.get("tone", "accent") not in VISUAL_TONES:
+                raise LoiCong(f"visual {vid} có tone lạ {x.get('tone')!r} — {o}")
+            if v["type"] == "timeline" and (not isinstance(x["magnitude"], (int, float))
+                                               or x["magnitude"] <= 0):
+                raise LoiCong(f"visual {vid} magnitude phải là số dương — {o}")
+            if v["type"] == "distribution" and (not isinstance(x["count"], int)
+                                                   or x["count"] <= 0):
+                raise LoiCong(f"visual {vid} count phải là số nguyên dương — {o}")
+    if len(ids) != len(set(ids)):
+        raise LoiCong(f"id visual bị trùng trong cấu hình — {o}")
+    if set(marker) != set(ids):
+        raise LoiCong(f"marker visual và cấu hình không khớp — marker={sorted(marker)}, "
+                      f"cấu hình={sorted(ids)} — {o}")
+
+
+def cong_visual_html(txt: str, visuals: list, o: str) -> None:
+    """Cổng sau render — cấu hình đúng mà renderer làm rơi hình vẫn phải nổ."""
+    if not visuals:
+        return
+    if "{{visual:" in txt:
+        raise LoiCong(f"directive visual còn sót sau render — {o}")
+    if BO_CUC != "v3":
+        return
+    if txt.count('<figure class="article-viz ') != len(visuals):
+        raise LoiCong(f"visual v3 dựng thiếu figure — cần {len(visuals)} — {o}")
+    if txt.count('<details class="article-viz-data">') != len(visuals):
+        raise LoiCong(f"visual v3 dựng thiếu bảng dữ liệu gốc — cần {len(visuals)} — {o}")
+    for v in visuals:
+        if f'id="visual-{v["id"]}"' not in txt:
+            raise LoiCong(f"visual v3 dựng thiếu id {v['id']!r} — {o}")
 
 def cong_ngon_ngu(txt: str, o: str) -> None:
     """Cổng 1 — dùng chung RETIRED/JARGON của template/check_language.py."""
@@ -2188,7 +2355,7 @@ def _hero_bai_v3(fm: dict, claims: list, trang_chu: dict) -> str:
 
 
 def trang_bai_v3(fm: dict, claims: list, body_md: str, o: str, ho_so: str,
-                  trang_chu: dict) -> str:
+                  trang_chu: dict, visuals: list) -> str:
     """Dựng trang bài bằng markup WOW, không dùng `.dai/.so/.claim` của D2."""
     muc = []
     for h in re.findall(r"^##\s+(.+)$", body_md, re.M)[:3]:
@@ -2196,7 +2363,7 @@ def trang_bai_v3(fm: dict, claims: list, body_md: str, o: str, ho_so: str,
         muc.append(f'<a href="#{slug(h)}">{ihtml.escape(nhan)}</a>')
     ban_dang = (f'<a href="{fm["kenh_x"]}">bản đăng trên X ↗</a>' if fm.get("kenh_x")
                 else '<i>chưa đăng trên kênh</i>')
-    than = render(body_md, o).replace('<div class="cuon"><table>', '<div class="bang"><table>')
+    than = render(body_md, o, visuals).replace('<div class="cuon"><table>', '<div class="bang"><table>')
     return (_hero_bai_v3(fm, claims, trang_chu)
             + '<nav class="article-map" aria-label="Điều hướng trong bài"><span>Đọc theo bằng chứng</span>'
             + '<a href="#so-claim">Sổ claim</a>' + "".join(muc) + '</nav>'
@@ -4014,7 +4181,10 @@ def main() -> None:
             khai_tc[md_path.stem] = _cj["trang_chu"]
 
         # cổng chạy TRƯỚC khi in ra bất cứ thứ gì (LAUNCH.md:126)
-        kho = body_md + "\n" + json.dumps(claims, ensure_ascii=False) + "\n" + json.dumps(fm, ensure_ascii=False)
+        visuals = _cj.get("visuals", [])
+        kho = (body_md + "\n" + json.dumps(claims, ensure_ascii=False) + "\n"
+               + json.dumps(fm, ensure_ascii=False) + "\n"
+               + json.dumps(visuals, ensure_ascii=False))
         cong_ngon_ngu(kho, o)
         cong_ngoi_xung(kho, o)
         cong_claim(claims, o)
@@ -4022,6 +4192,7 @@ def main() -> None:
         cong_do_lai(claims, o)
         cong_han(claims, o)
         cong_ghi_truoc(claims, o)
+        cong_visuals(body_md, visuals, claims, o)
 
         slug_ = md_path.stem
         # Khai token là BẮT BUỘC — nó là khoá của hồ sơ theo đối tượng, và một bài
@@ -4042,7 +4213,7 @@ def main() -> None:
         # Bản đầu đặt bài lên trước và màn hình đầu tiên giống hệt Telegram — người
         # bấm vào từ X/TG đã đọc bài rồi, đưa lại bài là không cho họ lý do ở lại.
         # Bài vẫn đăng đủ dạng native trên X/TG (LAUNCH.md:152), ở đây nó là THAM CHIẾU.
-        than = (trang_bai_v3(fm, claims, body_md, o, ho_so, _cj.get("trang_chu", {}))
+        than = (trang_bai_v3(fm, claims, body_md, o, ho_so, _cj.get("trang_chu", {}), visuals)
                 if BO_CUC == "v3" else
                 (f"<h1>{ihtml.escape(fm['title'])}</h1>"
                  + dai_trang_thai(claims, fm.get("doc_lai", ""), ho_so)
@@ -4057,7 +4228,8 @@ def main() -> None:
                    + (f' &nbsp;·&nbsp; <a href="{fm["kenh_x"]}">bản đăng trên X</a>'
                       if fm.get("kenh_x") else
                       ' &nbsp;·&nbsp; <i>chưa đăng trên kênh</i>') + '</p>'
-                 + render(body_md, o) + "</section>"))
+                 + render(body_md, o, visuals) + "</section>"))
+        cong_visual_html(than, visuals, o)
         d = OUT / "bai" / slug_
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(
