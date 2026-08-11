@@ -110,8 +110,14 @@ DO_TRAN = """<script>addEventListener('load',()=>{document.fonts.ready.then(()=>
    const q=document.createRange();q.selectNodeContents(e);
    if(q.getClientRects().length>1){split++;if(!splitWho)splitWho=e.className}
  }
+ let hit=0,hitWho='';
+ const phrase=w.querySelector('.uni-title-lockup .cum-tieu-de'),vault=w.querySelector('.uni-hero-grid .uni-vault');
+ if(phrase&&vault){
+   const p=phrase.getBoundingClientRect(),v=vault.getBoundingClientRect();
+   if(p.bottom>v.top&&v.bottom>p.top&&p.right>v.left-8){hit=1;hitWho='cum-tieu-de→uni-vault'}
+ }
  const f=document.fonts.check('16px Inter')&&document.fonts.check('12px "JetBrains Mono"');
- document.body.insertAdjacentHTML('beforeend','<i id=ovf>'+w.scrollWidth+'|'+WW+'|'+Math.round(mx)+'|'+who+'|'+(f?'font':'KHONG-FONT')+'|'+split+'|'+splitWho+'</i>');
+ document.body.insertAdjacentHTML('beforeend','<i id=ovf>'+w.scrollWidth+'|'+WW+'|'+Math.round(mx)+'|'+who+'|'+(f?'font':'KHONG-FONT')+'|'+split+'|'+splitWho+'|'+hit+'|'+hitWho+'</i>');
 })})</script>"""
 
 
@@ -207,14 +213,16 @@ def do_tran(html: str, tmp: pathlib.Path, nhan: str) -> bool:
     theo bề rộng, trên mốc ấy `.khung` thôi giãn nên tràn giảm dần về 0 ở ~1190.
     """
     tran = False
-    for w in (360, 380, 768, 1080):
+    # 1008 là đúng khổ ảnh Safari 11/08 nơi dòng hai của H1 UNI chạm sang cột phải;
+    # 768 và 1080 đều xanh nên nếu chỉ giữ hai mốc đó thì lỗi sống lọt ở giữa.
+    for w in (360, 380, 768, 1008, 1080, 1280):
         f = tmp / f"ovf{w}.html"
         f.write_text(neo_font(html).replace(
             "</body>", f"<script>WW={w};VUNG_CUON={VUNG_CUON}</script>" + DO_TRAN + "</body>"), encoding="utf-8")
         # Khổ ≥500 đặt được cửa sổ THẬT ⇒ đo đúng; khổ hẹp hơn vẫn phải ép bằng CSS
         # trong cửa sổ 520 vì macOS kẹp (xem trên).
         r = chrome(["--dump-dom", f"--window-size={max(520, w)},900", f.as_uri()], timeout=90)
-        m = re.search(r'<i id="ovf">(\d+)\|(\d+)\|(\d+)\|([^|]*)\|([\w-]+)\|(\d+)\|([^<]*)</i>', r.stdout)
+        m = re.search(r'<i id="ovf">(\d+)\|(\d+)\|(\d+)\|([^|]*)\|([\w-]+)\|(\d+)\|([^|]*)\|(\d+)\|([^<]*)</i>', r.stdout)
         if not m:
             print(f"  ⚠ {nhan} @{w}px: không đo được — phép đo MÙ, đừng đọc là 'không tràn'")
             continue
@@ -224,6 +232,9 @@ def do_tran(html: str, tmp: pathlib.Path, nhan: str) -> bool:
                      f"là của font hệ thống, không phải của bản sắp ship. Sửa neo_font().")
         if int(m.group(6)):
             print(f"  🔴 {nhan} @{w}px: {m.group(6)} cụm khóa vẫn bị bẻ dòng · {m.group(7)}")
+            tran = True
+        if int(m.group(8)):
+            print(f"  🔴 {nhan} @{w}px: tiêu đề UNI chạm khối trạng thái · {m.group(9)}")
             tran = True
         if sw > lim:
             print(f"  🔴 {nhan} @{w}px: TRÀN {sw}px > {lim}px · rộng nhất: <{who}> tới {mx}px")
