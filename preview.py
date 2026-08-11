@@ -70,7 +70,10 @@ KHUNG = [("dau", BAI, 1740, None),
 KHUNG_V3 = [("clock", "index.html", 900, "clock-khu"),
             ("hosokhu", "index.html", 1500, "inv-khu"),
             ("sogoc", "index.html", 700, "ledger-asset"),
-            ("phandinh", "index.html", 1900, "hero finding-home")]
+            ("phandinh", "index.html", 1900, "hero finding-home"),
+            # Ca hồi quy 11/08: dải bài vẫn đủ 11 link nhưng mất toàn bộ định dạng,
+            # nên không tràn và bốn ảnh trang chủ phía trên đều không nhìn tới nó.
+            ("baichu", "index.html", 760, "khu-bai home-articles")]
 
 # 🔴 Hai cách đo SAI đã thử và bị bác, ghi lại để không ai dựng lại:
 #   ① documentElement.scrollWidth — không bao giờ nhỏ hơn viewport ⇒ là chặn dưới

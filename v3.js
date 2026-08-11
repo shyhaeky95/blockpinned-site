@@ -208,7 +208,7 @@
   }
 
   // Reveal only major story beats. Reduced-motion users see everything immediately.
-  var revealItems = document.querySelectorAll(".finding-home,.article-verdict,.may-hero,.token-overview,.token-card,.numrow,.chart-card,.cred,.ho-so,.evidence,.than>h2,.than>figure,.ba-so,.fact-protocol,.facts-ledger-head,.fact-wow,.track-score,.track-ledger-head,.track-entry,.uni-vault,.uni-coverage,.uni-ledger-head,.uni-claim,.uni-articles,.data-protocol,.data-ledger-head,.data-file,.data-note");
+  var revealItems = document.querySelectorAll(".finding-home,.article-verdict,.may-hero,.token-overview,.token-card,.numrow,.chart-card,.cred,.ho-so,.evidence,.than>h2,.than>figure,.ba-so,.fact-protocol,.facts-ledger-head,.fact-wow,.track-score,.track-ledger-head,.track-entry,.uni-vault,.uni-coverage,.uni-ledger-head,.uni-claim,.uni-articles,.home-articles,.data-protocol,.data-ledger-head,.data-file,.data-note");
   if (!reduce && "IntersectionObserver" in window) {
     var revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -765,9 +765,9 @@
   }
 
   // The article rail remains usable without drag precision.
-  document.querySelectorAll(".uni-articles [data-rail]").forEach(function (button) {
+  document.querySelectorAll(".khu-bai [data-rail]").forEach(function (button) {
     button.addEventListener("click", function () {
-      var rail = button.closest(".uni-articles").querySelector(".rail");
+      var rail = button.closest(".khu-bai").querySelector(".rail");
       if (!rail) return;
       rail.scrollBy({ left: Number(button.dataset.rail) * Math.min(420, rail.clientWidth * .82), behavior: reduce ? "auto" : "smooth" });
     });

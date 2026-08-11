@@ -660,6 +660,32 @@ html.chuyen .home-promise h1 .nhan-manh::after{animation:keo-net .75s cubic-bezi
   background:var(--accent);border-radius:999px;transform:scaleX(.22);transform-origin:left;opacity:.8}
 html.chuyen .finding-home.is-visible .finding-title .nhan-manh::after{animation:keo-net .7s cubic-bezier(.2,.75,.25,1) forwards}
 
+/* Dải bài cuối trang chủ dùng chung dữ liệu với tủ kính, nhưng là một mặt v3 riêng.
+   Neo bằng `.home-articles`: nếu builder rơi lại về `.khu-bai` chưa định dạng, cổng bố cục nổ
+   thay vì để đủ chữ nối liền như production 11/08. */
+.home-articles{margin-top:82px;padding:36px 0 4px;border-top:1px solid var(--line)}
+.home-articles .khu-dau{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:22px}
+.home-articles .khu-dau h2{margin:0;font:780 clamp(30px,4vw,46px)/1 var(--display);letter-spacing:-.045em}
+.home-articles .dieu-rail{display:flex;gap:7px}
+.home-articles .rn{width:39px;height:39px;border:1px solid var(--line);border-radius:50%;background:var(--card);
+  color:var(--muted);font:650 14px/1 var(--mono);cursor:pointer}
+.home-articles .rn:hover,.home-articles .rn:focus-visible{border-color:var(--accent);color:var(--accent)}
+.home-articles .rail-boc{overflow:hidden}
+.home-articles .rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px,36%);gap:12px;
+  overflow-x:auto;padding:2px 2px 18px;scroll-snap-type:x mandatory;scrollbar-width:thin;
+  scrollbar-color:var(--line) transparent}
+.home-articles .bai{min-height:214px;padding:20px;display:flex;flex-direction:column;border:1px solid var(--line);
+  border-radius:16px;background:var(--card);box-shadow:var(--bong);scroll-snap-align:start;
+  transition:transform .25s,border-color .2s}
+.home-articles .bai:hover,.home-articles .bai:focus-visible{border-color:color-mix(in srgb,var(--accent) 35%,var(--line));transform:translateY(-2px)}
+.home-articles .bai .d{font:700 8.5px/1.4 var(--mono);letter-spacing:.1em;color:var(--faint)}
+.home-articles .bai .t{margin:16px 0 auto;font:720 16px/1.43 var(--display);letter-spacing:-.015em}
+.home-articles .mini{height:5px;display:flex;gap:2px;margin:22px 0 11px;border-radius:4px;overflow:hidden;background:var(--inset)}
+.home-articles .seg{height:100%}.home-articles .seg.xac{background:var(--c-xn)}.home-articles .seg.song{background:var(--c-song)}
+.home-articles .seg.sua{background:var(--c-sua)}.home-articles .seg.bac{background:var(--c-bac)}.home-articles .seg.cho{background:var(--c-cho)}
+.home-articles .bai .s,.home-articles .rail-goi{font:550 9px/1.45 var(--mono);color:var(--faint)}
+.home-articles .rail-goi{margin:6px 0 0;text-align:right}
+
 /* Một scan duy nhất: bám con trỏ với quán tính; không có animation tự chạy. */
 .scan-surface{--scan-x:50%;--scan-y:50%}
 .scan-surface>.cursor-scan{position:absolute;z-index:0;left:0;top:0;width:280px;height:210%;
@@ -687,6 +713,8 @@ html.chuyen .finding-home.is-visible .finding-title .nhan-manh::after{animation:
   .home-map{grid-template-columns:1fr}.home-door{min-height:124px;padding:17px}.door-copy{grid-column:2/3}
   .latest-rail{grid-template-columns:auto 1fr;gap:9px 12px}.latest-rail>span:nth-child(3){grid-column:1/-1}
   .latest-rail>b{grid-column:1/-1}.finding-home{margin-top:34px}
+  .home-articles{margin-top:65px}.home-articles .rail{grid-auto-columns:minmax(270px,86%)}
+  .home-articles .dieu-rail{display:none}
   .cursor-scan{display:none!important}
 }
 @media(prefers-reduced-motion:reduce){.cursor-scan{display:none!important}}
@@ -934,7 +962,7 @@ html.chuyen .token-overview.is-visible .token-scale>span:nth-child(5){animation-
 .token-count b{font-size:14px;color:var(--ink)}.token-count>i{width:1px;height:12px;background:var(--line)}
 .token-status-bar{grid-column:1/-1;height:9px;display:flex;gap:2px;margin-top:16px;padding:1px;border:1px solid var(--line);
   border-radius:5px;background:var(--bg);overflow:hidden}.token-status-bar>i{flex:var(--n);border-radius:3px}.token-status-bar .xn,.token-status-bar .xac{background:var(--c-xn)}.token-status-bar .song{background:var(--c-song)}
-.token-status-bar .sua{background:var(--c-sua)}.token-status-bar .bac{background:var(--c-bac)}
+.token-status-bar .sua{background:var(--c-sua)}.token-status-bar .bac{background:var(--c-bac)}.token-status-bar .cho{background:var(--c-cho)}
 .token-threshold{grid-column:1/-1;display:flex;justify-content:space-between;gap:16px;margin-top:13px;font:600 9.5px/1 var(--mono);font-style:normal;color:var(--faint)}
 .token-threshold>i{font-style:normal}.token-threshold>b{display:flex;gap:4px;align-items:center;color:var(--muted)}
 .token-threshold b span{width:18px;height:4px;border-radius:4px;background:var(--accent)}.token-threshold b span.empty{background:var(--line)}
@@ -1905,7 +1933,7 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   }
 
   // Reveal only major story beats. Reduced-motion users see everything immediately.
-  var revealItems = document.querySelectorAll(".finding-home,.article-verdict,.may-hero,.token-overview,.token-card,.numrow,.chart-card,.cred,.ho-so,.evidence,.than>h2,.than>figure,.ba-so,.fact-protocol,.facts-ledger-head,.fact-wow,.track-score,.track-ledger-head,.track-entry,.uni-vault,.uni-coverage,.uni-ledger-head,.uni-claim,.uni-articles,.data-protocol,.data-ledger-head,.data-file,.data-note");
+  var revealItems = document.querySelectorAll(".finding-home,.article-verdict,.may-hero,.token-overview,.token-card,.numrow,.chart-card,.cred,.ho-so,.evidence,.than>h2,.than>figure,.ba-so,.fact-protocol,.facts-ledger-head,.fact-wow,.track-score,.track-ledger-head,.track-entry,.uni-vault,.uni-coverage,.uni-ledger-head,.uni-claim,.uni-articles,.home-articles,.data-protocol,.data-ledger-head,.data-file,.data-note");
   if (!reduce && "IntersectionObserver" in window) {
     var revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -2462,9 +2490,9 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   }
 
   // The article rail remains usable without drag precision.
-  document.querySelectorAll(".uni-articles [data-rail]").forEach(function (button) {
+  document.querySelectorAll(".khu-bai [data-rail]").forEach(function (button) {
     button.addEventListener("click", function () {
-      var rail = button.closest(".uni-articles").querySelector(".rail");
+      var rail = button.closest(".khu-bai").querySelector(".rail");
       if (!rail) return;
       rail.scrollBy({ left: Number(button.dataset.rail) * Math.min(420, rail.clientWidth * .82), behavior: reduce ? "auto" : "smooth" });
     });

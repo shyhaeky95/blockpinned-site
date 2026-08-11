@@ -224,7 +224,7 @@ HIEN_VAT = {
 
 TEN_CONG = ["ngôn ngữ", "cấu trúc", "claim", "ngôi xưng", "đánh dấu",
             "thuộc tính số", "xem trước", "đo lại", "hạn", "ghi trước", "liên kết",
-            "fact"]
+            "fact", "bố cục"]
 
 # chữ ký hàm hợp lệ: tên + danh sách kiểu, vd `balanceOf(address)` · `x()` · `f(uint256,address)`
 RE_KY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*\((|[a-z0-9\[\],]+)\)$")
@@ -2347,6 +2347,9 @@ def trang_muc_token(tk: dict) -> str:
     Token chưa đủ sàn KHÔNG được dựng một trang trống cho có: nó trỏ thẳng sang bài,
     và nói rõ còn thiếu mấy bài. Một trang một-bài chỉ là bản chép của bài đó.
     """
+    if BO_CUC == "v3":
+        return trang_muc_token_v3(tk)
+
     hang = []
     for ma, v in sorted(tk.items(), key=lambda x: (-x[1]["bai"], -x[1]["claim"])):
         co_tu = ma == TU_KINH and CO_TRANG[TU_KINH_DUONG]
@@ -2375,6 +2378,106 @@ def trang_muc_token(tk: dict) -> str:
             f'trạng thái hiện tại, kể cả những câu đã đổ. Token chưa đủ thì vào thẳng bài, '
             f'vì một trang dựng từ một bài chỉ là bản chép của bài đó.</p>'
             f'<div class="cua cua-3" data-hien>{"".join(hang)}</div>')
+
+
+def trang_muc_token_v3(tk: dict) -> str:
+    """Mục lục token bằng đúng component v3 mà CSS/JS production đang canh.
+
+    Bản lật production 11/08 vẫn gọi khuôn D2 (`.cua/.cua-o`) trong khi v3 chỉ còn
+    luật cho `.token-directory/.token-card`. Kết quả là dữ liệu vẫn đủ nhưng năm thẻ
+    rơi thành một dòng chữ nối liền — hỏng hình mà mọi cổng nội dung đều xanh. Khuôn
+    này sinh hoàn toàn từ `tk`; mockup chỉ là hợp đồng trình bày, không phải nguồn số.
+    """
+    ds = sorted(tk.items(), key=lambda x: (-x[1]["bai"], -x[1]["claim"], x[0]))
+    tong_b = sum(v["bai"] for _, v in ds)
+    tong_c = sum(v["claim"] for _, v in ds)
+    so_mo = sum(ma == TU_KINH and CO_TRANG[TU_KINH_DUONG] for ma, _ in ds)
+
+    nut_nhanh = [
+        '<button type="button" data-token-tag="all" aria-pressed="true">'
+        '<span class="token-logo token-logo-all" aria-hidden="true">'
+        '<i></i><i></i><i></i><i></i></span>'
+        f'<span class="token-switch-copy"><b>Tất cả</b><small>{tong_c} claim</small></span></button>'
+    ]
+    ty_le = []
+    the = []
+    ten_tt = {"ĐÃ XÁC NHẬN": "đã xác nhận", "ĐANG ĐỨNG": "đang đứng",
+              "ĐÃ SỬA": "đã sửa", "BỊ BÁC": "bị bác", "CHỜ SỐ": "chờ số"}
+    thu_tu_tt = ["ĐÃ XÁC NHẬN", "ĐANG ĐỨNG", "ĐÃ SỬA", "BỊ BÁC", "CHỜ SỐ"]
+
+    for stt, (ma, v) in enumerate(ds, 1):
+        ma_nho = ma.lower()
+        co_tu = ma == TU_KINH and CO_TRANG[TU_KINH_DUONG]
+        dich = f"{TU_KINH.lower()}/" if co_tu else f"../bai/{v['slug_moi']}/"
+        thieu = max(0, TU_KINH_SAN - v["bai"])
+        profile = "open" if co_tu else "building"
+        nut_nhanh.append(
+            f'<button type="button" data-token-tag="{ma_nho}" aria-pressed="false">'
+            f'<span class="token-logo"><img src="../anh/token-{ma_nho}.png" width="32" '
+            f'height="32" alt="" decoding="async"></span>'
+            f'<span class="token-switch-copy"><b>{ma}</b><small>{v["claim"]} claim</small>'
+            f'</span></button>')
+        ty_le.append(
+            f'<span class="{ma_nho}" style="--claims:{v["claim"]}"><b>{ma}</b>'
+            f'<i>{v["claim"]}</i></span>')
+
+        thanh, doc_thanh = [], []
+        for trang_thai in thu_tu_tt:
+            n = v["dem"].get(trang_thai, 0)
+            if n:
+                thanh.append(f'<i class="{TRANG_THAI[trang_thai][0]}" style="--n:{n}"></i>')
+                doc_thanh.append(f'{n} {ten_tt[trang_thai]}')
+        vach = "".join('<span></span>' if i < min(v["bai"], TU_KINH_SAN)
+                       else '<span class="empty"></span>' for i in range(TU_KINH_SAN))
+        trang_thai_the = "Hồ sơ đã mở" if co_tu else f"Còn {thieu} bài"
+        copy = (f'Mở tủ kính — mọi câu về {TOKEN_TEN[ma]} trên một trang, mỗi câu ghim '
+                f'tại block đã đo.' if co_tu else
+                'Chưa mở tủ kính: vào thẳng bài mới nhất trong lúc hồ sơ tiếp tục tích lũy.')
+        the.append(
+            f'<a class="token-card{" token-card-featured" if co_tu else ""}" '
+            f'data-token-card data-token="{ma_nho}" data-profile="{profile}" '
+            f'data-claim-ghost="{v["claim"]:02d}" data-spotlight href="{dich}">'
+            f'<span class="token-card-no">{stt:02d}</span>'
+            f'<span class="token-card-state{" open" if co_tu else ""}"><i></i>'
+            f'{trang_thai_the}</span>'
+            f'<span class="token-symbol">{ma}</span><strong>{TOKEN_TEN[ma]}</strong>'
+            f'<span class="token-count"><b>{v["bai"]}</b> bài<i></i>'
+            f'<b>{v["claim"]}</b> khẳng định</span>'
+            f'<span class="token-status-bar" aria-label="{ihtml.escape(", ".join(doc_thanh))}">'
+            f'{"".join(thanh)}</span>'
+            f'<span class="token-threshold"><i>Độ phủ hồ sơ</i><b>{vach} '
+            f'{v["bai"]}/{TU_KINH_SAN} bài</b></span>'
+            f'<span class="token-card-copy">{copy}</span>'
+            f'<span class="token-card-go">{"Mở hồ sơ" if co_tu else "Mở bài mới nhất"}'
+            f'<i>→</i></span></a>')
+
+    doc_phan_bo = ", ".join(f"{ma} {v['claim']}" for ma, v in ds)
+    return f'''<section class="hero token-index-hero">
+  <span class="ghost-num" aria-hidden="true">{len(ds):02d}</span>
+  <span class="hero-code" aria-hidden="true">OBJECT INDEX · COVERAGE MAP</span>
+  <p class="eyebrow"><span>Hồ sơ theo đối tượng</span><span class="im">độ phủ nhìn được · trạng thái không bị giấu</span></p>
+  <h1 class="display">Kênh này đã đo được gì, <span class="nhan-manh">xếp theo token.</span></h1>
+  <p class="subline">{len(ds)} token · {tong_b} bài · {tong_c} khẳng định. Token nào đủ <b>{TU_KINH_SAN} bài</b> thì có một trang gom mọi câu về nó — mỗi câu giữ nguyên trạng thái hiện tại, kể cả những câu đã đổ.</p>
+</section>
+<nav class="token-switcher" aria-label="Lọc nhanh theo token">
+  <span class="token-switcher-label">Chọn đối tượng</span>{"".join(nut_nhanh)}
+</nav>
+<div class="token-overview">
+  <div class="token-overview-head"><span><b>{tong_c}</b><small>khẳng định đã được đặt vào đối tượng</small></span><i>độ rộng = số claim</i></div>
+  <div class="token-scale" role="img" aria-label="Phân bổ {tong_c} khẳng định: {doc_phan_bo}">{"".join(ty_le)}</div>
+</div>
+<section class="token-directory" aria-labelledby="token-directory-title">
+  <div class="token-directory-head">
+    <div><p class="section-code">OBJECT COVERAGE</p><h2 id="token-directory-title">Mở đúng cửa theo độ phủ</h2></div>
+    <div class="token-filters" role="group" aria-label="Lọc token theo trạng thái hồ sơ">
+      <button type="button" data-token-filter="all" aria-pressed="true">Tất cả <b>{len(ds)}</b></button>
+      <button type="button" data-token-filter="open" aria-pressed="false">Đã mở hồ sơ <b>{so_mo}</b></button>
+      <button type="button" data-token-filter="building" aria-pressed="false">Đang tích lũy <b>{len(ds) - so_mo}</b></button>
+    </div>
+  </div>
+  <p class="token-filter-status" aria-live="polite">Đang hiện {len(ds)} token</p>
+  <div class="token-grid" id="token-grid">{"".join(the)}</div>
+</section>'''
 
 
 def thanh_mini(dem: dict, tong: int) -> str:
@@ -3802,7 +3905,32 @@ sẽ bác bỏ nó, rồi cập nhật công khai khi kết quả thay đổi.</
     <a href="#bai">xem tất cả</a>
   </div>
   <div class="inv">{"".join(the_ds)}</div>
-</section>''' + sap_phan_dinh(moi_claim) + dai_bai(bai, ""))
+</section>''' + sap_phan_dinh(moi_claim) + dai_bai(bai, "", " home-articles"))
+
+
+def cong_bo_cuc(html_chu: str, html_token: str, so_bai: int, so_token: int) -> None:
+    """Chặn đúng ca 11/08: HTML còn đủ chữ nhưng selector của mặt đang phát hành mất.
+
+    Kiểm overflow không bắt được ca này vì chữ trần tự xuống dòng và không hề tràn.
+    Component bắt buộc + số item mới là hợp đồng giữa builder với CSS/JS.
+    """
+    if BO_CUC == "v3":
+        if ('class="khu-bai home-articles"' not in html_chu
+                or html_chu.count('<a class="bai"') != so_bai):
+            raise LoiCong("mục bài trang chủ v3 thiếu cấu trúc home-articles hoặc mất thẻ bài")
+        if (not all(x in html_token for x in ('class="token-switcher"',
+                                               'class="token-overview"',
+                                               'class="token-directory"',
+                                               'class="token-grid"'))
+                or html_token.count(" data-token-card") != so_token):
+            raise LoiCong("mục token v3 thiếu cấu trúc token-directory hoặc mất token-card")
+    else:
+        if ('class="khu-bai"' not in html_chu
+                or html_chu.count('<a class="bai"') != so_bai):
+            raise LoiCong("mục bài trang chủ D2 thiếu khu-bai hoặc mất thẻ bài")
+        if ('class="cua cua-3"' not in html_token
+                or html_token.count('class="cua-o tok"') != so_token):
+            raise LoiCong("mục token D2 thiếu lưới cua hoặc mất token")
 
 
 def main() -> None:
@@ -3989,11 +4117,10 @@ def main() -> None:
     if not 60 <= len(fm_i.get("mo_ta", "").strip()) <= 200:
         raise LoiCong("content/index.md thiếu 'mo_ta' 60–200 ký tự — trang chủ là chỗ "
                       "hay bị dán link nhất, để trắng là mất ở đúng cửa")
-    (OUT / "index.html").write_text(
-        trang("BlockPinned — số nào cũng truy ngược được", than_i, t, mat="home-page",
-              meta={"mo_ta": fm_i["mo_ta"].strip(), "duong": "/", "anh": "avatar-800.png",
-                    "loai": "website", "tieu_de_og": "BlockPinned — số nào cũng truy ngược được"}),
-        encoding="utf-8")
+    html_chu = trang("BlockPinned — số nào cũng truy ngược được", than_i, t, mat="home-page",
+                     meta={"mo_ta": fm_i["mo_ta"].strip(), "duong": "/", "anh": "avatar-800.png",
+                           "loai": "website", "tieu_de_og": "BlockPinned — số nào cũng truy ngược được"})
+    (OUT / "index.html").write_text(html_chu, encoding="utf-8")
 
     # ── TỦ KÍNH token ────────────────────────────────────────────────────────────
     # Dựng SAU vòng lặp vì nó cần cả bài lẫn claim của token; bật/tắt thì đã quyết
@@ -4005,14 +4132,15 @@ def main() -> None:
     d_mt.mkdir(parents=True, exist_ok=True)
     ds_tk = " · ".join(f"{m} {v['bai']} bài"
                        for m, v in sorted(tk.items(), key=lambda x: -x[1]["bai"]))
-    (d_mt / "index.html").write_text(trang(
+    html_token = trang(
         "Token — hồ sơ theo đối tượng — BlockPinned", trang_muc_token(tk), t, "..",
         muc="token/", mat="page-token-index",
         meta={"mo_ta": f"Mọi token BlockPinned đã đo, kèm số bài và số khẳng định của "
                        f"từng cái: {ds_tk}. Token đủ {TU_KINH_SAN} bài thì có trang hồ sơ riêng.",
               "duong": "/token/", "anh": "avatar-800.png", "loai": "website",
-              "tieu_de_og": "Kênh này đã đo được gì, xếp theo token"}),
-        encoding="utf-8")
+              "tieu_de_og": "Kênh này đã đo được gì, xếp theo token"})
+    cong_bo_cuc(html_chu, html_token, len(bai), len(tk))
+    (d_mt / "index.html").write_text(html_token, encoding="utf-8")
     print(f"  ✓ token/  ·  mục lục {len(tk)} token")
 
     bai_tk = [x for x in bai if token_cua[x[1]] == TU_KINH]

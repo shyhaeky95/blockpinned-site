@@ -54,6 +54,14 @@ def sua_facts(root, fn, nhan_doi=False):
         json.dumps({"facts": ds}, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def sua_builder(root, cu, moi):
+    p = root / "site" / "build.py"
+    txt = p.read_text(encoding="utf-8")
+    if cu not in txt:
+        raise RuntimeError(f"bộ thử không tìm thấy đoạn builder cần bẻ: {cu}")
+    p.write_text(txt.replace(cu, moi, 1), encoding="utf-8")
+
+
 CA = [
     ("control âm — không bẻ gì", None, None),
     ("① NGÔN NGỮ · từ đã khai tử",
@@ -248,6 +256,14 @@ CA = [
     ("BỐ CỤC v3 · thiếu v3.js phải NỔ",
      lambda r: (r / "site" / "v3.js").unlink(),
      "cần v3.js"),
+    ("BỐ CỤC v3 · token rơi về chữ trần phải NỔ",
+     lambda r: sua_builder(r, '<div class="token-grid" id="token-grid">',
+                           '<div class="token-grid-hong" id="token-grid">'),
+     "mục token v3 thiếu cấu trúc"),
+    ("BỐ CỤC v3 · dải bài trang chủ mất component phải NỔ",
+     lambda r: sua_builder(r, 'dai_bai(bai, "", " home-articles")',
+                           'dai_bai(bai, "")'),
+     "mục bài trang chủ v3 thiếu cấu trúc"),
     ("⑪ LIÊN KẾT · href hỏng trong THÂN TRANG vẫn phải chặn — cặp đối chứng của ca trên",
      lambda r: sua_md(r, lambda s: s.replace(
          "## Tự kiểm", "Xem [chỗ này](/khong-he-ton-tai/) đã.\n\n## Tự kiểm", 1)),
@@ -259,7 +275,9 @@ CA = [
 THEM_ARGV = {ten: ca[3] for ca in CA if len(ca) > 3 for ten in [ca[0]]}
 # Ba ca v3 dưới đây cần cờ nhưng khai ở dạng tuple 3 phần tử cho gọn — nối cờ ở đây.
 for _t in ("BỐ CỤC v3 · thiếu v3.css phải NỔ — trang đủ chữ mà không có hình là hỏng im nhất",
-           "BỐ CỤC v3 · thiếu v3.js phải NỔ"):
+           "BỐ CỤC v3 · thiếu v3.js phải NỔ",
+           "BỐ CỤC v3 · token rơi về chữ trần phải NỔ",
+           "BỐ CỤC v3 · dải bài trang chủ mất component phải NỔ"):
     THEM_ARGV[_t] = ["--bo-cuc", "v3"]
 
 
