@@ -1,0 +1,56 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Trên ảnh chụp khối lượng perp 24 giờ ngày 11/08/2026, ba cách xếp loại hợp lệ đối với các sàn perp do bên thứ ba dựng trên hạ tầng Hyperliquid cho ra ba thị phần khác nhau từ cùng một lượng giao dịch: tính chúng là một phần của Hyperliquid ra 37,6%; tách chúng khỏi cả tử lẫn mẫu ra 22,5%; tách khỏi tử số nhưng giữ trong mẫu số ra 18,1%.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ba đầu vào, đọc cùng lúc: Hyperliquid theo cách DefiLlama gộp 5.684.795.297 đô; toàn thị trường perp DEX 15.139.217.695 đô; đo trên chain, sàn bên thứ ba chiếm 51,747% khối lượng Hyperliquid (2.817.317.879 sàn chính + 3.021.192.199 sàn bên thứ ba). Số tổng lấy từ DefiLlama còn tỷ lệ đo trên chain là HAI CƠ SỞ khác nhau, lệch 2,70% — nên tỷ lệ được quy về cơ sở DefiLlama trước khi chia: sàn bên thứ ba 2.941.651.033, sàn chính 2.743.144.264. Trừ chéo hai cơ sở sẽ ra một con số thứ tư không thuộc về đâu.",
+      "falsifier": "Lấy ba đầu vào ở trên rồi chia lại: 5.685/15.139 phải ra 37,55%; 2.743/(15.139−2.942) phải ra 22,49%; 2.743/15.139 phải ra 18,12%. Không ra được ba tỷ lệ đó thì claim này phải rút. Và nếu tỷ trọng sàn bên thứ ba trong khối lượng Hyperliquid rời khỏi khoảng 45–60% thì ba con số phải đọc lại từ đầu, vì phép quy đổi cơ sở dựa vào chính tỷ lệ đó.",
+      "log": [
+        {
+          "ngay": "2026-08-12",
+          "ghi": "Bản đầu tính ba tỷ lệ bằng cách lấy số tổng của DefiLlama trừ thẳng số sàn bên thứ ba đo trên chain, ra 37,6/22,0/17,6. Soát lại thì hai vế đó là hai CƠ SỞ ĐO khác nhau, lệch 2,70% theo đúng control đã ghi sẵn trong artifact, nên hiệu số thấp hơn khối lượng sàn chính đo được 5,46%. Quy tỷ lệ về một cơ sở rồi mới chia, ra 37,6/22,5/18,1. Bài giữ lại chỗ này thành một đoạn trong thân, vì nó chính là điều bài đang đòi người khác làm."
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "Giữ nguyên tập sàn, cách tính và nguồn dữ liệu, chỉ đổi hai đầu mút của cửa sổ đo thì dấu của xu hướng đảo: từ tháng 1/2026 tới tháng 5/2026 thị phần khối lượng của Hyperliquid đi 22,2% lên 32,1%, còn từ tháng 8/2025 tới tháng 7/2026 nó đi 52,1% xuống 39,3%.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Khối lượng perp của Hyperliquid chia tổng khối lượng perp DEX, nguồn DefiLlama, chỉ nhận tháng lịch ĐẦY ĐỦ ở cả tử lẫn mẫu — tháng thiếu ngày bị loại vì nó tự làm lệch tỷ lệ. Cú giảm lớn nằm trong khoảng tháng 9 tới tháng 12/2025, tức nằm ngoài cửa sổ thứ nhất.",
+      "falsifier": "Dựng lại chuỗi từ DefiLlama với cùng tập sàn và cùng cách cộng theo tháng lịch đầy đủ. Nếu không ra được bốn mốc 22,2 · 32,1 · 52,1 · 39,3 thì claim này phải rút, kể cả khi phần còn lại của bài vẫn đứng.",
+      "log": [
+        {
+          "ngay": "2026-08-12",
+          "ghi": "Con số +6,05 điểm của cửa sổ 08/2025→07/2026 từng được định dùng làm luận điểm chính. Phép thử đầu mút quét 16 cặp (gốc 2025-06…2025-09 × cuối 2026-04…2026-07) chỉ cho 13/16 cặp cùng dấu, vì chuỗi mới vượt mốc gốc từ 2026-06. Nên bài bỏ hẳn cách kể theo một cặp đầu mút, chuyển sang kể chính chuyện đổi cửa sổ làm đảo dấu."
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "text": "Một bài của Yellow Research mang tiêu đề \"Hyperliquid Owns 13% Of All Perp Volume, So Why Is Nobody Asking How\" trong khi thân bài của chính nó viết Hyperliquid chiếm khoảng 70% toàn bộ khối lượng perp on-chain trên các chain. Trong bản web đọc ngày 12/08/2026, không tìm thấy đoạn nào định nghĩa mẫu số cho con số 13% hay giải thích quan hệ giữa 13% và 70%.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Bản web đọc ngày 12/08/2026, đọc lại sát giờ đăng cùng ngày và không đổi. Thân bài dẫn Dune làm nguồn cho con số 70%. Đây là câu về MỘT LƯỢT ĐỌC có ngày, không phải câu về toàn bộ lịch sử của trang.",
+      "falsifier": "Mở lại trang. Nếu tiêu đề đã bỏ con số 13%, hoặc bài đã thêm đoạn định nghĩa mẫu số cho 13% hay nối 13% với 70%, thì claim này hết hiệu lực và phải ghi ngày nó hết hiệu lực.",
+      "log": [
+        {
+          "ngay": "2026-08-12",
+          "ghi": "Đọc lần đầu ngày 12/08 và trích tiêu đề là \"Hyperliquid Owns 13% Of All Perp Volume\". Đọc lại sát giờ đăng cùng ngày thì tiêu đề đầy đủ còn vế sau: \", So Why Is Nobody Asking How\". Đã trích đủ — bài đang phê bình chính tiêu đề đó nên không được trích cụt."
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "text": "Khoảng cách giữa con số của CF Benchmarks và của Yellow Research cho cùng tháng 4/2026 chưa truy được về một khác biệt định nghĩa cụ thể: CF Benchmarks viết Hyperliquid còn khoảng một phần ba khối lượng perp on-chain, Yellow Research viết khoảng 70%, và cả hai đều mô tả mẫu số là khối lượng perp on-chain.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Đây là một claim về GIỚI HẠN của bài, không phải về đối tượng: bài không gán nguyên nhân cho khoảng cách đó, và không kết luận nguồn nào sai. Ba khả năng để ngỏ: tập sàn khác nhau, cách xử lý sàn bên thứ ba khác nhau, hoặc một nguồn sai.",
+      "falsifier": "Tìm được trong một trong hai nguồn phần mô tả cách đo đủ cụ thể để giải thích khoảng cách đó — ví dụ danh sách sàn trong mẫu số, hoặc cách họ xếp loại sàn do bên thứ ba dựng. Có thì claim này chuyển sang ĐÃ SỬA kèm lời giải; và phần bài đang ghi \"chưa truy được\" phải cập nhật.",
+      "log": [
+        {
+          "ngay": "2026-08-12",
+          "ghi": "Bản đầu của bài gộp cả bốn nguồn vào một lời giải thích chung là khác cửa sổ hoặc khác mẫu số. Soát lại thì cặp CF Benchmarks và Yellow Research cùng nói về tháng 4/2026 và cùng mô tả mẫu số là khối lượng perp on-chain, nên lời giải thích chung đó không áp được. Tách riêng thành một mục và ghi thẳng là chưa truy được nguyên nhân."
+        }
+      ]
+    }
+  ]
+}

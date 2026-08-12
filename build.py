@@ -190,6 +190,16 @@ NGUON_ASSET = {
     # Builder: template/build_card_cake_thi_phan_phi.py, số đọc thẳng từ ba artifact
     # của CAKE và có assert từ chối dựng khi cycle 10/08 đã đóng.
     "card-cake-thi-phan-phi-muc.png": "png",
+    # bài HYPE 12/08 — 🔴 card này KHÔNG do một `build_card_*.py` sinh ra, và đó là
+    # ngoại lệ có chủ ý được user duyệt: bản dựng bằng builder (`template/
+    # build_card_hype_thi_phan_ba_cach.py`) qua được `card_gate` nhưng user bác vì
+    # bố cục; bản dùng thật là HTML dựng tay, nguồn giữ ở
+    # `template/experiments/card-hype-market-share-editorial-v8-FINAL.html`, render
+    # bằng Chrome headless. ⇒ nó KHÔNG qua `card_gate`, và ba thứ cổng vốn kiểm đã
+    # được kiểm bằng tay, ghi ở `Crypto Research/PUBLISH.md` hàng #62.
+    # Số trên ảnh (37,6/22,5/18,1) trùng số trong bài và cùng nguồn artifact
+    # `HYPERLIQUID/data/hype_defillama_ssr_perps_20260811.json`.
+    "card-hype-13-hay-70.png": "experiments",
     "post01-card.png": "png",
     "post02-card.png": "png",
     "post04-card.png": "png",
