@@ -296,7 +296,15 @@ def inline(s: str, o: str) -> str:
 
 
 RE_VISUAL = re.compile(r"^\{\{visual:([a-z0-9-]+)\}\}$")
-VISUAL_TYPES = {"flow", "proof", "timeline", "distribution"}
+VISUAL_TYPES = {"flow", "proof", "timeline", "distribution", "dai"}
+# `dai` thêm 12/08. Bốn khuôn kia đều giả định các mục là những thứ KHÁC NHAU — chặng
+# nối tiếp, vòng kiểm, mốc thời gian, nhóm cộng thành tổng. Không khuôn nào chở được
+# hình dạng "CÙNG MỘT đại lượng, nhiều con số cùng hợp lệ, rải trên một trục" — mà đó
+# đúng là luận điểm lõi của bài HYPE 12/08 (5 nguồn công bố 5 con số cho một câu hỏi;
+# 3 cách xếp loại hợp lệ cho 3 tỷ lệ từ cùng một lượng giao dịch). Ép nó thành
+# `distribution` là nói dối: các con số đó KHÔNG cộng lại thành gì cả.
+# 🔵 Có sẵn `dai-ba-diem` trong `khoi_viz`, nhưng khuôn đó khoá cứng ĐÚNG ba điểm và
+# chỉ phục vụ thẻ trang chủ — không có bảng dữ liệu mở ra, không neo claim.
 VISUAL_TONES = {"accent", "good", "warn", "bad", "info", "muted"}
 
 
@@ -305,6 +313,17 @@ def _bang_visual(headers: list[str], rows: list[list[str]]) -> str:
     body = "".join("<tr>" + "".join(f"<td>{ihtml.escape(str(c))}</td>" for c in row)
                    + "</tr>" for row in rows)
     return f'<div class="bang"><table><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>'
+
+
+def _hien_dai(x: dict) -> str:
+    """Chuỗi hiện ra cho một điểm của `dai`.
+
+    🔵 Vì sao có `hien` riêng thay vì luôn format từ `value`: bài viết "13%" và "44%",
+    còn `so_vn(13.0, 1)` ra "13,0". Hình mà ghi khác thân bài một chữ số thì người đọc
+    phải dừng lại hỏi cái nào đúng — mà cả hai đều đúng. `value` vẫn BẮT BUỘC là số, vì
+    vị trí trên trục tính từ nó; `hien` chỉ đổi cách viết, không đổi chỗ đứng.
+    """
+    return str(x.get("hien") or so_vn(float(x["value"]), 1))
 
 
 def _du_lieu_visual(v: dict) -> tuple[list[str], list[list[str]]]:
@@ -319,6 +338,10 @@ def _du_lieu_visual(v: dict) -> tuple[list[str], list[list[str]]]:
     if v["type"] == "timeline":
         return (["ngày", v.get("unit", "giá trị"), "cách lần trước"],
                 [[x["label"], x["value"], x.get("gap", "—")] for x in v["events"]])
+    if v["type"] == "dai":
+        dv = v.get("don_vi", "")
+        return ([v.get("cot", "nguồn"), f"giá trị{f' ({dv})' if dv else ''}", "khai gì"],
+                [[x["label"], _hien_dai(x), x["note"]] for x in v["diem"]])
     return (["nhóm", "số mục", "đọc là"],
             [[x["label"], str(x["count"]), x["note"]] for x in v["segments"]])
 
@@ -356,6 +379,35 @@ def render_visual(v: dict) -> str:
                 f'<strong>{ihtml.escape(x["value"])}</strong><small>{ihtml.escape(x.get("gap", "—"))}</small></span>')
         than = (f'<div class="av-timeline" tabindex="0" role="img" '
                 f'aria-label="{ihtml.escape(v["aria"], quote=True)}">{"".join(diem)}</div>')
+    elif loai == "dai":
+        # 🔴 KHAI GIÁ TRỊ, KHÔNG KHAI VỊ TRÍ — cùng luật `khoi_viz` đã ghi: vị trí là
+        # KẾT QUẢ của một phép tính; khai kết quả thì lượt sửa số sau không kéo hình đi
+        # theo, và cổng ⑥ vẫn thấy một toạ độ hợp lệ nên không ai bắt được.
+        # 🔵 Chữ KHÔNG bám vào trục. Nhãn đặt tuyệt đối trên trục là ứng viên tràn số
+        # một ở khổ 360px, và khi các giá trị xúm lại một chỗ thì chúng đè lên nhau mà
+        # phép đo tràn vẫn xanh. Trục chỉ chở CHẤM; chữ xuống danh sách bên dưới.
+        gt = [float(x["value"]) for x in v["diem"]]
+        nho, lon = min(gt), max(gt)
+        dv = v.get("don_vi", "")
+        dat = lambda x: DAI_TRAI + (x - nho) / (lon - nho) * (DAI_PHAI - DAI_TRAI)
+        than = (
+            '<div class="av-dai-boc">'
+            f'<div class="av-dai" role="img" aria-label="{ihtml.escape(v["aria"], quote=True)}">'
+            '<div class="av-dai-truc">'
+            + "".join(f'<span class="av-dai-cham tone-{x.get("tone", "accent")}" '
+                      f'style="--p:{dat(float(x["value"])):.2f}%"></span>' for x in v["diem"])
+            + '</div><div class="av-dai-moc">'
+            # Mốc hai đầu lấy `hien` của CHÍNH điểm nhỏ nhất/lớn nhất, không format lại
+            # từ số — nếu không thì trục ghi "13,0%" trong khi danh sách ngay dưới và
+            # thân bài đều ghi "13%", và người đọc phải dừng lại hỏi cái nào đúng.
+            f'<span>{ihtml.escape(_hien_dai(min(v["diem"], key=lambda x: float(x["value"]))) + dv)}</span>'
+            f'<span>{ihtml.escape(_hien_dai(max(v["diem"], key=lambda x: float(x["value"]))) + dv)}</span></div></div>'
+            '<ol class="av-dai-chu">'
+            + "".join(f'<li class="tone-{x.get("tone", "accent")}"><i></i>'
+                      f'<b>{ihtml.escape(_hien_dai(x) + dv)}</b>'
+                      f'<span>{ihtml.escape(x["label"])}</span>'
+                      f'<small>{ihtml.escape(x["note"])}</small></li>' for x in v["diem"])
+            + "</ol></div>")
     else:
         than = '<div class="av-distribution" role="img" aria-label="{}"><div class="av-dist-bar">{}</div><div class="av-dist-legend">{}</div></div>'.format(
             ihtml.escape(v["aria"], quote=True),
@@ -518,15 +570,16 @@ def cong_visuals(body: str, visuals, claims: list, o: str) -> None:
         if la:
             raise LoiCong(f"visual {vid} neo vào claim không tồn tại: {la} — {o}")
 
-        khoa = "events" if v["type"] == "timeline" else ("segments" if v["type"] == "distribution" else "steps")
+        khoa = {"timeline": "events", "distribution": "segments",
+                "dai": "diem"}.get(v["type"], "steps")
         ds = v.get(khoa)
-        gioi_han = (3, 16) if khoa == "events" else (2, 6)
+        gioi_han = (3, 16) if khoa == "events" else ((2, 8) if khoa == "diem" else (2, 6))
         if not isinstance(ds, list) or not gioi_han[0] <= len(ds) <= gioi_han[1]:
             raise LoiCong(f"visual {vid}.{khoa} phải có {gioi_han[0]}–{gioi_han[1]} mục — {o}")
         for x in ds:
             if not isinstance(x, dict):
                 raise LoiCong(f"visual {vid}.{khoa} phải chứa object — {o}")
-            bat_buoc = ({"label", "value", "note"} if v["type"] == "flow" else
+            bat_buoc = ({"label", "value", "note"} if v["type"] in ("flow", "dai") else
                         {"label", "value", "question", "note"} if v["type"] == "proof" else
                         {"label", "value", "magnitude"} if v["type"] == "timeline" else
                         {"label", "count", "note"})
@@ -541,6 +594,20 @@ def cong_visuals(body: str, visuals, claims: list, o: str) -> None:
             if v["type"] == "distribution" and (not isinstance(x["count"], int)
                                                    or x["count"] <= 0):
                 raise LoiCong(f"visual {vid} count phải là số nguyên dương — {o}")
+            if v["type"] == "dai" and (isinstance(x["value"], bool)
+                                       or not isinstance(x["value"], (int, float))):
+                raise LoiCong(f"visual {vid} value của `dai` phải là SỐ, không phải chuỗi "
+                              f"(vị trí trên trục tính từ nó) — {o}: {x['value']!r}")
+        if v["type"] == "dai":
+            gt = [float(x["value"]) for x in ds]
+            # 🔴 Trục cần hai đầu KHÁC NHAU. Mọi điểm bằng nhau thì phép quy tỷ lệ chia
+            # cho 0; và kể cả có chặn ZeroDivisionError thì một dải mà mọi chấm chồng
+            # lên nhau cũng không nói được gì — hình sẽ TRÔNG như một chấm duy nhất
+            # trong khi bảng dữ liệu vẫn liệt kê đủ mục.
+            if min(gt) == max(gt):
+                raise LoiCong(f"visual {vid} có mọi điểm cùng một giá trị ({gt[0]}) — dải "
+                              f"cần hai đầu khác nhau, nếu không thì đây là một con số "
+                              f"chứ không phải một dải — {o}")
     if len(ids) != len(set(ids)):
         raise LoiCong(f"id visual bị trùng trong cấu hình — {o}")
     if set(marker) != set(ids):

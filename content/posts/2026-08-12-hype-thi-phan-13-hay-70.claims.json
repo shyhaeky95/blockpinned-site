@@ -52,5 +52,94 @@
         }
       ]
     }
+  ],
+  "visuals": [
+    {
+      "id": "nam-con-so",
+      "type": "dai",
+      "eyebrow": "CÙNG MỘT CÂU HỎI · BỐN NGUỒN",
+      "title": "Năm con số cho một câu hỏi, chênh nhau hơn năm lần",
+      "aria": "Trục thị phần perp của Hyperliquid từ 13% tới 71%, năm con số do bốn nguồn công khai đưa ra: 13% ở tiêu đề Yellow Research, 31,9% Datawallet, 44% Pump Parade, 70% Yellow Research trong thân bài, 71% CF Benchmarks.",
+      "caption": "Bốn con số đầu đo ở cửa sổ và/hoặc mẫu số khác nhau nên không nhất thiết mâu thuẫn; con số 13% là chuyện khác, xem claim C3.",
+      "claims": [
+        "C3",
+        "C4"
+      ],
+      "don_vi": "%",
+      "cot": "nguồn",
+      "diem": [
+        {
+          "label": "Yellow Research — tiêu đề bài",
+          "value": 13,
+          "hien": "13",
+          "tone": "bad",
+          "note": "không khai mẫu số; chính thân bài đó ghi 70%"
+        },
+        {
+          "label": "Datawallet",
+          "value": 31.9,
+          "hien": "31,9",
+          "tone": "info",
+          "note": "172,631 / 540,842 tỷ đô, cửa sổ 30 ngày, tập sàn theo DefiLlama"
+        },
+        {
+          "label": "Pump Parade",
+          "value": 44,
+          "hien": "44",
+          "tone": "info",
+          "note": "5/2026, toàn bộ khối lượng perp on-chain; 1/2026 họ ghi 36,4%"
+        },
+        {
+          "label": "Yellow Research — thân bài",
+          "value": 70,
+          "hien": "70",
+          "tone": "info",
+          "note": "4/2026, toàn bộ khối lượng perp on-chain trên mọi chain"
+        },
+        {
+          "label": "CF Benchmarks",
+          "value": 71,
+          "hien": "71",
+          "tone": "warn",
+          "note": "5/2025; tới 4/2026 chính họ sửa xuống “khoảng một phần ba”"
+        }
+      ]
+    },
+    {
+      "id": "ba-cach-xep-loai",
+      "type": "dai",
+      "eyebrow": "MỘT NGÀY · MỘT LƯỢNG GIAO DỊCH",
+      "title": "Không giao dịch nào đổi, chỉ cách xếp loại đổi",
+      "aria": "Ba cách xếp loại hợp lệ đối với sàn perp do bên thứ ba dựng trên hạ tầng Hyperliquid cho ra 18,1%, 22,5% và 37,6% trên cùng ảnh chụp 24 giờ ngày 11/08/2026.",
+      "caption": "Cùng ảnh chụp 24 giờ ngày 11/08/2026, số tổng theo DefiLlama; tỷ lệ 51,7% đo trên chain đã được quy về cùng cơ sở trước khi chia.",
+      "claims": [
+        "C1"
+      ],
+      "don_vi": "%",
+      "cot": "cách xếp loại sàn bên thứ ba",
+      "diem": [
+        {
+          "label": "Là sàn riêng, nhưng vẫn nằm trong mẫu số",
+          "value": 18.1,
+          "hien": "18,1",
+          "tone": "info",
+          "note": "2,743 / 15,139 tỷ đô"
+        },
+        {
+          "label": "Là sàn riêng, bỏ khỏi cả tử lẫn mẫu",
+          "value": 22.5,
+          "hien": "22,5",
+          "tone": "info",
+          "note": "2,743 / 12,198 tỷ đô"
+        },
+        {
+          "label": "Là một phần của Hyperliquid",
+          "value": 37.6,
+          "hien": "37,6",
+          "tone": "accent",
+          "note": "5,685 / 15,139 tỷ đô — cách DefiLlama gộp"
+        }
+      ]
+    }
   ]
 }

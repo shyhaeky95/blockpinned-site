@@ -378,6 +378,29 @@ code{font:500 .875em var(--mono);background:var(--inset);border:1px solid var(--
   font:550 9.5px/1.4 var(--mono);color:var(--faint)}
 .av-dist-legend>span>i{width:8px;height:8px;border-radius:2px;background:var(--vt)}
 .av-dist-legend>span>b{font-size:15px;color:var(--ink)}
+
+/* `dai` — N con số của CÙNG một đại lượng, rải trên một trục.
+   🔴 Trục chỉ chở CHẤM, không chở chữ. Nhãn đặt tuyệt đối trên trục là ứng viên tràn
+   số một ở 360px, và khi giá trị xúm lại thì chúng đè nhau mà phép đo tràn vẫn xanh —
+   đè nhau không phải tràn. Chữ xuống danh sách bên dưới, ở đó nó tự xuống dòng được. */
+.av-dai{padding:30px 0 0}
+.av-dai-truc{position:relative;height:34px;
+  background:linear-gradient(var(--line),var(--line)) left 50%/100% 1px no-repeat}
+.av-dai-cham{--vt:var(--accent);position:absolute;top:50%;left:var(--p);width:15px;height:15px;
+  margin:-7.5px 0 0 -7.5px;border-radius:50%;background:var(--vt);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--vt) 22%,transparent)}
+.av-dai-moc{display:flex;justify-content:space-between;
+  font:520 9.5px/1.4 var(--mono);letter-spacing:.08em;color:var(--faint)}
+.av-dai-chu{margin:20px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.av-dai-chu>li{--vt:var(--accent);display:grid;grid-template-columns:9px auto 1fr;gap:5px 11px;align-items:baseline;
+  padding-bottom:10px;border-bottom:1px solid var(--line-soft)}
+.av-dai-chu>li:last-child{padding-bottom:0;border-bottom:0}
+.av-dai-chu>li>i{width:9px;height:9px;border-radius:50%;background:var(--vt);transform:translateY(1px)}
+.av-dai-chu>li>b{font:780 17px/1.15 var(--display);letter-spacing:-.03em;color:var(--ink);
+  font-variant-numeric:tabular-nums}
+.av-dai-chu>li>span{font:600 13.5px/1.45 var(--sans);color:var(--muted)}
+.av-dai-chu>li>small{grid-column:2/-1;font:520 10px/1.5 var(--mono);color:var(--faint)}
+
 .article-viz-data{margin-top:16px;border-top:1px solid var(--line-soft)}
 .article-viz-data>summary{padding:14px 0 0;display:flex;justify-content:space-between;gap:14px;cursor:pointer;list-style:none;
   font:700 9.5px/1.4 var(--mono);letter-spacing:.08em;color:var(--muted)}
@@ -1883,13 +1906,23 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   <p><strong>Hỏi đúng một câu — &quot;Hyperliquid chiếm bao nhiêu phần thị trường perp?&quot; — rồi đọc bốn nguồn công khai, bạn nhận về năm con số: 13%, 31,9%, 44%, 70%, 71%. Chênh nhau hơn năm lần. Và phần lớn chúng không nhất thiết mâu thuẫn nhau.</strong></p>
 <p>Trên cùng một ảnh chụp thị trường ngày 11/08/2026, phép đo ở bài này còn cho ra <strong>18,1%, 22,5% hoặc 37,6%</strong> — mà không một giao dịch nào thay đổi. Ba con số đó không đến từ ba phép tính. Chúng đến từ <strong>một quyết định phải làm trước khi tính</strong>: trên hạ tầng Hyperliquid có những sàn perp do bên thứ ba dựng — khối lượng chạy qua đó tính cho Hyperliquid, hay tính riêng?</p>
 <h2 id="nam-con-so-va-mau-so-ma-chinh-nguon-khai">Năm con số, và mẫu số mà chính nguồn khai</h2>
-<div class="bang"><table><thead><tr><th>nguồn</th><th>con số</th><th>thời điểm</th><th>mẫu số họ khai</th></tr></thead><tbody><tr><td>CF Benchmarks</td><td><strong>71%</strong> → &quot;khoảng một phần ba&quot;</td><td>5/2025 → 4/2026</td><td>khối lượng perp on-chain</td></tr><tr><td>Yellow Research</td><td><strong>70%</strong></td><td>4/2026</td><td>&quot;toàn bộ khối lượng perp on-chain trên mọi chain&quot;</td></tr><tr><td>Pump Parade</td><td><strong>44%</strong> (1/2026: 36,4%)</td><td>5/2026</td><td>&quot;toàn bộ khối lượng perp on-chain&quot;</td></tr><tr><td>Datawallet</td><td><strong>31,9%</strong></td><td>cập nhật 11/05/2026</td><td>172,631 tỷ đô trên 540,842 tỷ đô, cửa sổ 30&nbsp;ngày, tập sàn theo DefiLlama</td></tr><tr><td>Yellow Research</td><td><strong>13%</strong></td><td>—</td><td><strong>không khai</strong> — nằm ở tiêu đề của chính bài&nbsp;viết ghi 70% trong thân</td></tr></tbody></table></div>
+<figure class="article-viz article-viz-dai" id="visual-nam-con-so" data-spotlight>
+  <div class="article-viz-head"><p>CÙNG MỘT CÂU HỎI · BỐN NGUỒN</p><h3>Năm con số cho một câu hỏi, chênh nhau hơn năm lần</h3></div>
+  <div class="av-dai-boc"><div class="av-dai" role="img" aria-label="Trục thị phần perp của Hyperliquid từ 13% tới 71%, năm con số do bốn nguồn công khai đưa ra: 13% ở tiêu đề Yellow Research, 31,9% Datawallet, 44% Pump Parade, 70% Yellow Research trong thân bài, 71% CF Benchmarks."><div class="av-dai-truc"><span class="av-dai-cham tone-bad" style="--p:11.70%"></span><span class="av-dai-cham tone-info" style="--p:38.03%"></span><span class="av-dai-cham tone-info" style="--p:54.89%"></span><span class="av-dai-cham tone-info" style="--p:91.11%"></span><span class="av-dai-cham tone-warn" style="--p:92.50%"></span></div><div class="av-dai-moc"><span>13%</span><span>71%</span></div></div><ol class="av-dai-chu"><li class="tone-bad"><i></i><b>13%</b><span>Yellow Research — tiêu đề bài</span><small>không khai mẫu số; chính thân bài đó ghi 70%</small></li><li class="tone-info"><i></i><b>31,9%</b><span>Datawallet</span><small>172,631&nbsp;/&nbsp;540,842 tỷ đô, cửa sổ 30&nbsp;ngày, tập sàn theo DefiLlama</small></li><li class="tone-info"><i></i><b>44%</b><span>Pump Parade</span><small>5/2026, toàn bộ khối lượng perp on-chain; 1/2026 họ ghi 36,4%</small></li><li class="tone-info"><i></i><b>70%</b><span>Yellow Research — thân bài</span><small>4/2026, toàn bộ khối lượng perp on-chain trên mọi chain</small></li><li class="tone-warn"><i></i><b>71%</b><span>CF Benchmarks</span><small>5/2025; tới 4/2026 chính họ sửa xuống “khoảng một phần ba”</small></li></ol></div>
+  <figcaption><span>Bốn con số đầu đo ở cửa sổ và/hoặc mẫu số khác nhau nên không nhất thiết mâu thuẫn; con số 13% là chuyện khác, xem claim C3.</span><span>neo vào claim <a href="#C3">C3</a> · <a href="#C4">C4</a></span></figcaption>
+  <details class="article-viz-data"><summary>Dữ&nbsp;liệu đứng sau hình <span>mở bảng ↓</span></summary><div class="bang"><table><thead><tr><th>nguồn</th><th>giá trị (%)</th><th>khai gì</th></tr></thead><tbody><tr><td>Yellow Research — tiêu đề bài</td><td>13</td><td>không khai mẫu số; chính thân bài đó ghi 70%</td></tr><tr><td>Datawallet</td><td>31,9</td><td>172,631&nbsp;/&nbsp;540,842 tỷ đô, cửa sổ 30&nbsp;ngày, tập sàn theo DefiLlama</td></tr><tr><td>Pump Parade</td><td>44</td><td>5/2026, toàn bộ khối lượng perp on-chain; 1/2026 họ ghi 36,4%</td></tr><tr><td>Yellow Research — thân bài</td><td>70</td><td>4/2026, toàn bộ khối lượng perp on-chain trên mọi chain</td></tr><tr><td>CF Benchmarks</td><td>71</td><td>5/2025; tới 4/2026 chính họ sửa xuống “khoảng một phần ba”</td></tr></tbody></table></div></details>
+</figure>
 <p>Bốn con số đầu được đo ở những cửa sổ và/hoặc mẫu số khác nhau. Con số thứ năm là chuyện khác, để cuối bài.</p>
 <p><strong>&quot;Thị phần Hyperliquid&quot; chưa phải một con số cho tới khi biết ba thứ — tử số gồm gì, mẫu số gồm gì, và đo trong khoảng thời gian nào.</strong></p>
 <h2 id="chi-doi-cach-xep-loai-thi-phan-doi-hon-gap-doi">Chỉ đổi cách xếp loại, thị phần đổi hơn gấp đôi</h2>
 <p>Câu hỏi ở đầu bài không phải chuyện chữ nghĩa: trong ngày đo, <strong>51,7% khối lượng perp của Hyperliquid chạy qua các sàn bên thứ ba</strong>. Trả lời &quot;tính cho Hyperliquid&quot; thì chúng nằm trong tử số; trả lời &quot;tính riêng&quot; thì chúng là sàn khác. Không giao dịch nào đổi — chỉ cách xếp loại đổi.</p>
 <p>Ba con số vào phép chia, đọc lúc đó: Hyperliquid theo cách DefiLlama gộp <strong>5,685 tỷ đô</strong>, toàn thị trường <strong>15,139 tỷ đô</strong>.</p>
-<div class="bang"><table><thead><tr><th>cách xếp loại sàn bên thứ ba</th><th>phép chia</th><th>thị phần</th></tr></thead><tbody><tr><td>là một phần của Hyperliquid</td><td>5,685&nbsp;/&nbsp;15,139</td><td><strong>37,6%</strong></td></tr><tr><td>là sàn riêng, bỏ khỏi cả tử lẫn mẫu</td><td>2,743&nbsp;/&nbsp;12,198</td><td><strong>22,5%</strong></td></tr><tr><td>là sàn riêng, nhưng vẫn nằm trong mẫu số</td><td>2,743&nbsp;/&nbsp;15,139</td><td><strong>18,1%</strong></td></tr></tbody></table></div>
+<figure class="article-viz article-viz-dai" id="visual-ba-cach-xep-loai" data-spotlight>
+  <div class="article-viz-head"><p>MỘT NGÀY · MỘT LƯỢNG GIAO DỊCH</p><h3>Không giao dịch nào đổi, chỉ cách xếp loại đổi</h3></div>
+  <div class="av-dai-boc"><div class="av-dai" role="img" aria-label="Ba cách xếp loại hợp lệ đối với sàn perp do bên thứ ba dựng trên hạ tầng Hyperliquid cho ra 18,1%, 22,5% và 37,6% trên cùng ảnh chụp 24 giờ ngày 11/08/2026."><div class="av-dai-truc"><span class="av-dai-cham tone-info" style="--p:11.70%"></span><span class="av-dai-cham tone-info" style="--p:29.93%"></span><span class="av-dai-cham tone-accent" style="--p:92.50%"></span></div><div class="av-dai-moc"><span>18,1%</span><span>37,6%</span></div></div><ol class="av-dai-chu"><li class="tone-info"><i></i><b>18,1%</b><span>Là sàn riêng, nhưng vẫn nằm trong mẫu số</span><small>2,743&nbsp;/&nbsp;15,139 tỷ đô</small></li><li class="tone-info"><i></i><b>22,5%</b><span>Là sàn riêng, bỏ khỏi cả tử lẫn mẫu</span><small>2,743&nbsp;/&nbsp;12,198 tỷ đô</small></li><li class="tone-accent"><i></i><b>37,6%</b><span>Là một phần của Hyperliquid</span><small>5,685&nbsp;/&nbsp;15,139 tỷ đô — cách DefiLlama gộp</small></li></ol></div>
+  <figcaption><span>Cùng ảnh chụp 24&nbsp;giờ ngày 11/08/2026, số tổng theo DefiLlama; tỷ lệ 51,7% đo trên chain đã được quy về cùng cơ sở trước khi chia.</span><span>neo vào claim <a href="#C1">C1</a></span></figcaption>
+  <details class="article-viz-data"><summary>Dữ&nbsp;liệu đứng sau hình <span>mở bảng ↓</span></summary><div class="bang"><table><thead><tr><th>cách xếp loại sàn bên thứ ba</th><th>giá trị (%)</th><th>khai gì</th></tr></thead><tbody><tr><td>Là sàn riêng, nhưng vẫn nằm trong mẫu số</td><td>18,1</td><td>2,743&nbsp;/&nbsp;15,139 tỷ đô</td></tr><tr><td>Là sàn riêng, bỏ khỏi cả tử lẫn mẫu</td><td>22,5</td><td>2,743&nbsp;/&nbsp;12,198 tỷ đô</td></tr><tr><td>Là một phần của Hyperliquid</td><td>37,6</td><td>5,685&nbsp;/&nbsp;15,139 tỷ đô — cách DefiLlama gộp</td></tr></tbody></table></div></details>
+</figure>
 <p>Một ngày. Một nguồn. Một lượng giao dịch. <strong>18,1% đến 37,6%.</strong> Không con số nào trong ba là gian lận — chúng trả lời ba câu hơi khác nhau, và cả ba đều được gọi bằng đúng một cái tên.</p>
 <p>Một chi tiết của chính phép tính này, nói luôn: số tổng của Hyperliquid lấy từ DefiLlama, còn tỷ lệ 51,7% đo trên chain — <strong>hai cơ sở khác nhau</strong>, lệch nhau 2,70%. Trừ chéo hai cơ sở sẽ ra một con số thứ tư không thuộc về đâu cả. Nên tỷ lệ đó được quy về số của DefiLlama rồi mới chia. Nói cách khác, chỉ để tách được ba cách đọc, bài này cũng đã phải chọn một cơ sở và giữ nguyên nó.</p>
 <h2 id="roi-chi-doi-cua-so-dau-cua-cau-chuyen-dao">Rồi chỉ đổi cửa sổ, dấu của câu chuyện đảo</h2>

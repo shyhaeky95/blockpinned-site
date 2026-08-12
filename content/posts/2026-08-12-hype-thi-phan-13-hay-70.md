@@ -17,13 +17,7 @@ Trên cùng một ảnh chụp thị trường ngày 11/08/2026, phép đo ở b
 
 ## Năm con số, và mẫu số mà chính nguồn khai
 
-| nguồn | con số | thời điểm | mẫu số họ khai |
-|---|---:|---|---|
-| CF Benchmarks | **71%** → "khoảng một phần ba" | 5/2025 → 4/2026 | khối lượng perp on-chain |
-| Yellow Research | **70%** | 4/2026 | "toàn bộ khối lượng perp on-chain trên mọi chain" |
-| Pump Parade | **44%** (1/2026: 36,4%) | 5/2026 | "toàn bộ khối lượng perp on-chain" |
-| Datawallet | **31,9%** | cập nhật 11/05/2026 | 172,631 tỷ đô trên 540,842 tỷ đô, cửa sổ 30 ngày, tập sàn theo DefiLlama |
-| Yellow Research | **13%** | — | **không khai** — nằm ở tiêu đề của chính bài viết ghi 70% trong thân |
+{{visual:nam-con-so}}
 
 Bốn con số đầu được đo ở những cửa sổ và/hoặc mẫu số khác nhau. Con số thứ năm là chuyện khác, để cuối bài.
 
@@ -35,11 +29,7 @@ Câu hỏi ở đầu bài không phải chuyện chữ nghĩa: trong ngày đo,
 
 Ba con số vào phép chia, đọc lúc đó: Hyperliquid theo cách DefiLlama gộp **5,685 tỷ đô**, toàn thị trường **15,139 tỷ đô**.
 
-| cách xếp loại sàn bên thứ ba | phép chia | thị phần |
-|---|---|---:|
-| là một phần của Hyperliquid | 5,685 / 15,139 | **37,6%** |
-| là sàn riêng, bỏ khỏi cả tử lẫn mẫu | 2,743 / 12,198 | **22,5%** |
-| là sàn riêng, nhưng vẫn nằm trong mẫu số | 2,743 / 15,139 | **18,1%** |
+{{visual:ba-cach-xep-loai}}
 
 Một ngày. Một nguồn. Một lượng giao dịch. **18,1% đến 37,6%.** Không con số nào trong ba là gian lận — chúng trả lời ba câu hơi khác nhau, và cả ba đều được gọi bằng đúng một cái tên.
 

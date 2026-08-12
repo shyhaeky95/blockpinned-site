@@ -16,6 +16,7 @@ SITE = pathlib.Path(__file__).parent
 MD = "content/posts/2026-07-27-defillama-uniswap-v4.md"
 CJ = "content/posts/2026-07-27-defillama-uniswap-v4.claims.json"
 PENDLE_CJ = "content/posts/2026-07-31-pendle-buyback-cot-bang-0.claims.json"
+HYPE_CJ = "content/posts/2026-08-12-hype-thi-phan-13-hay-70.claims.json"
 
 
 def sua_md(root, fn):
@@ -350,6 +351,23 @@ CA = [
      lambda r: sua_builder(r, '{f["title"]} {_tieu_de_h1(f)} {ma} {ngay} {sg}',
                            '{_tieu_de_h1(f)} {ma} {ngay} {sg}'),
      "mất TIÊU ĐỀ ĐẦY ĐỦ"),
+    # ⑭ VISUAL · khuôn `dai` — thêm 12/08. Bài mẫu của bộ thử không có visual, nên ba ca
+    # dưới bẻ thẳng cấu hình của bài HYPE, bài đầu tiên dùng khuôn này.
+    ("⑭ VISUAL dai · value là CHUỖI phải NỔ",
+     lambda r: sua_json_bai(r, HYPE_CJ, lambda d: d["visuals"][0]["diem"][0].__setitem__(
+         "value", "13%")),
+     "phải là SỐ"),
+    # Mọi điểm bằng nhau ⇒ phép quy tỷ lệ chia cho 0. Và kể cả chặn được lỗi chia, một
+    # dải mà mọi chấm chồng lên nhau vẫn TRÔNG như một chấm trong khi bảng liệt kê đủ mục.
+    ("⑭ VISUAL dai · mọi điểm cùng một giá trị phải NỔ",
+     lambda r: sua_json_bai(r, HYPE_CJ, lambda d: [
+         x.__setitem__("value", 50) for x in d["visuals"][0]["diem"]]),
+     "cần hai đầu khác nhau"),
+    ("⑭ VISUAL dai · 9 điểm (trần 8) phải NỔ",
+     lambda r: sua_json_bai(r, HYPE_CJ, lambda d: d["visuals"][0].__setitem__(
+         "diem", [dict(d["visuals"][0]["diem"][0], value=i + 1, label=f"n{i}")
+                  for i in range(9)])),
+     "phải có 2–8 mục"),
 ]
 
 # Ca nào cần cờ riêng thì khai ở đây, không nhét thêm cột vào mọi tuple cũ:

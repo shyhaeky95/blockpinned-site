@@ -104,6 +104,38 @@ Dùng cho 2–6 nhóm cộng lại thành một tổng. `count` phải là số 
 }
 ```
 
+### `dai` — cùng một đại lượng, nhiều con số cùng hợp lệ
+
+Dùng cho 2–8 giá trị **của CÙNG một đại lượng** rải trên một trục: nhiều nguồn công bố
+nhiều con số, hoặc nhiều cách tính hợp lệ cho nhiều kết quả. Khác `distribution` ở chỗ
+các con số **không cộng lại thành gì cả** — ép chúng thành phân bổ là nói dối về dữ liệu.
+
+`value` phải là SỐ (vị trí trên trục tính từ nó). `hien` là chuỗi hiện ra, tuỳ chọn —
+dùng khi thân bài viết `13%` mà format tự động cho ra `13,0`. Hai đầu trục phải khác nhau.
+
+```json
+{
+  "id": "nam-con-so",
+  "type": "dai",
+  "eyebrow": "CÙNG MỘT CÂU HỎI · BỐN NGUỒN",
+  "title": "Tiêu đề nói điều người đọc cần thấy",
+  "aria": "Mô tả dải, hai đầu mút và từng con số cho người dùng trình đọc màn hình.",
+  "caption": "Khai vì sao các con số khác nhau mà vẫn có thể cùng đúng.",
+  "claims": ["C3"],
+  "don_vi": "%",
+  "cot": "nguồn",
+  "diem": [
+    {"label": "Nguồn A", "value": 13, "hien": "13", "note": "không khai mẫu số", "tone": "bad"},
+    {"label": "Nguồn B", "value": 31.9, "hien": "31,9", "note": "cửa sổ 30 ngày", "tone": "info"},
+    {"label": "Nguồn C", "value": 71, "hien": "71", "note": "chính họ đã sửa xuống", "tone": "warn"}
+  ]
+}
+```
+
+🔴 Trục chỉ chở CHẤM, chữ nằm ở danh sách bên dưới. Nhãn đặt tuyệt đối trên trục là ứng
+viên tràn số một ở khổ 360px, và khi các giá trị xúm lại một chỗ thì chúng đè lên nhau
+mà phép đo tràn vẫn xanh — đè nhau không phải tràn.
+
 Màu hợp lệ: `accent`, `good`, `warn`, `bad`, `info`, `muted`. Màu chỉ giúp quét mắt;
 `label`, `aria`, `caption` và bảng gốc mới là lớp mang nghĩa.
 
@@ -113,7 +145,13 @@ Màu hợp lệ: `accent`, `good`, `warn`, `bad`, `info`, `muted`. Màu chỉ gi
 - Có nhiều tầng kiểm và mỗi tầng sửa cách hiểu: `proof`.
 - Có ngày/tháng và cần thấy nhịp hoặc ngoại lệ: `timeline`.
 - Có một tổng chia thành vài trạng thái: `distribution`.
+- Có nhiều con số cho CÙNG một đại lượng, không cộng lại thành tổng: `dai`.
 - Chỉ có một con số hoặc bảng đã đủ rõ: không ép thành visual.
+
+🔵 **Chỗ bộ template CÒN THIẾU, khai ra để lượt sau không phải tìm lại (12/08):** chưa
+khuôn nào chở được *"cùng một chuỗi, hai cửa sổ đo, hai chiều NGƯỢC nhau"* — thứ cần một
+cặp mũi tên trên cùng trục. `dai` vẽ được bốn chấm nhưng đánh rơi chiều, mà chiều mới là
+điều đáng nói. Bài HYPE 12/08 để mục đó ở dạng bảng chứ không ép thành hình.
 
 Một bài dài thường chỉ cần 2–4 visual, đặt sau đoạn đã giải thích dữ liệu. Visual tóm
 tắt lập luận; nó không thay claim, caption phạm vi hay bảng kiểm.

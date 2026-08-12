@@ -357,6 +357,29 @@ code{font:500 .875em var(--mono);background:var(--inset);border:1px solid var(--
   font:550 9.5px/1.4 var(--mono);color:var(--faint)}
 .av-dist-legend>span>i{width:8px;height:8px;border-radius:2px;background:var(--vt)}
 .av-dist-legend>span>b{font-size:15px;color:var(--ink)}
+
+/* `dai` — N con số của CÙNG một đại lượng, rải trên một trục.
+   🔴 Trục chỉ chở CHẤM, không chở chữ. Nhãn đặt tuyệt đối trên trục là ứng viên tràn
+   số một ở 360px, và khi giá trị xúm lại thì chúng đè nhau mà phép đo tràn vẫn xanh —
+   đè nhau không phải tràn. Chữ xuống danh sách bên dưới, ở đó nó tự xuống dòng được. */
+.av-dai{padding:30px 0 0}
+.av-dai-truc{position:relative;height:34px;
+  background:linear-gradient(var(--line),var(--line)) left 50%/100% 1px no-repeat}
+.av-dai-cham{--vt:var(--accent);position:absolute;top:50%;left:var(--p);width:15px;height:15px;
+  margin:-7.5px 0 0 -7.5px;border-radius:50%;background:var(--vt);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--vt) 22%,transparent)}
+.av-dai-moc{display:flex;justify-content:space-between;
+  font:520 9.5px/1.4 var(--mono);letter-spacing:.08em;color:var(--faint)}
+.av-dai-chu{margin:20px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.av-dai-chu>li{--vt:var(--accent);display:grid;grid-template-columns:9px auto 1fr;gap:5px 11px;align-items:baseline;
+  padding-bottom:10px;border-bottom:1px solid var(--line-soft)}
+.av-dai-chu>li:last-child{padding-bottom:0;border-bottom:0}
+.av-dai-chu>li>i{width:9px;height:9px;border-radius:50%;background:var(--vt);transform:translateY(1px)}
+.av-dai-chu>li>b{font:780 17px/1.15 var(--display);letter-spacing:-.03em;color:var(--ink);
+  font-variant-numeric:tabular-nums}
+.av-dai-chu>li>span{font:600 13.5px/1.45 var(--sans);color:var(--muted)}
+.av-dai-chu>li>small{grid-column:2/-1;font:520 10px/1.5 var(--mono);color:var(--faint)}
+
 .article-viz-data{margin-top:16px;border-top:1px solid var(--line-soft)}
 .article-viz-data>summary{padding:14px 0 0;display:flex;justify-content:space-between;gap:14px;cursor:pointer;list-style:none;
   font:700 9.5px/1.4 var(--mono);letter-spacing:.08em;color:var(--muted)}
