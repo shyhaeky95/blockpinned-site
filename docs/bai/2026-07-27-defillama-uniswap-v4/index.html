@@ -54,7 +54,12 @@ body{margin:0;color:var(--ink);font-family:var(--body);font-size:16.5px;line-hei
 a{color:var(--ink);text-decoration:none}
 p{margin:0 0 18px;overflow-wrap:break-word}
 h1,h2{text-wrap:balance}
-.khong-ngat,.cum-tieu-de{white-space:nowrap}
+/* 🔴 KHÔNG có `.khong-ngat` ở đây, và đó là CHỦ Ý. Máy khóa xuống dòng bằng `&nbsp;`
+   chứ không bọc span (xem build.py:khoa_xuong_dong). Một element do máy chèn vào khuôn
+   người khác viết không bao giờ trung tính: nó dính mọi selector `... span`, và thành
+   flex/grid item khi cha là flex/grid. Cả hai đã xảy ra thật trong ngày 11/08.
+   Cổng canh: khối `kieu` trong `preview.py:DO_TRAN` nổ nếu `.khong-ngat` sống lại. */
+.cum-tieu-de{white-space:nowrap}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 ::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
 
@@ -1008,6 +1013,10 @@ html.chuyen .token-overview.is-visible .token-scale>span:nth-child(5){animation-
   padding-bottom:18px;border-bottom:1px solid var(--line)}
 .section-code{font:700 9px/1.4 var(--mono);letter-spacing:.18em;color:var(--accent);margin:0 0 8px}
 .token-directory h2{font:760 clamp(28px,4vw,42px)/1.05 var(--display);letter-spacing:-.04em;margin:0}
+/* Chỗ trước đây là bộ lọc "đã mở hồ sơ / đang tích lũy". Bỏ 11/08: mọi token nay đi về
+   cùng một đích nên không còn hai loại thẻ để mà lọc. */
+.token-directory-note{margin:0 0 3px;max-width:38ch;text-align:right;font:600 9.5px/1.6 var(--mono);color:var(--faint)}
+.token-directory-note a{color:var(--accent);border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
 .token-filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
 .token-filters button{border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);padding:9px 12px;
   font:650 10px/1 var(--mono);cursor:pointer}.token-filters button b{color:var(--ink)}
@@ -1052,7 +1061,7 @@ html.chuyen .token-card.is-visible .token-status-bar>i{animation:status-lock .65
   .token-overview{margin-inline:-4px}.token-scale{overflow-x:auto;height:92px;padding-bottom:4px}.token-scale>span{flex:none;width:clamp(76px,28vw,150px)}
   .token-scale>span:first-child{width:clamp(170px,48vw,260px)}
   .token-switcher{top:54px;margin:-4px -4px 24px}.token-switcher-label{padding-inline:9px;max-width:64px}.token-switcher>button{min-width:108px}
-  .token-directory-head{align-items:flex-start;display:grid}.token-filters{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:3px}
+  .token-directory-head{align-items:flex-start;display:grid}.token-directory-note{text-align:left;max-width:none;margin-top:11px}.token-filters{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:3px}
   .token-filters button{flex:none}.token-filter-status{text-align:left}.token-grid{grid-template-columns:1fr}
   .token-card-featured{grid-column:auto}.token-card{min-height:325px;padding:21px}.token-symbol{margin-top:24px}
 }
@@ -1341,12 +1350,18 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
    UNI PROFILE — evidence vault. Semantic colour is a signal, never a panel.
    ══════════════════════════════════════════════════════════════════════════ */
 .page-token-uni main{padding-bottom:112px}.uni-hero{padding-bottom:30px}
-.uni-hero-grid{display:grid;grid-template-columns:minmax(0,.84fr) minmax(500px,1.16fr);gap:clamp(38px,5.5vw,88px);align-items:center}
-.uni-hero-copy{min-width:0}.uni-hero .subline{max-width:58ch;margin:0 0 28px}
+/* 🔴 MỘT CỘT Ở MỌI KHỔ — không phải chọn theo gu, mà theo phép đo. Cụm khóa
+   "qua từng lần kiểm chứng." là chữ display cỡ 33px, cần ~342px; bố cục hai cột cho
+   cột trái đúng 390px, trừ logo 84 + gap 22 còn 284px ⇒ chữ LÒI 57px. Và vì `.khung`
+   kẹp ở 1080px nên hình học ấy KHÔNG đổi theo màn hình: đo ở 1201 · 1280 · 1440 ·
+   1600 · 1920px đều lòi đúng 57–58px. Nới cột hay co chữ chỉ mua được vài px margin
+   trên một cụm không được phép xuống dòng — nên bỏ hẳn cột đôi. */
+.uni-hero-grid{display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
+.uni-hero-copy{min-width:0;max-width:900px}.uni-hero .subline{max-width:58ch;margin:0 0 28px}
 .uni-title-lockup{container-type:inline-size;display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
 .uni-title-lockup img{width:84px;height:84px;border-radius:23px;box-shadow:0 0 0 1px var(--line),0 18px 40px -26px var(--ink)}
 .uni-title-lockup>div>span{display:block;margin:0 0 7px;font:750 10px/1 var(--mono);letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
-.uni-title-lockup h1{max-width:none;margin:0;font-size:clamp(27px,2.8vw,33px)}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1{max-width:none;margin:0;font-size:clamp(40px,5vw,58px)}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
 .uni-title-lockup h1 .cum-tieu-de{display:block}
 .uni-hero-jump{width:min(100%,420px);display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:15px 17px;border:1px solid var(--line);border-radius:13px;background:var(--card);box-shadow:var(--bong)}
 .uni-hero-jump span{font:650 9px/1.4 var(--mono);color:var(--faint)}.uni-hero-jump b{font:760 10px/1 var(--mono);color:var(--accent)}.uni-hero-jump i{font-style:normal;color:var(--accent);transition:transform .2s}
@@ -1382,9 +1397,9 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
 .uni-vault-rule{grid-column:1/-1;display:flex;align-items:center;gap:11px 17px;margin:0;padding:15px 26px;border-top:1px solid var(--line);
   background:color-mix(in srgb,var(--bg2) 72%,transparent);font:600 9.5px/1.5 var(--mono);color:var(--muted)}
 .uni-vault-rule b{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}.uni-vault-rule i{font-style:normal;color:var(--accent)}
-.uni-hero-grid .uni-vault{grid-template-columns:1fr}
-.uni-hero-grid .uni-vault-total{min-height:205px;border-right:0;border-bottom:1px solid var(--line)}
-.uni-hero-grid .uni-vault-state{min-height:190px;padding-block:32px}
+.uni-hero-grid .uni-vault{grid-template-columns:1fr 1.15fr}
+.uni-hero-grid .uni-vault-total{min-height:205px;border-right:1px solid var(--line);border-bottom:0}
+.uni-hero-grid .uni-vault-state{min-height:205px;padding-block:32px}
 html.chuyen .uni-vault.is-visible .uni-status-bar>i{animation:uni-volume .8s cubic-bezier(.2,.8,.2,1) backwards}
 html.chuyen .uni-vault.is-visible .uni-status-bar>i:nth-child(2){animation-delay:.07s}html.chuyen .uni-vault.is-visible .uni-status-bar>i:nth-child(3){animation-delay:.14s}
 html.chuyen .uni-vault.is-visible .uni-status-bar>i:nth-child(4){animation-delay:.21s}
@@ -1488,7 +1503,12 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   color-mix(in srgb,var(--accent) 8%,transparent),transparent 66%);opacity:0;transition:opacity .2s}
 .article-priority .bai:hover::before,.article-priority .bai:focus-visible::before{opacity:1}
 .article-priority .bai-lead{grid-column:span 2;min-height:258px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 9%,var(--card)),var(--card))}
-.article-priority .bai-lead::after{content:"MỚI NHẤT";position:absolute;right:18px;bottom:54px;font:800 8px/1 var(--mono);letter-spacing:.16em;color:var(--accent)}
+/* 🔴 NHÃN "MỚI NHẤT" ĐI TRONG DÒNG, không đặt tuyệt đối nữa. Bản cũ neo `bottom:54px`
+   trên thẻ, mà chiều cao thẻ đổi theo bố cục — 11/08 nó rơi đúng lên thanh `.mini`
+   (đo: thanh 269→274px, đáy nhãn 276px). Neo vào chính `.mini` cũng không cứu được:
+   `.mini` khai `overflow:hidden` nên nhãn bị cắt. Đặt sau ngày thì nó không có cách
+   nào đè lên thứ khác, ở bất kỳ chiều cao thẻ nào. */
+.article-priority .bai-lead .d::after{content:" · MỚI NHẤT";font-weight:800;letter-spacing:.16em;color:var(--accent)}
 .article-priority .bai-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .article-priority .bai-token{padding:5px 7px;border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:999px;
   background:color-mix(in srgb,var(--accent) 6%,transparent);font:800 8px/1 var(--mono);letter-spacing:.1em;color:var(--accent)}
@@ -1499,16 +1519,10 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
 .article-priority .bai:hover .bai-go i,.article-priority .bai:focus-visible .bai-go i{display:inline-block;transform:translate(2px,-2px)}
 .article-priority .article-preview-note{margin:14px 0 0;font:550 9px/1.5 var(--mono);letter-spacing:.03em;color:var(--faint)}
 
-@media(max-width:1200px){
-  .uni-hero-grid{grid-template-columns:1fr;gap:40px}
-  .uni-hero-copy{max-width:900px}
-  .uni-title-lockup h1{font-size:clamp(40px,5vw,58px)}
-  .uni-hero-grid .uni-vault{grid-template-columns:1fr 1.15fr}
-  .uni-hero-grid .uni-vault-total{border-right:1px solid var(--line);border-bottom:0}
-  .uni-hero-grid .uni-vault-state{min-height:205px}
-}
+/* Khối @1200px cũ đã BỎ: nó chỉ lặp lại đúng bố cục nay là mặc định. Giữ lại thì
+   thành một nhánh chết mà lần sửa sau tưởng là chỗ đổi bố cục desktop. */
 @media(max-width:900px){
-  .uni-hero-grid{grid-template-columns:1fr;gap:40px}.uni-hero-copy{max-width:760px}.uni-hero-grid .uni-vault{grid-template-columns:1fr 1.15fr}.uni-hero-grid .uni-vault-total{border-right:1px solid var(--line);border-bottom:0}.uni-hero-grid .uni-vault-state{min-height:205px}
+  .uni-hero-copy{max-width:760px}
   .uni-vault{grid-template-columns:1fr}.uni-vault-total{min-height:205px;border-right:0;border-bottom:1px solid var(--line)}.uni-vault-state{padding:31px 34px}
   .uni-coverage{grid-template-columns:1fr 1fr 1fr}.uni-coverage-copy{grid-column:1/-1;min-height:145px}.uni-coverage article:first-of-type{border-left:0}
   .uni-tools{grid-template-columns:minmax(210px,.9fr) minmax(0,1.5fr)}.uni-open-tools{display:none}
@@ -1528,7 +1542,7 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   .uni-articles{margin-top:65px}.uni-articles .rail{grid-auto-columns:minmax(270px,86%)}.uni-articles .dieu-rail{display:none}
   .article-priority{margin-inline:-5px;padding:23px 18px;border-radius:18px}.article-priority .khu-dau{display:grid;align-items:start}
   .article-priority .bai-archive-link{width:100%;grid-template-columns:1fr auto auto}.article-priority .bai-archive-link i{grid-column:3;grid-row:1}.article-priority .article-preview-grid{grid-template-columns:1fr}
-  .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead::after{display:none}
+  .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead .d::after{display:none}
   .article-priority .bai-lead .t{font-size:23px}.article-priority::after{font-size:100px;top:-.12em}
 }
 @media(max-width:600px){
@@ -1765,40 +1779,40 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Trang&nbsp;chủ</a><a href="../../bai/">Bài&nbsp;viết</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
 </div></header>
 <main class="khung"><section class="hero hero-article">
-  <span class="ghost-num" aria-hidden="true"><span class="khong-ngat">3,9 lần</span></span>
+  <span class="ghost-num" aria-hidden="true">3,9&nbsp;lần</span>
   <span class="hero-code" aria-hidden="true">CLAIM C1 · ĐÃ XÁC NHẬN</span>
   <div class="article-path" aria-label="Vị trí bài viết">
     <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều&nbsp;tra</a><span>/</span><b>UNI</b><i><span class="dot xac"></span>xác nhận</i>
   </div>
-  <p class="eyebrow"><span>UNI</span><span class="im"><span class="khong-ngat">27/07/2026</span> · Cập nhật <span class="khong-ngat">28/07/2026</span> <span class="khong-ngat">09:36</span> UTC</span></p>
-  <h1 class="display">DefiLlama báo phí Uniswap v4 cao hơn <span class="nhan-manh"><span class="khong-ngat">3,9 lần</span></span> — và bản sửa mới chỉ chạy một chiều</h1>
-  <p class="subline">Ngày <span class="khong-ngat">16/07</span>, DefiLlama báo phí Uniswap v4 trên Robinhood chain cao hơn <span class="khong-ngat">3,9 lần</span> phép đếm trực tiếp trên chain. Họ đã merge bản sửa, rồi tự tính lại đúng trong khoảng tôi ghi&nbsp;trước.</p>
+  <p class="eyebrow"><span>UNI</span><span class="im">27/07/2026 · Cập nhật 28/07/2026 09:36 UTC</span></p>
+  <h1 class="display">DefiLlama báo phí Uniswap v4 cao hơn <span class="nhan-manh">3,9&nbsp;lần</span> — và bản sửa mới chỉ chạy một chiều</h1>
+  <p class="subline">Ngày 16/07, DefiLlama báo phí Uniswap v4 trên Robinhood chain cao hơn 3,9&nbsp;lần phép đếm trực tiếp trên chain. Họ đã merge bản sửa, rồi tự tính lại đúng trong khoảng tôi ghi&nbsp;trước.</p>
   <div class="article-verdict"><div class="heronum article-ratio">
-      <p class="l">Chênh lệch ngày <span class="khong-ngat">16/07</span></p>
-      <p class="v"><span class="khong-ngat">3,9</span><em>×</em></p>
-      <p class="d">đã phân&nbsp;định · số tính lại lệch <span class="khong-ngat">1,93%</span></p>
+      <p class="l">Chênh lệch ngày 16/07</p>
+      <p class="v">3,9<em>×</em></p>
+      <p class="d">đã phân&nbsp;định · số tính lại lệch 1,93%</p>
     </div><div class="case-path" role="img" aria-label="Tuyến phân định từ số dashboard, qua phép đếm on-chain, tới số đã tính lại">
-      <div class="case-step old"><span><span class="khong-ngat">01</span> · DASHBOARD</span><strong><span class="khong-ngat">$5.014.570</span></strong><small>số mở ra điều&nbsp;tra</small></div><i aria-hidden="true">→</i>
-      <div class="case-step chain"><span><span class="khong-ngat">02</span> · ON-CHAIN</span><strong><span class="khong-ngat">$1.286.386</span></strong><small><span class="khong-ngat">931.772 swap</span> được đếm</small></div><i aria-hidden="true">→</i>
-      <div class="case-step fixed"><span><span class="khong-ngat">03</span> · PHÂN&nbsp;ĐỊNH</span><strong><span class="khong-ngat">$1.311.164</span></strong><small>chuỗi đã được tính lại</small></div>
+      <div class="case-step old"><span>01 · DASHBOARD</span><strong>$5.014.570</strong><small>số mở ra điều&nbsp;tra</small></div><i aria-hidden="true">→</i>
+      <div class="case-step chain"><span>02 · ON-CHAIN</span><strong>$1.286.386</strong><small>931.772&nbsp;swap được đếm</small></div><i aria-hidden="true">→</i>
+      <div class="case-step fixed"><span>03 · PHÂN&nbsp;ĐỊNH</span><strong>$1.311.164</strong><small>chuỗi đã được tính lại</small></div>
     </div></div>
 <figure class="chart chart-card" data-spotlight>
     <div class="chart-dau">
       <b>Phí swap Uniswap v4 — Robinhood chain</b>
-      <span class="don-vi">USD/ngày · <span class="khong-ngat">01/07</span> → <span class="khong-ngat">08/08</span></span>
+      <span class="don-vi">USD/ngày · 01/07 → 08/08</span>
       <span class="cach-doc"><i><span class="sw"></span>chuỗi đã tính lại</i><i><span class="sw cu"></span>số cũ đã chết</i></span>
     </div>
     <div class="recalibration" role="img" aria-label="Ngày 16/07: số cũ 5.014.570 đô; đếm on-chain 1.286.386 đô; số tính lại 1.311.164 đô">
-      <div class="rc-head"><span>Bản đồ tái hiệu chỉnh · <span class="khong-ngat">16/07</span></span><em>tỷ lệ so với số cũ = <span class="khong-ngat">100%</span></em></div>
+      <div class="rc-head"><span>Bản đồ tái hiệu chỉnh · 16/07</span><em>tỷ lệ so với số cũ = 100%</em></div>
       <div class="rc-track">
         <span class="rc-axis"></span>
         <span class="rc-band" style="--left:23.07%;--width:5.15%"></span>
-        <i class="rc-pin chain" style="--x:25.65%;--delay:.48s"><span class="rc-label"><b><span class="khong-ngat">$1,286M</span></b>đếm on-chain</span></i>
-        <i class="rc-pin fixed" style="--x:26.15%;--delay:.64s"><span class="rc-label"><b><span class="khong-ngat">$1,311M</span></b>họ tính lại</span></i>
-        <i class="rc-pin old" style="--x:100%;--delay:.8s"><span class="rc-label"><b><span class="khong-ngat">$5,015M</span></b>số cũ</span></i>
+        <i class="rc-pin chain" style="--x:25.65%;--delay:.48s"><span class="rc-label"><b>$1,286M</b>đếm on-chain</span></i>
+        <i class="rc-pin fixed" style="--x:26.15%;--delay:.64s"><span class="rc-label"><b>$1,311M</b>họ tính lại</span></i>
+        <i class="rc-pin old" style="--x:100%;--delay:.8s"><span class="rc-label"><b>$5,015M</b>số cũ</span></i>
       </div>
     </div>
-    <div class="chart-mobile-nav" aria-label="Đi tới mốc trên biểu đồ"><span>ĐIỂM XEM</span><button type="button" data-chart-jump="pin"><span class="khong-ngat">16/07</span></button><button type="button" data-chart-jump="end">Mới nhất →</button></div>
+    <div class="chart-mobile-nav" aria-label="Đi tới mốc trên biểu đồ"><span>ĐIỂM XEM</span><button type="button" data-chart-jump="pin">16/07</button><button type="button" data-chart-jump="end">Mới nhất →</button></div>
     <div class="chart-cuon"><svg viewBox="0 0 1000 320" role="img" aria-label="Phí Uniswap v4 theo ngày, 01/07 tới 08/08, đỉnh $1,58M">
 <defs><linearGradient id="bp-area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--accent);stop-opacity:.28"/><stop offset=".72" style="stop-color:var(--accent);stop-opacity:.035"/><stop offset="1" style="stop-color:var(--accent);stop-opacity:0"/></linearGradient><linearGradient id="bp-scan" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:var(--accent);stop-opacity:0"/><stop offset=".5" style="stop-color:var(--accent);stop-opacity:.3"/><stop offset="1" style="stop-color:var(--accent);stop-opacity:0"/></linearGradient></defs>
 <line class="truc" x1="6" y1="290.0" x2="914" y2="290.0"/>
@@ -1835,21 +1849,21 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 </svg></div>
     <div class="provenance">
       <svg class="pmark" viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg>
-      <span class="f"><span class="k">GHIM</span><span>block <strong><span class="khong-ngat">#10.808.643 → #11.671.782</span></strong> · <span class="khong-ngat">16/07</span> UTC</span></span>
+      <span class="f"><span class="k">GHIM</span><span>block <strong>#10.808.643&nbsp;→&nbsp;#11.671.782</strong> · 16/07 UTC</span></span>
       <span class="f"><span class="k">NGUỒN</span><span><strong>api.llama.fi</strong> — lệnh curl in trong bài</span></span>
-      <span class="f"><span class="k">ĐỌC</span><span><b><span class="khong-ngat">09/08/2026</span></b></span></span>
+      <span class="f"><span class="k">ĐỌC</span><span><b>09/08/2026</b></span></span>
       <a class="chay" href="#tu-kiem">tự chạy lại được</a>
     </div>
   </figure><script>window.BP_CHART_DATA=[["01/07", 1894, 6.0, 289.7], ["02/07", 11316, 29.9, 288.1], ["03/07", 9647, 53.8, 288.4], ["04/07", 6171, 77.7, 289.0], ["05/07", 3470, 101.6, 289.4], ["06/07", 5452, 125.5, 289.1], ["07/07", 8182, 149.4, 288.6], ["08/07", 357150, 173.3, 231.1], ["09/07", 214010, 197.2, 254.7], ["10/07", 398135, 221.1, 224.3], ["11/07", 609786, 244.9, 189.4], ["12/07", 1053201, 268.8, 116.2], ["13/07", 1198749, 292.7, 92.2], ["14/07", 1527023, 316.6, 38.0], ["15/07", 1575188, 340.5, 30.1], ["16/07", 1311164, 364.4, 73.7], ["17/07", 1186030, 388.3, 94.3], ["18/07", 1035568, 412.2, 119.1], ["19/07", 885513, 436.1, 143.9], ["20/07", 895611, 460.0, 142.2], ["21/07", 814814, 483.9, 155.6], ["22/07", 860707, 507.8, 148.0], ["23/07", 1341639, 531.7, 68.6], ["24/07", 617679, 555.6, 188.1], ["25/07", 441229, 579.5, 217.2], ["26/07", 560804, 603.4, 197.5], ["27/07", 731049, 627.3, 169.4], ["28/07", 636652, 651.2, 185.0], ["29/07", 599261, 675.1, 191.1], ["30/07", 656778, 698.9, 181.6], ["31/07", 696535, 722.8, 175.1], ["01/08", 515421, 746.7, 205.0], ["02/08", 558258, 770.6, 197.9], ["03/08", 628975, 794.5, 186.2], ["04/08", 604866, 818.4, 190.2], ["05/08", 1137048, 842.3, 102.4], ["06/08", 1189918, 866.2, 93.7], ["07/08", 977888, 890.1, 128.6], ["08/08", 983441, 914.0, 127.7]];</script>
 </section><nav class="article-map" aria-label="Điều hướng trong bài"><span>Đọc theo bằng&nbsp;chứng</span><a href="#so-claim">Sổ claim</a><a href="#khong-phai-mot-he-so-thoi-phong-co-dinh">Không phải một hệ số thổi phồng cố định</a><a href="#vi-sao-sai">Vì sao sai</a><a href="#vi-sao-chua-xong">Vì sao chưa xong</a></nav><section class="article-ledger" aria-labelledby="so-claim-title">
 <details class="evidence case-evidence" id="so-claim">
   <summary>
-    <span class="case-ledger-title"><span>Sổ claim của bài</span><b id="so-claim-title"><span class="khong-ngat">6</span> khẳng&nbsp;định</b><small>đổi trạng thái tại chỗ · không xoá</small></span>
+    <span class="case-ledger-title"><span>Sổ claim của bài</span><b id="so-claim-title">6 khẳng&nbsp;định</b><small>đổi trạng thái tại chỗ · không xoá</small></span>
     <span class="case-ledger-viz">
       <span class="case-ledger-bar" role="img" aria-label="1 xác nhận, 4 đã sửa, 1 đã bị bác bỏ"><i class="xac" style="--n:1"></i><i class="sua" style="--n:4"></i><i class="bac" style="--n:1"></i></span>
-      <span class="case-ledger-legend"><i><span class="dot xac"></span><b><span class="khong-ngat">1</span></b> xác nhận</i><i><span class="dot sua"></span><b><span class="khong-ngat">4</span></b> đã sửa</i><i><span class="dot bac"></span><b><span class="khong-ngat">1</span></b> đã bị bác&nbsp;bỏ</i></span>
+      <span class="case-ledger-legend"><i><span class="dot xac"></span><b>1</b> xác nhận</i><i><span class="dot sua"></span><b>4</b> đã sửa</i><i><span class="dot bac"></span><b>1</b> đã bị bác&nbsp;bỏ</i></span>
     </span>
-    <span class="mo">mở <span class="khong-ngat">6 claim</span></span>
+    <span class="mo">mở 6&nbsp;claim</span>
   </summary>
   <div class="trong case-ledger-body">
     <p class="case-ledger-intro">Mỗi claim kèm điều có thể bác&nbsp;bỏ nó, mốc ghim và toàn bộ lịch sử đổi trạng thái.</p>
@@ -1859,60 +1873,60 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-status xac"><i aria-hidden="true"></i>ĐÃ XÁC NHẬN</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Ngày <span class="khong-ngat">16/07</span>, DefiLlama báo phí Uniswap v4 trên Robinhood chain cao hơn <span class="khong-ngat">3,9 lần</span> so với phép đếm trực tiếp trên chain (<span class="khong-ngat">$5.014.570</span> so với <span class="khong-ngat">$1.286.386</span>).</p>
+  <p class="case-claim-text">Ngày 16/07, DefiLlama báo phí Uniswap v4 trên Robinhood chain cao hơn 3,9&nbsp;lần so với phép đếm trực tiếp trên chain ($5.014.570 so với $1.286.386).</p>
   <figure class="hinh case-claim-scale"><div class="thang">
-<div class="hang"><div class="nh"><span>tôi đếm từng swap trên chain</span><b><span class="khong-ngat">$1,286M</span></b></div><div class="ray"><i class="cot toi" style="width:23.8%"></i></div></div>
-<div class="hang"><div class="nh"><span>DefiLlama SAU khi chạy lại — đọc <span class="khong-ngat">28/07</span> <span class="khong-ngat">01:57Z</span></span><b><span class="khong-ngat">$1,311M</span></b></div><div class="ray"><i class="cot ho" style="width:24.3%"></i></div></div>
-<div class="hang"><div class="nh"><span>DefiLlama TRƯỚC đó — con số issue này mở ra vì nó</span><b><span class="khong-ngat">$5,015M</span></b></div><div class="ray"><i class="cot cu" style="width:92.9%"></i></div></div>
-<div class="hang kh"><div class="ray tr"><i class="vung" style="left:21.4%;width:4.8%"></i></div><div class="nh nk2"><span>↑ khoảng tôi ghi&nbsp;trước, ngày <span class="khong-ngat">26/07</span> — trước khi họ chạy lại</span><b><span class="khong-ngat">$1,157–1,415M</span></b></div></div></div><figcaption>Phí Uniswap v4 trên Robinhood chain — ngày <span class="khong-ngat">16/07/2026</span></figcaption></figure>
+<div class="hang"><div class="nh"><span>tôi đếm từng swap trên chain</span><b>$1,286M</b></div><div class="ray"><i class="cot toi" style="width:23.8%"></i></div></div>
+<div class="hang"><div class="nh"><span>DefiLlama SAU khi chạy lại — đọc 28/07 01:57Z</span><b>$1,311M</b></div><div class="ray"><i class="cot ho" style="width:24.3%"></i></div></div>
+<div class="hang"><div class="nh"><span>DefiLlama TRƯỚC đó — con số issue này mở ra vì nó</span><b>$5,015M</b></div><div class="ray"><i class="cot cu" style="width:92.9%"></i></div></div>
+<div class="hang kh"><div class="ray tr"><i class="vung" style="left:21.4%;width:4.8%"></i></div><div class="nh nk2"><span>↑ khoảng tôi ghi&nbsp;trước, ngày 26/07 — trước khi họ chạy lại</span><b>$1,157–1,415M</b></div></div></div><figcaption>Phí Uniswap v4 trên Robinhood chain — ngày 16/07/2026</figcaption></figure>
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Robinhood chain · <span class="khong-ngat">block #10.808.643 → #11.671.782</span> (trọn ngày <span class="khong-ngat">16/07</span> UTC)</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>DefiLlama đã nói sẽ tính lại ngày <span class="khong-ngat">16/07</span>. Tôi ghi&nbsp;trước con số mục tiêu là <span class="khong-ngat">$1,286M</span>. Kết quả tính lại rơi trong khoảng <span class="khong-ngat">$1,157M–$1,415M</span> (<span class="khong-ngat">±10%</span>) ⇒ phép đo của tôi được chính đối tượng xác nhận. Rơi NGOÀI khoảng đó ⇒ tôi kiểm lại phép đo của mình trước, chưa kết luận bên nào sai.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Robinhood chain · block&nbsp;#10.808.643&nbsp;→&nbsp;#11.671.782 (trọn ngày 16/07 UTC)</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>DefiLlama đã nói sẽ tính lại ngày 16/07. Tôi ghi&nbsp;trước con số mục tiêu là $1,286M. Kết quả tính lại rơi trong khoảng $1,157M–$1,415M (±10%) ⇒ phép đo của tôi được chính đối tượng xác nhận. Rơi NGOÀI khoảng đó ⇒ tôi kiểm lại phép đo của mình trước, chưa kết luận bên nào sai.</p>
   </div>
   
-  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">4</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">26</span></span><span>Ghi&nbsp;trước con số mục tiêu <span class="khong-ngat">$1,286M</span> công khai trong thread, trước khi họ chạy lại. <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5083749092">nguồn</a></span></li><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">27</span></span><span>Đọc lại API lúc <span class="khong-ngat">06:32Z</span>: ngày <span class="khong-ngat">16/07</span> vẫn trả <span class="khong-ngat">$5.014.570</span> ⇒ họ chưa tính lại. Claim còn nguyên hiệu lực. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></span></li><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">27</span></span><span><span class="khong-ngat">16:23Z</span> — tác giả bản sửa chạy trọn ngày <span class="khong-ngat">16/07</span> qua adapter hiện tại: <span class="khong-ngat">$1,313M</span>, chia đều <span class="khong-ngat">24</span> khung giờ, không khung nào hụt dữ&nbsp;liệu. Họ viết ra thành lời: hai phép đo độc lập khớp nhau, chênh chạy đúng chiều mà khác biệt phương pháp dự đoán, và theo đúng tiêu chí tôi ghi&nbsp;trước thì việc này khép lại. <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5093909494">nguồn</a></span></li><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">28</span></span><span><span class="khong-ngat">01:57Z</span> — chuỗi công khai đã đổi thật: <span class="khong-ngat">16/07</span> từ <span class="khong-ngat">$5.014.570</span> xuống <span class="khong-ngat">$1.311.188</span>. Rơi trong khoảng tôi ghi&nbsp;trước, lệch <span class="khong-ngat">1,93%</span> so với con số tôi ghi. Điều&nbsp;bác&nbsp;bỏ đã chạy và claim sống sót — đây là lần đầu chuyện đó xảy ra trên kênh này. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 4 mốc</summary><ol><li><span class="case-log-date">2026-07-26</span><span>Ghi&nbsp;trước con số mục tiêu $1,286M công khai trong thread, trước khi họ chạy lại. <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5083749092">nguồn</a></span></li><li><span class="case-log-date">2026-07-27</span><span>Đọc lại API lúc 06:32Z: ngày 16/07 vẫn trả $5.014.570 ⇒ họ chưa tính lại. Claim còn nguyên hiệu lực. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></span></li><li><span class="case-log-date">2026-07-27</span><span>16:23Z — tác giả bản sửa chạy trọn ngày 16/07 qua adapter hiện tại: $1,313M, chia đều 24 khung giờ, không khung nào hụt dữ&nbsp;liệu. Họ viết ra thành lời: hai phép đo độc lập khớp nhau, chênh chạy đúng chiều mà khác biệt phương pháp dự đoán, và theo đúng tiêu chí tôi ghi&nbsp;trước thì việc này khép lại. <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5093909494">nguồn</a></span></li><li><span class="case-log-date">2026-07-28</span><span>01:57Z — chuỗi công khai đã đổi thật: 16/07 từ $5.014.570 xuống $1.311.188. Rơi trong khoảng tôi ghi&nbsp;trước, lệch 1,93% so với con số tôi ghi. Điều&nbsp;bác&nbsp;bỏ đã chạy và claim sống sót — đây là lần đầu chuyện đó xảy ra trên kênh này. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></span></li></ol></details>
 </article><article class="case-claim bac" id="C2" data-article-claim data-st="bac">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C2">C2</a>
     <span class="case-claim-status bac"><i aria-hidden="true"></i>ĐÃ BỊ BÁC&nbsp;BỎ</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Trong chuỗi phí v4 có một cú tụt do ĐỔI CÁCH TÍNH, không phải do thị trường — ước tính ban đầu khoảng <span class="khong-ngat">1,63×</span> sau khi chuẩn hoá theo v3.</p>
+  <p class="case-claim-text">Trong chuỗi phí v4 có một cú tụt do ĐỔI CÁCH TÍNH, không phải do thị trường — ước tính ban đầu khoảng 1,63× sau khi chuẩn hoá theo v3.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Số của DefiLlama, một lần đọc duy nhất <span class="khong-ngat">27/07/2026</span> <span class="khong-ngat">06:32Z</span> · so <span class="khong-ngat">7 ngày</span> trước bản sửa với <span class="khong-ngat">2 ngày</span> sau</p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>🔁 Điều&nbsp;bác&nbsp;bỏ này đã được THAY ngày <span class="khong-ngat">28/07</span> vì bản cũ hỏng — nguyên văn bản cũ và lý do thay nằm trong nhật ký ngay dưới. Bản thay: DefiLlama đã công bố sẽ tính lại <span class="khong-ngat">08</span>→<span class="khong-ngat">24/07</span>. Khi có ít nhất <span class="khong-ngat">3 ngày</span> trong nhóm <span class="khong-ngat">17–23/07</span> được tính lại, tôi lấy trung vị của (số cũ ÷ số mới) trên đúng những ngày đó. Trung vị ≤<span class="khong-ngat">1,1×</span> ⇒ cách tính không phải nguyên nhân ⇒ claim này ĐỔ. Trung vị ≥<span class="khong-ngat">1,3×</span> ⇒ claim đứng. Rơi giữa <span class="khong-ngat">1,1×</span> và <span class="khong-ngat">1,3×</span> ⇒ hướng đúng nhưng độ lớn <span class="khong-ngat">1,63×</span> của tôi bị thổi ⇒ tôi ghi lại con số đúng và đánh dấu claim này là ĐÃ SỬA. Còn nếu tới <span class="khong-ngat">30/09/2026</span> vẫn chưa đủ <span class="khong-ngat">3 ngày</span>, tôi ghi CHỜ SỐ — không ghi là đúng.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Số của DefiLlama, một lần đọc duy nhất 27/07/2026 06:32Z · so 7&nbsp;ngày trước bản sửa với 2&nbsp;ngày sau</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>🔁 Điều&nbsp;bác&nbsp;bỏ này đã được THAY ngày 28/07 vì bản cũ hỏng — nguyên văn bản cũ và lý do thay nằm trong nhật ký ngay dưới. Bản thay: DefiLlama đã công bố sẽ tính lại 08→24/07. Khi có ít nhất 3&nbsp;ngày trong nhóm 17–23/07 được tính lại, tôi lấy trung vị của (số cũ ÷ số mới) trên đúng những ngày đó. Trung vị ≤1,1× ⇒ cách tính không phải nguyên nhân ⇒ claim này ĐỔ. Trung vị ≥1,3× ⇒ claim đứng. Rơi giữa 1,1× và 1,3× ⇒ hướng đúng nhưng độ lớn 1,63× của tôi bị thổi ⇒ tôi ghi lại con số đúng và đánh dấu claim này là ĐÃ SỬA. Còn nếu tới 30/09/2026 vẫn chưa đủ 3&nbsp;ngày, tôi ghi CHỜ SỐ — không ghi là đúng.</p>
   </div>
   
-  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">4</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">27</span></span><span>Đăng ở mức ước tính ban đầu, kèm <span class="khong-ngat">4</span> giới hạn đã khai trong bài. Chưa có dữ&nbsp;liệu mới.</span></li><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">28</span></span><span>Điều&nbsp;bác&nbsp;bỏ cũ của tôi HỎNG, và tôi thay nó. Nguyên văn bản cũ: &quot;Sau khi DefiLlama tính lại xong, nếu chuỗi mới vẫn khớp chuỗi cũ trong biên <span class="khong-ngat">±10%</span> thì nhận định &#x27;cú tụt này do đổi cách tính&#x27; HẾT HIỆU LỰC.&quot; Hôm nay chuỗi mới khớp chuỗi cũ tới từng đơn vị ở <span class="khong-ngat">7/7 ngày</span> của nhóm trước — nhưng khớp vì họ CHƯA tính lại ngày nào trong nhóm đó, không phải vì tính lại rồi mà số không đổi. Câu tôi viết cho phép sự im lặng của bên kia được đọc thành bằng&nbsp;chứng chống lại chính tôi. Một phép thử mà bên kia không làm gì cũng &#x27;chạy&#x27; được thì không phải phép thử. Bản thay ở trên đòi số phải thực sự được tính lại mới tính là chạy.</span></li><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">28</span></span><span>Dữ kiện mới, và tôi ghi kèm giới hạn của nó: <span class="khong-ngat">16/07</span> là ngày duy nhất được tính lại, và nó tụt <span class="khong-ngat">3,82×</span> dưới cách tính mới. Đó là một ngày TRƯỚC mốc <span class="khong-ngat">24/07</span> tụt rất mạnh khi đổi cách tính — đúng chiều claim này. Nhưng đúng MỘT ngày, và lại là ngày cao nhất cả chuỗi, nên nó không đủ để nói các ngày còn lại tụt bao nhiêu. Tôi không tính nó là đã xác nhận. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></span></li><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">28</span></span><span>ĐIỀU&nbsp;BÁC&nbsp;BỎ ĐÃ CHẠY, VÀ CLAIM NÀY ĐỔ. Đọc lại lúc <span class="khong-ngat">09:36Z</span>: cả <span class="khong-ngat">7 ngày</span> <span class="khong-ngat">17–23/07</span> đều đã được tính lại bằng adapter mới, và trung vị (số cũ ÷ số mới) trên đúng <span class="khong-ngat">7 ngày</span> đó là <span class="khong-ngat">0,93</span> — dưới ngưỡng <span class="khong-ngat">1,1</span> tôi ghi&nbsp;trước, tức số mới nhìn chung còn CAO hơn số cũ khoảng <span class="khong-ngat">7%</span>. Đổi cách tính không tạo ra cú tụt, nên nhận định này sai và tôi rút nó. Phần vẫn đứng: cú tụt là thật — sau khi cả hai phía dùng cùng một adapter, phí v4 giảm <span class="khong-ngat">2,00 lần</span> trong khi v3 cùng kỳ chỉ giảm <span class="khong-ngat">1,21 lần</span>. <a href="https://x.com/blockpinned/status/2082047631786983793">nguồn</a></span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 4 mốc</summary><ol><li><span class="case-log-date">2026-07-27</span><span>Đăng ở mức ước tính ban đầu, kèm 4 giới hạn đã khai trong bài. Chưa có dữ&nbsp;liệu mới.</span></li><li><span class="case-log-date">2026-07-28</span><span>Điều&nbsp;bác&nbsp;bỏ cũ của tôi HỎNG, và tôi thay nó. Nguyên văn bản cũ: &quot;Sau khi DefiLlama tính lại xong, nếu chuỗi mới vẫn khớp chuỗi cũ trong biên ±10% thì nhận định &#x27;cú tụt này do đổi cách tính&#x27; HẾT HIỆU LỰC.&quot; Hôm nay chuỗi mới khớp chuỗi cũ tới từng đơn vị ở 7/7&nbsp;ngày của nhóm trước — nhưng khớp vì họ CHƯA tính lại ngày nào trong nhóm đó, không phải vì tính lại rồi mà số không đổi. Câu tôi viết cho phép sự im lặng của bên kia được đọc thành bằng&nbsp;chứng chống lại chính tôi. Một phép thử mà bên kia không làm gì cũng &#x27;chạy&#x27; được thì không phải phép thử. Bản thay ở trên đòi số phải thực sự được tính lại mới tính là chạy.</span></li><li><span class="case-log-date">2026-07-28</span><span>Dữ kiện mới, và tôi ghi kèm giới hạn của nó: 16/07 là ngày duy nhất được tính lại, và nó tụt 3,82× dưới cách tính mới. Đó là một ngày TRƯỚC mốc 24/07 tụt rất mạnh khi đổi cách tính — đúng chiều claim này. Nhưng đúng MỘT ngày, và lại là ngày cao nhất cả chuỗi, nên nó không đủ để nói các ngày còn lại tụt bao nhiêu. Tôi không tính nó là đã xác nhận. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></span></li><li><span class="case-log-date">2026-07-28</span><span>ĐIỀU&nbsp;BÁC&nbsp;BỎ ĐÃ CHẠY, VÀ CLAIM NÀY ĐỔ. Đọc lại lúc 09:36Z: cả 7&nbsp;ngày 17–23/07 đều đã được tính lại bằng adapter mới, và trung vị (số cũ ÷ số mới) trên đúng 7&nbsp;ngày đó là 0,93 — dưới ngưỡng 1,1 tôi ghi&nbsp;trước, tức số mới nhìn chung còn CAO hơn số cũ khoảng 7%. Đổi cách tính không tạo ra cú tụt, nên nhận định này sai và tôi rút nó. Phần vẫn đứng: cú tụt là thật — sau khi cả hai phía dùng cùng một adapter, phí v4 giảm 2,00&nbsp;lần trong khi v3 cùng kỳ chỉ giảm 1,21&nbsp;lần. <a href="https://x.com/blockpinned/status/2082047631786983793">nguồn</a></span></li></ol></details>
 </article><article class="case-claim sua" id="C3" data-article-claim data-st="sua">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C3">C3</a>
     <span class="case-claim-status sua"><i aria-hidden="true"></i>ĐÃ SỬA</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Bản sửa của DefiLlama chỉ áp dụng cho dữ&nbsp;liệu từ <span class="khong-ngat">24/07</span> trở đi; lịch sử trước đó chưa được tính lại.</p>
+  <p class="case-claim-text">Bản sửa của DefiLlama chỉ áp dụng cho dữ&nbsp;liệu từ 24/07 trở đi; lịch sử trước đó chưa được tính lại.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Đọc API <span class="khong-ngat">27/07/2026</span> <span class="khong-ngat">06:32Z</span></p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Con số ngày <span class="khong-ngat">16/07</span> trong chuỗi công khai của DefiLlama đổi khỏi <span class="khong-ngat">$5.014.570</span> ⇒ họ đã tính lại ⇒ claim này chuyển sang ĐÃ SỬA và C1 có kết quả.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Đọc API 27/07/2026 06:32Z</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Con số ngày 16/07 trong chuỗi công khai của DefiLlama đổi khỏi $5.014.570 ⇒ họ đã tính lại ⇒ claim này chuyển sang ĐÃ SỬA và C1 có kết quả.</p>
   </div>
   
-  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">3</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">26</span></span><span>DefiLlama mở lại issue và cam kết sẽ chạy lại adapter, cập nhật dữ&nbsp;liệu lịch sử. Chưa chốt khoảng ngày: tôi đề xuất <span class="khong-ngat">08</span>→<span class="khong-ngat">24/07</span>, họ dự tính bắt đầu từ <span class="khong-ngat">16/07</span>. <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242">nguồn</a></span></li><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">27</span></span><span>Đọc lại <span class="khong-ngat">06:32Z</span>: chưa chạy. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></span></li><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">28</span></span><span>Điều&nbsp;bác&nbsp;bỏ của chính claim này đã nổ: <span class="khong-ngat">16/07</span> đổi khỏi <span class="khong-ngat">$5.014.570</span> ⇒ lịch sử ĐÃ bị chạm ⇒ claim như tôi viết là sai. Nhưng sự thật mới hẹp hơn cả claim lẫn điều&nbsp;bác&nbsp;bỏ, nên tôi ghi ra cho đủ: trong khoảng tính lại họ đã công bố (<span class="khong-ngat">08</span>→<span class="khong-ngat">24/07</span>, <span class="khong-ngat">17 ngày</span>), đúng MỘT ngày đổi — <span class="khong-ngat">16/07</span>, đúng ngày được chạy tay để đối chiếu. <span class="khong-ngat">16 ngày</span> còn lại y hệt số hôm qua tới từng đơn vị. Ngày <span class="khong-ngat">20/07</span> mà chính bài này in là lệch <span class="khong-ngat">1,39×</span> vẫn đang đứng nguyên ở <span class="khong-ngat">$1.355.193</span>. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 3 mốc</summary><ol><li><span class="case-log-date">2026-07-26</span><span>DefiLlama mở lại issue và cam kết sẽ chạy lại adapter, cập nhật dữ&nbsp;liệu lịch sử. Chưa chốt khoảng ngày: tôi đề xuất 08→24/07, họ dự tính bắt đầu từ 16/07. <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242">nguồn</a></span></li><li><span class="case-log-date">2026-07-27</span><span>Đọc lại 06:32Z: chưa chạy. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></span></li><li><span class="case-log-date">2026-07-28</span><span>Điều&nbsp;bác&nbsp;bỏ của chính claim này đã nổ: 16/07 đổi khỏi $5.014.570 ⇒ lịch sử ĐÃ bị chạm ⇒ claim như tôi viết là sai. Nhưng sự thật mới hẹp hơn cả claim lẫn điều&nbsp;bác&nbsp;bỏ, nên tôi ghi ra cho đủ: trong khoảng tính lại họ đã công bố (08→24/07, 17&nbsp;ngày), đúng MỘT ngày đổi — 16/07, đúng ngày được chạy tay để đối chiếu. 16&nbsp;ngày còn lại y hệt số hôm qua tới từng đơn vị. Ngày 20/07 mà chính bài này in là lệch 1,39× vẫn đang đứng nguyên ở $1.355.193. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></span></li></ol></details>
 </article><article class="case-claim sua" id="C5" data-article-claim data-st="sua">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C5">C5</a>
     <span class="case-claim-status sua"><i aria-hidden="true"></i>ĐÃ SỬA</span>
     <span class="case-claim-actions"></span>
   </header>
-  <p class="case-claim-text">Trong khoảng tính lại DefiLlama đã chốt (<span class="khong-ngat">08</span>→<span class="khong-ngat">24/07</span>, <span class="khong-ngat">17 ngày</span>), tới <span class="khong-ngat">28/07</span> <span class="khong-ngat">01:57Z</span> đúng MỘT ngày đã đổi số — ngày <span class="khong-ngat">16/07</span>. <span class="khong-ngat">16 ngày</span> còn lại giống ảnh chụp hôm trước tới từng đơn vị.</p>
+  <p class="case-claim-text">Trong khoảng tính lại DefiLlama đã chốt (08→24/07, 17&nbsp;ngày), tới 28/07 01:57Z đúng MỘT ngày đã đổi số — ngày 16/07. 16&nbsp;ngày còn lại giống ảnh chụp hôm trước tới từng đơn vị.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Hai lần đọc chuỗi công khai của DefiLlama: <span class="khong-ngat">27/07</span> <span class="khong-ngat">06:32Z</span> và <span class="khong-ngat">28/07</span> <span class="khong-ngat">01:57Z</span> · block đối chiếu của ngày <span class="khong-ngat">16/07</span>: <span class="khong-ngat">#10.808.643 → #11.671.782</span></p>
-    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Đọc lại chuỗi công khai. Nếu từ <span class="khong-ngat">2 ngày</span> trở lên trong khoảng <span class="khong-ngat">08</span>→<span class="khong-ngat">24/07</span> đổi khỏi con số ghi ở đây, câu &#x27;mới sửa được một ngày&#x27; hết hạn ⇒ tôi ghi ngày và sửa dòng này. Nếu tới <span class="khong-ngat">30/09/2026</span> mà <span class="khong-ngat">16 ngày</span> kia vẫn y nguyên, tôi ghi rằng khoảng tính lại đã được công bố nhưng chưa chạy — không ghi rằng họ từ chối, vì tôi không biết điều đó.</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Hai lần đọc chuỗi công khai của DefiLlama: 27/07 06:32Z và 28/07 01:57Z · block đối chiếu của ngày 16/07: #10.808.643&nbsp;→&nbsp;#11.671.782</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Đọc lại chuỗi công khai. Nếu từ 2&nbsp;ngày trở lên trong khoảng 08→24/07 đổi khỏi con số ghi ở đây, câu &#x27;mới sửa được một ngày&#x27; hết hạn ⇒ tôi ghi ngày và sửa dòng này. Nếu tới 30/09/2026 mà 16&nbsp;ngày kia vẫn y nguyên, tôi ghi rằng khoảng tính lại đã được công bố nhưng chưa chạy — không ghi rằng họ từ chối, vì tôi không biết điều đó.</p>
   </div>
   
-  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">3</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">27</span></span><span><span class="khong-ngat">16:23Z</span> — họ chốt khoảng tính lại: <span class="khong-ngat">08</span>→<span class="khong-ngat">24/07</span> UTC, chỉ Robinhood chain, và nói code không cần sửa gì thêm. <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5093909494">nguồn</a></span></li><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">28</span></span><span><span class="khong-ngat">01:57Z</span> — so từng ngày giữa hai lần đọc: chỉ <span class="khong-ngat">16/07</span> đổi. Ngày <span class="khong-ngat">20/07</span>, ngày tôi cũng đã đếm trực tiếp và ra lệch <span class="khong-ngat">1,39×</span>, vẫn đứng nguyên ở <span class="khong-ngat">$1.355.193</span>. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></span></li><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">28</span></span><span>HẾT HIỆU LỰC, và tôi xử lý đúng cách điều&nbsp;bác&nbsp;bỏ này dặn: ghi ngày rồi sửa dòng này. Đọc lại lúc <span class="khong-ngat">09:36Z</span>, tức bảy tiếng rưỡi sau lần đọc trên: TOÀN BỘ <span class="khong-ngat">17/17 ngày</span> trong khoảng <span class="khong-ngat">08</span>→<span class="khong-ngat">24/07</span> đã đổi số so với ảnh chụp <span class="khong-ngat">27/07</span> — <span class="khong-ngat">11 ngày</span> trong đó đổi quá <span class="khong-ngat">10%</span>, và ngày <span class="khong-ngat">20/07</span> nói ở dòng trên tụt từ <span class="khong-ngat">$1.355.193</span> xuống <span class="khong-ngat">$895.611</span>. Không còn &#x27;mới sửa được một ngày&#x27; nào; câu này chỉ đúng cho đúng lần đọc <span class="khong-ngat">01:57Z</span>. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 3 mốc</summary><ol><li><span class="case-log-date">2026-07-27</span><span>16:23Z — họ chốt khoảng tính lại: 08→24/07 UTC, chỉ Robinhood chain, và nói code không cần sửa gì thêm. <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5093909494">nguồn</a></span></li><li><span class="case-log-date">2026-07-28</span><span>01:57Z — so từng ngày giữa hai lần đọc: chỉ 16/07 đổi. Ngày 20/07, ngày tôi cũng đã đếm trực tiếp và ra lệch 1,39×, vẫn đứng nguyên ở $1.355.193. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></span></li><li><span class="case-log-date">2026-07-28</span><span>HẾT HIỆU LỰC, và tôi xử lý đúng cách điều&nbsp;bác&nbsp;bỏ này dặn: ghi ngày rồi sửa dòng này. Đọc lại lúc 09:36Z, tức bảy tiếng rưỡi sau lần đọc trên: TOÀN BỘ 17/17&nbsp;ngày trong khoảng 08→24/07 đã đổi số so với ảnh chụp 27/07 — 11&nbsp;ngày trong đó đổi quá 10%, và ngày 20/07 nói ở dòng trên tụt từ $1.355.193 xuống $895.611. Không còn &#x27;mới sửa được một ngày&#x27; nào; câu này chỉ đúng cho đúng lần đọc 01:57Z. <a href="https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees">nguồn</a></span></li></ol></details>
 </article><article class="case-claim sua" id="C6" data-article-claim data-st="sua">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C6">C6</a>
@@ -1922,11 +1936,11 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   <p class="case-claim-text">Điều&nbsp;bác&nbsp;bỏ tôi tự viết cho claim C2 bị hỏng: nó có thể được coi là đã chạy trong khi bên kia không làm gì cả.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Bản cũ đăng <span class="khong-ngat">27/07</span> cùng bài này · phát hiện và thay <span class="khong-ngat">28/07</span> <span class="khong-ngat">01:57Z</span> sau khi so hai lần đọc chuỗi</p>
+    <p class="case-pin"><span>GHIM TẠI</span>Bản cũ đăng 27/07 cùng bài này · phát hiện và thay 28/07 01:57Z sau khi so hai lần đọc chuỗi</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Không có — đây là lỗi của chính tôi trong cách viết một phép thử, không phải một khẳng&nbsp;định về thế giới. Bản thay nằm ngay ở C2 phía trên, và bản thay đó thì có điều&nbsp;bác&nbsp;bỏ thật kèm hạn chót.</p>
   </div>
   
-  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">28</span></span><span>Bản cũ: &#x27;nếu tính lại xong mà chuỗi mới vẫn khớp chuỗi cũ trong biên <span class="khong-ngat">±10%</span> thì nhận định hết hiệu lực.&#x27; Hôm nay chuỗi khớp tới từng đơn vị ở cả <span class="khong-ngat">7 ngày</span> của nhóm trước — nhưng khớp vì họ chưa tính lại ngày nào trong nhóm đó. Câu tôi viết cho phép sự im lặng của bên kia được đọc thành bằng&nbsp;chứng, và đọc theo chiều bất lợi cho chính tôi. Bản thay đòi ít nhất <span class="khong-ngat">3 ngày</span> thực sự được tính lại mới tính là phép thử đã chạy.</span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-28</span><span>Bản cũ: &#x27;nếu tính lại xong mà chuỗi mới vẫn khớp chuỗi cũ trong biên ±10% thì nhận định hết hiệu lực.&#x27; Hôm nay chuỗi khớp tới từng đơn vị ở cả 7&nbsp;ngày của nhóm trước — nhưng khớp vì họ chưa tính lại ngày nào trong nhóm đó. Câu tôi viết cho phép sự im lặng của bên kia được đọc thành bằng&nbsp;chứng, và đọc theo chiều bất lợi cho chính tôi. Bản thay đòi ít nhất 3&nbsp;ngày thực sự được tính lại mới tính là phép thử đã chạy.</span></li></ol></details>
 </article><article class="case-claim sua" id="C4" data-article-claim data-st="sua">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C4">C4</a>
@@ -1936,44 +1950,44 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   <p class="case-claim-text">Trong issue gốc, tôi gọi sai tên cơ chế bảo vệ adapter v2/v3 — viết từ trí nhớ thay vì tra lại code.</p>
   
   <div class="case-claim-evidence">
-    <p class="case-pin"><span>GHIM TẠI</span>Comment đính chính <span class="khong-ngat">26/07/2026</span> <span class="khong-ngat">07:19:24Z</span></p>
+    <p class="case-pin"><span>GHIM TẠI</span>Comment đính chính 26/07/2026 07:19:24Z</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Không có — đây là lỗi của chính tôi, đã tự nhận và đính chính công khai. Mục này giữ lại để người đọc thấy lỗi, không phải để xoá nó.</p>
   </div>
   
-  <details class="case-log"><summary>Lịch sử · <span class="khong-ngat">1</span> mốc</summary><ol><li><span class="case-log-date"><span class="khong-ngat">2026-07</span>-<span class="khong-ngat">26</span></span><span>Đính chính công khai trong thread: cơ chế đúng là addOneToken trong helpers/uniswap.ts. Lỗi không đổi số đo hay nguyên nhân của bài. <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5082514404">nguồn</a></span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-26</span><span>Đính chính công khai trong thread: cơ chế đúng là addOneToken trong helpers/uniswap.ts. Lỗi không đổi số đo hay nguyên nhân của bài. <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5082514404">nguồn</a></span></li></ol></details>
 </article></div>
   </div>
 </details>
 </section><section class="than article-body" id="ban-day-du">
   <div class="article-meta">
-    <span><b>GHIM</b>Robinhood chain · <span class="khong-ngat">block #10.808.643 → #11.671.782</span> (trọn ngày <span class="khong-ngat">16/07</span> UTC)</span>
-    <span><b>NGÀY</b><span class="khong-ngat">27/07/2026</span></span>
+    <span><b>GHIM</b>Robinhood chain · block&nbsp;#10.808.643&nbsp;→&nbsp;#11.671.782 (trọn ngày 16/07 UTC)</span>
+    <span><b>NGÀY</b>27/07/2026</span>
     <span class="article-meta-link"><a href="https://x.com/blockpinned/status/2081674093368365398">bản đăng trên X ↗</a></span><a class="article-token-link" href="../../token/uni/">Hồ&nbsp;sơ Uniswap →</a>
   </div>
-  <p>Ngày <span class="khong-ngat">16/07</span>, DefiLlama báo phí Uniswap v4 trên Robinhood chain: <strong><span class="khong-ngat">$5,01M</span></strong>. Tôi đếm từng swap trên chain cùng ngày: <strong><span class="khong-ngat">$1,29M</span></strong>. Lệch <span class="khong-ngat">3,9 lần</span>.</p>
-<p>Tôi mở issue báo họ ngày <span class="khong-ngat">18/07</span>. Sáu ngày sau, DefiLlama merge bản sửa, dòng đầu ghi rõ: <em>&quot;Fixes <span class="khong-ngat">#8242</span>&quot;</em> — issue tôi đã mở.</p>
-<p><em>(Phí ở đây là phí swap người giao dịch trả cho pool — không phải phí gas, và cũng không phải phần phí giao thức mà governance Uniswap vừa bật hôm <span class="khong-ngat">27/07</span>.)</em></p>
+  <p>Ngày 16/07, DefiLlama báo phí Uniswap v4 trên Robinhood chain: <strong>$5,01M</strong>. Tôi đếm từng swap trên chain cùng ngày: <strong>$1,29M</strong>. Lệch 3,9&nbsp;lần.</p>
+<p>Tôi mở issue báo họ ngày 18/07. Sáu ngày sau, DefiLlama merge bản sửa, dòng đầu ghi rõ: <em>&quot;Fixes #8242&quot;</em> — issue tôi đã mở.</p>
+<p><em>(Phí ở đây là phí swap người giao dịch trả cho pool — không phải phí gas, và cũng không phải phần phí giao thức mà governance Uniswap vừa bật hôm 27/07.)</em></p>
 <h2 id="khong-phai-mot-he-so-thoi-phong-co-dinh">Không phải một hệ số thổi phồng cố định</h2>
 <p>Ba ngày, ba kết quả khác nhau:</p>
-<div class="bang"><table><thead><tr><th>Ngày</th><th>DefiLlama</th><th>Đếm trực tiếp</th><th>Ai đo</th><th>Tỷ lệ</th></tr></thead><tbody><tr><td><span class="khong-ngat">16/07</span></td><td><span class="khong-ngat">$5.014.570</span></td><td><span class="khong-ngat">$1.286.386</span></td><td>tôi</td><td><strong>cao hơn <span class="khong-ngat">3,9×</span></strong></td></tr><tr><td><span class="khong-ngat">20/07</span></td><td><span class="khong-ngat">$1.355.193</span></td><td><span class="khong-ngat">$977.586</span></td><td>tôi</td><td>cao hơn <span class="khong-ngat">1,39×</span></td></tr><tr><td><span class="khong-ngat">22/07</span></td><td>—</td><td>—</td><td><strong>chính tác giả bản sửa</strong></td><td><strong>thấp hơn</strong> <span class="khong-ngat">0,93×</span></td></tr></tbody></table></div>
+<div class="bang"><table><thead><tr><th>Ngày</th><th>DefiLlama</th><th>Đếm trực tiếp</th><th>Ai đo</th><th>Tỷ lệ</th></tr></thead><tbody><tr><td>16/07</td><td>$5.014.570</td><td>$1.286.386</td><td>tôi</td><td><strong>cao hơn 3,9×</strong></td></tr><tr><td>20/07</td><td>$1.355.193</td><td>$977.586</td><td>tôi</td><td>cao hơn 1,39×</td></tr><tr><td>22/07</td><td>—</td><td>—</td><td><strong>chính tác giả bản sửa</strong></td><td><strong>thấp hơn</strong> 0,93×</td></tr></tbody></table></div>
 <p>Có ngày số bị đội lên, có ngày bị kéo xuống. Không thể hiệu chỉnh chuỗi cũ bằng một hệ số chung. Nguyên văn trong bản sửa của họ: <em>&quot;it&#x27;s pure luck which direction wins&quot;</em> — lệch lên hay lệch xuống là hên xui.</p>
 <p><strong>Hệ quả với người đọc chart:</strong> nếu bạn nhìn phí Uniswap v4 để đọc mức độ hoạt động, bạn có thể kết luận phí tăng hay phí sập chỉ vì cách quy đổi ra USD đã đổi — không phải vì người ta giao dịch nhiều hay ít đi.</p>
 <h2 id="vi-sao-sai">Vì sao sai</h2>
 <p>DefiLlama không có sẵn một con số &quot;phí bằng USD&quot; để đọc. Phí thu bằng token, nên với mỗi swap, adapter phải chọn một token trong cặp làm mốc quy sang USD.</p>
-<p>Adapter v4 luôn chọn <code>currency0</code> — mà với một cặp ERC-<span class="khong-ngat">20</span>, <code>currency0</code> về cơ bản là <strong>token có địa chỉ contract nhỏ hơn</strong>, không liên quan gì tới token nào có giá đáng tin hơn. Trên Robinhood chain, một số meme token mới có địa chỉ thấp lọt đúng vào chỗ đó — thay vì WETH hoặc USDG, các core asset mà adapter có thể dùng làm mốc. Phí của những pool ấy bị quy USD theo giá meme token; cộng dồn cả ngày, tổng số lệch mạnh.</p>
-<p>Adapter v2/v3 tránh được lỗi này vì chúng ưu tiên lấy bên core của cặp làm mốc; riêng adapter v4 chưa từng được xử lý như vậy, cho tới bản sửa <span class="khong-ngat">24/07</span>.</p>
+<p>Adapter v4 luôn chọn <code>currency0</code> — mà với một cặp ERC-20, <code>currency0</code> về cơ bản là <strong>token có địa chỉ contract nhỏ hơn</strong>, không liên quan gì tới token nào có giá đáng tin hơn. Trên Robinhood chain, một số meme token mới có địa chỉ thấp lọt đúng vào chỗ đó — thay vì WETH hoặc USDG, các core asset mà adapter có thể dùng làm mốc. Phí của những pool ấy bị quy USD theo giá meme token; cộng dồn cả ngày, tổng số lệch mạnh.</p>
+<p>Adapter v2/v3 tránh được lỗi này vì chúng ưu tiên lấy bên core của cặp làm mốc; riêng adapter v4 chưa từng được xử lý như vậy, cho tới bản sửa 24/07.</p>
 <h2 id="vi-sao-chua-xong">Vì sao chưa xong</h2>
-<p>Bản sửa chỉ chạy từ <span class="khong-ngat">24/07</span> trở đi, lịch sử trước đó chưa tính lại. Sáng <span class="khong-ngat">27/07</span> tôi kiểm tra lại chuỗi dữ&nbsp;liệu của họ: ngày <span class="khong-ngat">16/07</span> <strong>vẫn trả đúng <span class="khong-ngat">$5.014.570</span></strong> — con số issue này mở ra vì nó.</p>
-<p><strong>Cập nhật <span class="khong-ngat">28/07/2026</span> —</strong> đoạn ngay trên là tình trạng lúc bài này đăng, và nó đã đổi. Sáng <span class="khong-ngat">28/07</span>, ngày <span class="khong-ngat">16/07</span> trong chuỗi của DefiLlama xuống còn <strong><span class="khong-ngat">$1.311.188</span></strong>, rơi trong khoảng tôi ghi&nbsp;trước ngày <span class="khong-ngat">26/07</span>. Nhưng đúng một ngày đó đổi thôi: <span class="khong-ngat">16 ngày</span> còn lại trong khoảng chính họ nói sẽ tính lại (<span class="khong-ngat">08</span>→<span class="khong-ngat">24/07</span>) vẫn giữ nguyên số cũ, giống tới từng đơn vị. Trạng thái từng khẳng&nbsp;định của bài nằm ở <a href="#so-claim">sổ claim</a> cuối trang — kể cả một chỗ tôi viết hỏng và đã thay.</p>
-<p>Nên mọi chart phí v4 gồm cả trước lẫn sau mốc <span class="khong-ngat">24/07</span> đang <strong>trộn hai thứ</strong>: biến động thị trường thật, và một cú tụt do đổi cách tính. Đọc trọn cú tụt đó thành &quot;phí sập&quot; là đọc sai.</p>
-<p>Tách thử hai phần đó ra — cả bảng dưới lấy từ <strong>một lần đọc duy nhất</strong> (<span class="khong-ngat">27/07</span> <span class="khong-ngat">06:32Z</span>), hai ngày &quot;sau&quot; đều đã đóng sổ:</p>
-<div class="bang"><table><thead><tr><th></th><th>TB <span class="khong-ngat">17–23/07</span> (trước)</th><th>TB <span class="khong-ngat">25–26/07</span> (sau)</th><th>tụt</th></tr></thead><tbody><tr><td>Uniswap v4</td><td><span class="khong-ngat">$987.745</span>/ngày</td><td><span class="khong-ngat">$501.016</span>/ngày</td><td><strong><span class="khong-ngat">1,97×</span></strong></td></tr><tr><td>Uniswap v3 <em>(bản sửa không đụng tới)</em></td><td><span class="khong-ngat">$1.459.704</span>/ngày</td><td><span class="khong-ngat">$1.208.511</span>/ngày</td><td><span class="khong-ngat">1,21×</span></td></tr><tr><td><strong>v4 ÷ v3</strong></td><td></td><td></td><td><strong><span class="khong-ngat">1,63×</span></strong></td></tr></tbody></table></div>
-<p>v3 tụt <span class="khong-ngat">1,21×</span> trong cùng khoảng thời gian; tôi dùng nó như một proxy cho xu hướng hoạt động chung trên Robinhood chain — không phải &quot;toàn thị trường&quot;. Sau khi trừ phần đó, chênh còn lại khoảng <strong><span class="khong-ngat">1,63×</span></strong>.</p>
+<p>Bản sửa chỉ chạy từ 24/07 trở đi, lịch sử trước đó chưa tính lại. Sáng 27/07 tôi kiểm tra lại chuỗi dữ&nbsp;liệu của họ: ngày 16/07 <strong>vẫn trả đúng $5.014.570</strong> — con số issue này mở ra vì nó.</p>
+<p><strong>Cập nhật 28/07/2026 —</strong> đoạn ngay trên là tình trạng lúc bài này đăng, và nó đã đổi. Sáng 28/07, ngày 16/07 trong chuỗi của DefiLlama xuống còn <strong>$1.311.188</strong>, rơi trong khoảng tôi ghi&nbsp;trước ngày 26/07. Nhưng đúng một ngày đó đổi thôi: 16&nbsp;ngày còn lại trong khoảng chính họ nói sẽ tính lại (08→24/07) vẫn giữ nguyên số cũ, giống tới từng đơn vị. Trạng thái từng khẳng&nbsp;định của bài nằm ở <a href="#so-claim">sổ claim</a> cuối trang — kể cả một chỗ tôi viết hỏng và đã thay.</p>
+<p>Nên mọi chart phí v4 gồm cả trước lẫn sau mốc 24/07 đang <strong>trộn hai thứ</strong>: biến động thị trường thật, và một cú tụt do đổi cách tính. Đọc trọn cú tụt đó thành &quot;phí sập&quot; là đọc sai.</p>
+<p>Tách thử hai phần đó ra — cả bảng dưới lấy từ <strong>một lần đọc duy nhất</strong> (27/07 06:32Z), hai ngày &quot;sau&quot; đều đã đóng sổ:</p>
+<div class="bang"><table><thead><tr><th></th><th>TB 17–23/07 (trước)</th><th>TB 25–26/07 (sau)</th><th>tụt</th></tr></thead><tbody><tr><td>Uniswap v4</td><td>$987.745/ngày</td><td>$501.016/ngày</td><td><strong>1,97×</strong></td></tr><tr><td>Uniswap v3 <em>(bản sửa không đụng tới)</em></td><td>$1.459.704/ngày</td><td>$1.208.511/ngày</td><td>1,21×</td></tr><tr><td><strong>v4 ÷ v3</strong></td><td></td><td></td><td><strong>1,63×</strong></td></tr></tbody></table></div>
+<p>v3 tụt 1,21× trong cùng khoảng thời gian; tôi dùng nó như một proxy cho xu hướng hoạt động chung trên Robinhood chain — không phải &quot;toàn thị trường&quot;. Sau khi trừ phần đó, chênh còn lại khoảng <strong>1,63×</strong>.</p>
 <p><strong>Đây là ước tính ban đầu, không phải một phân rã nhân quả hoàn chỉnh.</strong> Bốn chỗ nó có thể sai:</p>
-<ul><li>toàn bộ là số của DefiLlama, không phải tôi đo trên chain</li><li>mới có <strong><span class="khong-ngat">2 ngày</span></strong> dữ&nbsp;liệu sau bản sửa</li><li>v3 không phải một phép so hoàn hảo: mix pool và mức phí khác v4, và số v3-Robinhood của họ đi qua Dune chứ không đọc log — nên nó so được về <em>xu hướng thị trường</em>, không so được về <em>đường dữ&nbsp;liệu</em></li><li>ngày <span class="khong-ngat">24/07</span> bị loại khỏi cả hai nhóm vì bản sửa merge vào giữa ngày</li></ul>
-<p>Và một giới hạn của cả bài: chuỗi dữ&nbsp;liệu công khai của họ chỉ trả về khoảng <span class="khong-ngat">27 ngày</span> gần nhất. <strong>Mọi câu trong bài này chỉ nói về khoảng từ <span class="khong-ngat">01/07</span> trở đi</strong> — tôi không đọc được xa hơn, nên không nói gì về trước đó.</p>
+<ul><li>toàn bộ là số của DefiLlama, không phải tôi đo trên chain</li><li>mới có <strong>2&nbsp;ngày</strong> dữ&nbsp;liệu sau bản sửa</li><li>v3 không phải một phép so hoàn hảo: mix pool và mức phí khác v4, và số v3-Robinhood của họ đi qua Dune chứ không đọc log — nên nó so được về <em>xu hướng thị trường</em>, không so được về <em>đường dữ&nbsp;liệu</em></li><li>ngày 24/07 bị loại khỏi cả hai nhóm vì bản sửa merge vào giữa ngày</li></ul>
+<p>Và một giới hạn của cả bài: chuỗi dữ&nbsp;liệu công khai của họ chỉ trả về khoảng 27&nbsp;ngày gần nhất. <strong>Mọi câu trong bài này chỉ nói về khoảng từ 01/07 trở đi</strong> — tôi không đọc được xa hơn, nên không nói gì về trước đó.</p>
 <h2 id="tu-kiem-khong-can-tin-toi">Tự&nbsp;kiểm, không cần tin tôi</h2>
-<ol><li><strong>Issue gốc</strong>, kèm toàn bộ phép đo đã dán công khai trong thread: <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242">github.com/DefiLlama/dimension-adapters/issues/<span class="khong-ngat">8242</span></a></li><li><strong>Bản sửa:</strong> PR <span class="khong-ngat">#8376</span>, commit <code>33e0503</code>, diff đúng một file <code>dexs/uniswap-v4.ts</code></li><li><strong>Số gốc của chính DefiLlama</strong> — lệnh dưới đây đã chạy, không phải viết cho đẹp:</li></ol>
+<ol><li><strong>Issue gốc</strong>, kèm toàn bộ phép đo đã dán công khai trong thread: <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242">github.com/DefiLlama/dimension-adapters/issues/8242</a></li><li><strong>Bản sửa:</strong> PR #8376, commit <code>33e0503</code>, diff đúng một file <code>dexs/uniswap-v4.ts</code></li><li><strong>Số gốc của chính DefiLlama</strong> — lệnh dưới đây đã chạy, không phải viết cho đẹp:</li></ol>
 <pre class="l-bash"><code>curl -s &#x27;https://api.llama.fi/overview/fees/robinhood-chain?dataType=dailyFees&#x27; | python3 -c &quot;
 import sys,json,datetime
 def walk(o,out):
@@ -1984,14 +1998,14 @@ for ts,o in json.load(sys.stdin)[&#x27;totalDataChartBreakdown&#x27;]:
     if &#x27;Uniswap V4&#x27; in r:
         print(datetime.datetime.fromtimestamp(ts,datetime.timezone.utc).strftime(&#x27;%Y-%m-%d&#x27;), r[&#x27;Uniswap V4&#x27;])
 &quot;</code></pre>
-<ol><li><strong>Đếm tận gốc:</strong> sự kiện <code>Swap</code> của PoolManager trên Robinhood chain, <span class="khong-ngat">block 10.808.643 → 11.671.782</span> (trọn ngày <span class="khong-ngat">16/07</span> UTC). <span class="khong-ngat">931.772 swap</span>, volume <span class="khong-ngat">$226,6M</span>.</li></ol>
+<ol><li><strong>Đếm tận gốc:</strong> sự kiện <code>Swap</code> của PoolManager trên Robinhood chain, block&nbsp;10.808.643&nbsp;→&nbsp;11.671.782 (trọn ngày 16/07 UTC). 931.772&nbsp;swap, volume $226,6M.</li></ol>
 <h2 id="mot-loi-cua-chinh-toi">Một lỗi của chính tôi</h2>
-<p>Trong issue ban đầu, tôi gọi <strong>sai tên</strong> cơ chế bảo vệ v2/v3 trong codebase của họ — viết từ trí nhớ thay vì tra lại. Lỗi đó không đổi số đo hay nguyên nhân, và tôi đã <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5082514404">đính chính công khai trong thread ngày <span class="khong-ngat">26/07</span></a>.</p>
+<p>Trong issue ban đầu, tôi gọi <strong>sai tên</strong> cơ chế bảo vệ v2/v3 trong codebase của họ — viết từ trí nhớ thay vì tra lại. Lỗi đó không đổi số đo hay nguyên nhân, và tôi đã <a href="https://github.com/DefiLlama/dimension-adapters/issues/8242#issuecomment-5082514404">đính chính công khai trong thread ngày 26/07</a>.</p>
 <p>Không phải lời khuyên đầu tư.</p>
 <h2 id="phu-luc-cho-nguoi-muon-doc-code">Phụ lục — cho người muốn đọc code</h2>
-<p>Cơ chế giữ adapter v2/v3 khỏi lỗi này là <code>addOneToken</code> trong <code>helpers/uniswap.ts</code>. Bản sửa v4: commit <code>33e0503</code>, <span class="khong-ngat">+12</span>/<span class="khong-ngat">−5</span> dòng.</p>
-<p>Phép đo <span class="khong-ngat">22/07</span> của chính tác giả bản sửa: <span class="khong-ngat">block 15.977.411 → 16.839.577</span>, <span class="khong-ngat">1.047.163 swap</span> — hai bên đo bằng cùng một cách.</p>
-<p>Một bẫy tôi tự dính khi dựng bài này: bản tính đầu ra tỷ lệ tụt <strong><span class="khong-ngat">2,26×</span></strong> — sai, vì tôi lấy trung bình trên một ngày <strong>chưa kết thúc</strong>. Đọc lại khi ngày đã đóng: <span class="khong-ngat">1,97×</span>. <strong>Số ở ô cuối một chuỗi theo ngày còn tự lớn lên sau khi bạn đọc nó.</strong></p>
+<p>Cơ chế giữ adapter v2/v3 khỏi lỗi này là <code>addOneToken</code> trong <code>helpers/uniswap.ts</code>. Bản sửa v4: commit <code>33e0503</code>, +12/−5 dòng.</p>
+<p>Phép đo 22/07 của chính tác giả bản sửa: block&nbsp;15.977.411&nbsp;→&nbsp;16.839.577, 1.047.163&nbsp;swap — hai bên đo bằng cùng một cách.</p>
+<p>Một bẫy tôi tự dính khi dựng bài này: bản tính đầu ra tỷ lệ tụt <strong>2,26×</strong> — sai, vì tôi lấy trung bình trên một ngày <strong>chưa kết thúc</strong>. Đọc lại khi ngày đã đóng: 1,97×. <strong>Số ở ô cuối một chuỗi theo ngày còn tự lớn lên sau khi bạn đọc nó.</strong></p>
 </section></main>
 <div id="ch-tip"></div>
 <footer><div class="khung"><p>Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá. Không phải lời khuyên đầu tư. · <a href="https://x.com/blockpinned">@blockpinned</a></p></div></footer>
@@ -2130,7 +2144,8 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     var quickVisible = [];
 
     function quickNormalise(value) {
-      return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+      return (value || "").replace(/[\u00a0\u202f\u2007]/g, " ").normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
     }
     function quickRouteKey(value) {
       try {
@@ -2755,8 +2770,10 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   if (archiveCards.length) {
     var archiveActive = "all";
     var archiveLimit = 12;
+    // 🔴 GẤP NBSP VỀ KHOẢNG TRẮNG — xem lý do đầy đủ ở uniNormalise phía dưới.
     function archiveNormalise(value) {
-      return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+      return (value || "").replace(/[\u00a0\u202f\u2007]/g, " ").normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
     }
     function renderArticleArchive(resetLimit) {
       if (resetLimit) archiveLimit = 12;
@@ -2827,8 +2844,16 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     var uniActiveFilter = "all";
     var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng\u00a0vững", sua: "đã sửa", bac: "đã bị bác\u00a0bỏ", changed: "đã đổi trạng thái" };
 
+    // \ud83d\udd34 PH\u1ea2I G\u1ea4P NBSP V\u1ec0 KHO\u1ea2NG TR\u1eaeNG. T\u1eeb 11/08 `khoa_xuong_dong()` trong build.py
+    // thay kho\u1ea3ng tr\u1eafng b\u1eb1ng `&nbsp;` (U+00A0) ngay TRONG nh\u1eefng c\u1ee5m m\u00e0 ng\u01b0\u1eddi ta g\u00f5
+    // nhi\u1ec1u nh\u1ea5t \u2014 "\u0111\u1ee9ng v\u1eefng", "b\u00e1c b\u1ecf", "d\u1eef li\u1ec7u", "h\u1ed3 s\u01a1", "ghi tr\u01b0\u1edbc". H\u00e0m n\u00e0y
+    // b\u00f3c d\u1ea5u b\u1eb1ng NFD nh\u01b0ng KH\u00d4NG \u0111\u1ee5ng U+00A0, n\u00ean chu\u1ed7i t\u00ecm v\u00e0 chu\u1ed7i b\u1ecb t\u00ecm kh\u00e1c
+    // nhau \u0111\u00fang m\u1ed9t k\u00fd t\u1ef1 v\u00f4 h\u00ecnh. \u0110o 11/08 tr\u00ean b\u1ea3n \u0111ang ph\u1ee5c v\u1ee5: g\u00f5 "b\u00e1c b\u1ecf" ra
+    // 0/24 claim (\u0111\u00fang ph\u1ea3i 24), "\u0111\u1ee9ng v\u1eefng" 0/17, "d\u1eef li\u1ec7u" 0/3, "ghi tr\u01b0\u1edbc" 0/2.
+    // Kh\u00f4ng c\u1ed5ng n\u00e0o th\u1ea5y: build ki\u1ec3m markup, preview.py ki\u1ec3m tr\u00e0n \u2014 kh\u00f4ng ai G\u00d5 V\u00c0O \u00d4.
     function uniNormalise(value) {
-      return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+      return (value || "").replace(/[\u00a0\u202f\u2007]/g, " ").normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
     }
     function renderUniClaims() {
       var query = uniNormalise(uniSearch ? uniSearch.value : "");

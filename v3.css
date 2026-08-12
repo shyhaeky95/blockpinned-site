@@ -33,7 +33,12 @@ body{margin:0;color:var(--ink);font-family:var(--body);font-size:16.5px;line-hei
 a{color:var(--ink);text-decoration:none}
 p{margin:0 0 18px;overflow-wrap:break-word}
 h1,h2{text-wrap:balance}
-.khong-ngat,.cum-tieu-de{white-space:nowrap}
+/* 🔴 KHÔNG có `.khong-ngat` ở đây, và đó là CHỦ Ý. Máy khóa xuống dòng bằng `&nbsp;`
+   chứ không bọc span (xem build.py:khoa_xuong_dong). Một element do máy chèn vào khuôn
+   người khác viết không bao giờ trung tính: nó dính mọi selector `... span`, và thành
+   flex/grid item khi cha là flex/grid. Cả hai đã xảy ra thật trong ngày 11/08.
+   Cổng canh: khối `kieu` trong `preview.py:DO_TRAN` nổ nếu `.khong-ngat` sống lại. */
+.cum-tieu-de{white-space:nowrap}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 ::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
 
@@ -987,6 +992,10 @@ html.chuyen .token-overview.is-visible .token-scale>span:nth-child(5){animation-
   padding-bottom:18px;border-bottom:1px solid var(--line)}
 .section-code{font:700 9px/1.4 var(--mono);letter-spacing:.18em;color:var(--accent);margin:0 0 8px}
 .token-directory h2{font:760 clamp(28px,4vw,42px)/1.05 var(--display);letter-spacing:-.04em;margin:0}
+/* Chỗ trước đây là bộ lọc "đã mở hồ sơ / đang tích lũy". Bỏ 11/08: mọi token nay đi về
+   cùng một đích nên không còn hai loại thẻ để mà lọc. */
+.token-directory-note{margin:0 0 3px;max-width:38ch;text-align:right;font:600 9.5px/1.6 var(--mono);color:var(--faint)}
+.token-directory-note a{color:var(--accent);border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
 .token-filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
 .token-filters button{border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);padding:9px 12px;
   font:650 10px/1 var(--mono);cursor:pointer}.token-filters button b{color:var(--ink)}
@@ -1031,7 +1040,7 @@ html.chuyen .token-card.is-visible .token-status-bar>i{animation:status-lock .65
   .token-overview{margin-inline:-4px}.token-scale{overflow-x:auto;height:92px;padding-bottom:4px}.token-scale>span{flex:none;width:clamp(76px,28vw,150px)}
   .token-scale>span:first-child{width:clamp(170px,48vw,260px)}
   .token-switcher{top:54px;margin:-4px -4px 24px}.token-switcher-label{padding-inline:9px;max-width:64px}.token-switcher>button{min-width:108px}
-  .token-directory-head{align-items:flex-start;display:grid}.token-filters{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:3px}
+  .token-directory-head{align-items:flex-start;display:grid}.token-directory-note{text-align:left;max-width:none;margin-top:11px}.token-filters{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:3px}
   .token-filters button{flex:none}.token-filter-status{text-align:left}.token-grid{grid-template-columns:1fr}
   .token-card-featured{grid-column:auto}.token-card{min-height:325px;padding:21px}.token-symbol{margin-top:24px}
 }
@@ -1320,12 +1329,18 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
    UNI PROFILE — evidence vault. Semantic colour is a signal, never a panel.
    ══════════════════════════════════════════════════════════════════════════ */
 .page-token-uni main{padding-bottom:112px}.uni-hero{padding-bottom:30px}
-.uni-hero-grid{display:grid;grid-template-columns:minmax(0,.84fr) minmax(500px,1.16fr);gap:clamp(38px,5.5vw,88px);align-items:center}
-.uni-hero-copy{min-width:0}.uni-hero .subline{max-width:58ch;margin:0 0 28px}
+/* 🔴 MỘT CỘT Ở MỌI KHỔ — không phải chọn theo gu, mà theo phép đo. Cụm khóa
+   "qua từng lần kiểm chứng." là chữ display cỡ 33px, cần ~342px; bố cục hai cột cho
+   cột trái đúng 390px, trừ logo 84 + gap 22 còn 284px ⇒ chữ LÒI 57px. Và vì `.khung`
+   kẹp ở 1080px nên hình học ấy KHÔNG đổi theo màn hình: đo ở 1201 · 1280 · 1440 ·
+   1600 · 1920px đều lòi đúng 57–58px. Nới cột hay co chữ chỉ mua được vài px margin
+   trên một cụm không được phép xuống dòng — nên bỏ hẳn cột đôi. */
+.uni-hero-grid{display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
+.uni-hero-copy{min-width:0;max-width:900px}.uni-hero .subline{max-width:58ch;margin:0 0 28px}
 .uni-title-lockup{container-type:inline-size;display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
 .uni-title-lockup img{width:84px;height:84px;border-radius:23px;box-shadow:0 0 0 1px var(--line),0 18px 40px -26px var(--ink)}
 .uni-title-lockup>div>span{display:block;margin:0 0 7px;font:750 10px/1 var(--mono);letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
-.uni-title-lockup h1{max-width:none;margin:0;font-size:clamp(27px,2.8vw,33px)}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1{max-width:none;margin:0;font-size:clamp(40px,5vw,58px)}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
 .uni-title-lockup h1 .cum-tieu-de{display:block}
 .uni-hero-jump{width:min(100%,420px);display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:15px 17px;border:1px solid var(--line);border-radius:13px;background:var(--card);box-shadow:var(--bong)}
 .uni-hero-jump span{font:650 9px/1.4 var(--mono);color:var(--faint)}.uni-hero-jump b{font:760 10px/1 var(--mono);color:var(--accent)}.uni-hero-jump i{font-style:normal;color:var(--accent);transition:transform .2s}
@@ -1361,9 +1376,9 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
 .uni-vault-rule{grid-column:1/-1;display:flex;align-items:center;gap:11px 17px;margin:0;padding:15px 26px;border-top:1px solid var(--line);
   background:color-mix(in srgb,var(--bg2) 72%,transparent);font:600 9.5px/1.5 var(--mono);color:var(--muted)}
 .uni-vault-rule b{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}.uni-vault-rule i{font-style:normal;color:var(--accent)}
-.uni-hero-grid .uni-vault{grid-template-columns:1fr}
-.uni-hero-grid .uni-vault-total{min-height:205px;border-right:0;border-bottom:1px solid var(--line)}
-.uni-hero-grid .uni-vault-state{min-height:190px;padding-block:32px}
+.uni-hero-grid .uni-vault{grid-template-columns:1fr 1.15fr}
+.uni-hero-grid .uni-vault-total{min-height:205px;border-right:1px solid var(--line);border-bottom:0}
+.uni-hero-grid .uni-vault-state{min-height:205px;padding-block:32px}
 html.chuyen .uni-vault.is-visible .uni-status-bar>i{animation:uni-volume .8s cubic-bezier(.2,.8,.2,1) backwards}
 html.chuyen .uni-vault.is-visible .uni-status-bar>i:nth-child(2){animation-delay:.07s}html.chuyen .uni-vault.is-visible .uni-status-bar>i:nth-child(3){animation-delay:.14s}
 html.chuyen .uni-vault.is-visible .uni-status-bar>i:nth-child(4){animation-delay:.21s}
@@ -1467,7 +1482,12 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   color-mix(in srgb,var(--accent) 8%,transparent),transparent 66%);opacity:0;transition:opacity .2s}
 .article-priority .bai:hover::before,.article-priority .bai:focus-visible::before{opacity:1}
 .article-priority .bai-lead{grid-column:span 2;min-height:258px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 9%,var(--card)),var(--card))}
-.article-priority .bai-lead::after{content:"MỚI NHẤT";position:absolute;right:18px;bottom:54px;font:800 8px/1 var(--mono);letter-spacing:.16em;color:var(--accent)}
+/* 🔴 NHÃN "MỚI NHẤT" ĐI TRONG DÒNG, không đặt tuyệt đối nữa. Bản cũ neo `bottom:54px`
+   trên thẻ, mà chiều cao thẻ đổi theo bố cục — 11/08 nó rơi đúng lên thanh `.mini`
+   (đo: thanh 269→274px, đáy nhãn 276px). Neo vào chính `.mini` cũng không cứu được:
+   `.mini` khai `overflow:hidden` nên nhãn bị cắt. Đặt sau ngày thì nó không có cách
+   nào đè lên thứ khác, ở bất kỳ chiều cao thẻ nào. */
+.article-priority .bai-lead .d::after{content:" · MỚI NHẤT";font-weight:800;letter-spacing:.16em;color:var(--accent)}
 .article-priority .bai-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .article-priority .bai-token{padding:5px 7px;border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:999px;
   background:color-mix(in srgb,var(--accent) 6%,transparent);font:800 8px/1 var(--mono);letter-spacing:.1em;color:var(--accent)}
@@ -1478,16 +1498,10 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
 .article-priority .bai:hover .bai-go i,.article-priority .bai:focus-visible .bai-go i{display:inline-block;transform:translate(2px,-2px)}
 .article-priority .article-preview-note{margin:14px 0 0;font:550 9px/1.5 var(--mono);letter-spacing:.03em;color:var(--faint)}
 
-@media(max-width:1200px){
-  .uni-hero-grid{grid-template-columns:1fr;gap:40px}
-  .uni-hero-copy{max-width:900px}
-  .uni-title-lockup h1{font-size:clamp(40px,5vw,58px)}
-  .uni-hero-grid .uni-vault{grid-template-columns:1fr 1.15fr}
-  .uni-hero-grid .uni-vault-total{border-right:1px solid var(--line);border-bottom:0}
-  .uni-hero-grid .uni-vault-state{min-height:205px}
-}
+/* Khối @1200px cũ đã BỎ: nó chỉ lặp lại đúng bố cục nay là mặc định. Giữ lại thì
+   thành một nhánh chết mà lần sửa sau tưởng là chỗ đổi bố cục desktop. */
 @media(max-width:900px){
-  .uni-hero-grid{grid-template-columns:1fr;gap:40px}.uni-hero-copy{max-width:760px}.uni-hero-grid .uni-vault{grid-template-columns:1fr 1.15fr}.uni-hero-grid .uni-vault-total{border-right:1px solid var(--line);border-bottom:0}.uni-hero-grid .uni-vault-state{min-height:205px}
+  .uni-hero-copy{max-width:760px}
   .uni-vault{grid-template-columns:1fr}.uni-vault-total{min-height:205px;border-right:0;border-bottom:1px solid var(--line)}.uni-vault-state{padding:31px 34px}
   .uni-coverage{grid-template-columns:1fr 1fr 1fr}.uni-coverage-copy{grid-column:1/-1;min-height:145px}.uni-coverage article:first-of-type{border-left:0}
   .uni-tools{grid-template-columns:minmax(210px,.9fr) minmax(0,1.5fr)}.uni-open-tools{display:none}
@@ -1507,7 +1521,7 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   .uni-articles{margin-top:65px}.uni-articles .rail{grid-auto-columns:minmax(270px,86%)}.uni-articles .dieu-rail{display:none}
   .article-priority{margin-inline:-5px;padding:23px 18px;border-radius:18px}.article-priority .khu-dau{display:grid;align-items:start}
   .article-priority .bai-archive-link{width:100%;grid-template-columns:1fr auto auto}.article-priority .bai-archive-link i{grid-column:3;grid-row:1}.article-priority .article-preview-grid{grid-template-columns:1fr}
-  .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead::after{display:none}
+  .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead .d::after{display:none}
   .article-priority .bai-lead .t{font-size:23px}.article-priority::after{font-size:100px;top:-.12em}
 }
 @media(max-width:600px){

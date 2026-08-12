@@ -105,19 +105,48 @@ DO_TRAN = """<script>addEventListener('load',()=>{document.fonts.ready.then(()=>
    const r=e.getBoundingClientRect();
    if(r.width&&r.right>mx){mx=r.right;who=e.tagName.toLowerCase()+(e.className?'.'+String(e.className).split(' ')[0]:'')}
  }
+ const goi=s=>String(s).replace(/[|<>]/g,' ').slice(0,34);
  let split=0,splitWho='';
  for(const e of w.querySelectorAll('.khong-ngat,.cum-tieu-de')){
    const q=document.createRange();q.selectNodeContents(e);
-   if(q.getClientRects().length>1){split++;if(!splitWho)splitWho=e.className}
+   // 🔴 ĐẾM DÒNG, KHÔNG ĐẾM RECT. Range.getClientRects() trả một rect cho MỖI hộp chữ,
+   // nên một cụm nằm gọn trên MỘT dòng vẫn ra 2 rect. Xác 11/08: '1.066.799.814,53' ở
+   // /facts/@1008px — 2 rect, 1 dòng, white-space:nowrap vẫn đang áp đúng; cổng vẫn hô
+   // "cụm khóa bị bẻ dòng" và trả exit 1. Một cổng kêu oan thì lần sau người ta bỏ qua
+   // đúng vào lúc nó kêu thật (cùng họ với `failures=` mất nghĩa ở OPERATIONS §8).
+   const t=[...q.getClientRects()].map(r=>r.top).sort((a,b)=>a-b);
+   let dong=t.length?1:0;
+   for(let i=1;i<t.length;i++) if(t[i]-t[i-1]>4) dong++;
+   if(dong>1){split++;if(!splitWho)splitWho=e.className+' · '+goi(e.textContent)}
  }
+ // 🔴 KHÓA XUỐNG DÒNG PHẢI LÀ KÝ TỰ, KHÔNG PHẢI ELEMENT — cổng này canh đúng câu đó.
+ // 11/08 build từng bọc mỗi cụm số trong <span class="khong-ngat">, và một element do
+ // máy chèn vào khuôn người khác viết hỏng theo HAI đường cùng lúc: ① dính mọi selector
+ // `... span` (579 cụm đổi kiểu — số tổng /facts/ 64px→8px, số trang chủ 77px→11px, và
+ // cổng tràn mù vì chữ NHỎ ĐI thì không tràn) · ② thành flex/grid item khi cha là
+ // flex/grid, làm vỡ khối `.provenance` của bài. Nay khóa bằng `&nbsp;`, nên bất biến
+ // là: KHÔNG có `.khong-ngat` nào trên trang. Thấy một cái là helper đã quay về lối cũ.
+ let kieu=0,kieuWho='';
+ for(const e of w.querySelectorAll('.khong-ngat')){
+   kieu++;
+   if(!kieuWho){const p=e.parentElement;
+     kieuWho='span máy chèn sống lại trong <'+(p?p.tagName.toLowerCase():'?')+'> · '+goi(e.textContent)}
+ }
+ // 🔴 ĐO INK CỦA CHỮ, KHÔNG ĐO HỘP. Bản trước so `phrase.getBoundingClientRect()` với
+ // vị trí khối vault. Nhưng `.uni-title-lockup h1 .cum-tieu-de` khai `display:block`, nên
+ // hộp của nó LUÔN bằng bề rộng cột — chữ nowrap tràn ra ngoài hộp mà hộp không hề to
+ // lên, và cổng đọc được đúng một câu "không chạm". Xác 11/08: user gửi ảnh chữ "chứng."
+ // lòi sang cột phải, trong khi cổng vừa báo sạch ở cả 1008/1080/1280px; đo lại bằng
+ // Range thì lòi +57px ở MỌI khổ ≥1201px. Vị từ đúng là ink.right > box.right.
  let hit=0,hitWho='';
- const phrase=w.querySelector('.uni-title-lockup .cum-tieu-de'),vault=w.querySelector('.uni-hero-grid .uni-vault');
- if(phrase&&vault){
-   const p=phrase.getBoundingClientRect(),v=vault.getBoundingClientRect();
-   if(p.bottom>v.top&&v.bottom>p.top&&p.right>v.left-8){hit=1;hitWho='cum-tieu-de→uni-vault'}
+ for(const e of w.querySelectorAll('.cum-tieu-de')){
+   const q=document.createRange();q.selectNodeContents(e);
+   const ink=q.getBoundingClientRect(),box=e.getBoundingClientRect();
+   const loi=Math.round(ink.right-box.right);
+   if(loi>1){hit=1;hitWho='chữ lòi '+loi+'px khỏi hộp · '+goi(e.textContent);break}
  }
  const f=document.fonts.check('16px Inter')&&document.fonts.check('12px "JetBrains Mono"');
- document.body.insertAdjacentHTML('beforeend','<i id=ovf>'+w.scrollWidth+'|'+WW+'|'+Math.round(mx)+'|'+who+'|'+(f?'font':'KHONG-FONT')+'|'+split+'|'+splitWho+'|'+hit+'|'+hitWho+'</i>');
+ document.body.insertAdjacentHTML('beforeend','<i id=ovf>'+w.scrollWidth+'|'+WW+'|'+Math.round(mx)+'|'+who+'|'+(f?'font':'KHONG-FONT')+'|'+split+'|'+splitWho+'|'+hit+'|'+hitWho+'|'+kieu+'|'+kieuWho+'</i>');
 })})</script>"""
 
 
@@ -222,7 +251,8 @@ def do_tran(html: str, tmp: pathlib.Path, nhan: str) -> bool:
         # Khổ ≥500 đặt được cửa sổ THẬT ⇒ đo đúng; khổ hẹp hơn vẫn phải ép bằng CSS
         # trong cửa sổ 520 vì macOS kẹp (xem trên).
         r = chrome(["--dump-dom", f"--window-size={max(520, w)},900", f.as_uri()], timeout=90)
-        m = re.search(r'<i id="ovf">(\d+)\|(\d+)\|(\d+)\|([^|]*)\|([\w-]+)\|(\d+)\|([^|]*)\|(\d+)\|([^<]*)</i>', r.stdout)
+        m = re.search(r'<i id="ovf">(\d+)\|(\d+)\|(\d+)\|([^|]*)\|([\w-]+)\|(\d+)\|([^|]*)\|'
+                      r'(\d+)\|([^|]*)\|(\d+)\|([^<]*)</i>', r.stdout)
         if not m:
             print(f"  ⚠ {nhan} @{w}px: không đo được — phép đo MÙ, đừng đọc là 'không tràn'")
             continue
@@ -234,7 +264,11 @@ def do_tran(html: str, tmp: pathlib.Path, nhan: str) -> bool:
             print(f"  🔴 {nhan} @{w}px: {m.group(6)} cụm khóa vẫn bị bẻ dòng · {m.group(7)}")
             tran = True
         if int(m.group(8)):
-            print(f"  🔴 {nhan} @{w}px: tiêu đề UNI chạm khối trạng thái · {m.group(9)}")
+            print(f"  🔴 {nhan} @{w}px: cụm khóa lòi khỏi hộp chứa nó · {m.group(9)}")
+            tran = True
+        if int(m.group(10)):
+            print(f"  🔴 {nhan} @{w}px: {m.group(10)} span `.khong-ngat` do máy chèn "
+                  f"· {m.group(11)}")
             tran = True
         if sw > lim:
             print(f"  🔴 {nhan} @{w}px: TRÀN {sw}px > {lim}px · rộng nhất: <{who}> tới {mx}px")

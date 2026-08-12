@@ -54,7 +54,12 @@ body{margin:0;color:var(--ink);font-family:var(--body);font-size:16.5px;line-hei
 a{color:var(--ink);text-decoration:none}
 p{margin:0 0 18px;overflow-wrap:break-word}
 h1,h2{text-wrap:balance}
-.khong-ngat,.cum-tieu-de{white-space:nowrap}
+/* 🔴 KHÔNG có `.khong-ngat` ở đây, và đó là CHỦ Ý. Máy khóa xuống dòng bằng `&nbsp;`
+   chứ không bọc span (xem build.py:khoa_xuong_dong). Một element do máy chèn vào khuôn
+   người khác viết không bao giờ trung tính: nó dính mọi selector `... span`, và thành
+   flex/grid item khi cha là flex/grid. Cả hai đã xảy ra thật trong ngày 11/08.
+   Cổng canh: khối `kieu` trong `preview.py:DO_TRAN` nổ nếu `.khong-ngat` sống lại. */
+.cum-tieu-de{white-space:nowrap}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 ::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
 
@@ -1008,6 +1013,10 @@ html.chuyen .token-overview.is-visible .token-scale>span:nth-child(5){animation-
   padding-bottom:18px;border-bottom:1px solid var(--line)}
 .section-code{font:700 9px/1.4 var(--mono);letter-spacing:.18em;color:var(--accent);margin:0 0 8px}
 .token-directory h2{font:760 clamp(28px,4vw,42px)/1.05 var(--display);letter-spacing:-.04em;margin:0}
+/* Chỗ trước đây là bộ lọc "đã mở hồ sơ / đang tích lũy". Bỏ 11/08: mọi token nay đi về
+   cùng một đích nên không còn hai loại thẻ để mà lọc. */
+.token-directory-note{margin:0 0 3px;max-width:38ch;text-align:right;font:600 9.5px/1.6 var(--mono);color:var(--faint)}
+.token-directory-note a{color:var(--accent);border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
 .token-filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
 .token-filters button{border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);padding:9px 12px;
   font:650 10px/1 var(--mono);cursor:pointer}.token-filters button b{color:var(--ink)}
@@ -1052,7 +1061,7 @@ html.chuyen .token-card.is-visible .token-status-bar>i{animation:status-lock .65
   .token-overview{margin-inline:-4px}.token-scale{overflow-x:auto;height:92px;padding-bottom:4px}.token-scale>span{flex:none;width:clamp(76px,28vw,150px)}
   .token-scale>span:first-child{width:clamp(170px,48vw,260px)}
   .token-switcher{top:54px;margin:-4px -4px 24px}.token-switcher-label{padding-inline:9px;max-width:64px}.token-switcher>button{min-width:108px}
-  .token-directory-head{align-items:flex-start;display:grid}.token-filters{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:3px}
+  .token-directory-head{align-items:flex-start;display:grid}.token-directory-note{text-align:left;max-width:none;margin-top:11px}.token-filters{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:3px}
   .token-filters button{flex:none}.token-filter-status{text-align:left}.token-grid{grid-template-columns:1fr}
   .token-card-featured{grid-column:auto}.token-card{min-height:325px;padding:21px}.token-symbol{margin-top:24px}
 }
@@ -1341,12 +1350,18 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
    UNI PROFILE — evidence vault. Semantic colour is a signal, never a panel.
    ══════════════════════════════════════════════════════════════════════════ */
 .page-token-uni main{padding-bottom:112px}.uni-hero{padding-bottom:30px}
-.uni-hero-grid{display:grid;grid-template-columns:minmax(0,.84fr) minmax(500px,1.16fr);gap:clamp(38px,5.5vw,88px);align-items:center}
-.uni-hero-copy{min-width:0}.uni-hero .subline{max-width:58ch;margin:0 0 28px}
+/* 🔴 MỘT CỘT Ở MỌI KHỔ — không phải chọn theo gu, mà theo phép đo. Cụm khóa
+   "qua từng lần kiểm chứng." là chữ display cỡ 33px, cần ~342px; bố cục hai cột cho
+   cột trái đúng 390px, trừ logo 84 + gap 22 còn 284px ⇒ chữ LÒI 57px. Và vì `.khung`
+   kẹp ở 1080px nên hình học ấy KHÔNG đổi theo màn hình: đo ở 1201 · 1280 · 1440 ·
+   1600 · 1920px đều lòi đúng 57–58px. Nới cột hay co chữ chỉ mua được vài px margin
+   trên một cụm không được phép xuống dòng — nên bỏ hẳn cột đôi. */
+.uni-hero-grid{display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
+.uni-hero-copy{min-width:0;max-width:900px}.uni-hero .subline{max-width:58ch;margin:0 0 28px}
 .uni-title-lockup{container-type:inline-size;display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:22px;margin-bottom:24px}
 .uni-title-lockup img{width:84px;height:84px;border-radius:23px;box-shadow:0 0 0 1px var(--line),0 18px 40px -26px var(--ink)}
 .uni-title-lockup>div>span{display:block;margin:0 0 7px;font:750 10px/1 var(--mono);letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
-.uni-title-lockup h1{max-width:none;margin:0;font-size:clamp(27px,2.8vw,33px)}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
+.uni-title-lockup h1{max-width:none;margin:0;font-size:clamp(40px,5vw,58px)}.uni-title-lockup h1 em{font-style:normal;color:var(--accent)}
 .uni-title-lockup h1 .cum-tieu-de{display:block}
 .uni-hero-jump{width:min(100%,420px);display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:15px 17px;border:1px solid var(--line);border-radius:13px;background:var(--card);box-shadow:var(--bong)}
 .uni-hero-jump span{font:650 9px/1.4 var(--mono);color:var(--faint)}.uni-hero-jump b{font:760 10px/1 var(--mono);color:var(--accent)}.uni-hero-jump i{font-style:normal;color:var(--accent);transition:transform .2s}
@@ -1382,9 +1397,9 @@ html.chuyen .track-entry.is-visible .tr-body .mui{animation:resolution-signal .7
 .uni-vault-rule{grid-column:1/-1;display:flex;align-items:center;gap:11px 17px;margin:0;padding:15px 26px;border-top:1px solid var(--line);
   background:color-mix(in srgb,var(--bg2) 72%,transparent);font:600 9.5px/1.5 var(--mono);color:var(--muted)}
 .uni-vault-rule b{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}.uni-vault-rule i{font-style:normal;color:var(--accent)}
-.uni-hero-grid .uni-vault{grid-template-columns:1fr}
-.uni-hero-grid .uni-vault-total{min-height:205px;border-right:0;border-bottom:1px solid var(--line)}
-.uni-hero-grid .uni-vault-state{min-height:190px;padding-block:32px}
+.uni-hero-grid .uni-vault{grid-template-columns:1fr 1.15fr}
+.uni-hero-grid .uni-vault-total{min-height:205px;border-right:1px solid var(--line);border-bottom:0}
+.uni-hero-grid .uni-vault-state{min-height:205px;padding-block:32px}
 html.chuyen .uni-vault.is-visible .uni-status-bar>i{animation:uni-volume .8s cubic-bezier(.2,.8,.2,1) backwards}
 html.chuyen .uni-vault.is-visible .uni-status-bar>i:nth-child(2){animation-delay:.07s}html.chuyen .uni-vault.is-visible .uni-status-bar>i:nth-child(3){animation-delay:.14s}
 html.chuyen .uni-vault.is-visible .uni-status-bar>i:nth-child(4){animation-delay:.21s}
@@ -1488,7 +1503,12 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   color-mix(in srgb,var(--accent) 8%,transparent),transparent 66%);opacity:0;transition:opacity .2s}
 .article-priority .bai:hover::before,.article-priority .bai:focus-visible::before{opacity:1}
 .article-priority .bai-lead{grid-column:span 2;min-height:258px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 9%,var(--card)),var(--card))}
-.article-priority .bai-lead::after{content:"MỚI NHẤT";position:absolute;right:18px;bottom:54px;font:800 8px/1 var(--mono);letter-spacing:.16em;color:var(--accent)}
+/* 🔴 NHÃN "MỚI NHẤT" ĐI TRONG DÒNG, không đặt tuyệt đối nữa. Bản cũ neo `bottom:54px`
+   trên thẻ, mà chiều cao thẻ đổi theo bố cục — 11/08 nó rơi đúng lên thanh `.mini`
+   (đo: thanh 269→274px, đáy nhãn 276px). Neo vào chính `.mini` cũng không cứu được:
+   `.mini` khai `overflow:hidden` nên nhãn bị cắt. Đặt sau ngày thì nó không có cách
+   nào đè lên thứ khác, ở bất kỳ chiều cao thẻ nào. */
+.article-priority .bai-lead .d::after{content:" · MỚI NHẤT";font-weight:800;letter-spacing:.16em;color:var(--accent)}
 .article-priority .bai-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .article-priority .bai-token{padding:5px 7px;border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:999px;
   background:color-mix(in srgb,var(--accent) 6%,transparent);font:800 8px/1 var(--mono);letter-spacing:.1em;color:var(--accent)}
@@ -1499,16 +1519,10 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
 .article-priority .bai:hover .bai-go i,.article-priority .bai:focus-visible .bai-go i{display:inline-block;transform:translate(2px,-2px)}
 .article-priority .article-preview-note{margin:14px 0 0;font:550 9px/1.5 var(--mono);letter-spacing:.03em;color:var(--faint)}
 
-@media(max-width:1200px){
-  .uni-hero-grid{grid-template-columns:1fr;gap:40px}
-  .uni-hero-copy{max-width:900px}
-  .uni-title-lockup h1{font-size:clamp(40px,5vw,58px)}
-  .uni-hero-grid .uni-vault{grid-template-columns:1fr 1.15fr}
-  .uni-hero-grid .uni-vault-total{border-right:1px solid var(--line);border-bottom:0}
-  .uni-hero-grid .uni-vault-state{min-height:205px}
-}
+/* Khối @1200px cũ đã BỎ: nó chỉ lặp lại đúng bố cục nay là mặc định. Giữ lại thì
+   thành một nhánh chết mà lần sửa sau tưởng là chỗ đổi bố cục desktop. */
 @media(max-width:900px){
-  .uni-hero-grid{grid-template-columns:1fr;gap:40px}.uni-hero-copy{max-width:760px}.uni-hero-grid .uni-vault{grid-template-columns:1fr 1.15fr}.uni-hero-grid .uni-vault-total{border-right:1px solid var(--line);border-bottom:0}.uni-hero-grid .uni-vault-state{min-height:205px}
+  .uni-hero-copy{max-width:760px}
   .uni-vault{grid-template-columns:1fr}.uni-vault-total{min-height:205px;border-right:0;border-bottom:1px solid var(--line)}.uni-vault-state{padding:31px 34px}
   .uni-coverage{grid-template-columns:1fr 1fr 1fr}.uni-coverage-copy{grid-column:1/-1;min-height:145px}.uni-coverage article:first-of-type{border-left:0}
   .uni-tools{grid-template-columns:minmax(210px,.9fr) minmax(0,1.5fr)}.uni-open-tools{display:none}
@@ -1528,7 +1542,7 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   .uni-articles{margin-top:65px}.uni-articles .rail{grid-auto-columns:minmax(270px,86%)}.uni-articles .dieu-rail{display:none}
   .article-priority{margin-inline:-5px;padding:23px 18px;border-radius:18px}.article-priority .khu-dau{display:grid;align-items:start}
   .article-priority .bai-archive-link{width:100%;grid-template-columns:1fr auto auto}.article-priority .bai-archive-link i{grid-column:3;grid-row:1}.article-priority .article-preview-grid{grid-template-columns:1fr}
-  .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead::after{display:none}
+  .article-priority .bai-lead{grid-column:auto;min-height:238px}.article-priority .bai-lead .d::after{display:none}
   .article-priority .bai-lead .t{font-size:23px}.article-priority::after{font-size:100px;top:-.12em}
 }
 @media(max-width:600px){
@@ -1774,12 +1788,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <a href="track-record/">Mở toàn bộ sổ gốc →</a>
   </div>
   <div class="ledger-grid">
-    <div class="ledger-total"><strong><span class="khong-ngat">54</span></strong><span>khẳng&nbsp;định<small>trong <span class="khong-ngat">12 bài</span></small></span></div>
+    <div class="ledger-total"><strong>54</strong><span>khẳng&nbsp;định<small>trong 12&nbsp;bài</small></span></div>
     <div class="ledger-states">
       <div class="ledger-bar" role="img" aria-label="54 khẳng định: 2 xác nhận, 46 vẫn đứng vững, 4 đã sửa, 2 đã bị bác bỏ"><i class="xac" style="--n:2"></i><i class="song" style="--n:46"></i><i class="sua" style="--n:4"></i><i class="bac" style="--n:2"></i></div>
-      <div class="ledger-legend"><span><i class="dot xac"></i><b><span class="khong-ngat">2</span></b><small>xác nhận</small></span><span><i class="dot song"></i><b><span class="khong-ngat">46</span></b><small>vẫn đứng&nbsp;vững</small></span><span><i class="dot sua"></i><b><span class="khong-ngat">4</span></b><small>đã sửa</small></span><span><i class="dot bac"></i><b><span class="khong-ngat">2</span></b><small>đã bị bác&nbsp;bỏ</small></span></div>
+      <div class="ledger-legend"><span><i class="dot xac"></i><b>2</b><small>xác nhận</small></span><span><i class="dot song"></i><b>46</b><small>vẫn đứng&nbsp;vững</small></span><span><i class="dot sua"></i><b>4</b><small>đã sửa</small></span><span><i class="dot bac"></i><b>2</b><small>đã bị bác&nbsp;bỏ</small></span></div>
     </div>
-    <div class="ledger-preregister"><span>GHI&nbsp;TRƯỚC</span><strong><span class="khong-ngat">7</span></strong><p>lần công khai con số trước khi biết đáp án</p></div>
+    <div class="ledger-preregister"><span>GHI&nbsp;TRƯỚC</span><strong>7</strong><p>lần công khai con số trước khi biết đáp án</p></div>
   </div>
 </section>
 
@@ -1790,37 +1804,37 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
       <h1>Nghiên cứu crypto: <span class="nhan-manh">số nào cũng truy ngược được.</span></h1>
       <p class="home-lede">BlockPinned soi những con số đang được thị trường trích dẫn — từ dashboard, báo cáo đến dữ&nbsp;liệu on-chain — rồi đếm lại từ nguồn.</p>
       <div class="home-method" aria-label="Phương pháp BlockPinned">
-        <span><b><span class="khong-ngat">01</span></b> đi tận nguồn</span><span><b><span class="khong-ngat">02</span></b> ghim điều&nbsp;bác&nbsp;bỏ</span><span><b><span class="khong-ngat">03</span></b> sửa tại chỗ</span>
+        <span><b>01</b> đi tận nguồn</span><span><b>02</b> ghim điều&nbsp;bác&nbsp;bỏ</span><span><b>03</b> sửa tại chỗ</span>
       </div>
     </div>
     <nav class="home-map" aria-label="Khám phá BlockPinned">
-      <a class="home-door" href="#bai"><span class="door-no"><span class="khong-ngat">01</span></span><span class="door-copy"><b>Bài điều&nbsp;tra</b><small>Đọc trọn câu hỏi, đường đo và phần có thể sai.</small></span><span class="door-go" aria-hidden="true">↘</span></a>
-      <a class="home-door" href="token/"><span class="door-no"><span class="khong-ngat">02</span></span><span class="door-copy"><b>Token</b><small>Hồ&nbsp;sơ theo đối tượng, gom mọi câu đã ghim.</small></span><span class="door-go" aria-hidden="true">↗</span></a>
-      <a class="home-door" href="facts/"><span class="door-no"><span class="khong-ngat">03</span></span><span class="door-copy"><b>Facts</b><small>Một số · một block · một lệnh tự&nbsp;kiểm.</small></span><span class="door-go" aria-hidden="true">↗</span></a>
-      <a class="home-door" href="track-record/"><span class="door-no"><span class="khong-ngat">04</span></span><span class="door-copy"><b>Track record</b><small>Claim nào vẫn đứng&nbsp;vững, đã sửa hay đã bị bác&nbsp;bỏ.</small></span><span class="door-go" aria-hidden="true">↗</span></a>
+      <a class="home-door" href="#bai"><span class="door-no">01</span><span class="door-copy"><b>Bài điều&nbsp;tra</b><small>Đọc trọn câu hỏi, đường đo và phần có thể sai.</small></span><span class="door-go" aria-hidden="true">↘</span></a>
+      <a class="home-door" href="token/"><span class="door-no">02</span><span class="door-copy"><b>Token</b><small>Hồ&nbsp;sơ theo đối tượng, gom mọi câu đã ghim.</small></span><span class="door-go" aria-hidden="true">↗</span></a>
+      <a class="home-door" href="facts/"><span class="door-no">03</span><span class="door-copy"><b>Facts</b><small>Một số · một block · một lệnh tự&nbsp;kiểm.</small></span><span class="door-go" aria-hidden="true">↗</span></a>
+      <a class="home-door" href="track-record/"><span class="door-no">04</span><span class="door-copy"><b>Track record</b><small>Claim nào vẫn đứng&nbsp;vững, đã sửa hay đã bị bác&nbsp;bỏ.</small></span><span class="door-go" aria-hidden="true">↗</span></a>
     </nav>
   </div>
 </section>
 
-<section class="khu-bai home-articles article-priority" data-hien aria-labelledby="bai"><div class="khu-dau"><div class="bai-heading"><p class="section-code">READING DESK · <span class="khong-ngat">12</span> INVESTIGATIONS</p><h2 id="bai">Bài điều&nbsp;tra mới nhất</h2><p>Mỗi bài đi từ câu hỏi, qua phép đo, đến điều gì có thể chứng minh kết luận sai.</p></div><a class="bai-archive-link" href="bai/"><span>Xem tất cả</span><b><span class="khong-ngat">12 bài</span>&nbsp;viết</b><i aria-hidden="true">↗</i></a></div><div class="article-preview-grid"><a class="bai bai-lead" href="bai/2026-08-12-hype-thi-phan-13-hay-70/"><span class="bai-top"><span class="d">🟡 <span class="khong-ngat">12/08/2026</span></span><span class="bai-token">HYPE</span></span><span class="t">Thị phần perp của Hyperliquid được công bố ở cả <span class="khong-ngat">13%</span> lẫn <span class="khong-ngat">70%</span> trên cùng một bài&nbsp;viết, và ba cách xếp loại hợp lệ cho ra <span class="khong-ngat">18,1%</span> đến <span class="khong-ngat">37,6%</span> trên cùng một ngày</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s"><span class="khong-ngat">4 claim</span> — <span class="khong-ngat">4</span> vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/"><span class="bai-top"><span class="d">🟡 <span class="khong-ngat">10/08/2026</span></span><span class="bai-token">CAKE</span></span><span class="t">PancakeSwap mất gần một nửa thị phần BSC trong sáu tuần, nhưng phí giao dịch trên sàn tăng <span class="khong-ngat">3,1 lần</span> vì volume dời sang pool có mức phí cao gấp <span class="khong-ngat">100 lần</span></span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s"><span class="khong-ngat">6 claim</span> — <span class="khong-ngat">6</span> vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/"><span class="bai-top"><span class="d">🟡 <span class="khong-ngat">07/08/2026</span></span><span class="bai-token">HYPE</span></span><span class="t">Áp dụng nhất quán định nghĩa cung lưu thông của chính báo cáo, phát hành ròng HYPE quý II đổi từ <span class="khong-ngat">+890.000</span> sang <span class="khong-ngat">−412.960</span></span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s"><span class="khong-ngat">4 claim</span> — <span class="khong-ngat">4</span> vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-06-uni-burn-cham-gan-mot-tuan/"><span class="bai-top"><span class="d">🟡 <span class="khong-ngat">06/08/2026</span></span><span class="bai-token">UNI</span></span><span class="t">Biểu đồ UNI burn trên Ethereum đang chậm gần một tuần so với Robinhood Chain</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s"><span class="khong-ngat">5 claim</span> — <span class="khong-ngat">5</span> vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-04-lido-cmv2-220-validator-trong-so-0/"><span class="bai-top"><span class="d">🟡 <span class="khong-ngat">04/08/2026</span></span><span class="bai-token">LDO</span></span><span class="t"><span class="khong-ngat">220</span> validator đã nạp, trọng số phí của module vẫn đúng <span class="khong-ngat">0,0000 ETH</span></span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s"><span class="khong-ngat">5 claim</span> — <span class="khong-ngat">5</span> vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-07-31-uni-100usd-phi-swap/"><span class="bai-top"><span class="d">🔴 <span class="khong-ngat">31/07/2026</span></span><span class="bai-token">UNI</span></span><span class="t">Mỗi <span class="khong-ngat">$100</span> phí swap trên Robinhood Chain, Uniswap ghi nhận <span class="khong-ngat">$14,64</span></span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s"><span class="khong-ngat">5 claim</span> — <span class="khong-ngat">5</span> vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a></div><p class="article-preview-note">Đang giới thiệu <span class="khong-ngat">6 / 12 bài</span>&nbsp;viết · danh mục đầy đủ có tìm kiếm và lọc theo token</p></section>
+<section class="khu-bai home-articles article-priority" data-hien aria-labelledby="bai"><div class="khu-dau"><div class="bai-heading"><p class="section-code">READING DESK · 12 INVESTIGATIONS</p><h2 id="bai">Bài điều&nbsp;tra mới nhất</h2><p>Mỗi bài đi từ câu hỏi, qua phép đo, đến điều gì có thể chứng minh kết luận sai.</p></div><a class="bai-archive-link" href="bai/"><span>Xem tất cả</span><b>12&nbsp;bài&nbsp;viết</b><i aria-hidden="true">↗</i></a></div><div class="article-preview-grid"><a class="bai bai-lead" href="bai/2026-08-12-hype-thi-phan-13-hay-70/"><span class="bai-top"><span class="d">🟡 12/08/2026</span><span class="bai-token">HYPE</span></span><span class="t">Thị phần perp của Hyperliquid được công bố ở cả 13% lẫn 70% trên cùng một bài&nbsp;viết, và ba cách xếp loại hợp lệ cho ra 18,1% đến 37,6% trên cùng một ngày</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">4&nbsp;claim — 4 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/"><span class="bai-top"><span class="d">🟡 10/08/2026</span><span class="bai-token">CAKE</span></span><span class="t">PancakeSwap mất gần một nửa thị phần BSC trong sáu tuần, nhưng phí giao dịch trên sàn tăng 3,1&nbsp;lần vì volume dời sang pool có mức phí cao gấp 100&nbsp;lần</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">6&nbsp;claim — 6 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/"><span class="bai-top"><span class="d">🟡 07/08/2026</span><span class="bai-token">HYPE</span></span><span class="t">Áp dụng nhất quán định nghĩa cung lưu thông của chính báo cáo, phát hành ròng HYPE quý II đổi từ +890.000 sang −412.960</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">4&nbsp;claim — 4 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-06-uni-burn-cham-gan-mot-tuan/"><span class="bai-top"><span class="d">🟡 06/08/2026</span><span class="bai-token">UNI</span></span><span class="t">Biểu đồ UNI burn trên Ethereum đang chậm gần một tuần so với Robinhood Chain</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">5&nbsp;claim — 5 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-04-lido-cmv2-220-validator-trong-so-0/"><span class="bai-top"><span class="d">🟡 04/08/2026</span><span class="bai-token">LDO</span></span><span class="t">220 validator đã nạp, trọng số phí của module vẫn đúng 0,0000&nbsp;ETH</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">5&nbsp;claim — 5 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-07-31-uni-100usd-phi-swap/"><span class="bai-top"><span class="d">🔴 31/07/2026</span><span class="bai-token">UNI</span></span><span class="t">Mỗi $100 phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">5&nbsp;claim — 5 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a></div><p class="article-preview-note">Đang giới thiệu 6&nbsp;/&nbsp;12&nbsp;bài&nbsp;viết · danh mục đầy đủ có tìm kiếm và lọc theo token</p></section>
 
 <section class="hero finding-home" id="moi-nhat">
-  <span class="ghost-num" aria-hidden="true"><span class="khong-ngat">3,9×</span></span>
-  <span class="hero-code" aria-hidden="true">CASE <span class="khong-ngat">01</span> · VERIFIED</span>
-  <p class="eyebrow"><span>Phân&nbsp;định mới nhất</span><span class="im"><span class="khong-ngat">28/07/2026</span> · UNI · Robinhood chain</span></p>
-  <h2 class="finding-title">Con số bị thổi <span class="nhan-manh"><span class="khong-ngat">3,9 lần</span></span> đã phải tính lại.</h2>
-  <p class="subline">BlockPinned đếm <b><span class="khong-ngat">931.772 swap</span></b> tận gốc, dán trước kết quả công khai — và chuỗi phí Uniswap v4 của DefiLlama được tính lại <b>đúng khoảng đã ghim, lệch <span class="khong-ngat">1,93%</span></b>. <a href="bai/2026-07-27-defillama-uniswap-v4/">Đọc bài đầy đủ →</a></p>
+  <span class="ghost-num" aria-hidden="true">3,9×</span>
+  <span class="hero-code" aria-hidden="true">CASE 01 · VERIFIED</span>
+  <p class="eyebrow"><span>Phân&nbsp;định mới nhất</span><span class="im">28/07/2026 · UNI · Robinhood chain</span></p>
+  <h2 class="finding-title">Con số bị thổi <span class="nhan-manh">3,9&nbsp;lần</span> đã phải tính lại.</h2>
+  <p class="subline">BlockPinned đếm <b>931.772&nbsp;swap</b> tận gốc, dán trước kết quả công khai — và chuỗi phí Uniswap v4 của DefiLlama được tính lại <b>đúng khoảng đã ghim, lệch 1,93%</b>. <a href="bai/2026-07-27-defillama-uniswap-v4/">Đọc bài đầy đủ →</a></p>
 
   <div class="numrow">
     <div class="heronum">
-      <p class="l">Phí <span class="khong-ngat">16/07</span> · sau tính lại</p>
-      <p class="v"><span class="khong-ngat">$1.311.164</span></p>
-      <p class="d">lệch <span class="khong-ngat">1,93%</span> so với số ghi&nbsp;trước</p>
+      <p class="l">Phí 16/07 · sau tính lại</p>
+      <p class="v">$1.311.164</p>
+      <p class="d">lệch 1,93% so với số ghi&nbsp;trước</p>
     </div>
     <div class="mstack">
-      <div class="m"><p class="l">Từng bị báo</p><p class="v"><b><span class="khong-ngat">$5.014.570</span></b></p></div>
-      <div class="m"><p class="l">Tôi đếm trên chain</p><p class="v"><b><span class="khong-ngat">$1.286.386</span></b></p></div>
-      <div class="m"><p class="l">Khoảng ghi&nbsp;trước · công khai <span class="khong-ngat">26/07</span></p><p class="v"><b><span class="khong-ngat">±10%</span></b></p></div>
+      <div class="m"><p class="l">Từng bị báo</p><p class="v"><b>$5.014.570</b></p></div>
+      <div class="m"><p class="l">Tôi đếm trên chain</p><p class="v"><b>$1.286.386</b></p></div>
+      <div class="m"><p class="l">Khoảng ghi&nbsp;trước · công khai 26/07</p><p class="v"><b>±10%</b></p></div>
     </div>
   </div>
 
@@ -1828,20 +1842,20 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="cursor-scan" aria-hidden="true"></span>
     <div class="chart-dau">
       <b>Phí swap Uniswap v4 — Robinhood chain</b>
-      <span class="don-vi">USD/ngày · <span class="khong-ngat">01/07</span> → <span class="khong-ngat">08/08</span></span>
+      <span class="don-vi">USD/ngày · 01/07 → 08/08</span>
       <span class="cach-doc"><i><span class="sw"></span>chuỗi đã tính lại</i><i><span class="sw cu"></span>số cũ đã chết</i></span>
     </div>
     <div class="recalibration" role="img" aria-label="Ngày 16/07: số cũ 5.014.570 đô; đếm on-chain 1.286.386 đô; số tính lại 1.311.164 đô, nằm trong khoảng ghi trước cộng trừ 10 phần trăm">
-      <div class="rc-head"><span>Bản đồ tái hiệu chỉnh · <span class="khong-ngat">16/07</span></span><em>tỷ lệ so với số cũ = <span class="khong-ngat">100%</span></em></div>
+      <div class="rc-head"><span>Bản đồ tái hiệu chỉnh · 16/07</span><em>tỷ lệ so với số cũ = 100%</em></div>
       <div class="rc-track">
         <span class="rc-axis"></span>
         <span class="rc-band" style="--left:23.07%;--width:5.15%"></span>
-        <i class="rc-pin chain" style="--x:25.65%;--delay:.48s"><span class="rc-label"><b><span class="khong-ngat">$1,286M</span></b>đếm on-chain</span></i>
-        <i class="rc-pin fixed" style="--x:26.15%;--delay:.64s"><span class="rc-label"><b><span class="khong-ngat">$1,311M</span></b>họ tính lại</span></i>
-        <i class="rc-pin old" style="--x:100%;--delay:.8s"><span class="rc-label"><b><span class="khong-ngat">$5,015M</span></b>số cũ</span></i>
+        <i class="rc-pin chain" style="--x:25.65%;--delay:.48s"><span class="rc-label"><b>$1,286M</b>đếm on-chain</span></i>
+        <i class="rc-pin fixed" style="--x:26.15%;--delay:.64s"><span class="rc-label"><b>$1,311M</b>họ tính lại</span></i>
+        <i class="rc-pin old" style="--x:100%;--delay:.8s"><span class="rc-label"><b>$5,015M</b>số cũ</span></i>
       </div>
     </div>
-    <div class="chart-mobile-nav" aria-label="Đi tới mốc trên biểu đồ"><span>ĐIỂM XEM</span><button type="button" data-chart-jump="pin"><span class="khong-ngat">16/07</span></button><button type="button" data-chart-jump="end">Mới nhất →</button></div>
+    <div class="chart-mobile-nav" aria-label="Đi tới mốc trên biểu đồ"><span>ĐIỂM XEM</span><button type="button" data-chart-jump="pin">16/07</button><button type="button" data-chart-jump="end">Mới nhất →</button></div>
     <div class="chart-cuon"><svg viewBox="0 0 1000 320" role="img" aria-label="Phí Uniswap v4 theo ngày, 01/07 tới 08/08, đỉnh $1,58M">
 <defs><linearGradient id="bp-area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--accent);stop-opacity:.28"/><stop offset=".72" style="stop-color:var(--accent);stop-opacity:.035"/><stop offset="1" style="stop-color:var(--accent);stop-opacity:0"/></linearGradient><linearGradient id="bp-scan" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:var(--accent);stop-opacity:0"/><stop offset=".5" style="stop-color:var(--accent);stop-opacity:.3"/><stop offset="1" style="stop-color:var(--accent);stop-opacity:0"/></linearGradient></defs>
 <line class="truc" x1="6" y1="290.0" x2="914" y2="290.0"/>
@@ -1878,9 +1892,9 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 </svg></div>
     <div class="provenance">
       <svg class="pmark" viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg>
-      <span class="f"><span class="k">GHIM</span><span>block <strong><span class="khong-ngat">#10.808.643 → #11.671.782</span></strong> · <span class="khong-ngat">16/07</span> UTC</span></span>
+      <span class="f"><span class="k">GHIM</span><span>block <strong>#10.808.643&nbsp;→&nbsp;#11.671.782</strong> · 16/07 UTC</span></span>
       <span class="f"><span class="k">NGUỒN</span><span><strong>api.llama.fi</strong> — lệnh curl in trong bài</span></span>
-      <span class="f"><span class="k">ĐỌC</span><span><b><span class="khong-ngat">09/08/2026</span></b></span></span>
+      <span class="f"><span class="k">ĐỌC</span><span><b>09/08/2026</b></span></span>
       <a class="chay" href="bai/2026-07-27-defillama-uniswap-v4/#tu-kiem">tự chạy lại được</a>
     </div>
   </figure>
@@ -1890,11 +1904,11 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <section class="inv-khu" id="ho-so">
   <div class="inv-dau">
     <p class="kicker">Hồ&nbsp;sơ điều&nbsp;tra</p>
-    <span class="dem-bai"><span class="khong-ngat">12 bài</span> · <span class="khong-ngat">5</span> token</span>
+    <span class="dem-bai">12&nbsp;bài · 5 token</span>
     <a href="#bai">xem tất cả</a>
   </div>
-  <div class="inv"><a class="ho-so" href="bai/2026-08-06-uni-burn-cham-gan-mot-tuan/"><p class="eyebrow-nho"><span>UNI</span><span class="im"><span class="khong-ngat">06/08/2026</span></span></p><h3>Biểu đồ UNI burn trên Ethereum đang chậm gần một tuần so với Robinhood Chain</h3><div class="viz"><div class="rai"><span class="truc"></span><span class="cham vien" style="left:11.7%"></span><span class="cham" style="left:38.4%"></span><span class="cham vien" style="left:92.5%"></span><span class="nhan-cham" style="left:38.4%"><span class="khong-ngat">6,76 ngày</span></span><span class="nhan-duoi" style="left:11.7%"><span class="khong-ngat">6,44</span></span><span class="nhan-duoi" style="left:92.5%"><span class="khong-ngat">7,41</span></span></div></div><p class="so-chinh">Mỗi lệnh rút chờ <strong><span class="khong-ngat">6,44–7,41 ngày</span></strong> mới thực thi — đo trên cả <span class="khong-ngat">22</span> lượt đã về, trung vị <span class="khong-ngat">6,76</span>.</p><p class="trang-thai"><i><span class="dot song"></span><span class="khong-ngat">5</span> đang đứng</i><span class="ghim-nho"><span class="khong-ngat">blk 29.174.972</span></span></p></a><a class="ho-so" href="bai/2026-08-04-lido-cmv2-220-validator-trong-so-0/"><p class="eyebrow-nho"><span>LDO</span><span class="im"><span class="khong-ngat">04/08/2026</span></span></p><h3><span class="khong-ngat">220</span> validator đã nạp, trọng số phí của module vẫn đúng <span class="khong-ngat">0,0000 ETH</span></h3><div class="viz"><div class="doi"><span class="ve"><span class="n"><span class="khong-ngat">220</span></span><span class="t">validator đã nạp</span></span><span class="mui">→</span><span class="ve"><span class="n khong"><span class="khong-ngat">0,0000</span></span><span class="t">ETH oracle báo về</span></span></div></div><p class="so-chinh">Hai lần đo cách <strong><span class="khong-ngat">6 ngày</span></strong> — <span class="khong-ngat">block 25.637.121</span> và <span class="khong-ngat">25.680.251</span> — trọng số vẫn đúng <span class="khong-ngat">0</span>.</p><p class="trang-thai"><i><span class="dot song"></span><span class="khong-ngat">5</span> đang đứng</i><span class="ghim-nho"><span class="khong-ngat">blk 25.680.251</span></span></p></a><a class="ho-so" href="bai/2026-07-31-uni-100usd-phi-swap/"><p class="eyebrow-nho"><span>UNI</span><span class="im"><span class="khong-ngat">31/07/2026</span></span></p><h3>Mỗi <span class="khong-ngat">$100</span> phí swap trên Robinhood Chain, Uniswap ghi nhận <span class="khong-ngat">$14,64</span></h3><div class="viz"><div class="nh"><span>phần Uniswap ghi nhận</span><b><span class="khong-ngat">$14,64 / $100</span></b></div><div class="ray"><i style="width:14.64%;--i:0"></i></div></div><p class="so-chinh">Trọn ngày <span class="khong-ngat">29/07</span>: <strong><span class="khong-ngat">$2.521.197</span></strong> phí swap → <strong><span class="khong-ngat">$369.178</span></strong> phí giao thức. v4 lấy tỷ lệ thấp nhất trong ba phiên bản.</p><p class="trang-thai"><i><span class="dot song"></span><span class="khong-ngat">5</span> đang đứng</i><span class="ghim-nho">ghim <span class="khong-ngat">29/07</span> UTC</span></p></a><a class="ho-so" href="bai/2026-07-31-pendle-buyback-cot-bang-0/"><p class="eyebrow-nho"><span>PENDLE</span><span class="im"><span class="khong-ngat">31/07/2026</span></span></p><h3>Dashboard báo buyback bằng <span class="khong-ngat">0</span>, hợp đồng đang giữ <span class="khong-ngat">144.388 PENDLE</span></h3><div class="viz"><div class="nh"><span>bảng dữ&nbsp;liệu của Pendle</span><b><span class="khong-ngat">0</span></b></div><div class="ray"></div><div class="nh hang2"><span>đếm on-chain</span><b><span class="khong-ngat">144.388</span></b></div><div class="ray"><i style="width:100%;--i:1"></i></div></div><p class="so-chinh"><strong><span class="khong-ngat">82,44%</span></strong> tới thẳng từ swap. Dự đoán ghi&nbsp;trước về lượt chuyển kế tiếp <strong>đã đúng</strong>.</p><p class="trang-thai"><i><span class="dot xac"></span><span class="khong-ngat">1</span> đã xác nhận</i><i><span class="dot song"></span><span class="khong-ngat">4</span> đang đứng</i><span class="ghim-nho"><span class="khong-ngat">blk 25.650.178</span></span></p></a></div>
-</section><section class="clock-khu" id="sap-phan-dinh" aria-labelledby="clock-title"><div class="clock-dau"><div><p class="section-code">PRE-REGISTERED DEADLINES · <span class="khong-ngat">04</span></p><h2 id="clock-title">Sắp phân&nbsp;định</h2></div><p>Claim tự đặt ngày cho chính nó. Tới ngày đó là có kết quả — và nếu tôi trễ, dòng dưới đây <b>tự đổi thành ĐÃ TỚI HẠN</b> mà không cần ai sửa.</p></div><ul class="han clock-ds"><li class="clock-hang"><span class="ngay" data-han="2026-08-03"><span class="khong-ngat">03/08/2026</span></span><a class="clock-ma" href="bai/2026-07-31-pendle-buyback-cot-bang-0/#C5">C5</a><span class="clock-hua">Qua <span class="khong-ngat">2026-08-03T18:42:47Z</span> (<span class="khong-ngat">01:42:47</span> ngày <span class="khong-ngat">04/08 giờ</span> VN) phải đọc lại nhánh chuyển và đăng kết quả tại chính trang này, kể cả khi kết quả ngược với bài. Không có lượt chuyển nào thì dự đoán sai và phải ghi ra, không được để im. Ô đếm ngược của trang chạy theo NGÀY nên nó tắt muộn hơn mốc thật khoảng <span class="khong-ngat">5 giờ</span>; mốc có hiệu lực là thời điểm ghi trong claim, không phải ô đếm ngược.</span></li><li class="clock-hang"><span class="ngay" data-han="2026-08-04"><span class="khong-ngat">04/08/2026</span></span><a class="clock-ma" href="bai/2026-07-28-uni-v4-cong-tac-bat-tien-chay/#C4">C4</a><span class="clock-hua">Đếm log ProtocolFeeUpdated trên Ethereum từ <span class="khong-ngat">14:05Z</span> ngày <span class="khong-ngat">28/07</span>. Thêm từ <span class="khong-ngat">5.000 pool</span> trở lên ⇒ rút câu “nhịp bật pool đã giảm mạnh”; dưới ngưỡng đó ⇒ claim đứng.</span></li><li class="clock-hang"><span class="ngay" data-han="2026-08-12"><span class="khong-ngat">12/08/2026</span></span><a class="clock-ma" href="bai/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/#C6">C6</a><span class="clock-hua">Lệnh đốt tuần chạy theo nhịp thứ Hai. Tới ngày này phải đọc lại tổng cung và số dư địa chỉ đốt rồi ghi kết quả vào đây, kể cả khi kết quả là con số vượt cận trên đã ghi.</span></li><li class="clock-hang"><span class="ngay" data-han="2026-09-18"><span class="khong-ngat">18/09/2026</span></span><a class="clock-ma" href="bai/2026-07-29-ldo-cmv2-doi-cach-chia-phi/#C2">C2</a><span class="clock-hua">Nếu CMv2 vẫn dưới <span class="khong-ngat">1%</span> tổng balance module, BlockPinned hạ mức ưu tiên theo dõi chủ đề này trong <span class="khong-ngat">2026</span>. Đây là quyết định biên tập, không bác snapshot tại block đo.</span></li></ul></section></main>
+  <div class="inv"><a class="ho-so" href="bai/2026-08-06-uni-burn-cham-gan-mot-tuan/"><p class="eyebrow-nho"><span>UNI</span><span class="im">06/08/2026</span></p><h3>Biểu đồ UNI burn trên Ethereum đang chậm gần một tuần so với Robinhood Chain</h3><div class="viz"><div class="rai"><span class="truc"></span><span class="cham vien" style="left:11.7%"></span><span class="cham" style="left:38.4%"></span><span class="cham vien" style="left:92.5%"></span><span class="nhan-cham" style="left:38.4%">6,76&nbsp;ngày</span><span class="nhan-duoi" style="left:11.7%">6,44</span><span class="nhan-duoi" style="left:92.5%">7,41</span></div></div><p class="so-chinh">Mỗi lệnh rút chờ <strong>6,44–7,41&nbsp;ngày</strong> mới thực thi — đo trên cả 22 lượt đã về, trung vị 6,76.</p><p class="trang-thai"><i><span class="dot song"></span>5 đang đứng</i><span class="ghim-nho">blk&nbsp;29.174.972</span></p></a><a class="ho-so" href="bai/2026-08-04-lido-cmv2-220-validator-trong-so-0/"><p class="eyebrow-nho"><span>LDO</span><span class="im">04/08/2026</span></p><h3>220 validator đã nạp, trọng số phí của module vẫn đúng 0,0000&nbsp;ETH</h3><div class="viz"><div class="doi"><span class="ve"><span class="n">220</span><span class="t">validator đã nạp</span></span><span class="mui">→</span><span class="ve"><span class="n khong">0,0000</span><span class="t">ETH oracle báo về</span></span></div></div><p class="so-chinh">Hai lần đo cách <strong>6&nbsp;ngày</strong> — block&nbsp;25.637.121 và 25.680.251 — trọng số vẫn đúng 0.</p><p class="trang-thai"><i><span class="dot song"></span>5 đang đứng</i><span class="ghim-nho">blk&nbsp;25.680.251</span></p></a><a class="ho-so" href="bai/2026-07-31-uni-100usd-phi-swap/"><p class="eyebrow-nho"><span>UNI</span><span class="im">31/07/2026</span></p><h3>Mỗi $100 phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64</h3><div class="viz"><div class="nh"><span>phần Uniswap ghi nhận</span><b>$14,64&nbsp;/&nbsp;$100</b></div><div class="ray"><i style="width:14.64%;--i:0"></i></div></div><p class="so-chinh">Trọn ngày 29/07: <strong>$2.521.197</strong> phí swap → <strong>$369.178</strong> phí giao thức. v4 lấy tỷ lệ thấp nhất trong ba phiên bản.</p><p class="trang-thai"><i><span class="dot song"></span>5 đang đứng</i><span class="ghim-nho">ghim 29/07 UTC</span></p></a><a class="ho-so" href="bai/2026-07-31-pendle-buyback-cot-bang-0/"><p class="eyebrow-nho"><span>PENDLE</span><span class="im">31/07/2026</span></p><h3>Dashboard báo buyback bằng 0, hợp đồng đang giữ 144.388&nbsp;PENDLE</h3><div class="viz"><div class="nh"><span>bảng dữ&nbsp;liệu của Pendle</span><b>0</b></div><div class="ray"></div><div class="nh hang2"><span>đếm on-chain</span><b>144.388</b></div><div class="ray"><i style="width:100%;--i:1"></i></div></div><p class="so-chinh"><strong>82,44%</strong> tới thẳng từ swap. Dự đoán ghi&nbsp;trước về lượt chuyển kế tiếp <strong>đã đúng</strong>.</p><p class="trang-thai"><i><span class="dot xac"></span>1 đã xác nhận</i><i><span class="dot song"></span>4 đang đứng</i><span class="ghim-nho">blk&nbsp;25.650.178</span></p></a></div>
+</section><section class="clock-khu" id="sap-phan-dinh" aria-labelledby="clock-title"><div class="clock-dau"><div><p class="section-code">PRE-REGISTERED DEADLINES · 04</p><h2 id="clock-title">Sắp phân&nbsp;định</h2></div><p>Claim tự đặt ngày cho chính nó. Tới ngày đó là có kết quả — và nếu tôi trễ, dòng dưới đây <b>tự đổi thành ĐÃ TỚI HẠN</b> mà không cần ai sửa.</p></div><ul class="han clock-ds"><li class="clock-hang"><span class="ngay" data-han="2026-08-03">03/08/2026</span><a class="clock-ma" href="bai/2026-07-31-pendle-buyback-cot-bang-0/#C5">C5</a><span class="clock-hua">Qua 2026-08-03T18:42:47Z (01:42:47 ngày 04/08&nbsp;giờ VN) phải đọc lại nhánh chuyển và đăng kết quả tại chính trang này, kể cả khi kết quả ngược với bài. Không có lượt chuyển nào thì dự đoán sai và phải ghi ra, không được để im. Ô đếm ngược của trang chạy theo NGÀY nên nó tắt muộn hơn mốc thật khoảng 5&nbsp;giờ; mốc có hiệu lực là thời điểm ghi trong claim, không phải ô đếm ngược.</span></li><li class="clock-hang"><span class="ngay" data-han="2026-08-04">04/08/2026</span><a class="clock-ma" href="bai/2026-07-28-uni-v4-cong-tac-bat-tien-chay/#C4">C4</a><span class="clock-hua">Đếm log ProtocolFeeUpdated trên Ethereum từ 14:05Z ngày 28/07. Thêm từ 5.000&nbsp;pool trở lên ⇒ rút câu “nhịp bật pool đã giảm mạnh”; dưới ngưỡng đó ⇒ claim đứng.</span></li><li class="clock-hang"><span class="ngay" data-han="2026-08-12">12/08/2026</span><a class="clock-ma" href="bai/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/#C6">C6</a><span class="clock-hua">Lệnh đốt tuần chạy theo nhịp thứ Hai. Tới ngày này phải đọc lại tổng cung và số dư địa chỉ đốt rồi ghi kết quả vào đây, kể cả khi kết quả là con số vượt cận trên đã ghi.</span></li><li class="clock-hang"><span class="ngay" data-han="2026-09-18">18/09/2026</span><a class="clock-ma" href="bai/2026-07-29-ldo-cmv2-doi-cach-chia-phi/#C2">C2</a><span class="clock-hua">Nếu CMv2 vẫn dưới 1% tổng balance module, BlockPinned hạ mức ưu tiên theo dõi chủ đề này trong 2026. Đây là quyết định biên tập, không bác snapshot tại block đo.</span></li></ul></section></main>
 <div id="ch-tip"></div>
 <footer><div class="khung"><p>Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá. Không phải lời khuyên đầu tư. · <a href="https://x.com/blockpinned">@blockpinned</a></p></div></footer>
 <script>
@@ -2032,7 +2046,8 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     var quickVisible = [];
 
     function quickNormalise(value) {
-      return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+      return (value || "").replace(/[\u00a0\u202f\u2007]/g, " ").normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
     }
     function quickRouteKey(value) {
       try {
@@ -2657,8 +2672,10 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
   if (archiveCards.length) {
     var archiveActive = "all";
     var archiveLimit = 12;
+    // 🔴 GẤP NBSP VỀ KHOẢNG TRẮNG — xem lý do đầy đủ ở uniNormalise phía dưới.
     function archiveNormalise(value) {
-      return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+      return (value || "").replace(/[\u00a0\u202f\u2007]/g, " ").normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
     }
     function renderArticleArchive(resetLimit) {
       if (resetLimit) archiveLimit = 12;
@@ -2729,8 +2746,16 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     var uniActiveFilter = "all";
     var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng\u00a0vững", sua: "đã sửa", bac: "đã bị bác\u00a0bỏ", changed: "đã đổi trạng thái" };
 
+    // \ud83d\udd34 PH\u1ea2I G\u1ea4P NBSP V\u1ec0 KHO\u1ea2NG TR\u1eaeNG. T\u1eeb 11/08 `khoa_xuong_dong()` trong build.py
+    // thay kho\u1ea3ng tr\u1eafng b\u1eb1ng `&nbsp;` (U+00A0) ngay TRONG nh\u1eefng c\u1ee5m m\u00e0 ng\u01b0\u1eddi ta g\u00f5
+    // nhi\u1ec1u nh\u1ea5t \u2014 "\u0111\u1ee9ng v\u1eefng", "b\u00e1c b\u1ecf", "d\u1eef li\u1ec7u", "h\u1ed3 s\u01a1", "ghi tr\u01b0\u1edbc". H\u00e0m n\u00e0y
+    // b\u00f3c d\u1ea5u b\u1eb1ng NFD nh\u01b0ng KH\u00d4NG \u0111\u1ee5ng U+00A0, n\u00ean chu\u1ed7i t\u00ecm v\u00e0 chu\u1ed7i b\u1ecb t\u00ecm kh\u00e1c
+    // nhau \u0111\u00fang m\u1ed9t k\u00fd t\u1ef1 v\u00f4 h\u00ecnh. \u0110o 11/08 tr\u00ean b\u1ea3n \u0111ang ph\u1ee5c v\u1ee5: g\u00f5 "b\u00e1c b\u1ecf" ra
+    // 0/24 claim (\u0111\u00fang ph\u1ea3i 24), "\u0111\u1ee9ng v\u1eefng" 0/17, "d\u1eef li\u1ec7u" 0/3, "ghi tr\u01b0\u1edbc" 0/2.
+    // Kh\u00f4ng c\u1ed5ng n\u00e0o th\u1ea5y: build ki\u1ec3m markup, preview.py ki\u1ec3m tr\u00e0n \u2014 kh\u00f4ng ai G\u00d5 V\u00c0O \u00d4.
     function uniNormalise(value) {
-      return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+      return (value || "").replace(/[\u00a0\u202f\u2007]/g, " ").normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
     }
     function renderUniClaims() {
       var query = uniNormalise(uniSearch ? uniSearch.value : "");

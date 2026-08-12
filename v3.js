@@ -75,7 +75,8 @@
     var quickVisible = [];
 
     function quickNormalise(value) {
-      return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+      return (value || "").replace(/[\u00a0\u202f\u2007]/g, " ").normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
     }
     function quickRouteKey(value) {
       try {
@@ -700,8 +701,10 @@
   if (archiveCards.length) {
     var archiveActive = "all";
     var archiveLimit = 12;
+    // 🔴 GẤP NBSP VỀ KHOẢNG TRẮNG — xem lý do đầy đủ ở uniNormalise phía dưới.
     function archiveNormalise(value) {
-      return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+      return (value || "").replace(/[\u00a0\u202f\u2007]/g, " ").normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
     }
     function renderArticleArchive(resetLimit) {
       if (resetLimit) archiveLimit = 12;
@@ -772,8 +775,16 @@
     var uniActiveFilter = "all";
     var uniLabels = { xac: "đã xác nhận", song: "vẫn đứng\u00a0vững", sua: "đã sửa", bac: "đã bị bác\u00a0bỏ", changed: "đã đổi trạng thái" };
 
+    // \ud83d\udd34 PH\u1ea2I G\u1ea4P NBSP V\u1ec0 KHO\u1ea2NG TR\u1eaeNG. T\u1eeb 11/08 `khoa_xuong_dong()` trong build.py
+    // thay kho\u1ea3ng tr\u1eafng b\u1eb1ng `&nbsp;` (U+00A0) ngay TRONG nh\u1eefng c\u1ee5m m\u00e0 ng\u01b0\u1eddi ta g\u00f5
+    // nhi\u1ec1u nh\u1ea5t \u2014 "\u0111\u1ee9ng v\u1eefng", "b\u00e1c b\u1ecf", "d\u1eef li\u1ec7u", "h\u1ed3 s\u01a1", "ghi tr\u01b0\u1edbc". H\u00e0m n\u00e0y
+    // b\u00f3c d\u1ea5u b\u1eb1ng NFD nh\u01b0ng KH\u00d4NG \u0111\u1ee5ng U+00A0, n\u00ean chu\u1ed7i t\u00ecm v\u00e0 chu\u1ed7i b\u1ecb t\u00ecm kh\u00e1c
+    // nhau \u0111\u00fang m\u1ed9t k\u00fd t\u1ef1 v\u00f4 h\u00ecnh. \u0110o 11/08 tr\u00ean b\u1ea3n \u0111ang ph\u1ee5c v\u1ee5: g\u00f5 "b\u00e1c b\u1ecf" ra
+    // 0/24 claim (\u0111\u00fang ph\u1ea3i 24), "\u0111\u1ee9ng v\u1eefng" 0/17, "d\u1eef li\u1ec7u" 0/3, "ghi tr\u01b0\u1edbc" 0/2.
+    // Kh\u00f4ng c\u1ed5ng n\u00e0o th\u1ea5y: build ki\u1ec3m markup, preview.py ki\u1ec3m tr\u00e0n \u2014 kh\u00f4ng ai G\u00d5 V\u00c0O \u00d4.
     function uniNormalise(value) {
-      return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+      return (value || "").replace(/[\u00a0\u202f\u2007]/g, " ").normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
     }
     function renderUniClaims() {
       var query = uniNormalise(uniSearch ? uniSearch.value : "");
