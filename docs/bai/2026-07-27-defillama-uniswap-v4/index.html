@@ -931,6 +931,11 @@ html.chuyen .article-verdict.is-visible .case-step.fixed{animation-delay:.2s}
 .article-meta b{font-size:8.5px;letter-spacing:.14em;color:var(--faint)}
 .article-meta-link{grid-column:1/-1!important;display:flex!important;gap:14px!important}.article-meta-link a,.article-token-link{color:var(--accent)}
 .article-token-link{font:700 10.5px/1.4 var(--mono)}
+/* Khối GIỚI HẠN dưới lede. Mượn nguyên mặt chữ của .article-meta — cùng vai "siêu dữ
+   liệu của bài", không đẻ hệ trình bày thứ hai. Chỉ đổi hai thứ: MỘT cột (khối này có
+   một ô, để lưới hai cột thì 35% bề rộng bỏ trống ngay giữa hero), và margin trên để
+   nó tách khỏi lede chứ không dính vào như đoạn văn tiếp theo. */
+.article-limits{grid-template-columns:minmax(0,1fr);margin:30px 0 0}
 .article-body{padding-top:30px}.article-body>p,.article-body>ul,.article-body>ol{max-width:68ch}
 .article-body ul,.article-body ol{padding-left:1.35em}.article-body li{margin:7px 0}
 .article-body .bang{overflow-x:auto;margin:26px 0 30px}.article-body .bang table{border-collapse:collapse;min-width:620px;width:100%;font-size:14px}
@@ -1784,9 +1789,10 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   <div class="article-path" aria-label="Vị trí bài viết">
     <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều&nbsp;tra</a><span>/</span><b>UNI</b><i><span class="dot xac"></span>xác nhận</i>
   </div>
-  <p class="eyebrow"><span>UNI</span><span class="im">27/07/2026 · Cập nhật 28/07/2026 09:36 UTC</span></p>
+  <p class="eyebrow"><span>UNI</span><span class="im">27/07/2026</span></p>
   <h1 class="display">DefiLlama báo phí Uniswap v4 cao hơn <span class="nhan-manh">3,9&nbsp;lần</span> — và bản sửa mới chỉ chạy một chiều</h1>
   <p class="subline">Ngày 16/07, DefiLlama báo phí Uniswap v4 trên Robinhood chain cao hơn 3,9&nbsp;lần phép đếm trực tiếp trên chain. Họ đã merge bản sửa, rồi tự tính lại đúng trong khoảng tôi ghi&nbsp;trước.</p>
+  <div class="article-meta article-limits"><span><b>GIỚI HẠN</b>Cập nhật 28/07/2026 09:36 UTC — DefiLlama đã tính lại TOÀN BỘ khoảng 08→24/07. Phép đếm trực tiếp của tôi được xác nhận ở cả hai ngày ghi&nbsp;trước; nhận định &#x27;cú tụt do đổi cách tính&#x27; bị chính điều&nbsp;bác&nbsp;bỏ của nó bác, và tôi rút</span></div>
   <div class="article-verdict"><div class="heronum article-ratio">
       <p class="l">Chênh lệch ngày 16/07</p>
       <p class="v">3,9<em>×</em></p>

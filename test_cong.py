@@ -320,6 +320,36 @@ CA = [
      lambda r: sua_md(r, lambda s: s.replace(
          "## Tự kiểm", "Xem [chỗ này](/khong-he-ton-tai/) đã.\n\n## Tự kiểm", 1)),
      "href nội bộ không tới đâu"),
+    # ⑮ TIÊU ĐỀ — thêm 12/08. Cổng đo chuỗi ĐI RA MẶT CHỮ, không đo `title`.
+    # 🔵 Bài mẫu `2026-07-27-defillama-uniswap-v4` có title dài ĐÚNG 80 ký tự — đúng
+    # trần. Nên cặp biên đã có sẵn: "control âm — không bẻ gì" chứng minh 80 QUA, ca
+    # ngay dưới thêm một ký tự để chứng minh 81 NỔ. Không ca nào một mình đủ: ca nổ
+    # xanh cả khi trần bị đặt sai chỗ, ca qua xanh cả khi cổng chưa hề chạy.
+    ("⑮ TIÊU ĐỀ · title 81 ký tự (trần 80) phải NỔ",
+     lambda r: sua_md(r, lambda s: re.sub(r"^(title: .*)$", r"\1u", s,
+                                          count=1, flags=re.M)),
+     "trần 80"),
+    # Trường sinh ra để CỨU độ dài không được thành cửa vòng qua chính cổng đó.
+    ("⑮ TIÊU ĐỀ · tieu_de_ngan cũng vượt trần phải NỔ",
+     lambda r: sua_md(r, lambda s: re.sub(
+         r"^(title: .*)$", lambda m: m.group(1) + "\ntieu_de_ngan: " + "x" * 81,
+         s, count=1, flags=re.M)),
+     "đang lấy từ 'tieu_de_ngan'"),
+    # Control DƯƠNG của cùng cổng: title dài gấp đôi trần vẫn PHẢI dựng được khi bài đã
+    # khai dòng ngắn — ca này đỏ nghĩa là cổng đang chặn đúng thứ nó sinh ra để cho qua.
+    ("⑮ TIÊU ĐỀ · control DƯƠNG — title vượt trần + tieu_de_ngan ngắn phải QUA",
+     lambda r: sua_md(r, lambda s: re.sub(
+         r"^title: (.*)$",
+         lambda m: f"title: {m.group(1)}{' và một vế nữa cho thật dài' * 3}"
+                   f"\ntieu_de_ngan: Bản sửa của DefiLlama mới chỉ chạy một chiều",
+         s, count=1, flags=re.M)),
+     None),
+    # Thẻ hiện dòng ngắn ⇒ chỉ mục tìm là chỗ DUY NHẤT còn giữ câu dài. Mất nó thì gõ
+    # đúng chữ trong tiêu đề vẫn ra 0 kết quả — cùng hình dạng lỗi ô tìm claim vá 11/08.
+    ("⑮ TIÊU ĐỀ · chỉ mục tìm kho bài rơi mất title đầy đủ phải NỔ",
+     lambda r: sua_builder(r, '{f["title"]} {_tieu_de_h1(f)} {ma} {ngay} {sg}',
+                           '{_tieu_de_h1(f)} {ma} {ngay} {sg}'),
+     "mất TIÊU ĐỀ ĐẦY ĐỦ"),
 ]
 
 # Ca nào cần cờ riêng thì khai ở đây, không nhét thêm cột vào mọi tuple cũ:

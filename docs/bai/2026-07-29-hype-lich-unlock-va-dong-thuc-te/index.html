@@ -931,6 +931,11 @@ html.chuyen .article-verdict.is-visible .case-step.fixed{animation-delay:.2s}
 .article-meta b{font-size:8.5px;letter-spacing:.14em;color:var(--faint)}
 .article-meta-link{grid-column:1/-1!important;display:flex!important;gap:14px!important}.article-meta-link a,.article-token-link{color:var(--accent)}
 .article-token-link{font:700 10.5px/1.4 var(--mono)}
+/* Khối GIỚI HẠN dưới lede. Mượn nguyên mặt chữ của .article-meta — cùng vai "siêu dữ
+   liệu của bài", không đẻ hệ trình bày thứ hai. Chỉ đổi hai thứ: MỘT cột (khối này có
+   một ô, để lưới hai cột thì 35% bề rộng bỏ trống ngay giữa hero), và margin trên để
+   nó tách khỏi lede chứ không dính vào như đoạn văn tiếp theo. */
+.article-limits{grid-template-columns:minmax(0,1fr);margin:30px 0 0}
 .article-body{padding-top:30px}.article-body>p,.article-body>ul,.article-body>ol{max-width:68ch}
 .article-body ul,.article-body ol{padding-left:1.35em}.article-body li{margin:7px 0}
 .article-body .bang{overflow-x:auto;margin:26px 0 30px}.article-body .bang table{border-collapse:collapse;min-width:620px;width:100%;font-size:14px}
@@ -1785,7 +1790,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều&nbsp;tra</a><span>/</span><b>HYPE</b><i><span class="dot song"></span>vẫn đứng&nbsp;vững</i>
   </div>
   <p class="eyebrow"><span>HYPE</span><span class="im">29/07/2026</span></p>
-  <h1 class="display">Lịch unlock không phải lượng HYPE thực sự đi vào lưu hành — ledger thấp hơn mô hình <span class="nhan-manh">29</span>–38&nbsp;lần</h1>
+  <h1 class="display">Lịch unlock có thực sự cho biết bao nhiêu HYPE đi vào lưu hành?</h1>
   <p class="subline">Mô hình dùng 9,92 triệu HYPE mỗi tháng; ledger chính thức chỉ cho 259.866–347.176 HYPE rời bucket. Thấp hơn 29–38&nbsp;lần, và sai lệch đó làm mô hình cung đổi dấu.</p>
   <div class="article-verdict"><div class="heronum article-ratio article-ledger-count">
       <p class="l">Sổ bằng&nbsp;chứng của bài</p>

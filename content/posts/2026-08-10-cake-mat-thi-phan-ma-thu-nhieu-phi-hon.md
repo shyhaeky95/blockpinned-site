@@ -1,5 +1,6 @@
 ---
 title: PancakeSwap mất gần một nửa thị phần BSC trong sáu tuần, nhưng phí giao dịch trên sàn tăng 3,1 lần vì volume dời sang pool có mức phí cao gấp 100 lần
+tieu_de_ngan: PancakeSwap mất gần nửa thị phần BSC, nhưng phí giao dịch lại tăng 3,1 lần
 token: CAKE
 date: 2026-08-10
 mau: 🟡

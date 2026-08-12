@@ -1,5 +1,6 @@
 ---
 title: Thị phần perp của Hyperliquid được công bố ở cả 13% lẫn 70% trên cùng một bài viết, và ba cách xếp loại hợp lệ cho ra 18,1% đến 37,6% trên cùng một ngày
+tieu_de_ngan: Hyperliquid có 13% hay 70% thị phần perp? Cả hai con số đều đang được công bố.
 token: HYPE
 date: 2026-08-12
 mau: 🟡

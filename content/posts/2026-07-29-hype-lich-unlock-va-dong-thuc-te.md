@@ -1,5 +1,6 @@
 ---
 title: Lịch unlock không phải lượng HYPE thực sự đi vào lưu hành — ledger thấp hơn mô hình 29–38 lần
+tieu_de_ngan: Lịch unlock có thực sự cho biết bao nhiêu HYPE đi vào lưu hành?
 token: HYPE
 date: 2026-07-29
 mau: 🟢

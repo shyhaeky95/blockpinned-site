@@ -931,6 +931,11 @@ html.chuyen .article-verdict.is-visible .case-step.fixed{animation-delay:.2s}
 .article-meta b{font-size:8.5px;letter-spacing:.14em;color:var(--faint)}
 .article-meta-link{grid-column:1/-1!important;display:flex!important;gap:14px!important}.article-meta-link a,.article-token-link{color:var(--accent)}
 .article-token-link{font:700 10.5px/1.4 var(--mono)}
+/* Khối GIỚI HẠN dưới lede. Mượn nguyên mặt chữ của .article-meta — cùng vai "siêu dữ
+   liệu của bài", không đẻ hệ trình bày thứ hai. Chỉ đổi hai thứ: MỘT cột (khối này có
+   một ô, để lưới hai cột thì 35% bề rộng bỏ trống ngay giữa hero), và margin trên để
+   nó tách khỏi lede chứ không dính vào như đoạn văn tiếp theo. */
+.article-limits{grid-template-columns:minmax(0,1fr);margin:30px 0 0}
 .article-body{padding-top:30px}.article-body>p,.article-body>ul,.article-body>ol{max-width:68ch}
 .article-body ul,.article-body ol{padding-left:1.35em}.article-body li{margin:7px 0}
 .article-body .bang{overflow-x:auto;margin:26px 0 30px}.article-body .bang table{border-collapse:collapse;min-width:620px;width:100%;font-size:14px}
@@ -1784,9 +1789,10 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   <div class="article-path" aria-label="Vị trí bài viết">
     <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều&nbsp;tra</a><span>/</span><b>HYPE</b><i><span class="dot song"></span>vẫn đứng&nbsp;vững</i>
   </div>
-  <p class="eyebrow"><span>HYPE</span><span class="im">12/08/2026 · Ba tỷ lệ 37,6/22,5/18,1 là số của một ngày; ngày khác cho tỷ lệ khác. Chuỗi theo tháng chỉ nhận tháng lịch đầy đủ nên tháng đang chạy chưa vào. Tập sàn của DefiLlama là sàn còn sống tại lúc đọc, nên thị phần quá khứ có thể bị đẩy lên. Bốn bài của nguồn ngoài có thể được biên tập lại sau ngày đọc.</span></p>
-  <h1 class="display">Thị phần perp của Hyperliquid được công bố ở cả <span class="nhan-manh">13%</span> lẫn 70% trên cùng một bài&nbsp;viết, và ba cách xếp loại hợp lệ cho ra 18,1% đến 37,6% trên cùng một ngày</h1>
+  <p class="eyebrow"><span>HYPE</span><span class="im">12/08/2026</span></p>
+  <h1 class="display">Hyperliquid có <span class="nhan-manh">13%</span> hay 70% thị phần perp? Cả hai con số đều đang được công bố.</h1>
   <p class="subline">Bốn nguồn công khai đưa ra năm con số thị phần perp cho cùng một sàn, từ 13% tới 71%. Trên cùng một ảnh chụp, ba cách xếp loại hợp lệ cho ra 18,1%, 22,5% và 37,6%.</p>
+  <div class="article-meta article-limits"><span><b>GIỚI HẠN</b>Ba tỷ lệ 37,6/22,5/18,1 là số của một ngày; ngày khác cho tỷ lệ khác. Chuỗi theo tháng chỉ nhận tháng lịch đầy đủ nên tháng đang chạy chưa vào. Tập sàn của DefiLlama là sàn còn sống tại lúc đọc, nên thị phần quá khứ có thể bị đẩy lên. Bốn bài của nguồn ngoài có thể được biên tập lại sau ngày đọc.</span></div>
   <div class="article-verdict"><div class="heronum article-ratio article-ledger-count">
       <p class="l">Sổ bằng&nbsp;chứng của bài</p>
       <p class="v">4<em> claim</em></p>

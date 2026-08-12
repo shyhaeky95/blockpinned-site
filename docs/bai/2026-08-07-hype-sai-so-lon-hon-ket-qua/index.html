@@ -931,6 +931,11 @@ html.chuyen .article-verdict.is-visible .case-step.fixed{animation-delay:.2s}
 .article-meta b{font-size:8.5px;letter-spacing:.14em;color:var(--faint)}
 .article-meta-link{grid-column:1/-1!important;display:flex!important;gap:14px!important}.article-meta-link a,.article-token-link{color:var(--accent)}
 .article-token-link{font:700 10.5px/1.4 var(--mono)}
+/* Khối GIỚI HẠN dưới lede. Mượn nguyên mặt chữ của .article-meta — cùng vai "siêu dữ
+   liệu của bài", không đẻ hệ trình bày thứ hai. Chỉ đổi hai thứ: MỘT cột (khối này có
+   một ô, để lưới hai cột thì 35% bề rộng bỏ trống ngay giữa hero), và margin trên để
+   nó tách khỏi lede chứ không dính vào như đoạn văn tiếp theo. */
+.article-limits{grid-template-columns:minmax(0,1fr);margin:30px 0 0}
 .article-body{padding-top:30px}.article-body>p,.article-body>ul,.article-body>ol{max-width:68ch}
 .article-body ul,.article-body ol{padding-left:1.35em}.article-body li{margin:7px 0}
 .article-body .bang{overflow-x:auto;margin:26px 0 30px}.article-body .bang table{border-collapse:collapse;min-width:620px;width:100%;font-size:14px}
@@ -1784,9 +1789,10 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   <div class="article-path" aria-label="Vị trí bài viết">
     <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều&nbsp;tra</a><span>/</span><b>HYPE</b><i><span class="dot song"></span>vẫn đứng&nbsp;vững</i>
   </div>
-  <p class="eyebrow"><span>HYPE</span><span class="im">07/08/2026 · Đại lượng trôi theo thời gian là lượng lưu thông và tỉ trọng stake của ví. Tổng của quý đã đóng giữ nguyên, với điều kiện dữ&nbsp;liệu lịch sử của API không bị sửa và cùng phương pháp trích xuất được dùng lại.</span></p>
-  <h1 class="display">Áp dụng nhất quán định nghĩa cung lưu thông của chính báo cáo, phát hành ròng HYPE quý II đổi từ <span class="nhan-manh">+890.000</span> sang −412.960</h1>
+  <p class="eyebrow"><span>HYPE</span><span class="im">07/08/2026</span></p>
+  <h1 class="display">Bạn đang định giá HYPE bằng câu chuyện cung co lại hay nở ra?</h1>
   <p class="subline">Một báo cáo quý kết luận cung HYPE nở thêm 890.000 token trong quý II. Áp dụng nhất quán chính định nghĩa circulatingSupply mà báo cáo dùng thì cùng phép tính ra −412.960.</p>
+  <div class="article-meta article-limits"><span><b>GIỚI HẠN</b>Đại lượng trôi theo thời gian là lượng lưu thông và tỉ trọng stake của ví. Tổng của quý đã đóng giữ nguyên, với điều kiện dữ&nbsp;liệu lịch sử của API không bị sửa và cùng phương pháp trích xuất được dùng lại.</span></div>
   <div class="article-verdict"><div class="heronum article-ratio article-ledger-count">
       <p class="l">Sổ bằng&nbsp;chứng của bài</p>
       <p class="v">4<em> claim</em></p>

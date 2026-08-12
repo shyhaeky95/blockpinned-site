@@ -61,7 +61,13 @@ KHUNG = [("dau", BAI, 1740, None),
          # đoạn · tỷ trọng theo mức phí · tỷ lệ chuyển hoá). `BAI` mẫu ở trên không có
          # bảng nào, nên trước lượt này cổng đo tràn CHƯA BAO GIỜ nhìn thấy một bảng ở
          # khổ điện thoại. Bảng là ứng viên tràn số một; thêm ngay lượt dựng đầu.
-         ("cakebang", "bai/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/index.html", 2100, None)]
+         ("cakebang", "bai/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/index.html", 2100, None),
+         # 🔴 12/08: bài này ĐÃ RA WEB mà chưa lần nào qua khung nào — lượt phát hành hôm
+         # đó phải đo tay ngoài cổng mới biết nó không tràn. Đúng cái cảnh báo ở đầu danh
+         # sách này, lặp lần thứ hai. Nó cũng là bài ĐẦU TIÊN mang khối `.article-limits`
+         # (doc_lai xuống dưới lede) và là bài có `title` dài nhất kho, tức ca căng nhất
+         # cho cặp tiêu-đề-ngắn / tiêu-đề-đầy-đủ.
+         ("baihype", "bai/2026-08-12-hype-thi-phan-13-hay-70/index.html", 1900, None)]
 
 # 🔴 Khung CHỈ có ở bố cục v3 — mỗi khung là một khối KHÔNG tồn tại ở D2, nên danh sách
 # trên không đại diện cho chúng. Đây đúng là cảnh báo ở đầu `KHUNG` áp cho một trục mới:

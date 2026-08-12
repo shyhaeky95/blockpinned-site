@@ -1,5 +1,6 @@
 ---
 title: Áp dụng nhất quán định nghĩa cung lưu thông của chính báo cáo, phát hành ròng HYPE quý II đổi từ +890.000 sang −412.960
+tieu_de_ngan: Bạn đang định giá HYPE bằng câu chuyện cung co lại hay nở ra?
 token: HYPE
 date: 2026-08-07
 mau: 🟡

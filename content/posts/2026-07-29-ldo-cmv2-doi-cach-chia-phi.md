@@ -1,5 +1,6 @@
 ---
 title: Lido đổi cách chia phí ở module mới — nhưng gần 5 ngày sau, số dư được báo cáo vẫn là 0 ETH
+tieu_de_ngan: Lido đổi cách chia phí ở module mới. Gần 5 ngày sau, số dư vẫn là 0 ETH
 token: LDO
 date: 2026-07-29
 mau: 🟡

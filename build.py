@@ -251,7 +251,7 @@ HIEN_VAT = {
 
 TEN_CONG = ["ngôn ngữ", "cấu trúc", "claim", "ngôi xưng", "đánh dấu",
             "thuộc tính số", "xem trước", "đo lại", "hạn", "ghi trước", "liên kết",
-            "fact", "bố cục", "visual"]
+            "fact", "bố cục", "visual", "tiêu đề"]
 
 # chữ ký hàm hợp lệ: tên + danh sách kiểu, vd `balanceOf(address)` · `x()` · `f(uint256,address)`
 RE_KY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*\((|[a-z0-9\[\],]+)\)$")
@@ -593,6 +593,24 @@ def cong_cau_truc(fm: dict, body: str, claims: list, o: str) -> None:
     md_ = fm.get("mo_ta", "").strip()
     if not 60 <= len(md_) <= 200:
         raise LoiCong(f"'mo_ta' phải dài 60–200 ký tự, đang {len(md_)} — {o}")
+
+
+def cong_tieu_de(fm: dict, o: str) -> None:
+    """Cổng 15 — chuỗi đi vào <h1> và vào thẻ bài không được vượt `H1_TOI_DA`.
+
+    Đo cái ĐI RA MẶT CHỮ, không đo `title`. Bài có `tieu_de_ngan` thì `title` dài bao
+    nhiêu cũng được — nó chỉ còn phục vụ `<title>` và og:title, hai chỗ dài là có lợi.
+
+    🔴 `tieu_de_ngan` cũng bị đo. Không có phép này thì trường sinh ra để cứu độ dài lại
+    trở thành cửa vòng qua chính cổng đó.
+    """
+    h1 = _tieu_de_h1(fm)
+    if len(h1) > H1_TOI_DA:
+        nguon = "tieu_de_ngan" if (fm.get("tieu_de_ngan") or "").strip() else "title"
+        raise LoiCong(
+            f"tiêu đề hiện trên mặt chữ dài {len(h1)} ký tự, trần {H1_TOI_DA} "
+            f"(đang lấy từ '{nguon}') — thêm/rút front matter 'tieu_de_ngan' xuống "
+            f"≤{H1_TOI_DA}; 'title' giữ nguyên câu đầy đủ cho <title> và og:title — {o}")
 
 
 def cong_claim(claims: list, o: str) -> None:
@@ -2342,6 +2360,47 @@ def _tieu_de_nhan(tieu_de: str) -> str:
             + ihtml.escape(metric) + "</span>" + ihtml.escape(sau))
 
 
+H1_TOI_DA = 80
+# Vì sao 80 chứ không phải một con số tròn cho đẹp: ở khổ 500px, H1 chạy ~18 ký tự một
+# dòng, nên 80 là mốc H1 còn ~4–5 dòng và câu lede vẫn lọt màn hình đầu. Đo 12/08 trên
+# bài HYPE (title 152 ký tự): H1 **8 dòng** ở 500px, **6 dòng** ở 1280px — người đọc hết
+# màn đầu mà chưa gặp câu văn nào. Trung vị `title` của 12 bài là 78, tức ngưỡng này
+# nằm đúng chỗ desk vốn viết, không phải một luật áp từ ngoài vào.
+
+
+def _tieu_de_h1(fm: dict) -> str:
+    """Chuỗi đi vào <h1> và vào MỌI thẻ bài — một nguồn duy nhất.
+
+    🔴 Đừng để hai mặt tự lấy `fm['title']`. Trước lượt này có ba chỗ làm thế (hero,
+    thẻ trang chủ/token, thẻ kho bài); thêm một trường mà quên một chỗ thì hai mặt của
+    cùng một bài mang hai tiêu đề khác nhau, và không cổng nào bắt được vì cả hai đều
+    là chuỗi hợp lệ.
+
+    `title` KHÔNG bị thay: nó vẫn là `<title>` của tab và vẫn là dòng hiện ra khi link
+    được dán ra ngoài. Chỗ này chỉ chọn cái gì hiện trên MẶT CHỮ TO.
+    """
+    return (fm.get("tieu_de_ngan") or "").strip() or fm["title"]
+
+
+def _khoi_gioi_han(fm: dict) -> str:
+    """Giới hạn của phép đọc — khối riêng dưới lede, hiện đầy đủ.
+
+    🔴 Trước 12/08 trường `doc_lai` không có nhà trên bố cục v3. Nó bị `.split('—', 1)[0]`
+    nhét vào eyebrow như một mẩu ngắn — hợp đồng định dạng `<mẩu> — <phần còn lại>` mà
+    KHÔNG cổng nào cưỡng chế. Đo 12 bài: 1 bài có dấu gạch (29 ký tự, đúng ý đồ), **3 bài
+    không có** nên toàn văn 297/272/204 ký tự đổ lên đầu trang bằng chữ hoa mono, 8 bài
+    rỗng. `dai_trang_thai()` — chỗ `doc_lai` vốn có nhà tử tế — chỉ chạy ở nhánh D2.
+
+    Giữ TUỲ CHỌN: 8 bài đang trống thì không dựng gì. Bắt buộc nó là bắt viết thêm 8 đoạn
+    văn cho một việc thuộc về trình bày.
+    """
+    d = (fm.get("doc_lai") or "").strip()
+    if not d:
+        return ""
+    return ('  <div class="article-meta article-limits">'
+            f'<span><b>GIỚI HẠN</b>{ihtml.escape(d)}</span></div>\n')
+
+
 def _dem_trang_thai(claims: list) -> dict:
     return {k: sum(1 for c in claims if c["status"] == k) for k in TRANG_THAI}
 
@@ -2448,10 +2507,11 @@ def _hero_bai_v3(fm: dict, claims: list, trang_chu: dict) -> str:
     """Hero article WOW; bài #1 giữ tuyến ba số, các bài khác dùng tuyến claim thật."""
     c0 = claims[0]
     cls0, _ = TRANG_THAI[c0["status"]]
+    # 🔵 Số ghost đọc TIÊU ĐỀ ĐẦY ĐỦ, không đọc chuỗi H1. Câu dài là chỗ chắc chắn có
+    # con số; dòng H1 ngắn có thể không mang số nào, và khi đó ghost tụt về mã token —
+    # mất đúng thứ hero dùng để nhận diện bài. Hai đường độc lập, cố ý.
     metric = _metric_tieu_de(fm["title"]) or fm["token"]
     ngay = vn_ngay(str(fm["date"])[:10])
-    cap_nhat = (f" · {ihtml.escape(fm['doc_lai'].split('—', 1)[0].strip())}"
-                if fm.get("doc_lai") else "")
     nb = trang_chu.get("noi_bat") if trang_chu else None
 
     if nb:
@@ -2491,10 +2551,10 @@ def _hero_bai_v3(fm: dict, claims: list, trang_chu: dict) -> str:
   <div class="article-path" aria-label="Vị trí bài viết">
     <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều tra</a><span>/</span><b>{ihtml.escape(fm['token'])}</b><i><span class="dot {cls0}"></span>{ihtml.escape(TRANG_THAI_NGAN[c0['status']])}</i>
   </div>
-  <p class="eyebrow"><span>{ihtml.escape(fm['token'])}</span><span class="im">{ngay}{cap_nhat}</span></p>
-  <h1 class="display">{_tieu_de_nhan(fm['title'])}</h1>
+  <p class="eyebrow"><span>{ihtml.escape(fm['token'])}</span><span class="im">{ngay}</span></p>
+  <h1 class="display">{_tieu_de_nhan(_tieu_de_h1(fm))}</h1>
   <p class="subline">{ihtml.escape(fm['mo_ta'])}</p>
-  <div class="article-verdict">{ty_so}{duong}</div>
+{_khoi_gioi_han(fm)}  <div class="article-verdict">{ty_so}{duong}</div>
 {chart}
 </section>'''
 
@@ -3289,7 +3349,7 @@ def dai_bai(bai_list: list, tien_to: str, them_lop: str = "", *, uu_tien: bool =
                 f'<span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span>'
                 if v3_uu_tien else f'<span class="s">{n} claim — {sg}</span>')
         the.append(f'<a class="{lop}" href="{tien_to}bai/{s}/">{dau}'
-                   f'<span class="t">{ihtml.escape(f["title"])}</span>'
+                   f'<span class="t">{ihtml.escape(_tieu_de_h1(f))}</span>'
                    f'{thanh_mini(dm, n)}{chan}</a>')
     # v3 gắn `aria-labelledby="bai"` — khối này CÓ `<h2 id="bai">` bên trong, nên trình
     # đọc màn hình đọc được tên vùng thay vì "section". Lấy từ bản codex. Không gắn cho
@@ -3342,12 +3402,20 @@ def trang_muc_bai(bai: list) -> str:
         tong_claim += n
         ma = f.get("token", "").strip()
         ngay = vn_ngay(str(f["date"])[:10])
-        tim = ihtml.escape(f'{f["title"]} {ma} {ngay} {sg}', quote=True)
+        # 🔴 Chỉ mục tìm giữ NGUYÊN `title` đầy đủ, dù thẻ hiện dòng ngắn. Người đọc gõ
+        # chữ chỉ có trong câu dài thì vẫn phải ra bài. Bỏ vế này là tái tạo đúng lỗi ô
+        # tìm claim vá hôm 11/08: chuỗi tìm và chuỗi bị tìm khác nhau, không cổng nào thấy.
+        tim = ihtml.escape(f'{f["title"]} {_tieu_de_h1(f)} {ma} {ngay} {sg}', quote=True)
+        if ihtml.escape(f["title"], quote=True) not in tim:
+            raise LoiCong(
+                f"chỉ mục tìm của kho bài mất TIÊU ĐỀ ĐẦY ĐỦ của {s} — thẻ hiện dòng "
+                f"ngắn, nên đây là chỗ duy nhất còn giữ câu dài cho ô tìm. Mất nó thì "
+                f"gõ đúng chữ trong tiêu đề vẫn ra 0 kết quả, và không mặt nào báo lỗi")
         the.append(f'''<a class="article-archive-card" href="{s}/" data-article-card
   data-article-token="{ihtml.escape(ma.lower(), quote=True)}" data-article-text="{tim}">
   <span class="article-archive-no">{i:02d}</span>
   <span class="article-archive-meta"><b>{ihtml.escape(ma)}</b>{ihtml.escape(f["mau"])} {ngay}</span>
-  <strong>{ihtml.escape(f["title"])}</strong>
+  <strong>{ihtml.escape(_tieu_de_h1(f))}</strong>
   {thanh_mini(dm, n)}
   <span class="article-archive-foot"><small>{n} claim · {ihtml.escape(sg)}</small><i aria-hidden="true">↗</i></span>
 </a>''')
@@ -4527,6 +4595,7 @@ def main() -> None:
         cong_ngoi_xung(kho, o)
         cong_claim(claims, o)
         cong_cau_truc(fm, body_md, claims, o)
+        cong_tieu_de(fm, o)
         cong_do_lai(claims, o)
         cong_han(claims, o)
         cong_ghi_truoc(claims, o)
