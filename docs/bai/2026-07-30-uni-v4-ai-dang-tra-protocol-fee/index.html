@@ -343,6 +343,29 @@ code{font:500 .875em var(--mono);background:var(--inset);border:1px solid var(--
 .tone-accent{--vt:var(--accent)}.tone-good{--vt:var(--c-xn)}.tone-warn{--vt:var(--c-sua)}
 .tone-bad{--vt:var(--c-bac)}.tone-info{--vt:var(--c-song)}.tone-muted{--vt:var(--faint)}
 
+.av-compare-input{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:13px;padding:13px 15px;
+  border:1px solid var(--line);border-radius:10px;background:color-mix(in srgb,var(--bg) 64%,transparent)}
+.av-compare-input small,.av-compare-side>p,.av-compare-scale small,.av-compare-result small{
+  font:750 8.5px/1.4 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--faint)}
+.av-compare-input strong{font:650 10.5px/1.45 var(--mono);text-align:right;color:var(--ink)}
+.av-compare-grid{display:grid;grid-template-columns:minmax(0,1fr) 84px minmax(0,1fr);gap:10px;align-items:stretch}
+.av-compare-side{min-width:0;padding:18px;border:1px solid color-mix(in srgb,var(--vt) 34%,var(--line));
+  border-top:3px solid var(--vt);border-radius:13px;background:color-mix(in srgb,var(--vt) 5%,var(--card))}
+.av-compare-side>p{margin:0 0 17px;color:var(--vt)}
+.av-compare-facts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.av-compare-facts>span{padding:11px;border-radius:8px;background:color-mix(in srgb,var(--bg) 58%,transparent)}
+.av-compare-facts small{display:block;font:650 7.5px/1.35 var(--mono);letter-spacing:.08em;color:var(--faint)}
+.av-compare-facts strong{display:block;margin-top:5px;font:780 20px/1 var(--display);color:var(--ink)}
+.av-compare-scale{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:18px;padding:12px 0;
+  border-block:1px solid var(--line-soft)}
+.av-compare-scale strong{font:750 18px/1 var(--mono);color:var(--ink)}
+.av-compare-result{margin-top:19px}.av-compare-result>small{display:block}.av-compare-result>strong{display:block;margin-top:8px;
+  font:780 clamp(19px,2.35vw,27px)/1.08 var(--mono);letter-spacing:-.055em;color:var(--vt);overflow-wrap:normal}
+.av-compare-result>p{margin:9px 0 0;font:520 9.5px/1.5 var(--mono);color:var(--faint)}
+.av-compare-gap{align-self:center;display:grid;place-items:center;gap:3px;padding:14px 5px;border:1px solid color-mix(in srgb,var(--accent) 48%,var(--line));
+  border-radius:999px;background:color-mix(in srgb,var(--accent) 7%,var(--bg));color:var(--accent);text-align:center}
+.av-compare-gap strong{font:780 16px/1 var(--mono);letter-spacing:-.04em}.av-compare-gap small{font:700 7.5px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+
 .av-flow{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:22px}
 .av-node{--vt:var(--accent);min-height:154px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);
   border-top:3px solid var(--vt);border-radius:13px;background:color-mix(in srgb,var(--vt) 4%,var(--card));position:relative}
@@ -407,15 +430,17 @@ code{font:500 .875em var(--mono);background:var(--inset);border:1px solid var(--
 .article-viz-data>summary::-webkit-details-marker{display:none}.article-viz-data>summary span{color:var(--accent)}
 .article-viz-data[open]>summary span{font-size:0}.article-viz-data[open]>summary span::after{content:"đóng bảng ↑";font-size:9.5px}
 .article-viz-data .bang{margin:14px 0 0}.article-viz-data .bang table{font-size:13px;background:color-mix(in srgb,var(--bg) 45%,transparent)}
-html.chuyen .article-viz.is-visible .av-node,html.chuyen .article-viz.is-visible .av-proof li,
+html.chuyen .article-viz.is-visible .av-node,html.chuyen .article-viz.is-visible .av-proof li,html.chuyen .article-viz.is-visible .av-compare-side,
 html.chuyen .article-viz.is-visible .av-time>i,html.chuyen .article-viz.is-visible .av-dist-bar>i{
   animation:av-lock .58s cubic-bezier(.2,.8,.2,1) backwards}
-html.chuyen .article-viz.is-visible :is(.av-node,.av-proof li,.av-time>i,.av-dist-bar>i):nth-child(2){animation-delay:.08s}
-html.chuyen .article-viz.is-visible :is(.av-node,.av-proof li,.av-time>i,.av-dist-bar>i):nth-child(3){animation-delay:.16s}
+html.chuyen .article-viz.is-visible :is(.av-node,.av-proof li,.av-compare-side,.av-time>i,.av-dist-bar>i):nth-child(2){animation-delay:.08s}
+html.chuyen .article-viz.is-visible :is(.av-node,.av-proof li,.av-compare-side,.av-time>i,.av-dist-bar>i):nth-child(3){animation-delay:.16s}
 @keyframes av-lock{from{opacity:.18;transform:scaleY(.45);transform-origin:bottom}to{opacity:1;transform:none}}
 
 @media(max-width:700px){
   .article-viz{margin-inline:-4px;padding:20px 17px;border-radius:17px}.article-viz-head{grid-template-columns:1fr;gap:5px}
+  .av-compare-input{align-items:flex-start;flex-direction:column;gap:6px}.av-compare-input strong{text-align:left;overflow-wrap:anywhere}
+  .av-compare-grid{grid-template-columns:1fr;gap:0}.av-compare-gap{width:100px;margin:14px auto}.av-compare-result>strong{font-size:clamp(20px,6.5vw,25px)}
   .av-flow{grid-auto-flow:row;grid-auto-rows:auto;gap:19px}.av-node{min-height:125px}.av-node:not(:last-child)::after{right:50%;top:auto;
     bottom:-17px;transform:translateX(50%) rotate(90deg)}
   .av-proof{grid-template-columns:1fr}.av-proof li{min-height:118px}.av-timeline{margin-inline:-3px;grid-auto-columns:112px}
@@ -960,6 +985,9 @@ html.chuyen .article-verdict.is-visible .case-step.fixed{animation-delay:.2s}
    nó tách khỏi lede chứ không dính vào như đoạn văn tiếp theo. */
 .article-limits{grid-template-columns:minmax(0,1fr);margin:30px 0 0}
 .article-body{padding-top:30px}.article-body>p,.article-body>ul,.article-body>ol{max-width:68ch}
+.article-body-centered>.article-meta{width:min(100%,900px);margin-inline:auto}
+.article-body-centered>:is(p,ul,ol,h2,h3,pre){width:min(100%,680px);max-width:680px;margin-left:auto;margin-right:auto}
+.article-body-centered>.article-viz{width:min(100%,1000px);margin-left:auto;margin-right:auto}
 .article-body ul,.article-body ol{padding-left:1.35em}.article-body li{margin:7px 0}
 .article-body .bang{overflow-x:auto;margin:26px 0 30px}.article-body .bang table{border-collapse:collapse;min-width:620px;width:100%;font-size:14px}
 .article-body .bang th{padding:0 18px 10px 0;border-bottom:1px solid var(--line);font:650 9.5px/1.45 var(--mono);letter-spacing:.11em;text-transform:uppercase;text-align:left;color:var(--faint)}

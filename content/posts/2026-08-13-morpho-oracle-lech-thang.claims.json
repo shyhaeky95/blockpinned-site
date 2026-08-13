@@ -41,5 +41,47 @@
       ]
     }
   ],
-  "visuals": []
+  "visuals": [
+    {
+      "id": "hai-thang-decimals",
+      "type": "comparison",
+      "eyebrow": "CÙNG MỘT VỊ THẾ · HAI THANG ĐƠN VỊ",
+      "title": "Mười hai chữ số xuất hiện ở đâu",
+      "aria": "Cùng 0,059578845182231419 PAXG và cùng giá oracle, decimals thật 18 và 6 tạo scale 10 mũ 24 cùng giá trị 269,78218 đô; decimals khai 8 và 8 tạo scale 10 mũ 36 cùng giá trị 269.782.183.315.703,12 đô, chênh đúng 10 mũ 12.",
+      "caption": "Ảnh chụp một market trên Ethereum tại block 25.656.287; chênh lệch nằm ở thang đơn vị, không phải ở giá PAXG.",
+      "claims": ["C1", "C2"],
+      "input_label": "Đầu vào không đổi",
+      "input_value": "0,059578845182231419 PAXG × 4.528,153952808773 USDC/PAXG",
+      "gap_value": "×10¹²",
+      "gap_label": "+12 bậc",
+      "sides": [
+        {
+          "label": "Token khai thật",
+          "facts": [
+            {"label": "PAXG decimals", "value": "18"},
+            {"label": "USDC decimals", "value": "6"}
+          ],
+          "scale_label": "Scale đúng",
+          "scale": "10²⁴",
+          "result_label": "Giá trị thế chấp thực",
+          "result": "$269,78218",
+          "note": "Đơn vị khớp decimals mà hai token thực sự dùng.",
+          "tone": "good"
+        },
+        {
+          "label": "Oracle được khai",
+          "facts": [
+            {"label": "Base decimals", "value": "8"},
+            {"label": "Quote decimals", "value": "8"}
+          ],
+          "scale_label": "Scale được dùng",
+          "scale": "10³⁶",
+          "result_label": "Giá trị Blue dùng để thanh lý",
+          "result": "$269.782.183.315.703,12",
+          "note": "Giá không đổi; đơn vị bị đẩy sang một thang lớn hơn.",
+          "tone": "bad"
+        }
+      ]
+    }
+  ]
 }

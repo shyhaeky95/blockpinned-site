@@ -1,6 +1,7 @@
 ---
 title: Một market Morpho định giá chỗ thế chấp 269,78 đô thành 269.782.183.315.703 đô vì hai ô decimals của oracle được khai 8/8 trong khi hai token thật là 18/6
 tieu_de_ngan: 269 đô tài sản thế chấp, oracle đọc thành 269 nghìn tỷ đô
+reading_layout: centered
 token: MORPHO
 date: 2026-08-13
 mau: 🟡
@@ -14,6 +15,8 @@ doc_lai: Hai con số giá là ảnh chụp tại block chốt; block khác cho 
 **Có một thị trường cho vay trên Morpho mà giao thức đang nhìn vào và thấy một vị thế cực kỳ an toàn. Chỗ thế chấp đứng sau khoản vay đó, tính theo giá thật, đáng 269,78 đô. Con số mà giao thức dùng để quyết định thanh lý là 269.782.183.315.703 đô.**
 
 Một nghìn tỷ lần chênh lệch. Không phải làm tròn, không phải bug hiển thị — hai con số này ra từ hai thang đơn vị khác nhau, và giao thức chỉ biết một trong hai.
+
+{{visual:hai-thang-decimals}}
 
 Vấn đề nằm ở chỗ: con số sức khoẻ mà bạn nhìn vào để quyết định có bỏ tiền vào một thị trường cho vay hay không là con số **được tính ra**, chứ không phải **đo được**. Ở đây phép tính đó chạy sai thang — mà nhìn vào thì không thấy gì bất thường.
 

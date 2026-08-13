@@ -304,7 +304,7 @@ def inline(s: str, o: str) -> str:
 
 
 RE_VISUAL = re.compile(r"^\{\{visual:([a-z0-9-]+)\}\}$")
-VISUAL_TYPES = {"flow", "proof", "timeline", "distribution", "dai"}
+VISUAL_TYPES = {"flow", "proof", "timeline", "distribution", "dai", "comparison"}
 # `dai` thêm 12/08. Bốn khuôn kia đều giả định các mục là những thứ KHÁC NHAU — chặng
 # nối tiếp, vòng kiểm, mốc thời gian, nhóm cộng thành tổng. Không khuôn nào chở được
 # hình dạng "CÙNG MỘT đại lượng, nhiều con số cùng hợp lệ, rải trên một trục" — mà đó
@@ -336,6 +336,10 @@ def _hien_dai(x: dict) -> str:
 
 def _du_lieu_visual(v: dict) -> tuple[list[str], list[list[str]]]:
     """Một cấu hình sinh CẢ visual lẫn bảng kiểm — không có bản số thứ hai để trôi."""
+    if v["type"] == "comparison":
+        return (["thang", "tham số", "hệ số", "kết quả"],
+                [[x["label"], " · ".join(f'{f["label"]}: {f["value"]}' for f in x["facts"]),
+                  x["scale"], x["result"]] for x in v["sides"]])
     if v["type"] == "flow":
         return (["chặng", "số đọc", "ý nghĩa tại mốc"],
                 [[x["label"], x["value"], x["note"]] for x in v["steps"]])
@@ -363,7 +367,29 @@ def render_visual(v: dict) -> str:
         return bang_html
 
     vid, loai = v["id"], v["type"]
-    if loai == "flow":
+    if loai == "comparison":
+        ben = []
+        for x in v["sides"]:
+            # Số dài chỉ được ngắt ở dấu phân nhóm, không bẻ giữa một cụm chữ số.
+            ket_qua = ihtml.escape(x["result"]).replace(".", ".<wbr>")
+            ben.append(
+                f'<article class="av-compare-side tone-{x.get("tone", "accent")}">'
+                f'<p>{ihtml.escape(x["label"])}</p><div class="av-compare-facts">'
+                + "".join(f'<span><small>{ihtml.escape(f["label"])}</small>'
+                          f'<strong>{ihtml.escape(f["value"])}</strong></span>' for f in x["facts"])
+                + f'</div><div class="av-compare-scale"><small>{ihtml.escape(x["scale_label"])}</small>'
+                  f'<strong>{ihtml.escape(x["scale"])}</strong></div>'
+                  f'<div class="av-compare-result"><small>{ihtml.escape(x["result_label"])}</small>'
+                  f'<strong>{ket_qua}</strong><p>{ihtml.escape(x["note"])}</p></div></article>')
+        than = (
+            '<div class="av-compare" role="img" aria-label="{}">'
+            '<div class="av-compare-input"><small>{}</small><strong>{}</strong></div>'
+            '<div class="av-compare-grid">{}<div class="av-compare-gap"><strong>{}</strong><small>{}</small></div>{}</div>'
+            '</div>').format(
+                ihtml.escape(v["aria"], quote=True), ihtml.escape(v["input_label"]),
+                ihtml.escape(v["input_value"]), ben[0], ihtml.escape(v["gap_value"]),
+                ihtml.escape(v["gap_label"]), ben[1])
+    elif loai == "flow":
         than = '<div class="av-flow" role="img" aria-label="{}">{}</div>'.format(
             ihtml.escape(v["aria"], quote=True), "".join(
                 f'<article class="av-node tone-{x.get("tone", "accent")}">'
@@ -578,16 +604,24 @@ def cong_visuals(body: str, visuals, claims: list, o: str) -> None:
         if la:
             raise LoiCong(f"visual {vid} neo vào claim không tồn tại: {la} — {o}")
 
-        khoa = {"timeline": "events", "distribution": "segments",
-                "dai": "diem"}.get(v["type"], "steps")
+        if v["type"] == "comparison":
+            thieu_dau = sorted(k for k in ("input_label", "input_value", "gap_value", "gap_label")
+                              if not v.get(k))
+            if thieu_dau:
+                raise LoiCong(f"visual {vid} thiếu {thieu_dau} — {o}")
+        khoa = {"timeline": "events", "distribution": "segments", "dai": "diem",
+                "comparison": "sides"}.get(v["type"], "steps")
         ds = v.get(khoa)
-        gioi_han = (3, 16) if khoa == "events" else ((2, 8) if khoa == "diem" else (2, 6))
+        gioi_han = ((3, 16) if khoa == "events" else (2, 8) if khoa == "diem"
+                     else (2, 2) if khoa == "sides" else (2, 6))
         if not isinstance(ds, list) or not gioi_han[0] <= len(ds) <= gioi_han[1]:
             raise LoiCong(f"visual {vid}.{khoa} phải có {gioi_han[0]}–{gioi_han[1]} mục — {o}")
         for x in ds:
             if not isinstance(x, dict):
                 raise LoiCong(f"visual {vid}.{khoa} phải chứa object — {o}")
-            bat_buoc = ({"label", "value", "note"} if v["type"] in ("flow", "dai") else
+            bat_buoc = ({"label", "scale_label", "scale", "result_label", "result", "note", "facts"}
+                        if v["type"] == "comparison" else
+                        {"label", "value", "note"} if v["type"] in ("flow", "dai") else
                         {"label", "value", "question", "note"} if v["type"] == "proof" else
                         {"label", "value", "magnitude"} if v["type"] == "timeline" else
                         {"label", "count", "note"})
@@ -596,6 +630,12 @@ def cong_visuals(body: str, visuals, claims: list, o: str) -> None:
                 raise LoiCong(f"visual {vid}.{khoa} thiếu {thieu} — {o}")
             if x.get("tone", "accent") not in VISUAL_TONES:
                 raise LoiCong(f"visual {vid} có tone lạ {x.get('tone')!r} — {o}")
+            if v["type"] == "comparison":
+                facts = x.get("facts")
+                if (not isinstance(facts, list) or len(facts) != 2
+                        or any(not isinstance(f, dict) or not f.get("label") or not f.get("value")
+                               for f in facts)):
+                    raise LoiCong(f"visual {vid}.{khoa} mỗi bên phải có đúng 2 facts label/value — {o}")
             if v["type"] == "timeline" and (not isinstance(x["magnitude"], (int, float))
                                                or x["magnitude"] <= 0):
                 raise LoiCong(f"visual {vid} magnitude phải là số dương — {o}")
@@ -2637,6 +2677,10 @@ def _hero_bai_v3(fm: dict, claims: list, trang_chu: dict) -> str:
 def trang_bai_v3(fm: dict, claims: list, body_md: str, o: str, ho_so: str,
                   trang_chu: dict, visuals: list) -> str:
     """Dựng trang bài bằng markup WOW, không dùng `.dai/.so/.claim` của D2."""
+    reading_layout = fm.get("reading_layout", "standard")
+    if reading_layout not in {"standard", "centered"}:
+        raise LoiCong(f"reading_layout chỉ nhận standard/centered — {o}")
+    lop_doc = " article-body-centered" if reading_layout == "centered" else ""
     muc = []
     for h in re.findall(r"^##\s+(.+)$", body_md, re.M)[:3]:
         nhan = re.sub(r"[*_`]", "", h).strip()
@@ -2648,7 +2692,7 @@ def trang_bai_v3(fm: dict, claims: list, body_md: str, o: str, ho_so: str,
             + '<nav class="article-map" aria-label="Điều hướng trong bài"><span>Đọc theo bằng chứng</span>'
             + '<a href="#so-claim">Sổ claim</a>' + "".join(muc) + '</nav>'
             + _so_claim_v3(claims)
-            + f'''<section class="than article-body" id="ban-day-du">
+            + f'''<section class="than article-body{lop_doc}" id="ban-day-du">
   <div class="article-meta">
     <span><b>GHIM</b>{ihtml.escape(fm['ghim'])}</span>
     <span><b>NGÀY</b>{vn_ngay(str(fm['date'])[:10])}</span>

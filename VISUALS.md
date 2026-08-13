@@ -20,7 +20,42 @@ Builder chặn id trùng, marker/config lệch, claim nguồn không tồn tại
 dữ liệu rỗng và trường hợp renderer làm rơi hình/bảng. Bản rollback D2 tự hạ visual
 thành bảng đầy đủ.
 
-## Bốn template
+## Sáu template
+
+### `comparison` — cùng đầu vào, hai thang hoặc hai trạng thái
+
+Dùng khi hai cách khai hoặc hai trạng thái biến cùng một đầu vào thành hai kết quả cần
+đặt cạnh nhau. Bắt buộc có đúng hai bên; `gap_value` chở độ chênh ở giữa, còn mỗi bên
+có đúng hai fact để người đọc thấy tham số làm kết quả đổi.
+
+```json
+{
+  "id": "two-states",
+  "type": "comparison",
+  "title": "Cùng một vị thế, hai thang đơn vị",
+  "aria": "Mô tả đầy đủ đầu vào, hai bộ tham số, hai kết quả và độ chênh.",
+  "caption": "Khai block, phạm vi và điều không được suy ra.",
+  "claims": ["C1", "C2"],
+  "input_label": "Đầu vào không đổi",
+  "input_value": "cùng một giá trị đầu vào",
+  "gap_value": "×10¹²",
+  "gap_label": "+12 bậc",
+  "sides": [
+    {
+      "label": "Trạng thái A",
+      "facts": [{"label": "tham số 1", "value": "18"}, {"label": "tham số 2", "value": "6"}],
+      "scale_label": "hệ số", "scale": "10²⁴", "result_label": "kết quả", "result": "$269,78",
+      "note": "Đọc kết quả này như thế nào.", "tone": "good"
+    },
+    {
+      "label": "Trạng thái B",
+      "facts": [{"label": "tham số 1", "value": "8"}, {"label": "tham số 2", "value": "8"}],
+      "scale_label": "hệ số", "scale": "10³⁶", "result_label": "kết quả", "result": "$269 nghìn tỷ",
+      "note": "Vì sao kết quả đổi.", "tone": "bad"
+    }
+  ]
+}
+```
 
 ### `flow` — đường đi hoặc phép cân sổ
 
@@ -146,6 +181,7 @@ Màu hợp lệ: `accent`, `good`, `warn`, `bad`, `info`, `muted`. Màu chỉ gi
 - Có ngày/tháng và cần thấy nhịp hoặc ngoại lệ: `timeline`.
 - Có một tổng chia thành vài trạng thái: `distribution`.
 - Có nhiều con số cho CÙNG một đại lượng, không cộng lại thành tổng: `dai`.
+- Có cùng đầu vào nhưng hai bộ tham số/trạng thái cho hai kết quả: `comparison`.
 - Chỉ có một con số hoặc bảng đã đủ rõ: không ép thành visual.
 
 🔵 **Chỗ bộ template CÒN THIẾU, khai ra để lượt sau không phải tìm lại (12/08):** chưa
@@ -155,3 +191,10 @@ cặp mũi tên trên cùng trục. `dai` vẽ được bốn chấm nhưng đá
 
 Một bài dài thường chỉ cần 2–4 visual, đặt sau đoạn đã giải thích dữ liệu. Visual tóm
 tắt lập luận; nó không thay claim, caption phạm vi hay bảng kiểm.
+
+## Nợ rollout bố cục bài dài
+
+`reading_layout: centered` được thử trước trên bài MORPHO ngày 13/08: phần chữ thu về
+680 px và nằm giữa trang, còn visual được mở tới 1.000 px. **Chưa áp global.** Khi sửa
+các bài dài còn lại, bật từng bài rồi kiểm desktop/mobile; không đổi đồng loạt trước khi
+thấy heading, bảng và visual của chính bài đó sống được trong nhịp mới.
