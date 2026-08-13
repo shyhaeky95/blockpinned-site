@@ -179,9 +179,17 @@ LOGO_TOKEN = {
     # 🔴 Bản gốc là JPEG, đã đổi sang PNG lúc tải: `kich_thuoc_png()` đọc IHDR và NỔ
     # với mọi thứ không phải PNG, nên để nguyên .jpg là chặn build ở lượt sau.
     "HYPE":   ("token-hype.png",   "coingecko 50882/hyperliquid.jpg → png",    "2026-08-10"),
+    "MORPHO": ("token-morpho.png", "coingecko 29837/Morpho-token-icon.png",    "2026-08-13"),
 }
 
 NGUON_ASSET = {
+    # bài MORPHO 13/08 — dựng bằng KHUÔN v2, đường đi nay đã có chủ và có cổng:
+    # nguồn `template/card-morpho-oracle-thang.html` (chép từ `template/card-v2.html`,
+    # chỉ thay các ô `data-o`), render bằng `template/render_card_v2.py` — tức nó QUA
+    # `card_gate` VÀ qua cổng tràn khung, khác ngoại lệ dựng tay của card HYPE bên dưới.
+    # Số trên ảnh ($269 ↔ $269 nghìn tỷ) là hai vế của cùng một đại lượng, lấy từ
+    # `Crypto Research/MORPHO/data/frozen_market_origin_2026-08-04.json` khối `B_PAXG`.
+    "card-morpho-oracle-thang.png": "png",
     "favicon-16.png":  "logo/final",
     "favicon-32.png":  "logo/final",
     "avatar-800.png":  "logo/final",
@@ -1709,7 +1717,7 @@ def font_face(goc: str) -> str:
 # chiều sâu. Token lạ ⇒ CHẶN build: thêm tên vào đây là một quyết định, không phải
 # một lượt gõ.
 TOKEN_TEN = {"UNI": "Uniswap", "LDO": "Lido", "HYPE": "Hyperliquid", "PENDLE": "Pendle",
-             "CAKE": "PancakeSwap"}
+             "CAKE": "PancakeSwap", "MORPHO": "Morpho"}
 
 # Tủ kính hiện mở cho ĐÚNG MỘT token, khai ở đây; toàn bộ nội dung trang sinh từ dữ
 # liệu, nên đổi dòng này là trang tự dựng lại cho token khác. Kèm SÀN: dưới 3 bài thì

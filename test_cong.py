@@ -298,10 +298,18 @@ CA = [
     ("BỐ CỤC v3 · bỏ helper khóa xuống dòng phải NỔ",
      lambda r: sua_builder(r, "html = khoa_xuong_dong(html)", "html = html"),
      "còn khoảng trắng có thể bị bẻ"),
-    ("BỐ CỤC v3 · kho 11 bài mà nút mở thêm còn hiện phải NỔ",
+    # 🔴 SỬA 13/08/2026 — ca này TỪNG là "kho 11 bài mà nút mở thêm còn hiện", và nó
+    # CHẾT IM LẶNG khi kho vượt 12 bài: phép bẻ cũ (`an_mo_them = ""`) là no-op ở nhánh
+    # `so_bai > 12` vì lúc đó nút VỐN phải hiện. Bài thứ 13 (MORPHO, 13/08) đưa kho sang
+    # nhánh kia và ca thử báo "cổng thủng" trong khi cổng vẫn đúng — hỏng ở FIXTURE, không
+    # ở cổng. Nay bẻ bằng cách ĐẢO điều kiện, nên nó nổ được ở CẢ HAI nhánh:
+    #   · kho ≤12 bài  → nút hiện trong khi phải ẩn
+    #   · kho >12 bài  → nút ẩn trong khi phải hiện
+    # Không còn phụ thuộc số bài, tức không chết lại khi kho lớn lên.
+    ("BỐ CỤC v3 · nút mở thêm ngược trạng thái kho phải NỔ",
      lambda r: sua_builder(r, 'an_mo_them = " hidden" if not con_lai else ""',
-                           'an_mo_them = ""'),
-     "đã hiện đủ mà nút mở thêm vẫn hiện"),
+                           'an_mo_them = "" if not con_lai else " hidden"'),
+     "nút mở thêm"),
     ("BỐ CỤC v3 · menu đổi riêng Trang chủ thành Sổ gốc phải NỔ",
      lambda r: sua_builder(r, 'MUC_DIEU_HUONG = [("", "Trang chủ"),',
                            'MUC_DIEU_HUONG = [("", "Sổ gốc"),'),
@@ -381,7 +389,7 @@ for _t in ("BỐ CỤC v3 · thiếu v3.css phải NỔ — trang đủ chữ m�
            "BỐ CỤC v3 · preview bài token mất ưu tiên phải NỔ",
            "BỐ CỤC v3 · kho bài mất component phải NỔ",
            "BỐ CỤC v3 · bỏ helper khóa xuống dòng phải NỔ",
-           "BỐ CỤC v3 · kho 11 bài mà nút mở thêm còn hiện phải NỔ",
+           "BỐ CỤC v3 · nút mở thêm ngược trạng thái kho phải NỔ",
            "BỐ CỤC v3 · menu đổi riêng Trang chủ thành Sổ gốc phải NỔ"):
     THEM_ARGV[_t] = ["--bo-cuc", "v3"]
 
