@@ -304,7 +304,8 @@ def inline(s: str, o: str) -> str:
 
 
 RE_VISUAL = re.compile(r"^\{\{visual:([a-z0-9-]+)\}\}$")
-VISUAL_TYPES = {"flow", "proof", "timeline", "distribution", "dai", "comparison"}
+VISUAL_TYPES = {"flow", "proof", "timeline", "distribution", "dai", "comparison",
+                "opposite-direction"}
 # `dai` thêm 12/08. Bốn khuôn kia đều giả định các mục là những thứ KHÁC NHAU — chặng
 # nối tiếp, vòng kiểm, mốc thời gian, nhóm cộng thành tổng. Không khuôn nào chở được
 # hình dạng "CÙNG MỘT đại lượng, nhiều con số cùng hợp lệ, rải trên một trục" — mà đó
@@ -340,6 +341,11 @@ def _du_lieu_visual(v: dict) -> tuple[list[str], list[list[str]]]:
         return (["thang", "tham số", "hệ số", "kết quả"],
                 [[x["label"], " · ".join(f'{f["label"]}: {f["value"]}' for f in x["facts"]),
                   x["scale"], x["result"]] for x in v["sides"]])
+    if v["type"] == "opposite-direction":
+        return (["giai đoạn"] + [x["label"] for x in v["series"]],
+                [[f'{stage["label"]} — {stage["note"]}']
+                 + [str(series["values"][n]["hien"]) for series in v["series"]]
+                 for n, stage in enumerate(v["stages"])])
     if v["type"] == "flow":
         return (["chặng", "số đọc", "ý nghĩa tại mốc"],
                 [[x["label"], x["value"], x["note"]] for x in v["steps"]])
@@ -389,6 +395,28 @@ def render_visual(v: dict) -> str:
                 ihtml.escape(v["aria"], quote=True), ihtml.escape(v["input_label"]),
                 ihtml.escape(v["input_value"]), ben[0], ihtml.escape(v["gap_value"]),
                 ihtml.escape(v["gap_label"]), ben[1])
+    elif loai == "opposite-direction":
+        chuoi = []
+        for series in v["series"]:
+            diem = []
+            truoc = None
+            for stage, value in zip(v["stages"], series["values"]):
+                so = float(value["value"])
+                huong = ("is-start" if truoc is None else
+                         "is-up" if so > truoc else "is-down" if so < truoc else "is-flat")
+                diem.append(
+                    f'<li class="{huong}"><small>{ihtml.escape(stage["label"])}</small>'
+                    f'<strong>{ihtml.escape(str(value["hien"]))}</strong>'
+                    f'<span>{ihtml.escape(stage["note"])}</span></li>')
+                truoc = so
+            chuoi.append(
+                f'<article class="av-opp-series tone-{series.get("tone", "accent")}">'
+                f'<header><div><small>{ihtml.escape(series["label"])}</small>'
+                f'<p>{ihtml.escape(series["note"])}</p></div>'
+                f'<strong>{ihtml.escape(series["summary"])}</strong></header>'
+                f'<ol>{"".join(diem)}</ol></article>')
+        than = (f'<div class="av-opposite" role="img" '
+                f'aria-label="{ihtml.escape(v["aria"], quote=True)}">{"".join(chuoi)}</div>')
     elif loai == "flow":
         than = '<div class="av-flow" role="img" aria-label="{}">{}</div>'.format(
             ihtml.escape(v["aria"], quote=True), "".join(
@@ -609,6 +637,39 @@ def cong_visuals(body: str, visuals, claims: list, o: str) -> None:
                               if not v.get(k))
             if thieu_dau:
                 raise LoiCong(f"visual {vid} thiếu {thieu_dau} — {o}")
+        if v["type"] == "opposite-direction":
+            stages = v.get("stages")
+            if not isinstance(stages, list) or not 3 <= len(stages) <= 6:
+                raise LoiCong(f"visual {vid}.stages phải có 3–6 mốc — {o}")
+            for stage in stages:
+                if (not isinstance(stage, dict) or not stage.get("label")
+                        or not stage.get("note")):
+                    raise LoiCong(f"visual {vid}.stages mỗi mốc cần label/note — {o}")
+            series = v.get("series")
+            if not isinstance(series, list) or len(series) != 2:
+                raise LoiCong(f"visual {vid}.series phải có đúng 2 chuỗi — {o}")
+            bien = []
+            for s in series:
+                if not isinstance(s, dict):
+                    raise LoiCong(f"visual {vid}.series phải chứa object — {o}")
+                thieu = sorted(k for k in ("label", "note", "summary", "values")
+                              if s.get(k) in (None, ""))
+                if thieu:
+                    raise LoiCong(f"visual {vid}.series thiếu {thieu} — {o}")
+                if s.get("tone", "accent") not in VISUAL_TONES:
+                    raise LoiCong(f"visual {vid} có tone lạ {s.get('tone')!r} — {o}")
+                values = s["values"]
+                if not isinstance(values, list) or len(values) != len(stages):
+                    raise LoiCong(f"visual {vid}.series.values phải khớp {len(stages)} mốc — {o}")
+                for value in values:
+                    if (not isinstance(value, dict) or not value.get("hien")
+                            or isinstance(value.get("value"), bool)
+                            or not isinstance(value.get("value"), (int, float))):
+                        raise LoiCong(f"visual {vid}.series.values cần value là SỐ và hien là chữ — {o}")
+                bien.append(float(values[-1]["value"]) - float(values[0]["value"]))
+            if not bien[0] or not bien[1] or bien[0] * bien[1] >= 0:
+                raise LoiCong(f"visual {vid} cần hai chuỗi có hướng ròng NGƯỢC nhau — {o}")
+            continue
         khoa = {"timeline": "events", "distribution": "segments", "dai": "diem",
                 "comparison": "sides"}.get(v["type"], "steps")
         ds = v.get(khoa)

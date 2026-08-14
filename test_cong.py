@@ -17,6 +17,7 @@ MD = "content/posts/2026-07-27-defillama-uniswap-v4.md"
 CJ = "content/posts/2026-07-27-defillama-uniswap-v4.claims.json"
 PENDLE_CJ = "content/posts/2026-07-31-pendle-buyback-cot-bang-0.claims.json"
 HYPE_CJ = "content/posts/2026-08-12-hype-thi-phan-13-hay-70.claims.json"
+CAKE_CJ = "content/posts/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon.claims.json"
 
 
 def sua_md(root, fn):
@@ -376,6 +377,19 @@ CA = [
          "diem", [dict(d["visuals"][0]["diem"][0], value=i + 1, label=f"n{i}")
                   for i in range(9)])),
      "phải có 2–8 mục"),
+    # ⑯ VISUAL opposite-direction — pilot CAKE 14/08. Ba ca phân biệt một cấu hình
+    # thật sự chở hai hướng với một bảng chỉ tình cờ có hai hàng số.
+    ("⑯ VISUAL opposite · hai chuỗi cùng hướng phải NỔ",
+     lambda r: sua_json_bai(r, CAKE_CJ, lambda d: d["visuals"][0]["series"][1]["values"][-1].update(
+         value=100000, hien="$100.000")),
+     "hướng ròng NGƯỢC nhau"),
+    ("⑯ VISUAL opposite · số điểm không khớp số mốc phải NỔ",
+     lambda r: sua_json_bai(r, CAKE_CJ, lambda d: d["visuals"][0]["series"][1]["values"].pop()),
+     "phải khớp 3 mốc"),
+    ("⑯ VISUAL opposite · value dạng chuỗi phải NỔ",
+     lambda r: sua_json_bai(r, CAKE_CJ, lambda d: d["visuals"][0]["series"][0]["values"][0].update(
+         value="74%")),
+     "cần value là SỐ"),
 ]
 
 # Ca nào cần cờ riêng thì khai ở đây, không nhét thêm cột vào mọi tuple cũ:

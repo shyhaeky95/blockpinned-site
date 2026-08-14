@@ -345,6 +345,25 @@ code{font:500 .875em var(--mono);background:var(--inset);border:1px solid var(--
   border-radius:999px;background:color-mix(in srgb,var(--accent) 7%,var(--bg));color:var(--accent);text-align:center}
 .av-compare-gap strong{font:780 16px/1 var(--mono);letter-spacing:-.04em}.av-compare-gap small{font:700 7.5px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase}
 
+.av-opposite{display:grid;gap:12px}
+.av-opp-series{--vt:var(--accent);padding:18px;border:1px solid color-mix(in srgb,var(--vt) 28%,var(--line));
+  border-radius:14px;background:color-mix(in srgb,var(--vt) 4%,var(--card))}
+.av-opp-series>header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding-bottom:14px;
+  border-bottom:1px solid var(--line-soft)}
+.av-opp-series>header small{display:block;font:750 8.5px/1.35 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--vt)}
+.av-opp-series>header p{margin:5px 0 0;font:520 9.5px/1.45 var(--mono);color:var(--faint)}
+.av-opp-series>header>strong{font:780 15px/1.2 var(--mono);letter-spacing:-.035em;color:var(--vt);text-align:right}
+.av-opp-series>ol{list-style:none!important;margin:18px 0 0!important;padding:0!important;display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.av-opp-series li{min-width:0;padding:12px 13px;border:1px solid var(--line);border-radius:10px;background:var(--bg);position:relative}
+.av-opp-series li:not(:first-child)::before{position:absolute;left:-24px;top:50%;width:19px;transform:translateY(-50%);
+  text-align:center;font:750 17px/1 var(--mono);color:var(--vt)}
+.av-opp-series li.is-up::before{content:"↗"}.av-opp-series li.is-down::before{content:"↘"}.av-opp-series li.is-flat::before{content:"→"}
+.av-opp-series li small{display:block;font:750 8px/1.35 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.av-opp-series li strong{display:block;margin:9px 0 7px;font:780 clamp(22px,3vw,34px)/.95 var(--display);
+  letter-spacing:-.05em;color:var(--ink);font-variant-numeric:tabular-nums}
+.av-opp-series li span{display:block;font:520 9px/1.4 var(--mono);color:var(--faint)}
+
 .av-flow{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:22px}
 .av-node{--vt:var(--accent);min-height:154px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);
   border-top:3px solid var(--vt);border-radius:13px;background:color-mix(in srgb,var(--vt) 4%,var(--card));position:relative}
@@ -410,6 +429,7 @@ code{font:500 .875em var(--mono);background:var(--inset);border:1px solid var(--
 .article-viz-data[open]>summary span{font-size:0}.article-viz-data[open]>summary span::after{content:"đóng bảng ↑";font-size:9.5px}
 .article-viz-data .bang{margin:14px 0 0}.article-viz-data .bang table{font-size:13px;background:color-mix(in srgb,var(--bg) 45%,transparent)}
 html.chuyen .article-viz.is-visible .av-node,html.chuyen .article-viz.is-visible .av-proof li,html.chuyen .article-viz.is-visible .av-compare-side,
+html.chuyen .article-viz.is-visible .av-opp-series,
 html.chuyen .article-viz.is-visible .av-time>i,html.chuyen .article-viz.is-visible .av-dist-bar>i{
   animation:av-lock .58s cubic-bezier(.2,.8,.2,1) backwards}
 html.chuyen .article-viz.is-visible :is(.av-node,.av-proof li,.av-compare-side,.av-time>i,.av-dist-bar>i):nth-child(2){animation-delay:.08s}
@@ -420,6 +440,8 @@ html.chuyen .article-viz.is-visible :is(.av-node,.av-proof li,.av-compare-side,.
   .article-viz{margin-inline:-4px;padding:20px 17px;border-radius:17px}.article-viz-head{grid-template-columns:1fr;gap:5px}
   .av-compare-input{align-items:flex-start;flex-direction:column;gap:6px}.av-compare-input strong{text-align:left;overflow-wrap:anywhere}
   .av-compare-grid{grid-template-columns:1fr;gap:0}.av-compare-gap{width:100px;margin:14px auto}.av-compare-result>strong{font-size:clamp(20px,6.5vw,25px)}
+  .av-opp-series>header{display:grid}.av-opp-series>header>strong{text-align:left}
+  .av-opp-series>ol{grid-template-columns:1fr;gap:22px}.av-opp-series li:not(:first-child)::before{left:16px;top:-20px;transform:none}
   .av-flow{grid-auto-flow:row;grid-auto-rows:auto;gap:19px}.av-node{min-height:125px}.av-node:not(:last-child)::after{right:50%;top:auto;
     bottom:-17px;transform:translateX(50%) rotate(90deg)}
   .av-proof{grid-template-columns:1fr}.av-proof li{min-height:118px}.av-timeline{margin-inline:-3px;grid-auto-columns:112px}

@@ -1,4 +1,85 @@
 {
+ "visuals": [
+  {
+   "id": "thi-phan-phi-nguoc-huong",
+   "type": "opposite-direction",
+   "eyebrow": "CÙNG BA GIAI ĐOẠN · HAI ĐƠN VỊ",
+   "title": "Thị phần đi xuống. Phí đi lên.",
+   "aria": "Qua ba giai đoạn A, B và C, thị phần volume của PancakeSwap trên BSC giảm từ 74,0 xuống 44,4 rồi 36,4 phần trăm; phí PancakeSwap mỗi ngày đi từ 202.808 xuống 155.398 rồi tăng lên 479.026 đô. Hai hàng dùng hai thang đo riêng.",
+   "caption": "Trung vị theo ngày, 27/06–08/08/2026. Hai hàng khác đơn vị; không đọc khoảng cách hình học như một tỷ lệ chung. @BLOCKPINNED",
+   "claims": ["C1"],
+   "stages": [
+    {"label": "A · TRƯỚC", "note": "27/06–11/07"},
+    {"label": "B · SÓNG KHỐI LƯỢNG", "note": "12/07–29/07"},
+    {"label": "C · SÓNG PHÍ", "note": "30/07–08/08"}
+   ],
+   "series": [
+    {
+     "label": "THỊ PHẦN VOLUME",
+     "note": "PancakeSwap / toàn BSC",
+     "summary": "−37,6 điểm · A → C",
+     "tone": "bad",
+     "values": [
+      {"value": 74.0, "hien": "74,0%"},
+      {"value": 44.4, "hien": "44,4%"},
+      {"value": 36.4, "hien": "36,4%"}
+     ]
+    },
+    {
+     "label": "PHÍ PANCAKESWAP / NGÀY",
+     "note": "trung vị gross fee",
+     "summary": "×3,08 · B → C",
+     "tone": "good",
+     "values": [
+      {"value": 202808, "hien": "$202.808"},
+      {"value": 155398, "hien": "$155.398"},
+      {"value": 479026, "hien": "$479.026"}
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mix-pool-doi-gia-phi",
+   "type": "comparison",
+   "eyebrow": "PANCAKESWAP V3 · CÙNG CÁCH TÍNH",
+   "title": "Volume dời sang pool đắt hơn, phí trên mỗi đô tăng 2,43 lần",
+   "aria": "So sánh giai đoạn B và C của PancakeSwap v3 trên BSC. Tỷ trọng volume ở tier 0,25 và 1 phần trăm tăng từ 1,81 lên 9,76 phần trăm, còn phí trên mỗi đô volume tăng từ 2,25 lên 5,47 bps.",
+   "caption": "Dune, 12/07–29/07 so với 30/07–08/08/2026. Fee tier lấy từ log PoolCreated; hai giai đoạn dùng cùng pipeline. @BLOCKPINNED",
+   "claims": ["C2"],
+   "input_label": "ĐẦU VÀO GIỮ NGUYÊN",
+   "input_value": "volume v3 theo pool · fee tier từ PoolCreated",
+   "gap_value": "×2,43",
+   "gap_label": "fee-yield",
+   "sides": [
+    {
+     "label": "B · SÓNG KHỐI LƯỢNG",
+     "facts": [
+      {"label": "tier 0,01%", "value": "86,62%"},
+      {"label": "tier ≥0,25%", "value": "1,81%"}
+     ],
+     "scale_label": "USD ở tier ≥0,25%",
+     "scale": "$131M",
+     "result_label": "PHÍ / MỖI ĐÔ",
+     "result": "2,25 bps",
+     "note": "Volume tăng nhưng dồn vào pool rẻ nhất.",
+     "tone": "info"
+    },
+    {
+     "label": "C · SÓNG PHÍ",
+     "facts": [
+      {"label": "tier 0,01%", "value": "80,22%"},
+      {"label": "tier ≥0,25%", "value": "9,76%"}
+     ],
+     "scale_label": "USD ở tier ≥0,25%",
+     "scale": "$517M",
+     "result_label": "PHÍ / MỖI ĐÔ",
+     "result": "5,47 bps",
+     "note": "Nhóm tier cao lớn gấp 5,39 lần về tỷ trọng.",
+     "tone": "good"
+    }
+   ]
+  }
+ ],
  "claims": [
   {
    "id": "C1",

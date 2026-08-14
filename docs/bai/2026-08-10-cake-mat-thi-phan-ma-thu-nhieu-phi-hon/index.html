@@ -366,6 +366,25 @@ code{font:500 .875em var(--mono);background:var(--inset);border:1px solid var(--
   border-radius:999px;background:color-mix(in srgb,var(--accent) 7%,var(--bg));color:var(--accent);text-align:center}
 .av-compare-gap strong{font:780 16px/1 var(--mono);letter-spacing:-.04em}.av-compare-gap small{font:700 7.5px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase}
 
+.av-opposite{display:grid;gap:12px}
+.av-opp-series{--vt:var(--accent);padding:18px;border:1px solid color-mix(in srgb,var(--vt) 28%,var(--line));
+  border-radius:14px;background:color-mix(in srgb,var(--vt) 4%,var(--card))}
+.av-opp-series>header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding-bottom:14px;
+  border-bottom:1px solid var(--line-soft)}
+.av-opp-series>header small{display:block;font:750 8.5px/1.35 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--vt)}
+.av-opp-series>header p{margin:5px 0 0;font:520 9.5px/1.45 var(--mono);color:var(--faint)}
+.av-opp-series>header>strong{font:780 15px/1.2 var(--mono);letter-spacing:-.035em;color:var(--vt);text-align:right}
+.av-opp-series>ol{list-style:none!important;margin:18px 0 0!important;padding:0!important;display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.av-opp-series li{min-width:0;padding:12px 13px;border:1px solid var(--line);border-radius:10px;background:var(--bg);position:relative}
+.av-opp-series li:not(:first-child)::before{position:absolute;left:-24px;top:50%;width:19px;transform:translateY(-50%);
+  text-align:center;font:750 17px/1 var(--mono);color:var(--vt)}
+.av-opp-series li.is-up::before{content:"↗"}.av-opp-series li.is-down::before{content:"↘"}.av-opp-series li.is-flat::before{content:"→"}
+.av-opp-series li small{display:block;font:750 8px/1.35 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.av-opp-series li strong{display:block;margin:9px 0 7px;font:780 clamp(22px,3vw,34px)/.95 var(--display);
+  letter-spacing:-.05em;color:var(--ink);font-variant-numeric:tabular-nums}
+.av-opp-series li span{display:block;font:520 9px/1.4 var(--mono);color:var(--faint)}
+
 .av-flow{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:22px}
 .av-node{--vt:var(--accent);min-height:154px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);
   border-top:3px solid var(--vt);border-radius:13px;background:color-mix(in srgb,var(--vt) 4%,var(--card));position:relative}
@@ -431,6 +450,7 @@ code{font:500 .875em var(--mono);background:var(--inset);border:1px solid var(--
 .article-viz-data[open]>summary span{font-size:0}.article-viz-data[open]>summary span::after{content:"đóng bảng ↑";font-size:9.5px}
 .article-viz-data .bang{margin:14px 0 0}.article-viz-data .bang table{font-size:13px;background:color-mix(in srgb,var(--bg) 45%,transparent)}
 html.chuyen .article-viz.is-visible .av-node,html.chuyen .article-viz.is-visible .av-proof li,html.chuyen .article-viz.is-visible .av-compare-side,
+html.chuyen .article-viz.is-visible .av-opp-series,
 html.chuyen .article-viz.is-visible .av-time>i,html.chuyen .article-viz.is-visible .av-dist-bar>i{
   animation:av-lock .58s cubic-bezier(.2,.8,.2,1) backwards}
 html.chuyen .article-viz.is-visible :is(.av-node,.av-proof li,.av-compare-side,.av-time>i,.av-dist-bar>i):nth-child(2){animation-delay:.08s}
@@ -441,6 +461,8 @@ html.chuyen .article-viz.is-visible :is(.av-node,.av-proof li,.av-compare-side,.
   .article-viz{margin-inline:-4px;padding:20px 17px;border-radius:17px}.article-viz-head{grid-template-columns:1fr;gap:5px}
   .av-compare-input{align-items:flex-start;flex-direction:column;gap:6px}.av-compare-input strong{text-align:left;overflow-wrap:anywhere}
   .av-compare-grid{grid-template-columns:1fr;gap:0}.av-compare-gap{width:100px;margin:14px auto}.av-compare-result>strong{font-size:clamp(20px,6.5vw,25px)}
+  .av-opp-series>header{display:grid}.av-opp-series>header>strong{text-align:left}
+  .av-opp-series>ol{grid-template-columns:1fr;gap:22px}.av-opp-series li:not(:first-child)::before{left:16px;top:-20px;transform:none}
   .av-flow{grid-auto-flow:row;grid-auto-rows:auto;gap:19px}.av-node{min-height:125px}.av-node:not(:last-child)::after{right:50%;top:auto;
     bottom:-17px;transform:translateX(50%) rotate(90deg)}
   .av-proof{grid-template-columns:1fr}.av-proof li{min-height:118px}.av-timeline{margin-inline:-3px;grid-auto-columns:112px}
@@ -1953,7 +1975,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 </article></div>
   </div>
 </details>
-</section><section class="than article-body" id="ban-day-du">
+</section><section class="than article-body article-body-centered" id="ban-day-du">
   <div class="article-meta">
     <span><b>GHIM</b>BSC block&nbsp;115.070.912 (10/08/2026 14h22 giờ Việt Nam) — ví đốt 0xceba60280fb0ecd9a5a26a1552b90944770a4a0e giữ 59.637.099,55&nbsp;CAKE chưa đốt, trong đó 599.032,72 là tiền phí của tuần đang chạy. Chuỗi cycle tuần pin tại block&nbsp;115.047.719; phí pool TUT/WBNB đo trong cửa sổ block&nbsp;114.861.872 đến 115.053.819; allocPoint đọc tại block&nbsp;115.053.639</span>
     <span><b>NGÀY</b>10/08/2026</span>
@@ -1961,6 +1983,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   </div>
   <p><strong>Thị phần volume của PancakeSwap trên BSC đi một mạch từ 74,0% xuống 36,4% qua ba giai đoạn của sáu tuần. Cùng lúc đó, phí giao dịch tạo ra trên sàn tăng 3,1&nbsp;lần. Hai đường này không mâu thuẫn: volume dời từ pool mức phí 0,01% sang pool mức phí 0,25% và 1%.</strong></p>
 <p>Nhưng phần tới được token thì không tăng theo kịp. Gross fee tăng 3,1&nbsp;lần, lượng CAKE bị đốt từ nguồn phí chỉ tăng 1,4&nbsp;lần, và tỷ lệ chuyển hoá giữa hai đại lượng đó rơi từ khoảng 47% xuống 21%.</p>
+<figure class="article-viz article-viz-opposite-direction" id="visual-thi-phan-phi-nguoc-huong" data-spotlight>
+  <div class="article-viz-head"><p>CÙNG BA GIAI ĐOẠN · HAI ĐƠN VỊ</p><h3>Thị phần đi xuống. Phí đi lên.</h3></div>
+  <div class="av-opposite" role="img" aria-label="Qua ba giai đoạn A, B và C, thị phần volume của PancakeSwap trên BSC giảm từ 74,0 xuống 44,4 rồi 36,4 phần trăm; phí PancakeSwap mỗi ngày đi từ 202.808 xuống 155.398 rồi tăng lên 479.026 đô. Hai hàng dùng hai thang đo riêng."><article class="av-opp-series tone-bad"><header><div><small>THỊ PHẦN VOLUME</small><p>PancakeSwap / toàn BSC</p></div><strong>−37,6 điểm · A → C</strong></header><ol><li class="is-start"><small>A · TRƯỚC</small><strong>74,0%</strong><span>27/06–11/07</span></li><li class="is-down"><small>B · SÓNG KHỐI LƯỢNG</small><strong>44,4%</strong><span>12/07–29/07</span></li><li class="is-down"><small>C · SÓNG PHÍ</small><strong>36,4%</strong><span>30/07–08/08</span></li></ol></article><article class="av-opp-series tone-good"><header><div><small>PHÍ PANCAKESWAP / NGÀY</small><p>trung vị gross fee</p></div><strong>×3,08 · B → C</strong></header><ol><li class="is-start"><small>A · TRƯỚC</small><strong>$202.808</strong><span>27/06–11/07</span></li><li class="is-down"><small>B · SÓNG KHỐI LƯỢNG</small><strong>$155.398</strong><span>12/07–29/07</span></li><li class="is-up"><small>C · SÓNG PHÍ</small><strong>$479.026</strong><span>30/07–08/08</span></li></ol></article></div>
+  <figcaption><span>Trung vị theo ngày, 27/06–08/08/2026. Hai hàng khác đơn vị; không đọc khoảng cách hình học như một tỷ lệ chung. @BLOCKPINNED</span><span>neo vào claim <a href="#C1">C1</a></span></figcaption>
+  <details class="article-viz-data"><summary>Dữ&nbsp;liệu đứng sau hình <span>mở bảng ↓</span></summary><div class="bang"><table><thead><tr><th>giai đoạn</th><th>THỊ PHẦN VOLUME</th><th>PHÍ PANCAKESWAP / NGÀY</th></tr></thead><tbody><tr><td>A · TRƯỚC — 27/06–11/07</td><td>74,0%</td><td>$202.808</td></tr><tr><td>B · SÓNG KHỐI LƯỢNG — 12/07–29/07</td><td>44,4%</td><td>$155.398</td></tr><tr><td>C · SÓNG PHÍ — 30/07–08/08</td><td>36,4%</td><td>$479.026</td></tr></tbody></table></div></details>
+</figure>
 <h2 id="ba-giai-doan-do-bang-trung-vi-theo-ngay">Ba giai đoạn, đo bằng trung vị theo ngày</h2>
 <p>Trung vị chứ không phải tổng, để một ngày đột biến không kéo cả cụm. Ngày 02/08 là một ngày như vậy: phí 1.294.920 đô, gấp 2,7&nbsp;lần ngày kề bên.</p>
 <div class="bang"><table><thead><tr><th>trung vị/ngày</th><th>A. trước (27/06–11/07)</th><th>B. sóng khối lượng (12/07–29/07)</th><th>C. sóng phí (30/07–08/08)</th></tr></thead><tbody><tr><td>volume DEX cả chain BSC</td><td>674 triệu đô</td><td><strong>1,02 tỷ</strong> (+51%)</td><td><strong>1,77 tỷ</strong></td></tr><tr><td>volume PancakeSwap</td><td>491 triệu đô</td><td><strong>477 triệu</strong> (−3%)</td><td>630 triệu</td></tr><tr><td><strong>thị phần PancakeSwap</strong></td><td><strong>74,0%</strong></td><td><strong>44,4%</strong></td><td><strong>36,4%</strong></td></tr><tr><td>phí PancakeSwap</td><td>202.808 đô</td><td><strong>155.398</strong> (−23%)</td><td><strong>479.026</strong> (×3,08 so với B)</td></tr><tr><td>phí trên mỗi đô volume</td><td>4,07 bps</td><td>3,47 bps</td><td><strong>7,36 bps</strong></td></tr></tbody></table></div>
@@ -1971,6 +1999,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <h2 id="volume-doi-cho-khong-phai-nhieu-them">Volume dời chỗ, không phải nhiều thêm</h2>
 <p>Trên v3 mỗi pool có một mức phí riêng, từ 0,01% cho cặp lớn tới 1% cho token biến động mạnh. Cùng một đô volume thì mức phí danh nghĩa chênh nhau tới 100&nbsp;lần.</p>
 <div class="bang"><table><thead><tr><th>tỷ trọng volume v3</th><th>A. trước</th><th>B. sóng khối lượng</th><th>C. sóng phí</th></tr></thead><tbody><tr><td>mức 0,01%</td><td>75,76%</td><td><strong>86,62%</strong></td><td>80,22%</td></tr><tr><td>mức 0,05%</td><td>21,28%</td><td>11,56%</td><td>10,02%</td></tr><tr><td>mức 0,25%</td><td>2,18%</td><td>1,34%</td><td><strong>7,45%</strong></td></tr><tr><td>mức 1,00%</td><td>0,77%</td><td>0,48%</td><td><strong>2,31%</strong></td></tr><tr><td><strong>tổng nhóm ≥ 0,25%</strong></td><td><strong>2,95%</strong></td><td><strong>1,81%</strong></td><td><strong>9,76%</strong></td></tr><tr><td>quy ra đô, cả giai đoạn</td><td>146 triệu</td><td>131 triệu</td><td><strong>517 triệu</strong></td></tr><tr><td>phí trên mỗi đô volume v3</td><td>3,14 bps</td><td>2,25 bps</td><td><strong>5,47 bps</strong></td></tr></tbody></table></div>
+<figure class="article-viz article-viz-comparison" id="visual-mix-pool-doi-gia-phi" data-spotlight>
+  <div class="article-viz-head"><p>PANCAKESWAP V3 · CÙNG CÁCH TÍNH</p><h3>Volume dời sang pool đắt hơn, phí trên mỗi đô tăng 2,43&nbsp;lần</h3></div>
+  <div class="av-compare" role="img" aria-label="So sánh giai đoạn B và C của PancakeSwap v3 trên BSC. Tỷ trọng volume ở tier 0,25 và 1 phần trăm tăng từ 1,81 lên 9,76 phần trăm, còn phí trên mỗi đô volume tăng từ 2,25 lên 5,47 bps."><div class="av-compare-input"><small>ĐẦU VÀO GIỮ NGUYÊN</small><strong>volume v3 theo pool · fee tier từ PoolCreated</strong></div><div class="av-compare-grid"><article class="av-compare-side tone-info"><p>B · SÓNG KHỐI LƯỢNG</p><div class="av-compare-facts"><span><small>tier 0,01%</small><strong>86,62%</strong></span><span><small>tier ≥0,25%</small><strong>1,81%</strong></span></div><div class="av-compare-scale"><small>USD ở tier ≥0,25%</small><strong>$131M</strong></div><div class="av-compare-result"><small>PHÍ / MỖI ĐÔ</small><strong>2,25 bps</strong><p>Volume tăng nhưng dồn vào pool rẻ nhất.</p></div></article><div class="av-compare-gap"><strong>×2,43</strong><small>fee-yield</small></div><article class="av-compare-side tone-good"><p>C · SÓNG PHÍ</p><div class="av-compare-facts"><span><small>tier 0,01%</small><strong>80,22%</strong></span><span><small>tier ≥0,25%</small><strong>9,76%</strong></span></div><div class="av-compare-scale"><small>USD ở tier ≥0,25%</small><strong>$517M</strong></div><div class="av-compare-result"><small>PHÍ / MỖI ĐÔ</small><strong>5,47 bps</strong><p>Nhóm tier cao lớn gấp 5,39&nbsp;lần về tỷ trọng.</p></div></article></div></div>
+  <figcaption><span>Dune, 12/07–29/07 so với 30/07–08/08/2026. Fee tier lấy từ log PoolCreated; hai giai đoạn dùng cùng pipeline. @BLOCKPINNED</span><span>neo vào claim <a href="#C2">C2</a></span></figcaption>
+  <details class="article-viz-data"><summary>Dữ&nbsp;liệu đứng sau hình <span>mở bảng ↓</span></summary><div class="bang"><table><thead><tr><th>thang</th><th>tham số</th><th>hệ số</th><th>kết quả</th></tr></thead><tbody><tr><td>B · SÓNG KHỐI LƯỢNG</td><td>tier 0,01%: 86,62% · tier ≥0,25%: 1,81%</td><td>$131M</td><td>2,25 bps</td></tr><tr><td>C · SÓNG PHÍ</td><td>tier 0,01%: 80,22% · tier ≥0,25%: 9,76%</td><td>$517M</td><td>5,47 bps</td></tr></tbody></table></div></details>
+</figure>
 <p>Ở giai đoạn B, tỷ trọng nhóm phí cao <strong>giảm</strong> còn 1,81% trong khi mức 0,01% tăng lên 86,62%. Volume v3 tăng 20% mà phí thu được giảm 14%. Ở giai đoạn C, tỷ trọng nhóm phí cao tăng 5,4&nbsp;lần.</p>
 <p>Câu hỏi đầu tiên phải hỏi khi một chỉ số nhảy gấp đôi đúng một ngày rồi ở đó: có phải nguồn dữ&nbsp;liệu vừa đổi cách tính không. Kiểm bằng v2, vì mức phí của nó cố định 0,25% nên nếu công thức đổi thì tỷ lệ phí trên volume của v2 phải đổi theo. Đo ba giai đoạn, nó đứng yên ở <strong>25,5 rồi 26,5 rồi 25,8 bps</strong>.</p>
 <h2 id="mot-pool-1-va-khong-mot-cake-emissions-nao">Một pool 1% và không một CAKE emissions nào</h2>

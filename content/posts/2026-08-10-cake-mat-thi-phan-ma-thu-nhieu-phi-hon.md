@@ -9,11 +9,14 @@ mo_ta: Thị phần volume của PancakeSwap trên BSC đi từ 74,0% xuống 36
 anh: card-cake-thi-phan-phi-muc.png
 kenh_x: https://x.com/blockpinned/status/2086712976091046317
 doc_lai: Số của tuần đang chạy trôi cho tới lúc lệnh đốt tuần thực thi, nên nó là mức sàn chứ không phải con số cuối. Ba giai đoạn đã đóng thì giữ nguyên, với điều kiện DefiLlama không tính lại lịch sử và Dune không sửa bảng dex.trades. Giá CAKE và BNB là ảnh chụp theo giờ đã ghi.
+reading_layout: centered
 ---
 
 **Thị phần volume của PancakeSwap trên BSC đi một mạch từ 74,0% xuống 36,4% qua ba giai đoạn của sáu tuần. Cùng lúc đó, phí giao dịch tạo ra trên sàn tăng 3,1 lần. Hai đường này không mâu thuẫn: volume dời từ pool mức phí 0,01% sang pool mức phí 0,25% và 1%.**
 
 Nhưng phần tới được token thì không tăng theo kịp. Gross fee tăng 3,1 lần, lượng CAKE bị đốt từ nguồn phí chỉ tăng 1,4 lần, và tỷ lệ chuyển hoá giữa hai đại lượng đó rơi từ khoảng 47% xuống 21%.
+
+{{visual:thi-phan-phi-nguoc-huong}}
 
 ## Ba giai đoạn, đo bằng trung vị theo ngày
 
@@ -48,6 +51,8 @@ Trên v3 mỗi pool có một mức phí riêng, từ 0,01% cho cặp lớn tớ
 | **tổng nhóm ≥ 0,25%** | **2,95%** | **1,81%** | **9,76%** |
 | quy ra đô, cả giai đoạn | 146 triệu | 131 triệu | **517 triệu** |
 | phí trên mỗi đô volume v3 | 3,14 bps | 2,25 bps | **5,47 bps** |
+
+{{visual:mix-pool-doi-gia-phi}}
 
 Ở giai đoạn B, tỷ trọng nhóm phí cao **giảm** còn 1,81% trong khi mức 0,01% tăng lên 86,62%. Volume v3 tăng 20% mà phí thu được giảm 14%. Ở giai đoạn C, tỷ trọng nhóm phí cao tăng 5,4 lần.
 

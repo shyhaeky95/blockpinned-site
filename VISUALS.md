@@ -20,7 +20,25 @@ Builder chặn id trùng, marker/config lệch, claim nguồn không tồn tại
 dữ liệu rỗng và trường hợp renderer làm rơi hình/bảng. Bản rollback D2 tự hạ visual
 thành bảng đầy đủ.
 
-## Sáu template
+## Ghép thành một bài
+
+Primitive chỉ là từ vựng. Mỗi bài vẫn cần một bố cục riêng theo bốn vai trò:
+
+1. **ORIENT** — cho thấy cỗ máy hoặc mâu thuẫn tổng thể;
+2. **EXPLAIN** — mở cơ chế bằng quan hệ, thứ tự hoặc phép cộng/trừ;
+3. **PROVE** — đặt lớp bằng chứng đỡ kết luận;
+4. **RECAP** — quay lại đúng khung ORIENT và mở các nhánh đã giải, không dựng một
+   ontology thứ hai ở cuối bài.
+
+Primer mặc định 3–5 visual; bài điều tra dài 2–4; Fact 0–1. Đây là liều để kiểm nhịp,
+không phải quota. Một khối prose bọc trong card không thành visual nếu nó không cho thấy
+quan hệ, độ lớn, thứ tự, nhịp, phân bổ hoặc điểm gãy.
+
+Mỗi bài có đúng một **visual signature** sống được khi bị screenshot rời: claim hẹp,
+phạm vi đo, mốc và `@BLOCKPINNED`. Mobile 360/390/430px là bố cục khác, không phải bản
+desktop bị thu nhỏ; bảng dữ liệu gốc và light/dark luôn phải còn đọc được.
+
+## Bảy template
 
 ### `comparison` — cùng đầu vào, hai thang hoặc hai trạng thái
 
@@ -52,6 +70,41 @@ có đúng hai fact để người đọc thấy tham số làm kết quả đ�
       "facts": [{"label": "tham số 1", "value": "8"}, {"label": "tham số 2", "value": "8"}],
       "scale_label": "hệ số", "scale": "10³⁶", "result_label": "kết quả", "result": "$269 nghìn tỷ",
       "note": "Vì sao kết quả đổi.", "tone": "bad"
+    }
+  ]
+}
+```
+
+### `opposite-direction` — cùng mốc, hai chuỗi đi ngược hướng ròng
+
+Dùng khi cùng một tập giai đoạn làm một đại lượng giảm còn đại lượng kia tăng. Hai chuỗi
+được vẽ trên **hai hàng riêng** vì khác đơn vị; visual chỉ nối hướng giữa các mốc, không
+giả vờ rằng chúng dùng chung một trục. Bắt buộc đúng hai chuỗi, 3–6 mốc, và hai delta
+đầu→cuối phải trái dấu. Nếu không trái dấu thì dùng `timeline` hoặc bảng.
+
+```json
+{
+  "id": "hai-duong-nguoc",
+  "type": "opposite-direction",
+  "title": "Thị phần giảm, phí tăng",
+  "aria": "Qua ba giai đoạn, thị phần giảm còn phí mỗi ngày tăng; mỗi chuỗi dùng đơn vị riêng.",
+  "caption": "Trung vị/ngày; hai hàng không dùng chung thang đo.",
+  "claims": ["C1"],
+  "stages": [
+    {"label": "A · TRƯỚC", "note": "27/06–11/07"},
+    {"label": "B · SÓNG KHỐI LƯỢNG", "note": "12/07–29/07"},
+    {"label": "C · SÓNG PHÍ", "note": "30/07–08/08"}
+  ],
+  "series": [
+    {
+      "label": "THỊ PHẦN VOLUME", "note": "PancakeSwap / toàn BSC",
+      "summary": "−37,6 điểm", "tone": "bad",
+      "values": [{"value": 74, "hien": "74,0%"}, {"value": 44.4, "hien": "44,4%"}, {"value": 36.4, "hien": "36,4%"}]
+    },
+    {
+      "label": "PHÍ / NGÀY", "note": "trung vị gross fee",
+      "summary": "×2,36 từ A → C", "tone": "good",
+      "values": [{"value": 202808, "hien": "$202.808"}, {"value": 155398, "hien": "$155.398"}, {"value": 479026, "hien": "$479.026"}]
     }
   ]
 }
@@ -182,12 +235,13 @@ Màu hợp lệ: `accent`, `good`, `warn`, `bad`, `info`, `muted`. Màu chỉ gi
 - Có một tổng chia thành vài trạng thái: `distribution`.
 - Có nhiều con số cho CÙNG một đại lượng, không cộng lại thành tổng: `dai`.
 - Có cùng đầu vào nhưng hai bộ tham số/trạng thái cho hai kết quả: `comparison`.
+- Có cùng 3–6 mốc nhưng hai đại lượng khác đơn vị đi ngược hướng ròng: `opposite-direction`.
 - Chỉ có một con số hoặc bảng đã đủ rõ: không ép thành visual.
 
-🔵 **Chỗ bộ template CÒN THIẾU, khai ra để lượt sau không phải tìm lại (12/08):** chưa
-khuôn nào chở được *"cùng một chuỗi, hai cửa sổ đo, hai chiều NGƯỢC nhau"* — thứ cần một
-cặp mũi tên trên cùng trục. `dai` vẽ được bốn chấm nhưng đánh rơi chiều, mà chiều mới là
-điều đáng nói. Bài HYPE 12/08 để mục đó ở dạng bảng chứ không ép thành hình.
+🔵 `opposite-direction` đóng đúng nợ *"cùng mốc, hai chiều ngược nhau"* bằng pilot CAKE
+14/08. Roadmap vẫn còn ba năng lực chưa có primitive thật: `system-map`, `waterfall` và
+`time-series` liên tục. Không đổi tên `timeline` thành time-series để đánh dấu hoàn thành:
+một chuỗi cột sự kiện không phải một đường thời gian liên tục.
 
 Một bài dài thường chỉ cần 2–4 visual, đặt sau đoạn đã giải thích dữ liệu. Visual tóm
 tắt lập luận; nó không thay claim, caption phạm vi hay bảng kiểm.
