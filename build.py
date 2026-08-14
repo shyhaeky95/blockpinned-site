@@ -180,6 +180,9 @@ LOGO_TOKEN = {
     # với mọi thứ không phải PNG, nên để nguyên .jpg là chặn build ở lượt sau.
     "HYPE":   ("token-hype.png",   "coingecko 50882/hyperliquid.jpg → png",    "2026-08-10"),
     "MORPHO": ("token-morpho.png", "coingecko 29837/Morpho-token-icon.png",    "2026-08-13"),
+    # 🔴 Bản gốc là JPEG (coin id `pump-fun`), đổi sang PNG bằng `sips` lúc tải — cùng
+    # lý do đã ghi ở HYPE: `kich_thuoc_png()` đọc IHDR và NỔ với mọi thứ không phải PNG.
+    "PUMP":   ("token-pump.png",   "coingecko 67164/pump.jpg → png",           "2026-08-14"),
 }
 
 NGUON_ASSET = {
@@ -190,6 +193,18 @@ NGUON_ASSET = {
     # Số trên ảnh ($269 ↔ $269 nghìn tỷ) là hai vế của cùng một đại lượng, lấy từ
     # `Crypto Research/MORPHO/data/frozen_market_origin_2026-08-04.json` khối `B_PAXG`.
     "card-morpho-oracle-thang.png": "png",
+    # bài PUMP 14/08 — cùng đường đi có chủ như card MORPHO: nguồn
+    # `template/card-pump-unlock-057.html` (chép từ `template/card-v2.html`, chỉ thay
+    # các ô `data-o`), render bằng `template/render_card_v2.py` ⇒ QUA `card_gate` và
+    # qua cổng tràn khung. `card_gate` đã NỔ một lần khi dựng (dải tham chiếu 227 ký
+    # tự > trần 200) và được sửa bằng cách rút chữ, không gỡ cổng.
+    # 🔴 Hai vế trên ảnh (0,49% ↔ 9,54%) là CÙNG một đại lượng — lượng đã bán của lượt
+    # phát 14/07 ở hai cách đếm. Tỉ số 187 lần cố ý KHÔNG lên hai ô số, vì nó là đại
+    # lượng khác và mẫu số của nó là một giả định chia đều; nó nằm ở dải tham chiếu,
+    # nơi đủ chữ để nói "năng lực mua BÌNH QUÂN".
+    # Số lấy từ `Crypto Research/PUMP/data/pump_cohort_ban_that_2026-08-13.json` và
+    # `pump_cuc_time_profile_2026-08-13.json`.
+    "card-pump-unlock-057.png": "png",
     "favicon-16.png":  "logo/final",
     "favicon-32.png":  "logo/final",
     "avatar-800.png":  "logo/final",
@@ -305,7 +320,7 @@ def inline(s: str, o: str) -> str:
 
 RE_VISUAL = re.compile(r"^\{\{visual:([a-z0-9-]+)\}\}$")
 VISUAL_TYPES = {"flow", "proof", "timeline", "distribution", "dai", "comparison",
-                "opposite-direction"}
+                "opposite-direction", "system-map", "waterfall"}
 # `dai` thêm 12/08. Bốn khuôn kia đều giả định các mục là những thứ KHÁC NHAU — chặng
 # nối tiếp, vòng kiểm, mốc thời gian, nhóm cộng thành tổng. Không khuôn nào chở được
 # hình dạng "CÙNG MỘT đại lượng, nhiều con số cùng hợp lệ, rải trên một trục" — mà đó
@@ -337,6 +352,16 @@ def _hien_dai(x: dict) -> str:
 
 def _du_lieu_visual(v: dict) -> tuple[list[str], list[list[str]]]:
     """Một cấu hình sinh CẢ visual lẫn bảng kiểm — không có bản số thứ hai để trôi."""
+    if v["type"] == "system-map":
+        edges = v["edges"]
+        return (["tầng", "nút", "vai trò", "đường ra"],
+                [[lane["label"], node["value"], node["note"],
+                  " · ".join(e["label"] for e in edges if e["from"] == node["id"]) or "—"]
+                 for lane in v["lanes"] for node in lane["nodes"]])
+    if v["type"] == "waterfall":
+        ten = {"start": "đầu kỳ", "change": "thay đổi", "total": "kết quả"}
+        return (["vai trò", "dòng", "giá trị", "đọc là"],
+                [[ten[x["kind"]], x["label"], x["hien"], x["note"]] for x in v["items"]])
     if v["type"] == "comparison":
         return (["thang", "tham số", "hệ số", "kết quả"],
                 [[x["label"], " · ".join(f'{f["label"]}: {f["value"]}' for f in x["facts"]),
@@ -364,7 +389,7 @@ def _du_lieu_visual(v: dict) -> tuple[list[str], list[list[str]]]:
             [[x["label"], str(x["count"]), x["note"]] for x in v["segments"]])
 
 
-def render_visual(v: dict) -> str:
+def render_visual(v: dict, show_claim_refs: bool = True) -> str:
     headers, rows = _du_lieu_visual(v)
     bang_html = _bang_visual(headers, rows)
     # D2 là đường rollback: không mượn CSS v3, nhưng dữ liệu không được biến mất.
@@ -373,7 +398,41 @@ def render_visual(v: dict) -> str:
         return bang_html
 
     vid, loai = v["id"], v["type"]
-    if loai == "comparison":
+    if loai == "system-map":
+        lane_html = []
+        for n, lane in enumerate(v["lanes"], 1):
+            nodes = "".join(
+                f'<article class="av-system-node tone-{node.get("tone", "accent")}">'
+                f'<span>{ihtml.escape(node["label"])}</span>'
+                f'<strong>{ihtml.escape(node["value"])}</strong>'
+                f'<small>{ihtml.escape(node["note"])}</small></article>'
+                for node in lane["nodes"])
+            lane_html.append(
+                f'<section class="av-system-lane"><header><b>{n:02d}</b><div>'
+                f'<span>{ihtml.escape(lane["label"])}</span>'
+                f'<small>{ihtml.escape(lane["note"])}</small></div></header>{nodes}</section>')
+        edge_html = "".join(
+            f'<li><code>{ihtml.escape(e["from"])}</code><i aria-hidden="true">→</i>'
+            f'<code>{ihtml.escape(e["to"])}</code><span>{ihtml.escape(e["label"])}</span></li>'
+            for e in v["edges"])
+        than = (f'<div class="av-system" role="img" '
+                f'aria-label="{ihtml.escape(v["aria"], quote=True)}">'
+                f'<div class="av-system-lanes">{"".join(lane_html)}</div>'
+                f'<ol class="av-system-edges" aria-label="Quan hệ giữa các tầng">{edge_html}</ol></div>')
+    elif loai == "waterfall":
+        lon = max(abs(float(x["value"])) for x in v["items"])
+        item_html = []
+        for x in v["items"]:
+            rong = max(8.0, abs(float(x["value"])) / lon * 100)
+            item_html.append(
+                f'<li class="is-{x["kind"]} tone-{x.get("tone", "accent")}">'
+                f'<span>{ihtml.escape(x["label"])}</span>'
+                f'<div><i style="--w:{rong:.2f}%"></i></div>'
+                f'<strong>{ihtml.escape(x["hien"])}</strong>'
+                f'<small>{ihtml.escape(x["note"])}</small></li>')
+        than = (f'<ol class="av-waterfall" role="img" '
+                f'aria-label="{ihtml.escape(v["aria"], quote=True)}">{"".join(item_html)}</ol>')
+    elif loai == "comparison":
         ben = []
         for x in v["sides"]:
             # Số dài chỉ được ngắt ở dấu phân nhóm, không bẻ giữa một cụm chữ số.
@@ -478,17 +537,27 @@ def render_visual(v: dict) -> str:
             "".join(f'<span class="tone-{x.get("tone", "accent")}"><i></i><b>{x["count"]}</b>'
                     f'<small>{ihtml.escape(x["label"])}</small></span>' for x in v["segments"]))
 
-    claims = " · ".join(f'<a href="#{ihtml.escape(cid, quote=True)}">{ihtml.escape(cid)}</a>'
-                         for cid in v["claims"])
+    if show_claim_refs:
+        claims = " · ".join(
+            f'<a href="#{ihtml.escape(cid, quote=True)}">{ihtml.escape(cid)}</a>'
+            for cid in v["claims"])
+        scope = f'<span>neo vào claim {claims}</span>'
+    else:
+        # Primer là mặt public dành cho người đọc, không phải giao diện
+        # của desk. Provenance nội bộ vẫn nằm trong cấu hình và đi qua
+        # `cong_visuals`; chỉ con trỏ file/claim không được lọ ra caption.
+        scope = (f'<span class="article-viz-scope">'
+                 f'{ihtml.escape(v["public_scope"])}</span>')
     return f'''<figure class="article-viz article-viz-{loai}" id="visual-{vid}" data-spotlight>
   <div class="article-viz-head"><p>{ihtml.escape(v.get("eyebrow", loai).upper())}</p><h3>{ihtml.escape(v["title"])}</h3></div>
   {than}
-  <figcaption><span>{ihtml.escape(v["caption"])}</span><span>neo vào claim {claims}</span></figcaption>
+  <figcaption><span>{ihtml.escape(v["caption"])}</span>{scope}</figcaption>
   <details class="article-viz-data"><summary>Dữ liệu đứng sau hình <span>mở bảng ↓</span></summary>{bang_html}</details>
 </figure>'''
 
 
-def render(md: str, o: str, visuals: list | None = None) -> str:
+def render(md: str, o: str, visuals: list | None = None,
+           show_claim_refs: bool = True) -> str:
     visual_map = {v["id"]: v for v in (visuals or [])}
     lines, out, i = md.split("\n"), [], 0
     while i < len(lines):
@@ -502,7 +571,7 @@ def render(md: str, o: str, visuals: list | None = None) -> str:
         if vm:
             if vm.group(1) not in visual_map:
                 raise LoiCong(f"visual '{vm.group(1)}' có marker nhưng thiếu cấu hình — {o}")
-            out.append(render_visual(visual_map[vm.group(1)])); i += 1; continue
+            out.append(render_visual(visual_map[vm.group(1)], show_claim_refs)); i += 1; continue
 
         if ln.startswith("```"):                                    # khối code
             lang_ = ln[3:].strip()
@@ -524,6 +593,21 @@ def render(md: str, o: str, visuals: list | None = None) -> str:
             out.append(f"<h3>{inline(ln[4:].strip(), o)}</h3>"); i += 1; continue
         if ln.startswith("# "):
             raise LoiCong(f"'# ' không dùng trong thân bài (tiêu đề lấy từ front matter) — {o}")
+
+        if ln.startswith(">"):
+            quote = []
+            while i < len(lines) and lines[i].startswith(">"):
+                quote.append(lines[i][1:].lstrip())
+                i += 1
+            doan, hien_tai = [], []
+            for q in quote + [""]:
+                if q:
+                    hien_tai.append(q)
+                elif hien_tai:
+                    doan.append(" ".join(hien_tai)); hien_tai = []
+            out.append('<blockquote class="trich">' +
+                       "".join(f"<p>{inline(p, o)}</p>" for p in doan) + "</blockquote>")
+            continue
 
         if ln.strip() == "---":
             out.append("<hr>"); i += 1; continue
@@ -555,7 +639,11 @@ def render(md: str, o: str, visuals: list | None = None) -> str:
         while i < len(lines) and lines[i].strip() and not re.match(
                 r"^(```|#{1,3}\s|\||-\s|\d+\.\s|---$|\{\{visual:)", lines[i].lstrip()):
             para.append(lines[i]); i += 1
-        out.append(f'<p>{inline(" ".join(x.strip() for x in para), o)}</p>')
+        van = inline(" ".join(x.strip() for x in para), o)
+        if para[0].startswith(("🔴", "⚠️")):
+            out.append(f'<div class="chan"><p>{van}</p></div>')
+        else:
+            out.append(f'<p>{van}</p>')
 
     return "\n".join(out)
 
@@ -669,6 +757,75 @@ def cong_visuals(body: str, visuals, claims: list, o: str) -> None:
                 bien.append(float(values[-1]["value"]) - float(values[0]["value"]))
             if not bien[0] or not bien[1] or bien[0] * bien[1] >= 0:
                 raise LoiCong(f"visual {vid} cần hai chuỗi có hướng ròng NGƯỢC nhau — {o}")
+            continue
+        if v["type"] == "system-map":
+            lanes = v.get("lanes")
+            if not isinstance(lanes, list) or not 3 <= len(lanes) <= 5:
+                raise LoiCong(f"visual {vid}.lanes phải có 3–5 tầng — {o}")
+            node_ids, node_lane = [], {}
+            for lane_n, lane in enumerate(lanes):
+                if (not isinstance(lane, dict) or not lane.get("label")
+                        or not lane.get("note")):
+                    raise LoiCong(f"visual {vid}.lanes mỗi tầng cần label/note — {o}")
+                nodes = lane.get("nodes")
+                if not isinstance(nodes, list) or not 1 <= len(nodes) <= 3:
+                    raise LoiCong(f"visual {vid}.lanes.nodes phải có 1–3 nút — {o}")
+                for node in nodes:
+                    if not isinstance(node, dict):
+                        raise LoiCong(f"visual {vid}.lanes.nodes phải chứa object — {o}")
+                    thieu = sorted(k for k in ("id", "label", "value", "note")
+                                  if node.get(k) in (None, ""))
+                    if thieu:
+                        raise LoiCong(f"visual {vid}.lanes.nodes thiếu {thieu} — {o}")
+                    nid = str(node["id"])
+                    if not re.fullmatch(r"[a-z0-9-]+", nid):
+                        raise LoiCong(f"visual {vid} có id nút sai dạng: {nid!r} — {o}")
+                    if node.get("tone", "accent") not in VISUAL_TONES:
+                        raise LoiCong(f"visual {vid} có tone lạ {node.get('tone')!r} — {o}")
+                    node_ids.append(nid); node_lane[nid] = lane_n
+            if len(node_ids) != len(set(node_ids)):
+                raise LoiCong(f"visual {vid} có id nút trùng — {o}")
+            edges = v.get("edges")
+            if not isinstance(edges, list) or not len(lanes) - 1 <= len(edges) <= 10:
+                raise LoiCong(f"visual {vid}.edges phải có {len(lanes) - 1}–10 quan hệ — {o}")
+            pairs, touched = [], set()
+            for edge in edges:
+                if (not isinstance(edge, dict)
+                        or any(not edge.get(k) for k in ("from", "to", "label"))):
+                    raise LoiCong(f"visual {vid}.edges mỗi quan hệ cần from/to/label — {o}")
+                a, b = str(edge["from"]), str(edge["to"])
+                if a not in node_lane or b not in node_lane:
+                    raise LoiCong(f"visual {vid}.edges trỏ tới nút không tồn tại: {a} → {b} — {o}")
+                if node_lane[a] >= node_lane[b]:
+                    raise LoiCong(f"visual {vid}.edges phải đi tới tầng sau: {a} → {b} — {o}")
+                pairs.append((a, b)); touched.update((a, b))
+            if len(pairs) != len(set(pairs)):
+                raise LoiCong(f"visual {vid} có quan hệ trùng — {o}")
+            bo_quen = sorted(set(node_ids) - touched)
+            if bo_quen:
+                raise LoiCong(f"visual {vid} có nút không tham gia quan hệ: {bo_quen} — {o}")
+            continue
+        if v["type"] == "waterfall":
+            items = v.get("items")
+            if not isinstance(items, list) or not 3 <= len(items) <= 8:
+                raise LoiCong(f"visual {vid}.items phải có 3–8 dòng — {o}")
+            if any(not isinstance(x, dict) for x in items):
+                raise LoiCong(f"visual {vid}.items phải chứa object — {o}")
+            if items[0].get("kind") != "start" or items[-1].get("kind") != "total" \
+                    or any(x.get("kind") != "change" for x in items[1:-1]):
+                raise LoiCong(f"visual {vid} phải theo thứ tự start → change → total — {o}")
+            for x in items:
+                thieu = sorted(k for k in ("label", "hien", "note", "value", "kind")
+                              if x.get(k) in (None, ""))
+                if thieu:
+                    raise LoiCong(f"visual {vid}.items thiếu {thieu} — {o}")
+                if isinstance(x["value"], bool) or not isinstance(x["value"], (int, float)):
+                    raise LoiCong(f"visual {vid}.items value phải là SỐ — {o}")
+                if x.get("tone", "accent") not in VISUAL_TONES:
+                    raise LoiCong(f"visual {vid} có tone lạ {x.get('tone')!r} — {o}")
+            tinh = float(items[0]["value"]) + sum(float(x["value"]) for x in items[1:-1])
+            if abs(tinh - float(items[-1]["value"])) > 1e-8:
+                raise LoiCong(f"visual {vid} không khép số: {tinh:g} ≠ {items[-1]['value']} — {o}")
             continue
         khoa = {"timeline": "events", "distribution": "segments", "dai": "diem",
                 "comparison": "sides"}.get(v["type"], "steps")
@@ -1818,7 +1975,7 @@ def font_face(goc: str) -> str:
 # chiều sâu. Token lạ ⇒ CHẶN build: thêm tên vào đây là một quyết định, không phải
 # một lượt gõ.
 TOKEN_TEN = {"UNI": "Uniswap", "LDO": "Lido", "HYPE": "Hyperliquid", "PENDLE": "Pendle",
-             "CAKE": "PancakeSwap", "MORPHO": "Morpho"}
+             "CAKE": "PancakeSwap", "MORPHO": "Morpho", "PUMP": "pump.fun"}
 
 # Tủ kính hiện mở cho ĐÚNG MỘT token, khai ở đây; toàn bộ nội dung trang sinh từ dữ
 # liệu, nên đổi dòng này là trang tự dựng lại cho token khác. Kèm SÀN: dưới 3 bài thì
@@ -1843,6 +2000,192 @@ MUC_DIEU_HUONG = [("", "Trang chủ"), ("bai/", "Bài viết"), ("token/", "Toke
                   ("track-record/", "Track record"), ("facts/", "Facts")]
 CO_TRANG = {"bai/": False, "facts/": False, "track-record/": False, "token/": False,
             TU_KINH_DUONG: False, "du-lieu/": False}
+
+# Primer không phải bài theo ngày và cũng không phải tủ claim của UNI. Nó có nguồn chữ
+# riêng trong `drafts/`, nhưng chỉ phần nằm giữa hai marker được phép đi ra web. Khi
+# mirror công khai dựng độc lập, `publish_site.py` vật chất hoá đúng phần đó thành
+# `content/primers/<id>.md`; builder kiểm cùng một sha256 ở cả hai đường.
+PRIMER_DIR = CONTENT / "primers"
+
+
+def _than_primer_tu_draft(raw: str, cfg: dict, o: str) -> str:
+    start, end = cfg.get("start_marker", ""), cfg.get("end_marker", "")
+    if not start or not end:
+        raise LoiCong(f"primer thiếu start_marker/end_marker — {o}")
+    lines = raw.splitlines()
+    dau = [n for n, line in enumerate(lines) if line.startswith(start)]
+    cuoi = [n for n, line in enumerate(lines) if line == end]
+    if len(dau) != 1 or len(cuoi) != 1 or dau[0] >= cuoi[0]:
+        raise LoiCong(f"marker THÂN BÀI primer phải khớp đúng một cặp có thứ tự — {o}")
+    body = "\n".join(lines[dau[0] + 1:cuoi[0]]).strip() + "\n"
+    if body == "\n":
+        raise LoiCong(f"marker primer khớp nhưng thân rỗng — FAIL lượt gọi, không phải bài rỗng — {o}")
+    return body
+
+
+def _chen_sau_mot_lan(body: str, anchor: str, chen: str, o: str) -> str:
+    n = body.count(anchor)
+    if n != 1:
+        raise LoiCong(f"anchor primer phải xuất hiện đúng 1 lần, hiện {n}: {anchor[:70]!r} — {o}")
+    return body.replace(anchor, anchor + "\n\n" + chen, 1)
+
+
+def doc_primers() -> list[dict]:
+    """Đọc cấu hình Primer và buộc chữ · visual · nguồn cùng chốt vào một bản."""
+    if not PRIMER_DIR.exists():
+        return []
+    ra, ids, paths, tokens = [], set(), set(), set()
+    for p in sorted(PRIMER_DIR.glob("*.json")):
+        o = f"content/primers/{p.name}"
+        try:
+            cfg = json.loads(p.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as e:
+            raise LoiCong(f"JSON primer hỏng — {o}: {e}") from e
+        bat_buoc = ("id", "token", "name", "title", "description", "pin", "edition", "lastmod",
+                    "draft", "body_sha256", "start_marker", "end_marker",
+                    "source_claims", "placements", "visuals", "recap_heading")
+        thieu = [k for k in bat_buoc if cfg.get(k) in (None, "", [])]
+        if thieu:
+            raise LoiCong(f"primer thiếu {thieu} — {o}")
+        pid, token = str(cfg["id"]), str(cfg["token"])
+        if not re.fullmatch(r"[a-z0-9-]+", pid) or not re.fullmatch(r"[A-Z0-9]+", token):
+            raise LoiCong(f"primer id/token sai dạng — {o}: {pid!r}/{token!r}")
+        path = f"token/{pid}/"
+        if pid in ids or path in paths or token in tokens:
+            raise LoiCong(f"primer trùng id/path/token — {o}")
+        ids.add(pid); paths.add(path); tokens.add(token)
+        draft_rel = pathlib.PurePosixPath(str(cfg["draft"]))
+        if draft_rel.is_absolute() or ".." in draft_rel.parts:
+            raise LoiCong(f"primer draft phải là đường tương đối nằm trong kho — {o}")
+        draft = ROOT.parent / pathlib.Path(*draft_rel.parts)
+        vat_chat = PRIMER_DIR / f"{pid}.md"
+        if draft.exists():
+            body = _than_primer_tu_draft(draft.read_text(encoding="utf-8"), cfg, o)
+            cfg["_body_source"] = str(draft_rel)
+        elif vat_chat.exists():
+            body = vat_chat.read_text(encoding="utf-8").strip() + "\n"
+            cfg["_body_source"] = f"content/primers/{pid}.md"
+        else:
+            raise LoiCong(f"primer thiếu cả draft riêng lẫn thân đã vật chất hoá — {o}")
+        got = hashlib.sha256(body.encode()).hexdigest()
+        if got != cfg["body_sha256"]:
+            raise LoiCong(f"primer body sha256 lệch: cấu hình {cfg['body_sha256']}, đọc được {got} — {o}")
+        if not body.startswith("# "):
+            raise LoiCong(f"primer phải bắt đầu bằng đúng một H1 — {o}")
+        h1, body = body.split("\n", 1)
+        if h1[2:].strip() != cfg["title"]:
+            raise LoiCong(f"title primer không trùng H1 trong draft — {o}")
+        body = body.lstrip()
+        boundary = "# 🔎 Lớp kiểm chứng"
+        if body.count(boundary) != 1:
+            raise LoiCong(f"primer phải có đúng một ranh giới '# 🔎 Lớp kiểm chứng' — {o}")
+        claims = cfg["source_claims"]
+        if (not isinstance(claims, list) or not claims
+                or any(not isinstance(c, dict) or not c.get("id") or not c.get("label")
+                       for c in claims)):
+            raise LoiCong(f"primer source_claims cần id/label — {o}")
+        # Kho gốc phải giữ đủ con trỏ desk để cổng provenance còn có
+        # thứ để kiểm. Mirror public được publisher chủ động lột trường
+        # `source`; khi đó thân đã vật chất hoá là nguồn đọc độc lập.
+        if draft.exists() and any(not c.get("source") for c in claims):
+            raise LoiCong(f"primer kho gốc source_claims cần source nội bộ — {o}")
+        claim_ids = [str(c["id"]) for c in claims]
+        if len(claim_ids) != len(set(claim_ids)) or any(
+                not re.fullmatch(r"[A-Za-z][A-Za-z0-9_.-]+", x) for x in claim_ids):
+            raise LoiCong(f"primer source_claims có id trùng hoặc sai dạng — {o}")
+        placements = cfg["placements"]
+        visuals = cfg["visuals"]
+        if not isinstance(placements, list) or not 3 <= len(visuals) <= 5:
+            raise LoiCong(f"primer cần 3–5 visual và placements dạng danh sách — {o}")
+        if any(not isinstance(v, dict) or not v.get("public_scope") for v in visuals):
+            raise LoiCong(f"primer visual cần public_scope thay cho con trỏ desk — {o}")
+        pids = []
+        for place in placements:
+            if not isinstance(place, dict) or not place.get("visual") or not place.get("after"):
+                raise LoiCong(f"primer placement cần visual/after — {o}")
+            pids.append(str(place["visual"]))
+            body = _chen_sau_mot_lan(body, str(place["after"]),
+                                      f'{{{{visual:{place["visual"]}}}}}', o)
+        vids = [str(v.get("id")) for v in visuals if isinstance(v, dict)]
+        if len(pids) != len(set(pids)) or set(pids) != set(vids):
+            raise LoiCong(f"primer placements và visuals không khớp — {o}")
+        # Draft là chủ nội dung; lớp web chỉ được phép thay đúng những chuỗi đã khai,
+        # kèm số lượt. Mục đích là đi qua từ điển public mà không lặng lẽ biên tập lại
+        # một bản 30 nghìn ký tự. Draft đổi một lượt là cổng count nổ và buộc xem lại.
+        for rep in cfg.get("web_replacements", []):
+            if (not isinstance(rep, dict) or not rep.get("from") or not rep.get("to")
+                    or not isinstance(rep.get("count"), int) or rep["count"] <= 0):
+                raise LoiCong(f"primer web_replacements cần from/to/count dương — {o}")
+            n = body.count(rep["from"])
+            if n != rep["count"]:
+                raise LoiCong(f"primer replacement {rep['from']!r} chờ {rep['count']} lượt, thấy {n} — {o}")
+            body = body.replace(rep["from"], rep["to"])
+        public_cfg = {k: cfg[k] for k in ("title", "description", "pin", "edition", "visuals")}
+        cong_ngon_ngu(body + "\n" + json.dumps(public_cfg, ensure_ascii=False), o)
+        cong_ngoi_xung(body, o)
+        cong_visuals(body, visuals, claims, o)
+        story, verify = body.split(boundary, 1)
+        if not story.strip() or not verify.strip():
+            raise LoiCong(f"primer có lớp KỂ hoặc VERIFY rỗng — {o}")
+        if story.count(cfg["recap_heading"]) != 1:
+            raise LoiCong(f"recap_heading primer phải khớp đúng một lần — {o}")
+        cfg.update(_path=path, _story=story.strip(), _verify=verify.strip(),
+                   _origin=o, _blockers=len(re.findall(r"^(?:🔴|⚠️)", body, re.M)))
+        CO_TRANG[path] = True
+        ra.append(cfg)
+    return ra
+
+
+def trang_primer(cfg: dict) -> str:
+    """Token Primer: mạch kể mở; lớp kiểm chứng có tên và đóng mặc định."""
+    o, visuals = cfg["_origin"], cfg["visuals"]
+    story = render(cfg["_story"], o, visuals, show_claim_refs=False).replace(
+        '<div class="cuon"><table>', '<div class="bang"><table>')
+    verify = render(cfg["_verify"], o, visuals, show_claim_refs=False).replace(
+        '<div class="cuon"><table>', '<div class="bang"><table>')
+    recap_id = slug(cfg["recap_heading"].removeprefix("## "))
+    recap_h2 = f'<h2 id="{recap_id}">'
+    if story.count(recap_h2) != 1:
+        raise LoiCong(f"renderer làm rơi heading RECAP của primer — {o}")
+    story = story.replace(
+        recap_h2,
+        f'<p class="primer-return"><a href="#visual-{cfg["visuals"][0]["id"]}">'
+        '↖ Quay lại bản đồ bốn tầng trước khi đọc phần kết</a></p>' + recap_h2, 1)
+    jump = []
+    for heading in re.findall(r"^##\s+(.+)$", cfg["_story"], re.M)[:4]:
+        jump.append(f'<a href="#{slug(heading)}">{ihtml.escape(re.sub(r"[*_`]", "", heading))}</a>')
+    than = f'''<section class="hero primer-hero">
+  <span class="ghost-num" aria-hidden="true">{ihtml.escape(cfg["token"])}</span>
+  <span class="hero-code" aria-hidden="true">TOKEN PRIMER · SYSTEM / CAPITAL / CAPTURE</span>
+  <div class="article-path" aria-label="Vị trí Token Primer"><a href="../../">BlockPinned</a><span>/</span><a href="../">Token</a><span>/</span><b>{ihtml.escape(cfg["token"])}</b></div>
+  <p class="eyebrow"><span>Token Primer · {ihtml.escape(cfg["token"])}</span><span class="im">đọc cỗ máy trước · đọc token sau</span></p>
+  <h1 class="display">{_tieu_de_nhan(cfg["title"])}</h1>
+  <p class="subline">{ihtml.escape(cfg["description"])}</p>
+  <div class="primer-pin"><span><b>GHIM TẠI</b>{ihtml.escape(cfg["pin"])}</span><span><b>BẢN NỘI DUNG</b>{ihtml.escape(cfg["edition"])}</span><span><b>LOẠI</b>Sống theo đối tượng, không theo ngày đăng</span></div>
+</section>
+<nav class="primer-nav" aria-label="Đường đọc Token Primer"><span>Đường đọc</span>{"".join(jump)}<a href="#lop-kiem-chung">Lớp kiểm chứng ↓</a></nav>
+<section class="than article-body article-body-centered primer-body" id="primer-story">
+  {story}
+  <details class="primer-verify" id="lop-kiem-chung">
+    <summary><span class="primer-verify-mark" aria-hidden="true">🔎</span><span class="primer-verify-copy"><small>VERIFY · CHỦ ĐỘNG MỞ</small><strong>Lớp kiểm chứng</strong><p>Từ đây trở xuống là phần để tự đo lại, không phải phần bắt buộc để hiểu cỗ máy Sky.</p></span><span class="primer-verify-toggle">Mở ↓</span></summary>
+    <div class="primer-verify-body">{verify}</div>
+  </details>
+</section>'''
+    cong_visual_html(than, visuals, o)
+    if '<details class="primer-verify" id="lop-kiem-chung" open' in than:
+        raise LoiCong(f"VERIFY primer phải đóng mặc định — {o}")
+    if than.count('class="chan"') != cfg["_blockers"]:
+        raise LoiCong(f"renderer làm rơi câu chặn inline của primer — {o}")
+    # Cổng này đo HTML đã render, không đo ý định trong CSS. Chỉ
+    # `display:none` thì con trỏ desk vẫn nằm trong source public và vẫn là leak.
+    private_refs = [str(c["id"]) for c in cfg["source_claims"]]
+    private_refs += [str(c.get("source", "")) for c in cfg["source_claims"] if c.get("source")]
+    leaked = [ref for ref in private_refs if ref and ref in than]
+    if leaked:
+        raise LoiCong(f"primer làm lộ con trỏ desk: {leaked} — {o}")
+    if "{{visual:" in than or "Không phải lời khuyên đầu tư." not in than or "@BLOCKPINNED" not in than:
+        raise LoiCong(f"primer làm rơi directive/disclaimer/chữ ký — {o}")
+    return than
 
 # Nút đổi nền. Trang KHÔNG phụ thuộc nó: mặc định đọc prefers-color-scheme của máy,
 # nút chỉ ghi đè và nhớ lựa chọn. Tắt JS thì mất nút, không mất nền tối.
@@ -2888,7 +3231,7 @@ def ban_do(so_bai: int, so_token: int, gt: list, facts: list, so_hien_vat: int) 
         for k, n, g, d in o if n) + "</nav>"
 
 
-def trang_muc_token(tk: dict) -> str:
+def trang_muc_token(tk: dict, primers: list[dict] | None = None) -> str:
     """Mục lục `/token/` — CẢ BỐN token, kể cả token chưa đủ sàn mở tủ kính.
 
     User 06/08 chốt giữ sàn 3 bài (chỉ UNI có tủ kính), nhưng thêm trang này, và lý do
@@ -2899,10 +3242,16 @@ def trang_muc_token(tk: dict) -> str:
     Token chưa đủ sàn KHÔNG được dựng một trang trống cho có: nó trỏ thẳng sang bài,
     và nói rõ còn thiếu mấy bài. Một trang một-bài chỉ là bản chép của bài đó.
     """
+    primers = primers or []
     if BO_CUC == "v3":
-        return trang_muc_token_v3(tk)
+        return trang_muc_token_v3(tk, primers)
 
-    hang = []
+    hang = [
+        f'<a class="cua-o tok primer" href="{ihtml.escape(p["id"], quote=True)}/">'
+        f'<span class="k">{ihtml.escape(p["token"])}</span><span class="t">{ihtml.escape(p["name"])}</span>'
+        f'<span class="n"><b>Primer</b><i></i><b>{len(p["visuals"])}</b> visual</span>'
+        f'<span class="g">{ihtml.escape(p["description"])}</span><span class="mui" aria-hidden="true">→</span></a>'
+        for p in primers]
     for ma, v in sorted(tk.items(), key=lambda x: (-x[1]["bai"], -x[1]["claim"])):
         co_tu = ma == TU_KINH and CO_TRANG[TU_KINH_DUONG]
         dich = f"{TU_KINH.lower()}/" if co_tu else f"../bai/{v['slug_moi']}/"
@@ -2925,14 +3274,14 @@ def trang_muc_token(tk: dict) -> str:
     tong_c = sum(v["claim"] for v in tk.values())
     return (f'<p class="crumb">Hồ sơ theo đối tượng</p>'
             f'<h1>BlockPinned đã đo được gì, xếp theo token</h1>'
-            f'<p class="dan">{len(tk)} token · {tong_b} bài · {tong_c} khẳng định. Token nào đủ '
+            f'<p class="dan">{len(tk)} token có bài · {len(primers)} Token Primer · {tong_b} bài · {tong_c} khẳng định. Token nào đủ '
             f'<b>{TU_KINH_SAN} bài</b> thì có một trang gom mọi câu về nó — mỗi câu giữ nguyên '
             f'trạng thái hiện tại, kể cả những câu đã bị bác bỏ. Token chưa đủ thì vào thẳng bài, '
             f'vì một trang dựng từ một bài chỉ là bản chép của bài đó.</p>'
             f'<div class="cua cua-3" data-hien>{"".join(hang)}</div>')
 
 
-def trang_muc_token_v3(tk: dict) -> str:
+def trang_muc_token_v3(tk: dict, primers: list[dict] | None = None) -> str:
     """Mục lục token bằng đúng component v3 mà CSS/JS production đang canh.
 
     Bản lật production 11/08 vẫn gọi khuôn D2 (`.cua/.cua-o`) trong khi v3 chỉ còn
@@ -2940,6 +3289,7 @@ def trang_muc_token_v3(tk: dict) -> str:
     rơi thành một dòng chữ nối liền — hỏng hình mà mọi cổng nội dung đều xanh. Khuôn
     này sinh hoàn toàn từ `tk`; mockup chỉ là hợp đồng trình bày, không phải nguồn số.
     """
+    primers = primers or []
     ds = sorted(tk.items(), key=lambda x: (-x[1]["bai"], -x[1]["claim"], x[0]))
     tong_b = sum(v["bai"] for _, v in ds)
     tong_c = sum(v["claim"] for _, v in ds)
@@ -3001,13 +3351,25 @@ def trang_muc_token_v3(tk: dict) -> str:
             f'<span class="token-card-go">Mở {v["bai"]} bài<i>→</i></span></a>')
 
     doc_phan_bo = ", ".join(f"{ma} {v['claim']}" for ma, v in ds)
+    primer_html = ""
+    if primers:
+        cards = "".join(
+            f'<a class="primer-index-card" href="{ihtml.escape(p["id"], quote=True)}/" '
+            f'data-token="{ihtml.escape(p["token"], quote=True)}"><small>TOKEN PRIMER · {ihtml.escape(p["token"])}</small>'
+            f'<i>{len(p["visuals"])} visual · VERIFY tách lớp</i><strong>{ihtml.escape(p["name"])} — đọc cỗ máy trước, đọc token sau</strong>'
+            f'<span>Mở Primer <i aria-hidden="true">→</i></span></a>' for p in primers)
+        primer_html = f'''<section class="primer-directory" aria-labelledby="primer-directory-title">
+  <div class="primer-directory-head"><div><p class="section-code">TOKEN PRIMERS</p><h2 id="primer-directory-title">Hồ sơ bắt đầu từ cỗ máy</h2></div><p>Primer không tính vào sổ claim của bài viết; nó gom mô hình kinh doanh, chính sách vốn và đường token capture trên một đường đọc.</p></div>
+  <div class="primer-index-grid">{cards}</div>
+</section>'''
     return f'''<section class="hero token-index-hero">
-  <span class="ghost-num" aria-hidden="true">{len(ds):02d}</span>
+  <span class="ghost-num" aria-hidden="true">{len(ds) + len(primers):02d}</span>
   <span class="hero-code" aria-hidden="true">OBJECT INDEX · COVERAGE MAP</span>
   <p class="eyebrow"><span>Hồ sơ theo đối tượng</span><span class="im">độ phủ nhìn được · trạng thái không bị giấu</span></p>
   <h1 class="display">BlockPinned đã đo được gì, <span class="nhan-manh">xếp theo token.</span></h1>
-  <p class="subline">{len(ds)} token · {tong_b} bài · {tong_c} khẳng định. Bấm một token để mở toàn bộ bài đã viết về nó — mỗi khẳng định giữ nguyên trạng thái hiện tại, kể cả những câu đã bị bác bỏ.</p>
+  <p class="subline">{len(ds)} token có bài · {len(primers)} Token Primer · {tong_b} bài · {tong_c} khẳng định. Primer đọc cỗ máy theo đối tượng; phần còn lại mở toàn bộ bài và trạng thái claim.</p>
 </section>
+{primer_html}
 <nav class="token-switcher" aria-label="Lọc nhanh theo token">
   <span class="token-switcher-label">Chọn đối tượng</span>{"".join(nut_nhanh)}
 </nav>
@@ -4719,6 +5081,7 @@ def main() -> None:
         shutil.rmtree(OUT)
     OUT.mkdir(parents=True, exist_ok=True)
     lap_asset()
+    primers = doc_primers()
 
     # 🔴 Thanh điều hướng dựng TRƯỚC trang đầu tiên, nên phải biết trước trang nào sẽ có.
     # Bản đầu định đọc sau vòng lặp — nhưng trang bài được ghi TRONG vòng lặp, tức nó sẽ
@@ -4745,7 +5108,7 @@ def main() -> None:
     CO_TRANG["bai/"] = bool([k for k in dem_token if k])
     # Mục lục token có mặt khi có BẤT KỲ token nào — nó là bản đồ, không phải tủ kính,
     # nên nó không có sàn. Sàn chỉ chặn việc MỞ MỘT TRANG RIÊNG cho token mỏng.
-    CO_TRANG["token/"] = bool([k for k in dem_token if k])
+    CO_TRANG["token/"] = bool([k for k in dem_token if k]) or bool(primers)
 
     bai, moi_claim, token_cua, khai_tc = [], [], {}, {}
 
@@ -4907,15 +5270,27 @@ def main() -> None:
     ds_tk = " · ".join(f"{m} {v['bai']} bài"
                        for m, v in sorted(tk.items(), key=lambda x: -x[1]["bai"]))
     html_token = trang(
-        "Token — hồ sơ theo đối tượng — BlockPinned", trang_muc_token(tk), t, "..",
+        "Token — hồ sơ theo đối tượng — BlockPinned", trang_muc_token(tk, primers), t, "..",
         muc="token/", mat="page-token-index",
         meta={"mo_ta": f"Mọi token BlockPinned đã đo, kèm số bài và số khẳng định của "
-                       f"từng cái: {ds_tk}. Token đủ {TU_KINH_SAN} bài thì có trang hồ sơ riêng.",
+                       f"từng cái: {ds_tk}; hiện có {len(primers)} Token Primer theo đối tượng.",
               "duong": "/token/", "anh": "avatar-800.png", "loai": "website",
               "tieu_de_og": "BlockPinned đã đo được gì, xếp theo token"})
     cong_bo_cuc(html_chu, html_token, len(bai), len(tk))
     (d_mt / "index.html").write_text(html_token, encoding="utf-8")
-    print(f"  ✓ token/  ·  mục lục {len(tk)} token")
+    print(f"  ✓ token/  ·  mục lục {len(tk)} token có bài + {len(primers)} Primer")
+
+    for primer in primers:
+        d_primer = OUT / "token" / primer["id"]
+        d_primer.mkdir(parents=True, exist_ok=True)
+        html_primer = trang(
+            f'{primer["title"]} — BlockPinned', trang_primer(primer), t, "../..",
+            muc="token/", mat="page-token-primer",
+            meta={"mo_ta": primer["description"], "duong": f'/{primer["_path"]}',
+                  "anh": primer.get("image", "avatar-800.png"), "loai": "article",
+                  "tieu_de_og": primer["title"]})
+        (d_primer / "index.html").write_text(html_primer, encoding="utf-8")
+        print(f'  ✓ {primer["_path"]}  ·  Token Primer · {len(primer["visuals"])} visual')
 
     bai_tk = [x for x in bai if token_cua[x[1]] == TU_KINH]
     if CO_TRANG[TU_KINH_DUONG]:
@@ -5006,6 +5381,7 @@ def main() -> None:
     if facts:
         loc.append((f"{BASE}/facts/", max(str(f.get("ngay", "")) or ngay_moi for f in facts)))
     loc.append((f"{BASE}/token/", ngay_moi))
+    loc += [(f'{BASE}/{p["_path"]}', str(p["lastmod"])) for p in primers]
     if CO_TRANG[TU_KINH_DUONG]:
         # lastmod của tủ kính = ngày bài MỚI NHẤT của chính token đó, không phải ngày
         # bài mới nhất của site: trang này chỉ đổi khi hồ sơ token đổi.

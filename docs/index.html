@@ -385,6 +385,39 @@ code{font:500 .875em var(--mono);background:var(--inset);border:1px solid var(--
   letter-spacing:-.05em;color:var(--ink);font-variant-numeric:tabular-nums}
 .av-opp-series li span{display:block;font:520 9px/1.4 var(--mono);color:var(--faint)}
 
+/* system-map — quan hệ nhiều tầng, có thể rẽ nhánh; mobile đổi thành một cột thật. */
+.av-system-lanes{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:13px}
+.av-system-lane{min-width:0;padding:14px;border:1px solid var(--line);border-radius:14px;
+  background:color-mix(in srgb,var(--card) 86%,var(--bg));position:relative}
+.av-system-lane:not(:last-child)::after{content:"→";position:absolute;right:-11px;top:25px;z-index:2;width:20px;height:20px;
+  display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--bg);font:750 10px/1 var(--mono);color:var(--accent)}
+.av-system-lane>header{display:grid;grid-template-columns:auto minmax(0,1fr);gap:9px;align-items:start;margin-bottom:12px}
+.av-system-lane>header>b{width:26px;height:26px;display:grid;place-items:center;border-radius:7px;
+  background:color-mix(in srgb,var(--accent) 10%,var(--inset));font:750 8px/1 var(--mono);color:var(--accent)}
+.av-system-lane>header span{display:block;font:750 8.5px/1.35 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--ink)}
+.av-system-lane>header small{display:block;margin-top:4px;font:520 8.5px/1.4 var(--mono);color:var(--faint)}
+.av-system-node{--vt:var(--accent);min-height:116px;padding:13px;display:flex;flex-direction:column;border:1px solid color-mix(in srgb,var(--vt) 30%,var(--line));
+  border-top:3px solid var(--vt);border-radius:10px;background:color-mix(in srgb,var(--vt) 5%,var(--bg))}
+.av-system-node+.av-system-node{margin-top:8px}.av-system-node>span{font:720 8px/1.35 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--vt)}
+.av-system-node>strong{margin:13px 0 8px;font:760 clamp(18px,2.2vw,25px)/1.02 var(--display);letter-spacing:-.035em;color:var(--ink)}
+.av-system-node>small{margin-top:auto;font:520 9px/1.45 var(--mono);color:var(--faint)}
+.av-system-edges{list-style:none!important;margin:15px 0 0!important;padding:13px!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 14px;
+  border:1px dashed var(--line);border-radius:11px;background:color-mix(in srgb,var(--inset) 55%,transparent)}
+.av-system-edges li{min-width:0;display:grid;grid-template-columns:auto auto auto minmax(0,1fr);gap:7px;align-items:center;margin:0!important;
+  font:520 8.5px/1.4 var(--mono);color:var(--faint)}
+.av-system-edges code{padding:0;border:0;background:none;font-size:8px;color:var(--muted)}.av-system-edges i{font-style:normal;color:var(--accent)}
+
+/* waterfall — số học khép kín; mỗi dòng giữ label, bar, số và diễn giải cùng nhau. */
+.av-waterfall{list-style:none!important;margin:0!important;padding:0!important;display:grid;gap:8px}
+.av-waterfall li{--vt:var(--accent);min-width:0;display:grid;grid-template-columns:minmax(125px,.48fr) minmax(130px,1fr) auto;
+  gap:8px 14px;align-items:center;margin:0!important;padding:12px 13px;border:1px solid var(--line);border-radius:11px;background:var(--card)}
+.av-waterfall li>span{font:750 9px/1.35 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.av-waterfall li>div{height:13px;padding:2px;border:1px solid var(--line);border-radius:8px;background:var(--bg);overflow:hidden}
+.av-waterfall li>div>i{display:block;width:var(--w);height:100%;border-radius:5px;background:var(--vt);opacity:.78}
+.av-waterfall li>strong{min-width:92px;text-align:right;font:780 18px/1 var(--mono);letter-spacing:-.04em;color:var(--vt);font-variant-numeric:tabular-nums}
+.av-waterfall li>small{grid-column:2/-1;font:520 9px/1.45 var(--mono);color:var(--faint)}
+.av-waterfall li.is-change>div>i{margin-left:auto}.av-waterfall li.is-total{border-color:color-mix(in srgb,var(--vt) 42%,var(--line));border-top-width:3px}
+
 .av-flow{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:22px}
 .av-node{--vt:var(--accent);min-height:154px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);
   border-top:3px solid var(--vt);border-radius:13px;background:color-mix(in srgb,var(--vt) 4%,var(--card));position:relative}
@@ -450,7 +483,8 @@ code{font:500 .875em var(--mono);background:var(--inset);border:1px solid var(--
 .article-viz-data[open]>summary span{font-size:0}.article-viz-data[open]>summary span::after{content:"đóng bảng ↑";font-size:9.5px}
 .article-viz-data .bang{margin:14px 0 0}.article-viz-data .bang table{font-size:13px;background:color-mix(in srgb,var(--bg) 45%,transparent)}
 html.chuyen .article-viz.is-visible .av-node,html.chuyen .article-viz.is-visible .av-proof li,html.chuyen .article-viz.is-visible .av-compare-side,
-html.chuyen .article-viz.is-visible .av-opp-series,
+html.chuyen .article-viz.is-visible .av-opp-series,html.chuyen .article-viz.is-visible .av-system-node,
+html.chuyen .article-viz.is-visible .av-waterfall li>div>i,
 html.chuyen .article-viz.is-visible .av-time>i,html.chuyen .article-viz.is-visible .av-dist-bar>i{
   animation:av-lock .58s cubic-bezier(.2,.8,.2,1) backwards}
 html.chuyen .article-viz.is-visible :is(.av-node,.av-proof li,.av-compare-side,.av-time>i,.av-dist-bar>i):nth-child(2){animation-delay:.08s}
@@ -463,6 +497,9 @@ html.chuyen .article-viz.is-visible :is(.av-node,.av-proof li,.av-compare-side,.
   .av-compare-grid{grid-template-columns:1fr;gap:0}.av-compare-gap{width:100px;margin:14px auto}.av-compare-result>strong{font-size:clamp(20px,6.5vw,25px)}
   .av-opp-series>header{display:grid}.av-opp-series>header>strong{text-align:left}
   .av-opp-series>ol{grid-template-columns:1fr;gap:22px}.av-opp-series li:not(:first-child)::before{left:16px;top:-20px;transform:none}
+  .av-system-lanes{grid-template-columns:1fr}.av-system-lane:not(:last-child)::after{right:50%;top:auto;bottom:-12px;transform:translateX(50%) rotate(90deg)}
+  .av-system-edges{grid-template-columns:1fr}.av-waterfall li{grid-template-columns:1fr auto;gap:8px 12px}
+  .av-waterfall li>div{grid-column:1/-1;grid-row:2}.av-waterfall li>strong{grid-column:2;grid-row:1}.av-waterfall li>small{grid-column:1/-1;grid-row:3}
   .av-flow{grid-auto-flow:row;grid-auto-rows:auto;gap:19px}.av-node{min-height:125px}.av-node:not(:last-child)::after{right:50%;top:auto;
     bottom:-17px;transform:translateX(50%) rotate(90deg)}
   .av-proof{grid-template-columns:1fr}.av-proof li{min-height:118px}.av-timeline{margin-inline:-3px;grid-auto-columns:112px}
@@ -1008,7 +1045,7 @@ html.chuyen .article-verdict.is-visible .case-step.fixed{animation-delay:.2s}
 .article-limits{grid-template-columns:minmax(0,1fr);margin:30px 0 0}
 .article-body{padding-top:30px}.article-body>p,.article-body>ul,.article-body>ol{max-width:68ch}
 .article-body-centered>.article-meta{width:min(100%,900px);margin-inline:auto}
-.article-body-centered>:is(p,ul,ol,h2,h3,pre){width:min(100%,680px);max-width:680px;margin-left:auto;margin-right:auto}
+.article-body-centered>:is(p,ul,ol,h2,h3,pre,.trich,.chan){width:min(100%,680px);max-width:680px;margin-left:auto;margin-right:auto}
 .article-body-centered>.article-viz{width:min(100%,1000px);margin-left:auto;margin-right:auto}
 .article-body ul,.article-body ol{padding-left:1.35em}.article-body li{margin:7px 0}
 .article-body .bang{overflow-x:auto;margin:26px 0 30px}.article-body .bang table{border-collapse:collapse;min-width:620px;width:100%;font-size:14px}
@@ -1031,6 +1068,154 @@ html.chuyen .article-verdict.is-visible .case-step.fixed{animation-delay:.2s}
   .case-evidence>summary .mo{grid-row:3}.case-ledger-viz{grid-row:2}.case-ledger-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
   .case-ledger-body{padding:16px!important}.case-claim{padding:18px 16px 17px 18px}.case-claim-actions{width:100%;margin-left:0}
   .case-claim-text{font-size:15px}.case-log li{grid-template-columns:1fr;gap:2px}.article-meta{margin-bottom:26px}
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   TOKEN PRIMER — sống theo đối tượng; VERIFY là lớp người đọc chủ động mở.
+   ══════════════════════════════════════════════════════════════════════════ */
+.page-token-primer main{padding-bottom:104px}.primer-hero{padding-bottom:28px}
+.primer-hero h1{max-width:19ch}.primer-hero .subline{max-width:64ch}
+.primer-pin{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:30px;max-width:860px}
+.primer-pin>span{min-width:0;padding:13px 14px;border:1px solid var(--line);border-radius:10px;background:color-mix(in srgb,var(--card) 74%,transparent);
+  font:560 10px/1.45 var(--mono);color:var(--muted);overflow-wrap:anywhere}
+.primer-pin b{display:block;margin-bottom:5px;font:760 8px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.primer-nav{position:sticky;top:55px;z-index:38;display:flex;align-items:center;gap:5px;overflow-x:auto;margin:0 0 34px;padding:7px;
+  border:1px solid var(--line);border-radius:13px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(18px);scrollbar-width:none}
+.primer-nav::-webkit-scrollbar{display:none}.primer-nav>span,.primer-nav>a{flex:none;padding:8px 11px;border-radius:8px;font:680 9px/1 var(--mono)}
+.primer-nav>span{letter-spacing:.11em;text-transform:uppercase;color:var(--accent)}.primer-nav>a{color:var(--muted)}.primer-nav>a:hover{background:var(--inset);color:var(--ink)}
+.primer-body{padding-top:0}
+
+/* Primer không dùng một "card visual" lặp bốn lần. Bốn hình mang bốn
+   vai đọc khác nhau: poster định hướng · dải tính · sổ theo nhịp ·
+   bảng điểm trạng thái. Scope dưới `.page-token-primer` để không đổi
+   ngữ pháp visual của các bài điều tra thông thường. */
+.page-token-primer .article-viz{margin-top:58px;margin-bottom:66px}
+.page-token-primer .article-viz-scope{align-self:flex-end;font-weight:760;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* 01 · SYSTEM MAP — poster đảo sáng/tối, nhìn từ xa vẫn ra "bản đồ". */
+.page-token-primer .article-viz-system-map{padding:clamp(27px,4.2vw,46px);border:0;border-radius:28px;background:var(--ink);color:var(--bg);
+  box-shadow:0 24px 60px color-mix(in srgb,var(--ink) 22%,transparent);overflow:hidden}
+.page-token-primer .article-viz-system-map::before{background:
+  radial-gradient(560px circle at 8% 0,color-mix(in srgb,var(--accent) 36%,transparent),transparent 70%),
+  linear-gradient(125deg,transparent 52%,color-mix(in srgb,var(--bg) 4%,transparent) 52%)}
+.page-token-primer .article-viz-system-map .article-viz-head{grid-template-columns:minmax(150px,.35fr) minmax(0,1fr);margin-bottom:34px;padding-bottom:25px;
+  border-color:color-mix(in srgb,var(--bg) 22%,transparent)}
+.page-token-primer .article-viz-system-map .article-viz-head>p{color:color-mix(in srgb,var(--accent) 72%,var(--bg))}
+.page-token-primer .article-viz-system-map .article-viz-head>h3{max-width:17ch;font-size:clamp(30px,4.5vw,48px);line-height:1;color:var(--bg)}
+.page-token-primer .article-viz-system-map .av-system-lanes{gap:9px}
+.page-token-primer .article-viz-system-map .av-system-lane{padding:16px;border-color:color-mix(in srgb,var(--bg) 20%,transparent);border-radius:5px;
+  background:color-mix(in srgb,var(--bg) 7%,transparent)}
+.page-token-primer .article-viz-system-map .av-system-lane:not(:last-child)::after{border-color:color-mix(in srgb,var(--bg) 26%,transparent);
+  background:var(--ink);color:var(--bg)}
+.page-token-primer .article-viz-system-map .av-system-lane>header>b{border:1px solid color-mix(in srgb,var(--bg) 20%,transparent);
+  border-radius:50%;background:transparent;color:var(--bg)}
+.page-token-primer .article-viz-system-map .av-system-lane>header span,.page-token-primer .article-viz-system-map .av-system-node>strong{color:var(--bg)}
+.page-token-primer .article-viz-system-map .av-system-lane>header small,.page-token-primer .article-viz-system-map .av-system-node>small{
+  color:color-mix(in srgb,var(--bg) 66%,transparent)}
+.page-token-primer .article-viz-system-map .av-system-node{min-height:142px;border-color:color-mix(in srgb,var(--vt) 65%,transparent);border-radius:4px;
+  background:color-mix(in srgb,var(--bg) 5%,transparent)}
+.page-token-primer .article-viz-system-map .av-system-edges{margin-top:22px!important;border-color:color-mix(in srgb,var(--bg) 24%,transparent);
+  border-radius:3px;background:transparent}
+.page-token-primer .article-viz-system-map .av-system-edges li{color:color-mix(in srgb,var(--bg) 68%,transparent)}
+.page-token-primer .article-viz-system-map .av-system-edges code{color:var(--bg)}
+.page-token-primer .article-viz-system-map figcaption,.page-token-primer .article-viz-system-map .article-viz-data{
+  border-color:color-mix(in srgb,var(--bg) 20%,transparent);color:color-mix(in srgb,var(--bg) 62%,transparent)}
+.page-token-primer .article-viz-system-map .article-viz-scope,.page-token-primer .article-viz-system-map .article-viz-data>summary{color:var(--bg)}
+.page-token-primer .article-viz-system-map .bang th{color:color-mix(in srgb,var(--bg) 62%,transparent);border-color:color-mix(in srgb,var(--bg) 18%,transparent)}
+.page-token-primer .article-viz-system-map .bang td{color:var(--bg);border-color:color-mix(in srgb,var(--bg) 14%,transparent)}
+
+/* 02 · WATERFALL — dải tính editorial, không khung bo góc. */
+.page-token-primer .article-viz-waterfall{padding:34px 0 28px;border:0;border-block:1px solid var(--ink);border-radius:0;background:transparent;box-shadow:none;overflow:visible}
+.page-token-primer .article-viz-waterfall::before{display:none}
+.page-token-primer .article-viz-waterfall .article-viz-head{grid-template-columns:170px minmax(0,1fr);margin-bottom:4px;padding:0 0 25px;border-bottom:4px solid var(--ink)}
+.page-token-primer .article-viz-waterfall .article-viz-head>h3{font-size:clamp(30px,4.3vw,45px);line-height:1.02}
+.page-token-primer .article-viz-waterfall .av-waterfall{gap:0}
+.page-token-primer .article-viz-waterfall .av-waterfall li{grid-template-columns:minmax(160px,.52fr) minmax(180px,1fr) auto;gap:10px 20px;
+  padding:20px 0;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent}
+.page-token-primer .article-viz-waterfall .av-waterfall li:first-child{border-top:0}
+.page-token-primer .article-viz-waterfall .av-waterfall li>div{height:22px;padding:3px;border-radius:0;background:transparent}
+.page-token-primer .article-viz-waterfall .av-waterfall li>div>i{border-radius:0;opacity:1}
+.page-token-primer .article-viz-waterfall .av-waterfall li>strong{min-width:126px;font-size:clamp(23px,3vw,32px)}
+.page-token-primer .article-viz-waterfall .av-waterfall li>small{font-size:9.5px}
+.page-token-primer .article-viz-waterfall .av-waterfall li.is-total{margin-top:8px!important;padding:23px 18px;border-top:0;
+  background:color-mix(in srgb,var(--c-xn) 9%,var(--card))}
+
+/* 03 · TIMELINE — tờ ledger có lưới và nhịp, cạnh vuông có chủ ý. */
+.page-token-primer .article-viz-timeline{padding:clamp(24px,3.5vw,34px);border:1px solid var(--muted);border-radius:4px;
+  background:repeating-linear-gradient(0deg,transparent 0 31px,color-mix(in srgb,var(--line) 62%,transparent) 32px),var(--inset);
+  box-shadow:9px 9px 0 color-mix(in srgb,var(--ink) 8%,transparent)}
+.page-token-primer .article-viz-timeline::before{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 8%,transparent),transparent 38%)}
+.page-token-primer .article-viz-timeline .article-viz-head{align-items:start;margin-bottom:14px;padding-bottom:19px;border-bottom:3px double var(--muted)}
+.page-token-primer .article-viz-timeline .article-viz-head>h3{font-size:clamp(27px,3.8vw,39px)}
+.page-token-primer .article-viz-timeline .av-timeline{height:290px;gap:8px;padding:16px 5px 20px}
+.page-token-primer .article-viz-timeline .av-time{padding-inline:12px;border-left:1px dashed var(--line);border-bottom:3px solid var(--ink);background:color-mix(in srgb,var(--card) 38%,transparent)}
+.page-token-primer .article-viz-timeline .av-time>i{border-radius:1px 1px 0 0;opacity:.9}
+.page-token-primer .article-viz-timeline .av-time>strong{font-size:12px}
+
+/* 04 · CAPTURE — scoreboard bất đối xứng; con số 2 / 2 / 1 là nhân vật chính. */
+.page-token-primer .article-viz-distribution{display:grid;grid-template-columns:minmax(210px,.72fr) minmax(340px,1.28fr);gap:22px 44px;
+  padding:clamp(27px,4vw,43px);border-color:color-mix(in srgb,var(--accent) 42%,var(--line));border-radius:24px;
+  background:linear-gradient(112deg,color-mix(in srgb,var(--accent) 12%,var(--card)) 0 38%,var(--card) 38%);box-shadow:var(--bong)}
+.page-token-primer .article-viz-distribution::before{background:radial-gradient(420px circle at 5% 10%,color-mix(in srgb,var(--accent) 17%,transparent),transparent 70%)}
+.page-token-primer .article-viz-distribution .article-viz-head{display:block;align-self:center;margin:0;padding:0;border:0}
+.page-token-primer .article-viz-distribution .article-viz-head>p{margin-bottom:16px}
+.page-token-primer .article-viz-distribution .article-viz-head>h3{font-size:clamp(31px,4vw,44px);line-height:1.02}
+.page-token-primer .article-viz-distribution .av-distribution{align-self:center}
+.page-token-primer .article-viz-distribution .av-dist-bar{height:108px;gap:6px;padding:0;border:0;border-radius:3px;background:transparent}
+.page-token-primer .article-viz-distribution .av-dist-bar>i{min-width:28px;border-radius:2px;opacity:.9}
+.page-token-primer .article-viz-distribution .av-dist-legend{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:18px}
+.page-token-primer .article-viz-distribution .av-dist-legend>span{grid-template-columns:8px 1fr;grid-template-rows:auto auto;gap:2px 9px;align-items:start;
+  padding-top:10px;border-top:1px solid var(--line)}
+.page-token-primer .article-viz-distribution .av-dist-legend>span>i{grid-row:1/3;margin-top:7px}
+.page-token-primer .article-viz-distribution .av-dist-legend>span>b{font:800 clamp(35px,4.5vw,52px)/.9 var(--display);letter-spacing:-.06em;color:var(--vt)}
+.page-token-primer .article-viz-distribution .av-dist-legend>span>small{font:700 8.5px/1.35 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.page-token-primer .article-viz-distribution figcaption,.page-token-primer .article-viz-distribution .article-viz-data{grid-column:1/-1}
+.primer-return{width:min(100%,680px);margin:16px auto 34px!important;padding:13px 15px;border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:10px;
+  background:color-mix(in srgb,var(--accent) 6%,var(--card));font:700 9.5px/1.4 var(--mono)!important;color:var(--accent)!important;text-decoration:none!important}
+.primer-verify{width:min(100%,1000px);margin:64px auto 0;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,var(--card),var(--bg2));box-shadow:var(--bong);overflow:hidden;scroll-margin-top:115px}
+.primer-verify>summary{min-height:132px;padding:23px 25px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:17px;align-items:center;cursor:pointer;list-style:none}
+.primer-verify>summary::-webkit-details-marker{display:none}.primer-verify-mark{width:44px;height:44px;display:grid;place-items:center;border:1px solid color-mix(in srgb,var(--accent) 42%,var(--line));border-radius:12px;
+  background:color-mix(in srgb,var(--accent) 8%,var(--bg));font-size:19px}
+.primer-verify-copy small{display:block;font:750 8px/1.3 var(--mono);letter-spacing:.14em;color:var(--accent)}
+.primer-verify-copy strong{display:block;margin:7px 0 6px;font:780 clamp(24px,3.2vw,35px)/1.05 var(--display);letter-spacing:-.04em;color:var(--ink)}
+.primer-verify-copy p{margin:0;max-width:65ch;font:500 11px/1.55 var(--mono);color:var(--faint)}
+.primer-verify-toggle{font:720 9px/1.3 var(--mono);color:var(--accent);white-space:nowrap}.primer-verify[open] .primer-verify-toggle{font-size:0}
+.primer-verify[open] .primer-verify-toggle::after{content:"Đóng ↑";font-size:9px}.primer-verify[open]>summary{border-bottom:1px solid var(--line)}
+.primer-verify-body{padding:clamp(22px,4vw,42px)}.primer-verify-body>:is(p,ul,ol,h2,h3,pre,.trich,.chan){width:min(100%,680px);max-width:680px;margin-left:auto;margin-right:auto}
+.primer-verify-body>.bang{width:min(100%,900px);margin-left:auto;margin-right:auto}.primer-verify-body>h2:first-child{margin-top:0}
+
+.primer-directory{margin:8px 0 48px}.primer-directory-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:16px}
+.primer-directory-head h2{margin:4px 0 0;font:780 clamp(27px,4vw,40px)/1.05 var(--display);letter-spacing:-.04em}.primer-directory-head>p{margin:0;max-width:40ch;text-align:right;font:560 9px/1.5 var(--mono);color:var(--faint)}
+.primer-index-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.primer-index-card{min-height:275px;padding:24px;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto 1fr auto;
+  border:1px solid color-mix(in srgb,var(--accent) 32%,var(--line));border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 7%,var(--card)),var(--card));box-shadow:var(--bong);position:relative;overflow:hidden}
+.primer-index-card::after{content:attr(data-token);position:absolute;right:-.03em;bottom:-.22em;z-index:0;font:850 clamp(105px,18vw,205px)/1 var(--display);letter-spacing:-.08em;color:color-mix(in srgb,var(--accent) 9%,transparent)}
+.primer-index-card>*{position:relative;z-index:1}.primer-index-card>small{font:760 8.5px/1 var(--mono);letter-spacing:.13em;color:var(--accent)}
+.primer-index-card>i{justify-self:end;font:650 8.5px/1 var(--mono);font-style:normal;color:var(--c-xn)}.primer-index-card>strong{grid-column:1/-1;align-self:center;max-width:17ch;margin:28px 0;
+  font:780 clamp(28px,4vw,43px)/1.05 var(--display);letter-spacing:-.045em;color:var(--ink)}
+.primer-index-card>span{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid var(--line-soft);font:680 9.5px/1.3 var(--mono);color:var(--accent)}
+
+@media(max-width:700px){
+  .primer-pin{grid-template-columns:1fr}.primer-nav{margin-inline:-4px}
+  .page-token-primer .article-viz{margin-top:45px;margin-bottom:52px}
+  .page-token-primer .article-viz-system-map{padding:25px 17px;border-radius:19px}
+  .page-token-primer .article-viz-system-map .article-viz-head{grid-template-columns:1fr;gap:8px;margin-bottom:25px;padding-bottom:20px}
+  .page-token-primer .article-viz-system-map .av-system-node{min-height:118px}
+  .page-token-primer .article-viz-waterfall{padding-block:26px 22px}
+  .page-token-primer .article-viz-waterfall .article-viz-head{grid-template-columns:1fr;gap:8px;padding-bottom:20px}
+  .page-token-primer .article-viz-waterfall .av-waterfall li{grid-template-columns:1fr auto;gap:8px 12px;padding:17px 0}
+  .page-token-primer .article-viz-waterfall .av-waterfall li.is-total{padding:20px 14px}
+  .page-token-primer .article-viz-timeline{padding:21px 15px;box-shadow:5px 5px 0 color-mix(in srgb,var(--ink) 8%,transparent)}
+  .page-token-primer .article-viz-timeline .article-viz-head{grid-template-columns:1fr;gap:7px}
+  .page-token-primer .article-viz-timeline .av-timeline{height:270px;grid-auto-columns:132px}
+  .page-token-primer .article-viz-distribution{grid-template-columns:1fr;gap:28px;padding:25px 17px;
+    background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 12%,var(--card)) 0 32%,var(--card) 32%)}
+  .page-token-primer .article-viz-distribution .article-viz-head{padding-bottom:23px}
+  .page-token-primer .article-viz-distribution .av-dist-bar{height:78px}
+  .page-token-primer .article-viz-distribution .av-dist-legend{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+  .page-token-primer .article-viz-distribution .av-dist-legend>span{grid-template-columns:6px 1fr;gap:2px 6px}
+  .page-token-primer .article-viz-distribution .av-dist-legend>span>b{font-size:35px}
+  .primer-verify{margin-top:48px}.primer-verify>summary{grid-template-columns:auto 1fr;padding:19px 17px}.primer-verify-toggle{grid-column:2}.primer-verify-body{padding:20px 16px}
+  .primer-directory-head{display:grid;align-items:start}.primer-directory-head>p{text-align:left}.primer-index-grid{grid-template-columns:1fr}.primer-index-card{min-height:245px}
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -1866,10 +2051,10 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <a href="track-record/">Mở toàn bộ sổ gốc →</a>
   </div>
   <div class="ledger-grid">
-    <div class="ledger-total"><strong>58</strong><span>khẳng&nbsp;định<small>trong 13&nbsp;bài</small></span></div>
+    <div class="ledger-total"><strong>63</strong><span>khẳng&nbsp;định<small>trong 14&nbsp;bài</small></span></div>
     <div class="ledger-states">
-      <div class="ledger-bar" role="img" aria-label="58 khẳng định: 2 xác nhận, 49 vẫn đứng vững, 4 đã sửa, 2 đã bị bác bỏ, 1 chờ số"><i class="xac" style="--n:2"></i><i class="song" style="--n:49"></i><i class="sua" style="--n:4"></i><i class="bac" style="--n:2"></i><i class="cho" style="--n:1"></i></div>
-      <div class="ledger-legend"><span><i class="dot xac"></i><b>2</b><small>xác nhận</small></span><span><i class="dot song"></i><b>49</b><small>vẫn đứng&nbsp;vững</small></span><span><i class="dot sua"></i><b>4</b><small>đã sửa</small></span><span><i class="dot bac"></i><b>2</b><small>đã bị bác&nbsp;bỏ</small></span><span><i class="dot cho"></i><b>1</b><small>chờ số</small></span></div>
+      <div class="ledger-bar" role="img" aria-label="63 khẳng định: 2 xác nhận, 52 vẫn đứng vững, 4 đã sửa, 2 đã bị bác bỏ, 3 chờ số"><i class="xac" style="--n:2"></i><i class="song" style="--n:52"></i><i class="sua" style="--n:4"></i><i class="bac" style="--n:2"></i><i class="cho" style="--n:3"></i></div>
+      <div class="ledger-legend"><span><i class="dot xac"></i><b>2</b><small>xác nhận</small></span><span><i class="dot song"></i><b>52</b><small>vẫn đứng&nbsp;vững</small></span><span><i class="dot sua"></i><b>4</b><small>đã sửa</small></span><span><i class="dot bac"></i><b>2</b><small>đã bị bác&nbsp;bỏ</small></span><span><i class="dot cho"></i><b>3</b><small>chờ số</small></span></div>
     </div>
     <div class="ledger-preregister"><span>GHI&nbsp;TRƯỚC</span><strong>7</strong><p>lần công khai con số trước khi biết đáp án</p></div>
   </div>
@@ -1894,7 +2079,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   </div>
 </section>
 
-<section class="khu-bai home-articles article-priority" data-hien aria-labelledby="bai"><div class="khu-dau"><div class="bai-heading"><p class="section-code">READING DESK · 13 INVESTIGATIONS</p><h2 id="bai">Bài điều&nbsp;tra mới nhất</h2><p>Mỗi bài đi từ câu hỏi, qua phép đo, đến điều gì có thể chứng minh kết luận sai.</p></div><a class="bai-archive-link" href="bai/"><span>Xem tất cả</span><b>13&nbsp;bài&nbsp;viết</b><i aria-hidden="true">↗</i></a></div><div class="article-preview-grid"><a class="bai bai-lead" href="bai/2026-08-13-morpho-oracle-lech-thang/"><span class="bai-top"><span class="d">🟡 13/08/2026</span><span class="bai-token">MORPHO</span></span><span class="t">269 đô tài sản thế chấp, oracle đọc thành 269 nghìn tỷ đô</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:75.00%"></span><span class="seg cho" style="width:25.00%"></span></span><span class="bai-foot"><span class="s">4&nbsp;claim — 3 vẫn đứng&nbsp;vững · 1 chờ số</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-12-hype-thi-phan-13-hay-70/"><span class="bai-top"><span class="d">🟡 12/08/2026</span><span class="bai-token">HYPE</span></span><span class="t">Hyperliquid có 13% hay 70% thị phần perp? Cả hai con số đều đang được công bố.</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">4&nbsp;claim — 4 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/"><span class="bai-top"><span class="d">🟡 10/08/2026</span><span class="bai-token">CAKE</span></span><span class="t">PancakeSwap mất gần nửa thị phần BSC, nhưng phí giao dịch lại tăng 3,1&nbsp;lần</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">6&nbsp;claim — 6 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/"><span class="bai-top"><span class="d">🟡 07/08/2026</span><span class="bai-token">HYPE</span></span><span class="t">Bạn đang định giá HYPE bằng câu chuyện cung co lại hay nở ra?</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">4&nbsp;claim — 4 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-06-uni-burn-cham-gan-mot-tuan/"><span class="bai-top"><span class="d">🟡 06/08/2026</span><span class="bai-token">UNI</span></span><span class="t">Biểu đồ UNI burn trên Ethereum đang chậm gần một tuần so với Robinhood Chain</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">5&nbsp;claim — 5 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-04-lido-cmv2-220-validator-trong-so-0/"><span class="bai-top"><span class="d">🟡 04/08/2026</span><span class="bai-token">LDO</span></span><span class="t">220 validator đã nạp, trọng số phí của module vẫn đúng 0,0000&nbsp;ETH</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">5&nbsp;claim — 5 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a></div><p class="article-preview-note">Đang giới thiệu 6&nbsp;/&nbsp;13&nbsp;bài&nbsp;viết · danh mục đầy đủ có tìm kiếm và lọc theo token</p></section>
+<section class="khu-bai home-articles article-priority" data-hien aria-labelledby="bai"><div class="khu-dau"><div class="bai-heading"><p class="section-code">READING DESK · 14 INVESTIGATIONS</p><h2 id="bai">Bài điều&nbsp;tra mới nhất</h2><p>Mỗi bài đi từ câu hỏi, qua phép đo, đến điều gì có thể chứng minh kết luận sai.</p></div><a class="bai-archive-link" href="bai/"><span>Xem tất cả</span><b>14&nbsp;bài&nbsp;viết</b><i aria-hidden="true">↗</i></a></div><div class="article-preview-grid"><a class="bai bai-lead" href="bai/2026-08-14-pump-phat-579-ty-ban-049/"><span class="bai-top"><span class="d">🔴 14/08/2026</span><span class="bai-token">PUMP</span></span><span class="t">57,9 tỷ PUMP phát ra, 0,49% bán được chứng minh</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:60.00%"></span><span class="seg cho" style="width:40.00%"></span></span><span class="bai-foot"><span class="s">5&nbsp;claim — 3 vẫn đứng&nbsp;vững · 2 chờ số</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-13-morpho-oracle-lech-thang/"><span class="bai-top"><span class="d">🟡 13/08/2026</span><span class="bai-token">MORPHO</span></span><span class="t">269 đô tài sản thế chấp, oracle đọc thành 269 nghìn tỷ đô</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:75.00%"></span><span class="seg cho" style="width:25.00%"></span></span><span class="bai-foot"><span class="s">4&nbsp;claim — 3 vẫn đứng&nbsp;vững · 1 chờ số</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-12-hype-thi-phan-13-hay-70/"><span class="bai-top"><span class="d">🟡 12/08/2026</span><span class="bai-token">HYPE</span></span><span class="t">Hyperliquid có 13% hay 70% thị phần perp? Cả hai con số đều đang được công bố.</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">4&nbsp;claim — 4 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon/"><span class="bai-top"><span class="d">🟡 10/08/2026</span><span class="bai-token">CAKE</span></span><span class="t">PancakeSwap mất gần nửa thị phần BSC, nhưng phí giao dịch lại tăng 3,1&nbsp;lần</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">6&nbsp;claim — 6 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-07-hype-sai-so-lon-hon-ket-qua/"><span class="bai-top"><span class="d">🟡 07/08/2026</span><span class="bai-token">HYPE</span></span><span class="t">Bạn đang định giá HYPE bằng câu chuyện cung co lại hay nở ra?</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">4&nbsp;claim — 4 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-06-uni-burn-cham-gan-mot-tuan/"><span class="bai-top"><span class="d">🟡 06/08/2026</span><span class="bai-token">UNI</span></span><span class="t">Biểu đồ UNI burn trên Ethereum đang chậm gần một tuần so với Robinhood Chain</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">5&nbsp;claim — 5 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a></div><p class="article-preview-note">Đang giới thiệu 6&nbsp;/&nbsp;14&nbsp;bài&nbsp;viết · danh mục đầy đủ có tìm kiếm và lọc theo token</p></section>
 
 <section class="hero finding-home" id="moi-nhat">
   <span class="ghost-num" aria-hidden="true">3,9×</span>
@@ -1982,7 +2167,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <section class="inv-khu" id="ho-so">
   <div class="inv-dau">
     <p class="kicker">Hồ&nbsp;sơ điều&nbsp;tra</p>
-    <span class="dem-bai">13&nbsp;bài · 6 token</span>
+    <span class="dem-bai">14&nbsp;bài · 7 token</span>
     <a href="#bai">xem tất cả</a>
   </div>
   <div class="inv"><a class="ho-so" href="bai/2026-08-06-uni-burn-cham-gan-mot-tuan/"><p class="eyebrow-nho"><span>UNI</span><span class="im">06/08/2026</span></p><h3>Biểu đồ UNI burn trên Ethereum đang chậm gần một tuần so với Robinhood Chain</h3><div class="viz"><div class="rai"><span class="truc"></span><span class="cham vien" style="left:11.7%"></span><span class="cham" style="left:38.4%"></span><span class="cham vien" style="left:92.5%"></span><span class="nhan-cham" style="left:38.4%">6,76&nbsp;ngày</span><span class="nhan-duoi" style="left:11.7%">6,44</span><span class="nhan-duoi" style="left:92.5%">7,41</span></div></div><p class="so-chinh">Mỗi lệnh rút chờ <strong>6,44–7,41&nbsp;ngày</strong> mới thực thi — đo trên cả 22 lượt đã về, trung vị 6,76.</p><p class="trang-thai"><i><span class="dot song"></span>5 đang đứng</i><span class="ghim-nho">blk&nbsp;29.174.972</span></p></a><a class="ho-so" href="bai/2026-08-04-lido-cmv2-220-validator-trong-so-0/"><p class="eyebrow-nho"><span>LDO</span><span class="im">04/08/2026</span></p><h3>220 validator đã nạp, trọng số phí của module vẫn đúng 0,0000&nbsp;ETH</h3><div class="viz"><div class="doi"><span class="ve"><span class="n">220</span><span class="t">validator đã nạp</span></span><span class="mui">→</span><span class="ve"><span class="n khong">0,0000</span><span class="t">ETH oracle báo về</span></span></div></div><p class="so-chinh">Hai lần đo cách <strong>6&nbsp;ngày</strong> — block&nbsp;25.637.121 và 25.680.251 — trọng số vẫn đúng 0.</p><p class="trang-thai"><i><span class="dot song"></span>5 đang đứng</i><span class="ghim-nho">blk&nbsp;25.680.251</span></p></a><a class="ho-so" href="bai/2026-07-31-uni-100usd-phi-swap/"><p class="eyebrow-nho"><span>UNI</span><span class="im">31/07/2026</span></p><h3>Mỗi $100 phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64</h3><div class="viz"><div class="nh"><span>phần Uniswap ghi nhận</span><b>$14,64&nbsp;/&nbsp;$100</b></div><div class="ray"><i style="width:14.64%;--i:0"></i></div></div><p class="so-chinh">Trọn ngày 29/07: <strong>$2.521.197</strong> phí swap → <strong>$369.178</strong> phí giao thức. v4 lấy tỷ lệ thấp nhất trong ba phiên bản.</p><p class="trang-thai"><i><span class="dot song"></span>5 đang đứng</i><span class="ghim-nho">ghim 29/07 UTC</span></p></a><a class="ho-so" href="bai/2026-07-31-pendle-buyback-cot-bang-0/"><p class="eyebrow-nho"><span>PENDLE</span><span class="im">31/07/2026</span></p><h3>Dashboard báo buyback bằng 0, hợp đồng đang giữ 144.388&nbsp;PENDLE</h3><div class="viz"><div class="nh"><span>bảng dữ&nbsp;liệu của Pendle</span><b>0</b></div><div class="ray"></div><div class="nh hang2"><span>đếm on-chain</span><b>144.388</b></div><div class="ray"><i style="width:100%;--i:1"></i></div></div><p class="so-chinh"><strong>82,44%</strong> tới thẳng từ swap. Dự đoán ghi&nbsp;trước về lượt chuyển kế tiếp <strong>đã đúng</strong>.</p><p class="trang-thai"><i><span class="dot xac"></span>1 đã xác nhận</i><i><span class="dot song"></span>4 đang đứng</i><span class="ghim-nho">blk&nbsp;25.650.178</span></p></a></div>

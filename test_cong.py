@@ -10,7 +10,7 @@ Control âm: bản chưa bẻ phải PASS — nếu nó cũng fail thì mọi ca
 
 Chạy:  python3 site/test_cong.py
 """
-import json, pathlib, re, shutil, subprocess, sys, tempfile
+import hashlib, json, pathlib, re, shutil, subprocess, sys, tempfile
 
 SITE = pathlib.Path(__file__).parent
 MD = "content/posts/2026-07-27-defillama-uniswap-v4.md"
@@ -18,6 +18,7 @@ CJ = "content/posts/2026-07-27-defillama-uniswap-v4.claims.json"
 PENDLE_CJ = "content/posts/2026-07-31-pendle-buyback-cot-bang-0.claims.json"
 HYPE_CJ = "content/posts/2026-08-12-hype-thi-phan-13-hay-70.claims.json"
 CAKE_CJ = "content/posts/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon.claims.json"
+SKY_PRIMER = "content/primers/sky.json"
 
 
 def sua_md(root, fn):
@@ -37,6 +38,27 @@ def sua_json_bai(root, path, fn):
     d = json.loads(p.read_text(encoding="utf-8"))
     fn(d)
     p.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def vat_chat_primers(root):
+    """Bộ thử chỉ chép `site/`; đưa thân Primer vào như publish_site làm cho mirror."""
+    for p in sorted((SITE / "content" / "primers").glob("*.json")):
+        cfg = json.loads(p.read_text(encoding="utf-8"))
+        co_san = SITE / "content" / "primers" / f'{cfg["id"]}.md'
+        if co_san.is_file():
+            body = co_san.read_text(encoding="utf-8").strip() + "\n"
+        else:
+            draft = SITE.parent / cfg["draft"]
+            lines = draft.read_text(encoding="utf-8").splitlines()
+            dau = [n for n, line in enumerate(lines) if line.startswith(cfg["start_marker"])]
+            cuoi = [n for n, line in enumerate(lines) if line == cfg["end_marker"]]
+            if len(dau) != 1 or len(cuoi) != 1 or dau[0] >= cuoi[0]:
+                raise RuntimeError(f"marker Primer hỏng trong fixture: {draft}")
+            body = "\n".join(lines[dau[0] + 1:cuoi[0]]).strip() + "\n"
+        if hashlib.sha256(body.encode()).hexdigest() != cfg["body_sha256"]:
+            raise RuntimeError(f"sha256 Primer hỏng trong fixture: {p}")
+        out = root / "site" / "content" / "primers" / f'{cfg["id"]}.md'
+        out.write_text(body, encoding="utf-8")
 
 
 # Fact mẫu HỢP LỆ — bộ thử tự dựng, không lấy từ content/ thật. Lý do: `facts.json`
@@ -111,9 +133,9 @@ CA = [
     ("④ NGÔI XƯNG · 'chúng tôi'",
      lambda r: sua_md(r, lambda s: s.replace("Tôi mở issue báo họ", "Chúng tôi mở issue báo họ")),
      "chúng tôi"),
-    ("⑤ MARKDOWN · cú pháp ngoài tập con (blockquote)",
-     lambda r: sua_md(r, lambda s: s.replace("Không phải lời khuyên đầu tư.",
-                                             "> Không phải lời khuyên đầu tư.")),
+    ("⑤ MARKDOWN · cú pháp ngoài tập con (ảnh inline)",
+     lambda r: sua_md(r, lambda s: s.replace("## Tự kiểm",
+                                             "![ảnh không qua asset gate](x.png)\n\n## Tự kiểm", 1)),
      "không nằm trong tập con"),
     ("⑤ MARKDOWN · ** không đóng",
      lambda r: sua_md(r, lambda s: s.replace("**$5,01M**", "**$5,01M")),
@@ -390,6 +412,33 @@ CA = [
      lambda r: sua_json_bai(r, CAKE_CJ, lambda d: d["visuals"][0]["series"][0]["values"][0].update(
          value="74%")),
      "cần value là SỐ"),
+    # ⑰ TOKEN PRIMER + hai primitive mới. Cả ba ca bẻ dữ liệu trong config; nếu chỉ
+    # nhìn HTML mẫu thì builder có thể trôi mà bộ thử vẫn xanh.
+    ("⑰ VISUAL system-map · edge trỏ nút không tồn tại phải NỔ",
+     lambda r: sua_json_bai(r, SKY_PRIMER,
+                            lambda d: d["visuals"][0]["edges"][0].update(to="ghost-node")),
+     "nút không tồn tại"),
+    ("⑰ VISUAL waterfall · phép tính không khép phải NỔ",
+     lambda r: sua_json_bai(r, SKY_PRIMER,
+                            lambda d: d["visuals"][1]["items"][-1].update(value=41.09)),
+     "không khép số"),
+    ("⑰ PRIMER · body sha256 lệch phải NỔ",
+     lambda r: sua_json_bai(r, SKY_PRIMER, lambda d: d.update(body_sha256="0" * 64)),
+     "body sha256 lệch"),
+    ("⑰ PRIMER · visual thiếu nhãn public phải NỔ",
+     lambda r: sua_json_bai(r, SKY_PRIMER,
+                            lambda d: d["visuals"][0].update(public_scope="")),
+     "primer visual cần public_scope"),
+    ("⑰ PRIMER · con trỏ desk lọt ra caption public phải NỔ",
+     lambda r: sua_builder(
+         r,
+         'story = render(cfg["_story"], o, visuals, show_claim_refs=False).replace(',
+         'story = render(cfg["_story"], o, visuals, show_claim_refs=True).replace('),
+     "primer làm lộ con trỏ desk"),
+    ("⑰ PRIMER · VERIFY mở sẵn phải NỔ",
+     lambda r: sua_builder(r, '<details class="primer-verify" id="lop-kiem-chung">',
+                           '<details class="primer-verify" id="lop-kiem-chung" open>'),
+     "VERIFY primer phải đóng mặc định"),
 ]
 
 # Ca nào cần cờ riêng thì khai ở đây, không nhét thêm cột vào mọi tuple cũ:
@@ -414,6 +463,7 @@ def main():
         with tempfile.TemporaryDirectory() as td:
             root = pathlib.Path(td)
             shutil.copytree(SITE, root / "site")
+            vat_chat_primers(root)
             # check_language.py nằm ở ../template trong kho gốc, và NGAY CẠNH
             # build.py trong repo mirror công khai. Neo cứng một chỗ thì bộ thử
             # chỉ chạy được ở kho gốc — nghĩa là bản công khai đi ra mà không

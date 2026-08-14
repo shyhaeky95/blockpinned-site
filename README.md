@@ -19,7 +19,7 @@ python3 test_cong.py        # ép từng cổng phải nổ, kèm control âm
 python3 preview.py          # ảnh chụp khổ hẹp + phép đo tràn tự kiểm
 ```
 
-Bốn mẫu visual cho bài dài và cấu hình copy-paste nằm tại [`VISUALS.md`](VISUALS.md).
+Chín mẫu visual cho bài dài và cấu hình copy-paste nằm tại [`VISUALS.md`](VISUALS.md).
 
 `docs/` là thứ GitHub Pages phục vụ. Nó là **bản sinh ra** — sửa nội dung ở
 `content/`, đừng sửa `docs/`.

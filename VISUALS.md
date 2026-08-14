@@ -6,7 +6,8 @@ thứ hai.
 
 ## Cách gắn vào bài
 
-1. Thêm object vào mảng top-level `visuals` của file `*.claims.json`.
+1. Thêm object vào mảng top-level `visuals` của file `*.claims.json`; Token Primer dùng
+   cùng schema trong `content/primers/*.json`.
 2. Đặt đúng một marker trên một dòng riêng trong Markdown:
 
    ```text
@@ -38,7 +39,7 @@ Mỗi bài có đúng một **visual signature** sống được khi bị screen
 phạm vi đo, mốc và `@BLOCKPINNED`. Mobile 360/390/430px là bố cục khác, không phải bản
 desktop bị thu nhỏ; bảng dữ liệu gốc và light/dark luôn phải còn đọc được.
 
-## Bảy template
+## Chín template
 
 ### `comparison` — cùng đầu vào, hai thang hoặc hai trạng thái
 
@@ -227,6 +228,60 @@ mà phép đo tràn vẫn xanh — đè nhau không phải tràn.
 Màu hợp lệ: `accent`, `good`, `warn`, `bad`, `info`, `muted`. Màu chỉ giúp quét mắt;
 `label`, `aria`, `caption` và bảng gốc mới là lớp mang nghĩa.
 
+### `system-map` — nhiều tầng của cùng một cỗ máy
+
+Dùng khi một quyết định phải đi qua 3–5 tầng và có thể rẽ nhánh. Mỗi tầng có 1–3 nút;
+`edges` chỉ được đi tới tầng sau, phải trỏ id có thật, và không nút nào được đứng ngoài
+quan hệ. Bảng dữ liệu mở ra được sinh từ chính `lanes` + `edges`.
+
+```json
+{
+  "id": "system-value-flow",
+  "type": "system-map",
+  "title": "Business tốt chưa tự chảy thành token capture",
+  "aria": "Business tạo lợi nhuận, chính sách vốn chia phần, governance đặt độ mở, rồi giá trị mới tới kho hoặc thị trường.",
+  "caption": "Bản đồ cơ chế; không dùng số trạng thái dễ đổi làm tên tầng.",
+  "claims": ["C1", "C2"],
+  "lanes": [
+    {"label": "Business", "note": "tạo economics", "nodes": [
+      {"id": "business", "label": "đầu máy", "value": "Net Revenue", "note": "sau chi phí", "tone": "info"}
+    ]},
+    {"label": "Capital policy", "note": "chia phần", "nodes": [
+      {"id": "policy", "label": "quy tắc", "value": "giữ / phân bổ", "note": "hai đích khác nhau", "tone": "accent"}
+    ]},
+    {"label": "Governance", "note": "đặt độ mở", "nodes": [
+      {"id": "gate", "label": "tham số", "value": "đổi được", "note": "không tự động", "tone": "warn"}
+    ]}
+  ],
+  "edges": [
+    {"from": "business", "to": "policy", "label": "đặt giới hạn"},
+    {"from": "policy", "to": "gate", "label": "chia rồi mới mở"}
+  ]
+}
+```
+
+### `waterfall` — một phép cộng/trừ phải khép số
+
+Dùng khi cần cho thấy giá trị đầu kỳ đi qua 1–6 thay đổi rồi thành kết quả. Dòng đầu
+phải là `start`, dòng cuối là `total`, giữa chúng chỉ là `change`; builder tự tính lại
+và chặn nếu `start + changes ≠ total`.
+
+```json
+{
+  "id": "q2-waterfall",
+  "type": "waterfall",
+  "title": "Doanh thu gộp khép lại ở Net Revenue",
+  "aria": "107,35 triệu đô trừ 67,26 triệu đô chi phí còn 40,09 triệu đô.",
+  "caption": "Cùng cửa sổ Q2/2026; kết quả chưa phải khoản tự động thuộc về holder.",
+  "claims": ["C3"],
+  "items": [
+    {"kind": "start", "label": "Gross Revenue", "value": 107.35, "hien": "$107,35M", "note": "đầu kỳ", "tone": "info"},
+    {"kind": "change", "label": "Chi phí", "value": -67.26, "hien": "−$67,26M", "note": "dòng trừ", "tone": "bad"},
+    {"kind": "total", "label": "Net Revenue", "value": 40.09, "hien": "$40,09M", "note": "kết quả", "tone": "good"}
+  ]
+}
+```
+
 ## Chọn template nào
 
 - Có mũi tên hoặc quan hệ trước–sau rõ: `flow`.
@@ -236,11 +291,13 @@ Màu hợp lệ: `accent`, `good`, `warn`, `bad`, `info`, `muted`. Màu chỉ gi
 - Có nhiều con số cho CÙNG một đại lượng, không cộng lại thành tổng: `dai`.
 - Có cùng đầu vào nhưng hai bộ tham số/trạng thái cho hai kết quả: `comparison`.
 - Có cùng 3–6 mốc nhưng hai đại lượng khác đơn vị đi ngược hướng ròng: `opposite-direction`.
+- Có 3–5 tầng của một hệ thống, nhất là khi quan hệ rẽ nhánh: `system-map`.
+- Có một giá trị đầu, các dòng cộng/trừ và một kết quả phải khép: `waterfall`.
 - Chỉ có một con số hoặc bảng đã đủ rõ: không ép thành visual.
 
-🔵 `opposite-direction` đóng đúng nợ *"cùng mốc, hai chiều ngược nhau"* bằng pilot CAKE
-14/08. Roadmap vẫn còn ba năng lực chưa có primitive thật: `system-map`, `waterfall` và
-`time-series` liên tục. Không đổi tên `timeline` thành time-series để đánh dấu hoàn thành:
+🔵 `opposite-direction` đóng nợ *"cùng mốc, hai chiều ngược nhau"* bằng pilot CAKE;
+`system-map` và `waterfall` được ép lần đầu bằng SKY Primer 14/08. Roadmap còn một năng
+lực chưa có primitive thật: `time-series` liên tục. Không đổi tên `timeline` thành time-series để đánh dấu hoàn thành:
 một chuỗi cột sự kiện không phải một đường thời gian liên tục.
 
 Một bài dài thường chỉ cần 2–4 visual, đặt sau đoạn đã giải thích dữ liệu. Visual tóm

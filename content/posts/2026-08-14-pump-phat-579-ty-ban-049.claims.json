@@ -1,0 +1,69 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Ngày 14/07/2026 lúc 18:01:14Z, 57.966.305.029,378914 PUMP rời hai ví phát trên Solana và tới đúng 127 ví, mỗi ví nhận đúng một lượt trong cùng một nhịp. Lượng đó bằng khoảng 6,9% cung PUMP đang tồn tại.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Solana, mint PUMP pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn (Token-2022, 6 decimals). Hai ví phát GsM3emTijQshDHrWRRhSQhqG1zYC9BNnAuah7ZPEu6ya (197 chữ ký, phát ra 52.755.632.275,91) và ESRc4ce6jpyRyvGJ9Gjgtmwc7wEtR1ZPaQPnh9kWZM67 (122 chữ ký, phát ra 7.440.134.389,60). Cụm phát lớn nhất của ví thứ nhất gồm 80 giao dịch, từ 16:14:51Z ngày 14/07 tới 14:55:52Z ngày 15/07. Mẫu số cung lấy tại 840,9251 tỷ PUMP đã mint, đọc 13/08/2026.",
+      "falsifier": "Dựng lại lớp ví nhận cuối cùng của hai ví phát trong cửa sổ hai ngày 14 và 15 tháng 7 năm 2026 mà ra khác 127 ví, khác 57.966.305.029,38 PUMP, hoặc mốc khác 18:01:14Z ngày 14 tháng 7 năm 2026, thì phép dựng lượt phát sai và mọi tỷ lệ tính trên nó trong bài phải rút.",
+      "log": [
+        {
+          "ngay": "2026-08-14",
+          "ghi": "Mở claim. Con số dựng lại từ chuỗi chuyển của hai ví phát khớp một phép đo độc lập trước đó lệch +0,00%. Phép thử ngược: 24 giờ trước mốc T0, lượng rời ví bằng 0,000000 — mốc thời gian không bị gán lệch."
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "Trong khoảng ba mươi ngày sau lượt phát, lượng bán chứng minh được của lượt phát đó là 0,2833 tỷ PUMP, tức 0,49%. Kịch bản bi quan nhất — cộng cả phần chỉ mới tới một địa chỉ hoạt động dày như ví trung chuyển và cả phần chưa phân loại được — là 9,54%. Con số đó là ít nhất, không phải tất cả: giao dịch trong sổ lệnh nội bộ của một sàn không nằm trên chain nên không đường nào thấy.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Số on-chain đọc tới hết 13/08/2026. Con số 0,2833 tỷ là lượng bán trên DEX của chính nhóm ví nhận, quét 27 ngày, và chỉ thấy được lượt bán mà chính ví đó là bên đặt lệnh. Phép truy chặng thứ hai chạy trên 23 địa chỉ nhận 92,6% lượng chuyển ra, quét 9.523 giao dịch với 0 giao dịch lỗi, theo phép thử PUMP giảm đồng thời SOL hoặc USDC tăng trong cùng giao dịch, và trả về 0. Phép đối chiếu vào-ra khớp đúng 0 đơn vị gốc ở 23 trên 23 địa chỉ.",
+      "falsifier": "Tìm được dù một giao dịch nào trong nhóm 23 địa chỉ chặng thứ hai có PUMP giảm đồng thời SOL hoặc USDC tăng, thì con số 0 của nhóm đó phải rút. Và nếu phép đối chiếu tổng vào trừ tổng ra không bằng số dư đọc từ chuỗi ở bất kỳ địa chỉ nào trong 23, cả bốn nhóm phân loại phải đo lại.",
+      "log": [
+        {
+          "ngay": "2026-08-14",
+          "ghi": "Mở claim. Lượt quét đầu chỉ lấy chữ ký theo owner và cũng in ra 0 — con số đó vô nghĩa vì lượt chuyển SPL tới một ví chỉ tham chiếu token account, nên gần hết dòng vào bị bỏ sót; phép đối chiếu lệch ở 15 trên 20 địa chỉ. Chỉ sau khi quét hợp owner và token account, số 0 mới có nghĩa."
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "text": "Nhóm ví nhận không bị một cơ chế trên chain nào cưỡng chế phải tiếp tục giữ số token đã nhận: 21 ví trong nhóm 78 ví lớn nhất đã chuyển đi từ 95% lượng nhận trở lên. Cấu hình của từng ví trong 127 ví nhận thì bài không đọc, nên câu này dựa trên hành vi đã xảy ra chứ không dựa trên một phép dò khoá.",
+      "status": "CHỜ SỐ",
+      "ghim": "Số on-chain đọc tới hết 13/08/2026. Nhóm 78 ví là nhánh phát chính; số dư còn lại của nhóm này tại mốc chốt là 45,15 tỷ PUMP, bằng 86,77% lượng đã nhận. Phần rời khỏi ví nhận là 7,63 tỷ, tức 14,67%, trong đó 92,8% đi tới 29 địa chỉ mà mỗi địa chỉ chỉ có đúng một bên từng gửi tiền vào.",
+      "falsifier": "Đọc được cấu hình của các ví trong 127 ví nhận và tìm thấy một hợp đồng khoá hoặc khoảng chờ trên chain giữ số token đó lại, thì câu này phải sửa. Ngược lại, dò hết 127 ví mà không ví nào có ràng buộc như vậy sẽ đóng claim theo hướng đang viết và nâng trạng thái.",
+      "log": [
+        {
+          "ngay": "2026-08-14",
+          "ghi": "Mở ở trạng thái CHỜ SỐ chứ không phải ĐANG ĐỨNG. Bằng chứng hiện có là hành vi — 21 ví đã chuyển đi phần lớn lượng nhận — chứ không phải một phép dò cơ chế khoá trên cả 127 ví. Bản draft trước từng viết câu này như thể đã dò; đó là mô tả một phép đo chưa chạy, và đã bị sửa trước khi đăng."
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "text": "Theo tốc độ mua trung bình của chương trình buyback ở giai đoạn hiện tại, một dòng cung kiểu giờ đầu ngày 14/07 lớn hơn năng lực mua bình quân cùng giờ khoảng 187 lần; tỉ số đó về 8,57 lần ở mốc 24 giờ và 1,24 lần sau 7 ngày, trong khi khoảng 90% dòng đó đã xảy ra ngay trong giờ đầu.",
+      "status": "CHỜ SỐ",
+      "ghim": "Tử số là dòng token có khả năng chạm thị trường, không phải lượng đã bán: 2,3930 tỷ PUMP sau 1 giờ và 2,6654 tỷ sau 7 ngày. Mẫu số là tốc độ mua trung bình 307,86 triệu PUMP mỗi ngày, neo trên phép đo dòng mua on-chain giai đoạn 05/2026 đến 12/08/2026, rồi chia đều theo giờ. Cùng ngày, khối lượng giao dịch của PUMP tăng gấp 2,27 lần so với hôm trước.",
+      "falsifier": "Đo được lượng buyback thực mua theo từng giờ quanh mốc ngày 14 tháng 7 năm 2026 mà tỉ số giờ đầu ra khác 187 lần một cách đáng kể thì con số này phải sửa. Nếu chương trình dồn mua vào lúc giá rơi thay vì rải đều, tỉ số thật thấp hơn — đó chính là lý do claim mở ở trạng thái chờ số.",
+      "log": [
+        {
+          "ngay": "2026-08-14",
+          "ghi": "Mở ở trạng thái CHỜ SỐ vì mẫu số là một giả định chia đều, không phải phép đo. Đo trực tiếp lượng buyback theo giờ không làm được bằng dữ liệu miễn phí: quét chữ ký của ví mua theo cả owner lẫn token account đều vượt 60.000 trong 21 ngày, tức chạm giới hạn đọc và phải dừng, hai lần."
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "text": "Trên tên miền pump.fun, dò bằng bốn đường độc lập không tìm thấy trang phân bổ, cliff hay bảng vesting nào; bảng 33/24/20/13 và câu cliff 12 tháng mở dần 42 tháng xuất hiện trên các dashboard đã kiểm nhưng chưa truy được về một nguồn nào trên tên miền đó. Thứ đọc được trên chain là ngưỡng chữ ký và khoảng chờ thực thi, không phải một lịch.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Phép dò chạy trên tên miền pump.fun, bốn đường độc lập, đọc 12/08/2026. Cấu hình multisig đọc tại slot ghim ngày 13/08/2026: ví kho cần 3 trong 4 khoá với khoảng chờ 172.800 giây tức 48 giờ, và còn 303.261.857.115,53 PUMP chưa phát; hai ví phát cần 3 trong 5 khoá với khoảng chờ bằng 0. Bóc bằng layout Multisig trong IDL mà chính program ghi lên chain.",
+      "falsifier": "Tìm được ở bất kỳ kênh chính chủ nào của pump.fun — X, blog, tài liệu nhà đầu tư — một bảng phân bổ hoặc lịch vesting có mốc khớp ngày 14 tháng 7 năm 2026, hoặc đọc được một account hay contract trên chain giữ token theo lịch và giải phóng đúng mốc đó, thì claim này phải rút cùng toàn bộ mục nói về lịch phát hành.",
+      "log": [
+        {
+          "ngay": "2026-08-14",
+          "ghi": "Mở claim với phạm vi ghi thẳng trong câu. Các kênh chính chủ ngoài tên miền pump.fun chưa được kiểm, nên đây là câu về những gì đã dò chứ không phải câu về mọi nơi. Cấu hình multisig là ảnh chụp tại lúc đọc: chính multisig sửa được ngưỡng và khoảng chờ của nó qua đúng quy trình đề xuất."
+        }
+      ]
+    }
+  ]
+}
