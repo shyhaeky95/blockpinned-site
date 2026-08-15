@@ -334,9 +334,21 @@ VISUAL_TONES = {"accent", "good", "warn", "bad", "info", "muted"}
 
 def _bang_visual(headers: list[str], rows: list[list[str]]) -> str:
     head = "".join(f"<th>{ihtml.escape(str(c))}</th>" for c in headers)
-    body = "".join("<tr>" + "".join(f"<td>{ihtml.escape(str(c))}</td>" for c in row)
-                   + "</tr>" for row in rows)
+    body = "".join(
+        "<tr>" + "".join(
+            f'<td data-label="{ihtml.escape(str(headers[n]), quote=True)}">'
+            f'{ihtml.escape(str(c))}</td>'
+            for n, c in enumerate(row)
+        ) + "</tr>" for row in rows
+    )
     return f'<div class="bang"><table><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>'
+
+
+def _bo_cham_trang_thai_primer(html: str) -> str:
+    """Ẩn emoji trạng thái/cảnh báo khỏi mặt đọc; câu chặn vẫn còn nguyên."""
+    for symbol in ("🔴", "🟢", "🔵", "⚪", "⚠️", "⚠"):
+        html = html.replace(symbol, "")
+    return html
 
 
 def _hien_dai(x: dict) -> str:
@@ -389,7 +401,8 @@ def _du_lieu_visual(v: dict) -> tuple[list[str], list[list[str]]]:
             [[x["label"], str(x["count"]), x["note"]] for x in v["segments"]])
 
 
-def render_visual(v: dict, show_claim_refs: bool = True) -> str:
+def render_visual(v: dict, show_claim_refs: bool = True, chapter: str = "",
+                  art_direction: str = "") -> str:
     headers, rows = _du_lieu_visual(v)
     bang_html = _bang_visual(headers, rows)
     # D2 là đường rollback: không mượn CSS v3, nhưng dữ liệu không được biến mất.
@@ -398,40 +411,83 @@ def render_visual(v: dict, show_claim_refs: bool = True) -> str:
         return bang_html
 
     vid, loai = v["id"], v["type"]
+    may_bon_van = art_direction == "machine-valves" and bool(chapter)
     if loai == "system-map":
-        lane_html = []
-        for n, lane in enumerate(v["lanes"], 1):
-            nodes = "".join(
-                f'<article class="av-system-node tone-{node.get("tone", "accent")}">'
-                f'<span>{ihtml.escape(node["label"])}</span>'
-                f'<strong>{ihtml.escape(node["value"])}</strong>'
-                f'<small>{ihtml.escape(node["note"])}</small></article>'
-                for node in lane["nodes"])
-            lane_html.append(
-                f'<section class="av-system-lane"><header><b>{n:02d}</b><div>'
-                f'<span>{ihtml.escape(lane["label"])}</span>'
-                f'<small>{ihtml.escape(lane["note"])}</small></div></header>{nodes}</section>')
-        edge_html = "".join(
-            f'<li><code>{ihtml.escape(e["from"])}</code><i aria-hidden="true">→</i>'
-            f'<code>{ihtml.escape(e["to"])}</code><span>{ihtml.escape(e["label"])}</span></li>'
-            for e in v["edges"])
-        than = (f'<div class="av-system" role="img" '
-                f'aria-label="{ihtml.escape(v["aria"], quote=True)}">'
-                f'<div class="av-system-lanes">{"".join(lane_html)}</div>'
-                f'<ol class="av-system-edges" aria-label="Quan hệ giữa các tầng">{edge_html}</ol></div>')
+        if may_bon_van:
+            stations = []
+            for n, lane in enumerate(v["lanes"], 1):
+                nodes = "".join(
+                    f'<article class="pm-node tone-{node.get("tone", "accent")}">'
+                    f'<span>{ihtml.escape(node["label"])}</span>'
+                    f'<strong>{ihtml.escape(node["value"])}</strong>'
+                    f'<small>{ihtml.escape(node["note"])}</small></article>'
+                    for node in lane["nodes"])
+                stations.append(
+                    f'<section class="pm-station"><header><b>{n:02d}</b><div>'
+                    f'<span>{ihtml.escape(lane["label"])}</span>'
+                    f'<small>{ihtml.escape(lane["note"])}</small></div></header>{nodes}</section>')
+                if n < len(v["lanes"]):
+                    ids_here = {node["id"] for node in lane["nodes"]}
+                    ids_next = {node["id"] for node in v["lanes"][n]["nodes"]}
+                    labels = [e["label"] for e in v["edges"]
+                              if e["from"] in ids_here and e["to"] in ids_next]
+                    stations.append(
+                        '<div class="pm-valve" aria-hidden="true"><i></i>'
+                        + "".join(f'<span>{ihtml.escape(label)}</span>' for label in labels)
+                        + '</div>')
+            than = (f'<span class="pm-map-ghost" aria-hidden="true">MÁY</span>'
+                    f'<div class="pm-machine" role="img" '
+                    f'aria-label="{ihtml.escape(v["aria"], quote=True)}">'
+                    f'{"".join(stations)}</div>')
+        else:
+            lane_html = []
+            for n, lane in enumerate(v["lanes"], 1):
+                nodes = "".join(
+                    f'<article class="av-system-node tone-{node.get("tone", "accent")}">'
+                    f'<span>{ihtml.escape(node["label"])}</span>'
+                    f'<strong>{ihtml.escape(node["value"])}</strong>'
+                    f'<small>{ihtml.escape(node["note"])}</small></article>'
+                    for node in lane["nodes"])
+                lane_html.append(
+                    f'<section class="av-system-lane"><header><b>{n:02d}</b><div>'
+                    f'<span>{ihtml.escape(lane["label"])}</span>'
+                    f'<small>{ihtml.escape(lane["note"])}</small></div></header>{nodes}</section>')
+            edge_html = "".join(
+                f'<li><code>{ihtml.escape(e["from"])}</code><i aria-hidden="true">→</i>'
+                f'<code>{ihtml.escape(e["to"])}</code><span>{ihtml.escape(e["label"])}</span></li>'
+                for e in v["edges"])
+            than = (f'<div class="av-system" role="img" '
+                    f'aria-label="{ihtml.escape(v["aria"], quote=True)}">'
+                    f'<div class="av-system-lanes">{"".join(lane_html)}</div>'
+                    f'<ol class="av-system-edges" aria-label="Quan hệ giữa các tầng">{edge_html}</ol></div>')
     elif loai == "waterfall":
         lon = max(abs(float(x["value"])) for x in v["items"])
         item_html = []
         for x in v["items"]:
             rong = max(8.0, abs(float(x["value"])) / lon * 100)
-            item_html.append(
-                f'<li class="is-{x["kind"]} tone-{x.get("tone", "accent")}">'
-                f'<span>{ihtml.escape(x["label"])}</span>'
-                f'<div><i style="--w:{rong:.2f}%"></i></div>'
-                f'<strong>{ihtml.escape(x["hien"])}</strong>'
-                f'<small>{ihtml.escape(x["note"])}</small></li>')
-        than = (f'<ol class="av-waterfall" role="img" '
-                f'aria-label="{ihtml.escape(v["aria"], quote=True)}">{"".join(item_html)}</ol>')
+            if may_bon_van:
+                phep = "−" if x["kind"] == "change" else "=" if x["kind"] == "total" else ""
+                hien = str(x["hien"]).lstrip("−-") if x["kind"] == "change" else str(x["hien"])
+                item_html.append(
+                    f'<div class="pm-sub-row is-{x["kind"]} tone-{x.get("tone", "accent")}">'
+                    f'<span class="pm-sub-op" aria-hidden="true">{phep}</span>'
+                    f'<div class="pm-sub-label"><span>{ihtml.escape(x["label"])}</span>'
+                    f'<small>{ihtml.escape(x["note"])}</small></div>'
+                    f'<b class="pm-sub-figure">{ihtml.escape(hien)}</b>'
+                    f'<i class="pm-sub-bar" style="--w:{rong:.2f}%"></i></div>')
+            else:
+                item_html.append(
+                    f'<li class="is-{x["kind"]} tone-{x.get("tone", "accent")}">'
+                    f'<span>{ihtml.escape(x["label"])}</span>'
+                    f'<div><i style="--w:{rong:.2f}%"></i></div>'
+                    f'<strong>{ihtml.escape(x["hien"])}</strong>'
+                    f'<small>{ihtml.escape(x["note"])}</small></li>')
+        if may_bon_van:
+            than = (f'<div class="pm-subtraction" role="img" '
+                    f'aria-label="{ihtml.escape(v["aria"], quote=True)}">{"".join(item_html)}</div>')
+        else:
+            than = (f'<ol class="av-waterfall" role="img" '
+                    f'aria-label="{ihtml.escape(v["aria"], quote=True)}">{"".join(item_html)}</ol>')
     elif loai == "comparison":
         ben = []
         for x in v["sides"]:
@@ -494,12 +550,28 @@ def render_visual(v: dict, show_claim_refs: bool = True) -> str:
         diem = []
         for x in v["events"]:
             cao = max(12.0, float(x["magnitude"]) / lon * 100)
-            diem.append(
-                f'<span class="av-time tone-{x.get("tone", "info")}">'
-                f'<i style="--m:{cao:.2f}%"></i><b>{ihtml.escape(x["label"])}</b>'
-                f'<strong>{ihtml.escape(x["value"])}</strong><small>{ihtml.escape(x.get("gap", "—"))}</small></span>')
-        than = (f'<div class="av-timeline" tabindex="0" role="img" '
-                f'aria-label="{ihtml.escape(v["aria"], quote=True)}">{"".join(diem)}</div>')
+            if may_bon_van:
+                ky, co, chot = str(x.get("gap", "—")).partition(" · ")
+                diem.append(
+                    f'<div class="pm-ledger-row tone-{x.get("tone", "info")}" style="--m:{cao:.2f}">'
+                    f'<b>{ihtml.escape(x["label"])}</b><div class="pm-ledger-period">'
+                    f'<span>{ihtml.escape(ky)}</span>'
+                    f'{f"<small>{ihtml.escape(chot)}</small>" if co else ""}</div>'
+                    f'<div class="pm-ledger-amount"><i></i><b>{ihtml.escape(x["value"])}</b></div></div>')
+            else:
+                diem.append(
+                    f'<span class="av-time tone-{x.get("tone", "info")}">'
+                    f'<i style="--m:{cao:.2f}%"></i><b>{ihtml.escape(x["label"])}</b>'
+                    f'<strong>{ihtml.escape(x["value"])}</strong><small>{ihtml.escape(x.get("gap", "—"))}</small></span>')
+        if may_bon_van:
+            than = (f'<div class="pm-ledger" role="img" '
+                    f'aria-label="{ihtml.escape(v["aria"], quote=True)}">'
+                    f'<div class="pm-ledger-row pm-ledger-head" aria-hidden="true">'
+                    f'<span>Tháng ghi nhận</span><span>Kỳ economics · ngày chốt</span>'
+                    f'<span>{ihtml.escape(v.get("unit", "giá trị"))}</span></div>{"".join(diem)}</div>')
+        else:
+            than = (f'<div class="av-timeline" tabindex="0" role="img" '
+                    f'aria-label="{ihtml.escape(v["aria"], quote=True)}">{"".join(diem)}</div>')
     elif loai == "dai":
         # 🔴 KHAI GIÁ TRỊ, KHÔNG KHAI VỊ TRÍ — cùng luật `khoi_viz` đã ghi: vị trí là
         # KẾT QUẢ của một phép tính; khai kết quả thì lượt sửa số sau không kéo hình đi
@@ -530,12 +602,27 @@ def render_visual(v: dict, show_claim_refs: bool = True) -> str:
                       f'<small>{ihtml.escape(x["note"])}</small></li>' for x in v["diem"])
             + "</ol></div>")
     else:
-        than = '<div class="av-distribution" role="img" aria-label="{}"><div class="av-dist-bar">{}</div><div class="av-dist-legend">{}</div></div>'.format(
-            ihtml.escape(v["aria"], quote=True),
-            "".join(f'<i class="tone-{x.get("tone", "accent")}" style="--n:{x["count"]}"></i>'
-                    for x in v["segments"]),
-            "".join(f'<span class="tone-{x.get("tone", "accent")}"><i></i><b>{x["count"]}</b>'
-                    f'<small>{ihtml.escape(x["label"])}</small></span>' for x in v["segments"]))
+        if may_bon_van:
+            rows = []
+            for x in v["segments"]:
+                tone = x.get("tone", "accent")
+                pipe = "pm-pipe-flow" if tone == "good" else "pm-pipe-shut" if tone == "bad" else "pm-pipe-dot"
+                rows.append(
+                    f'<div class="pm-capture-row tone-{tone}"><b>{x["count"]}</b>'
+                    f'<div class="pm-capture-label"><span>{ihtml.escape(x["label"])}</span>'
+                    f'<small>{ihtml.escape(x["note"])}</small></div>'
+                    f'<div class="pm-capture-pipes">'
+                    + "".join(f'<i class="{pipe}"></i>' for _ in range(x["count"]))
+                    + '</div></div>')
+            than = (f'<div class="pm-capture" role="img" '
+                    f'aria-label="{ihtml.escape(v["aria"], quote=True)}">{"".join(rows)}</div>')
+        else:
+            than = '<div class="av-distribution" role="img" aria-label="{}"><div class="av-dist-bar">{}</div><div class="av-dist-legend">{}</div></div>'.format(
+                ihtml.escape(v["aria"], quote=True),
+                "".join(f'<i class="tone-{x.get("tone", "accent")}" style="--n:{x["count"]}"></i>'
+                        for x in v["segments"]),
+                "".join(f'<span class="tone-{x.get("tone", "accent")}"><i></i><b>{x["count"]}</b>'
+                        f'<small>{ihtml.escape(x["label"])}</small></span>' for x in v["segments"]))
 
     if show_claim_refs:
         claims = " · ".join(
@@ -548,6 +635,16 @@ def render_visual(v: dict, show_claim_refs: bool = True) -> str:
         # `cong_visuals`; chỉ con trỏ file/claim không được lọ ra caption.
         scope = (f'<span class="article-viz-scope">'
                  f'{ihtml.escape(v["public_scope"])}</span>')
+    if may_bon_van:
+        them = " primer-chapter-map" if loai == "system-map" else ""
+        return f'''<figure class="article-viz article-viz-{loai} primer-chapter{them}" id="visual-{vid}" data-chapter="{chapter}" data-spotlight>
+  <div class="primer-chapter-inner">
+  <header class="article-viz-head primer-chapter-head"><span class="primer-chapter-no" aria-hidden="true">{chapter}</span><div><p>{ihtml.escape(v.get("eyebrow", loai).upper())}</p><h3>{ihtml.escape(v["title"])}</h3></div></header>
+  {than}
+  <figcaption><span>{ihtml.escape(v["caption"])}</span>{scope}</figcaption>
+  <details class="article-viz-data"><summary>Dữ liệu đứng sau hình <span>mở bảng ↓</span></summary>{bang_html}</details>
+  </div>
+</figure>'''
     return f'''<figure class="article-viz article-viz-{loai}" id="visual-{vid}" data-spotlight>
   <div class="article-viz-head"><p>{ihtml.escape(v.get("eyebrow", loai).upper())}</p><h3>{ihtml.escape(v["title"])}</h3></div>
   {than}
@@ -557,7 +654,8 @@ def render_visual(v: dict, show_claim_refs: bool = True) -> str:
 
 
 def render(md: str, o: str, visuals: list | None = None,
-           show_claim_refs: bool = True) -> str:
+           show_claim_refs: bool = True, visual_chapters: dict | None = None,
+           art_direction: str = "") -> str:
     visual_map = {v["id"]: v for v in (visuals or [])}
     lines, out, i = md.split("\n"), [], 0
     while i < len(lines):
@@ -571,7 +669,10 @@ def render(md: str, o: str, visuals: list | None = None,
         if vm:
             if vm.group(1) not in visual_map:
                 raise LoiCong(f"visual '{vm.group(1)}' có marker nhưng thiếu cấu hình — {o}")
-            out.append(render_visual(visual_map[vm.group(1)], show_claim_refs)); i += 1; continue
+            vid = vm.group(1)
+            out.append(render_visual(visual_map[vid], show_claim_refs,
+                                     (visual_chapters or {}).get(vid, ""), art_direction))
+            i += 1; continue
 
         if ln.startswith("```"):                                    # khối code
             lang_ = ln[3:].strip()
@@ -581,8 +682,12 @@ def render(md: str, o: str, visuals: list | None = None,
                 buf.append(lines[j]); j += 1
             if j >= len(lines):
                 raise LoiCong(f"khối ``` không đóng — {o}")
-            cls = f' class="l-{lang_}"' if lang_ else ""
-            out.append(f'<pre{cls}><code>{ihtml.escape(chr(10).join(buf))}</code></pre>')
+            allocation = _so_do_phan_bo_primer(buf) if art_direction == "machine-valves" else ""
+            if allocation:
+                out.append(allocation)
+            else:
+                cls = f' class="l-{lang_}"' if lang_ else ""
+                out.append(f'<pre{cls}><code>{ihtml.escape(chr(10).join(buf))}</code></pre>')
             i = j + 1
             continue
 
@@ -648,14 +753,131 @@ def render(md: str, o: str, visuals: list | None = None,
     return "\n".join(out)
 
 
+def _so_do_phan_bo_primer(lines: list[str]) -> str:
+    """Đổi đúng cây phân bổ trong Primer thành flow; mọi nhãn vẫn đọc từ markdown."""
+    if len(lines) != 4 or lines[0].strip() != "Net Revenue":
+        return ""
+    nhanh_mot = re.fullmatch(r"\s*├─\s*(.+?)\s*→\s*(.+?)\s*", lines[1])
+    ghi_chu = re.fullmatch(r"\s*│\s*(.+?)\s*", lines[2])
+    nhanh_hai = re.fullmatch(r"\s*└─\s*(.+?)\s*→\s*(.+?)\s*", lines[3])
+    if not (nhanh_mot and ghi_chu and nhanh_hai):
+        return ""
+    nhanh = ((nhanh_mot.group(1), nhanh_mot.group(2), ghi_chu.group(1)),
+             (nhanh_hai.group(1), nhanh_hai.group(2), ""))
+    cards = "".join(
+        f'<article><b>{ihtml.escape(ty_le)}</b><span>{ihtml.escape(ten.strip(chr(34)))}</span>'
+        f'{f"<small>{ihtml.escape(note)}</small>" if note else ""}</article>'
+        for ty_le, ten, note in nhanh)
+    return (f'<section class="primer-allocation" aria-label="Sơ đồ phân bổ từ Net Revenue">'
+            f'<header>{ihtml.escape(lines[0].strip())}</header><div>{cards}</div></section>')
+
+
+def _loai_bang(headers: list[str], data_rows: list[list[str]]) -> str:
+    """Gắn vai trình bày từ chính header/nhãn; không duy trì registry dữ liệu thứ hai."""
+    sach = tuple(re.sub(r"[*_`]", "", c).strip().casefold() for c in headers)
+    if sach == ("cách so", "kết quả"):
+        return "table-compare"
+    if sach == ("bước", "ai làm", "lấy từ đâu"):
+        return "table-process"
+    if sach == ("đường về tay ai đó", "trạng thái tại lần đo"):
+        return "table-status"
+    if all(not c for c in sach):
+        cot_dau = " ".join(re.sub(r"[*_`]", "", r[0]).casefold()
+                           for r in data_rows if r)
+        if "stablecoin lưu hành" in cot_dau:
+            return "table-finance"
+        if "chi phí trực tiếp" in cot_dau:
+            return "table-costs"
+        if "tổng cung sky" in cot_dau:
+            return "table-chain"
+        if "sky protocol" in cot_dau:
+            return "table-actors"
+    return ""
+
+
 def bang(blk: list[str], o: str) -> str:
     rows = [[c.strip() for c in r.strip().strip("|").split("|")] for r in blk]
     if len(rows) < 2 or not all(set(c) <= set("-: ") for c in rows[1]):
         raise LoiCong(f"bảng thiếu dòng ngăn cách '|---|' — {o}")
-    head = "".join(f"<th>{inline(c, o)}</th>" for c in rows[0])
-    body = "".join("<tr>" + "".join(f"<td>{inline(c, o)}</td>" for c in r) + "</tr>"
-                   for r in rows[2:])
-    return f'<div class="cuon"><table><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>'
+    headers, data_rows = rows[0], rows[2:]
+    kind = _loai_bang(headers, data_rows)
+    head = "".join(f"<th>{inline(c, o)}</th>" for c in headers)
+    bar_values = []
+    if kind == "table-costs":
+        for row in data_rows:
+            m = re.search(r"\d[\d.,]*", re.sub(r"[*_`]", "", row[1])) if len(row) > 1 else None
+            bar_values.append(float(m.group(0).replace(".", "").replace(",", ".")) if m else 0.0)
+    bar_max = max(bar_values, default=0.0)
+    body_rows = []
+    for row_no, row in enumerate(data_rows):
+        row_class = ""
+        if kind == "table-status" and len(row) > 1:
+            row_class = (' status-live' if row[1].startswith("🟢") else
+                         ' status-closed' if row[1].startswith("🔴") else
+                         ' status-indirect' if row[1].startswith("⚪") else "")
+        cells = "".join(
+            f'<td data-col="{ihtml.escape(re.sub(r"[*_`]", "", headers[n]), quote=True)}">'
+            f'{inline(c, o)}</td>' for n, c in enumerate(row))
+        attrs = f' class="{row_class.strip()}"' if row_class else ""
+        if kind == "table-costs" and bar_max:
+            attrs += f' style="--bar:{bar_values[row_no] / bar_max * 100:.2f}%"'
+        body_rows.append(f'<tr{attrs}>{cells}</tr>')
+    table_classes = []
+    if all(not c for c in headers):
+        table_classes.append("table-key-value")
+    if kind:
+        table_classes.append(kind)
+    table_attr = f' class="{" ".join(table_classes)}"' if table_classes else ""
+    wrap_class = "cuon table-module" if kind else "cuon"
+    return (f'<div class="{wrap_class}"><table{table_attr}><thead><tr>{head}</tr></thead>'
+            f'<tbody>{"".join(body_rows)}</tbody></table></div>')
+
+
+def _gom_snapshot_primer(story: str, recap_id: str, o: str) -> str:
+    """Giữ recap thành một mạch đọc; gom đúng ba bảng vào financial data sheet."""
+    lines, out = story.splitlines(), []
+    panels = {"table-finance": "finance", "table-costs": "costs", "table-chain": "chain"}
+    found = set()
+    for line in lines:
+        kind = next((name for name in panels if f" {name}" in line), "")
+        if kind and line.startswith('<div class="bang table-module">'):
+            if not out or not out[-1].startswith("<p>"):
+                raise LoiCong(f"snapshot Primer thiếu heading ngay trước {kind} — {o}")
+            title = out.pop()
+            panel = panels[kind]
+            # Snapshot là bảng báo cáo, không phải data-card. Đổi vai ngay trong
+            # markup để nó không còn phụ thuộc vào việc CSS override thắng grid cũ.
+            line, changed = re.subn(
+                rf'(?<=\s){re.escape(kind)}(?=(?:\s|"))',
+                f"report-{panel}", line, count=1)
+            if changed != 1:
+                raise LoiCong(f"snapshot Primer không đổi được vai bảng {kind} — {o}")
+            out.append(f'<section class="snapshot-panel snapshot-panel-{panel}">{title}{line}</section>')
+            found.add(kind)
+        else:
+            out.append(line)
+    if found != set(panels):
+        raise LoiCong(f"snapshot Primer thiếu bảng để gom: {sorted(set(panels) - found)} — {o}")
+    story = "\n".join(out)
+    marker = f'<h2 id="{recap_id}">'
+    recap_heading = story.find(marker)
+    if recap_heading < 0:
+        raise LoiCong(f"snapshot Primer thiếu heading recap để gom — {o}")
+    recap_start = story.find("</h2>", recap_heading) + len("</h2>")
+    snapshot_heading = story.find("\n<h2 ", recap_start)
+    first_panel = story.find('<section class="snapshot-panel snapshot-panel-finance">',
+                             snapshot_heading)
+    if snapshot_heading < 0 or first_panel < 0:
+        raise LoiCong(f"snapshot Primer thiếu heading hoặc panel ảnh chụp — {o}")
+    snapshot_start = story.find("</h2>", snapshot_heading) + len("</h2>")
+    snapshot_end = story.find("\n<h2 ", first_panel)
+    if snapshot_start <= snapshot_heading or snapshot_end < 0:
+        raise LoiCong(f"snapshot Primer thiếu ranh giới để đóng report form — {o}")
+    return (story[:recap_start] + '\n<section class="primer-recap">'
+            + story[recap_start:snapshot_heading] + "\n</section>"
+            + story[snapshot_heading:snapshot_start]
+            + '\n<section class="primer-snapshot-suite">'
+            + story[snapshot_start:snapshot_end] + "\n</section>" + story[snapshot_end:])
 
 
 def slug(s: str) -> str:
@@ -893,6 +1115,10 @@ def cong_visual_html(txt: str, visuals: list, o: str) -> None:
         raise LoiCong(f"visual v3 dựng thiếu figure — cần {len(visuals)} — {o}")
     if txt.count('<details class="article-viz-data">') != len(visuals):
         raise LoiCong(f"visual v3 dựng thiếu bảng dữ liệu gốc — cần {len(visuals)} — {o}")
+    expected_labels = sum(len(headers) * len(rows)
+                          for headers, rows in (_du_lieu_visual(v) for v in visuals))
+    if txt.count('data-label="') != expected_labels:
+        raise LoiCong(f"visual v3 dựng thiếu nhãn data card — cần {expected_labels} — {o}")
     for v in visuals:
         if f'id="visual-{v["id"]}"' not in txt:
             raise LoiCong(f"visual v3 dựng thiếu id {v['id']!r} — {o}")
@@ -2054,6 +2280,9 @@ def doc_primers() -> list[dict]:
         if pid in ids or path in paths or token in tokens:
             raise LoiCong(f"primer trùng id/path/token — {o}")
         ids.add(pid); paths.add(path); tokens.add(token)
+        art_direction = str(cfg.get("art_direction", ""))
+        if art_direction not in {"", "machine-valves"}:
+            raise LoiCong(f"primer art_direction lạ {art_direction!r} — {o}")
         draft_rel = pathlib.PurePosixPath(str(cfg["draft"]))
         if draft_rel.is_absolute() or ".." in draft_rel.parts:
             raise LoiCong(f"primer draft phải là đường tương đối nằm trong kho — {o}")
@@ -2139,10 +2368,18 @@ def doc_primers() -> list[dict]:
 def trang_primer(cfg: dict) -> str:
     """Token Primer: mạch kể mở; lớp kiểm chứng có tên và đóng mặc định."""
     o, visuals = cfg["_origin"], cfg["visuals"]
-    story = render(cfg["_story"], o, visuals, show_claim_refs=False).replace(
-        '<div class="cuon"><table>', '<div class="bang"><table>')
-    verify = render(cfg["_verify"], o, visuals, show_claim_refs=False).replace(
-        '<div class="cuon"><table>', '<div class="bang"><table>')
+    chapters = {str(place["visual"]): f"{n:02d}"
+                for n, place in enumerate(cfg["placements"], 1)}
+    art_direction = str(cfg.get("art_direction", ""))
+    story = render(cfg["_story"], o, visuals, show_claim_refs=False,
+                   visual_chapters=chapters, art_direction=art_direction).replace(
+        '<div class="cuon', '<div class="bang')
+    verify = render(cfg["_verify"], o, visuals, show_claim_refs=False,
+                    visual_chapters=chapters, art_direction=art_direction).replace(
+        '<div class="cuon', '<div class="bang')
+    if art_direction == "machine-valves":
+        story = _bo_cham_trang_thai_primer(story)
+        verify = _bo_cham_trang_thai_primer(verify)
     recap_id = slug(cfg["recap_heading"].removeprefix("## "))
     recap_h2 = f'<h2 id="{recap_id}">'
     if story.count(recap_h2) != 1:
@@ -2151,17 +2388,38 @@ def trang_primer(cfg: dict) -> str:
         recap_h2,
         f'<p class="primer-return"><a href="#visual-{cfg["visuals"][0]["id"]}">'
         '↖ Quay lại bản đồ bốn tầng trước khi đọc phần kết</a></p>' + recap_h2, 1)
+    if art_direction == "machine-valves":
+        story = _gom_snapshot_primer(story, recap_id, o)
     jump = []
     for heading in re.findall(r"^##\s+(.+)$", cfg["_story"], re.M)[:4]:
         jump.append(f'<a href="#{slug(heading)}">{ihtml.escape(re.sub(r"[*_`]", "", heading))}</a>')
+    hero_ghost = (f'<span class="primer-hero-ghost" aria-hidden="true">'
+                  f'{ihtml.escape(cfg["token"])}</span>') if art_direction == "machine-valves" else (
+                  f'<span class="ghost-num" aria-hidden="true">{ihtml.escape(cfg["token"])}</span>')
+    hero_top_open = '<div class="primer-hero-top">' if art_direction == "machine-valves" else ""
+    hero_top_close = '</div>' if art_direction == "machine-valves" else ""
+    machine_index = ""
+    if art_direction == "machine-valves":
+        visual_map = {str(v["id"]): v for v in visuals}
+        links = []
+        for place in cfg["placements"]:
+            vid = str(place["visual"]); v = visual_map[vid]
+            links.append(
+                f'<a href="#visual-{ihtml.escape(vid, quote=True)}"><b>{chapters[vid]}</b>'
+                f'<small>{ihtml.escape(v.get("eyebrow", v["type"]).upper())}</small>'
+                f'<span>{ihtml.escape(v["title"])}</span></a>')
+        machine_index = ('<nav class="primer-machine-index" '
+                         'aria-label="Một cỗ máy, bốn lăng kính">'
+                         + "".join(links) + '</nav>')
     than = f'''<section class="hero primer-hero">
-  <span class="ghost-num" aria-hidden="true">{ihtml.escape(cfg["token"])}</span>
-  <span class="hero-code" aria-hidden="true">TOKEN PRIMER · SYSTEM / CAPITAL / CAPTURE</span>
-  <div class="article-path" aria-label="Vị trí Token Primer"><a href="../../">BlockPinned</a><span>/</span><a href="../">Token</a><span>/</span><b>{ihtml.escape(cfg["token"])}</b></div>
+  {hero_ghost}
+  {hero_top_open}<div class="article-path" aria-label="Vị trí Token Primer"><a href="../../">BlockPinned</a><span>/</span><a href="../">Token</a><span>/</span><b>{ihtml.escape(cfg["token"])}</b></div>
+  <span class="hero-code" aria-hidden="true">TOKEN PRIMER · SYSTEM / CAPITAL / CAPTURE</span>{hero_top_close}
   <p class="eyebrow"><span>Token Primer · {ihtml.escape(cfg["token"])}</span><span class="im">đọc cỗ máy trước · đọc token sau</span></p>
   <h1 class="display">{_tieu_de_nhan(cfg["title"])}</h1>
   <p class="subline">{ihtml.escape(cfg["description"])}</p>
   <div class="primer-pin"><span><b>GHIM TẠI</b>{ihtml.escape(cfg["pin"])}</span><span><b>BẢN NỘI DUNG</b>{ihtml.escape(cfg["edition"])}</span><span><b>LOẠI</b>Sống theo đối tượng, không theo ngày đăng</span></div>
+  {machine_index}
 </section>
 <nav class="primer-nav" aria-label="Đường đọc Token Primer"><span>Đường đọc</span>{"".join(jump)}<a href="#lop-kiem-chung">Lớp kiểm chứng ↓</a></nav>
 <section class="than article-body article-body-centered primer-body" id="primer-story">
@@ -2176,6 +2434,50 @@ def trang_primer(cfg: dict) -> str:
         raise LoiCong(f"VERIFY primer phải đóng mặc định — {o}")
     if than.count('class="chan"') != cfg["_blockers"]:
         raise LoiCong(f"renderer làm rơi câu chặn inline của primer — {o}")
+    if art_direction == "machine-valves":
+        required = ('class="primer-machine-index"', 'class="pm-subtraction"',
+                    'class="pm-map-ghost"', 'class="pm-machine"',
+                    'class="pm-ledger"', 'class="pm-capture"')
+        missing = [x for x in required if x not in than]
+        if missing or than.count('class="primer-chapter-no"') != len(visuals):
+            raise LoiCong(f"art direction machine-valves dựng thiếu cấu trúc: {missing} — {o}")
+        metric = _metric_tieu_de(cfg["title"])
+        if metric and f"${metric}" in cfg["title"] and (
+                f'<span class="nhan-manh">${ihtml.escape(metric)}</span>' not in than):
+            raise LoiCong(f"primer làm rơi ký hiệu tiền khỏi nhấn số ở hero — {o}")
+        headerless = re.findall(
+            r'<table([^>]*)><thead><tr>(?:<th></th>)+</tr>', than)
+        if any("table-key-value" not in (
+                re.search(r'class="([^"]*)"', attrs).group(1).split()
+                if re.search(r'class="([^"]*)"', attrs) else []) for attrs in headerless):
+            raise LoiCong(f"primer làm rơi kiểu bảng key-value trong thân bài — {o}")
+        html_classes = {name for blob in re.findall(r'class="([^"]*)"', than)
+                        for name in blob.split()}
+        snapshot_html = re.search(
+            r'<section class="primer-snapshot-suite">(.*?)</section>\s*<h2 ', than, re.S)
+        recap_html = re.search(
+            r'<section class="primer-recap">(.*?)</section>\s*<h2 ', than, re.S)
+        leaked_card_roles = ([name for name in ("table-finance", "table-costs", "table-chain")
+                              if name in html_classes])
+        misplaced_panels = ([name for name in ("snapshot-panel-finance", "snapshot-panel-costs",
+                                               "snapshot-panel-chain")
+                             if recap_html and name in recap_html.group(1)])
+        missing_reports = ([name for name in ("report-finance", "report-costs", "report-chain")
+                            if not snapshot_html or name not in snapshot_html.group(1)])
+        if not snapshot_html or not recap_html or leaked_card_roles or misplaced_panels or missing_reports:
+            raise LoiCong(
+                f"recap/report Primer sai ranh giới: card={leaked_card_roles}, "
+                f"panel-trong-recap={misplaced_panels}, report-thiếu={missing_reports} — {o}")
+        editorial = ("table-compare", "table-process", "primer-allocation",
+                     "table-status", "report-finance", "report-costs", "report-chain",
+                     "primer-recap", "primer-snapshot-suite",
+                     "snapshot-panel-finance", "snapshot-panel-costs", "snapshot-panel-chain")
+        missing_editorial = [name for name in editorial if name not in html_classes]
+        if missing_editorial or '<pre><code>Net Revenue' in than:
+            raise LoiCong(f"primer dựng thiếu data module biên tập: {missing_editorial} — {o}")
+        status_dots = [dot for dot in ("🔴", "🟢", "🔵", "⚪", "⚠️", "⚠") if dot in than]
+        if status_dots:
+            raise LoiCong(f"primer machine-valves còn emoji trạng thái trong mặt đọc: {status_dots} — {o}")
     # Cổng này đo HTML đã render, không đo ý định trong CSS. Chỉ
     # `display:none` thì con trỏ desk vẫn nằm trong source public và vẫn là leak.
     private_refs = [str(c["id"]) for c in cfg["source_claims"]]
@@ -2875,6 +3177,8 @@ def _tieu_de_nhan(tieu_de: str) -> str:
     if not metric:
         return ihtml.escape(tieu_de)
     truoc, sau = tieu_de.split(metric, 1)
+    if truoc.endswith("$"):
+        truoc, metric = truoc[:-1], "$" + metric
     return (ihtml.escape(truoc) + '<span class="nhan-manh">'
             + ihtml.escape(metric) + "</span>" + ihtml.escape(sau))
 
@@ -5285,7 +5589,9 @@ def main() -> None:
         d_primer.mkdir(parents=True, exist_ok=True)
         html_primer = trang(
             f'{primer["title"]} — BlockPinned', trang_primer(primer), t, "../..",
-            muc="token/", mat="page-token-primer",
+            muc="token/", mat=("page-token-primer" +
+                                (f' primer-{primer["art_direction"]}'
+                                 if primer.get("art_direction") else "")),
             meta={"mo_ta": primer["description"], "duong": f'/{primer["_path"]}',
                   "anh": primer.get("image", "avatar-800.png"), "loai": "article",
                   "tieu_de_og": primer["title"]})

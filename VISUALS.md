@@ -39,6 +39,12 @@ Mỗi bài có đúng một **visual signature** sống được khi bị screen
 phạm vi đo, mốc và `@BLOCKPINNED`. Mobile 360/390/430px là bố cục khác, không phải bản
 desktop bị thu nhỏ; bảng dữ liệu gốc và light/dark luôn phải còn đọc được.
 
+Token Primer có thể khai `"art_direction": "machine-valves"` ở top-level. Direction
+này không thay schema hay dữ liệu: `placements` quyết định số chương 01–04, cùng object
+visual vẫn sinh hình và bảng kiểm; lớp trình bày chỉ đổi composition thành hero index,
+chapter full-width, system-map dạng trạm/van và timeline dạng ledger. Không chép HTML
+prototype hay số liệu sang một nguồn thứ hai.
+
 ## Chín template
 
 ### `comparison` — cùng đầu vào, hai thang hoặc hai trạng thái
