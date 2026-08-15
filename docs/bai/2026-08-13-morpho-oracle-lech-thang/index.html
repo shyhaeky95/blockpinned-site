@@ -2290,12 +2290,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Oracle 0xdd1778f7…1101 của market USDC/PAXG 0x8eaf7b29…06c9 trên Ethereum khai baseTokenDecimals = 8 và quoteTokenDecimals = 8 trong tham số constructor, trong khi decimals thật đọc từ chính hai token là PAXG 18 và USDC 6. Hệ quả là hệ số quy thang SCALE_FACTOR bằng 10^36 thay vì 10^24, tức giá trị tài sản thế chấp bị đọc cao gấp đúng 10^12.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Tham số constructor giải mã từ giao dịch tạo oracle 0x1adb1aa3… tại Ethereum block&nbsp;20.640.779. SCALE_FACTOR() đọc on-chain tại block&nbsp;25.656.287 trả 10^36, khớp đúng giá trị dựng lại từ tham số đã khai. decimals() của PAXG 0x45804880…baf78 trả 18 và của USDC 0xa0b86991…06eb48 trả 6, đọc cùng block.</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Đọc SCALE_FACTOR() của oracle 0xdd1778f7…1101 ra một giá trị khác 10^36, hoặc đọc decimals() của PAXG và USDC ra khác 18 và 6, thì vế lệch 10^12 sai và claim này phải rút. Tham số constructor là immutable nên phép kiểm chạy được ở bất kỳ block nào sau 20.640.779.</p>
   </div>
-  
+
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-13</span><span>Mở claim. Dựng lại SCALE_FACTOR bằng công thức trong mã nguồn đã verify của MorphoChainlinkOracleV2, đối chiếu tham số constructor với decimals đọc thẳng từ hai token; 8/8 control PASS gồm control âm marketId bịa.</span></li></ol></details>
 </article><article class="case-claim song" id="C2" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2304,12 +2304,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Tại Ethereum block&nbsp;25.656.287, chỗ tài sản thế chấp còn lại trong market này là 0,059578845182231419 PAXG, đáng 269,78 đô theo giá feed; con số mà Morpho Blue dùng để quyết định thanh lý là 269.782.183.315.703 đô. Tỷ lệ vay trên thế chấp giao thức đọc được là 0,00000384 so với ngưỡng thanh lý 91,5%, và phép đếm sự kiện Liquidate toàn bộ lịch sử market cho ra 0 lượt.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Ethereum block&nbsp;25.656.287 (31/07/2026 23:58:59Z). Giá feed cùng block: PAXG/USD 4.527,35690715 và USDC/USD 0,99982398, nên giá oracle dùng là 4.528,153952808773&nbsp;USDC mỗi PAXG. Vòng đóng tài sản thế chấp lệch 0 giữa phép dựng từ sự kiện và phép đọc vị thế.</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Dựng lại 0,059578845182231419&nbsp;× (4.527,35690715&nbsp;/&nbsp;0,99982398) mà không làm tròn thành 269,78218 ở 5 chữ số thập phân thì con số thế chấp thật sai. Và nếu tìm được dù một sự kiện Liquidate nào trong lịch sử market này đến block chốt thì vế 0 lượt sai. Cả hai vế đều phải rút nếu một trong hai phép kiểm đổ.</p>
   </div>
-  
+
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-13</span><span>Mở claim. Lưu ý phép kiểm phải chia cho QUOTE_FEED_1: chỉ nhân với BASE_FEED_1 sẽ ra 269,73, lệch 0,02% và không khớp giá đọc on-chain.</span></li></ol></details>
 </article><article class="case-claim song" id="C3" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2318,12 +2318,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Khoản nợ ghi trên sổ của market này là 1.036.144.267,44 đô, nhưng vốn gốc tiền mặt ròng đã rời tay người cho vay chỉ là 95.013,24 đô; phần còn lại 1.036.049.254,20 đô là lãi ghi sổ, chiếm 99,991%. Hai con số cách nhau 10.905&nbsp;lần, nên con số một tỷ không phải quy mô thiệt hại.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Ethereum block&nbsp;25.656.287. totalSupplyAssets của market bằng 1.036.144.267,436096&nbsp;USDC; vốn gốc ròng 95.013,238325&nbsp;USDC dựng từ đối soát toàn bộ lịch sử dòng vốn của market. Trường lastUpdate bằng 1780659815 tức 05/06/2026 11:43:35Z, nghĩa là con số sổ đứng yên 56&nbsp;ngày trước block chốt vì lãi chỉ được ghi vào sổ mỗi lần có người chạm vào market.</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Đối soát lại toàn bộ lịch sử dòng vốn của market mà tổng vốn gốc ròng cộng lãi ghi sổ không khớp 1.036.144.267,436096, hoặc phần vốn gốc ròng ra khác 95.013,24 đô, thì tỷ lệ 99,991% và bội số 10.905&nbsp;lần đều phải rút.</p>
   </div>
-  
+
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-13</span><span>Mở claim. Phần chênh giữa vốn gốc và tài sản thế chấp được gọi là phần chưa được bảo đảm tương xứng, KHÔNG gọi là khoản lỗ đã thực hiện — người vay vẫn có thể trả nợ bằng nguồn ngoài market, và không phép đo nào ở đây chạm tới khả năng đó.</span></li></ol></details>
 </article><article class="case-claim cho" id="C4" data-article-claim data-st="cho">
   <header class="case-claim-head">
@@ -2332,12 +2332,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Market này có 7 địa chỉ cấp vốn và 8 địa chỉ đi vay, không địa chỉ nào xuất hiện ở cả hai tập. Dữ&nbsp;liệu đó loại được vòng tự vay tự trả bằng cùng một địa chỉ, nhưng chưa loại được khả năng nhiều địa chỉ khác nhau cùng một chủ.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Ethereum block&nbsp;25.656.287, dựng từ sổ cái sự kiện toàn bộ lịch sử market: Supply 19, Withdraw 13, Borrow 12, Repay 6, SupplyCollateral 9, WithdrawCollateral 2, Liquidate 0. Phép đếm dừng khi trang cuối ngắn hơn giới hạn 1.000 bản ghi mỗi trang, tức đã cạn chứ không bị cắt.</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Đưa ra được dữ kiện ở tầng chủ thể nối một hoặc nhiều địa chỉ cấp vốn với một hoặc nhiều địa chỉ đi vay — nguồn nạp chung, đích rút chung, hoặc quan hệ điều khiển — thì vế chưa loại được sẽ đóng theo hướng có trùng chủ. Ngược lại, chứng minh được bảy và tám địa chỉ đó thuộc về các chủ thể riêng biệt cũng đóng claim này.</p>
   </div>
-  
+
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-13</span><span>Mở ở trạng thái CHỜ SỐ, không phải ĐANG ĐỨNG: on-chain chỉ nói về địa chỉ, không nói về chủ thể. Bài công khai vế này như một câu chưa trả lời được thay vì suy ra kết luận về quan hệ giữa hai bên.</span></li></ol></details>
 </article></div>
   </div>

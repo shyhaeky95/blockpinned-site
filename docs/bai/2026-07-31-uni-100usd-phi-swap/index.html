@@ -2289,12 +2289,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Trong trọn ngày UTC 29/07/2026 trên Robinhood Chain, người dùng trả tổng $2.521.197 phí swap và Uniswap ghi nhận $369.178 phí giao thức — tức 14,64%, tương đương $14,64 trên mỗi $100.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Robinhood Chain · block&nbsp;22.006.019&nbsp;→&nbsp;22.867.791 (2026-07-29T00:00:00Z → 23:59:59Z) · factory v2 0x8bceaa40b9acdfaedf85adf4ff01f5ad6517937f · factory v3 0x1f7d7550b1b028f7571e69a784071f0205fd2efa · PoolManager v4 0x8366a39cc670b4001a1121b8f6a443a643e40951 · giá quy đổi cuối ngày UTC 29/07</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Dựng lại tập pool từ log tạo pool của ba factory (25.472 pair v2 · 334.102&nbsp;pool v3 · 209.478&nbsp;pool v4), quét log Swap của đúng tập đó trong cửa sổ block trên, rồi cộng phí theo tỷ lệ protocol fee của từng pool. Nếu tổng phí lệch quá 0,5% so với $2.521.197, hoặc phần giao thức lệch quá 0,5% so với $369.178, claim này sai.</p>
   </div>
-  
+
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Đăng. Phép cộng theo tỷ lệ thật từng pool được bắt phải tái lập đúng tổng phí đã đo trước đó: v3 ra đúng $1.723.901,73 (lệch 0,0%), v4 lệch 5 xu do làm tròn. Truy vấn đối chứng với mã sự kiện không tồn tại trả 0 kết quả; không khoảng block nào bị bỏ sót trong 4,09 triệu log. Lượt tính ĐẦU đã bị chính cổng này chặn vì lệch 49% — nguyên nhân là hàm tra giá thiếu một dòng gán giá ETH gốc bằng giá WETH, làm 3.708&nbsp;pool mất giá.</span></li></ol></details>
 </article><article class="case-claim song" id="C2" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2303,12 +2303,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Phiên bản v4 lấy tỷ lệ thấp nhất trong ba phiên bản: 7,81% bình quân gia quyền theo phí của các pool v4 đã bật, so với 16,67% ở v2 và 16,78% ở v3.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Cùng cửa sổ block. v2 $198.383 phí → $33.064 · v3 $1.723.902 → $289.353 · v4 $598.913 → $46.762. Tỷ lệ v4 tính từ trường fee của từng log Swap và protocolFee của đúng pool.</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Một phép dựng độc lập đọc từng log Swap cùng cấu hình protocol fee của đúng pool tại đúng block. Nếu tỷ lệ v4 lệch quá 2 điểm phần trăm so với 7,81%, claim này sai và câu &#x27;phiên bản mới nhất lấy tỷ lệ thấp nhất&#x27; phải sửa công khai.</p>
   </div>
-  
+
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Đăng. Tỷ lệ 7,81% là bình quân gia quyền theo phí của các pool v4 đã bật, tính từ trường fee của từng log Swap và protocolFee của đúng pool — không phải trung bình số học giữa các pool. Con số này thay cho phép áp đồng loạt một phần sáu ở bản nháp đầu, vốn cho kết quả cao hơn 5,69%.</span></li></ol></details>
 </article><article class="case-claim song" id="C3" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2317,12 +2317,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Công tắc protocol fee không bật ở mọi pool: tính theo giá trị phí, 92,9% phát sinh ở pool đã bật; $7,15 trên mỗi $100 phát sinh ở pool chưa bật, giao thức nhận $0.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Tập pool đã bật dựng từ event SetFeeProtocol (v3) và ProtocolFeeUpdated trên PoolManager (v4), quét từ block&nbsp;1 tới 22.867.791. v2 là công tắc toàn cục feeTo() trên factory.</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Quét lại hai event trên tới hết block&nbsp;22.867.791 rồi cân theo giá trị phí của từng pool trong cửa sổ đo. Nếu độ phủ lệch quá 3 điểm phần trăm so với 92,9%, claim này sai.</p>
   </div>
-  
+
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Đăng. Độ phủ đọc bằng EVENT chứ không bằng trạng thái pool: node công khai của chain này trả lỗi cho truy vấn trạng thái tại block cũ. v2 là công tắc toàn cục, đọc feeTo() trên factory và nó trỏ đúng contract giữ tiền đã ghim.</span></li></ol></details>
 </article><article class="case-claim song" id="C4" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2331,12 +2331,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Trong 30&nbsp;pool v4 sinh phí nhiều nhất ngày hôm đó, cả 15&nbsp;pool gắn hook đều không bật protocol fee. 15&nbsp;pool còn lại trong nhóm không gắn hook.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Cùng cửa sổ block. Trường hook đọc từ event Initialize trên PoolManager v4; trạng thái công tắc đọc từ event ProtocolFeeUpdated.</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Lấy 30&nbsp;pool v4 có phí cao nhất trong cửa sổ, đọc trường hook của từng pool và kiểm từng poolId có trong tập đã bật hay không. Nếu có bất kỳ pool gắn hook nào đã bật, claim này sai.</p>
   </div>
-  
+
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Đăng. Kết quả này nối tiếp bài đăng ngày 30/07 của kênh, vốn đã cho thấy một lớp pool trả 0; lần này đếm được lớp đó lớn cỡ nào trong nhóm sinh phí mạnh nhất.</span></li></ol></details>
 </article><article class="case-claim song" id="C5" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2345,12 +2345,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Phần chênh giữa phí giao thức ghi nhận và giá trị UNI đem burn trong cùng ngày KHÔNG nằm trong contract giữ tiền: dòng vào và dòng ra khớp nhau tới từng xu trên phần định giá được ($206.158,02 cả hai chiều), tồn ròng bằng 0.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Cùng cửa sổ block. TokenJar 0x2ac03e14cfe755426daaee0a4994184ce81482f8 · contract burn 0x7a8f74c2585f84c781f951b7f2ff21337d5b630b · UNI trên Robinhood 0xf177d86a28b520e3e396e4f3b96cd8e72d7dabd8. Giới hạn: 420 trên 472 token vào kho không có trong bộ giá đang dùng, nên $206.158 chỉ là phần định giá được.</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Quét log Transfer có đích là TokenJar và có nguồn là TokenJar trong cùng cửa sổ, cộng theo từng token. Nếu tồn ròng khác 0 trên phần định giá được, claim này sai. Control dương: UNI vào contract burn trong cửa sổ phải đúng 62.000 (31 lượt × 2.000).</p>
   </div>
-  
+
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Đăng. Phép đo này được chạy vì một câu hỏi của người đọc bản nháp: phần chênh giữa phí ghi nhận và UNI đã burn thì đi đâu. Nó BÁC giả thuyết &#x27;còn nằm trong kho&#x27;, và chính vì thế bài bỏ trục cũ (tỷ lệ burn trên phí) trước khi đăng. Giới hạn nặng: 420 trên 472 token vào kho không có trong bộ giá đang dùng.</span></li></ol></details>
 </article></div>
   </div>

@@ -1,0 +1,107 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Trong mã nguồn SBE BEAM đã xác minh, ví vận hành được phép điều chỉnh kbump, burn và hop bên trong các giới hạn do cơ chế quản trị đặt ra, với khoảng nghỉ 1.800 giây giữa hai lần đổi. Giới hạn tốc độ lớn nhất tương đương 350 triệu USD mỗi năm; tỷ lệ dành cho mua lại nhận giá trị từ 0% tới 100%. Ví được chỉ định có 6 owner và threshold 4 tại block 25.760.209.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ethereum block 25.760.209. SBE BEAM 0xc8b61d211D3D03A630Fb09199E17953a8c9749a9; ví vận hành 0x869294B42B80f99CF3Bdac0F44abddAd6cD41330. Mã nguồn đã xác minh được đối chiếu với mã băm của văn bản đề xuất; block ghim đọc getThreshold = 4 và getOwners = 6 địa chỉ.",
+      "falsifier": "Đọc lại mã nguồn đã xác minh mà hàm set không cho địa chỉ được cấp phép đổi đủ ba tham số, hoặc các nhánh file không cưỡng chế những giới hạn đã nêu; hoặc gọi getThreshold và getOwners tại đúng block ghim mà không ra 4 và 6, thì claim cơ chế này phải rút.",
+      "khong_do_lai": "Claim này cần đối chiếu mã nguồn đã xác minh với nhiều lời gọi trạng thái và một phép quy đổi tốc độ, nên không thể thu gọn thành một nút gọi hợp đồng duy nhất trên trình duyệt.",
+      "log": [
+        {
+          "ngay": "2026-08-15",
+          "ghi": "Đăng ở dạng năng lực có giới hạn, không gọi là chiếm quyền. Bốn chỗ chặn vẫn nằm trong thân bài: giới hạn chỉ executive vote đổi được, mức tối thiểu 300 giây, ngưỡng kích hoạt không giao cho ví, và địa chỉ triển khai không còn quyền tại block ghim.",
+          "nguon": "https://x.com/blockpinned/status/2088599713167937958"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "Dự đoán ghi trước: executive spell 0xB26b9d89776aa9E74ddA0e86e916413def03F59b được cast trong khoảng 2026-08-17T14:01:00Z tới 2026-08-17T20:27:00Z, tức 21h01 ngày 17/08 tới 03h27 ngày 18/08 giờ Việt Nam.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ghi trước trên X lúc 2026-08-15T12:12:31Z. Snapshot Ethereum block 25.760.209: spell đã lên hat, đã schedule, chưa cast; eta = 1786891307; nextCastTime = 21h00 ngày 17/08 giờ Việt Nam. Khoảng dự đoán suy từ 8 executive spell gần nhất, tất cả trễ 4,584 tới 4,852 ngày.",
+      "falsifier": "Nếu spell được cast trước 2026-08-17T14:01:00Z hoặc sau 2026-08-17T20:27:00Z, dự đoán này sai. Không dời hai đầu khoảng sau khi đã thấy giao dịch; nếu spell không được cast thì ghi rõ điều kiện không xảy ra, không tự tính là đúng.",
+      "khong_do_lai": "Đây là dự đoán về một giao dịch chưa xảy ra. Tới khi có kết quả phải đọc receipt và timestamp của giao dịch cast; trước đó không có một giá trị hợp đồng nào phân định được claim.",
+      "han": "2026-08-17",
+      "han_ghi": "Kết quả được phân định khi spell được cast hoặc khi khoảng dự đoán kết thúc lúc 2026-08-17T20:27:00Z; phải ghi kết quả tại trang này kể cả khi dự đoán sai.",
+      "ghi_truoc": {
+        "ngay": "2026-08-15",
+        "noi": "https://x.com/blockpinned/status/2088599717030830339 và trang này",
+        "so": "spell được cast trong khoảng 2026-08-17T14:01:00Z tới 2026-08-17T20:27:00Z"
+      },
+      "log": [
+        {
+          "ngay": "2026-08-15",
+          "ghi": "Ghi trước khi spell được cast. Khoảng giữ nguyên sau khi lịch schedule xuất hiện; không dùng nextCastTime để nới hai đầu dự đoán.",
+          "nguon": "https://x.com/blockpinned/status/2088599717030830339"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "text": "Dự đoán có điều kiện: nếu executive spell được cast, số thứ tự chương trình trả thưởng đi từ 15 lên 16 trong chính giao dịch đó.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ghi trước trên X lúc 2026-08-15T12:12:31Z. Snapshot trước cast tại Ethereum block 25.760.209; chương trình hiện hành có ids = 15. Dự đoán đọc từ chỉ thị kết thúc chương trình 15 và tạo chương trình 16 trong mã nguồn executive spell đã xác minh.",
+      "falsifier": "Nếu spell được cast mà ngay sau giao dịch đó ids không bằng 16, cách đọc source dùng cho dự đoán này bị bác. Nếu spell không được cast, claim không được tính là đúng hay sai vì điều kiện chấm chưa xảy ra.",
+      "khong_do_lai": "Đây là dự đoán có điều kiện về trạng thái sau một giao dịch chưa xảy ra. Chỉ có thể phân định bằng cách đọc ids tại block ngay sau giao dịch cast.",
+      "han": "2026-08-17",
+      "han_ghi": "Chỉ phân định nếu spell được cast; khi đó đọc ids tại block ngay sau giao dịch và ghi 15 lên 16 hoặc con số thực tế tại trang này.",
+      "ghi_truoc": {
+        "ngay": "2026-08-15",
+        "noi": "https://x.com/blockpinned/status/2088599717030830339 và trang này",
+        "so": "nếu spell được cast, ids đi từ 15 lên 16 trong cùng giao dịch"
+      },
+      "log": [
+        {
+          "ngay": "2026-08-15",
+          "ghi": "Ghi trước ở dạng có điều kiện. Bản cũ từng cho phép chấm ngay cả khi spell chưa chạy; đã sửa trước khi đăng để một kết cục ngoài điều kiện không thể bị gán thành thất bại giả.",
+          "nguon": "https://x.com/blockpinned/status/2088599717030830339"
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "text": "Dự đoán có điều kiện: nếu executive spell được cast, tổng đã rút của chương trình 15 sau khi chốt nằm trong khoảng 89.167.349 tới 90.021.114 SKY.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ghi trước trên X lúc 2026-08-15T12:12:31Z. Snapshot trước cast tại Ethereum block 25.760.209. Khoảng được tính từ trạng thái chương trình 15 và biên thời gian tới cửa cast đã ghi, trước khi biết giá trị rxd sau giao dịch.",
+      "falsifier": "Nếu spell được cast và rxd của chương trình 15 sau khi giao dịch hoàn tất thấp hơn 89.167.349 hoặc cao hơn 90.021.114 SKY, dự đoán này sai. Nếu spell không được cast, điều kiện chấm chưa xảy ra và claim không được tự tính là đúng.",
+      "khong_do_lai": "Giá trị cần kiểm chỉ tồn tại sau giao dịch cast. Tới lúc đó phải gọi rxd cho chương trình 15 tại block ngay sau giao dịch và so với hai đầu khoảng đã ghi.",
+      "han": "2026-08-17",
+      "han_ghi": "Chỉ phân định nếu spell được cast; khi đó đọc rxd của chương trình 15 ngay sau giao dịch và ghi con số thật, kể cả khi nó nằm ngoài khoảng dự đoán.",
+      "ghi_truoc": {
+        "ngay": "2026-08-15",
+        "noi": "https://x.com/blockpinned/status/2088599717030830339 và trang này",
+        "so": "nếu spell được cast, rxd của chương trình 15 sau khi chốt nằm trong 89.167.349 tới 90.021.114 SKY"
+      },
+      "log": [
+        {
+          "ngay": "2026-08-15",
+          "ghi": "Ghi trước khi có giá trị sau cast. Hai đầu khoảng được giữ nguyên sau khi spell được schedule.",
+          "nguon": "https://x.com/blockpinned/status/2088599717030830339"
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "text": "Dự đoán có điều kiện: nếu executive spell được cast, khoảng cách giữa hai lượt trả thưởng của chương trình mới giữ nguyên 601.200 giây.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ghi trước trên X lúc 2026-08-15T12:12:31Z. Snapshot trước cast tại Ethereum block 25.760.209. Con số 601.200 giây đọc từ cấu hình đã công bố và mã nguồn executive spell đã xác minh.",
+      "falsifier": "Nếu spell được cast mà intervals của chương trình mới khác 601.200 giây tại block ngay sau giao dịch, dự đoán này sai. Nếu spell không được cast, điều kiện chấm chưa xảy ra và claim không được tự tính là đúng.",
+      "khong_do_lai": "Đây là dự đoán có điều kiện về cấu hình sau một giao dịch chưa xảy ra. Chỉ có thể phân định bằng cách đọc intervals của chương trình mới sau cast.",
+      "han": "2026-08-17",
+      "han_ghi": "Chỉ phân định nếu spell được cast; khi đó đọc intervals của chương trình mới và ghi con số thật tại trang này, không chỉ ghi đúng hoặc sai.",
+      "ghi_truoc": {
+        "ngay": "2026-08-15",
+        "noi": "https://x.com/blockpinned/status/2088599717030830339 và trang này",
+        "so": "nếu spell được cast, intervals của chương trình mới giữ nguyên 601.200 giây"
+      },
+      "log": [
+        {
+          "ngay": "2026-08-15",
+          "ghi": "Ghi trước khi chương trình mới tồn tại trên sổ cái. Con số được giữ nguyên sau khi spell được schedule.",
+          "nguon": "https://x.com/blockpinned/status/2088599717030830339"
+        }
+      ]
+    }
+  ]
+}

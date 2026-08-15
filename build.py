@@ -183,9 +183,17 @@ LOGO_TOKEN = {
     # 🔴 Bản gốc là JPEG (coin id `pump-fun`), đổi sang PNG bằng `sips` lúc tải — cùng
     # lý do đã ghi ở HYPE: `kich_thuoc_png()` đọc IHDR và NỔ với mọi thứ không phải PNG.
     "PUMP":   ("token-pump.png",   "coingecko 67164/pump.jpg → png",           "2026-08-14"),
+    "SKY":    ("token-sky.png",    "coingecko 39925/sky.jpg → png",            "2026-08-15"),
 }
 
 NGUON_ASSET = {
+    # bài SKY 15/08 — nguồn `template/card-sky-sbe-beam.html`, dựng bằng
+    # `template/render_card_v2.py` và phục vụ đúng bản PNG trong `template/out/png/`.
+    # Hai số trên ảnh là hai vai khác nhau của cùng cơ chế nếu executive spell được
+    # thực thi: 27,77M là cấu hình mặc định sau cast; 350M là giới hạn của ví vận hành.
+    # Card giữ điều kiện "nếu spell được thực thi" ngay trên tầng đọc để 350M không bị
+    # hiểu thành mức chi hiện hành hay một dự báo.
+    "card-sky-sbe-beam.png": "png",
     # bài MORPHO 13/08 — dựng bằng KHUÔN v2, đường đi nay đã có chủ và có cổng:
     # nguồn `template/card-morpho-oracle-thang.html` (chép từ `template/card-v2.html`,
     # chỉ thay các ô `data-o`), render bằng `template/render_card_v2.py` — tức nó QUA
@@ -2201,7 +2209,8 @@ def font_face(goc: str) -> str:
 # chiều sâu. Token lạ ⇒ CHẶN build: thêm tên vào đây là một quyết định, không phải
 # một lượt gõ.
 TOKEN_TEN = {"UNI": "Uniswap", "LDO": "Lido", "HYPE": "Hyperliquid", "PENDLE": "Pendle",
-             "CAKE": "PancakeSwap", "MORPHO": "Morpho", "PUMP": "pump.fun"}
+             "CAKE": "PancakeSwap", "MORPHO": "Morpho", "PUMP": "pump.fun",
+             "SKY": "Sky"}
 
 # Tủ kính hiện mở cho ĐÚNG MỘT token, khai ở đây; toàn bộ nội dung trang sinh từ dữ
 # liệu, nên đổi dòng này là trang tự dựng lại cho token khác. Kèm SÀN: dưới 3 bài thì
@@ -3261,12 +3270,12 @@ def _so_claim_v3(claims: list) -> str:
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">{ihtml.escape(c['text'])}</p>
-  {hinh}
+{hinh}
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>{ihtml.escape(c['ghim'])}</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC BỎ CLAIM NÀY</span>{ihtml.escape(c['falsifier'])}</p>
   </div>
-  {khoi_do_lai(c)}
+{khoi_do_lai(c)}
   <details class="case-log"><summary>Lịch sử · {len(c['log'])} mốc</summary><ol>{nk}</ol></details>
 </article>''')
 

@@ -2290,12 +2290,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Trong quý II/2026, ví 0x43e9abea… nhận 1.311.093 HYPE staking emissions, bằng 54,20% tổng emissions 2.419.166 của quý. Ví này nằm trong danh sách nonCirculatingUserBalances mà Info API của Hyperliquid trả về, với số dư 241.150.943,99 tại thời điểm đo.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Ví 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API self-published, KHÔNG có block — ảnh chụp wall-clock 07/08/2026 · nonCirculatingUserBalances có 4 mục · circulatingSupply 299.024.976,59 · totalSupply 999.049.594,42</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Gọi delegatorRewards cho đúng ví đó rồi cộng totalAmount của các bản ghi thuộc tháng 4, 5, 6 năm 2026: ra khác 1.311.093 thì con số này sai. Kiểm chuỗi có lỗ không bằng ba số phải bằng nhau — số bản ghi, số ngày phân biệt, độ dài khoảng thời gian; ba số lệch nhau thì tổng quý chỉ là mức ÍT NHẤT chứ không phải tổng đầy đủ. Vế phân loại: gọi tokenDetails và đọc nonCirculatingUserBalances — ví không còn trong danh sách đó thì tiền đề trung tâm của bài mất chỗ dựa.</p>
   </div>
-  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Nút đo lại của trang gọi eth_call trên RPC Ethereum tại MỘT block. Phép đo này nằm trên HyperCore, đọc qua Info API bằng POST JSON, và không neo được vào block nào — HyperEVM RPC công khai mặc định không phục vụ trạng thái lịch sử. Đường dựng lại đầy đủ nằm ở mục Cách tự&nbsp;kiểm.</p>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Nút đo lại của trang gọi eth_call trên RPC Ethereum tại MỘT block. Phép đo này nằm trên HyperCore, đọc qua Info API bằng POST JSON, và không neo được vào block nào — HyperEVM RPC công khai mặc định không phục vụ trạng thái lịch sử. Đường dựng lại đầy đủ nằm ở mục Cách tự&nbsp;kiểm.</p>
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-07</span><span>Đăng. Tử số đo trực tiếp; mẫu số 2.419.166 là chuỗi của desk và khớp con số 2,41 triệu báo cáo tự in trong 0,38%. Lấy mẫu số của họ thì tỉ lệ là 54,40%. <a href="https://x.com/blockpinned/status/2085611015794995577">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C2" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2304,12 +2304,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Cùng quý, ví chuyển ra 1.288.966 HYPE qua 58 lệnh, tới 29 địa chỉ phân biệt, và 0/29 địa chỉ nhận nằm trong danh sách loại-trừ tại thời điểm đo. Chiều ngược lại có 0 lệnh chuyển token vào ví. Vì vậy khoản rời ví được cộng lại vào lưu thông, và vế cộng thêm của phép tính không đếm thừa.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Ví 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API self-published, KHÔNG có block — ảnh chụp wall-clock 07/08/2026 · quét userNonFundingLedgerUpdates theo từng tháng, 0/3 tháng chạm giới hạn số dòng trả về</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Quét lại userNonFundingLedgerUpdates cho ví đó trong quý II theo từng tháng, lấy các dòng HYPE có ví là nguồn, rồi đối chiếu từng destination với nonCirculatingUserBalances. Có bất kỳ địa chỉ nhận nào nằm trong danh sách loại-trừ thì phần cộng lại phải nhỏ hơn 1.288.967 — khi đó kết quả càng âm hơn, không đảo chiều. Tháng nào trả về đúng 500, 1000 hay 2000 dòng là chạm giới hạn, và khi đó tổng chỉ là mức ÍT NHẤT. Trước khi tin con số 0, kiểm phép đối chiếu có phân biệt được hai phía không: hỏi cùng phép thử với chính ví này, với 0xfefe…fefe và với địa chỉ dead — cả ba phải trả CÓ trong danh sách.</p>
   </div>
-  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Nút đo lại của trang gọi eth_call trên RPC Ethereum tại MỘT block. Phép đo này nằm trên HyperCore, đọc qua Info API bằng POST JSON, và không neo được vào block nào — HyperEVM RPC công khai mặc định không phục vụ trạng thái lịch sử. Đường dựng lại đầy đủ nằm ở mục Cách tự&nbsp;kiểm.</p>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Nút đo lại của trang gọi eth_call trên RPC Ethereum tại MỘT block. Phép đo này nằm trên HyperCore, đọc qua Info API bằng POST JSON, và không neo được vào block nào — HyperEVM RPC công khai mặc định không phục vụ trạng thái lịch sử. Đường dựng lại đầy đủ nằm ở mục Cách tự&nbsp;kiểm.</p>
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-07</span><span>Đăng. Vế này là giả định ngầm cho tới 07/08 — một lượt phản biện ngoài đòi đo nó, và phép đo đã thay giả định. Chiều rủi ro bị nêu ngược trong lượt phản biện đó: đích nhận là địa chỉ lưu thông chính là giả định của mô hình, còn kịch bản làm phép tính đổi là đích nhận thuộc danh sách loại-trừ. <a href="https://x.com/blockpinned/status/2085611015794995577">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C3" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2318,12 +2318,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Giữ nguyên mọi con số khác của báo cáo và chỉ đổi cách xử lý emissions chảy vào ví ngoài lưu thông, cán cân phát hành ròng quý II/2026 là −412.960 HYPE thay vì +890.000 mà báo cáo kết luận. Bỏ hẳn hạng mục huỷ token 39.792 ra khỏi phép tính thì kết quả vẫn âm, −373.168.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Ví 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API self-published, KHÔNG có block — ảnh chụp wall-clock 07/08/2026 · 2.419.166&nbsp;−&nbsp;1.311.093 = 1.108.073; cộng 1.288.967 thành 2.397.040; trừ 2.810.000 của báo cáo (mua lại 2.770.208 + huỷ 39.792) · nền lưu thông 299.024.977</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Cộng lại bốn hạng tử: ra khác −412.960 thì phép tính sai. Hai đường đo lượng rời ví lệch nhau 1 HYPE — sổ chuyển token cho 1.288.966, lệnh rút đã hoàn tất cho 1.288.967, chênh nằm trọn ở tháng 4 và bằng 0,00008%; bài dùng con số thứ hai, dùng con số thứ nhất thì kết quả là −412.961. Claim này KHÔNG nói báo cáo sai về hướng: đoạn kế tiếp của chính báo cáo cũng kết luận cung đang siết, nên ai đọc nó thành bất đồng về hướng là đọc sai claim.</p>
   </div>
-  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Nút đo lại của trang gọi eth_call trên RPC Ethereum tại MỘT block. Phép đo này nằm trên HyperCore, đọc qua Info API bằng POST JSON, và không neo được vào block nào — HyperEVM RPC công khai mặc định không phục vụ trạng thái lịch sử. Đường dựng lại đầy đủ nằm ở mục Cách tự&nbsp;kiểm.</p>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Nút đo lại của trang gọi eth_call trên RPC Ethereum tại MỘT block. Phép đo này nằm trên HyperCore, đọc qua Info API bằng POST JSON, và không neo được vào block nào — HyperEVM RPC công khai mặc định không phục vụ trạng thái lịch sử. Đường dựng lại đầy đủ nằm ở mục Cách tự&nbsp;kiểm.</p>
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-07</span><span>Đăng. Dấu âm không treo vào hạng mục yếu nhất: đặt phần huỷ bằng 0 thì vẫn còn −373.168. Phần huỷ là chỗ kém chắc nhất vì phép đo lượng huỷ của chính BlockPinned chênh 106% tuỳ khoảng thời gian chọn, và một kết luận về lượng huỷ từng viết ra đã bị tự rút vì lý do đó. <a href="https://x.com/blockpinned/status/2085611015794995577">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C4" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2332,12 +2332,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Lượng thưởng staking chảy vào ví đó dao động trong khoảng hẹp qua sáu quý đủ ngày: 1.303.294 · 1.327.384 · 1.336.732 · 1.351.753 · 1.289.617 · 1.311.093, chênh 4,82% giữa mức cao nhất và thấp nhất. Chuỗi này đo LƯỢNG CHẢY VÀO VÍ; nó không chứng minh các báo cáo quý trước cũng mắc cùng lỗi, vì BlockPinned chỉ có một báo cáo để kiểm phép tính.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Ví 0x43e9abea1910387c4292bca4b94de81462f8a251 · Info API self-published, KHÔNG có block — ảnh chụp wall-clock 07/08/2026 · delegatorRewards trả 587 bản ghi / 587&nbsp;ngày phân biệt / khoảng thời gian 587&nbsp;ngày, từ 29/12/2024 tới 07/08/2026, không thiếu ngày</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Cộng totalAmount theo từng quý dương lịch: một quý đủ ngày rơi ra ngoài khoảng 1.289.617–1.351.753 thì câu dao-động-hẹp phải viết lại. Một quý dương lịch hoàn chỉnh sau quý II/2026 ghi nhận dưới 1,0 triệu HYPE thì cách đọc này bị bác. Claim này KHÔNG được trích thành sai-số-lặp-sáu-lần: muốn nói vậy phải có sáu báo cáo quý và chứng minh từng bản đều cộng gộp cùng cách, mà BlockPinned không có.</p>
   </div>
-  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Nút đo lại của trang gọi eth_call trên RPC Ethereum tại MỘT block. Phép đo này nằm trên HyperCore, đọc qua Info API bằng POST JSON, và không neo được vào block nào — HyperEVM RPC công khai mặc định không phục vụ trạng thái lịch sử. Đường dựng lại đầy đủ nằm ở mục Cách tự&nbsp;kiểm.</p>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Nút đo lại của trang gọi eth_call trên RPC Ethereum tại MỘT block. Phép đo này nằm trên HyperCore, đọc qua Info API bằng POST JSON, và không neo được vào block nào — HyperEVM RPC công khai mặc định không phục vụ trạng thái lịch sử. Đường dựng lại đầy đủ nằm ở mục Cách tự&nbsp;kiểm.</p>
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-07</span><span>Đăng. Trước khi đo, desk đăng ký một điều-bác-bỏ cho mệnh đề phần này tăng dần theo thời gian — và nó nổ: quý I/2026 thấp hơn quý IV/2025, quý cuối trên quý đầu chỉ 1,006&nbsp;lần. Bản draft thứ hai vẫn viết sai-số-ổn-định-qua-sáu-quý và bị lượt phản biện ngoài thứ hai bắt; chủ ngữ đã thu về LƯỢNG CHẢY VÀO VÍ. <a href="https://x.com/blockpinned/status/2085611015794995577">nguồn</a></span></li></ol></details>
 </article></div>
   </div>

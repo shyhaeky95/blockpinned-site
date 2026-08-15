@@ -2289,12 +2289,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Tại block&nbsp;25.650.178, hợp đồng buyback của Pendle giữ 144.388,016375167975281387&nbsp;PENDLE: 65 giao dịch đưa token vào kể từ ngay sau lượt chuyển ngày 17/07, 0 lượt chuyển ra, và số dư bằng đúng phần vào trừ phần ra tới wei.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Ethereum block&nbsp;25.650.178 (2026-07-31T03:34:35Z) · cửa sổ đếm 25.553.408 → 25.650.178 · token PENDLE 0x808507121B80c02388fAd14726482e061B8da827 · hợp đồng buyback 0x9e08C5499F953C6297a7755bcbcED383B606896b</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Đếm lại log Transfer của PENDLE với đích là hợp đồng buyback trong đúng cửa sổ 25.553.408 → 25.650.178, rồi hỏi balanceOf tại block&nbsp;25.650.178. Nếu số lượt khác 65, hoặc tổng khác 144.388,016375167975281387, hoặc số dư không bằng vào trừ ra, thì claim này sai và tôi kiểm lại phía mình trước. Nếu xuất hiện bất kỳ lượt chuyển RA nào trong cửa sổ đó thì vế &#x27;0 lượt ra&#x27; chết.</p>
   </div>
-  <div class="dolai-o"><button class="dolai" type="button" data-to="0x808507121B80c02388fAd14726482e061B8da827" data-data="0x70a082310000000000000000000000009e08c5499f953c6297a7755bcbced383b606896b" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="18" data-chu-so="2" data-don-vi="PENDLE" data-ghim="144388.02">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>balanceOf(address)</code> trên <code>0x80850712…a827</code></div></div>
+<div class="dolai-o"><button class="dolai" type="button" data-to="0x808507121B80c02388fAd14726482e061B8da827" data-data="0x70a082310000000000000000000000009e08c5499f953c6297a7755bcbced383b606896b" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="18" data-chu-so="2" data-don-vi="PENDLE" data-ghim="144388.02">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>balanceOf(address)</code> trên <code>0x80850712…a827</code></div></div>
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Đăng. Control chạy cùng lượt: bỏ lọc địa chỉ ra 442 log (không rỗng); đích bịa ra 0 log; và đếm lại đúng cửa sổ của lượt đo 30/07 tái lập chính xác 45 log vào, 0 ra, 97.667,665590&nbsp;PENDLE — script tự dừng nếu ba số đó không trùng. Ảnh chụp lượt kiểm (9/9 PASS) nay tải được tại mục nguồn; một ghi chú diễn giải trong đó đã bị đánh dấu SỬA tại chỗ — ô nhãn 30/06 khớp nguồn Merkle chứ không khớp lượt chuyển. <a href="/du-lieu/verify_post07_2026-07-31.json">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C2" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2303,12 +2303,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Ít nhất 82,44% lượng PENDLE đó (119.039,606792 trên 144.388,016375) đến thẳng từ một lượt swap: token rời một địa chỉ vừa phát sự kiện swap rồi tới hợp đồng buyback trong chính giao dịch đó. Đây là con số sàn, không phải toàn phần.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>65 giao dịch riêng biệt trong cửa sổ 25.553.408 → 25.650.178 · 65/65 có ít nhất một sự kiện swap và có USDT đi ra khỏi hợp đồng · 378 sự kiện swap trên Uniswap v2, v3, v4 và Balancer · cùng một selector 0x8328af2f ở cả 65 giao dịch</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Nối từng sự kiện swap với log Transfer của PENDLE vào hợp đồng theo token, lượng và người nhận. Nếu có giao dịch mà PENDLE tới từ một transfer không liên quan tới swap nào trong cùng giao dịch, phần lượng đó phải bị trừ khỏi con số 82,44%. Ngược lại, mở rộng bộ lọc sang các loại sự kiện swap chưa nhận diện có thể nâng con số này lên — nên con số này là mức sàn ở cả hai chiều.</p>
   </div>
-  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Phép nối này đọc toàn bộ receipt của 65 giao dịch rồi so từng cặp log, không phải một lời gọi hàm đơn lẻ nên không chạy được bằng một nút trên trình duyệt.</p>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Phép nối này đọc toàn bộ receipt của 65 giao dịch rồi so từng cặp log, không phải một lời gọi hàm đơn lẻ nên không chạy được bằng một nút trên trình duyệt.</p>
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Đăng ở dạng con số sàn, sau ba vòng đo. Vòng 1 hỏi &#x27;địa chỉ gửi có tự phát sự kiện swap không&#x27; và trả 0/65 — sai bề rộng, vì sự kiện swap do pool phát còn người gửi là router. Vòng 2 ra 65/65 nhưng chỉ chứng minh ĐỒNG THỜI. Vòng 3 nối nhân quả và chỉ đóng được 82,44%, với 1/65 giao dịch nối kín hoàn toàn. Bản nháp trước đó gọi thẳng là &#x27;mua qua 65 giao dịch&#x27; — đã hạ. Hiện vật nay tải được: 65 transaction hash kèm số sự kiện swap, loại DEX, token chi ra và lượng PENDLE nhận của TỪNG giao dịch. 🔴 File nối (pendle_buy_tie) chỉ lưu 10 trong 64 ca trượt — đó là một giới hạn tự đặt lúc ghi ảnh chụp, không phải kết quả đo, và nay được khai thẳng trong chính file. Ai kiểm 82,44% bằng file đó chỉ kiểm được 10/64 ca. Sinh lại đủ 64: task PENDLE-T-TIE-FULL64. <a href="/du-lieu/pendle_buy_source_2026-07-31.json">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C3" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2317,12 +2317,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Nhánh chuyển từ hợp đồng buyback sang sPendle có đúng 12 lượt tính từ block&nbsp;0, và danh sách đã cạn chứ không phải trang đầu của một danh sách dài hơn. Khoảng cách giữa các lượt là 11,473 đến 17,121&nbsp;ngày, trung vị 13,924, trung bình 14,021.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>12 lượt từ block&nbsp;24.447.170 (13/02) tới block&nbsp;25.553.407 (17/07), tổng 2.242.951,379862&nbsp;PENDLE · truy vấn trang kế tiếp trả 0 kết quả ở cả cỡ trang 1.000 lẫn 50 · 11 khoảng tính từ timestamp của chính 12 lượt, không từ nhãn ngày; 9/11 khoảng nằm trong 13,4–14,5&nbsp;ngày</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Quét lại log Transfer của PENDLE với người gửi là hợp đồng buyback và người nhận là sPendle, từ block&nbsp;0, rồi xin trang thứ hai. Nếu trang hai trả về bất kỳ bản ghi nào, hoặc nếu tổng số lượt khác 12, thì danh sách này chưa cạn và mọi phát biểu về nhịp dựng trên nó phải viết lại.</p>
   </div>
-  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Đây là một truy vấn log trên toàn bộ lịch sử chain, không phải một lời gọi hàm trả về một giá trị, nên nút đo lại trên trình duyệt không chạy được cho claim này.</p>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Đây là một truy vấn log trên toàn bộ lịch sử chain, không phải một lời gọi hàm trả về một giá trị, nên nút đo lại trên trình duyệt không chạy được cho claim này.</p>
   <details class="case-log"><summary>Lịch sử · 2 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Đăng. Vế &#x27;đã cạn&#x27; được kiểm bằng cách xin trang thứ hai thật, ở hai cỡ trang khác nhau, thay vì suy từ việc số kết quả nhỏ hơn giới hạn một trang. <span class="nguon-tro">nguồn: PENDLE/data/pendle_buyback_unit_2026-07-31.json (kho nghiên cứu, chưa publish)</span></span></li><li><span class="case-log-date">2026-07-31</span><span>Sửa một nhãn sai. Bản đăng ghi &#x27;trung vị 14,0&#x27;; tính lại 11 khoảng từ timestamp cho trung vị 13,924, còn 14,021 là TRUNG BÌNH — con số có thật, tên gọi sai. Câu cũ còn trộn hai cơ sở đo: hai đầu dải 11,5–17,1 tính bằng timestamp trong khi 14,0 chỉ đúng nếu lấy trung vị theo ngày lịch bỏ giờ (khi đó dải phải là 11–17). Đính chính đã đăng công khai trên X trước khi tới hạn kiểm. <a href="https://x.com/blockpinned/status/2083111195654103262">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C4" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2331,12 +2331,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Bảng lịch sử trên trang dữ&nbsp;liệu của Pendle có 12 ô: hai ô mới nhất bằng 0, chín ô ghép được với một lượt chuyển on-chain theo khối lượng, và một ô không ghép được với lượt nào. Trong chín cặp đã ghép, tính theo ngày UTC, ngày trên bảng đứng trước ngày chuyển 17&nbsp;ngày ở tám cặp và 20&nbsp;ngày ở một cặp.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Bảng đọc lúc 2026-07-31 03:34 UTC · ghép theo khối lượng với dung sai 2&nbsp;PENDLE vì bảng hiển thị số làm tròn · ô lệch 20&nbsp;ngày là nhãn 07/04 ứng lượt chuyển 27/04 · ô không ghép được là nhãn 24/02, giá trị 203.883,6461908</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Đọc lại endpoint và ghép lại theo cùng quy tắc. Nếu số ô ghép được khác chín, hoặc nếu độ lệch của bất kỳ cặp nào khác 17 và 20&nbsp;ngày, thì claim này sai. Claim này KHÔNG phát biểu gì về cách trang dữ&nbsp;liệu tính ra các ô đó — một phép đo riêng đã cho thấy cột này là hỗn hợp nhiều nguồn, nên mọi câu dạng &#x27;cột đó đếm các lượt chuyển&#x27; đều nằm ngoài phạm vi và không được suy ra từ đây.</p>
   </div>
-  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Vế này đối chiếu một endpoint ngoài chain với sổ chuyển on-chain, nên không quy về một lời gọi hợp đồng để bấm lại từ trình duyệt.</p>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Vế này đối chiếu một endpoint ngoài chain với sổ chuyển on-chain, nên không quy về một lời gọi hợp đồng để bấm lại từ trình duyệt.</p>
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Đăng. Bản nháp trước đó viết &#x27;ổn định khoảng 17&nbsp;ngày qua 11 kỳ&#x27; — con số thừa kế từ một phép đo cũ, chưa tự đếm lại. Đếm từng ô cho ra chín cặp, một ngoại lệ 20&nbsp;ngày và một ô chưa giải thích được. Cũng đã bỏ một câu sai: bản nháp nói ô nhãn 30/06 trùng khối lượng lượt chuyển 149.086,56 sau khi làm tròn, nhưng 149.086,56 làm tròn ra 149.087, và phép đo cũ đã xếp ô đó khớp với một nguồn khác. <span class="nguon-tro">nguồn: PENDLE/FACTS.md F14d ⒟</span></span></li></ol></details>
 </article><article class="case-claim xac" id="C5" data-article-claim data-st="xac">
   <header class="case-claim-head">
@@ -2345,12 +2345,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Dự đoán ghi&nbsp;trước: lượt chuyển kế tiếp từ hợp đồng buyback sang sPendle sẽ xảy ra trước khi khoảng của kỳ này vượt khoảng dài nhất đã đo (17&nbsp;ngày 2&nbsp;giờ&nbsp;54&nbsp;phút) — tức trước 01:42:47 ngày 04/08/2026 giờ VN, bằng 2026-08-03T18:42:47Z.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Mốc đếm là lượt chuyển 2026-07-17T15:48:47Z tại block&nbsp;25.553.407 · biên là khoảng dài nhất trong 11 khoảng giữa 12 lượt (10/04 02:38:47Z → 27/04 05:32:47Z = 17&nbsp;ngày 2&nbsp;giờ&nbsp;54&nbsp;phút = 17,120833&nbsp;ngày) · hạn kiểm là MỘT thời điểm, không phải một ngày</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Sau 2026-08-03T18:42:47Z (01:42:47 ngày 04/08&nbsp;giờ VN), quét log Transfer của PENDLE với người gửi là hợp đồng buyback và người nhận là sPendle. Không có lượt nào thì dự đoán này sai. Điều đó CHƯA đủ để kết luận chương trình buyback đã dừng — nó chỉ nói kỳ này dài hơn mọi kỳ đã đo. Nếu trước lượt chuyển sang sPendle mà tổng PENDLE đi từ hợp đồng tới các đích khác đạt 144.388,02 thì giả thuyết &#x27;số dư đang chờ chuyển sang sPendle&#x27; phải rút lại; chuyển một phần thì chưa xác nhận được gì và phải báo riêng lượng đã chuyển, lượng còn lại và đích nhận.</p>
   </div>
-  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Đây là một dự đoán về một sự kiện chưa xảy ra, nên không có giá trị nào để đọc lại từ trình duyệt cho tới khi tới hạn.</p>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Đây là một dự đoán về một sự kiện chưa xảy ra, nên không có giá trị nào để đọc lại từ trình duyệt cho tới khi tới hạn.</p>
   <details class="case-log"><summary>Lịch sử · 3 mốc</summary><ol><li><span class="case-log-date">2026-07-31</span><span>Ghi&nbsp;trước khi biết kết quả. Đăng lúc bridge lần 13 chưa xảy ra: sổ vẫn 12 lượt, và hợp đồng đang giữ 144.388,02&nbsp;PENDLE chưa chuyển đi đâu. <span class="nguon-tro">nguồn: PENDLE/FACTS.md F14d ⒜</span></span></li><li><span class="case-log-date">2026-07-31</span><span>Thu hẹp hạn kiểm TRƯỚC khi tới hạn. Bản đăng chốt dự đoán bằng hai ngày khác nhau và không ngày nào có múi giờ — &#x27;biên đó là 03/08&#x27; rồi &#x27;hết ngày 04/08 thì dự đoán đã sai&#x27; — cộng lại tự cho thêm 22&nbsp;giờ&nbsp;17&nbsp;phút về phía có lợi cho dự đoán. Mốc đúng tính từ timestamp của 12 lượt là 2026-08-03T18:42:47Z. Một tiêu chí bác&nbsp;bỏ phân xử sau khi tới hạn thì không còn là tiêu chí, nên sửa lúc còn ba ngày. Do một lượt phản biện ngoài trên bản đã đăng chỉ ra. <a href="https://x.com/blockpinned/status/2083111195654103262">nguồn</a></span></li><li><span class="case-log-date">2026-08-03</span><span>Phân&nbsp;định. Sự kiện xảy ra 31/07 lúc 13:04:47Z, tức 7&nbsp;giờ&nbsp;23&nbsp;phút sau khi bài lên, nhưng tôi chỉ đọc được 03/08 — chậm 2&nbsp;ngày 13&nbsp;giờ, vì lịch theo dõi canh hạn chót chứ không canh sự kiện. Ghi ra vì một dự đoán dạng &#x27;xảy ra trước T&#x27; được xác nhận ngay lúc sự kiện xảy ra, chỉ vế bác mới phải đợi tới T. <span class="nguon-tro">nguồn: PENDLE/FACTS.md F14e · PENDLE/data/pendle_bridge_outflow_2026-08-03.json</span></span></li></ol></details>
 </article></div>
   </div>

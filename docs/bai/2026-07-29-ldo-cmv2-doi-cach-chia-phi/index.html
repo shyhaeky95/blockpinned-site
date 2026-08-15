@@ -2289,12 +2289,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Module mới CMv2 của Lido chia phí khác module cũ: CMv1 là 350/650 bp (3,50% operator, 6,50% treasury), CMv2 là 400/600 bp (4,00% / 6,00%) — hai bảng đọc trực tiếp từ StakingRouter, không lấy từ slide.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Ethereum block&nbsp;25.637.121 (29/07/2026 07:53:59 UTC) · StakingRouter 0xfddf38947afb03c621c71b06c9c70bce73f12999 · CMv1 0x55032650b14df07b85bf18a3a3ec8e0af2e028d5 · CMv2 0xda5f930ce326eb5205085d66c72a4e79d60cb8c1</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Gọi lại cùng các getter ở đúng block&nbsp;25.637.121. Nếu hai bảng phí trả về khác 350/650 và 400/600 bp thì phép đo này sai. Tổng hai cột của từng module phải cộng đúng 1.000 bp — lệch khỏi đó cũng là dấu hiệu đọc sai getter.</p>
   </div>
-  <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Bảng phí của từng module nằm trong một mảng struct do getStakingModules() trả về; bộ giải mã nhỏ của trang này chỉ đọc được kiểu tĩnh nên không tự đọc nó. Tự&nbsp;kiểm được: gọi getStakingModules() trên StakingRouter tại block&nbsp;25.637.121 và đọc hai trường stakingModuleFee / treasuryFee của module 1 và 4.</p>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Bảng phí của từng module nằm trong một mảng struct do getStakingModules() trả về; bộ giải mã nhỏ của trang này chỉ đọc được kiểu tĩnh nên không tự đọc nó. Tự&nbsp;kiểm được: gọi getStakingModules() trên StakingRouter tại block&nbsp;25.637.121 và đọc hai trường stakingModuleFee / treasuryFee của module 1 và 4.</p>
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-29</span><span>Đăng. Điểm của claim này là cách chia phí đổi ở tầng contract, đọc được tại một block cố định — nên nó kiểm ngược được bất cứ lúc nào, không phụ thuộc trạng thái hiện tại. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C2" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2303,12 +2303,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Tại block đo, CMv2 có 43 registered operators nhưng 0 depositable keys, 0 deposited validators và 0&nbsp;ETH reported balance — nên bảng phí mới có trọng số bằng 0 trong tỷ lệ fee gộp. Operator đăng ký không đồng nghĩa stake đã di cư.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Ethereum block&nbsp;25.637.121 · getStakingModuleSummary(4) và getModuleValidatorsBalance(4) · share CMv1 tại block đo 89,8307%</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Chỉ cần một trong bốn số 43/0/0/0 khác đi khi gọi lại ở đúng block&nbsp;25.637.121 là phép đo này sai. Và khi reported balance của CMv2 đổi khỏi 0 ở block sau, claim này hết hiệu lực theo thời gian — phải chạy lại phép tính tỷ lệ gộp, chứ không giữ nguyên câu cũ.</p>
   </div>
-  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0xbdaf4e770000000000000000000000000000000000000000000000000000000000000004" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="18" data-chu-so="4" data-don-vi="ETH" data-ghim="0">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getModuleValidatorsBalance(uint256)</code> trên <code>0xfddf3894…2999</code></div></div>
+<div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0xbdaf4e770000000000000000000000000000000000000000000000000000000000000004" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="18" data-chu-so="4" data-don-vi="ETH" data-ghim="0">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getModuleValidatorsBalance(uint256)</code> trên <code>0xfddf3894…2999</code></div></div>
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-29</span><span>Đăng. Đây là claim quyết định độ nghiêm trọng của cả bài: bảng phí mới đã tồn tại trên chain nhưng chưa có ETH nào tạo trọng số cho nó tại block đo. Ngưỡng theo dõi tự đặt: tới 18/09/2026, nếu CMv2 vẫn dưới 1% tổng balance module thì hạ mức ưu tiên — đó là quyết định biên tập, không bác snapshot. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C3" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2317,12 +2317,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Tỷ lệ phân bổ treasury gộp tại block đo là 6,2085170404% phần thưởng; nếu dịch toàn bộ balance từ CMv1 sang CMv2 và giữ mọi thứ khác không đổi, tỷ lệ này về 5,7594% — giảm 7,23%. Con số đó là bài toán giả định, KHÔNG phải doanh thu Lido vừa mất.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Ethereum block&nbsp;25.637.121 · getStakingFeeAggregateDistribution() bản đầy đủ (bản E4Precision chỉ trả 6,20%) · bảng 0/25/50/75/100% dựng trên share CMv1 89,8307%</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Dựng lại bảng 0/25/50/75/100% từ chính hai bảng phí và share 89,8307% tại block&nbsp;25.637.121 mà không ra chuỗi 6,2085 → 6,0962 → 5,9839 → 5,8717 → 5,7594 ⇒ bảng này sai. Nếu ai chỉ ra getter đang dùng thực chất đo lượng ETH đã chuyển vào treasury chứ không phải một tỷ lệ phân bổ, thì cách diễn giải cả mục này sai. Tổng balance hoặc cơ cấu balance giữa các module đổi, hoặc DAO thay fee CMv2 ⇒ bảng phải tính lại.</p>
   </div>
-  <div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0xfa5093eb" data-tu="1" data-chia="2" data-nhan="100" data-thap-phan="0" data-chu-so="10" data-don-vi="%" data-ghim="6.2085170404">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getStakingFeeAggregateDistribution()</code> trên <code>0xfddf3894…2999</code></div></div>
+<div class="dolai-o"><button class="dolai" type="button" data-to="0xfddf38947afb03c621c71b06c9c70bce73f12999" data-data="0xfa5093eb" data-tu="1" data-chia="2" data-nhan="100" data-thap-phan="0" data-chu-so="10" data-don-vi="%" data-ghim="6.2085170404">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>getStakingFeeAggregateDistribution()</code> trên <code>0xfddf3894…2999</code></div></div>
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-29</span><span>Đăng kèm chữ &#x27;giả định&#x27; ngay trong claim, vì đây đúng chỗ một con số dễ bị trích thành &#x27;Lido mất 7,23% doanh thu&#x27;. Getter trả tỷ lệ trong công thức, không đo ETH thực nhận — muốn biết treasury nhận bao nhiêu phải đo phần thưởng phát sinh theo từng module trong kỳ. <a href="https://x.com/blockpinned/status/2082421671152218340">nguồn</a></span></li></ol></details>
 </article></div>
   </div>

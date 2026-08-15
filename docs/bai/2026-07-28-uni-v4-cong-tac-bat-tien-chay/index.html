@@ -2289,12 +2289,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Chỉ số tích luỹ phí của Uniswap v4 là SỐ DƯ còn nằm trong hợp đồng, không phải bộ đếm cộng dồn — nên mức giảm 53% (ETH) và 61% (USDC) trên Ethereum không đọc được thành phí đã ngừng phát sinh.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Ethereum · hai lượt đọc protocolFeesAccrued lúc 14:51Z ngày 27/07 và 01:48Z ngày 28/07 · cùng cửa sổ block&nbsp;25.624.853&nbsp;→&nbsp;25.628.131</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Có bằng&nbsp;chứng cho thấy protocolFeesAccrued đã bao gồm cả phần phí đã được chuyển khỏi hợp đồng — khi đó công thức khép cửa sổ trong bài sai, và cả bài phải viết lại. Cách tự&nbsp;kiểm nằm ngay trong bài: đọc chỉ số hai lần cách nhau vài giờ, rồi đối chiếu log FeesCollected trong cùng cửa sổ để xem phần giảm có đúng là số dư đã rời hợp đồng.</p>
   </div>
-  <div class="dolai-o"><button class="dolai" type="button" data-to="0x000000000004444c5dc75cB358380D2e3dE08A90" data-data="0x97e8cd4e0000000000000000000000000000000000000000000000000000000000000000" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="18" data-chu-so="4" data-don-vi="ETH" data-ghim="0.0159">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>protocolFeesAccrued(address)</code> trên <code>0x00000000…8A90</code></div></div>
+<div class="dolai-o"><button class="dolai" type="button" data-to="0x000000000004444c5dc75cB358380D2e3dE08A90" data-data="0x97e8cd4e0000000000000000000000000000000000000000000000000000000000000000" data-tu="0" data-chia="" data-nhan="1" data-thap-phan="18" data-chu-so="4" data-don-vi="ETH" data-ghim="0.0159">Đo lại ngay ↻</button><div class="ketqua" role="status" aria-live="polite">gọi <code>protocolFeesAccrued(address)</code> trên <code>0x00000000…8A90</code></div></div>
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-28</span><span>Đăng cùng bốn lượt đo. Lượt bốn cho hai token trên CÙNG một chain đi hai hướng ngược nhau (Ethereum ETH −92%, USDC +76%) nên luận điểm &#x27;số dư không phải bộ đếm&#x27; chứng minh được trong một chain, không cần mượn chain khác làm đối chứng. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C2" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2303,12 +2303,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Cửa sổ 10,97&nbsp;giờ đầu tiên khép được dòng phí v4 trên Ethereum: 4.382,57 đô, tính bằng (số dư sau − số dư trước) + tổng đã chuyển khỏi hợp đồng. Đây là mức sàn — mới định giá được 10 trong 28 loại token, và mới 1 trong 6 chain quy được ra tiền.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Ethereum · block&nbsp;25.624.853&nbsp;→&nbsp;25.628.131 (21h50 ngày 27/07 → 08h48 ngày 28/07, tức 14:50Z → 01:48Z)</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Khép lại đúng cửa sổ này trên Ethereum, cộng đủ phần đã chuyển, mà ra lệch quá 5% so với 4.382,57 đô ⇒ BlockPinned kiểm lại phía mình trước. Ngưỡng 5% được ghi&nbsp;trước ngay trong bài, thay cho chữ &#x27;khác đáng kể&#x27; của bản nháp — một điều&nbsp;bác&nbsp;bỏ phải ghi&nbsp;trước cả ngưỡng lẫn cách tính.</p>
   </div>
-  
+
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-28</span><span>Đăng ở mức này. Con số ghim block hai đầu nên nó không già theo giờ: đọc lại lúc nào cũng phải ra đúng cặp block đó. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C3" data-article-claim data-st="song">
   <header class="case-claim-head">
@@ -2317,12 +2317,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Phần giá trị cuối cùng quy về UNI vẫn chưa tách được riêng cho v4: phí của v2, v3 và v4 vào chung một kho rồi kho mới được dùng để mua và đốt UNI, và bước đó bài này chưa đo được.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Trên rổ định giá được, v4 chiếm 17,71% giá trị dòng vào kho trong những giờ đầu · cùng cửa sổ block&nbsp;25.624.853&nbsp;→&nbsp;25.628.131</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Ai chỉ ra được một đường tiền từ phí v4 tới cơ chế mua và đốt UNI mà bài chưa đo ⇒ phần &#x27;chưa tách được&#x27; phải viết lại. Đây là giới hạn tự khai, không phải kết luận rằng đường tiền đó không tồn tại.</p>
   </div>
-  
+
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-07-28</span><span>Đăng ở trạng thái chưa tách được, kèm tỉ lệ 17,71% để người đọc thấy độ lớn của phần v4 trong dòng vào kho — không dùng nó thay cho phép đo còn thiếu. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></span></li></ol></details>
 </article><article class="case-claim bac" id="C4" data-article-claim data-st="bac">
   <header class="case-claim-head">
@@ -2331,12 +2331,12 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Nhịp bật pool đã giảm mạnh: đợt đầu bật 36.523&nbsp;pool trong 7,7&nbsp;giờ, rồi 23,5&nbsp;giờ sau chỉ thêm 273&nbsp;pool và tổng vẫn chưa qua 36.800.</p>
-  
+
   <div class="case-claim-evidence">
     <p class="case-pin"><span>GHIM TẠI</span>Ethereum · 15:06Z ngày 27/07 (36.523&nbsp;pool) → 02:24Z ngày 28/07 (blk&nbsp;25.628.338) → 14:35Z ngày 28/07 (blk&nbsp;25.631.951)</p>
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Nếu từ 21h05 ngày 28/07 (14:05Z) đến 23h59 ngày 04/08/2026 số pool được bật trên Ethereum tăng thêm từ 5.000 trở lên, BlockPinned rút câu này và sửa tại đây. Điều này không bác&nbsp;bỏ ba claim còn lại của bài.</p>
   </div>
-  
+
   <details class="case-log"><summary>Lịch sử · 2 mốc</summary><ol><li><span class="case-log-date">2026-07-28</span><span>Đăng kèm hạn 04/08/2026 — đây là claim duy nhất của bài có ngày hết hạn tự đặt, nên nó sẽ được phân&nbsp;định bằng một phép đếm log, không bằng cảm nhận về nhịp. <a href="https://x.com/blockpinned/status/2082128396382023921">nguồn</a></span></li><li><span class="case-log-date">2026-08-03</span><span>Điều-bác-bỏ bị vượt. Thước đo giữ nguyên cách bài gốc đếm: poolId duy nhất trong sự kiện ProtocolFeeUpdated. Nền 36.788&nbsp;poolId quét từ block tạo hợp đồng, giao với tập 51.651 của khoảng sau bằng rỗng. Bốn phép kiểm phá số đã chạy: 0 log đặt phí về 0; một giao dịch phát tối đa 150 sự kiện nên khoá loại trùng là cặp mã giao dịch cộng chỉ số log; 0 sự kiện trong 3.911.671 block trước nền; log thô không có poolId lặp. Ba cách sắp thứ tự cho cùng phần tử thứ 5.000. <span class="nguon-tro">nguồn: UNI/data/v4_pool_delta_recheck_2026-08-03.json · v4_fee_event_semantics_2026-08-03.json · v4_fee_history_full_2026-08-03.json · v4_fee_thu5000_2026-08-03.json</span></span></li></ol></details>
 </article></div>
   </div>
