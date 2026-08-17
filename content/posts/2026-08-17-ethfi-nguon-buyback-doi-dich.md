@@ -27,11 +27,11 @@ Trang đó ghi **"Last updated 1 year ago"** và tới thời điểm đo vẫn 
 
 ## Đường ống cũ: gom lại rồi chuyển sang ví buyback
 
-Ở các đời implementation của `WithdrawRequestNFT` cho tới 12/02/2026, phần chênh mỗi lượt claim được dồn vào biến `totalRemainderEEthShares`, rồi hàm `handleRemainder()` chia nó theo tham số `shareRemainderSplitToTreasuryInBps` cho biến `treasury`. Source của đời đó tự chú thích ngay cạnh khai báo biến:
+Ở các bản contract của `WithdrawRequestNFT` chạy tới 12/02/2026, phần chênh mỗi lượt claim được dồn vào biến `totalRemainderEEthShares`, rồi hàm `handleRemainder()` chia nó theo tham số `shareRemainderSplitToTreasuryInBps` cho biến `treasury`. Source của chính bản đó tự chú thích ngay cạnh khai báo biến:
 
 > *"this treasury address is set to ethfi buyback wallet address"*
 
-Gọi `treasury()` tại một block trước 14/07 trả về `0x2f5301a3D59388c509C65f8698f521377D41Fd0F` — đúng ví mà tài liệu buyback tự khai. Ở đời implementation hiện hành, lời gọi đó **revert**: hàm không còn tồn tại.
+Gọi `treasury()` tại một block trước 14/07 trả về `0x2f5301a3D59388c509C65f8698f521377D41Fd0F` — đúng ví mà tài liệu buyback tự khai. Ở bản đang chạy, lời gọi đó **revert** — báo lỗi thay vì trả về một địa chỉ: hàm không còn tồn tại.
 
 Đo cửa sổ 01/04 tới 14/07/2026: **68 lượt chia, 355,658 ETH** đã đi từ đường rút chậm sang ví buyback. Trong cùng cửa sổ, phần đốt bằng **0** — tức toàn bộ phần gom được đưa sang ví, không phần nào bị đốt. Cộng thêm phí của đường rút nhanh trong cùng giai đoạn là **3,783 ETH**, tổng đã về ví buyback là **359,441 ETH**, khoảng **676 nghìn USD**.
 

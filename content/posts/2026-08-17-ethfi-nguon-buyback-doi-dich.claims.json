@@ -2,11 +2,11 @@
  "claims": [
   {
    "id": "C1",
-   "text": "Ở các đời implementation của WithdrawRequestNFT cho tới 12/02/2026, phần chênh còn lại sau mỗi lượt claim của đường rút chậm được gom rồi chuyển sang một địa chỉ mà source của chính đời đó chú thích là ví buyback ETHFI, và địa chỉ đó đọc ra đúng ví 0x2f5301a3D59388c509C65f8698f521377D41Fd0F. Từ 01/04 tới 14/07/2026, 68 lượt chia đã đưa 355,658 ETH sang ví đó, với phần đốt bằng 0.",
+   "text": "Ở các bản contract của WithdrawRequestNFT chạy tới 12/02/2026, phần chênh còn lại sau mỗi lượt claim của đường rút chậm được gom rồi chuyển sang một địa chỉ mà source của chính bản đó chú thích là ví buyback ETHFI, và địa chỉ đó đọc ra đúng ví 0x2f5301a3D59388c509C65f8698f521377D41Fd0F. Từ 01/04 tới 14/07/2026, 68 lượt chia đã đưa 355,658 ETH sang ví đó, với phần đốt bằng 0.",
    "status": "ĐANG ĐỨNG",
-   "ghim": "Ethereum block 24.781.450 → 25.533.308. Hàm handleRemainder() và biến treasury của WithdrawRequestNFT 0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c, đọc từ source của TỪNG đời implementation chứ không từ một đời rồi áp cho cả cửa sổ. Gọi treasury() tại một block trước 14/07 trả về 0x2f5301a3D59388c509C65f8698f521377D41Fd0F; tại đời hiện hành lời gọi revert. Sự kiện HandledRemainderOfClaimedWithdrawRequests đếm được 68 lần trong cửa sổ, tổng eEthAmountToTreasury 355,658 ETH và tổng eEthAmountBurnt 0.",
+   "ghim": "Ethereum block 24.781.450 → 25.533.308. Hàm handleRemainder() và biến treasury của WithdrawRequestNFT 0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c, đọc từ source của TỪNG bản contract chứ không từ một bản rồi áp cho cả cửa sổ. Gọi treasury() tại một block trước 14/07 trả về 0x2f5301a3D59388c509C65f8698f521377D41Fd0F; tại bản đang chạy lời gọi revert. Sự kiện HandledRemainderOfClaimedWithdrawRequests đếm được 68 lần trong cửa sổ, tổng eEthAmountToTreasury 355,658 ETH và tổng eEthAmountBurnt 0.",
    "falsifier": "Nếu đếm sự kiện handleRemainder trong đúng dải block trên ra khác 68 lần, hoặc tổng phần về treasury khác 355,658 ETH, hoặc gọi treasury() tại một block trước 14/07 trả về một địa chỉ khác ví buyback, thì claim này phải rút.",
-   "khong_do_lai": "Claim gộp một phép đọc source theo từng đời implementation, một phép đếm sự kiện xuyên 752.000 block, và hai lời gọi trạng thái ở hai block khác nhau, nên không thu gọn được thành một nút gọi hợp đồng duy nhất trên trình duyệt.",
+   "khong_do_lai": "Claim gộp một phép đọc source theo từng bản contract, một phép đếm sự kiện xuyên 752.000 block, và hai lời gọi trạng thái ở hai block khác nhau, nên không thu gọn được thành một nút gọi hợp đồng duy nhất trên trình duyệt.",
    "log": [
     {
      "ngay": "2026-08-17",
@@ -20,7 +20,7 @@
    "status": "ĐANG ĐỨNG",
    "ghim": "Ethereum block 25.533.308 → 25.772.300. Ba hợp đồng rút: WithdrawRequestNFT 0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c, PriorityWithdrawalQueue 0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA, EtherFiRedemptionManager 0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0. eETH 0x35fA164735182de50811E8e2E824cFb9B6118ac2. Số 0 sau mốc có control: cùng bộ lọc, cùng cách gọi, tìm ra 11.493 leg trong dải 24.781.450 → 25.533.308 — chia ra 11.423 của EtherFiRedemptionManager, 68 của WithdrawRequestNFT, 2 của PriorityWithdrawalQueue. Lần chạy cuối cùng của handleRemainder là 2026-07-14T20:25Z, mười một phút trước lần nâng cấp.",
    "falsifier": "Nếu trong dải 25.533.308 → 25.772.300 tìm được ít nhất một log Transfer eETH từ một trong ba hợp đồng rút tới ví buyback, VÀ trace của giao dịch cho thấy transfer đó phát sinh từ đường xử lý phần chênh sau rút, thì claim này phải rút. Vế thứ hai là bắt buộc: một transfer chỉ khớp người gửi và người nhận thì chưa tự chứng minh nó đến từ đường ấy, và thiếu vế đó thì chính điều-bác-bỏ này có thể tự bắn oan.",
-   "khong_do_lai": "Phép lọc log xuyên 239.000 block trên ba hợp đồng, cộng một phép đọc source theo từng đời implementation để biết hàm nào đã biến mất — không thu gọn được thành một lời gọi trạng thái.",
+   "khong_do_lai": "Phép lọc log xuyên 239.000 block trên ba hợp đồng, cộng một phép đọc source theo từng bản contract để biết hàm nào đã biến mất — không thu gọn được thành một lời gọi trạng thái.",
    "log": [
     {
      "ngay": "2026-08-17",
