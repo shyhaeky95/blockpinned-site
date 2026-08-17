@@ -1,0 +1,74 @@
+{
+ "claims": [
+  {
+   "id": "C1",
+   "text": "Ở các đời implementation của WithdrawRequestNFT cho tới 12/02/2026, phần chênh còn lại sau mỗi lượt claim của đường rút chậm được gom rồi chuyển sang một địa chỉ mà source của chính đời đó chú thích là ví buyback ETHFI, và địa chỉ đó đọc ra đúng ví 0x2f5301a3D59388c509C65f8698f521377D41Fd0F. Từ 01/04 tới 14/07/2026, 68 lượt chia đã đưa 355,658 ETH sang ví đó, với phần đốt bằng 0.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Ethereum block 24.781.450 → 25.533.308. Hàm handleRemainder() và biến treasury của WithdrawRequestNFT 0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c, đọc từ source của TỪNG đời implementation chứ không từ một đời rồi áp cho cả cửa sổ. Gọi treasury() tại một block trước 14/07 trả về 0x2f5301a3D59388c509C65f8698f521377D41Fd0F; tại đời hiện hành lời gọi revert. Sự kiện HandledRemainderOfClaimedWithdrawRequests đếm được 68 lần trong cửa sổ, tổng eEthAmountToTreasury 355,658 ETH và tổng eEthAmountBurnt 0.",
+   "falsifier": "Nếu đếm sự kiện handleRemainder trong đúng dải block trên ra khác 68 lần, hoặc tổng phần về treasury khác 355,658 ETH, hoặc gọi treasury() tại một block trước 14/07 trả về một địa chỉ khác ví buyback, thì claim này phải rút.",
+   "khong_do_lai": "Claim gộp một phép đọc source theo từng đời implementation, một phép đếm sự kiện xuyên 752.000 block, và hai lời gọi trạng thái ở hai block khác nhau, nên không thu gọn được thành một nút gọi hợp đồng duy nhất trên trình duyệt.",
+   "log": [
+    {
+     "ngay": "2026-08-17",
+     "ghi": "Đăng kèm chữ đỡ rằng phần đốt bằng 0 trong cửa sổ đo, tức toàn bộ phần gom đi sang ví buyback, chứ không phải một phần theo tham số chia. Cơ chế vẫn có tham số chia; con số 0 là kết quả đo, không phải tính chất của thiết kế."
+    }
+   ]
+  },
+  {
+   "id": "C2",
+   "text": "Giao dịch nâng cấp tại Ethereum block 25.533.308, lúc 2026-07-14T20:36Z, nâng cấp 26 proxy trong một giao dịch và kèm 55 lần đổi phân quyền trên RoleRegistry. Sau giao dịch đó, hàm handleRemainder() và biến treasury của WithdrawRequestNFT không còn tồn tại, và từ block đó tới 25.772.300 không có một log Transfer eETH nào đi từ ba hợp đồng rút tới ví buyback.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Ethereum block 25.533.308 → 25.772.300. Ba hợp đồng rút: WithdrawRequestNFT 0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c, PriorityWithdrawalQueue 0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA, EtherFiRedemptionManager 0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0. eETH 0x35fA164735182de50811E8e2E824cFb9B6118ac2. Số 0 sau mốc có control: cùng bộ lọc, cùng cách gọi, tìm ra 11.493 leg trong dải 24.781.450 → 25.533.308 — chia ra 11.423 của EtherFiRedemptionManager, 68 của WithdrawRequestNFT, 2 của PriorityWithdrawalQueue. Lần chạy cuối cùng của handleRemainder là 2026-07-14T20:25Z, mười một phút trước lần nâng cấp.",
+   "falsifier": "Nếu trong dải 25.533.308 → 25.772.300 tìm được ít nhất một log Transfer eETH từ một trong ba hợp đồng rút tới ví buyback, VÀ trace của giao dịch cho thấy transfer đó phát sinh từ đường xử lý phần chênh sau rút, thì claim này phải rút. Vế thứ hai là bắt buộc: một transfer chỉ khớp người gửi và người nhận thì chưa tự chứng minh nó đến từ đường ấy, và thiếu vế đó thì chính điều-bác-bỏ này có thể tự bắn oan.",
+   "khong_do_lai": "Phép lọc log xuyên 239.000 block trên ba hợp đồng, cộng một phép đọc source theo từng đời implementation để biết hàm nào đã biến mất — không thu gọn được thành một lời gọi trạng thái.",
+   "log": [
+    {
+     "ngay": "2026-08-17",
+     "ghi": "Điều-bác-bỏ được viết thêm vế provenance sau một lượt phản biện: bản đầu chỉ đòi tìm một Transfer khớp người gửi và người nhận, tức có thể tự bắn oan bởi một transfer không liên quan tới đường remainder."
+    }
+   ]
+  },
+  {
+   "id": "C3",
+   "text": "Từ block 25.533.308 tới 25.772.300, phần chênh của đường rút chậm ở lại trong quỹ và làm tăng giá trị mỗi share eETH, cộng dồn 98,506 ETH — trong đó WithdrawRequestNFT 97,898 và PriorityWithdrawalQueue 0,607. Cơ chế là LiquidityPool.withdraw(_amount, _share) trừ _amount khỏi tổng tài sản nhưng đốt trọn _share của yêu cầu, nên mẫu số nhỏ đi nhanh hơn tử số.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Ethereum block 25.533.308 → 25.772.300. Đo bằng chính log: mỗi lượt claim, giá trị ETH của phần share bị đốt trừ đi số ETH đã trả cho người rút, ghép theo transaction hash — 575/575 tx khớp ở WithdrawRequestNFT và 6/6 ở PriorityWithdrawalQueue. Giá trị ETH của phần share bị đốt đọc thẳng từ log Transfer mà EETH._burnShares phát ra, tức không qua bất kỳ phép ước lượng tỷ giá nào.",
+   "falsifier": "Nếu ghép lại theo transaction hash mà tổng phần chênh khác 98,506 ETH, hoặc nếu tìm được một đường trong hợp đồng cho phép rút phần chênh đó ra như một số dư riêng thay vì để nó nằm trong tỷ giá, thì claim này phải rút.",
+   "khong_do_lai": "Phép đo cộng hai vế của hàng nghìn log trên hai hợp đồng rồi ghép theo transaction hash; không có getter nào trả về đại lượng này.",
+   "log": [
+    {
+     "ngay": "2026-08-17",
+     "ghi": "Bản đầu của phép đo dùng tỷ giá xấp xỉ từ mốc Rebase gần nhất và control tự đặt đã FAIL với lệch 4,67e-5 trên ngưỡng 1e-5. Không nới ngưỡng: thay bằng phép đọc thẳng giá trị ETH của share bị đốt từ log tại đúng block. Cầu nối từ 'ở lại quỹ' tới 'tăng giá trị mỗi share' đi bằng số học của hai dòng code, không bằng một phép đo dòng tiền riêng — giới hạn này khai trong thân bài."
+    }
+   ]
+  },
+  {
+   "id": "C4",
+   "text": "Giao dịch nâng cấp 14/07 không phải một hành động lén: nó đi qua một ví nhiều chữ ký cần 6 trên 10 người ký, rồi qua một timelock có độ trễ tối thiểu 10 ngày. Ghép từng lệnh đã lên lịch với từng lệnh đã chạy theo id cho 86 trên 86 cặp, độ trễ thật ngắn nhất là 978.372 giây tức 11,32 ngày, và 0 trên 86 cặp chạy trước mức tối thiểu.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Ví nhiều chữ ký 0xcdd57d11476c22d265722f68390b036f3da48c21, đọc getThreshold() và getOwners() cho 6 và 10. Upgrade Timelock 0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761, getMinDelay() đọc ở CẢ block hiện tại lẫn block ngay trước lần nâng cấp, cả hai trả 864.000 giây — đọc hai lần vì đọc cấu hình tại block hiện tại rồi phát biểu về quá khứ là đọc tham số thay cho kết quả. Ghép CallScheduled với CallExecuted theo id; trường delay nằm ở word thứ 4 của data, không phải word cuối.",
+   "falsifier": "Nếu ghép lại 86 cặp lệnh mà có ít nhất một cặp chạy trước 864.000 giây, hoặc nếu getMinDelay() tại block ngay trước lần nâng cấp trả về một giá trị nhỏ hơn, thì phần nói timelock được tôn trọng phải rút.",
+   "khong_do_lai": "Phép ghép hai loại sự kiện của timelock theo id trên một dải block, cộng hai lời gọi trạng thái ở hai block khác nhau.",
+   "log": [
+    {
+     "ngay": "2026-08-17",
+     "ghi": "Claim này đi NGƯỢC hướng câu chuyện chính của bài và được đặt vào bài đúng vì thế. Lượt đọc đầu lấy trường delay ở word cuối của data thay vì word thứ 4, cho ra những con số cỡ 10^76 cho một đại lượng tính bằng giây — chúng vô lý nên lộ ngay, nhưng nếu payload ngắn hơn thì word cuối rất có thể là một số trông hợp lý."
+    }
+   ]
+  },
+  {
+   "id": "C5",
+   "text": "Trong các nguồn chính chủ đã kiểm tra, chưa thấy văn bản nào mô tả việc đổi đích này: 0 trên 4 bài blog về siết bảo mật cùng giai đoạn nhắc tới, không có ở các lá phiếu và chủ đề diễn đàn đã kiểm tra cho đợt này, và cửa sổ 01/06 → 18/08/2026 trên kênh công bố trả về 0 bài. Trang tài liệu quản trị vẫn ghi Last updated 1 year ago.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Bốn bài blog đếm trên RAW HTML, control dương cùng lượt đếm cho withdraw 20, upgrade 16, security 25, eETH 89 — nên số 0 là câu về văn bản, không phải về trình bóc. Kênh công bố x.com/ether_fi_Fdn đọc bằng trình duyệt với truy vấn có khung ngày; control HAI CHIỀU: cửa sổ 01/11/2025 → 01/04/2026 trả về 4 bài và cả 4 đều là thông báo buyback, cửa sổ sau 01/04 trả về 1 bài và nó không phải buyback. Trang tài liệu etherfi.gitbook.io/gov/ethfi-buyback-program.",
+   "falsifier": "Chỉ cần MỘT nguồn chính chủ nói rõ khoản chênh không còn tài trợ buyback và nay quay về quỹ là claim này phải bỏ.",
+   "khong_do_lai": "Claim là một phủ định trên nhiều kênh khác nhau, mỗi kênh một cách đọc; nó chỉ có nghĩa cùng với các control dương đi kèm, nên không thu gọn được thành một phép kiểm.",
+   "log": [
+    {
+     "ngay": "2026-08-17",
+     "ghi": "Claim này có PHẠM VI HẸP và phạm vi đó khai ngay trong thân bài: phép đọc kênh công bố chỉ phủ 5 trong số 160 bài mà tài khoản tự khai, cả hai đường đọc đều bị chặn ở đó. Cái đỡ cho kết luận không phải độ phủ mà là control hai chiều. Câu 'không ai thông báo' bị cấm trong mọi bản."
+    }
+   ]
+  }
+ ]
+}

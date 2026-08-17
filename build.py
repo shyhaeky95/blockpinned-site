@@ -173,6 +173,10 @@ MARK_SVG = (
 # Ngày tải ghi ra để lần sau còn biết bản đang phục vụ cũ tới đâu — logo đổi thì bản
 # tự host đứng im, và đó là cái giá đã biết khi user chốt tự host (10/08).
 LOGO_TOKEN = {
+    # 🔴 Bản gốc là JPEG (coin id `ether-fi`, ảnh 35958), đổi sang PNG bằng `sips` lúc
+    # tải — cùng lý do đã ghi ở HYPE và PUMP: `kich_thuoc_png()` đọc IHDR và NỔ với mọi
+    # thứ không phải PNG, nên để nguyên .jpeg là chặn build ở lượt sau.
+    "ETHFI":  ("token-ethfi.png",  "coingecko 35958/etherfi.jpeg → png",       "2026-08-17"),
     "UNI":    ("token-uni.png",    "coingecko 12504/uniswap-logo.png",         "2026-08-10"),
     "CAKE":   ("token-cake.png",   "coingecko 12632/pancakeswap-cake-logo",    "2026-08-10"),
     "LDO":    ("token-ldo.png",    "coingecko 13573/Lido_DAO.png",             "2026-08-10"),
@@ -188,6 +192,18 @@ LOGO_TOKEN = {
 }
 
 NGUON_ASSET = {
+    # bài ETHFI 17/08 — nguồn `template/card-ethfi-doi-dich.html`, dựng bằng
+    # `template/render_card_v2.py`. Khuôn xác định bằng `template/khuon_card.py` (chép
+    # từ card LDO 17/08), KHÔNG bằng builder Python mới nhất theo mtime — lượt đầu của
+    # card này đi nhầm sang nhánh `build_card_*.py` đã chết, tức lần thứ TƯ của cùng bẫy.
+    # Ảnh chở MỘT nguồn và HAI đích: khoản chênh phát sinh khi rút eETH, trước 14/07 đi
+    # sang ví buyback ETHFI (355,66 ETH), từ 14/07 ở lại trong eETH (98,5 ETH). Câu tài
+    # liệu ở dải tối là CHỮ ĐỠ bắt buộc — nó là cú xung đột của bài; thiếu nó, ảnh chỉ
+    # còn là một sơ đồ đổi đích mà không ai biết vì sao đáng đọc.
+    # 🔴 CẤM đưa lại độ dài cửa sổ ("104 ngày / 34 ngày") hay bất kỳ đại lượng mỗi-ngày
+    # nào lên ảnh: chúng mời người đọc tính TỐC ĐỘ, trong khi bài không nói về tốc độ.
+    # 🔴 CẤM `text-transform: uppercase` trên ô đích — nó biến `eETH` thành `EETH`.
+    "card-ethfi-doi-dich.png": "png",
     # bài LDO 17/08 — nguồn `template/card-ldo-nest-145k-zero.html`, dựng bằng
     # `template/render_card_v2.py` (chép trực tiếp từ card SKY 15/08, tức khuôn v2).
     # Hai số trên ảnh là hai đầu của MỘT đường đi, không phải hai kịch bản: 145.443 đô
@@ -2265,7 +2281,7 @@ def font_face(goc: str) -> str:
 # một lượt gõ.
 TOKEN_TEN = {"UNI": "Uniswap", "LDO": "Lido", "HYPE": "Hyperliquid", "PENDLE": "Pendle",
              "CAKE": "PancakeSwap", "MORPHO": "Morpho", "PUMP": "pump.fun",
-             "SKY": "Sky"}
+             "SKY": "Sky", "ETHFI": "ether.fi"}
 
 # Tủ kính hiện mở cho ĐÚNG MỘT token, khai ở đây; toàn bộ nội dung trang sinh từ dữ
 # liệu, nên đổi dòng này là trang tự dựng lại cho token khác. Kèm SÀN: dưới 3 bài thì
