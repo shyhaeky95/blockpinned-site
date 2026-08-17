@@ -188,6 +188,18 @@ LOGO_TOKEN = {
 }
 
 NGUON_ASSET = {
+    # bài LDO 17/08 — nguồn `template/card-ldo-nest-145k-zero.html`, dựng bằng
+    # `template/render_card_v2.py` (chép trực tiếp từ card SKY 15/08, tức khuôn v2).
+    # Hai số trên ảnh là hai đầu của MỘT đường đi, không phải hai kịch bản: 145.443 đô
+    # đã vào contract nguồn, 0 đô là ngân sách mua mà contract phân bổ tạo ra. Ô
+    # "Kho DAO vẫn nhận LDO" ở dải tham chiếu là CHỮ ĐỠ bắt buộc — thiếu nó, ảnh đi
+    # một mình đọc thành "Lido không mua LDO", trong khi một chương trình mua khác
+    # đang chạy thật. Footer dùng chữ "Chưa", không dùng "hỏng": đường ống chảy đúng.
+    # 🔴 Card này từng bị dựng SAI KHUÔN bốn lượt vì desk tìm mẫu bằng builder Python
+    # mới nhất theo mtime, trong khi khuôn đã chuyển sang HTML từ 13/08. Trước khi
+    # dựng card mới, chạy `python3 template/khuon_card.py` — nó suy ra khuôn hiện hành
+    # từ bài ĐÃ ĐĂNG chứ không từ mtime.
+    "card-ldo-nest-145k-zero.png": "png",
     # bài SKY 15/08 — nguồn `template/card-sky-sbe-beam.html`, dựng bằng
     # `template/render_card_v2.py` và phục vụ đúng bản PNG trong `template/out/png/`.
     # Hai số trên ảnh là hai vai khác nhau của cùng cơ chế nếu executive spell được

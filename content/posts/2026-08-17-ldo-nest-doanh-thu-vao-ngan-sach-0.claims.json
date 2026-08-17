@@ -1,0 +1,85 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Tại Ethereum block 25.771.902, contract phân bổ của cơ chế mua lại LDO có ngân sách mua bằng 0, tổng doanh thu ghi nhận bằng 0, và chưa phát một event phân bổ nào; trong khi contract nhận doanh thu đã ghi 145.443,549059 USD. Contract phân bổ có 14 log trong lịch sử đọc được và 0 trong 14 là event phân bổ.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ethereum block 25.771.902 (2026-08-17T02:46:23Z). Contract nhận doanh thu 0x6220212a33a87ed7cc386b67eb2c393974f28c38; contract phân bổ 0xaa568141c051f2d1132b110f8391f18d48e8d889. Đọc bằng lời gọi trạng thái tại đúng block ghim, kèm hai phép kiểm: cùng một getter trả 0 trước vòng doanh thu đầu, 73.084,06 sau vòng một và 145.443,549059 sau vòng hai, nên phép đọc theo block phân biệt được các trạng thái; và một block tương lai không trả về giá trị nào thay vì trả 0.",
+      "falsifier": "Gọi bốn giá trị nêu trên tại đúng block 25.771.902 mà ngân sách mua khác 0, hoặc tổng doanh thu ghi nhận khác 0, hoặc đếm log của contract phân bổ ra một event phân bổ, thì claim này phải rút.",
+      "khong_do_lai": "Claim gộp bốn lời gọi trạng thái trên hai contract khác nhau cộng một phép đếm log toàn thời gian, nên không thu gọn được thành một nút gọi hợp đồng duy nhất trên trình duyệt.",
+      "log": [
+        {
+          "ngay": "2026-08-17",
+          "ghi": "Đăng ở dạng ảnh chụp tại block, không gọi là cơ chế hỏng. Hai chỗ chặn nằm trong thân bài: kho DAO vẫn nhận LDO qua một chương trình mua khác, và bộ máy mua của cơ chế này đã chạy thử trọn một vòng hôm 13/08 bằng vốn ngoài kho.",
+          "nguon": "https://x.com/blockpinned/status/2089284493974856166"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "Dự đoán ghi trước: tới hết 2026-08-24, log phân bổ trên contract phân bổ 0xaa568141c051f2d1132b110f8391f18d48e8d889 vẫn chưa phát lần nào.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ghi trước trên X lúc 2026-08-17. Nền tại block 25.771.902: contract phân bổ có 14 log toàn thời gian, không log nào là event phân bổ, log mới nhất ở block 25.724.759, tức ngày 10/08.",
+      "falsifier": "Nếu event phân bổ được phát ở bất kỳ block nào tới hết 2026-08-24T23:59:00Z, dự đoán này sai. Không dời hạn sau khi đã thấy giao dịch.",
+      "khong_do_lai": "Đây là dự đoán về một sự kiện chưa xảy ra; phân định bằng cách đếm log của contract trong cửa sổ thời gian, không bằng một giá trị hợp đồng đọc tại một block.",
+      "han": "2026-08-24",
+      "han_ghi": "Ngày này phân định việc event phân bổ có được phát hay không trong cửa 17 tới 24/08; phải ghi kết quả tại trang này kể cả khi dự đoán sai.",
+      "ghi_truoc": {
+        "ngay": "2026-08-17",
+        "noi": "https://x.com/blockpinned/status/2089284497238110414 và trang này",
+        "so": "log phân bổ vẫn chưa phát lần nào tới hết 2026-08-24"
+      },
+      "log": [
+        {
+          "ngay": "2026-08-17",
+          "ghi": "Ghi trước khi bước đồng bộ giữa hai contract xảy ra lần nào.",
+          "nguon": "https://x.com/blockpinned/status/2089284497238110414"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "text": "Dự đoán có điều kiện: nếu contract phân bổ đồng bộ được với sổ doanh thu trong cửa 17 tới 24/08, thì ngân sách mua sau lượt đồng bộ đó vẫn nhỏ hơn hoặc bằng 0.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ghi trước trên X lúc 2026-08-17. Nền: tốc độ doanh thu 30 ngày 40,0172 stETH mỗi ngày; ở giá 1.909,33 USD đọc tại block 25.773.271 thành 76.406 USD mỗi ngày, dưới mức sàn 109.589 USD mỗi ngày của công thức.",
+      "falsifier": "Nếu bước đồng bộ xảy ra và ngân sách mua sau lượt đó lớn hơn 0, dự đoán này sai. Nếu bước đồng bộ không xảy ra trong cửa, claim không được tính là đúng hay sai vì điều kiện chấm chưa xảy ra.",
+      "khong_do_lai": "Đây là dự đoán có điều kiện về trạng thái sau một giao dịch chưa xảy ra; chỉ phân định được bằng cách đọc ngân sách mua tại block ngay sau lượt đồng bộ.",
+      "han": "2026-08-24",
+      "han_ghi": "Ngày này phân định điều kiện có xảy ra hay không; nếu có thì đọc ngân sách mua tại block ngay sau lượt đồng bộ và ghi con số thực tế tại trang này, nếu không thì ghi rõ điều kiện chấm chưa xảy ra.",
+      "ghi_truoc": {
+        "ngay": "2026-08-17",
+        "noi": "https://x.com/blockpinned/status/2089284497238110414 và trang này",
+        "so": "nếu đồng bộ xảy ra trong cửa, ngân sách mua vẫn nhỏ hơn hoặc bằng 0"
+      },
+      "log": [
+        {
+          "ngay": "2026-08-17",
+          "ghi": "Ghi trước ở dạng có điều kiện, để một kết cục ngoài điều kiện không bị gán thành thất bại giả. Bản trước của bài này từng mang một bộ dự đoán mà kết cục thật nằm ngoài mọi nhánh đã liệt kê; bộ đó bị bỏ trước khi đăng.",
+          "nguon": "https://x.com/blockpinned/status/2089284497238110414"
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "text": "Dự đoán ghi trước: sổ doanh thu nhận thêm ít nhất 6 vòng ghi nhận nữa trong 8 ngày từ 17 tới 24/08, tức bước quy đổi tiếp tục diễn ra gần như mỗi ngày.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ghi trước trên X lúc 2026-08-17. Nền: hai vòng đầu tiên xảy ra ngày 15 và 16/08, mỗi vòng gồm một lượt ghi nhận stETH và một giao dịch quy đổi riêng gửi sau đó.",
+      "falsifier": "Nếu tới hết 2026-08-24T23:59:00Z sổ doanh thu nhận thêm ít hơn 6 vòng, dự đoán này sai. Đếm theo số lượt quy đổi vào sổ, không đếm theo số lượt rebase.",
+      "khong_do_lai": "Phải đếm log trong một cửa sổ thời gian trên contract nhận doanh thu, không đọc được bằng một lời gọi trạng thái tại một block.",
+      "han": "2026-08-24",
+      "han_ghi": "Ngày này phân định số vòng ghi nhận doanh thu trong cửa 17 tới 24/08; phải ghi con số đếm được tại trang này kể cả khi dưới 6.",
+      "ghi_truoc": {
+        "ngay": "2026-08-17",
+        "noi": "https://x.com/blockpinned/status/2089284497238110414 và trang này",
+        "so": "ít nhất 6 vòng ghi nhận doanh thu nữa trong 17 tới 24/08"
+      },
+      "log": [
+        {
+          "ngay": "2026-08-17",
+          "ghi": "Ghi trước dựa trên hai mẫu, và hai mẫu chưa đủ để gọi là một nhịp — điều đó được nói thẳng trong bài.",
+          "nguon": "https://x.com/blockpinned/status/2089284497238110414"
+        }
+      ]
+    }
+  ]
+}
