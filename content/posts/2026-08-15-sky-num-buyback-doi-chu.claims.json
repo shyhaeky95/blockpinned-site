@@ -41,7 +41,7 @@
         {
           "ngay": "2026-08-17",
           "ghi": "Phân định trong ngày hạn. Mốc chốt lấy bằng hai đường độc lập rồi mới đối với cửa; khe 60 giây giữa cạnh dưới của dự đoán và thời điểm sớm nhất hợp đồng cho phép đã được ghi ra TRƯỚC lượt đọc, và cấm nới cạnh dưới sau khi thấy giao dịch.",
-          "nguon": "SKY/FACTS.md §7d · SKY/data/c2_cast_adjudicate_2026-08-17_blk25775271.json · SKY/scripts/sky_c2_cast_adjudicate.py"
+          "nguon": "SKY/FACTS.md §7c.3 · SKY/data/c2_cast_adjudicate_2026-08-17_blk25775271.json · SKY/scripts/sky_c2_cast_adjudicate.py"
         }
       ]
     },
@@ -71,7 +71,7 @@
         {
           "ngay": "2026-08-17",
           "ghi": "Phân định trong ngày hạn. Kiểm bằng hai block liền nhau quanh giao dịch chốt, không bằng một lượt đọc ở head — nếu chỉ đọc head thì không phân biệt được 'đổi trong giao dịch này' với 'đổi ở một giao dịch khác cùng ngày'.",
-          "nguon": "SKY/FACTS.md §7d · SKY/data/c2_cast_adjudicate_2026-08-17_blk25775271.json · SKY/scripts/sky_c2_cast_adjudicate.py"
+          "nguon": "SKY/FACTS.md §7c.3 · SKY/data/c2_cast_adjudicate_2026-08-17_blk25775271.json · SKY/scripts/sky_c2_cast_adjudicate.py"
         }
       ]
     },
@@ -101,7 +101,7 @@
         {
           "ngay": "2026-08-17",
           "ghi": "Phân định trong ngày hạn, và kết quả là SAI. Phần thiếu được bóc thành hai mảnh đo được thay vì chỉ báo ngoài dải; cả hai mảnh là mốc thời gian giả định, nên bài học là một dự đoán dựng trên hai mốc thời gian của người khác thì dải phải rộng theo cả hai, không chỉ theo tốc độ. Không nới dải sau khi biết kết quả.",
-          "nguon": "SKY/FACTS.md §7d · SKY/data/c2_cast_adjudicate_2026-08-17_blk25775271.json · SKY/scripts/sky_c2_cast_adjudicate.py"
+          "nguon": "SKY/FACTS.md §7c.3 · SKY/data/c2_cast_adjudicate_2026-08-17_blk25775271.json · SKY/scripts/sky_c2_cast_adjudicate.py"
         }
       ]
     },
@@ -131,7 +131,7 @@
         {
           "ngay": "2026-08-17",
           "ghi": "Phân định trong ngày hạn, kèm một control âm để lượt đọc mapping không thể trả hằng số.",
-          "nguon": "SKY/FACTS.md §7d · SKY/data/c2_cast_adjudicate_2026-08-17_blk25775271.json · SKY/scripts/sky_c2_cast_adjudicate.py"
+          "nguon": "SKY/FACTS.md §7c.3 · SKY/data/c2_cast_adjudicate_2026-08-17_blk25775271.json · SKY/scripts/sky_c2_cast_adjudicate.py"
         }
       ]
     }
