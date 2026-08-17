@@ -18,7 +18,7 @@
     {
       "id": "C2",
       "text": "Dự đoán ghi trước: executive spell 0xB26b9d89776aa9E74ddA0e86e916413def03F59b được cast trong khoảng 2026-08-17T14:01:00Z tới 2026-08-17T20:27:00Z, tức 21h01 ngày 17/08 tới 03h27 ngày 18/08 giờ Việt Nam.",
-      "status": "ĐANG ĐỨNG",
+      "status": "ĐÃ XÁC NHẬN",
       "ghim": "Ghi trước trên X lúc 2026-08-15T12:12:31Z. Snapshot Ethereum block 25.760.209: spell đã lên hat, đã schedule, chưa cast; eta = 1786891307; nextCastTime = 21h00 ngày 17/08 giờ Việt Nam. Khoảng dự đoán suy từ 8 executive spell gần nhất, tất cả trễ 4,584 tới 4,852 ngày.",
       "falsifier": "Nếu spell được cast trước 2026-08-17T14:01:00Z hoặc sau 2026-08-17T20:27:00Z, dự đoán này sai. Không dời hai đầu khoảng sau khi đã thấy giao dịch; nếu spell không được cast thì ghi rõ điều kiện không xảy ra, không tự tính là đúng.",
       "khong_do_lai": "Đây là dự đoán về một giao dịch chưa xảy ra. Tới khi có kết quả phải đọc receipt và timestamp của giao dịch cast; trước đó không có một giá trị hợp đồng nào phân định được claim.",
@@ -27,20 +27,28 @@
       "ghi_truoc": {
         "ngay": "2026-08-15",
         "noi": "https://x.com/blockpinned/status/2088599717030830339 và trang này",
-        "so": "spell được cast trong khoảng 2026-08-17T14:01:00Z tới 2026-08-17T20:27:00Z"
+        "so": "spell được cast trong khoảng 2026-08-17T14:01:00Z tới 2026-08-17T20:27:00Z",
+        "ket_qua": "Đúng. Độ lớn: giao dịch chốt rơi lúc 14:02:23Z ngày 17/08, tức 83 giây sau cạnh dưới của cửa đã ghi trước và 143 giây sau thời điểm sớm nhất mà hợp đồng cho phép. Đọc tại Ethereum block 25.775.271; cùng mốc đó cổng bỏ phiếu chính chủ ghi dateExecuted 14:02:23Z, hai đường khớp tới từng giây. 🔴 Dự đoán này suýt sai vì một khe 60 giây do chính người viết nó tạo ra: cạnh dưới ghi 14:01:00Z trong khi hợp đồng cho phép chốt từ 14:00:00Z, nên một lượt chốt ở đúng phút đầu tiên sẽ làm nó sai. Khe đó đã được ghi ra trước lượt đọc này, không phải sau. Cửa rộng 6 giờ 26 phút và phần thắng chỉ là 83 giây; đọc thành 'mô hình độ trễ đúng' là quá lời.",
+        "ai_phan_dinh": "phép đo của tôi trên sổ cái Ethereum tại đúng block cast 25.775.271 và block liền trước 25.775.270, qua RPC archive: một phép nhị phân trên done() của spell để khoanh chính block cast, rồi đọc lại bốn ô của ảnh nền tiền-cast tại block cũ 25.768.814 để chứng rằng dụng cụ đọc đúng đại lượng bài đã đăng. Mốc cast còn được đối chiếu bằng một đường thứ hai độc lập, dateExecuted của cổng bỏ phiếu chính chủ, và hai đường khớp tới từng giây",
+        "ngay_ket": "2026-08-17"
       },
       "log": [
         {
           "ngay": "2026-08-15",
           "ghi": "Ghi trước khi spell được cast. Khoảng giữ nguyên sau khi lịch schedule xuất hiện; không dùng nextCastTime để nới hai đầu dự đoán.",
           "nguon": "https://x.com/blockpinned/status/2088599717030830339"
+        },
+        {
+          "ngay": "2026-08-17",
+          "ghi": "Phân định trong ngày hạn. Mốc chốt lấy bằng hai đường độc lập rồi mới đối với cửa; khe 60 giây giữa cạnh dưới của dự đoán và thời điểm sớm nhất hợp đồng cho phép đã được ghi ra TRƯỚC lượt đọc, và cấm nới cạnh dưới sau khi thấy giao dịch.",
+          "nguon": "SKY/FACTS.md §7d · SKY/data/c2_cast_adjudicate_2026-08-17_blk25775271.json · SKY/scripts/sky_c2_cast_adjudicate.py"
         }
       ]
     },
     {
       "id": "C3",
       "text": "Dự đoán có điều kiện: nếu executive spell được cast, số thứ tự chương trình trả thưởng đi từ 15 lên 16 trong chính giao dịch đó.",
-      "status": "ĐANG ĐỨNG",
+      "status": "ĐÃ XÁC NHẬN",
       "ghim": "Ghi trước trên X lúc 2026-08-15T12:12:31Z. Snapshot trước cast tại Ethereum block 25.760.209; chương trình hiện hành có ids = 15. Dự đoán đọc từ chỉ thị kết thúc chương trình 15 và tạo chương trình 16 trong mã nguồn executive spell đã xác minh.",
       "falsifier": "Nếu spell được cast mà ngay sau giao dịch đó ids không bằng 16, cách đọc source dùng cho dự đoán này bị bác. Nếu spell không được cast, claim không được tính là đúng hay sai vì điều kiện chấm chưa xảy ra.",
       "khong_do_lai": "Đây là dự đoán có điều kiện về trạng thái sau một giao dịch chưa xảy ra. Chỉ có thể phân định bằng cách đọc ids tại block ngay sau giao dịch cast.",
@@ -49,20 +57,28 @@
       "ghi_truoc": {
         "ngay": "2026-08-15",
         "noi": "https://x.com/blockpinned/status/2088599717030830339 và trang này",
-        "so": "nếu spell được cast, ids đi từ 15 lên 16 trong cùng giao dịch"
+        "so": "nếu spell được cast, ids đi từ 15 lên 16 trong cùng giao dịch",
+        "ket_qua": "Đúng. Số chương trình đọc ra 15 tại block 25.775.270 và 16 tại block 25.775.271, tức đúng trong giao dịch chốt chứ không ở một giao dịch khác cùng ngày. Chương trình 16 có người nhận là hợp đồng phân phối thưởng của farm, tổng 96.903.706 SKY trong 90 ngày, và mốc bắt đầu bằng đúng dấu thời gian của block chốt. Hai hệ quả đo được kèm theo: chương trình 15 bị chốt lại ngay trong giao dịch đó, mốc kết thúc của nó nhảy từ 18/10 về 17/08; và tốc độ rời kho theo chương trình đi từ 3.185.719 xuống 1.076.708 SKY mỗi ngày, xác nhận bằng một lượt phân phối 156 giây sau khi chốt chỉ chuyển 1.944 SKY.",
+        "ai_phan_dinh": "phép đo của tôi trên sổ cái Ethereum tại đúng block cast 25.775.271 và block liền trước 25.775.270, qua RPC archive: một phép nhị phân trên done() của spell để khoanh chính block cast, rồi đọc lại bốn ô của ảnh nền tiền-cast tại block cũ 25.768.814 để chứng rằng dụng cụ đọc đúng đại lượng bài đã đăng. Mốc cast còn được đối chiếu bằng một đường thứ hai độc lập, dateExecuted của cổng bỏ phiếu chính chủ, và hai đường khớp tới từng giây",
+        "ngay_ket": "2026-08-17"
       },
       "log": [
         {
           "ngay": "2026-08-15",
           "ghi": "Ghi trước ở dạng có điều kiện. Bản cũ từng cho phép chấm ngay cả khi spell chưa chạy; đã sửa trước khi đăng để một kết cục ngoài điều kiện không thể bị gán thành thất bại giả.",
           "nguon": "https://x.com/blockpinned/status/2088599717030830339"
+        },
+        {
+          "ngay": "2026-08-17",
+          "ghi": "Phân định trong ngày hạn. Kiểm bằng hai block liền nhau quanh giao dịch chốt, không bằng một lượt đọc ở head — nếu chỉ đọc head thì không phân biệt được 'đổi trong giao dịch này' với 'đổi ở một giao dịch khác cùng ngày'.",
+          "nguon": "SKY/FACTS.md §7d · SKY/data/c2_cast_adjudicate_2026-08-17_blk25775271.json · SKY/scripts/sky_c2_cast_adjudicate.py"
         }
       ]
     },
     {
       "id": "C4",
       "text": "Dự đoán có điều kiện: nếu executive spell được cast, tổng đã rút của chương trình 15 sau khi chốt nằm trong khoảng 89.167.349 tới 90.021.114 SKY.",
-      "status": "ĐANG ĐỨNG",
+      "status": "BỊ BÁC",
       "ghim": "Ghi trước trên X lúc 2026-08-15T12:12:31Z. Snapshot trước cast tại Ethereum block 25.760.209. Khoảng được tính từ trạng thái chương trình 15 và biên thời gian tới cửa cast đã ghi, trước khi biết giá trị rxd sau giao dịch.",
       "falsifier": "Nếu spell được cast và rxd của chương trình 15 sau khi giao dịch hoàn tất thấp hơn 89.167.349 hoặc cao hơn 90.021.114 SKY, dự đoán này sai. Nếu spell không được cast, điều kiện chấm chưa xảy ra và claim không được tự tính là đúng.",
       "khong_do_lai": "Giá trị cần kiểm chỉ tồn tại sau giao dịch cast. Tới lúc đó phải gọi rxd cho chương trình 15 tại block ngay sau giao dịch và so với hai đầu khoảng đã ghi.",
@@ -71,20 +87,28 @@
       "ghi_truoc": {
         "ngay": "2026-08-15",
         "noi": "https://x.com/blockpinned/status/2088599717030830339 và trang này",
-        "so": "nếu spell được cast, rxd của chương trình 15 sau khi chốt nằm trong 89.167.349 tới 90.021.114 SKY"
+        "so": "nếu spell được cast, rxd của chương trình 15 sau khi chốt nằm trong 89.167.349 tới 90.021.114 SKY",
+        "ket_qua": "Sai. Độ lớn: thiếu 10.582,22 SKY so với cạnh dưới 89.167.349, tức lệch 0,0119% và nằm ngoài một dải rộng 853.765 SKY. Đọc tại đúng block chốt 25.775.271: tổng đã rút của chương trình 15 bằng 89.156.766,78 SKY. Phần thiếu bóc được thành đúng hai mảnh, cộng lại khớp tới hai chữ số thập phân. Một: 8.406,98 SKY vì cục của keeper nhỏ hơn mô hình — nó rơi lúc 10:31:11Z tại block 25.774.218 với 22.172.603,23 SKY, trong khi dự đoán dựng trên một cục 22.181.010 SKY rơi lúc 10:28:47Z. Hai: 2.175,23 SKY vì lượt mà chính spell tự đẩy chỉ 467.238,77 SKY thay vì tối thiểu 469.414 đã ghi trước — khoảng từ cục keeper tới lúc chốt là 12.672 giây, ngắn hơn 12.731 giây mà cạnh dưới giả định. Cả hai mảnh đều là mốc THỜI GIAN mà dự đoán buộc phải giả định trước, không phải cơ chế: cơ chế vẫn đúng như bài kể — chương trình 15 bị chốt trong chính giao dịch đó và tốc độ rời kho vẫn 3.185.718,86 SKY mỗi ngày. Phạm vi: điều-bác-bỏ này chỉ nói về khoảng dự đoán của C4, không chạm ba claim còn lại của bài.",
+        "ai_phan_dinh": "phép đo của tôi trên sổ cái Ethereum tại đúng block cast 25.775.271 và block liền trước 25.775.270, qua RPC archive: một phép nhị phân trên done() của spell để khoanh chính block cast, rồi đọc lại bốn ô của ảnh nền tiền-cast tại block cũ 25.768.814 để chứng rằng dụng cụ đọc đúng đại lượng bài đã đăng. Mốc cast còn được đối chiếu bằng một đường thứ hai độc lập, dateExecuted của cổng bỏ phiếu chính chủ, và hai đường khớp tới từng giây",
+        "ngay_ket": "2026-08-17"
       },
       "log": [
         {
           "ngay": "2026-08-15",
           "ghi": "Ghi trước khi có giá trị sau cast. Hai đầu khoảng được giữ nguyên sau khi spell được schedule.",
           "nguon": "https://x.com/blockpinned/status/2088599717030830339"
+        },
+        {
+          "ngay": "2026-08-17",
+          "ghi": "Phân định trong ngày hạn, và kết quả là SAI. Phần thiếu được bóc thành hai mảnh đo được thay vì chỉ báo ngoài dải; cả hai mảnh là mốc thời gian giả định, nên bài học là một dự đoán dựng trên hai mốc thời gian của người khác thì dải phải rộng theo cả hai, không chỉ theo tốc độ. Không nới dải sau khi biết kết quả.",
+          "nguon": "SKY/FACTS.md §7d · SKY/data/c2_cast_adjudicate_2026-08-17_blk25775271.json · SKY/scripts/sky_c2_cast_adjudicate.py"
         }
       ]
     },
     {
       "id": "C5",
       "text": "Dự đoán có điều kiện: nếu executive spell được cast, khoảng cách giữa hai lượt trả thưởng của chương trình mới giữ nguyên 601.200 giây.",
-      "status": "ĐANG ĐỨNG",
+      "status": "ĐÃ XÁC NHẬN",
       "ghim": "Ghi trước trên X lúc 2026-08-15T12:12:31Z. Snapshot trước cast tại Ethereum block 25.760.209. Con số 601.200 giây đọc từ cấu hình đã công bố và mã nguồn executive spell đã xác minh.",
       "falsifier": "Nếu spell được cast mà intervals của chương trình mới khác 601.200 giây tại block ngay sau giao dịch, dự đoán này sai. Nếu spell không được cast, điều kiện chấm chưa xảy ra và claim không được tự tính là đúng.",
       "khong_do_lai": "Đây là dự đoán có điều kiện về cấu hình sau một giao dịch chưa xảy ra. Chỉ có thể phân định bằng cách đọc intervals của chương trình mới sau cast.",
@@ -93,13 +117,21 @@
       "ghi_truoc": {
         "ngay": "2026-08-15",
         "noi": "https://x.com/blockpinned/status/2088599717030830339 và trang này",
-        "so": "nếu spell được cast, intervals của chương trình mới giữ nguyên 601.200 giây"
+        "so": "nếu spell được cast, intervals của chương trình mới giữ nguyên 601.200 giây",
+        "ket_qua": "Đúng. Khoảng cách giữa hai lượt trả thưởng đọc ra 601.200 giây ở cả block trước khi chốt và block chốt, không đổi một giây. Lý do đã ghi trước và nó đứng: hàm cập nhật chương trình của spell không gọi hàm đặt nhịp trên hợp đồng lịch, chỉ hàm khởi tạo farm mới gọi. Control âm cho phép đọc này: cùng lượt đọc, nhịp của địa chỉ rỗng trả về 0, nên phép đọc phân biệt được khoá có và khoá không, chứ không trả một hằng số cho mọi khoá.",
+        "ai_phan_dinh": "phép đo của tôi trên sổ cái Ethereum tại đúng block cast 25.775.271 và block liền trước 25.775.270, qua RPC archive: một phép nhị phân trên done() của spell để khoanh chính block cast, rồi đọc lại bốn ô của ảnh nền tiền-cast tại block cũ 25.768.814 để chứng rằng dụng cụ đọc đúng đại lượng bài đã đăng. Mốc cast còn được đối chiếu bằng một đường thứ hai độc lập, dateExecuted của cổng bỏ phiếu chính chủ, và hai đường khớp tới từng giây",
+        "ngay_ket": "2026-08-17"
       },
       "log": [
         {
           "ngay": "2026-08-15",
           "ghi": "Ghi trước khi chương trình mới tồn tại trên sổ cái. Con số được giữ nguyên sau khi spell được schedule.",
           "nguon": "https://x.com/blockpinned/status/2088599717030830339"
+        },
+        {
+          "ngay": "2026-08-17",
+          "ghi": "Phân định trong ngày hạn, kèm một control âm để lượt đọc mapping không thể trả hằng số.",
+          "nguon": "SKY/FACTS.md §7d · SKY/data/c2_cast_adjudicate_2026-08-17_blk25775271.json · SKY/scripts/sky_c2_cast_adjudicate.py"
         }
       ]
     }
