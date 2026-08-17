@@ -5505,7 +5505,23 @@ def main() -> None:
 
     bai, moi_claim, token_cua, khai_tc = [], [], {}, {}
 
-    for md_path in sorted(CONTENT.glob("posts/*.md"), reverse=True):
+    # 🔴 SẮP BÀI: trước 17/08 chỗ này sắp bằng TÊN FILE giảm dần, nên hai bài CÙNG NGÀY
+    # xếp theo thứ tự chữ cái ngược — không liên quan gì tới giờ đăng. Xác: 17/08 có hai
+    # bài, `…-ldo-nest-…` lên trước `…-ethfi-…` chỉ vì "ldo" > "ethfi", trong khi bài
+    # ETHFI đăng SAU. Người dùng bắt, không cổng nào kêu.
+    # Nay tie-break bằng trường `gio` (HH:MM) trong front matter, mặc định "00:00" —
+    # bài không khai giờ vẫn sắp y như cũ, nên bản vá này không đảo thứ tự bài nào đã có.
+    def _khoa_sap(mp):
+        fm_, _ = front(mp.read_text(encoding="utf-8"), f"content/posts/{mp.name}")
+        # 🔴 `front()` chỉ `.strip()`, KHÔNG bóc dấu ngoặc kép ⇒ `gio: "17:45"` vào đây
+        # thành `'"17:45"'`, và `"` (0x22) < `0` (0x30) nên nó sắp THẤP HƠN cả mặc định
+        # "00:00". Lượt vá đầu của chính chỗ này dính đúng bẫy đó và im lặng sắp ngược.
+        # Bóc ngoặc ở đây để một bài khai `gio: "17:45"` vẫn sắp đúng.
+        return (str(fm_.get("date", "")),
+                str(fm_.get("gio") or "00:00").strip('"\''),
+                mp.name)
+
+    for md_path in sorted(CONTENT.glob("posts/*.md"), key=_khoa_sap, reverse=True):
         o = f"content/posts/{md_path.name}"
         fm, body_md = front(md_path.read_text(encoding="utf-8"), o)
         cj = md_path.with_suffix(".claims.json")

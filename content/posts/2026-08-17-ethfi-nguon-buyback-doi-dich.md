@@ -4,6 +4,7 @@ tieu_de_ngan: "ETHFI: một nguồn buyback đã đổi đích từ 14/07"
 reading_layout: centered
 token: ETHFI
 date: 2026-08-17
+gio: 17:45
 mau: 🟡
 ghim: Ethereum block 24.135.880 → 25.772.300 (2026-08-17T04:06Z) cho toàn bộ phép quét log; mốc nâng cấp block 25.533.308 (2026-07-14T20:36Z). WithdrawRequestNFT 0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c; PriorityWithdrawalQueue 0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA; EtherFiRedemptionManager 0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0; eETH 0x35fA164735182de50811E8e2E824cFb9B6118ac2; ví buyback 0x2f5301a3D59388c509C65f8698f521377D41Fd0F; Upgrade Timelock 0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761.
 mo_ta: Tài liệu ether.fi nói 100% phí rút eETH dùng mua lại ETHFI hàng tuần. Cơ chế đó có thật, đã chuyển 355,66 ETH sang ví buyback, và bị xoá khỏi hợp đồng ngày 14/07/2026.
