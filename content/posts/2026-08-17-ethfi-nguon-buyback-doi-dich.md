@@ -9,6 +9,7 @@ mau: 🟡
 ghim: Ethereum block 24.135.880 → 25.772.300 (2026-08-17T04:06Z) cho toàn bộ phép quét log; mốc nâng cấp block 25.533.308 (2026-07-14T20:36Z). WithdrawRequestNFT 0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c; PriorityWithdrawalQueue 0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA; EtherFiRedemptionManager 0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0; eETH 0x35fA164735182de50811E8e2E824cFb9B6118ac2; ví buyback 0x2f5301a3D59388c509C65f8698f521377D41Fd0F; Upgrade Timelock 0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761.
 mo_ta: Tài liệu ether.fi nói 100% phí rút eETH dùng mua lại ETHFI hàng tuần. Cơ chế đó có thật, đã chuyển 355,66 ETH sang ví buyback, và bị xoá khỏi hợp đồng ngày 14/07/2026.
 anh: card-ethfi-doi-dich.png
+kenh_x: https://x.com/blockpinned/status/2089359697224892552
 doc_lai: Đây là ảnh chụp trạng thái tại các block ghim, không phải một kết luận bền — hợp đồng có thể được nâng cấp lại bất cứ lúc nào sau đó. Con số quy đổi 676 nghìn USD dùng một mức giá ETH duy nhất tại 16/08, không dùng giá tại từng thời điểm phát sinh; phần ETH là số đo, phần USD là phép ngoại suy. Câu về việc các kênh chính chủ chưa mô tả thay đổi này có phạm vi hẹp: phép đọc kênh công bố chỉ phủ 5 trong số 160 bài mà tài khoản tự khai. Cầu nối từ "khoản đó ở lại quỹ" tới "làm tăng giá trị mỗi share eETH" đi bằng số học của hai dòng code, không bằng một phép đo dòng tiền riêng.
 ---
 

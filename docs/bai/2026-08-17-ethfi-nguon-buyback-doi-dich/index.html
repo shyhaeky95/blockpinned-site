@@ -2296,7 +2296,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Nếu đếm sự kiện handleRemainder trong đúng dải block trên ra khác 68&nbsp;lần, hoặc tổng phần về treasury khác 355,658&nbsp;ETH, hoặc gọi treasury() tại một block trước 14/07 trả về một địa chỉ khác ví buyback, thì claim này phải rút.</p>
   </div>
 <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Claim gộp một phép đọc source theo từng bản contract, một phép đếm sự kiện xuyên 752.000 block, và hai lời gọi trạng thái ở hai block khác nhau, nên không thu gọn được thành một nút gọi hợp đồng duy nhất trên trình duyệt.</p>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Đăng kèm chữ đỡ rằng phần đốt bằng 0 trong cửa sổ đo, tức toàn bộ phần gom đi sang ví buyback, chứ không phải một phần theo tham số chia. Cơ chế vẫn có tham số chia; con số 0 là kết quả đo, không phải tính chất của thiết kế.</span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Đăng kèm chữ đỡ rằng phần đốt bằng 0 trong cửa sổ đo, tức toàn bộ phần gom đi sang ví buyback, chứ không phải một phần theo tham số chia. Cơ chế vẫn có tham số chia; con số 0 là kết quả đo, không phải tính chất của thiết kế. <a href="https://x.com/blockpinned/status/2089359697224892552">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C2" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C2">C2</a>
@@ -2310,7 +2310,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Nếu trong dải 25.533.308 → 25.772.300 tìm được ít nhất một log Transfer eETH từ một trong ba hợp đồng rút tới ví buyback, VÀ trace của giao dịch cho thấy transfer đó phát sinh từ đường xử lý phần chênh sau rút, thì claim này phải rút. Vế thứ hai là bắt buộc: một transfer chỉ khớp người gửi và người nhận thì chưa tự chứng minh nó đến từ đường ấy, và thiếu vế đó thì chính điều-bác-bỏ này có thể tự bắn oan.</p>
   </div>
 <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Phép lọc log xuyên 239.000 block trên ba hợp đồng, cộng một phép đọc source theo từng bản contract để biết hàm nào đã biến mất — không thu gọn được thành một lời gọi trạng thái.</p>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Điều-bác-bỏ được viết thêm vế provenance sau một lượt phản biện: bản đầu chỉ đòi tìm một Transfer khớp người gửi và người nhận, tức có thể tự bắn oan bởi một transfer không liên quan tới đường remainder.</span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Điều-bác-bỏ được viết thêm vế provenance sau một lượt phản biện: bản đầu chỉ đòi tìm một Transfer khớp người gửi và người nhận, tức có thể tự bắn oan bởi một transfer không liên quan tới đường remainder. <a href="https://x.com/blockpinned/status/2089359697224892552">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C3" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C3">C3</a>
@@ -2324,7 +2324,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Nếu ghép lại theo transaction hash mà tổng phần chênh khác 98,506&nbsp;ETH, hoặc nếu tìm được một đường trong hợp đồng cho phép rút phần chênh đó ra như một số dư riêng thay vì để nó nằm trong tỷ giá, thì claim này phải rút.</p>
   </div>
 <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Phép đo cộng hai vế của hàng nghìn log trên hai hợp đồng rồi ghép theo transaction hash; không có getter nào trả về đại lượng này.</p>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Bản đầu của phép đo dùng tỷ giá xấp xỉ từ mốc Rebase gần nhất và control tự đặt đã FAIL với lệch 4,67e-5 trên ngưỡng 1e-5. Không nới ngưỡng: thay bằng phép đọc thẳng giá trị ETH của share bị đốt từ log tại đúng block. Cầu nối từ &#x27;ở lại quỹ&#x27; tới &#x27;tăng giá trị mỗi share&#x27; đi bằng số học của hai dòng code, không bằng một phép đo dòng tiền riêng — giới hạn này khai trong thân bài.</span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Bản đầu của phép đo dùng tỷ giá xấp xỉ từ mốc Rebase gần nhất và control tự đặt đã FAIL với lệch 4,67e-5 trên ngưỡng 1e-5. Không nới ngưỡng: thay bằng phép đọc thẳng giá trị ETH của share bị đốt từ log tại đúng block. Cầu nối từ &#x27;ở lại quỹ&#x27; tới &#x27;tăng giá trị mỗi share&#x27; đi bằng số học của hai dòng code, không bằng một phép đo dòng tiền riêng — giới hạn này khai trong thân bài. <a href="https://x.com/blockpinned/status/2089359697224892552">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C4" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C4">C4</a>
@@ -2338,7 +2338,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Nếu ghép lại 86 cặp lệnh mà có ít nhất một cặp chạy trước 864.000 giây, hoặc nếu getMinDelay() tại block ngay trước lần nâng cấp trả về một giá trị nhỏ hơn, thì phần nói timelock được tôn trọng phải rút.</p>
   </div>
 <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Phép ghép hai loại sự kiện của timelock theo id trên một dải block, cộng hai lời gọi trạng thái ở hai block khác nhau.</p>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Claim này đi NGƯỢC hướng câu chuyện chính của bài và được đặt vào bài đúng vì thế. Lượt đọc đầu lấy trường delay ở word cuối của data thay vì word thứ 4, cho ra những con số cỡ 10^76 cho một đại lượng tính bằng giây — chúng vô lý nên lộ ngay, nhưng nếu payload ngắn hơn thì word cuối rất có thể là một số trông hợp lý.</span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Claim này đi NGƯỢC hướng câu chuyện chính của bài và được đặt vào bài đúng vì thế. Lượt đọc đầu lấy trường delay ở word cuối của data thay vì word thứ 4, cho ra những con số cỡ 10^76 cho một đại lượng tính bằng giây — chúng vô lý nên lộ ngay, nhưng nếu payload ngắn hơn thì word cuối rất có thể là một số trông hợp lý. <a href="https://x.com/blockpinned/status/2089359697224892552">nguồn</a></span></li></ol></details>
 </article><article class="case-claim song" id="C5" data-article-claim data-st="song">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C5">C5</a>
@@ -2352,7 +2352,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Chỉ cần MỘT nguồn chính chủ nói rõ khoản chênh không còn tài trợ buyback và nay quay về quỹ là claim này phải bỏ.</p>
   </div>
 <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Claim là một phủ định trên nhiều kênh khác nhau, mỗi kênh một cách đọc; nó chỉ có nghĩa cùng với các control dương đi kèm, nên không thu gọn được thành một phép kiểm.</p>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Claim này có PHẠM VI HẸP và phạm vi đó khai ngay trong thân bài: phép đọc kênh công bố chỉ phủ 5 trong số 160&nbsp;bài mà tài khoản tự khai, cả hai đường đọc đều bị chặn ở đó. Cái đỡ cho kết luận không phải độ phủ mà là control hai chiều. Câu &#x27;không ai thông báo&#x27; bị cấm trong mọi bản.</span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Claim này có PHẠM VI HẸP và phạm vi đó khai ngay trong thân bài: phép đọc kênh công bố chỉ phủ 5 trong số 160&nbsp;bài mà tài khoản tự khai, cả hai đường đọc đều bị chặn ở đó. Cái đỡ cho kết luận không phải độ phủ mà là control hai chiều. Câu &#x27;không ai thông báo&#x27; bị cấm trong mọi bản. <a href="https://x.com/blockpinned/status/2089359697224892552">nguồn</a></span></li></ol></details>
 </article></div>
   </div>
 </details>
@@ -2360,7 +2360,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   <div class="article-meta">
     <span><b>GHIM</b>Ethereum block&nbsp;24.135.880&nbsp;→&nbsp;25.772.300 (2026-08-17T04:06Z) cho toàn bộ phép quét log; mốc nâng cấp block&nbsp;25.533.308 (2026-07-14T20:36Z). WithdrawRequestNFT 0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c; PriorityWithdrawalQueue 0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA; EtherFiRedemptionManager 0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0; eETH 0x35fA164735182de50811E8e2E824cFb9B6118ac2; ví buyback 0x2f5301a3D59388c509C65f8698f521377D41Fd0F; Upgrade Timelock 0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761.</span>
     <span><b>NGÀY</b>17/08/2026</span>
-    <span class="article-meta-link"><i>chưa đăng trên kênh</i></span>
+    <span class="article-meta-link"><a href="https://x.com/blockpinned/status/2089359697224892552">bản đăng trên X ↗</a></span>
   </div>
   <p><strong>Tài liệu quản trị của ether.fi nói 100% doanh thu từ phí rút eETH được dùng mua lại ETHFI, theo nhịp hàng tuần. Cơ chế đó có thật trong code. Ngày 14/07/2026, một bản nâng cấp xoá hàm thực hiện nó khỏi hợp đồng. Trang tài liệu vẫn giữ nguyên câu cũ.</strong></p>
 <p>Điều đáng nói không phải là một cơ chế ngừng chạy. Là một khoản tiền vẫn phát sinh đều, vẫn chảy, nhưng từ một ngày cụ thể thì chảy sang người khác — và không văn bản nào của đối tượng, trong phạm vi BlockPinned đã đọc, mô tả việc đó.</p>

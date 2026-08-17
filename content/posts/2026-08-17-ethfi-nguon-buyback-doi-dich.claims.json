@@ -10,7 +10,8 @@
    "log": [
     {
      "ngay": "2026-08-17",
-     "ghi": "Đăng kèm chữ đỡ rằng phần đốt bằng 0 trong cửa sổ đo, tức toàn bộ phần gom đi sang ví buyback, chứ không phải một phần theo tham số chia. Cơ chế vẫn có tham số chia; con số 0 là kết quả đo, không phải tính chất của thiết kế."
+     "ghi": "Đăng kèm chữ đỡ rằng phần đốt bằng 0 trong cửa sổ đo, tức toàn bộ phần gom đi sang ví buyback, chứ không phải một phần theo tham số chia. Cơ chế vẫn có tham số chia; con số 0 là kết quả đo, không phải tính chất của thiết kế.",
+     "nguon": "https://x.com/blockpinned/status/2089359697224892552"
     }
    ]
   },
@@ -24,7 +25,8 @@
    "log": [
     {
      "ngay": "2026-08-17",
-     "ghi": "Điều-bác-bỏ được viết thêm vế provenance sau một lượt phản biện: bản đầu chỉ đòi tìm một Transfer khớp người gửi và người nhận, tức có thể tự bắn oan bởi một transfer không liên quan tới đường remainder."
+     "ghi": "Điều-bác-bỏ được viết thêm vế provenance sau một lượt phản biện: bản đầu chỉ đòi tìm một Transfer khớp người gửi và người nhận, tức có thể tự bắn oan bởi một transfer không liên quan tới đường remainder.",
+     "nguon": "https://x.com/blockpinned/status/2089359697224892552"
     }
    ]
   },
@@ -38,7 +40,8 @@
    "log": [
     {
      "ngay": "2026-08-17",
-     "ghi": "Bản đầu của phép đo dùng tỷ giá xấp xỉ từ mốc Rebase gần nhất và control tự đặt đã FAIL với lệch 4,67e-5 trên ngưỡng 1e-5. Không nới ngưỡng: thay bằng phép đọc thẳng giá trị ETH của share bị đốt từ log tại đúng block. Cầu nối từ 'ở lại quỹ' tới 'tăng giá trị mỗi share' đi bằng số học của hai dòng code, không bằng một phép đo dòng tiền riêng — giới hạn này khai trong thân bài."
+     "ghi": "Bản đầu của phép đo dùng tỷ giá xấp xỉ từ mốc Rebase gần nhất và control tự đặt đã FAIL với lệch 4,67e-5 trên ngưỡng 1e-5. Không nới ngưỡng: thay bằng phép đọc thẳng giá trị ETH của share bị đốt từ log tại đúng block. Cầu nối từ 'ở lại quỹ' tới 'tăng giá trị mỗi share' đi bằng số học của hai dòng code, không bằng một phép đo dòng tiền riêng — giới hạn này khai trong thân bài.",
+     "nguon": "https://x.com/blockpinned/status/2089359697224892552"
     }
    ]
   },
@@ -52,7 +55,8 @@
    "log": [
     {
      "ngay": "2026-08-17",
-     "ghi": "Claim này đi NGƯỢC hướng câu chuyện chính của bài và được đặt vào bài đúng vì thế. Lượt đọc đầu lấy trường delay ở word cuối của data thay vì word thứ 4, cho ra những con số cỡ 10^76 cho một đại lượng tính bằng giây — chúng vô lý nên lộ ngay, nhưng nếu payload ngắn hơn thì word cuối rất có thể là một số trông hợp lý."
+     "ghi": "Claim này đi NGƯỢC hướng câu chuyện chính của bài và được đặt vào bài đúng vì thế. Lượt đọc đầu lấy trường delay ở word cuối của data thay vì word thứ 4, cho ra những con số cỡ 10^76 cho một đại lượng tính bằng giây — chúng vô lý nên lộ ngay, nhưng nếu payload ngắn hơn thì word cuối rất có thể là một số trông hợp lý.",
+     "nguon": "https://x.com/blockpinned/status/2089359697224892552"
     }
    ]
   },
@@ -66,7 +70,8 @@
    "log": [
     {
      "ngay": "2026-08-17",
-     "ghi": "Claim này có PHẠM VI HẸP và phạm vi đó khai ngay trong thân bài: phép đọc kênh công bố chỉ phủ 5 trong số 160 bài mà tài khoản tự khai, cả hai đường đọc đều bị chặn ở đó. Cái đỡ cho kết luận không phải độ phủ mà là control hai chiều. Câu 'không ai thông báo' bị cấm trong mọi bản."
+     "ghi": "Claim này có PHẠM VI HẸP và phạm vi đó khai ngay trong thân bài: phép đọc kênh công bố chỉ phủ 5 trong số 160 bài mà tài khoản tự khai, cả hai đường đọc đều bị chặn ở đó. Cái đỡ cho kết luận không phải độ phủ mà là control hai chiều. Câu 'không ai thông báo' bị cấm trong mọi bản.",
+     "nguon": "https://x.com/blockpinned/status/2089359697224892552"
     }
    ]
   }
