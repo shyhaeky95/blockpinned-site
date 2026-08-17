@@ -7,11 +7,22 @@
    "title": "Thị phần đi xuống. Phí đi lên.",
    "aria": "Qua ba giai đoạn A, B và C, thị phần volume của PancakeSwap trên BSC giảm từ 74,0 xuống 44,4 rồi 36,4 phần trăm; phí PancakeSwap mỗi ngày đi từ 202.808 xuống 155.398 rồi tăng lên 479.026 đô. Hai hàng dùng hai thang đo riêng.",
    "caption": "Trung vị theo ngày, 27/06–08/08/2026. Hai hàng khác đơn vị; không đọc khoảng cách hình học như một tỷ lệ chung. @BLOCKPINNED",
-   "claims": ["C1"],
+   "claims": [
+    "C1"
+   ],
    "stages": [
-    {"label": "A · TRƯỚC", "note": "27/06–11/07"},
-    {"label": "B · SÓNG KHỐI LƯỢNG", "note": "12/07–29/07"},
-    {"label": "C · SÓNG PHÍ", "note": "30/07–08/08"}
+    {
+     "label": "A · TRƯỚC",
+     "note": "27/06–11/07"
+    },
+    {
+     "label": "B · SÓNG KHỐI LƯỢNG",
+     "note": "12/07–29/07"
+    },
+    {
+     "label": "C · SÓNG PHÍ",
+     "note": "30/07–08/08"
+    }
    ],
    "series": [
     {
@@ -20,9 +31,18 @@
      "summary": "−37,6 điểm · A → C",
      "tone": "bad",
      "values": [
-      {"value": 74.0, "hien": "74,0%"},
-      {"value": 44.4, "hien": "44,4%"},
-      {"value": 36.4, "hien": "36,4%"}
+      {
+       "value": 74.0,
+       "hien": "74,0%"
+      },
+      {
+       "value": 44.4,
+       "hien": "44,4%"
+      },
+      {
+       "value": 36.4,
+       "hien": "36,4%"
+      }
      ]
     },
     {
@@ -31,9 +51,18 @@
      "summary": "×3,08 · B → C",
      "tone": "good",
      "values": [
-      {"value": 202808, "hien": "$202.808"},
-      {"value": 155398, "hien": "$155.398"},
-      {"value": 479026, "hien": "$479.026"}
+      {
+       "value": 202808,
+       "hien": "$202.808"
+      },
+      {
+       "value": 155398,
+       "hien": "$155.398"
+      },
+      {
+       "value": 479026,
+       "hien": "$479.026"
+      }
      ]
     }
    ]
@@ -45,7 +74,9 @@
    "title": "Volume dời sang pool đắt hơn, phí trên mỗi đô tăng 2,43 lần",
    "aria": "So sánh giai đoạn B và C của PancakeSwap v3 trên BSC. Tỷ trọng volume ở tier 0,25 và 1 phần trăm tăng từ 1,81 lên 9,76 phần trăm, còn phí trên mỗi đô volume tăng từ 2,25 lên 5,47 bps.",
    "caption": "Dune, 12/07–29/07 so với 30/07–08/08/2026. Fee tier lấy từ log PoolCreated; hai giai đoạn dùng cùng pipeline. @BLOCKPINNED",
-   "claims": ["C2"],
+   "claims": [
+    "C2"
+   ],
    "input_label": "ĐẦU VÀO GIỮ NGUYÊN",
    "input_value": "volume v3 theo pool · fee tier từ PoolCreated",
    "gap_value": "×2,43",
@@ -54,8 +85,14 @@
     {
      "label": "B · SÓNG KHỐI LƯỢNG",
      "facts": [
-      {"label": "tier 0,01%", "value": "86,62%"},
-      {"label": "tier ≥0,25%", "value": "1,81%"}
+      {
+       "label": "tier 0,01%",
+       "value": "86,62%"
+      },
+      {
+       "label": "tier ≥0,25%",
+       "value": "1,81%"
+      }
      ],
      "scale_label": "USD ở tier ≥0,25%",
      "scale": "$131M",
@@ -67,8 +104,14 @@
     {
      "label": "C · SÓNG PHÍ",
      "facts": [
-      {"label": "tier 0,01%", "value": "80,22%"},
-      {"label": "tier ≥0,25%", "value": "9,76%"}
+      {
+       "label": "tier 0,01%",
+       "value": "80,22%"
+      },
+      {
+       "label": "tier ≥0,25%",
+       "value": "9,76%"
+      }
      ],
      "scale_label": "USD ở tier ≥0,25%",
      "scale": "$517M",
@@ -88,7 +131,10 @@
    "ghim": "DefiLlama dimension API, chuỗi ngày đã pin kèm sha256 trong artifact CAKE/cache/defillama/llama_{dexs,fees}_bsc_2026-08-10.json.gz · trung vị theo ngày, không phải tổng · ranh giới 12/07 là ngày volume cả chain lần đầu vượt 1 tỷ đô, 30/07 là ngày phí nhảy từ 200.030 lên 447.400 · hai ngày 09/08 và 10/08 bị loại vì nguồn trả 0 cho nhánh AMM",
    "falsifier": "Lấy lại chuỗi dailyVolume và dailyFees của chain BSC có breakdown theo protocol, cộng mọi khoá chứa chữ PancakeSwap, rồi tính trung vị theo ngày cho ba cửa sổ 27/06–11/07, 12/07–29/07, 30/07–08/08. Ra thị phần không phải 74,0 rồi 44,4 rồi 36,4 phần trăm, hoặc phí không phải 202.808 rồi 155.398 rồi 479.026 đô, thì bảng ba giai đoạn sai. Chú ý phải loại hai ngày cuối chuỗi: ngày nào nhánh AMM trả 0 đồng phí trong khi cột volume vẫn có số thì ngày đó nguồn chưa chốt.",
    "log": [
-    {"ngay": "2026-08-10", "ghi": "Đo lần đầu bằng hai cửa sổ và ra câu thị phần giảm từ khoảng 45% xuống 35%. Soát lại bằng trung vị thì cửa sổ nền đã nằm trong sóng khối lượng rồi, và trung vị hai cửa sổ đó là 34,9% với 37,0%, tức gần như không đổi. Chia lại thành ba giai đoạn mới ra bảng hiện tại."}
+    {
+     "ngay": "2026-08-10",
+     "ghi": "Đo lần đầu bằng hai cửa sổ và ra câu thị phần giảm từ khoảng 45% xuống 35%. Soát lại bằng trung vị thì cửa sổ nền đã nằm trong sóng khối lượng rồi, và trung vị hai cửa sổ đó là 34,9% với 37,0%, tức gần như không đổi. Chia lại thành ba giai đoạn mới ra bảng hiện tại."
+    }
    ]
   },
   {
@@ -98,7 +144,10 @@
    "ghim": "Dune, bảng dex.trades lọc blockchain bnb, project pancakeswap, version 3, nối với bảng pool sang mức phí dựng từ log PoolCreated của factory v3 0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865 · artifact CAKE/data/cake_v3_tier_mix_2026-08-10.json · cửa sổ 27/06 đến 09/08/2026",
    "falsifier": "Dựng lại bảng pool sang mức phí từ log PoolCreated rồi nối với dex.trades và cộng volume theo từng mức phí cho ba giai đoạn. Nếu tỷ trọng nhóm 0,25% cộng 1% ở giai đoạn C không cao hơn giai đoạn B ít nhất 2 lần thì toàn bộ đoạn giải thích bằng cơ cấu mức phí phải viết lại. Ba phép thử kèm theo cũng phải chạy lại: bảng pool sang mức phí phải trả đúng 10000 cho pool TUT/WBNB và 100 cho pool USDT/WBNB và 100 cho pool quq/USDT, đọc độc lập bằng fee() on-chain; volume của Dune chia trung vị DefiLlama phải nằm trong khoảng nửa lần tới hai lần; và phí dựng lại từ tỷ trọng chia phí DefiLlama cũng vậy.",
    "log": [
-    {"ngay": "2026-08-10", "ghi": "Câu này ban đầu chỉ có nền là phí trên mỗi đô volume gộp của cả v3, tức một suy diễn. Một lượt phản biện ngoài chỉ đúng chỗ đó và đòi volume tách theo mức phí. Đo xong thì claim đứng và mạnh hơn bản cũ: ở giai đoạn B tỷ trọng nhóm phí cao còn giảm, đúng nghĩa đen của việc dòng tiền dồn vào chỗ rẻ nhất."}
+    {
+     "ngay": "2026-08-10",
+     "ghi": "Câu này ban đầu chỉ có nền là phí trên mỗi đô volume gộp của cả v3, tức một suy diễn. Một lượt phản biện ngoài chỉ đúng chỗ đó và đòi volume tách theo mức phí. Đo xong thì claim đứng và mạnh hơn bản cũ: ở giai đoạn B tỷ trọng nhóm phí cao còn giảm, đúng nghĩa đen của việc dòng tiền dồn vào chỗ rẻ nhất."
+    }
    ]
   },
   {
@@ -108,8 +157,14 @@
    "ghim": "Pool 0x6dafbf0ab4fd72e2a5c0ad5a1ed277d3bf8a8d1f, cửa sổ block 114.861.872 đến 115.053.819 · kết quả thô 110,69 WBNB cộng 377.679 TUT, quy một đơn vị bằng slot0 của chính pool là 2.658,02 TUT mỗi WBNB, nhân giá BNB 602,45 đô · allocPoint đọc tại block 115.053.639, tổng totalAllocPoint 6.526 trên 588 pid",
    "falsifier": "Đọc feeGrowthGlobal0X128 và feeGrowthGlobal1X128 của đúng pool đó tại đúng hai block trên, nhân hiệu với liquidity, chia 2 mũ 128. Không ra 110,69 WBNB cộng 377.679 TUT thì con số phí sai. Với vế emissions, gọi v3PoolAddressPid rồi poolInfo trên MasterChef v3: allocPoint khác 0 tại block 115.053.639 thì câu về emissions sai. Phép thử đối chứng bắt buộc chạy cùng lượt là pool USDT/WBNB 0x172fcd41…f849, nó phải trả pid 137 với allocPoint 1.645, không thì phép đọc đang mù chứ không phải pool kia bằng 0.",
    "log": [
-    {"ngay": "2026-08-10", "ghi": "Bản nháp đầu định in 188 nghìn đô mỗi ngày, lấy volume của một bảng xếp hạng nhân với 1%. Đo thật ra 152.288, lệch 19%. Phép nhân không phải phép đo, và nguồn của phép nhân đó chính là nguồn cùng bài đang chứng minh có hàng không thanh khoản."},
-    {"ngay": "2026-08-10", "ghi": "Lượt kiểm đầu kết luận pool không nằm trong farm, dựa trên danh sách pool có phần chia. Sai chữ: pool có pid 258, phần chia mới bằng 0. Có mặt trong sổ không phải là nhận emissions."}
+    {
+     "ngay": "2026-08-10",
+     "ghi": "Bản nháp đầu định in 188 nghìn đô mỗi ngày, lấy volume của một bảng xếp hạng nhân với 1%. Đo thật ra 152.288, lệch 19%. Phép nhân không phải phép đo, và nguồn của phép nhân đó chính là nguồn cùng bài đang chứng minh có hàng không thanh khoản."
+    },
+    {
+     "ngay": "2026-08-10",
+     "ghi": "Lượt kiểm đầu kết luận pool không nằm trong farm, dựa trên danh sách pool có phần chia. Sai chữ: pool có pid 258, phần chia mới bằng 0. Có mặt trong sổ không phải là nhận emissions."
+    }
    ]
   },
   {
@@ -119,8 +174,14 @@
    "ghim": "Chuỗi cycle tuần pin tại BSC block 115.047.719 · phần đốt từ phí bằng tổng đốt trừ phần tự triệt tiêu, đọc từ log của từng lượt harvest · tuần 27/07 là 150.871 trừ 344.346 bằng âm 193.475; tuần 03/08 là 152.180 trừ 496.944 bằng âm 344.764 · artifact CAKE/data/cake_burn_weekly_head_2026-08-10.json",
    "falsifier": "Bisect số dư địa chỉ đốt và tổng cung trong cửa sổ giữa hai lệnh đốt tuần, rồi đọc log tại từng block nhảy để tách phần tự triệt tiêu khỏi phần đến từ phí. Ra khác 344.346 và 496.944 thì hai con số sai. Với vế quy đổi ra năm: đừng nhân thẳng lượng đốt, vì cung ròng đổi bằng một hiệu nên nó khuếch đại, lượng đốt tăng 1,44 lần mà tốc độ giảm cung tăng 1,78 lần; ai nhân thẳng sẽ ra số khác và tưởng bài sai.",
    "log": [
-    {"ngay": "2026-08-10", "ghi": "Bản trước dùng số của tuần đang chạy, 570.715 CAKE. Lượt đo lại bắt buộc trước khi đăng cho thấy lệnh đốt tuần chưa chạy nên con số đó vẫn đang tăng, đã lên 599.033 sau ba tiếng. Chuyển headline sang hai tuần đã đóng để số không trôi nữa."},
-    {"ngay": "2026-08-10", "ghi": "Hai số quy ra năm ban đầu không có đường tái lập trong bài. Người đọc lấy lượng đốt nhân 52 chia cung sẽ ra số khác. Đã khai công thức đầy đủ ở cả bản đăng lẫn phần tự kiểm."}
+    {
+     "ngay": "2026-08-10",
+     "ghi": "Bản trước dùng số của tuần đang chạy, 570.715 CAKE. Lượt đo lại bắt buộc trước khi đăng cho thấy lệnh đốt tuần chưa chạy nên con số đó vẫn đang tăng, đã lên 599.033 sau ba tiếng. Chuyển headline sang hai tuần đã đóng để số không trôi nữa."
+    },
+    {
+     "ngay": "2026-08-10",
+     "ghi": "Hai số quy ra năm ban đầu không có đường tái lập trong bài. Người đọc lấy lượng đốt nhân 52 chia cung sẽ ra số khác. Đã khai công thức đầy đủ ở cả bản đăng lẫn phần tự kiểm."
+    }
    ]
   },
   {
@@ -130,24 +191,38 @@
    "ghim": "Công thức giữ nguyên mọi tuần: lượng CAKE đốt từ phí nhân giá CAKE trung bình tuần, chia tổng gross fee BSC bảy ngày cùng tuần · artifact CAKE/data/cake_fee_passthrough_2026-08-10.json · ba tuần đủ 7 trên 7 ngày dữ liệu; tuần kết 10/08 bị loại vì cả tử số lẫn mẫu số đều chưa đóng",
    "falsifier": "Tính lại tỷ lệ cho ba tuần đó bằng đúng công thức trên. Nếu tỷ lệ của tuần 03/08 không thấp hơn trung bình hai tuần 20/07 và 27/07 thì câu phần tới CAKE không tăng theo kịp phí phải rút. Lưu ý mức tuyệt đối của tỷ lệ này không dùng được, vì tử số là phần thanh toán tuần trên BSC có cả perps sau khi đã chuyển đổi còn mẫu số là con số phí lý thuyết chỉ BSC và chỉ DEX; chỉ hình dạng giữa các tuần là so được.",
    "log": [
-    {"ngay": "2026-08-10", "ghi": "Claim này sinh ra từ một lượt đối kháng: bài đang ghép gross fee theo ngày với CAKE burn theo tuần rồi gọi cả cụm bằng một từ rộng. Đo ra thì hai đại lượng đi ngược nhau thật, nên phần kết của bài phải thêm một nhịp thứ ba."}
+    {
+     "ngay": "2026-08-10",
+     "ghi": "Claim này sinh ra từ một lượt đối kháng: bài đang ghép gross fee theo ngày với CAKE burn theo tuần rồi gọi cả cụm bằng một từ rộng. Đo ra thì hai đại lượng đi ngược nhau thật, nên phần kết của bài phải thêm một nhịp thứ ba."
+    }
    ]
   },
   {
    "id": "C6",
    "text": "Tại 13h14 ngày 10/08/2026 giờ Việt Nam, ví đốt của PancakeSwap giữ 59.637.099,55 CAKE chưa đốt, trong đó 599.032,72 là tiền phí của tuần đang chạy, và lệnh đốt tuần chưa thực thi. Khi lệnh đó chạy, hiệu giữa tổng cung và số dư địa chỉ đốt phải rơi xuống không cao hơn 339.823.371,96.",
-   "status": "ĐANG ĐỨNG",
-   "ghim": "Ví đốt 0xceba60280fb0ecd9a5a26a1552b90944770a4a0e · đọc tại BSC block 115.070.912 lúc 14h22 ngày 10/08, số y nguyên so với lần đọc 13h14 · hiệu tổng cung trừ số dư địa chỉ đốt lúc đó là 399.460.471,51 · cận trên 339.823.371,96 bằng 399.460.471,51 trừ 59.637.099,55",
+   "status": "BỊ BÁC",
+   "ghim": "Ví đốt 0xceba60280fb0ecd9a5a26a1552b90944770a4a0e · đọc tại BSC block 115.070.912 lúc 14h22 ngày 10/08, số y nguyên so với lần đọc 13h14 · hiệu tổng cung trừ số dư địa chỉ đốt lúc đó là 399.460.471,51 · cận trên 339.823.371,96 bằng 399.460.471,51 trừ 59.637.099,55 · 🔴 SỬA 16/08/2026: câu trên gọi 0xceba60280fb0ecd9a5a26a1552b90944770a4a0e là ví đốt, nhưng địa chỉ đó là burnAdmin của MasterChef v2, tức cái ví GIỮ lô trước khi đốt. Đại lượng mà con số 399.460.471,51 thật sự nói tới là tổng cung trừ số dư 0x000000000000000000000000000000000000dEaD, nơi CAKE nằm sau khi đốt. Đo lại tại đúng block ghim cho thấy tổng cung trừ số dư dEaD ra 399.460.471,51069164, khớp con số đã đăng, còn tổng cung trừ số dư burnAdmin ra 4.972.187.308,20, lệch 4,57 tỷ. Số đúng, tên đại lượng sai.",
    "falsifier": "Sau khi lệnh đốt tuần thực thi, gọi totalSupply của CAKE và balanceOf của địa chỉ đốt tại cùng một block rồi lấy hiệu. Nếu con số đó cao hơn 339.823.371,96 thì phép bóc nguồn của tuần này sai và có dòng chưa ai đếm. Nếu nó thấp hơn, phần thấp hơn phải bằng đúng lượng phí gom thêm từ lúc đo tới lúc đốt.",
    "ghi_truoc": {
     "ngay": "2026-08-10",
     "noi": "bài đăng trên X lúc 14h ngày 10/08/2026, và trang này, đều ghi cận trên trước khi lệnh đốt tuần chạy",
-    "so": "hiệu tổng cung trừ số dư địa chỉ đốt phải rơi xuống không cao hơn 339.823.371,96 CAKE"
+    "so": "hiệu tổng cung trừ số dư địa chỉ đốt phải rơi xuống không cao hơn 339.823.371,96 CAKE",
+    "ket_qua": "Sai. Lệnh đốt tuần chạy lúc 15h20 ngày 10/08/2026 giờ Việt Nam, tức 08:20:12Z, tại BSC block 115.087.730, chuyển đúng 59.637.099 CAKE tròn sang địa chỉ đốt. Đọc lại lúc 23h02 ngày 16/08 giờ Việt Nam tại block 116.300.892: tổng cung 5.031.824.407,75105095 trừ số dư địa chỉ đốt 4.692.001.035,25214863 bằng 339.823.372,49890274. Cận trên đã ghi trước là 339.823.371,96, nên con số thật cao hơn 0,538902759552 CAKE và dự đoán sai. Dòng chưa ai đếm đã tìm ra và nó không phải một dòng phí: lệnh đốt chuyển một số nguyên tròn và để lại 0,548629743399761 CAKE trong ví giữ lô, đúng bằng phần vượt. Cận trên đã giả định ví về không. Biên sai là 0,0000009 phần trăm của lô, nhưng điều-bác-bỏ viết cao hơn là sai, nên đây ghi là sai chứ không ghi là gần đúng.",
+    "ai_phan_dinh": "phép đo của tôi trên sổ cái BSC tại block 116.300.892 qua RPC archive, kèm lượt đo lại chính block nền 115.070.912 để chứng rằng đại lượng đọc là đúng đại lượng bài đã đăng, và một phép nhị phân 22 lượt gọi để khoanh đúng block lệnh đốt rồi lấy log tại block đó",
+    "ngay_ket": "2026-08-16"
    },
    "han": "2026-08-12",
    "han_ghi": "Lệnh đốt tuần chạy theo nhịp thứ Hai. Tới ngày này phải đọc lại tổng cung và số dư địa chỉ đốt rồi ghi kết quả vào đây, kể cả khi kết quả là con số vượt cận trên đã ghi.",
    "log": [
-    {"ngay": "2026-08-10", "ghi": "Ghi trước lúc lệnh đốt chưa chạy. Bản trước của bài ghi một dự báo điểm là 339.851.689,20, tính trên số dư ví lúc 03h20; số đó hết hạn ngay trong ngày vì ví vẫn đang gom thêm phí. Đổi sang một cận trên nên nó không phụ thuộc vào lượng phí gom thêm."}
+    {
+     "ngay": "2026-08-10",
+     "ghi": "Ghi trước lúc lệnh đốt chưa chạy. Bản trước của bài ghi một dự báo điểm là 339.851.689,20, tính trên số dư ví lúc 03h20; số đó hết hạn ngay trong ngày vì ví vẫn đang gom thêm phí. Đổi sang một cận trên nên nó không phụ thuộc vào lượng phí gom thêm."
+    },
+    {
+     "ngay": "2026-08-16",
+     "ghi": "Đọc lại và ghi kết quả: dự đoán sai, vượt cận trên 0,538902759552 CAKE. Lệnh đốt tuần đã chạy từ 08:20:12Z ngày 10/08, tức chỉ 2 giờ 6 phút 11 giây sau mốc ghim của bài, nên claim này phân định được ngay chiều hôm đó; nó nằm im tới 16/08 vì hạn 12/08 chỉ tồn tại trong file claim của trang, không có mặt trong lịch làm việc nào. Đã mở việc để mọi hạn claim từ nay phải có một dòng trong lịch. Cùng lượt này sửa một lỗi trong ô ghim: nó gọi ví giữ lô là ví đốt. Số không đổi, tên đại lượng đổi.",
+     "nguon": "CAKE/FACTS.md §20 · CAKE/data/cake_c6_burn_readback_blk116300892.json · CAKE/scripts/cake_c6_burn_readback.py"
+    }
    ]
   }
  ]

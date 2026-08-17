@@ -31,6 +31,7 @@ một dòng cũng gây đúng lỗi đó, lần này do máy.
 Chạy:  python3 site/build.py [--theme benchmark|do|verdigris] [--out <thư mục>]
        mặc định là `benchmark` — hệ nhận diện đã chốt 29/07; hai hệ kia giữ làm hồ sơ
 """
+import datetime
 import hashlib
 import html as ihtml
 import json
@@ -281,7 +282,7 @@ HIEN_VAT = {
 }
 
 TEN_CONG = ["ngôn ngữ", "cấu trúc", "claim", "ngôi xưng", "đánh dấu",
-            "thuộc tính số", "xem trước", "đo lại", "hạn", "ghi trước", "liên kết",
+            "thuộc tính số", "xem trước", "đo lại", "hạn", "quá hạn", "ghi trước", "liên kết",
             "fact", "bố cục", "visual", "tiêu đề"]
 
 # chữ ký hàm hợp lệ: tên + danh sách kiểu, vd `balanceOf(address)` · `x()` · `f(uint256,address)`
@@ -1261,6 +1262,48 @@ def cong_han(claims: list, o: str) -> None:
             raise LoiCong(f"{c['id']} điều-bác-bỏ có ngày "
                           f"{RE_NGAY_VAN.search(c['falsifier']).group()} mà không khai 'han' ⇒ "
                           f"tới ngày đó sẽ không gì nhắc — {o}")
+
+
+def cong_qua_han(claims: list, o: str) -> None:
+    """Cổng — hạn đã TRÔI QUA mà claim vẫn `ĐANG ĐỨNG` ⇒ CHẶN BUILD.
+
+    🔴 VÌ SAO CÓ CỔNG NÀY (16/08/2026, và nó có xác).
+    `cong_han` bắt claim phải KHAI `han`; `cong_ghi_truoc` bắt claim đã phân định phải
+    có `ket_qua`. Giữa hai cổng đó có một khoảng trống đúng bằng thứ quan trọng nhất:
+    **hạn trôi qua mà không ai đọc lại**. Không cổng nào so `han` với hôm nay, nên thứ
+    duy nhất phản ứng là JS đếm ngược chạy TRONG TRÌNH DUYỆT NGƯỜI ĐỌC — tức người
+    ngoài thấy chữ ĐÃ TỚI HẠN còn desk thì không thấy gì. Cổng canh nợ mà chỉ báo cho
+    chủ nợ, không báo cho con nợ.
+
+    Xác: claim `C6` của bài CAKE 10/08 có hạn **12/08**. Sự kiện nó canh xảy ra
+    **08:20:12Z ngày 10/08**, tức 2 giờ 6 phút sau khi bài lên. Claim nằm im tới
+    **16/08** — trễ 4 ngày sau hạn, 6 ngày sau khi đã phân định được — và trong suốt
+    thời gian đó trang chủ vẫn đang in ĐÃ TỚI HẠN cho khách đọc.
+
+    🔵 HAI CỬA RA, cả hai đều hợp lệ, và đó là điểm của cổng — nó không đòi bạn phải
+    ĐÚNG, nó đòi bạn phải NÓI:
+      ⑴ đọc lại rồi ghi kết quả ⇒ `status` sang `ĐÃ XÁC NHẬN` / `BỊ BÁC` / `ĐÃ SỬA`
+         (khi đó `cong_ghi_truoc` tiếp quản và đòi `ket_qua`/`ai_phan_dinh`/`ngay_ket`);
+      ⑵ chưa đủ số ⇒ `status` sang `CHỜ SỐ` **và** thêm một dòng `log` nói rõ tới hạn
+         mà chưa đo được gì. Đó đúng là câu mà `PUBLISH.md` đã đòi từ 28/07:
+         *"tới hạn mà chưa đo thì phải công khai ghi 'chưa đủ số', không được để im"*.
+    Không có cửa thứ ba, và **không có cửa dời hạn** — sửa `han` sau khi thấy kết quả
+    là dời goalpost, hỏng đúng thứ làm nên một bài ghi trước.
+
+    🔴 Cổng đọc ĐỒNG HỒ, phần dựng thì KHÔNG. Trang tĩnh phải dựng hai lần ra cùng
+    byte (vì thế đếm ngược mới nằm ở client), nên ngày hôm nay chỉ được phép quyết
+    định **build có chạy hay không**, tuyệt đối không được chảy vào HTML.
+    """
+    hom_nay = datetime.date.today().isoformat()
+    for c in claims:
+        if c.get("han") and c["status"] == "ĐANG ĐỨNG" and str(c["han"]) < hom_nay:
+            raise LoiCong(
+                f"{c['id']} có hạn {c['han']} đã trôi qua mà vẫn 'ĐANG ĐỨNG' — {o}. "
+                f"Trang công khai đang in ĐÃ TỚI HẠN cho dòng này. Hai cửa ra: "
+                f"⑴ đọc lại rồi đổi status sang ĐÃ XÁC NHẬN/BỊ BÁC/ĐÃ SỬA kèm "
+                f"ghi_truoc.ket_qua + ai_phan_dinh + ngay_ket; ⑵ chưa đủ số thì đổi "
+                f"sang CHỜ SỐ kèm một dòng log nói rõ tới hạn chưa đo được gì. "
+                f"KHÔNG được sửa 'han' — dời hạn sau khi thấy kết quả là dời goalpost")
 
 
 def cong_do_lai(claims: list, o: str) -> None:
@@ -3716,7 +3759,16 @@ def sap_phan_dinh(moi: list) -> str:
     """Lịch những claim tự đặt NGÀY. Đếm ngược tính bằng JS, không tính lúc build —
     để trang tự đúng qua từng ngày mà không phải dựng lại, và để hai lần dựng cùng
     nội dung vẫn ra cùng byte."""
-    co = sorted(((c["han"], s, t, c) for s, t, c in moi if c.get("han")), key=lambda x: x[0])
+    # 🔴 VÁ 16/08/2026 — chỉ claim CÒN ĐANG ĐỨNG mới lên đồng hồ.
+    # `cong_han` (:1250) đã viết luật này thành lời từ đầu — *"Claim đã được phân định
+    # thì miễn: hạn của nó là lịch sử"* — nhưng dòng dựng danh sách thì không lọc, nên
+    # bảng chở cả claim đã xong. Hậu quả đo được ngày 16/08: 7 dòng, 3 dòng hiện
+    # ĐÃ TỚI HẠN, mà **2 trong 3 đã phân định xong từ 03/08 và 28/07**. Một báo động
+    # thật nằm giữa hai báo động giả thì cả ba đều mất tiếng — và đây là khối mà cả
+    # trang dựa vào để tự đòi nợ. Cùng loài với `LDO/FACTS.md §24`: cổng không FAIL,
+    # nó chỉ in ra thứ trông như câu trả lời.
+    co = sorted(((c["han"], s, t, c) for s, t, c in moi
+                 if c.get("han") and c["status"] == "ĐANG ĐỨNG"), key=lambda x: x[0])
     if not co:
         return ""
     if BO_CUC != "v3":
@@ -5454,6 +5506,7 @@ def main() -> None:
         cong_tieu_de(fm, o)
         cong_do_lai(claims, o)
         cong_han(claims, o)
+        cong_qua_han(claims, o)
         cong_ghi_truoc(claims, o)
         cong_visuals(body_md, visuals, claims, o)
 

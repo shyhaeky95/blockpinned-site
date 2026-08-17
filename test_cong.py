@@ -181,6 +181,20 @@ CA = [
     ("⑨ HẠN · khai hạn nhưng không nói ngày đó phân định gì",
      lambda r: sua_claims(r, lambda cs: cs[0].update(han="2026-12-31", han_ghi="xem lại")),
      "thiếu 'han_ghi'"),
+    # ⑨b QUÁ HẠN — thêm 16/08. Khoảng trống giữa ⑨ (phải KHAI hạn) và ⑩ (đã phân
+    # định thì phải ghi kết quả) đúng bằng thứ quan trọng nhất: hạn TRÔI QUA mà không
+    # ai đọc lại. Xác: CAKE C6 hạn 12/08 nằm im tới 16/08, trong khi trang công khai
+    # vẫn in ĐÃ TỚI HẠN cho khách đọc — cổng canh nợ mà chỉ báo cho chủ nợ.
+    ("⑨b QUÁ HẠN · hạn đã trôi mà claim vẫn ĐANG ĐỨNG",
+     lambda r: sua_claims(r, lambda cs: cs[0].update(
+         status="ĐANG ĐỨNG", han="2020-01-01",
+         han_ghi="ngày này phải đọc lại và ghi kết quả vào đây, kể cả khi ngược bài")),
+     "đã trôi qua mà vẫn 'ĐANG ĐỨNG'"),
+    ("⑨b QUÁ HẠN · CHỜ SỐ là cửa ra hợp lệ — KHÔNG được nổ",
+     lambda r: sua_claims(r, lambda cs: cs[0].update(
+         status="CHỜ SỐ", han="2020-01-01",
+         han_ghi="ngày này phải đọc lại và ghi kết quả vào đây, kể cả khi ngược bài")),
+     None),
     # ⑩ GHI TRƯỚC — thêm 30/07. Đây là cửa để một lần ĐỔ lặng lẽ rơi khỏi bảng.
     ("⑩ GHI TRƯỚC · đã phân định mà không ghi kết quả",
      lambda r: sua_claims(r, lambda cs: cs[0]["ghi_truoc"].pop("ket_qua")),
