@@ -4895,6 +4895,10 @@ def bien_lai_en(fm: dict, claims: list, body_md: str, slug_: str, t: dict, o: st
     en = fm.get("_en")
     if not en:
         return None
+    en_slug = str(en.get("slug") or slug_).strip()
+    if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", en_slug):
+        raise LoiCong(f"en.slug không hợp lệ ({en_slug!r}) — {o}. "
+                      "Chỉ dùng chữ thường ASCII, số và dấu gạch ngang")
     # 🔴 `ghim` BẮT BUỘC phải có bản EN, không được rơi về trường VN. Bản đầu 07/08
     #    dùng lại thẳng `c["ghim"]` và trang EN in ra một ô neo TIẾNG VIỆT chở số định
     #    dạng Việt (`299.024.976,59`) — người đọc Anh parse dấu chấm/phẩy ngược lại, tức
@@ -4953,16 +4957,28 @@ def bien_lai_en(fm: dict, claims: list, body_md: str, slug_: str, t: dict, o: st
              + '<p class="dan" style="margin-top:2.5rem">Corrections are made in place and '
                'never deleted; every claim above carries its current status. '
                '<b>Not investment advice.</b></p>'))
-    d = OUT / "en" / slug_
+    d = OUT / "en" / en_slug
     d.mkdir(parents=True, exist_ok=True)
     (d / "index.html").write_text(
         trang(en["title"], than, t, "../..", mat="page-en",
               lang="en" if BO_CUC == "v3" else "vi",
-              meta={"mo_ta": en["mo_ta"].strip(), "duong": f"/en/{slug_}/",
+              meta={"mo_ta": en["mo_ta"].strip(), "duong": f"/en/{en_slug}/",
                     "anh": fm.get("anh"), "loai": "article",
                     "tieu_de_og": en["og_title"]}),
         encoding="utf-8")
-    return f"en/{slug_}/"
+    if en_slug != slug_:
+        d_cu = OUT / "en" / slug_
+        d_cu.mkdir(parents=True, exist_ok=True)
+        url_moi = f"{BASE}/en/{en_slug}/"
+        (d_cu / "index.html").write_text(
+            '<!doctype html><html lang="en"><head><meta charset="utf-8">'
+            f'<link rel="canonical" href="{url_moi}">'
+            '<meta name="robots" content="noindex">'
+            f'<meta http-equiv="refresh" content="0; url=/en/{en_slug}/">'
+            '<title>Page moved</title></head><body><p>This page has moved to '
+            f'<a href="{url_moi}">{url_moi}</a>.</p></body></html>\n',
+            encoding="utf-8")
+    return f"en/{en_slug}/"
 
 
 TRANG_THAI_EN = {"ĐÃ XÁC NHẬN": "CONFIRMED", "ĐANG ĐỨNG": "STANDING",

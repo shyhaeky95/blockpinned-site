@@ -102,6 +102,7 @@
   }
  ],
  "en": {
+  "slug": "2026-08-17-ethfi-buyback-funding-path-changed",
   "title": "ETHFI buyback funding changed destination on 14 July 2026 — evidence receipt",
   "og_title": "An ether.fi withdrawal-fee stream stopped funding the ETHFI buyback wallet after the 14 July upgrade",
   "mo_ta": "English evidence receipt for BlockPinned's ETHFI investigation: five claims, exact block ranges, contract addresses, figures, controls, falsifiers and measurement limits.",
