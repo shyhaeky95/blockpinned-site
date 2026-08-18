@@ -204,6 +204,27 @@ NGUON_ASSET = {
     # nào lên ảnh: chúng mời người đọc tính TỐC ĐỘ, trong khi bài không nói về tốc độ.
     # 🔴 CẤM `text-transform: uppercase` trên ô đích — nó biến `eETH` thành `EETH`.
     "card-ethfi-doi-dich.png": "png",
+    # bài HYPE 18/08 — nguồn `template/card-hype-hai-co-may.html`, dựng bằng
+    # `template/render_card_v2.py`. Khuôn xác định bằng `template/khuon_card.py`, chép
+    # từ card LDO 17/08.
+    # 🔴🔴 CARD NÀY BỊ DỰNG SAI KHUÔN HAI LƯỢT LIÊN TIẾP, tức lượt thứ NĂM và SÁU của
+    # cùng một bẫy: lượt một chép `build_card_*.py` mới nhất theo mtime (nhánh đã chết
+    # từ 13/08); lượt hai đã CHẠY `khuon_card.py`, đọc đúng dòng nó in ra
+    # (`Chép: template/card-ldo-nest-145k-zero.html`) rồi vẫn dựng từ canvas trắng
+    # `card_editorial.py new`. Bài học không phải "nhớ chạy công cụ" mà là "chép ĐÚNG
+    # file công cụ chỉ". Nay `card_gate.kiem()` NỔ nếu bị gọi từ một `build_card_*.py`
+    # ngoài ảnh chụp 18 builder trước mốc editorial 17/08.
+    # Hai số là hai tỷ trọng trên CÙNG một tổng: 51,17% khối lượng perp không phải
+    # crypto, và 11,7% doanh thu về holder mà chính phần đó tạo ra. Cả hai tính trên
+    # tập RỘNG (gồm nhóm chưa xếp được lớp) — ghép một số tập rộng với một số tập hẹp
+    # là đặt hai tử số khác tập cạnh nhau, và control của builder đã bắt đúng ca đó.
+    # Ô "PHÍ GIẢM CÒN 1/10 · ai cũng kiểm được" ở dải tối là CHỮ ĐỠ bắt buộc — thiếu
+    # nó, ảnh đi một mình đọc thành "Hyperliquid giấu doanh thu", trong khi trạng thái
+    # chế độ giảm phí đọc được công khai theo từng công cụ.
+    # 🔴 Ô "ƯỚC TÍNH · ba cách đo cho 11–27%" cũng bắt buộc: 11,7% lấy từ ĐẦU THẤP.
+    # 🔴 CẤM chữ "đang giảm"/"xấu đi" — chế độ giảm phí mới đọc được ở MỘT thời điểm.
+    # 🔴 CẤM chữ "cờ" — từ của lập trình viên, không phải từ người đọc BP dùng.
+    "card-hype-hai-co-may.png": "png",
     # bài LDO 17/08 — nguồn `template/card-ldo-nest-145k-zero.html`, dựng bằng
     # `template/render_card_v2.py` (chép trực tiếp từ card SKY 15/08, tức khuôn v2).
     # Hai số trên ảnh là hai đầu của MỘT đường đi, không phải hai kịch bản: 145.443 đô
@@ -303,10 +324,15 @@ BODY_FONT = "system-ui"
 # Tên các họ cổng — dùng cho dòng in ra, và là chỗ DUY NHẤT đếm chúng.
 # Hiện vật đưa lên site — KHAI TỪNG FILE, không quét cả thư mục. Quét thư mục là
 # publish thứ chưa ai đọc; mỗi dòng dưới đây là một file đã được mở ra xem.
+# 🔴 NHÃN TRỎ BẰNG NGÀY, KHÔNG BẰNG SỐ THỨ TỰ BÀI (sửa 18/08/2026).
+# Ba nhãn này viết "bài #7" và chính chúng làm `cong_ngon_ngu` chặn build: `du-lieu/`
+# sinh ra từ đây, nên chuỗi `bài #N` — từ nghề nội bộ, người ngoài không đọc được —
+# đi thẳng vào HTML. Đo được: build NỔ cả khi bỏ hết bài mới ra, tức site đã không
+# dựng được từ trước lượt đăng 18/08. Cách sửa lấy đúng câu cổng tự khuyên: trỏ bằng NGÀY.
 HIEN_VAT = {
-    "verify_post07_2026-07-31.json": "bài #7 — 9/9 kiểm sau đăng",
-    "pendle_buy_source_2026-07-31.json": "bài #7 — 65 tx hash + chi tiết từng tx",
-    "pendle_buy_tie_2026-07-31.json": "bài #7 — lượt nối swap→hợp đồng, 82,44%",
+    "verify_post07_2026-07-31.json": "bài PENDLE 31/07 — 9/9 kiểm sau đăng",
+    "pendle_buy_source_2026-07-31.json": "bài PENDLE 31/07 — 65 tx hash + chi tiết từng tx",
+    "pendle_buy_tie_2026-07-31.json": "bài PENDLE 31/07 — lượt nối swap→hợp đồng, 82,44%",
 }
 
 TEN_CONG = ["ngôn ngữ", "cấu trúc", "claim", "ngôi xưng", "đánh dấu",

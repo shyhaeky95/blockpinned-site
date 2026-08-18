@@ -1,0 +1,34 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Trong tháng lịch đủ 2026-07, 51,17 phần trăm khối lượng perp đo được trên Hyperliquid đến từ tài sản không phải crypto: cổ phiếu 29,29, hàng hoá 9,96, chỉ số 9,37, công ty chưa niêm yết 2,22, ngoại tệ 0,09, chưa xếp được lớp 0,24. Cùng đại lượng ở tháng 2025-08 là 0,1 phần trăm.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ảnh chụp Info API Hyperliquid ngày 2026-08-18, quét 494 công cụ trên 11 perp dex, nến ngày từ 2025-08-01. KHÔNG neo được vào block number: RPC công khai của Hyperliquid không phục vụ trạng thái lịch sử, nên đây là ảnh chụp theo giờ đồng hồ. Phân lớp đi bằng HAI đường độc lập: xếp theo ký hiệu cho 51,17 phần trăm, và đo tỉ lệ khối lượng cuối tuần trên ngày thường — một phép không dùng tên công cụ — cho 53,70 phần trăm. Phép kiểm của chính bộ phân loại: đem áp lên sàn crypto chính của Hyperliquid, nơi chắc chắn toàn crypto, nó dán nhãn TradFi cho 0,0919 phần trăm.",
+      "falsifier": "Dựng lại phân lớp bằng một đường độc lập khác cho tháng 2026-07 mà phần không phải crypto dưới 40 phần trăm thì claim này phải rút. Ngưỡng 40 được ghi trước lượt đo, trong ô việc HYPE-T-TRADFI-BASE.",
+      "khong_do_lai": "Phải cộng nến ngày của 494 công cụ trên 11 perp dex rồi xếp từng công cụ vào lớp tài sản, nên không thu gọn được thành một lời gọi đọc tại một block.",
+      "log": [
+        {
+          "ngay": "2026-08-18",
+          "ghi": "Đăng ở dạng ảnh chụp một tháng lịch đủ, không gọi là tính chất bền. Danh sách công cụ là danh sách đang niêm yết tại thời điểm đo, nên mọi tổng theo lớp là mức thấp nhất tái dựng được.",
+          "nguon": ""
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "Phần khối lượng không phải crypto ấy chỉ tương ứng khoảng 11,7 phần trăm doanh thu về người giữ token, vì chế độ giảm phí growth mode đang phủ 95,94 phần trăm khối lượng của phần đó, kéo mức thu về còn 13,65 phần trăm mức của sàn chính trên mỗi đô khối lượng.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Cùng ảnh chụp 2026-08-18. Suy từ công thức phí Hyperliquid tự công bố: khi growth mode bật, phần phí giao thức giữ lại còn một phần mười. Trạng thái growth mode đọc theo từng công cụ qua Info API. Đây là ĐƯỜNG CƠ CHẾ, đường thấp nhất trong ba đường đo; hai đường còn lại cho 16,7 và 26,6 phần trăm, tức dải 11 tới 27.",
+      "falsifier": "Một phép đo dựa trên sổ thu tiền thực tế, thay vì suy từ cơ chế phí công bố, cho tỉ trọng doanh thu của phần không phải crypto vượt 25 phần trăm thì claim này phải rút. Ngưỡng 25 được ghi trước lượt đo.",
+      "khong_do_lai": "Phải nhân trạng thái growth mode của từng công cụ với khối lượng của chính công cụ đó rồi cộng lại, không đọc được bằng một lời gọi trạng thái.",
+      "log": [
+        {
+          "ngay": "2026-08-18",
+          "ghi": "Trạng thái growth mode mới đọc được tại MỘT thời điểm, chưa có chuỗi lịch sử, nên bài không nói tỉ lệ này đang tăng hay đang giảm.",
+          "nguon": ""
+        }
+      ]
+    }
+  ]
+}

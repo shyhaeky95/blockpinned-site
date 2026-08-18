@@ -82,6 +82,17 @@ VALUATION = [
 RETIRED = RETIRED_TU + VALUATION
 
 # ── ② từ nghề của repo, không mang ra ngoài (LAUNCH §6b.4) ───────────────────
+# 🔴🔴 CẢNH BÁO CHO NGƯỜI THÊM MẪU VÀO `JARGON` — NHÓM NÀY KHÔNG "CHỈ LÀ 🟡".
+# `site/build.py:1194` **import chung danh sách này** và nâng mọi hit thành `LoiCong`,
+# tức **CHẶN CỨNG lượt dựng site**. Đầu ra của file này in 🟡 và nói "không chặn đăng" —
+# câu đó đúng với `check_language`, SAI với `build.py`. Một danh sách, hai người dùng,
+# hai mức nghiêm trọng.
+# 🔴 XÁC 18/08: thêm mẫu `bài #NN` (đúng và cần) làm **site không dựng được**, vì artifact
+# CŨ (`HIEN_VAT`, `_doc`) có chuỗi đó; một phiên khác phải đi dọn. Người thêm mẫu đã tự
+# trấn an "🟡 nên không chặn" mà không đọc phía tiêu thụ.
+# ⇒ TRƯỚC KHI THÊM MỘT MẪU: chạy `python3 site/build.py --out /tmp/x` để biết nội dung
+#   ĐÃ ĐĂNG có dính mẫu mới không. Dính ⇒ dọn artifact TRƯỚC, rồi mới thêm mẫu.
+
 JARGON = [
     # 🔴 NỚI 30/07 — bản cũ `\btrần của\b` chỉ bắt đúng MỘT cách nói. Draft #27 v2
     # viết "mức trần" ba lần, cổng trả SẠCH, và người phản biện NGOÀI bắt được thứ
@@ -90,6 +101,14 @@ JARGON = [
     # cụm "trần của". Quét từ-nghề chỉ chạy trên file ĐÃ EXPORT nên nới rộng không
     # làm ồn ghi chú nội bộ trong draft.
     (r"\btrần\b", "nói thẳng giới hạn: 'pool fee' · 'giới hạn của phép đo'"),
+    # 🔴 THÊM 18/08 — số bài là SỔ ĐẾM NỘI BỘ, chưa từng ra ngoài lần nào.
+    # Xác: bản thảo quote v4 viết "Bài #16 nói:" và nó đi qua trọn cổng ngôn ngữ;
+    # user bắt bằng mắt. Ở đúng bài đó nó còn nguy hiểm gấp đôi vì thân bài có
+    # "chương trình thưởng đi từ 15 lên 16" — người đọc gộp hai cái làm một.
+    # 🔵 CỐ Ý HẸP: `#\d+` trần sẽ chặn nhầm số issue công khai (#8242, #8376 đã
+    # đăng thật). Chỉ bắt cụm "bài #NN". Control âm đã chạy: quét toàn bộ
+    # template/out/*.txt cũ ra 0 hit ⇒ luật không đụng bài nào đã đăng.
+    (r"\bbài\s*#\d+", "trỏ bằng NGÀY ('bài hôm 15/08') hoặc 'bài tôi quote ở đây'"),
     (r"\bcửa sổ đọc\b", "'số đọc đến ngày …'"),
     (r"\bcận dưới\b", "'ít nhất là …'"),
     (r"\bđăng ký trước\b", "'ghi trước'"),
