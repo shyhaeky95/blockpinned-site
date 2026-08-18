@@ -13,7 +13,12 @@
      "ghi": "Đăng kèm chữ đỡ rằng phần đốt bằng 0 trong cửa sổ đo, tức toàn bộ phần gom đi sang ví buyback, chứ không phải một phần theo tham số chia. Cơ chế vẫn có tham số chia; con số 0 là kết quả đo, không phải tính chất của thiết kế.",
      "nguon": "https://x.com/blockpinned/status/2089359697224892552"
     }
-   ]
+   ],
+   "en": {
+    "text": "Before the 14 July 2026 upgrade, the slow-withdrawal remainder was accumulated and sent to an address that the implementation source itself describes as the ETHFI buyback wallet; treasury() resolves to the documented wallet 0x2f5301a3D59388c509C65f8698f521377D41Fd0F. From 1 April through 14 July 2026, 68 distributions sent 355.658 ETH to that wallet, while 0 ETH was burned.",
+    "falsifier": "Recount the handleRemainder events over the pinned block range. If there are not 68 events, if eEthAmountToTreasury does not sum to 355.658 ETH, or if treasury() at a pre-upgrade block resolves to an address other than the documented buyback wallet, this claim must be withdrawn.",
+    "ghim": "Ethereum blocks 24,781,450 to 25,533,308 · WithdrawRequestNFT 0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c · source read separately for each implementation · treasury() before the upgrade returns 0x2f5301a3D59388c509C65f8698f521377D41Fd0F; the call reverts on the current implementation · 68 HandledRemainderOfClaimedWithdrawRequests events · eEthAmountToTreasury 355.658 ETH · eEthAmountBurnt 0"
+   }
   },
   {
    "id": "C2",
@@ -28,7 +33,12 @@
      "ghi": "Điều-bác-bỏ được viết thêm vế provenance sau một lượt phản biện: bản đầu chỉ đòi tìm một Transfer khớp người gửi và người nhận, tức có thể tự bắn oan bởi một transfer không liên quan tới đường remainder.",
      "nguon": "https://x.com/blockpinned/status/2089359697224892552"
     }
-   ]
+   ],
+   "en": {
+    "text": "At Ethereum block 25,533,308, 2026-07-14T20:36Z, one transaction upgraded 26 proxies and made 55 RoleRegistry permission changes. After it executed, WithdrawRequestNFT no longer exposed handleRemainder() or treasury. From that block through 25,772,300, no eETH Transfer log went from any of the three withdrawal contracts to the buyback wallet.",
+    "falsifier": "Find at least one eETH Transfer between blocks 25,533,308 and 25,772,300 from one of the three withdrawal contracts to the buyback wallet, and trace the transaction to show that it came from post-withdrawal remainder handling. Both conditions are required: matching sender and recipient alone does not establish the transfer's origin.",
+    "ghim": "Ethereum blocks 25,533,308 to 25,772,300 · WithdrawRequestNFT 0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c · PriorityWithdrawalQueue 0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA · EtherFiRedemptionManager 0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0 · eETH 0x35fA164735182de50811E8e2E824cFb9B6118ac2 · same filter finds 11,493 legs before the upgrade: 11,423 + 68 + 2 · last handleRemainder execution 2026-07-14T20:25Z, 11 minutes before the upgrade"
+   }
   },
   {
    "id": "C3",
@@ -43,7 +53,12 @@
      "ghi": "Bản đầu của phép đo dùng tỷ giá xấp xỉ từ mốc Rebase gần nhất và control tự đặt đã FAIL với lệch 4,67e-5 trên ngưỡng 1e-5. Không nới ngưỡng: thay bằng phép đọc thẳng giá trị ETH của share bị đốt từ log tại đúng block. Cầu nối từ 'ở lại quỹ' tới 'tăng giá trị mỗi share' đi bằng số học của hai dòng code, không bằng một phép đo dòng tiền riêng — giới hạn này khai trong thân bài.",
      "nguon": "https://x.com/blockpinned/status/2089359697224892552"
     }
-   ]
+   ],
+   "en": {
+    "text": "From block 25,533,308 through 25,772,300, the slow-withdrawal remainder stayed in the pool and increased value per eETH share, accumulating to 98.506 ETH: 97.898 through WithdrawRequestNFT and 0.607 through PriorityWithdrawalQueue. LiquidityPool.withdraw(_amount, _share) subtracts _amount from assets while burning the request's full _share, so the denominator falls faster than the numerator.",
+    "falsifier": "Join the underlying logs by transaction hash. If the remainder does not sum to 98.506 ETH, or if the contracts expose a path that withdraws it as a separate balance instead of leaving it in the exchange rate, this claim must be withdrawn.",
+    "ghim": "Ethereum blocks 25,533,308 to 25,772,300 · per claim, subtract ETH paid to the withdrawing user from the ETH value of the shares burned, joined by transaction hash · 575/575 WithdrawRequestNFT transactions and 6/6 PriorityWithdrawalQueue transactions reconcile · burned-share ETH value is read directly from EETH._burnShares Transfer logs, with no estimated exchange rate"
+   }
   },
   {
    "id": "C4",
@@ -58,7 +73,12 @@
      "ghi": "Claim này đi NGƯỢC hướng câu chuyện chính của bài và được đặt vào bài đúng vì thế. Lượt đọc đầu lấy trường delay ở word cuối của data thay vì word thứ 4, cho ra những con số cỡ 10^76 cho một đại lượng tính bằng giây — chúng vô lý nên lộ ngay, nhưng nếu payload ngắn hơn thì word cuối rất có thể là một số trông hợp lý.",
      "nguon": "https://x.com/blockpinned/status/2089359697224892552"
     }
-   ]
+   ],
+   "en": {
+    "text": "The 14 July upgrade was not a hidden execution. It passed through a 6-of-10 Safe and an Upgrade Timelock with a 10-day minimum delay. All 86 scheduled calls match 86 executed calls by id; the shortest observed delay was 978,372 seconds, or 11.32 days, and 0/86 calls executed early.",
+    "falsifier": "Rebuild the 86 scheduled-to-executed pairs. If any call executed before 864,000 seconds, or if getMinDelay() at the block immediately before the upgrade returns a lower value, the statement that the timelock was respected must be withdrawn.",
+    "ghim": "Safe 0xcdd57d11476c22d265722f68390b036f3da48c21 · getThreshold() = 6 · getOwners() = 10 · Upgrade Timelock 0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761 · getMinDelay() at latest and immediately before the upgrade = 864,000 seconds · match CallScheduled to CallExecuted by id · delay is word 4 of the event data, not the final word"
+   }
   },
   {
    "id": "C5",
@@ -73,7 +93,53 @@
      "ghi": "Claim này có PHẠM VI HẸP và phạm vi đó khai ngay trong thân bài: phép đọc kênh công bố chỉ phủ 5 trong số 160 bài mà tài khoản tự khai, cả hai đường đọc đều bị chặn ở đó. Cái đỡ cho kết luận không phải độ phủ mà là control hai chiều. Câu 'không ai thông báo' bị cấm trong mọi bản.",
      "nguon": "https://x.com/blockpinned/status/2089359697224892552"
     }
-   ]
+   ],
+   "en": {
+    "text": "Across the first-party sources checked, no document described this change in destination: 0/4 security-hardening blog posts from the period mention it; it was not found in the checked votes or forum topics for the upgrade; and the 2026-06-01 to 2026-08-18 window on the designated announcement account returned 0 posts. The governance documentation still says Last updated 1 year ago.",
+    "falsifier": "One first-party source explicitly stating that the remainder no longer funds buybacks and now returns to the pool is enough to remove this claim.",
+    "ghim": "Four first-party blog pages counted from raw HTML · positive controls in the same extraction: withdraw 20, upgrade 16, security 25, eETH 89 · designated account x.com/ether_fi_Fdn queried with date windows · two-way control: 2025-11-01 to 2026-04-01 returns 4/4 buyback announcements; the post-2026-04-01 window returns 1 non-buyback post · governance source: etherfi.gitbook.io/gov/ethfi-buyback-program"
+   }
   }
- ]
+ ],
+ "en": {
+  "title": "ETHFI buyback funding changed destination on 14 July 2026 — evidence receipt",
+  "og_title": "An ether.fi withdrawal-fee stream stopped funding the ETHFI buyback wallet after the 14 July upgrade",
+  "mo_ta": "English evidence receipt for BlockPinned's ETHFI investigation: five claims, exact block ranges, contract addresses, figures, controls, falsifiers and measurement limits.",
+  "intro": "This is the English evidence receipt for the Vietnamese investigation, not a shortened promotional summary. It carries all five published claims, their exact block pins, contract addresses, figures, controls, falsifiers and limits. The core finding is narrow: one withdrawal-fee stream that had funded the ETHFI buyback wallet changed destination after the 14 July 2026 upgrade.",
+  "pin": "Primary log range: Ethereum blocks 24,135,880 to 25,772,300, ending 2026-08-17T04:06Z. Upgrade: block 25,533,308 at 2026-07-14T20:36Z. WithdrawRequestNFT 0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c · PriorityWithdrawalQueue 0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA · EtherFiRedemptionManager 0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0 · eETH 0x35fA164735182de50811E8e2E824cFb9B6118ac2 · buyback wallet 0x2f5301a3D59388c509C65f8698f521377D41Fd0F · Upgrade Timelock 0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761.",
+  "how_to_check": [
+   [
+    "Contract change",
+    "Call treasury() on WithdrawRequestNFT at a block before and after 25,533,308. Before: 0x2f5301a3D59388c509C65f8698f521377D41Fd0F. After: the call reverts because treasury and handleRemainder no longer exist. Read the source for each implementation, not one implementation applied across the whole range."
+   ],
+   [
+    "Pre-upgrade funding",
+    "Count HandledRemainderOfClaimedWithdrawRequests between blocks 24,781,450 and 25,533,308: 68 events, eEthAmountToTreasury 355.658 ETH, eEthAmountBurnt 0. Add 3.783 ETH from the fast-withdrawal path for 359.441 ETH reaching the buyback wallet, approximately $676k using the single ETH price pinned on 16 August."
+   ],
+   [
+    "Where the transfer path stops",
+    "Filter eETH Transfer logs from the three withdrawal contracts to the buyback wallet. Blocks 24,781,450 to 25,533,308 return 11,493 legs; blocks 25,533,308 to 25,772,300 return 0. A matching transfer is not enough by itself: trace it back to remainder handling before treating it as a falsifier."
+   ],
+   [
+    "Post-upgrade remainder",
+    "Join burned-share value and ETH paid by transaction hash. The difference is 98.506 ETH: 97.898 from WithdrawRequestNFT and 0.607 from PriorityWithdrawalQueue. The controls reconcile 575/575 and 6/6 transactions."
+   ],
+   [
+    "Upgrade governance",
+    "Read getThreshold() and getOwners() on Safe 0xcdd57d11476c22d265722f68390b036f3da48c21, then getMinDelay() on 0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761 both now and immediately before the upgrade. Match 86/86 CallScheduled and CallExecuted events by id: minimum delay 864,000 seconds; shortest observed delay 978,372 seconds."
+   ],
+   [
+    "Announcement and execution sequence",
+    "Compare the designated announcement account, the official dashboard and on-chain execution. Last buyback announcement: 2026-02-12T19:32:18Z. Last observed market buy: 2026-04-01T21:34:47Z. Funding route removed: 2026-07-14T20:36Z. Published cumulative total $15,571,023 versus dashboard total $16,591,121.30: a $1,020,098 gap between two cumulative first-party figures, not a transaction-by-transaction reconstruction."
+   ]
+  ],
+  "limits": [
+   "This is a block-pinned snapshot, not a permanent conclusion. The contracts can be upgraded again after block 25,772,300.",
+   "The approximately $676k conversion applies one ETH price observed on 16 August to 359.441 ETH accrued across 1 April to 14 July. The ETH amount is measured; the USD figure is an approximation, not per-transaction pricing.",
+   "The announcement-account search covers only 5 of the 160 posts the account reports. The negative statement is therefore narrow and depends on the two-way control disclosed above; it is not a claim that nobody announced anything anywhere.",
+   "The 98.506 ETH link to higher value per eETH share follows the contract arithmetic: assets fall by the paid amount while the full share amount is burned. It is not an independent cash-flow measurement.",
+   "The fast-withdrawal path was not removed. It collected 38.053 ETH on 213,955.37 ETH of volume, or 0.0178%, over the measured window, and from 14 July it paid a treasury address other than the documented buyback wallet.",
+   "This investigation does not claim that ether.fi stopped all ETHFI buybacks, that the upgrade was hidden, or that anyone took the remainder. It identifies one funding stream that changed destination while the first-party documentation continued to describe the previous mechanism."
+  ]
+ }
 }
