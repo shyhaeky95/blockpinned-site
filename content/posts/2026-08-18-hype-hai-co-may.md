@@ -8,6 +8,7 @@ mau: 🔴
 ghim: KHÔNG CÓ BLOCK — HyperCore đọc qua Info API, RPC công khai của Hyperliquid không phục vụ trạng thái lịch sử. Ảnh chụp theo giờ đồng hồ ngày 18/08/2026, quét 494 công cụ trên 11 perp dex, nến ngày từ 01/08/2025. Tháng lịch đủ 2026-07: tổng khối lượng perp 224.233.021.320 đô, phần không phải crypto 114.741.983.929 đô.
 mo_ta: Quá nửa khối lượng perp của Hyperliquid trong tháng 7 không còn đến từ crypto, nhưng phần đó chỉ mang về khoảng một phần tám doanh thu cho người giữ token.
 anh: card-hype-hai-co-may.png
+kenh_x: https://x.com/blockpinned/status/2089690133583044963
 doc_lai: Tỉ lệ thu về của phần không phải crypto suy từ cơ chế phí Hyperliquid tự công bố, không phải từ sổ thu tiền thực tế; ba cách đo độc lập cho dải 11 tới 27 phần trăm và bài lấy đầu thấp. Trạng thái chế độ giảm phí mới đọc được tại một thời điểm, chưa có chuỗi lịch sử, nên không kết luận tỉ lệ này đang tăng hay đang giảm. Danh sách công cụ là danh sách đang niêm yết tại thời điểm đo, nên mọi tổng theo lớp là mức thấp nhất tái dựng được, không phải tổng lịch sử tuyệt đối.
 ---
 
