@@ -1,0 +1,49 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Ba pool nằm trong 60 dòng đầu bảng khối lượng 24 giờ GeckoTerminal trên BNB Chain cộng lại 83.913.902 đô khối lượng bảng ghi, trong khi phía token định giá là USDT hoặc WBNB của từng pool đều dưới 10 đô ở cả 13 mốc đã đo. SH/WBNB dải 0,00261 tới 0,00265 WBNB, CCSC/USDT dải 6,596486062531350392 tới 6,714618394743140151 USDT, AXIOM/WBNB dải 0,014825485144692290 tới 0,015083281424936085 WBNB.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "BNB Chain, cửa sổ block 116.624.661 tới 116.816.654, đúng 24 giờ, đọc tại 13 mốc trải đều qua đường archive không cần key. Đọc bằng balanceOf của token định giá trên địa chỉ pool, neo block tag ở mọi lời gọi. Bảng xếp hạng chụp lúc 15h31 ngày 19/08 giờ Việt Nam. Kiểm chống mù: cùng phép đọc trên pool USDT/WBNB trả 33.566.345,58 USDT ở đầu cửa sổ; kiểm chiều ngược lại: gọi vào một địa chỉ bịa trả về rỗng chứ không trả số 0.",
+      "falsifier": "Đọc lại bất kỳ mốc nào trong 13 mốc của ba pool mà phía token định giá vượt 10 đô thì claim này phải rút.",
+      "khong_do_lai": "Phải đọc số dư của ba pool tại 13 block khác nhau rồi so từng mốc, không thu gọn được thành một lời gọi tại một block.",
+      "log": [
+        {
+          "ngay": "2026-08-19",
+          "ghi": "Mười ba mốc là mười ba lát cắt; giữa hai lát desk không quan sát, nên đây là câu về các mốc đã đo chứ không phải về mọi thời điểm. Phép đo chỉ chạm phía token định giá; phía token còn lại vẫn có số lượng rất lớn nên bài không nói ba pool đó rỗng.",
+          "nguon": ""
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "Tại block 116.816.654, router PancakeSwap V2 báo giá lượng token trị giá 10.000 đô theo spot price của chính pool SH/WBNB chỉ đổi được 0,002612402845449776 WBNB, tức 1,5767 đô. Ở mức 100 đô, con số là 1,5524 đô. Với CCSC/USDT và AXIOM/WBNB ở mức 1.000 đô, router báo 6,5531 đô và 8,8681 đô.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Báo giá đọc thẳng từ getAmountsOut của router PancakeSwap V2 tại block 116.816.654, không qua công thức của desk; công thức desk khớp router lệch 0 phần trăm ở cả bốn pool. Router trả factory 0xca143ce32fe78f1f7019d7d551a6402fc5350c73, trùng factory của cả ba pool. Lượng token đầu vào dựng lại được từ hai số dư của chính pool: 0,002612815831046279 WBNB chia 628.301,168919335 SH nhân 603,53 ra giá một SH, lấy 10.000 chia cho nó ra đúng 3.984.374.997,899152 SH.",
+      "falsifier": "Chạy lệnh đã in tại block 116.816.654 mà router trả về khác đúng con số 2612402845449776 thì claim này phải rút. Số này tất định tại một block cố định nên không có dung sai. Hoặc dựng lại lượng token đầu vào từ hai số dư đã in mà không ra đúng 3.984.374.997,899152 SH. Hoặc một trong ba pool trả factory khác 0xca143ce3 thì phần suy từ số dư sang số router trả được phải rút.",
+      "khong_do_lai": "Đọc được bằng một lời gọi tại một block, và lệnh đầy đủ đã in trong bài.",
+      "log": [
+        {
+          "ngay": "2026-08-19",
+          "ghi": "Đây là BÁO GIÁ theo trạng thái pool, không phải số tiền một lệnh đã chạy nhận về. Router có đường đi riêng cho token thu phí lúc chuyển và bài chưa đo lớp đó, nên nếu ba token này có cơ chế thu phí hoặc hạn chế khi bán thì lệnh thật có thể ra khác. Bài không kết luận gì về việc khối lượng bảng ghi có thật hay không.",
+          "nguon": ""
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "text": "Cùng phép hỏi đó trên pool USDT/WBNB của chính bảng, ở mức 1.000 đô, router báo 997,4758 đô, tức 99,7476 phần trăm, mức hụt rất gần phần phí 0,25 phần trăm.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Cùng block 116.816.654, cùng phép hỏi, cùng đường đọc. Đây là phép kiểm dương của bài: nó cho thấy phép hỏi trả về gần trọn giá trị đầu vào khi pool có lượng USDT hoặc WBNB lớn.",
+      "falsifier": "Phép hỏi trên USDT/WBNB cho ra ngoài dải 99,50 tới 99,75 phần trăm thì claim này phải rút, và khi đó mọi con số nhỏ ở C2 cũng mất chỗ dựa. Mức 99,75 là cao nhất có thể về lý thuyết vì phí đúng 0,25 phần trăm; rơi dưới 99,50 ở mức 1.000 đô nghĩa là phép hỏi đang sai chứ không phải pool nông.",
+      "khong_do_lai": "Đọc được bằng một lời gọi tại một block.",
+      "log": [
+        {
+          "ngay": "2026-08-19",
+          "ghi": "Ngưỡng 99,50 tới 99,75 được ghi trước lượt đăng, trong ô việc CAKE-T-EXIT-VALUE-20260819.",
+          "nguon": ""
+        }
+      ]
+    }
+  ]
+}

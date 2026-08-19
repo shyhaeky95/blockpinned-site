@@ -192,6 +192,24 @@ LOGO_TOKEN = {
 }
 
 NGUON_ASSET = {
+    # bài BSC 19/08 — nguồn `template/card-bsc-ban-10000-do-nhan-ve-1-58.html`, dựng bằng
+    # `template/render_card_v2.py`. Khuôn xác định bằng `template/khuon_card.py` (chép từ
+    # card HYPE 18/08) — lượt đầu của card này đi từ canvas trắng `card_editorial.py new`
+    # và user bác "xấu quá, sao lại tạo bằng khuôn cũ nữa": lần thứ SÁU của cùng bẫy, và
+    # lần thứ HAI liên tiếp trong hai ngày. Căn nguyên là XUNG ĐỘT TÀI LIỆU: `BRIEF-card.md`
+    # viết "không chép card đăng gần nhất", còn `khuon_card.py` chỉ thẳng phải chép nó.
+    # Chủ thật là `khuon_card.py` — chạy nó TRƯỚC, chép đúng file nó chỉ.
+    # Ảnh chở HAI câu văn xuôi, KHÔNG chở hai số đối nhau. Bản dùng khuôn `versus` bị user
+    # bác là "khó hiểu", và lý do đúng: hai số KHÁC LOẠI — 60 triệu đô là khối lượng CẢ
+    # NGÀY, 1,58 đô là báo giá cho MỘT LỆNH. Đặt đối nhau là bắt người xem tự bắc cầu.
+    # 🔴 CẤM bỏ chữ "báo giá": getAmountsOut là quote theo trạng thái pool, KHÔNG phải số
+    #    một lệnh đã chạy nhận về. Bỏ chữ đó là over-claim, và đó đúng là CHẶN-ĐĂNG mà
+    #    vòng phản biện ngoài thứ năm đã bắt.
+    # 🔴 CẤM bỏ ô đối chứng 997,48/1.000 — thiếu nó, "1,58 đô" bị đọc thành tật của phép đo.
+    # 🔴 CẤM hàm ý khối lượng đó là giả: bài không dựng lại giao dịch.
+    # 🔴 CẤM in tên hàm lên ảnh (`LAUNCH §6b.3`) — lượt trước in "GETAMOUNTSOUT" ở chân card
+    #    và `card_gate` không soi mục này nên nó lọt.
+    "card-bsc-ban-10000-do-nhan-ve-1-58.png": "png",
     # bài ETHFI 17/08 — nguồn `template/card-ethfi-doi-dich.html`, dựng bằng
     # `template/render_card_v2.py`. Khuôn xác định bằng `template/khuon_card.py` (chép
     # từ card LDO 17/08), KHÔNG bằng builder Python mới nhất theo mtime — lượt đầu của
