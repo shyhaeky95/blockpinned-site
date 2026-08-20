@@ -32,8 +32,6 @@ CP172 vì thế không chỉ là một lời mời đổi token lấy cổ phầ
 
 Nó buộc người giữ CFG phải định giá lại chính thứ họ đang sở hữu.
 
----
-
 ## Một CFG đổi lấy một cổ phần — nhưng cổ phần đó là gì?
 
 CP172 đưa ra một tỷ lệ rất dễ hiểu:
@@ -66,8 +64,6 @@ Và có một chi tiết dễ bỏ qua: người tham gia **trả bằng chính 
 
 **Nếu phải đem CFG đi đổi, bản thân CFG trước giờ mang lại cho người giữ thứ gì?**
 
----
-
 ## Tìm một lần Centrifuge mua CFG về
 
 Nếu CFG có một cơ chế rõ ràng đưa giá trị từ hoạt động kinh doanh trở lại token — chẳng hạn dùng doanh thu mua CFG trên thị trường rồi đốt hoặc phân phối lại cho holder — thì người giữ ít nhất có một thứ cụ thể để so với cổ phần mới.
@@ -95,8 +91,6 @@ Vì một con số 0 rất dễ chỉ là lỗi của công cụ, toàn bộ l�
 Nói đơn giản: nếu hụt một phần lịch sử đủ để làm sai kết luận, sổ sẽ không khép.
 
 Nó khép.
-
----
 
 ## Một phía chưa từng thấy buyback. Phía kia tăng khoảng 3% mỗi năm.
 
@@ -141,8 +135,6 @@ Việc đóng cầu chuyển đổi cũ khiến khoảng **24,97 triệu token c
 Đó là một tiền lệ đáng nhớ: Centrifuge đã từng có một deadline mà sau khi nó qua đi, một lượng token thực sự bị bỏ lại phía sau.
 
 Giờ một cuộc chuyển đổi khác lại đang được đề xuất.
-
----
 
 ## Vậy cổ phần Centrifuge đáng bao nhiêu?
 
@@ -202,8 +194,6 @@ Có thể cuối cùng **1 CFG đổi 1 cổ phần** vẫn là một giao dịc
 
 Nhưng với những gì đã được công bố hiện tại, chưa có đủ số để kết luận như vậy.
 
----
-
 ## Vì sao chuyện này có thể khiến thị trường nhìn CFG khác đi?
 
 CP172 xuất hiện vào đúng lúc một câu hỏi vốn có thể bị trì hoãn trở thành câu hỏi phải trả lời ngay:
@@ -223,8 +213,6 @@ Và đó là lý do CP172 đáng chú ý hơn một thay đổi governance thôn
 Nó đặt dấu hỏi lên **vai trò tương lai của chính token**.
 
 Chi tiết cuối củng cố cách đọc đó: CP172 ghi thẳng trong phần đầu rằng nó `impacts/modifies: cp171` — đảo ngược chính đề xuất ngay trước, cái đã hứa *"một cơ chế nhận giá trị duy nhất: CFG, không có mảng cổ phần."*
-
----
 
 ## CP172 có phải nguyên nhân làm CFG giảm 18%?
 
@@ -251,8 +239,6 @@ Và khi đi kiểm tra nền kinh tế của token, một sự bất đối xứ
 BlockPinned cũng tìm một nguyên nhân cạnh tranh trong cùng giai đoạn — delist, sự cố, thông báo lớn từ sàn hay một tin riêng khác của Centrifuge. Không thấy sự kiện nào nổi bật tương đương. Những thảo luận công khai quanh CFG lúc đó gần như đều xoay quanh CP172. *(Độ phủ của phép quét này nằm ở Phần kiểm chứng.)*
 
 Vì vậy, CP172 hiện là **ứng viên giải thích mạnh nhất BlockPinned tìm thấy** cho việc thị trường định giá lại CFG. Không phải vì đề xuất chắc chắn xấu, mà vì nó buộc thị trường trả lời ngay một câu hỏi trước đó còn có thể bỏ qua: **CFG thực sự đáng giá dựa trên quyền kinh tế nào?**
-
----
 
 ## Bốn câu hỏi Centrifuge vẫn chưa trả lời
 
@@ -283,8 +269,6 @@ Tính tới lúc đo, CP172 chưa trả lời đầy đủ.
 Cho tới khi bốn khoảng trống này được lấp, "1 đổi 1" vẫn chỉ là một tỷ lệ số lượng.
 
 Chưa phải một mức giá.
-
----
 
 ## Phần kiểm chứng — cách tự kiểm
 
