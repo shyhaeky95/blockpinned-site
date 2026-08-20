@@ -8,7 +8,7 @@ mau: 🟡
 ghim: Số on-chain đo tại Ethereum block 25.788.346, tức 16h45 ngày 19/08/2026 giờ Việt Nam (09:45:59Z), node lưu trữ; đọc lại mốc cũ block 25.565.187 khớp từng wei ở cả bốn đại lượng. Sổ số dư dựng lại từ 335.808 dòng chuyển khoản, tổng bằng đúng totalSupply, lệch 0 wei. Giá và chuỗi phí lấy từ nguồn tổng hợp bên thứ ba, KHÔNG neo block — nhãn suy luận, phải đọc lại sát giờ đăng.
 mo_ta: CFG rơi 18% trong 27 giờ khi thị trường gần như đứng yên. Nửa ngày trước đó, chính đội ngũ đề xuất đổi token lấy cổ phần — 1 đổi 1, nhưng chưa nói mỗi cổ phần đáng bao nhiêu.
 anh: card-cfg-dieu-gi-dung-sau-cu-sup.png
-kenh_x: ""
+kenh_x: https://x.com/blockpinned/status/2090341178466275605
 doc_lai: Vế nhân quả giữ ở mức suy luận toàn bài — CP172 là ứng viên giải thích mạnh nhất desk tìm thấy, không phải nguyên nhân đã chứng minh; 97,8% khối lượng CFG chạy trên sàn tập trung nên lệnh bán không để lại dấu vết trên chuỗi. Giá và phí trôi thời gian thực, mọi con số quy đô-la phải đọc lại sát giờ đăng. Điều khoản CP172 có thể được bổ sung bất cứ lúc nào — cửa sổ lấy ý kiến đóng khoảng 31/08, tới đó bài phải kiểm lại, đặc biệt bốn điều còn trống: định giá, cap table, báo cáo tài chính, số phận token không chuyển đổi. Đề xuất KHÔNG nói người không đổi buộc phải bán — nó chưa nói gì về họ, và bài giữ đúng khoảng trống đó. Quyền hạn hợp đồng đọc tại một block; quyền có thể được cấp hoặc thu hồi sau đó và phải đọc lại.
 ---
 
