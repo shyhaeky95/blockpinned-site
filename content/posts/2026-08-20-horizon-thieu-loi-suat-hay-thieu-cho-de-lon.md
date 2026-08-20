@@ -8,6 +8,7 @@ mau: 🟡
 ghim: Mọi số on-chain đo tại Ethereum block 25.792.601 (2026-08-20T00:00:00Z), node lưu trữ. Chuỗi lãi vay và dư nợ dựng từ 61 mẫu theo ngày 21/06→20/08; chuỗi NAV dựng từ 31 mẫu ngày và kiểm chéo bằng hai cửa sổ 30 ngày độc lập. Giá lấy từ oracle của chính Aave tại cùng block, không dùng nguồn giá ngoài.
 mo_ta: Một quỹ tín dụng xin vào Aave Horizon với lý do collateral hiện tại chưa đủ hấp dẫn. Đo lại: chênh lệch dương đã có — thứ đáng nhìn nằm ở hạn mức.
 anh: card-2026-08-20-horizon-tran-collateral.png
+kenh_x: https://x.com/blockpinned/status/2090399953688657926
 doc_lai: Bài KHÔNG chứng minh hạn mức cấp vốn là nguyên nhân khiến dư nợ giảm — mắt xích collateral nào sinh bao nhiêu dư nợ, cách hạn mức bao xa, và bỏ hạn mức thì dư nợ tăng bao nhiêu vẫn chưa nối được. Cũng chưa có bằng chứng có người muốn gửi thêm nhưng bị hạn mức chặn: chưa thấy giao dịch gửi bị từ chối vì hạn mức, chưa thấy hạn mức nâng rồi được lấp ngay. Chưa pin block của lệnh đổi hạn mức nên không nói được cắt hạn mức và rút tiền cái nào trước. Chưa đọc eMode, nên tham số LTV nền có thể bị nhóm eMode ghi đè. Ba quỹ nhóm tích luỹ sạch có chia cổ tức hay không thì không đọc được từ chuỗi — nếu có, mức tăng NAV đo được chỉ là mức tối thiểu — con số thật chỉ có thể cao hơn.
 ---
 
