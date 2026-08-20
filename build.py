@@ -2577,7 +2577,7 @@ def trang_primer(cfg: dict) -> str:
   {hero_top_open}<div class="article-path" aria-label="Vị trí Token Primer"><a href="../../">BlockPinned</a><span>/</span><a href="../">Token</a><span>/</span><b>{ihtml.escape(cfg["token"])}</b></div>
   <span class="hero-code" aria-hidden="true">TOKEN PRIMER · SYSTEM / CAPITAL / CAPTURE</span>{hero_top_close}
   <p class="eyebrow"><span>Token Primer · {ihtml.escape(cfg["token"])}</span><span class="im">đọc cỗ máy trước · đọc token sau</span></p>
-  <h1 class="display">{_tieu_de_nhan(cfg["title"])}</h1>
+  <h1 class="display">{_tieu_de_nhan(_tieu_de_h1(cfg))}</h1>
   <p class="subline">{ihtml.escape(cfg["description"])}</p>
   <div class="primer-pin"><span><b>GHIM TẠI</b>{ihtml.escape(cfg["pin"])}</span><span><b>BẢN NỘI DUNG</b>{ihtml.escape(cfg["edition"])}</span><span><b>LOẠI</b>Sống theo đối tượng, không theo ngày đăng</span></div>
   {machine_index}
@@ -2602,8 +2602,12 @@ def trang_primer(cfg: dict) -> str:
         missing = [x for x in required if x not in than]
         if missing or than.count('class="primer-chapter-no"') != len(visuals):
             raise LoiCong(f"art direction machine-valves dựng thiếu cấu trúc: {missing} — {o}")
-        metric = _metric_tieu_de(cfg["title"])
-        if metric and f"${metric}" in cfg["title"] and (
+        # 🔴 Soi chuỗi THẬT SỰ ra hero, không soi `title`. Trước 20/08 hai thứ đó là
+        #    một nên không ai thấy khác biệt; từ khi primer có `tieu_de_ngan`, đọc
+        #    `title` ở đây bắt hero phải nhấn một con số KHÔNG có trong hero.
+        mat_chu_hero = _tieu_de_h1(cfg)
+        metric = _metric_tieu_de(mat_chu_hero)
+        if metric and f"${metric}" in mat_chu_hero and (
                 f'<span class="nhan-manh">${ihtml.escape(metric)}</span>' not in than):
             raise LoiCong(f"primer làm rơi ký hiệu tiền khỏi nhấn số ở hero — {o}")
         headerless = re.findall(

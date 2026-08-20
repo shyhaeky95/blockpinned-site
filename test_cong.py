@@ -40,6 +40,26 @@ def sua_json_bai(root, path, fn):
     p.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def sua_primer_h1(root, moi):
+    """Đổi chuỗi THẬT SỰ ra mặt chữ của Primer: H1 trong thân + `tieu_de_ngan` + sha.
+
+    🔴 Vì sao ca thử cần helper này (20/08): trước đây hero Primer lấy cứng
+    `cfg["title"]`, nên ca thử nào cần hero mang một con số chỉ việc dựa vào
+    title sẵn có. Từ khi Primer có `tieu_de_ngan`, hero đọc chuỗi khác — ca thử
+    cũ vẫn "chạy" nhưng cổng thành VÔ HIỆU, và nó báo *"cổng thủng"* trong khi
+    cổng vẫn đúng. Ca thử phải đặt con số vào đúng chuỗi mà hero đọc.
+    """
+    md = root / "site" / "content" / "primers" / "sky.md"
+    dong = md.read_text(encoding="utf-8").split("\n")
+    dong[0] = f"# {moi}"
+    than = "\n".join(dong).strip() + "\n"
+    md.write_text(than, encoding="utf-8")
+    p = root / "site" / SKY_PRIMER
+    d = json.loads(p.read_text(encoding="utf-8"))
+    d["tieu_de_ngan"] = moi
+    d["body_sha256"] = hashlib.sha256(than.encode()).hexdigest()
+    p.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
+
 def vat_chat_primers(root):
     """Bộ thử chỉ chép `site/`; đưa thân Primer vào như publish_site làm cho mirror."""
     for p in sorted((SITE / "content" / "primers").glob("*.json")):
@@ -454,7 +474,9 @@ CA = [
      lambda r: sua_builder(r, 'data-label="', 'data-card-label="'),
      "visual v3 dựng thiếu nhãn data card"),
     ("⑰ PRIMER · hero tô số mà làm rơi ký hiệu tiền phải NỔ",
-     lambda r: sua_builder(r, 'if truoc.endswith("$"):', 'if False and truoc.endswith("$"):'),
+     lambda r: (sua_primer_h1(r, "SKY: cỗ máy stablecoin $10 tỷ"),
+                sua_builder(r, 'if truoc.endswith("$"):',
+                            'if False and truoc.endswith("$"):')),
      "làm rơi ký hiệu tiền khỏi nhấn số"),
     ("⑰ PRIMER · bảng key-value rơi về bảng trần phải NỔ",
      lambda r: sua_builder(r, 'table_classes.append("table-key-value")',

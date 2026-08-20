@@ -1,4 +1,4 @@
-# SKY Primer: một cỗ máy stablecoin hơn $10 tỷ kiếm tiền thế nào — và SKY holder thực sự nhận được gì?
+# SKY hoạt động như thế nào?
 
 **Quý II/2026, Sky tạo ra $107 triệu doanh thu. Nhưng mua SKY không có nghĩa bạn sở hữu một phần của số đó.**
 
@@ -191,11 +191,11 @@ Câu trả lời gọn nhất là một bảng — **từng đường một, và
 |---|---|
 | **buyback trên thị trường mở** — cỗ máy dùng USDS mua SKY, đưa về kho | 🟢 **đang chạy** — 188 lượt trong 30,11 ngày |
 | **thưởng cho người stake SKY** — trả bằng SKY | 🟢 **đang chạy**, nhưng token lấy từ **kho**, không lấy từ doanh thu vừa kiếm |
-| **thưởng cho người stake SKY** — trả bằng **USDS** | 🔴 **cơ chế có sẵn, đang ở mức 0** — tỉ lệ chia hiện đặt **100% sang mua SKY / 0% sang USDS** |
+| **thưởng cho người stake SKY** — trả bằng **USDS** | 🔴 **đang chảy từ 17/08** — tỉ lệ chia rời 100%/0% sang **55% mua SKY / 45% thưởng USDS**; xem hộp ngay dưới bảng ảnh chụp |
 | **nhánh mua-rồi-"đốt"** của chế độ thứ hai | 🔴 **chưa mở** — chế độ 2 chưa bật; và khi bật thì nó **cũng không đốt** (xem cuối bài) |
 | **người chỉ giữ SKY, không stake** | ⚪ **không có đường trực tiếp nào** — chỉ hưởng gián tiếp qua lực mua của buyback |
 
-🔴 **Đọc bảng này theo CỘT PHẢI, đừng theo cột trái.** Đếm số dòng ra "năm đường value về token" là đếm **thiết kế**; chỉ **hai** dòng đang chảy, và **cả hai** đều không phải "chia lợi nhuận".
+🔴 **Đọc bảng này theo CỘT PHẢI, đừng theo cột trái.** Đếm số dòng ra "năm đường value về token" là đếm **thiết kế**. Tại lần đo gần nhất có **ba** dòng đang chảy — và **cả ba** đều không phải "chia lợi nhuận": hai dòng lấy token từ kho, dòng thứ ba trả bằng USDS **đúc lúc trả**.
 
 Đường trực tiếp nhất là dòng đầu: **buyback trên thị trường**.
 
@@ -336,6 +336,15 @@ Sky có business thật. Nhưng SKY không phải equity.
 | **Nhịp rút kho** | **một cục ~22M SKY mỗi tuần** — không phải dòng chảy đều |
 | **Runway của kho** | **~22–34 ngày** tuỳ cách đo tốc độ rút — đọc kèm dòng nhịp ngay trên |
 
+**Đã đổi sau lần đo — cast 17/08/2026 lúc 21:02:23 giờ VN (`14:02:23Z`), block 25.775.271.** Bảng trên là ảnh chụp ngày 07/08 và giữ nguyên, vì toàn bộ phân tích buyback ở thân bài neo vào cửa sổ 30,11 ngày kết thúc tại đó. Hai hàng của nó đã hết hiệu lực:
+
+| | ngày 07/08 | từ 17/08 |
+|---|---:|---:|
+| Tỉ lệ chia: mua SKY / thưởng USDS | 100% / 0% | **55% / 45%** |
+| Khoảng cách tối thiểu giữa hai lượt | 13.787 giây | **3.748 giây** |
+
+Lượng mỗi lượt không đổi ($6.000), nên lượng rút khỏi quỹ đệm đi từ **~$37.601/ngày** lên **$138.314/ngày** — tách thành **$76.073** mua SKY và **$62.241** thưởng USDS. Nhánh USDS trả bằng tiền **đúc lúc trả**, không phải chuyển từ kho. Bài riêng về lần cast này: *Sky trả thưởng bằng USDS đúc mới*.
+
 **Kho theo thời gian:** 147,26M *(30/06)* → 105,75M *(24/07)* → **70,45M** *(07/08)* — 🔴 ba **mức**, không phải một **đường đi**: chúng cách nhau ~2 tuần trên một chu kỳ rút hằng tuần.
 
 ## Điều gì sẽ làm các kết luận trên sai?
@@ -344,7 +353,7 @@ Bài này không yêu cầu bạn tin BlockPinned. Nó phải có cách bị bá
 
 - **Nếu SKY mua lại thực sự bị đốt** thì `totalSupply` phải giảm sau một kỳ phân bổ. Đọc ở hai block, nó không giảm.
 - **Nếu người chỉ giữ SKY có dòng tiền tự động** thì phải tồn tại một contract trả value chỉ dựa trên số dư, không cần stake. Chưa tìm ra cái nào.
-- **Nếu chỉ 2 trong 5 đường capture đang chảy là sai** thì tỉ lệ chia phải đọc ra một số khác `100% / 0%`.
+- **Nếu người chỉ giữ SKY có dòng tiền tự động là sai** thì bảng trên phải bỏ dòng cuối. Điều kiện bác: tồn tại một contract trả value **chỉ dựa trên số dư SKY**, không cần stake.
 
 *Bảy điều-bác-bỏ còn lại, cùng lệnh chạy từng cái: **lớp kiểm chứng** ngay dưới.*
 
@@ -367,7 +376,7 @@ Bài này không yêu cầu bạn tin BlockPinned. Nó phải có cách bị bá
 | **"Sky Reserves" và "Aggregate Backstop Capital" là MỘT đại lượng** | tìm được một văn bản chính chủ định nghĩa chúng thành hai quỹ tách biệt, với hai số dư khác nhau tại cùng một mốc |
 | **Kho ra thành từng cục ~22M SKY mỗi 601.200 giây** | đọc số dư kho ở nhiều ngày liên tiếp mà thấy nó giảm đều, thay vì đứng yên rồi tụt một nhát |
 | **Nhánh "buyback and burn" không huỷ token** | `totalSupply()` đọc ở hai block trước và sau một kỳ phân bổ cho ra hai số khác nhau theo chiều giảm |
-| **Chỉ 2 trong 5 đường ở bảng capture đang chảy** | đọc tỉ lệ chia ra một số khác 100%/0% (tức nhánh USDS đang mở), hoặc tìm được một khoản trả tự động cho người chỉ giữ SKY mà không stake |
+| **Mỗi đường trong bảng capture đều đọc được trạng thái từ chain, không từ thông cáo** | tồn tại một đường trong bảng mà trạng thái của nó **không** đọc ra được bằng một lệnh gọi hợp đồng — khi đó bảng đang chở một câu không kiểm được |
 
 ## Ba chỗ bài cố ý không mở ở thân bài
 
@@ -383,8 +392,8 @@ Bài này không yêu cầu bạn tin BlockPinned. Nó phải có cách bị bá
 
 ```text
 # Tỉ lệ chia hiện tại
-Splitter.burn()          # 1e18 = 100% sang mua SKY, 0 cho thưởng USDS
-Splitter.hop()           # 13787 giây
+Splitter.burn()          # phần đi mua SKY (phần còn lại sang thưởng USDS)
+Splitter.hop()           # khoảng cách tối thiểu giữa hai lượt, tính bằng giây
 
 # SKY nằm trong kho giao thức
 SKY.balanceOf(0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB)

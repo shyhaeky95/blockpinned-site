@@ -2,14 +2,14 @@
   "id": "sky",
   "token": "SKY",
   "name": "Sky",
-  "title": "SKY Primer: một cỗ máy stablecoin hơn $10 tỷ kiếm tiền thế nào — và SKY holder thực sự nhận được gì?",
-  "description": "Một đường đọc từ business stablecoin, cái vạch Net Revenue và thác phân bổ vốn tới buyback, staking và phần economics thực sự chạm vào SKY.",
+  "title": "Hiểu SKY: cỗ máy phía sau stablecoin $10 tỷ",
+  "description": "Sky kiếm tiền ở đâu, tiền đi đâu, và SKY nằm ở đâu trong hệ thống?",
   "pin": "Ethereum block 25.700.475 · 07/08/2026 14:23:23Z",
-  "edition": "v4.1 · 13/08/2026",
+  "edition": "v4.2 · 20/08/2026",
   "art_direction": "machine-valves",
-  "lastmod": "2026-08-13",
+  "lastmod": "2026-08-20",
   "draft": "drafts/2026-08-08-sky-primer-v2.md",
-  "body_sha256": "b8354fe4a787ed62de1cc5aa1827530eb57ada276c3670f40b1b125b9f1eb122",
+  "body_sha256": "53fc95d6d1e95ec666034f064d77d8c0eeb6675e7fb6a98977221db00d375d19",
   "start_marker": "<!-- THÂN BÀI: BẮT ĐẦU",
   "end_marker": "<!-- THÂN BÀI: HẾT -->",
   "recap_heading": "## Đứng lùi ra, Sky hiện là bức tranh gì?",
@@ -67,7 +67,7 @@
     },
     {
       "visual": "sky-capture-status",
-      "after": "🔴 **Đọc bảng này theo CỘT PHẢI, đừng theo cột trái.** Đếm số dòng ra \"năm đường value về token\" là đếm **thiết kế**; chỉ **hai** dòng đang chảy, và **cả hai** đều không phải \"chia lợi nhuận\"."
+      "after": "🔴 **Đọc bảng này theo CỘT PHẢI, đừng theo cột trái.** Đếm số dòng ra \"năm đường value về token\" là đếm **thiết kế**. Tại lần đo gần nhất có **ba** dòng đang chảy — và **cả ba** đều không phải \"chia lợi nhuận\": hai dòng lấy token từ kho, dòng thứ ba trả bằng USDS **đúc lúc trả**."
     }
   ],
   "visuals": [
@@ -261,10 +261,10 @@
       "id": "sky-capture-status",
       "type": "distribution",
       "eyebrow": "PROVE · ĐỌC CỘT PHẢI",
-      "title": "Năm đường trong thiết kế, chỉ hai đường đang chảy",
-      "aria": "Trong năm đường value capture được liệt kê, hai đường đang chạy, hai đường có trong thiết kế nhưng đang đóng, và một đường chỉ tác động gián tiếp tới người giữ token.",
-      "caption": "Đơn vị là số đường trong bảng capture tại block ghim. Đây là phân loại trạng thái, không phải tỷ trọng economics hay doanh thu.",
-      "public_scope": "Ảnh chụp tại block 25.700.475",
+      "title": "Năm đường trong thiết kế, ba đường đang chảy",
+      "aria": "Trong năm đường value capture được liệt kê, ba đường đang chạy, một đường có trong thiết kế nhưng chưa mở, và một đường chỉ tác động gián tiếp tới người giữ token.",
+      "caption": "Đơn vị là số đường trong bảng capture. Đây là phân loại trạng thái, không phải tỷ trọng economics hay doanh thu. Trạng thái đọc ở block 25.795.066; các con số economics của bài vẫn ghim ở block 25.700.475.",
+      "public_scope": "Trạng thái tại block 25.795.066 · 20/08/2026",
       "claims": [
         "staking-treasury",
         "buyback-governance",
@@ -273,14 +273,14 @@
       "segments": [
         {
           "label": "đang chạy",
-          "count": 2,
-          "note": "buyback thị trường + thưởng staking bằng SKY",
+          "count": 3,
+          "note": "buyback thị trường + thưởng staking bằng SKY + thưởng USDS (mở từ 17/08)",
           "tone": "good"
         },
         {
-          "label": "có thiết kế, đang đóng",
-          "count": 2,
-          "note": "nhánh USDS mức 0 + chế độ 2 chưa mở",
+          "label": "có thiết kế, chưa mở",
+          "count": 1,
+          "note": "chế độ 2 chưa bật",
           "tone": "bad"
         },
         {
@@ -291,5 +291,6 @@
         }
       ]
     }
-  ]
+  ],
+  "tieu_de_ngan": "SKY hoạt động như thế nào?"
 }
