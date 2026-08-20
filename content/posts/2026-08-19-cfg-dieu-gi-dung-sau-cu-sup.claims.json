@@ -77,8 +77,8 @@
   },
   {
    "id": "C6",
-   "text": "CP172 đăng 17/08/2026 19:11:10Z, khoảng 12 giờ trước mốc bắt đầu cửa sổ giá được đo. Điều khoản đã công bố: 1 CFG = 1 share, trả bằng chính token, pháp nhân Cayman, ngưỡng 100.000 CFG vào thẳng sổ cổ đông, 'relative to other converters' (trích nguyên văn), impacts/modifies: cp171. Cái CHƯA có: định giá · cap table · báo cáo tài chính · quyền cổ đông · thị trường thứ cấp · danh sách quốc gia loại trừ · số phận CFG không chuyển đổi. Raw thread: 0 hit 'forced'/'must sell' — đề xuất KHÔNG nói người không đổi buộc phải bán.",
-   "status": "ĐANG ĐỨNG",
+   "text": "CP172 đăng 17/08/2026 19:11:10Z, khoảng 12 giờ trước mốc bắt đầu cửa sổ giá được đo. Điều khoản đã công bố: 1 CFG = 1 share, trả bằng chính token, pháp nhân Cayman, ngưỡng 100.000 CFG, 'relative to other converters' (trích nguyên văn), impacts/modifies: cp171; và mục 'Optionality for Non-Participating Holders' (có từ version 1): không bắt buộc đổi — bán trên thị trường mở hoặc giữ như hiện tại, Centrifuge sẽ cố duy trì thanh khoản TRONG cửa sổ chuyển đổi. Cái CHƯA có: định giá · cap table · BCTC · quyền cổ đông · thị trường thứ cấp · danh sách quốc gia loại trừ · kinh tế/quản trị của CFG giữ lại SAU cửa sổ · số phận CFG bị NỘP LẠI (đốt hay công ty giữ) · lạm phát 3% tiếp tục hay bị thay. Raw thread: 0 hit 'forced'/'must sell' — đề xuất KHÔNG bắt người không đổi phải bán.",
+   "status": "ĐÃ SỬA",
    "ghim": "Raw JSON topic 7525 đọc 19/08, pin kèm sha256. Kiểm chống mù: cùng phép đọc thấy lại câu 'relative to other converters' đã biết chắc có. Đọc lại 20/08 trước khi đăng, đủ 37/37 post: đội ngũ chỉ lặp lại 'sẽ trả lời gộp' lần hai — 0/4 điều trống được trả lời.",
    "falsifier": "Đội ngũ bổ sung điều khoản trả lời bất kỳ mục nào trong danh sách CHƯA CÓ — bài phải cập nhật ngay. Cửa sổ lấy ý kiến đóng khoảng 31/08/2026: mốc phải đọc lại.",
    "khong_do_lai": "Nội dung diễn đàn là nguồn ngoài chuỗi, sửa/xoá được — đối chiếu bằng raw JSON đã pin kèm sha256, không bằng trang web hiện tại.",
@@ -87,6 +87,11 @@
      "ngay": "2026-08-20",
      "ghi": "Vế 'CP172 là nguyên nhân cú giảm' KHÔNG nằm trong claim nào — toàn bài giữ nó ở mức ứng viên giải thích mạnh nhất, nhãn suy luận; nhân quả giá không đo được bằng phép đếm nguồn.",
      "nguon": ""
+    },
+    {
+     "ngay": "2026-08-20",
+     "ghi": "ĐÍNH CHÍNH: bản đầu liệt 'số phận CFG không chuyển đổi' vào danh sách CHƯA CÓ — đọc sót mục Optionality nằm ngay trong post 1. Kiểm ba lượt đọc (19/08, 20/08 sáng, 20/08 live): post 1 version=1, không hề edit, độ dài text y hệt — tức mục đó có TỪ ĐẦU, lỗi ở phép đọc của desk (phủ đếm số post đã đọc, không phủ nội dung post 1). Lộ ra nhờ một vòng phản biện ngoài. Danh sách CHƯA CÓ đã thu hẹp lại đúng phần đề xuất thật sự chưa trả lời: kinh tế CFG sau cửa sổ, số phận CFG nộp lại, tương lai lạm phát 3%.",
+     "nguon": "gov.centrifuge.io/t/7525 post 1 (version=1)"
     }
    ],
    "han": "2026-08-31",

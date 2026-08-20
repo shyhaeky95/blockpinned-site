@@ -9,7 +9,7 @@ ghim: Số on-chain đo tại Ethereum block 25.788.346, tức 16h45 ngày 19/08
 mo_ta: CFG rơi 18% trong 27 giờ khi thị trường gần như đứng yên. Nửa ngày trước đó, chính đội ngũ đề xuất đổi token lấy cổ phần — 1 đổi 1, nhưng chưa nói mỗi cổ phần đáng bao nhiêu.
 anh: card-cfg-dieu-gi-dung-sau-cu-sup.png
 kenh_x: https://x.com/blockpinned/status/2090341178466275605
-doc_lai: Vế nhân quả giữ ở mức suy luận toàn bài — CP172 là ứng viên giải thích mạnh nhất desk tìm thấy, không phải nguyên nhân đã chứng minh; 97,8% khối lượng CFG chạy trên sàn tập trung nên lệnh bán không để lại dấu vết trên chuỗi. Giá và phí trôi thời gian thực, mọi con số quy đô-la phải đọc lại sát giờ đăng. Điều khoản CP172 có thể được bổ sung bất cứ lúc nào — cửa sổ lấy ý kiến đóng khoảng 31/08, tới đó bài phải kiểm lại, đặc biệt bốn điều còn trống: định giá, cap table, báo cáo tài chính, số phận token không chuyển đổi. Đề xuất KHÔNG nói người không đổi buộc phải bán — nó chưa nói gì về họ, và bài giữ đúng khoảng trống đó. Quyền hạn hợp đồng đọc tại một block; quyền có thể được cấp hoặc thu hồi sau đó và phải đọc lại.
+doc_lai: Vế nhân quả giữ ở mức suy luận toàn bài — CP172 là ứng viên giải thích mạnh nhất desk tìm thấy, không phải nguyên nhân đã chứng minh; 97,8% khối lượng CFG chạy trên sàn tập trung nên lệnh bán không để lại dấu vết trên chuỗi. Giá và phí trôi thời gian thực, mọi con số quy đô-la phải đọc lại sát giờ đăng. Điều khoản CP172 có thể được bổ sung bất cứ lúc nào — cửa sổ lấy ý kiến đóng khoảng 31/08, tới đó bài phải kiểm lại, đặc biệt bốn điều còn trống: định giá, cap table, báo cáo tài chính, số phận token không chuyển đổi. Đề xuất KHÔNG bắt người không đổi phải bán — mục Optionality (có từ version 1; bản đầu của bài đọc sót, đã sửa 20/08, xem C6) cho giữ hoặc bán và hứa hỗ trợ thanh khoản TRONG cửa sổ chuyển đổi; khoảng trống thật là kinh tế của CFG giữ lại SAU cửa sổ và số phận CFG bị nộp lại. Quyền hạn hợp đồng đọc tại một block; quyền có thể được cấp hoặc thu hồi sau đó và phải đọc lại.
 ---
 
 Trong khoảng 27 giờ từ chiều 18/08 đến chiều 19/08 (giờ Việt Nam), **CFG mất 18%**.
@@ -46,9 +46,9 @@ Tính tới lúc đo, phần lớn những dữ kiện đó chưa được công
 
 Người giữ từ **100.000 CFG** trở lên dự kiến được ghi trực tiếp vào sổ cổ đông. Người dưới ngưỡng đó đi qua một cấu trúc trust. Việc chuyển đổi yêu cầu định danh và có loại trừ theo quốc gia — danh sách nước nào chưa được công bố.
 
-Còn nếu một người **không đổi hoặc không thể đổi**, CFG của họ sau đó sẽ có quyền kinh tế gì?
+Với người **không đổi hoặc không thể đổi**, đề xuất có hẳn một mục riêng — và bản đầu của bài đã đọc sót nó, nay sửa: không ai bị bắt buộc tham gia; token có thể bán trên thị trường mở hoặc giữ như hiện tại, và Centrifuge nói sẽ cố duy trì thanh khoản **trong** cửa sổ chuyển đổi.
 
-Tính tới lúc đo, đề xuất chưa trả lời rõ.
+Nhưng câu hỏi kinh tế thì mục đó chưa chạm tới: **sau khi cửa sổ đóng**, CFG giữ lại còn quyền quản trị hay quyền kinh tế gì — và CFG bị nộp lại khi đổi sẽ bị đốt hay công ty giữ? Đề xuất chưa nói.
 
 Một câu khác trong CP172 còn đáng chú ý hơn. Tỷ lệ sở hữu của người chuyển đổi được mô tả là **"relative to other converters"** — tương đối với những người cùng tham gia chuyển đổi.
 
@@ -258,13 +258,13 @@ Cần biết tổng số cổ phần, ai khác sở hữu công ty và converter
 
 Management fee ước tính khoảng $5,43 triệu chưa cho biết công ty có lãi bao nhiêu. Không có chi phí thì chưa thể đi tới earnings.
 
-**4. Số phận CFG không chuyển đổi**
+**4. Kinh tế của CFG sau cửa sổ chuyển đổi**
 
 Đây có thể là câu quan trọng nhất.
 
-Nếu một người không hoặc không thể chuyển đổi, token họ giữ sau đó còn có utility, governance hay một đường value capture nào hay không?
+CP172 đã nói phần dễ: người không đổi được giữ hoặc bán, và thanh khoản được hỗ trợ trong cửa sổ chuyển đổi. Phần chưa nói mới là phần định giá được: sau khi cửa sổ đóng, CFG giữ lại còn utility, governance hay một đường nhận giá trị nào không? Lạm phát 3% tiếp tục chạy hay bị thay? Và CFG bị nộp lại để lấy cổ phần sẽ bị đốt hay công ty giữ?
 
-Tính tới lúc đo, CP172 chưa trả lời đầy đủ.
+Tính tới lúc đo, CP172 chưa trả lời những câu này.
 
 Cho tới khi bốn khoảng trống này được lấp, "1 đổi 1" vẫn chỉ là một tỷ lệ số lượng.
 
