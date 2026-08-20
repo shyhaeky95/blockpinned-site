@@ -197,14 +197,14 @@ LOGO_TOKEN = {
 
 NGUON_ASSET = {
     # bài CFG 20/08 — nguồn `template/card-cfg-dieu-gi-dung-sau-cu-sup.html`, dựng bằng
-    # `template/render_card_v2.py` qua pipeline editorial (`card_editorial.py new` → ruột
-    # tự dựng: hai vế nối bằng con nhộng "1 ĐỔI 1"). Outsider test PASS bởi độc giả mù
-    # (independent-reader), bắt 1 vấp đã sửa: nhãn vế trái phải là "QUỸ MUA LẠI TOKEN"
-    # thì "0 lần" mới khớp lần đọc đầu.
+    # `template/render_card_v2.py` qua pipeline editorial. Bản 1 (hai vế "0 lần / chưa
+    # có giá" nối con nhộng 1 ĐỔI 1) bị user BÁC cùng ngày: "nhét 3 câu chuyện cùng lúc,
+    # người chưa đọc bài không biết nhìn đâu trước". Bản 2 theo concept user chọn — MỘT
+    # tension: −18% → [1 CFG]→[1 CỔ PHẦN] → ĐÁNG BAO NHIÊU?; 0-buyback/3% CỐ Ý bỏ khỏi
+    # cover (là reveal thứ hai của bài, không phải thứ nhét lên bìa).
     # 🔴 CẤM gọi mốc giá 18/08 07:00Z là "đỉnh" (user chốt 20/08 — dùng "mốc bắt đầu
     #    cửa sổ giảm/đo"); CẤM nói cổ phần "không bán được" — đúng chữ là "thị trường
-    #    bán lại: chưa công bố" (thanh khoản, không phải phán quyết pháp lý); "0 lần"
-    #    phải đứng cạnh phạm vi "quỹ mua lại · 506 ngày" — không nới thành toàn hệ.
+    #    bán lại: chưa công bố" (thanh khoản, không phải phán quyết pháp lý).
     "card-cfg-dieu-gi-dung-sau-cu-sup.png": "png",
     # bài BSC 19/08 — nguồn `template/card-bsc-ban-10000-do-nhan-ve-1-58.html`, dựng bằng
     # `template/render_card_v2.py`. Khuôn xác định bằng `template/khuon_card.py` (chép từ
