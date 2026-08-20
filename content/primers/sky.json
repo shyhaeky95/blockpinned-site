@@ -14,35 +14,42 @@
   "end_marker": "<!-- THÂN BÀI: HẾT -->",
   "recap_heading": "## Đứng lùi ra, Sky hiện là bức tranh gì?",
   "web_replacements": [
-    {"from": "nấc", "to": "tầng", "count": 5},
-    {"from": "mức trần", "to": "giới hạn", "count": 1},
-    {"from": "trần", "to": "mức tối đa", "count": 2}
+    {
+      "from": "nấc",
+      "to": "tầng",
+      "count": 5
+    },
+    {
+      "from": "mức trần",
+      "to": "giới hạn",
+      "count": 1
+    },
+    {
+      "from": "trần",
+      "to": "mức tối đa",
+      "count": 2
+    }
   ],
   "source_claims": [
     {
       "id": "q2-accounts",
-      "label": "Báo cáo Q2/2026",
-      "source": "SKY/REPORTS.md §4b · SKY/research_v16.md §2.3–§2.5"
+      "label": "Báo cáo Q2/2026"
     },
     {
       "id": "monthly-settlement",
-      "label": "Monthly Settlement Cycle",
-      "source": "SKY/FACTS.md #57 · #73"
+      "label": "Monthly Settlement Cycle"
     },
     {
       "id": "staking-treasury",
-      "label": "Thưởng staking rút từ kho",
-      "source": "SKY/FACTS.md #58"
+      "label": "Thưởng staking rút từ kho"
     },
     {
       "id": "buyback-governance",
-      "label": "Tham số buyback do governance đặt",
-      "source": "SKY/FACTS.md #63 · #64 · #65"
+      "label": "Tham số buyback do governance đặt"
     },
     {
       "id": "capture-ledger",
-      "label": "Buyback và nguồn thưởng",
-      "source": "SKY/FACTS.md #68"
+      "label": "Buyback và nguồn thưởng"
     }
   ],
   "placements": [
@@ -72,7 +79,12 @@
       "aria": "Bốn tầng nối tiếp: business tạo Net Revenue, chính sách vốn chia phần giữ lại và phân bổ, governance đặt độ mở, rồi giá trị tới kho hoặc thị trường.",
       "caption": "Đây là bản đồ cơ chế, không phải ảnh chụp trạng thái. Mỗi tầng là một van riêng; đổi một tầng không tự động đổi các tầng còn lại.",
       "public_scope": "Mô hình cơ chế · không phải ảnh chụp trạng thái",
-      "claims": ["q2-accounts", "staking-treasury", "buyback-governance", "capture-ledger"],
+      "claims": [
+        "q2-accounts",
+        "staking-treasury",
+        "buyback-governance",
+        "capture-ledger"
+      ],
       "lanes": [
         {
           "label": "Business",
@@ -135,10 +147,26 @@
         }
       ],
       "edges": [
-        {"from": "business", "to": "policy", "label": "business đặt giới hạn"},
-        {"from": "policy", "to": "gate", "label": "chính sách chia phần sau vạch"},
-        {"from": "gate", "to": "treasury", "label": "định cỡ thưởng staking"},
-        {"from": "gate", "to": "market", "label": "cho phép và định nhịp buyback"}
+        {
+          "from": "business",
+          "to": "policy",
+          "label": "business đặt giới hạn"
+        },
+        {
+          "from": "policy",
+          "to": "gate",
+          "label": "chính sách chia phần sau vạch"
+        },
+        {
+          "from": "gate",
+          "to": "treasury",
+          "label": "định cỡ thưởng staking"
+        },
+        {
+          "from": "gate",
+          "to": "market",
+          "label": "cho phép và định nhịp buyback"
+        }
       ]
     },
     {
@@ -149,7 +177,9 @@
       "aria": "Waterfall quý hai năm 2026: 107,35 triệu đô doanh thu gộp trừ 67,26 triệu đô chi phí còn 40,09 triệu đô Net Protocol Revenue.",
       "caption": "Ba số dùng cùng cửa sổ Q2/2026. Phép khép là 107,35 − 67,26 = 40,09; Net Revenue vẫn chưa phải khoản tự động thuộc về SKY holder.",
       "public_scope": "Cửa sổ Q2/2026 · đơn vị USD",
-      "claims": ["q2-accounts"],
+      "claims": [
+        "q2-accounts"
+      ],
       "items": [
         {
           "kind": "start",
@@ -185,14 +215,46 @@
       "aria": "Năm cột cho thấy doanh thu Prime được ghi vào báo cáo theo các đợt settlement, trong đó tháng hai và tháng ba chứa nhiều kỳ hơn tháng bốn đến tháng sáu.",
       "caption": "Chiều cao là số triệu đô ghi vào P&L ở từng đợt; khoảng cách chữ cho biết kỳ báo cáo nào được chốt, không phải tốc độ business thay đổi.",
       "public_scope": "Nhịp ghi nhận · không phải tốc độ business",
-      "claims": ["monthly-settlement"],
+      "claims": [
+        "monthly-settlement"
+      ],
       "unit": "$M ghi vào P&L",
       "events": [
-        {"label": "Tháng 2", "value": "$37,27M", "gap": "Nov–Dec · chốt 02/02", "magnitude": 37.27, "tone": "warn"},
-        {"label": "Tháng 3", "value": "$32,42M", "gap": "Jan + Feb · 2 lượt chốt", "magnitude": 32.42, "tone": "warn"},
-        {"label": "Tháng 4", "value": "$16,03M", "gap": "Mar · chốt 27/04", "magnitude": 16.03, "tone": "info"},
-        {"label": "Tháng 5", "value": "$20,53M", "gap": "Apr · chốt ~04/05", "magnitude": 20.53, "tone": "info"},
-        {"label": "Tháng 6", "value": "$21,59M", "gap": "May · chốt 22/06", "magnitude": 21.59, "tone": "info"}
+        {
+          "label": "Tháng 2",
+          "value": "$37,27M",
+          "gap": "Nov–Dec · chốt 02/02",
+          "magnitude": 37.27,
+          "tone": "warn"
+        },
+        {
+          "label": "Tháng 3",
+          "value": "$32,42M",
+          "gap": "Jan + Feb · 2 lượt chốt",
+          "magnitude": 32.42,
+          "tone": "warn"
+        },
+        {
+          "label": "Tháng 4",
+          "value": "$16,03M",
+          "gap": "Mar · chốt 27/04",
+          "magnitude": 16.03,
+          "tone": "info"
+        },
+        {
+          "label": "Tháng 5",
+          "value": "$20,53M",
+          "gap": "Apr · chốt ~04/05",
+          "magnitude": 20.53,
+          "tone": "info"
+        },
+        {
+          "label": "Tháng 6",
+          "value": "$21,59M",
+          "gap": "May · chốt 22/06",
+          "magnitude": 21.59,
+          "tone": "info"
+        }
       ]
     },
     {
@@ -203,11 +265,30 @@
       "aria": "Trong năm đường value capture được liệt kê, hai đường đang chạy, hai đường có trong thiết kế nhưng đang đóng, và một đường chỉ tác động gián tiếp tới người giữ token.",
       "caption": "Đơn vị là số đường trong bảng capture tại block ghim. Đây là phân loại trạng thái, không phải tỷ trọng economics hay doanh thu.",
       "public_scope": "Ảnh chụp tại block 25.700.475",
-      "claims": ["staking-treasury", "buyback-governance", "capture-ledger"],
+      "claims": [
+        "staking-treasury",
+        "buyback-governance",
+        "capture-ledger"
+      ],
       "segments": [
-        {"label": "đang chạy", "count": 2, "note": "buyback thị trường + thưởng staking bằng SKY", "tone": "good"},
-        {"label": "có thiết kế, đang đóng", "count": 2, "note": "nhánh USDS mức 0 + chế độ 2 chưa mở", "tone": "bad"},
-        {"label": "chỉ gián tiếp", "count": 1, "note": "holder không stake chỉ chạm lực mua buyback", "tone": "muted"}
+        {
+          "label": "đang chạy",
+          "count": 2,
+          "note": "buyback thị trường + thưởng staking bằng SKY",
+          "tone": "good"
+        },
+        {
+          "label": "có thiết kế, đang đóng",
+          "count": 2,
+          "note": "nhánh USDS mức 0 + chế độ 2 chưa mở",
+          "tone": "bad"
+        },
+        {
+          "label": "chỉ gián tiếp",
+          "count": 1,
+          "note": "holder không stake chỉ chạm lực mua buyback",
+          "tone": "muted"
+        }
       ]
     }
   ]
