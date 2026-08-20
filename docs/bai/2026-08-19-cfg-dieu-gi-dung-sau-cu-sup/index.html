@@ -1,22 +1,22 @@
 <!doctype html><html lang="vi"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BlockPinned — số nào cũng truy ngược được</title>
-<meta name="description" content="Sổ gốc của mọi bài BlockPinned: từng khẳng định một dòng, ghim tại block đã đo, kèm điều gì sẽ bác bỏ nó. Claim nào sai thì ghi là sai, ngay tại chỗ, không xoá.">
-<link rel="canonical" href="https://blockpinned.com/">
+<title>Điều gì đứng sau cú sập 18% của CFG? — BlockPinned</title>
+<meta name="description" content="CFG rơi 18% trong 27 giờ khi thị trường gần như đứng yên. Nửa ngày trước đó, chính đội ngũ đề xuất đổi token lấy cổ phần — 1 đổi 1, nhưng chưa nói mỗi cổ phần đáng bao nhiêu.">
+<link rel="canonical" href="https://blockpinned.com/bai/2026-08-19-cfg-dieu-gi-dung-sau-cu-sup/">
 <meta property="og:site_name" content="BlockPinned">
 <meta property="og:locale" content="vi_VN">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BlockPinned — số nào cũng truy ngược được">
-<meta property="og:description" content="Sổ gốc của mọi bài BlockPinned: từng khẳng định một dòng, ghim tại block đã đo, kèm điều gì sẽ bác bỏ nó. Claim nào sai thì ghi là sai, ngay tại chỗ, không xoá.">
-<meta property="og:url" content="https://blockpinned.com/">
-<meta property="og:image" content="https://blockpinned.com/anh/avatar-800.png">
-<meta property="og:image:width" content="800">
-<meta property="og:image:height" content="800">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Điều gì đứng sau cú sập 18% của CFG?">
+<meta property="og:description" content="CFG rơi 18% trong 27 giờ khi thị trường gần như đứng yên. Nửa ngày trước đó, chính đội ngũ đề xuất đổi token lấy cổ phần — 1 đổi 1, nhưng chưa nói mỗi cổ phần đáng bao nhiêu.">
+<meta property="og:url" content="https://blockpinned.com/bai/2026-08-19-cfg-dieu-gi-dung-sau-cu-sup/">
+<meta property="og:image" content="https://blockpinned.com/anh/card-cfg-dieu-gi-dung-sau-cu-sup.png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1350">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="./font/inter-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="./font/inter-vietnamese.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="./font/jetbrains-mono-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="./font/jetbrains-mono-vietnamese.woff2">
-<link rel="icon" type="image/png" sizes="32x32" href="./anh/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="./anh/favicon-16.png">
-<style>@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(./font/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(./font/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(./font/inter-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(./font/jetbrains-mono-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(./font/jetbrains-mono-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(./font/jetbrains-mono-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}:root{--bg:#faf7f2;--bg2:#f3efe7;--card:#fffdfa;--inset:#f5f1ea;--ink:#1a1512;--muted:#5f564b;--faint:#746b60;--line:#e6ded1;--line-soft:#efe9df;--accent:#b8412a;--c-xn:#0f8a3c;--c-song:#1d5fae;--c-sua:#a16207;--c-bac:#be123c;--c-cho:#64748b;--nut-nen:#1a1512;--nut-chu:#fffdfa;color-scheme:light;--cu:rgba(26,21,18,.34);--bong:0 1px 2px rgba(26,21,18,.05),0 24px 60px -36px rgba(26,21,18,.4);--display:'Inter',system-ui,sans-serif;--body:system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;--dw:800;--gian-ten:-.01em}
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../font/inter-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../font/inter-vietnamese.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../font/jetbrains-mono-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../font/jetbrains-mono-vietnamese.woff2">
+<link rel="icon" type="image/png" sizes="32x32" href="../../anh/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../anh/favicon-16.png">
+<style>@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(../../font/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(../../font/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(../../font/inter-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(../../font/jetbrains-mono-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(../../font/jetbrains-mono-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(../../font/jetbrains-mono-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}:root{--bg:#faf7f2;--bg2:#f3efe7;--card:#fffdfa;--inset:#f5f1ea;--ink:#1a1512;--muted:#5f564b;--faint:#746b60;--line:#e6ded1;--line-soft:#efe9df;--accent:#b8412a;--c-xn:#0f8a3c;--c-song:#1d5fae;--c-sua:#a16207;--c-bac:#be123c;--c-cho:#64748b;--nut-nen:#1a1512;--nut-chu:#fffdfa;color-scheme:light;--cu:rgba(26,21,18,.34);--bong:0 1px 2px rgba(26,21,18,.05),0 24px 60px -36px rgba(26,21,18,.4);--display:'Inter',system-ui,sans-serif;--body:system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;--dw:800;--gian-ten:-.01em}
 @media (prefers-color-scheme:dark){:root:not([data-theme="sang"]){--bg:#100f0d;--bg2:#15130f;--card:#1b1815;--inset:#141210;--ink:#f2ede6;--muted:#b0a596;--faint:#918678;--line:#302a24;--line-soft:#241f1a;--accent:#ff7a5c;--c-xn:#35c46a;--c-song:#4d9fff;--c-sua:#f0b429;--c-bac:#ef4056;--c-cho:#94a3b8;--nut-nen:#faf7f2;--nut-chu:#1a1512;color-scheme:dark;--cu:rgba(242,237,230,.30);--bong:0 2px 4px rgba(0,0,0,.3),0 28px 70px -36px rgba(0,0,0,.85);}}
 :root[data-theme="toi"]{--bg:#100f0d;--bg2:#15130f;--card:#1b1815;--inset:#141210;--ink:#f2ede6;--muted:#b0a596;--faint:#918678;--line:#302a24;--line-soft:#241f1a;--accent:#ff7a5c;--c-xn:#35c46a;--c-song:#4d9fff;--c-sua:#f0b429;--c-bac:#ef4056;--c-cho:#94a3b8;--nut-nen:#faf7f2;--nut-chu:#1a1512;color-scheme:dark;--cu:rgba(242,237,230,.30);--bong:0 2px 4px rgba(0,0,0,.3),0 28px 70px -36px rgba(0,0,0,.85);}
 /* ════════════════════════════════════════════════ v3 — THÂN CSS HỆ TRÌNH BÀY
@@ -2244,144 +2244,298 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   if(!matchMedia('(prefers-reduced-motion:reduce)').matches)d.classList.add('chuyen');
   if(c==='toi'||c==='sang')d.setAttribute('data-theme',c);
 })();
-</script></head><body class="home-page">
+</script></head><body class="page-article">
 <div id="bp-tien" aria-hidden="true"></div>
 <header class="dau"><div class="khung">
   <span class="mark"><svg viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg></span>
-  <a class="ten" href="./">Block<span>Pinned</span></a>
-  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="./" class="tai">Trang&nbsp;chủ</a><a href="./bai/">Bài&nbsp;viết</a><a href="./token/">Token</a><a href="./track-record/">Track record</a><a href="./facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
+  <a class="ten" href="../../">Block<span>Pinned</span></a>
+  <button class="nut-menu" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span>↘</span></button><nav class="dieu" id="site-nav" aria-label="Điều hướng chính"><a href="../../" class="tai">Trang&nbsp;chủ</a><a href="../../bai/">Bài&nbsp;viết</a><a href="../../token/">Token</a><a href="../../track-record/">Track record</a><a href="../../facts/">Facts</a></nav><button id="nut-nen" class="nut-nen" type="button" aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>
 </div></header>
-<main class="khung"><section class="ledger-asset" id="so-goc" aria-labelledby="ledger-title">
-  <div class="ledger-head">
-    <div>
-      <p class="ledger-kicker">Tài sản công khai · cập nhật tại chỗ</p>
-      <h2 id="ledger-title">Sổ gốc không xoá phần sai.</h2>
-      <p>Mỗi khẳng&nbsp;định có trạng thái, điều&nbsp;bác&nbsp;bỏ và lịch sử thay đổi — người đọc thấy cả những lần BlockPinned phải sửa mình.</p>
-    </div>
-    <a href="track-record/">Mở toàn bộ sổ gốc →</a>
+<main class="khung"><section class="hero hero-article">
+  <span class="ghost-num" aria-hidden="true">18%</span>
+  <span class="hero-code" aria-hidden="true">CLAIM C1 · ĐANG ĐỨNG</span>
+  <div class="article-path" aria-label="Vị trí bài viết">
+    <a href="../../">BlockPinned</a><span>/</span><a href="../../#ho-so">Điều&nbsp;tra</a><span>/</span><b>CFG</b><i><span class="dot song"></span>vẫn đứng&nbsp;vững</i>
   </div>
-  <div class="ledger-grid">
-    <div class="ledger-total"><strong>88</strong><span>khẳng&nbsp;định<small>trong 20&nbsp;bài</small></span></div>
-    <div class="ledger-states">
-      <div class="ledger-bar" role="img" aria-label="88 khẳng định: 5 xác nhận, 72 vẫn đứng vững, 4 đã sửa, 4 đã bị bác bỏ, 3 chờ số"><i class="xac" style="--n:5"></i><i class="song" style="--n:72"></i><i class="sua" style="--n:4"></i><i class="bac" style="--n:4"></i><i class="cho" style="--n:3"></i></div>
-      <div class="ledger-legend"><span><i class="dot xac"></i><b>5</b><small>xác nhận</small></span><span><i class="dot song"></i><b>72</b><small>vẫn đứng&nbsp;vững</small></span><span><i class="dot sua"></i><b>4</b><small>đã sửa</small></span><span><i class="dot bac"></i><b>4</b><small>đã bị bác&nbsp;bỏ</small></span><span><i class="dot cho"></i><b>3</b><small>chờ số</small></span></div>
-    </div>
-    <div class="ledger-preregister"><span>GHI&nbsp;TRƯỚC</span><strong>14</strong><p>lần công khai con số trước khi biết đáp án</p></div>
+  <p class="eyebrow"><span>CFG</span><span class="im">19/08/2026</span></p>
+  <h1 class="display">&quot;Điều gì đứng sau cú sập <span class="nhan-manh">18%</span> của CFG?&quot;</h1>
+  <p class="subline">CFG rơi 18% trong 27&nbsp;giờ khi thị trường gần như đứng yên. Nửa ngày trước đó, chính đội ngũ đề xuất đổi token lấy cổ phần — 1 đổi 1, nhưng chưa nói mỗi cổ phần đáng bao nhiêu.</p>
+  <div class="article-meta article-limits"><span><b>GIỚI HẠN</b>Vế nhân quả giữ ở mức suy luận toàn bài — CP172 là ứng viên giải thích mạnh nhất desk tìm thấy, không phải nguyên nhân đã chứng minh; 97,8% khối lượng CFG chạy trên sàn tập trung nên lệnh bán không để lại dấu vết trên chuỗi. Giá và phí trôi thời gian thực, mọi con số quy đô-la phải đọc lại sát giờ đăng. Điều khoản CP172 có thể được bổ sung bất cứ lúc nào — cửa sổ lấy ý kiến đóng khoảng 31/08, tới đó bài phải kiểm lại, đặc biệt bốn điều còn trống: định giá, cap table, báo cáo tài chính, số phận token không chuyển đổi. Đề xuất KHÔNG nói người không đổi buộc phải bán — nó chưa nói gì về họ, và bài giữ đúng khoảng trống đó. Quyền hạn hợp đồng đọc tại một block; quyền có thể được cấp hoặc thu hồi sau đó và phải đọc lại.</span></div>
+  <div class="article-verdict"><div class="heronum article-ratio article-ledger-count">
+      <p class="l">Sổ bằng&nbsp;chứng của bài</p>
+      <p class="v">6<em> claim</em></p>
+      <p class="d">6 vẫn đứng&nbsp;vững hoặc đã xác nhận</p>
+    </div><div class="case-path" role="img" aria-label="Tuyến bằng chứng: đối tượng, điều bác bỏ, trạng thái hiện tại">
+      <div class="case-step file"><span>01 · ĐỐI TƯỢNG</span><strong>CFG</strong><small>hồ&nbsp;sơ được ghim theo token</small></div><i aria-hidden="true">→</i>
+      <div class="case-step test"><span>02 · TỰ&nbsp;KIỂM</span><strong>6</strong><small>điều&nbsp;bác&nbsp;bỏ viết cùng claim</small></div><i aria-hidden="true">→</i>
+      <div class="case-step state song"><span>03 · SỔ SỐNG</span><strong>6 mốc</strong><small>lịch sử đổi trạng thái công khai</small></div>
+    </div></div>
+
+</section><nav class="article-map" aria-label="Điều hướng trong bài"><span>Đọc theo bằng&nbsp;chứng</span><a href="#so-claim">Sổ claim</a><a href="#mot-cfg-doi-lay-mot-co-phan-nhung-co-phan-do-la-gi">Một CFG đổi lấy một cổ phần — nhưng cổ phần đó là gì?</a><a href="#tim-mot-lan-centrifuge-mua-cfg-ve">Tìm một lần Centrifuge mua CFG về</a><a href="#mot-phia-chua-tung-thay-buyback-phia-kia-tang-khoang-3-moi-n">Một phía chưa từng thấy buyback. Phía kia tăng khoảng 3% mỗi năm.</a></nav><section class="article-ledger" aria-labelledby="so-claim-title">
+<details class="evidence case-evidence" id="so-claim">
+  <summary>
+    <span class="case-ledger-title"><span>Sổ claim của bài</span><b id="so-claim-title">6 khẳng&nbsp;định</b><small>đổi trạng thái tại chỗ · không xoá</small></span>
+    <span class="case-ledger-viz">
+      <span class="case-ledger-bar" role="img" aria-label="6 vẫn đứng vững"><i class="song" style="--n:6"></i></span>
+      <span class="case-ledger-legend"><i><span class="dot song"></span><b>6</b> vẫn đứng&nbsp;vững</i></span>
+    </span>
+    <span class="mo">mở 6&nbsp;claim</span>
+  </summary>
+  <div class="trong case-ledger-body">
+    <p class="case-ledger-intro">Mỗi claim kèm điều có thể bác&nbsp;bỏ nó, mốc ghim và toàn bộ lịch sử đổi trạng thái.</p>
+    <div class="case-claim-list"><article class="case-claim song" id="C1" data-article-claim data-st="song">
+  <header class="case-claim-head">
+    <a class="case-claim-id" href="#C1">C1</a>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
+    <span class="case-claim-actions"></span>
+  </header>
+  <p class="case-claim-text">Tại block&nbsp;25.788.346, đúng hai địa chỉ có quyền tạo token trên hợp đồng CFG 0xccc…8A94: 0x7ed4…368f (Root) và 0x50a1…0def (InflationMinter). Dựng từ toàn bộ 7 sự kiện cấp quyền và 5 sự kiện thu quyền toàn lịch sử, xác nhận từng địa chỉ bằng wards().</p>
+
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>GHIM TẠI</span>Ethereum block&nbsp;25.788.346 (2026-08-19T09:45:59Z), node lưu trữ. Kiểm chống mù: địa chỉ bịa trả 0 chứ không lỗi — hàm tồn tại và phân biệt được. Đo lại 20/08 trước khi đăng: wards(Root)=1, wards(InflationMinter)=1, wards(địa chỉ bịa)=0, không đổi.</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>wards() trả 1 cho một địa chỉ thứ ba, hoặc một giao dịch tạo token mà người gọi ngoài hai địa chỉ trên.</p>
   </div>
-</section>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Chữ &#x27;đúng hai&#x27; phải dựng từ toàn bộ sự kiện cấp/thu quyền rồi xác nhận từng địa chỉ tại block neo — một lời gọi đơn lẻ chỉ kiểm được một địa chỉ, không kiểm được số đếm.</p>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-19</span><span>Quyền đọc tại một block; quyền có thể được cấp hoặc thu hồi sau đó và phải đọc lại.</span></li></ol></details>
+</article><article class="case-claim song" id="C2" data-article-claim data-st="song">
+  <header class="case-claim-head">
+    <a class="case-claim-id" href="#C2">C2</a>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
+    <span class="case-claim-actions"></span>
+  </header>
+  <p class="case-claim-text">InflationMinter có period = 604.800 giây (7&nbsp;ngày), rate = 566.665.722.130.821 trên nền 1e18 mỗi period, target là một địa chỉ cố định; cả ba immutable. Tốc độ lãi kép quy năm 3,000065%. Hàm mint() không mang modifier kiểm tra quyền — bất kỳ ai gọi được, token luôn về target.</p>
 
-<section class="home-intro">
-  <div class="home-intro-grid">
-    <div class="home-promise">
-      <p class="eyebrow"><span>Crypto research · evidence first</span><span class="im">không kèo · không nhận định giá</span></p>
-      <h1>Nghiên cứu crypto: <span class="nhan-manh">số nào cũng truy ngược được.</span></h1>
-      <p class="home-lede">BlockPinned soi những con số đang được thị trường trích dẫn — từ dashboard, báo cáo đến dữ&nbsp;liệu on-chain — rồi đếm lại từ nguồn.</p>
-      <div class="home-method" aria-label="Phương pháp BlockPinned">
-        <span><b>01</b> đi tận nguồn</span><span><b>02</b> ghim điều&nbsp;bác&nbsp;bỏ</span><span><b>03</b> sửa tại chỗ</span>
-      </div>
-    </div>
-    <nav class="home-map" aria-label="Khám phá BlockPinned">
-      <a class="home-door" href="#bai"><span class="door-no">01</span><span class="door-copy"><b>Bài điều&nbsp;tra</b><small>Đọc trọn câu hỏi, đường đo và phần có thể sai.</small></span><span class="door-go" aria-hidden="true">↘</span></a>
-      <a class="home-door" href="token/"><span class="door-no">02</span><span class="door-copy"><b>Token</b><small>Hồ&nbsp;sơ theo đối tượng, gom mọi câu đã ghim.</small></span><span class="door-go" aria-hidden="true">↗</span></a>
-      <a class="home-door" href="facts/"><span class="door-no">03</span><span class="door-copy"><b>Facts</b><small>Một số · một block · một lệnh tự&nbsp;kiểm.</small></span><span class="door-go" aria-hidden="true">↗</span></a>
-      <a class="home-door" href="track-record/"><span class="door-no">04</span><span class="door-copy"><b>Track record</b><small>Claim nào vẫn đứng&nbsp;vững, đã sửa hay đã bị bác&nbsp;bỏ.</small></span><span class="door-go" aria-hidden="true">↗</span></a>
-    </nav>
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>GHIM TẠI</span>eth_call trực tiếp tại block&nbsp;25.788.346; immutable và việc thiếu modifier đọc từ source đã verify trên Etherscan. Bẫy đã né: dòng khai trong source ghi period = 1 days nhưng constructor ghi đè — tham số phải ĐỌC bằng eth_call, không đọc từ dòng khai.</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Một giao dịch sửa được rate, period hoặc target của hợp đồng hiện tại; hoặc một lời gọi mint() bị từ chối vì người gọi không có quyền.</p>
   </div>
-</section>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Tham số đọc bằng eth_call tại block neo; tính immutable phải đọc từ source, không suy được từ việc giá trị chưa từng đổi.</p>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-19</span><span>Lãi ĐƠN ra 2,9581%/năm — công thức _rpow trong source là lãi KÉP; khai cách gộp để hai người đo không cãi nhau vì hai cách tính.</span></li></ol></details>
+</article><article class="case-claim song" id="C3" data-article-claim data-st="song">
+  <header class="case-claim-head">
+    <a class="case-claim-id" href="#C3">C3</a>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
+    <span class="case-claim-actions"></span>
+  </header>
+  <p class="case-claim-text">Toàn bộ lịch sử tới block đo có đúng hai lượt phát hành lạm phát: 04/06/2026 (13 nhịp, 5.115.459,22 CFG) và 03/08/2026 (8 nhịp, 3.166.749,05 CFG). Lượt 03/08 tái lập tới từng wei bằng công thức lãi kép chép từ source: 3.166.749.050.595.280.967.692.756 wei.</p>
 
-<section class="khu-bai home-articles article-priority" data-hien aria-labelledby="bai"><div class="khu-dau"><div class="bai-heading"><p class="section-code">READING DESK · 20 INVESTIGATIONS</p><h2 id="bai">Bài điều&nbsp;tra mới nhất</h2><p>Mỗi bài đi từ câu hỏi, qua phép đo, đến điều gì có thể chứng minh kết luận sai.</p></div><a class="bai-archive-link" href="bai/"><span>Xem tất cả</span><b>20&nbsp;bài&nbsp;viết</b><i aria-hidden="true">↗</i></a></div><div class="article-preview-grid"><a class="bai bai-lead" href="bai/2026-08-19-cfg-dieu-gi-dung-sau-cu-sup/"><span class="bai-top"><span class="d">🟡 19/08/2026</span><span class="bai-token">CFG</span></span><span class="t">&quot;Điều gì đứng sau cú sập 18% của CFG?&quot;</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">6&nbsp;claim — 6 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-19-bsc-ban-10000-do-nhan-ve-1-58/"><span class="bai-top"><span class="d">🟡 19/08/2026</span><span class="bai-token">CAKE</span></span><span class="t">&quot;60 triệu đô khối lượng một ngày; router báo giá bán 10.000 đô: 1,58 đô&quot;</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">3&nbsp;claim — 3 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-18-hype-hai-co-may/"><span class="bai-top"><span class="d">🔴 18/08/2026</span><span class="bai-token">HYPE</span></span><span class="t">&quot;Hai Hyperliquid trong cùng một sàn: 51% volume, 12% doanh thu&quot;</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">2&nbsp;claim — 2 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-17-ethfi-nguon-buyback-doi-dich/"><span class="bai-top"><span class="d">🟡 17/08/2026</span><span class="bai-token">ETHFI</span></span><span class="t">&quot;ETHFI: một nguồn buyback đã đổi đích từ 14/07&quot;</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">5&nbsp;claim — 5 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-17-ldo-nest-doanh-thu-vao-ngan-sach-0/"><span class="bai-top"><span class="d">🟡 17/08/2026</span><span class="bai-token">LDO</span></span><span class="t">LDO: 145.443&nbsp;USD đã vào, ngân sách mua vẫn là 0</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">4&nbsp;claim — 4 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="bai/2026-08-15-sky-num-buyback-doi-chu/"><span class="bai-top"><span class="d">🟡 15/08/2026</span><span class="bai-token">SKY</span></span><span class="t">SKY: 27,77 triệu hay giới hạn 350 triệu USD mỗi năm?</span><span class="mini" aria-hidden="true"><span class="seg xac" style="width:60.00%"></span><span class="seg song" style="width:20.00%"></span><span class="seg bac" style="width:20.00%"></span></span><span class="bai-foot"><span class="s">5&nbsp;claim — 3 xác nhận · 1 vẫn đứng&nbsp;vững · 1 đã bị bác&nbsp;bỏ</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a></div><p class="article-preview-note">Đang giới thiệu 6&nbsp;/&nbsp;20&nbsp;bài&nbsp;viết · danh mục đầy đủ có tìm kiếm và lọc theo token</p></section>
-
-<section class="hero finding-home" id="moi-nhat">
-  <span class="ghost-num" aria-hidden="true">3,9×</span>
-  <span class="hero-code" aria-hidden="true">CASE 01 · VERIFIED</span>
-  <p class="eyebrow"><span>Phân&nbsp;định mới nhất</span><span class="im">28/07/2026 · UNI · Robinhood chain</span></p>
-  <h2 class="finding-title">Con số bị thổi <span class="nhan-manh">3,9&nbsp;lần</span> đã phải tính lại.</h2>
-  <p class="subline">BlockPinned đếm <b>931.772&nbsp;swap</b> tận gốc, dán trước kết quả công khai — và chuỗi phí Uniswap v4 của DefiLlama được tính lại <b>đúng khoảng đã ghim, lệch 1,93%</b>. <a href="bai/2026-07-27-defillama-uniswap-v4/">Đọc bài đầy đủ →</a></p>
-
-  <div class="numrow">
-    <div class="heronum">
-      <p class="l">Phí 16/07 · sau tính lại</p>
-      <p class="v">$1.311.164</p>
-      <p class="d">lệch 1,93% so với số ghi&nbsp;trước</p>
-    </div>
-    <div class="mstack">
-      <div class="m"><p class="l">Từng bị báo</p><p class="v"><b>$5.014.570</b></p></div>
-      <div class="m"><p class="l">Tôi đếm trên chain</p><p class="v"><b>$1.286.386</b></p></div>
-      <div class="m"><p class="l">Khoảng ghi&nbsp;trước · công khai 26/07</p><p class="v"><b>±10%</b></p></div>
-    </div>
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>GHIM TẠI</span>Quét event Mint từ block&nbsp;0 tới 25.788.346, trang cuối ngắn hơn giới hạn mỗi trang của công cụ — tức đã đọc tới hết, không bị cắt. Kiểm chống mù: tính với 9 nhịp thay vì 8 KHÔNG khớp — công thức phân biệt được. Đo lại 20/08 trước khi đăng: totalSupply không đổi tới wei — chưa có lượt phát hành thứ ba.</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Một lượt phát hành lạm phát thứ ba, hoặc tổng hai lượt không khớp công thức tái lập.</p>
   </div>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Chữ &#x27;đúng hai lượt&#x27; phải quét event từ block&nbsp;0 và chạm trang cuối ngắn hơn giới hạn mỗi trang; một lời gọi tại một block chỉ đọc được trạng thái, không đọc được số lượt.</p>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-20</span><span>Tại block đo còn 3 nhịp (1.191.235,87 CFG) đủ điều kiện phát hành mà chưa ai gọi — con số này tăng theo tuần và phải đọc lại khi trích.</span></li></ol></details>
+</article><article class="case-claim song" id="C4" data-article-claim data-st="song">
+  <header class="case-claim-head">
+    <a class="case-claim-id" href="#C4">C4</a>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
+    <span class="case-claim-actions"></span>
+  </header>
+  <p class="case-claim-text">Từ block đầu tiên của token tới block&nbsp;25.788.346, ví treasury 0xD052…93Cb có 0 lượt mua lại token trên thị trường và 0 lượt đốt. Toàn bộ 2.080 lượt đốt có thật của token phát ra từ hợp đồng chuyển đổi 0xacf3…3069 — thao tác kỹ thuật của migration, không phải mua lại. Dòng 72.043.110 CFG &#x27;từ một hợp đồng&#x27; vào treasury đến từ chính địa chỉ nhận lượt tạo token đầu tiên 115.000.000 CFG — ống phân phối, không phải sàn.</p>
 
-  <figure class="chart chart-card scan-surface" data-cursor-scan>
-    <span class="cursor-scan" aria-hidden="true"></span>
-    <div class="chart-dau">
-      <b>Phí swap Uniswap v4 — Robinhood chain</b>
-      <span class="don-vi">USD/ngày · 01/07 → 08/08</span>
-      <span class="cach-doc"><i><span class="sw"></span>chuỗi đã tính lại</i><i><span class="sw cu"></span>số cũ đã chết</i></span>
-    </div>
-    <div class="recalibration" role="img" aria-label="Ngày 16/07: số cũ 5.014.570 đô; đếm on-chain 1.286.386 đô; số tính lại 1.311.164 đô, nằm trong khoảng ghi trước cộng trừ 10 phần trăm">
-      <div class="rc-head"><span>Bản đồ tái hiệu chỉnh · 16/07</span><em>tỷ lệ so với số cũ = 100%</em></div>
-      <div class="rc-track">
-        <span class="rc-axis"></span>
-        <span class="rc-band" style="--left:23.07%;--width:5.15%"></span>
-        <i class="rc-pin chain" style="--x:25.65%;--delay:.48s"><span class="rc-label"><b>$1,286M</b>đếm on-chain</span></i>
-        <i class="rc-pin fixed" style="--x:26.15%;--delay:.64s"><span class="rc-label"><b>$1,311M</b>họ tính lại</span></i>
-        <i class="rc-pin old" style="--x:100%;--delay:.8s"><span class="rc-label"><b>$5,015M</b>số cũ</span></i>
-      </div>
-    </div>
-    <div class="chart-mobile-nav" aria-label="Đi tới mốc trên biểu đồ"><span>ĐIỂM XEM</span><button type="button" data-chart-jump="pin">16/07</button><button type="button" data-chart-jump="end">Mới nhất →</button></div>
-    <div class="chart-cuon"><svg viewBox="0 0 1000 320" role="img" aria-label="Phí Uniswap v4 theo ngày, 01/07 tới 08/08, đỉnh $1,58M">
-<defs><linearGradient id="bp-area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--accent);stop-opacity:.28"/><stop offset=".72" style="stop-color:var(--accent);stop-opacity:.035"/><stop offset="1" style="stop-color:var(--accent);stop-opacity:0"/></linearGradient><linearGradient id="bp-scan" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:var(--accent);stop-opacity:0"/><stop offset=".5" style="stop-color:var(--accent);stop-opacity:.3"/><stop offset="1" style="stop-color:var(--accent);stop-opacity:0"/></linearGradient></defs>
-<line class="truc" x1="6" y1="290.0" x2="914" y2="290.0"/>
-<text x="924" y="294.0">$0</text>
-<line class="truc" x1="6" y1="224.0" x2="914" y2="224.0"/>
-<text x="924" y="228.0">$0,4M</text>
-<line class="truc" x1="6" y1="158.0" x2="914" y2="158.0"/>
-<text x="924" y="162.0">$0,8M</text>
-<line class="truc" x1="6" y1="92.0" x2="914" y2="92.0"/>
-<text x="924" y="96.0">$1,2M</text>
-<line class="truc" x1="6" y1="26.0" x2="914" y2="26.0"/>
-<text x="924" y="30.0">$1,6M</text>
-<text x="6.0" y="312" text-anchor="start">01/07</text>
-<text x="173.3" y="312" text-anchor="middle">08/07</text>
-<text x="340.5" y="312" text-anchor="middle">15/07</text>
-<text x="507.8" y="312" text-anchor="middle">22/07</text>
-<text x="675.1" y="312" text-anchor="middle">29/07</text>
-<text x="842.3" y="312" text-anchor="middle">05/08</text>
-<line class="moc" x1="555.6" y1="20" x2="555.6" y2="290"/>
-<text class="nhan-moc" x="562.6" y="32">bản sửa merge · 24/07</text>
-<path class="mien" d="M6.0,289.7 L29.9,288.1 L53.8,288.4 L77.7,289.0 L101.6,289.4 L125.5,289.1 L149.4,288.6 L173.3,231.1 L197.2,254.7 L221.1,224.3 L244.9,189.4 L268.8,116.2 L292.7,92.2 L316.6,38.0 L340.5,30.1 L364.4,73.7 L388.3,94.3 L412.2,119.1 L436.1,143.9 L460.0,142.2 L483.9,155.6 L507.8,148.0 L531.7,68.6 L555.6,188.1 L579.5,217.2 L603.4,197.5 L627.3,169.4 L651.2,185.0 L675.1,191.1 L698.9,181.6 L722.8,175.1 L746.7,205.0 L770.6,197.9 L794.5,186.2 L818.4,190.2 L842.3,102.4 L866.2,93.7 L890.1,128.6 L914.0,127.7 L914.0,290 L6.0,290 Z"/>
-<path class="duong-glow" d="M6.0,289.7 L29.9,288.1 L53.8,288.4 L77.7,289.0 L101.6,289.4 L125.5,289.1 L149.4,288.6 L173.3,231.1 L197.2,254.7 L221.1,224.3 L244.9,189.4 L268.8,116.2 L292.7,92.2 L316.6,38.0 L340.5,30.1 L364.4,73.7 L388.3,94.3 L412.2,119.1 L436.1,143.9 L460.0,142.2 L483.9,155.6 L507.8,148.0 L531.7,68.6 L555.6,188.1 L579.5,217.2 L603.4,197.5 L627.3,169.4 L651.2,185.0 L675.1,191.1 L698.9,181.6 L722.8,175.1 L746.7,205.0 L770.6,197.9 L794.5,186.2 L818.4,190.2 L842.3,102.4 L866.2,93.7 L890.1,128.6 L914.0,127.7"/>
-<path class="duong" d="M6.0,289.7 L29.9,288.1 L53.8,288.4 L77.7,289.0 L101.6,289.4 L125.5,289.1 L149.4,288.6 L173.3,231.1 L197.2,254.7 L221.1,224.3 L244.9,189.4 L268.8,116.2 L292.7,92.2 L316.6,38.0 L340.5,30.1 L364.4,73.7 L388.3,94.3 L412.2,119.1 L436.1,143.9 L460.0,142.2 L483.9,155.6 L507.8,148.0 L531.7,68.6 L555.6,188.1 L579.5,217.2 L603.4,197.5 L627.3,169.4 L651.2,185.0 L675.1,191.1 L698.9,181.6 L722.8,175.1 L746.7,205.0 L770.6,197.9 L794.5,186.2 L818.4,190.2 L842.3,102.4 L866.2,93.7 L890.1,128.6 L914.0,127.7"/>
-<rect class="chart-scan" x="-260" y="26" width="160" height="264"/>
-<circle class="diem-sua" cx="364.4" cy="73.7" r="5"/>
-<line class="leader" x1="246.4" y1="52" x2="357.4" y2="66.7"/>
-<text class="nhan-ma" x="10" y="40">16/07 từng bị báo <tspan style="font-weight:700;text-decoration:line-through">$5.014.570</tspan></text>
-<text class="nhan-ma" x="10" y="56">đã tính lại còn <tspan style="font-weight:700">$1.311.164</tspan> — điểm khoanh</text>
-<circle class="pulse-ring" cx="914.0" cy="127.7" r="8"/>
-<circle class="diem-cuoi" cx="914.0" cy="127.7" r="5"/>
-<text class="nhan-cuoi" x="905.0" y="114.7" text-anchor="end">08/08 · $983.441</text>
-<line class="soi" id="soi" x1="0" y1="26" x2="0" y2="290"/>
-<circle class="soi-diem" id="soidiem" r="5"/>
-</svg></div>
-    <div class="provenance">
-      <svg class="pmark" viewBox="0 0 240 240" aria-hidden="true"><path d="M36,60 Q120,36 204,60 Q120,84 36,60 Z"/><path d="M120,84.0 Q142,144 120,206 Q98,144 120,84.0 Z"/><path d="M120,84.0 Q102.1,139.9 52,174 Q69.9,116.1 120,84.0 Z"/><path d="M120,84.0 Q137.9,139.9 188,174 Q170.1,116.1 120,84.0 Z"/></svg>
-      <span class="f"><span class="k">GHIM</span><span>block <strong>#10.808.643&nbsp;→&nbsp;#11.671.782</strong> · 16/07 UTC</span></span>
-      <span class="f"><span class="k">NGUỒN</span><span><strong>api.llama.fi</strong> — lệnh curl in trong bài</span></span>
-      <span class="f"><span class="k">ĐỌC</span><span><b>09/08/2026</b></span></span>
-      <a class="chay" href="bai/2026-07-27-defillama-uniswap-v4/#tu-kiem">tự chạy lại được</a>
-    </div>
-  </figure>
-</section>
-<script>window.BP_CHART_DATA=[["01/07", 1894, 6.0, 289.7], ["02/07", 11316, 29.9, 288.1], ["03/07", 9647, 53.8, 288.4], ["04/07", 6171, 77.7, 289.0], ["05/07", 3470, 101.6, 289.4], ["06/07", 5452, 125.5, 289.1], ["07/07", 8182, 149.4, 288.6], ["08/07", 357150, 173.3, 231.1], ["09/07", 214010, 197.2, 254.7], ["10/07", 398135, 221.1, 224.3], ["11/07", 609786, 244.9, 189.4], ["12/07", 1053201, 268.8, 116.2], ["13/07", 1198749, 292.7, 92.2], ["14/07", 1527023, 316.6, 38.0], ["15/07", 1575188, 340.5, 30.1], ["16/07", 1311164, 364.4, 73.7], ["17/07", 1186030, 388.3, 94.3], ["18/07", 1035568, 412.2, 119.1], ["19/07", 885513, 436.1, 143.9], ["20/07", 895611, 460.0, 142.2], ["21/07", 814814, 483.9, 155.6], ["22/07", 860707, 507.8, 148.0], ["23/07", 1341639, 531.7, 68.6], ["24/07", 617679, 555.6, 188.1], ["25/07", 441229, 579.5, 217.2], ["26/07", 560804, 603.4, 197.5], ["27/07", 731049, 627.3, 169.4], ["28/07", 636652, 651.2, 185.0], ["29/07", 599261, 675.1, 191.1], ["30/07", 656778, 698.9, 181.6], ["31/07", 696535, 722.8, 175.1], ["01/08", 515421, 746.7, 205.0], ["02/08", 558258, 770.6, 197.9], ["03/08", 628975, 794.5, 186.2], ["04/08", 604866, 818.4, 190.2], ["05/08", 1137048, 842.3, 102.4], ["06/08", 1189918, 866.2, 93.7], ["07/08", 977888, 890.1, 128.6], ["08/08", 983441, 914.0, 127.7]];</script>
-
-<section class="inv-khu" id="ho-so">
-  <div class="inv-dau">
-    <p class="kicker">Hồ&nbsp;sơ điều&nbsp;tra</p>
-    <span class="dem-bai">20&nbsp;bài · 10 token</span>
-    <a href="#bai">xem tất cả</a>
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>GHIM TẠI</span>Sổ số dư dựng lại từ 335.808 dòng chuyển khoản, tổng bằng totalSupply() lệch 0 wei; riêng ví treasury, vào trừ ra bằng balanceOf lệch 0 wei. Kiểm chống mù: phép quét thấy lại lượt tạo 59.808.601,09 CFG ngày 04/06 đã biết trước. Đo lại 20/08: balance treasury không đổi tới wei.</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Một giao dịch token vào ví treasury từ hợp đồng sàn, có phía đối ứng trả bằng tài sản khác.</p>
   </div>
-  <div class="inv"><a class="ho-so" href="bai/2026-08-06-uni-burn-cham-gan-mot-tuan/"><p class="eyebrow-nho"><span>UNI</span><span class="im">06/08/2026</span></p><h3>Biểu đồ UNI burn trên Ethereum đang chậm gần một tuần so với Robinhood Chain</h3><div class="viz"><div class="rai"><span class="truc"></span><span class="cham vien" style="left:11.7%"></span><span class="cham" style="left:38.4%"></span><span class="cham vien" style="left:92.5%"></span><span class="nhan-cham" style="left:38.4%">6,76&nbsp;ngày</span><span class="nhan-duoi" style="left:11.7%">6,44</span><span class="nhan-duoi" style="left:92.5%">7,41</span></div></div><p class="so-chinh">Mỗi lệnh rút chờ <strong>6,44–7,41&nbsp;ngày</strong> mới thực thi — đo trên cả 22 lượt đã về, trung vị 6,76.</p><p class="trang-thai"><i><span class="dot song"></span>5 đang đứng</i><span class="ghim-nho">blk&nbsp;29.174.972</span></p></a><a class="ho-so" href="bai/2026-08-04-lido-cmv2-220-validator-trong-so-0/"><p class="eyebrow-nho"><span>LDO</span><span class="im">04/08/2026</span></p><h3>220 validator đã nạp, trọng số phí của module vẫn đúng 0,0000&nbsp;ETH</h3><div class="viz"><div class="doi"><span class="ve"><span class="n">220</span><span class="t">validator đã nạp</span></span><span class="mui">→</span><span class="ve"><span class="n khong">0,0000</span><span class="t">ETH oracle báo về</span></span></div></div><p class="so-chinh">Hai lần đo cách <strong>6&nbsp;ngày</strong> — block&nbsp;25.637.121 và 25.680.251 — trọng số vẫn đúng 0.</p><p class="trang-thai"><i><span class="dot song"></span>5 đang đứng</i><span class="ghim-nho">blk&nbsp;25.680.251</span></p></a><a class="ho-so" href="bai/2026-07-31-uni-100usd-phi-swap/"><p class="eyebrow-nho"><span>UNI</span><span class="im">31/07/2026</span></p><h3>Mỗi $100 phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64</h3><div class="viz"><div class="nh"><span>phần Uniswap ghi nhận</span><b>$14,64&nbsp;/&nbsp;$100</b></div><div class="ray"><i style="width:14.64%;--i:0"></i></div></div><p class="so-chinh">Trọn ngày 29/07: <strong>$2.521.197</strong> phí swap → <strong>$369.178</strong> phí giao thức. v4 lấy tỷ lệ thấp nhất trong ba phiên bản.</p><p class="trang-thai"><i><span class="dot song"></span>5 đang đứng</i><span class="ghim-nho">ghim 29/07 UTC</span></p></a><a class="ho-so" href="bai/2026-07-31-pendle-buyback-cot-bang-0/"><p class="eyebrow-nho"><span>PENDLE</span><span class="im">31/07/2026</span></p><h3>Dashboard báo buyback bằng 0, hợp đồng đang giữ 144.388&nbsp;PENDLE</h3><div class="viz"><div class="nh"><span>bảng dữ&nbsp;liệu của Pendle</span><b>0</b></div><div class="ray"></div><div class="nh hang2"><span>đếm on-chain</span><b>144.388</b></div><div class="ray"><i style="width:100%;--i:1"></i></div></div><p class="so-chinh"><strong>82,44%</strong> tới thẳng từ swap. Dự đoán ghi&nbsp;trước về lượt chuyển kế tiếp <strong>đã đúng</strong>.</p><p class="trang-thai"><i><span class="dot xac"></span>1 đã xác nhận</i><i><span class="dot song"></span>4 đang đứng</i><span class="ghim-nho">blk&nbsp;25.650.178</span></p></a></div>
-</section><section class="clock-khu" id="sap-phan-dinh" aria-labelledby="clock-title"><div class="clock-dau"><div><p class="section-code">PRE-REGISTERED DEADLINES · 05</p><h2 id="clock-title">Sắp phân&nbsp;định</h2></div><p>Claim tự đặt ngày cho chính nó. Tới ngày đó là có kết quả — và nếu tôi trễ, dòng dưới đây <b>tự đổi thành ĐÃ TỚI HẠN</b> mà không cần ai sửa.</p></div><ul class="han clock-ds"><li class="clock-hang"><span class="ngay" data-han="2026-08-24">24/08/2026</span><a class="clock-ma" href="bai/2026-08-17-ldo-nest-doanh-thu-vao-ngan-sach-0/#C2">C2</a><span class="clock-hua">Ngày này phân&nbsp;định việc event phân bổ có được phát hay không trong cửa 17 tới 24/08; phải ghi kết quả tại trang này kể cả khi dự đoán sai.</span></li><li class="clock-hang"><span class="ngay" data-han="2026-08-24">24/08/2026</span><a class="clock-ma" href="bai/2026-08-17-ldo-nest-doanh-thu-vao-ngan-sach-0/#C3">C3</a><span class="clock-hua">Ngày này phân&nbsp;định điều kiện có xảy ra hay không; nếu có thì đọc ngân sách mua tại block ngay sau lượt đồng bộ và ghi con số thực tế tại trang này, nếu không thì ghi rõ điều kiện chấm chưa xảy ra.</span></li><li class="clock-hang"><span class="ngay" data-han="2026-08-24">24/08/2026</span><a class="clock-ma" href="bai/2026-08-17-ldo-nest-doanh-thu-vao-ngan-sach-0/#C4">C4</a><span class="clock-hua">Ngày này phân&nbsp;định số vòng ghi nhận doanh thu trong cửa 17 tới 24/08; phải ghi con số đếm được tại trang này kể cả khi dưới 6.</span></li><li class="clock-hang"><span class="ngay" data-han="2026-08-31">31/08/2026</span><a class="clock-ma" href="bai/2026-08-19-cfg-dieu-gi-dung-sau-cu-sup/#C6">C6</a><span class="clock-hua">Cửa sổ lấy ý kiến CP172 đóng khoảng ngày này. Tới hạn phải đọc lại topic 7525: điều khoản bổ sung (định giá · cap table · báo cáo tài chính · số phận token không chuyển đổi) và ghi kết quả tại trang này — kể cả khi đội ngũ vẫn im lặng.</span></li><li class="clock-hang"><span class="ngay" data-han="2026-09-18">18/09/2026</span><a class="clock-ma" href="bai/2026-07-29-ldo-cmv2-doi-cach-chia-phi/#C2">C2</a><span class="clock-hua">Nếu CMv2 vẫn dưới 1% tổng balance module, BlockPinned hạ mức ưu tiên theo dõi chủ đề này trong 2026. Đây là quyết định biên tập, không bác snapshot tại block đo.</span></li></ul></section></main>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Phải dựng lại toàn bộ sổ số dư rồi khép tổng với totalSupply() — sót một dòng là lệch ngay; không thu gọn được thành một lời gọi.</p>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-19</span><span>Câu này nói về ví treasury trong hồ&nbsp;sơ theo dõi, không phải mọi ví liên quan tới công ty — danh tính ví treasury là suy luận từ dòng tiền governance, chưa có chữ ký xác nhận.</span></li></ol></details>
+</article><article class="case-claim song" id="C5" data-article-claim data-st="song">
+  <header class="case-claim-head">
+    <a class="case-claim-id" href="#C5">C5</a>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
+    <span class="case-claim-actions"></span>
+  </header>
+  <p class="case-claim-text">Cửa sổ 18/08 07:00Z → 19/08 10:02Z: CFG $0,165347 → $0,135544, giảm 18,02%, vượt trung vị nhóm RWA 5 token 14,94 điểm phần trăm; BTC +0,15%, ETH +0,83%; TVL Centrifuge đi ngang ($1,6357B&nbsp;ngày 15/08 → $1,6341B&nbsp;ngày 19/08).</p>
+
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>GHIM TẠI</span>Giá từ nguồn tổng hợp bên thứ ba, KHÔNG neo block — nhãn suy luận. Nhóm so sánh 5 token RWA và ngưỡng phân xử ≥5 điểm phần trăm đăng ký ở sổ việc TRƯỚC khi đo. Control định danh: id nguồn giá có platforms.ethereum đúng bằng địa chỉ hợp đồng đã pin. Đọc lại 20/08 sát giờ đăng: giá $0,134991 (−0,41%), TVL $1,634B — không đổi cỡ.</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Cùng cửa sổ, cùng nguồn giá mà trung vị nhóm RWA lệch tới mức phần vượt trội dưới 5 điểm phần trăm.</p>
+  </div>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Nguồn giá không tất định — mỗi lượt đọc gắn với sha256 của payload lượt đó; đo lại phải đọc cùng cửa sổ giờ, cùng nguồn, nhiều lượt.</p>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-20</span><span>Số trôi thời gian thực; mọi con số quy đô-la trong bài neo &#x27;giá lúc đo&#x27; và đã đọc lại sát giờ đăng.</span></li></ol></details>
+</article><article class="case-claim song" id="C6" data-article-claim data-st="song">
+  <header class="case-claim-head">
+    <a class="case-claim-id" href="#C6">C6</a>
+    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
+    <span class="case-claim-actions"></span>
+  </header>
+  <p class="case-claim-text">CP172 đăng 17/08/2026 19:11:10Z, khoảng 12&nbsp;giờ trước mốc bắt đầu cửa sổ giá được đo. Điều khoản đã công bố: 1 CFG = 1 share, trả bằng chính token, pháp nhân Cayman, ngưỡng 100.000 CFG vào thẳng sổ cổ đông, &#x27;relative to other converters&#x27; (trích nguyên văn), impacts/modifies: cp171. Cái CHƯA có: định giá · cap table · báo cáo tài chính · quyền cổ đông · thị trường thứ cấp · danh sách quốc gia loại trừ · số phận CFG không chuyển đổi. Raw thread: 0 hit &#x27;forced&#x27;/&#x27;must sell&#x27; — đề xuất KHÔNG nói người không đổi buộc phải bán.</p>
+
+  <div class="case-claim-evidence">
+    <p class="case-pin"><span>GHIM TẠI</span>Raw JSON topic 7525 đọc 19/08, pin kèm sha256. Kiểm chống mù: cùng phép đọc thấy lại câu &#x27;relative to other converters&#x27; đã biết chắc có. Đọc lại 20/08 trước khi đăng, đủ 37/37 post: đội ngũ chỉ lặp lại &#x27;sẽ trả lời gộp&#x27; lần hai — 0/4 điều trống được trả lời.</p>
+    <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Đội ngũ bổ sung điều khoản trả lời bất kỳ mục nào trong danh sách CHƯA CÓ — bài phải cập nhật ngay. Cửa sổ lấy ý kiến đóng khoảng 31/08/2026: mốc phải đọc lại.</p>
+  </div>
+<p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Nội dung diễn đàn là nguồn ngoài chuỗi, sửa/xoá được — đối chiếu bằng raw JSON đã pin kèm sha256, không bằng trang web hiện tại.</p>
+  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-20</span><span>Vế &#x27;CP172 là nguyên nhân cú giảm&#x27; KHÔNG nằm trong claim nào — toàn bài giữ nó ở mức ứng viên giải thích mạnh nhất, nhãn suy luận; nhân quả giá không đo được bằng phép đếm nguồn.</span></li></ol></details>
+</article></div>
+  </div>
+</details>
+</section><section class="than article-body article-body-centered" id="ban-day-du">
+  <div class="article-meta">
+    <span><b>GHIM</b>Số on-chain đo tại Ethereum block&nbsp;25.788.346, tức 16h45 ngày 19/08/2026 giờ Việt Nam (09:45:59Z), node lưu trữ; đọc lại mốc cũ block&nbsp;25.565.187 khớp từng wei ở cả bốn đại lượng. Sổ số dư dựng lại từ 335.808 dòng chuyển khoản, tổng bằng đúng totalSupply, lệch 0 wei. Giá và chuỗi phí lấy từ nguồn tổng hợp bên thứ ba, KHÔNG neo block — nhãn suy luận, phải đọc lại sát giờ đăng.</span>
+    <span><b>NGÀY</b>19/08/2026</span>
+    <span class="article-meta-link"><a href="""">bản đăng trên X ↗</a></span>
+  </div>
+  <p>Trong khoảng 27&nbsp;giờ từ chiều 18/08 đến chiều 19/08 (giờ Việt Nam), <strong>CFG mất 18%</strong>.</p>
+<p>Cùng lúc đó, Bitcoin và Ethereum gần như đứng yên. Nhóm token RWA mà BlockPinned dùng để so chỉ giảm khoảng 3% — tức CFG rơi sâu hơn trung vị nhóm so sánh <strong>14,94 điểm phần trăm</strong>. Tài sản trong các quỹ của Centrifuge cũng vẫn quanh <strong>$1,63 tỷ</strong>.</p>
+<p>Cú giảm của CFG vì vậy không đi cùng một biến động tương ứng ở thị trường chung hay những chỉ số hoạt động đo được của Centrifuge.</p>
+<p>Vậy chuyện gì vừa thay đổi?</p>
+<p>Khoảng nửa ngày trước khi cửa sổ giảm này bắt đầu, Centrifuge đăng <strong>CP172</strong>: đề xuất cho người giữ CFG đổi token lấy cổ phần của một công ty tại Cayman, theo tỷ lệ <strong>1 CFG = 1 cổ phần</strong>.</p>
+<p>Thoạt nhìn, đây có vẻ là một nâng cấp: bỏ một token quản trị để nhận cổ phần thật.</p>
+<p>Nhưng &quot;1 đổi 1&quot; chỉ nói bạn nhận được bao nhiêu cổ phần. Nó không nói cổ phần đó đáng bao nhiêu.</p>
+<p>Và khi đi tìm câu trả lời, một vấn đề lớn hơn lộ ra: <strong>CFG trước giờ chưa có một lần buyback nào từ quỹ được quan sát thấy, trong khi nguồn cung lại có một cơ chế tăng khoảng 3% mỗi năm.</strong></p>
+<p>CP172 vì thế không chỉ là một lời mời đổi token lấy cổ phần.</p>
+<p>Nó buộc người giữ CFG phải định giá lại chính thứ họ đang sở hữu.</p>
+<hr>
+<h2 id="mot-cfg-doi-lay-mot-co-phan-nhung-co-phan-do-la-gi">Một CFG đổi lấy một cổ phần — nhưng cổ phần đó là gì?</h2>
+<p>CP172 đưa ra một tỷ lệ rất dễ hiểu:</p>
+<p><strong>1 CFG = 1 cổ phần.</strong></p>
+<p>Nhưng với một nhà đầu tư, đó gần như là phần dễ nhất của bài toán.</p>
+<p>Một cổ phần đáng bao nhiêu còn phụ thuộc vào giá trị công ty, số cổ phần tồn tại sau chuyển đổi, những cổ đông khác là ai, quyền đi kèm cổ phần là gì và liệu có thể bán lại hay không.</p>
+<p>Tính tới lúc đo, phần lớn những dữ kiện đó chưa được công bố.</p>
+<p>Người giữ từ <strong>100.000 CFG</strong> trở lên dự kiến được ghi trực tiếp vào sổ cổ đông. Người dưới ngưỡng đó đi qua một cấu trúc trust. Việc chuyển đổi yêu cầu định danh và có loại trừ theo quốc gia — danh sách nước nào chưa được công bố.</p>
+<p>Còn nếu một người <strong>không đổi hoặc không thể đổi</strong>, CFG của họ sau đó sẽ có quyền kinh tế gì?</p>
+<p>Tính tới lúc đo, đề xuất chưa trả lời rõ.</p>
+<p>Một câu khác trong CP172 còn đáng chú ý hơn. Tỷ lệ sở hữu của người chuyển đổi được mô tả là <strong>&quot;relative to other converters&quot;</strong> — tương đối với những người cùng tham gia chuyển đổi.</p>
+<p>Nói đơn giản: quyền sở hữu trong công ty mới được chia giữa những người đổi CFG sang cổ phần. Người không đổi sẽ không có phần sở hữu thông qua cơ chế này.</p>
+<p>Thanh khoản cũng thay đổi hoàn toàn.</p>
+<p>CFG hiện là một token có thị trường giao dịch hàng ngày. Với cổ phần công ty tư nhân nhận về, CP172 chưa mô tả một thị trường bán lại nào.</p>
+<p>Và có một chi tiết dễ bỏ qua: người tham gia <strong>trả bằng chính CFG</strong>, nên đây là một cuộc hoán đổi tài sản — không phải một vòng gọi vốn mang tiền mới vào công ty.</p>
+<p>Điều đó dẫn tới câu hỏi quan trọng hơn:</p>
+<p><strong>Nếu phải đem CFG đi đổi, bản thân CFG trước giờ mang lại cho người giữ thứ gì?</strong></p>
+<hr>
+<h2 id="tim-mot-lan-centrifuge-mua-cfg-ve">Tìm một lần Centrifuge mua CFG về</h2>
+<p>Nếu CFG có một cơ chế rõ ràng đưa giá trị từ hoạt động kinh doanh trở lại token — chẳng hạn dùng doanh thu mua CFG trên thị trường rồi đốt hoặc phân phối lại cho holder — thì người giữ ít nhất có một thứ cụ thể để so với cổ phần mới.</p>
+<p>Nhưng lịch sử on-chain hiện không cho thấy điều đó.</p>
+<p>Từ lúc token mới xuất hiện đến block đo, ví treasury trong hồ&nbsp;sơ theo dõi có:</p>
+<p><strong>0 lượt mua CFG trên thị trường.</strong></p>
+<p><strong>0 lượt đốt CFG từ quỹ.</strong></p>
+<p>Có 2.080 lượt token bị đốt thật, nhưng tất cả đều đến từ hợp đồng chuyển đổi giữa token cũ và token mới. Đó là thao tác kỹ thuật của quá trình migration, không phải Centrifuge bỏ tiền mua token rồi huỷ.</p>
+<p>Có một dòng hơn 72 triệu CFG từng đi vào ví quỹ từ một hợp đồng. Nhìn riêng transfer này rất dễ tưởng là buyback.</p>
+<p>Nhưng hợp đồng gửi số token đó chính là địa chỉ từng nhận <strong>115 triệu CFG được tạo mới</strong> ở thời điểm đầu tiên.</p>
+<p>Đó là một đường phân phối token, không phải tiền từ business quay lại mua CFG.</p>
+<p>Sau <strong>506&nbsp;ngày</strong>, vẫn chưa tìm thấy một lần buyback nào từ quỹ chạy cho CFG.</p>
+<p>Vì một con số 0 rất dễ chỉ là lỗi của công cụ, toàn bộ lịch sử chuyển khoản của token được kiểm lại: sổ số dư dựng lại từ <strong>335.808 transfer</strong> khớp <code>totalSupply()</code> tới <strong>0 wei</strong>.</p>
+<p>Nói đơn giản: nếu hụt một phần lịch sử đủ để làm sai kết luận, sổ sẽ không khép.</p>
+<p>Nó khép.</p>
+<hr>
+<h2 id="mot-phia-chua-tung-thay-buyback-phia-kia-tang-khoang-3-moi-n">Một phía chưa từng thấy buyback. Phía kia tăng khoảng 3% mỗi năm.</h2>
+<p>CFG có một hợp đồng tên <strong>InflationMinter</strong>.</p>
+<p>Hợp đồng này được thiết kế để tạo thêm token theo nhịp 7&nbsp;ngày, với tốc độ lãi kép khoảng <strong>3,000065% mỗi năm</strong>, và gửi toàn bộ token mới tới một địa chỉ cố định.</p>
+<p>Điều đáng chú ý nhất không phải chuyện bất kỳ ai cũng có thể gọi hàm <code>mint()</code>.</p>
+<p>Người gọi không nhận được gì. Việc hàm này public chủ yếu ảnh hưởng thời điểm phát hành, vì token vẫn luôn đi tới cùng một người nhận.</p>
+<p>Phần quan trọng hơn nằm ở ba tham số của nó:</p>
+<p><strong>tốc độ, chu kỳ và địa chỉ nhận đều là <code>immutable</code>.</strong></p>
+<p>Nghĩa là không có một nút governance để chỉnh trực tiếp mức 3% trong hợp đồng hiện tại.</p>
+<p>Muốn thay đổi, cần thay chính hợp đồng đang được cấp quyền: triển khai một minter mới, cấp quyền cho nó và thu quyền của hợp đồng cũ.</p>
+<p>Chi tiết này đáng chú ý bởi trước CP172, diễn đàn Centrifuge đã có hai chủ đề — ngày 28/07 và 15/08 — yêu cầu <strong>xem lại mức inflation 3%</strong>.</p>
+<p>Nhưng mức 3% hiện tại không phải một tham số mà một cuộc bỏ phiếu đơn giản có thể sửa.</p>
+<p>Lịch sử phát hành cũng khá khác thường.</p>
+<p>Tới block đo, InflationMinter mới được gọi đúng hai lần.</p>
+<p>Một lần gom cùng lúc <strong>91&nbsp;ngày</strong> inflation đã tích luỹ.</p>
+<p>Lần còn lại gom <strong>56&nbsp;ngày</strong>.</p>
+<p>Tại block đo, khoảng <strong>1,19 triệu CFG</strong> nữa đã đủ điều kiện phát hành nhưng chưa có ai gọi hàm.</p>
+<p>Ngày InflationMinter được cấp quyền cũng trùng với một thay đổi lớn khác của CFG.</p>
+<p>Ngày 04/06/2026, chỉ một giao dịch đã tạo thêm khoảng <strong>59,81 triệu CFG</strong>, đóng quyền của hợp đồng chuyển đổi token cũ, cấp quyền cho một <code>Root</code> mới và cấp quyền cho InflationMinter.</p>
+<p>Khoảng 38&nbsp;phút sau, đợt inflation đầu tiên chạy.</p>
+<p>Việc đóng cầu chuyển đổi cũ khiến khoảng <strong>24,97 triệu token cũ</strong> không còn đường chuyển sang CFG mới.</p>
+<p>Đó là một tiền lệ đáng nhớ: Centrifuge đã từng có một deadline mà sau khi nó qua đi, một lượng token thực sự bị bỏ lại phía sau.</p>
+<p>Giờ một cuộc chuyển đổi khác lại đang được đề xuất.</p>
+<hr>
+<h2 id="vay-co-phan-centrifuge-dang-bao-nhieu">Vậy cổ phần Centrifuge đáng bao nhiêu?</h2>
+<p>Đây mới là câu hỏi quyết định lời mời 1 đổi 1 hấp dẫn hay không.</p>
+<p>Và đây cũng là nơi một con số rất dễ bị đọc sai.</p>
+<p>Các quỹ của Centrifuge tạo ra khoảng <strong>$59,59 triệu phí</strong> trong một năm.</p>
+<p>Nhìn con số đó rồi gọi toàn bộ là &quot;doanh thu Centrifuge&quot; sẽ sai khá xa.</p>
+<p>Khoảng <strong>$54,16 triệu</strong> đi về phía nhà đầu tư trong các quỹ dưới dạng lợi suất tài sản.</p>
+<p>Phần được bộ dữ&nbsp;liệu ghi nhận là management fee của Centrifuge chỉ khoảng:</p>
+<p><strong>$5,43 triệu một năm.</strong></p>
+<p>Ngay cả con số $5,43 triệu này cũng cần một dấu sao.</p>
+<p>Đọc cách bộ đếm tạo ra nó sẽ thấy: đây không phải một dòng tiền mặt quan sát được chảy vào một địa chỉ công ty. Nó được tính bằng công thức:</p>
+<p><strong>tài sản quản lý × biểu phí công bố.</strong></p>
+<p>Nói chính xác hơn, $5,43 triệu là <strong>phí quản lý ước tính theo biểu phí</strong>, không phải doanh thu trên một báo cáo tài chính đã kiểm toán.</p>
+<p>Trong khi đó, mức inflation hiện tại tương đương khoảng <strong>21 triệu CFG mới mỗi năm</strong>.</p>
+<p>Quy theo giá tại thời điểm đo, số token mới này có giá trị danh nghĩa khoảng <strong>$2,85 triệu</strong>.</p>
+<p>Đây không phải $2,85 triệu tiền mặt người giữ CFG trực tiếp trả cho ai. Chi phí thực của họ là <strong>pha loãng</strong>: sau mỗi đợt phát hành, cùng một lượng CFG cũ đại diện cho một tỷ lệ nhỏ hơn trong tổng cung.</p>
+<p>Đặt các con số cạnh nhau:</p>
+<ul><li>management fee ước tính của business: <strong>$5,43 triệu/năm</strong>;</li><li>buyback từ quỹ quan sát được: <strong>$0</strong>;</li><li>CFG mới do inflation, quy theo giá lúc đo: khoảng <strong>$2,85 triệu/năm</strong>.</li></ul>
+<p>CFG tại thời điểm đo có FDV khoảng <strong>$94,9 triệu</strong>.</p>
+<p>Nếu chỉ đặt FDV của token cạnh management fee ước tính, ta có một tham chiếu khoảng <strong>17,5&nbsp;lần</strong>.</p>
+<p>Nhưng cần giữ đúng mẫu số: <strong>$94,9 triệu là định giá pha loãng của token, không phải valuation đã công bố của công ty Centrifuge.</strong></p>
+<p>Và đó chính là khoảng trống của CP172.</p>
+<p>Tỷ lệ đổi được đưa ra trước khi có đủ dữ&nbsp;liệu để biết thứ nhận về đáng bao nhiêu.</p>
+<p>Không có cap table đầy đủ.</p>
+<p>Không có chi phí vận hành để đi từ management fee tới lợi nhuận.</p>
+<p>Không có valuation của pháp nhân sẽ phát hành cổ phần.</p>
+<p>Không có thị trường bán lại nào được mô tả.</p>
+<p>Có thể cuối cùng <strong>1 CFG đổi 1 cổ phần</strong> vẫn là một giao dịch rất tốt.</p>
+<p>Nhưng với những gì đã được công bố hiện tại, chưa có đủ số để kết luận như vậy.</p>
+<hr>
+<h2 id="vi-sao-chuyen-nay-co-the-khien-thi-truong-nhin-cfg-khac-di">Vì sao chuyện này có thể khiến thị trường nhìn CFG khác đi?</h2>
+<p>CP172 xuất hiện vào đúng lúc một câu hỏi vốn có thể bị trì hoãn trở thành câu hỏi phải trả lời ngay:</p>
+<p><strong>CFG thực sự đại diện cho cái gì?</strong></p>
+<p>Nếu tiếp tục giữ token, holder đang giữ một tài sản mà buyback từ quỹ chưa từng được quan sát chạy trong 506&nbsp;ngày, trong khi inflation khoảng 3% mỗi năm vẫn tồn tại.</p>
+<p>Nếu chuyển đổi, holder nhận cổ phần của một công ty chưa công bố đủ dữ&nbsp;liệu để định giá.</p>
+<p>Nếu không chuyển đổi, đề xuất hiện vẫn chưa nói rõ CFG sau đó sẽ có quyền kinh tế gì.</p>
+<p>Ba lựa chọn ấy rất khác nhau.</p>
+<p>Và đó là lý do CP172 đáng chú ý hơn một thay đổi governance thông thường: nó không chỉ thay đổi một tham số của CFG.</p>
+<p>Nó đặt dấu hỏi lên <strong>vai trò tương lai của chính token</strong>.</p>
+<p>Chi tiết cuối củng cố cách đọc đó: CP172 ghi thẳng trong phần đầu rằng nó <code>impacts/modifies: cp171</code> — đảo ngược chính đề xuất ngay trước, cái đã hứa <em>&quot;một cơ chế nhận giá trị duy nhất: CFG, không có mảng cổ phần.&quot;</em></p>
+<hr>
+<h2 id="cp172-co-phai-nguyen-nhan-lam-cfg-giam-18">CP172 có phải nguyên nhân làm CFG giảm 18%?</h2>
+<p>Không thể chứng minh.</p>
+<p>Phần lớn khối lượng CFG — <strong>97,8%</strong> lúc đo — giao dịch trên sàn tập trung. Không nhìn thấy được từng người bán, càng không biết lý do trong đầu họ khi nhấn nút.</p>
+<p>On-chain chỉ cho thấy những ví treasury và phân phối mà hồ&nbsp;sơ đang theo dõi không có một dòng token đủ lớn để tự nó giải thích cú giảm — tổng dịch chuyển của chúng trong cửa sổ: 57.082 CFG, khoảng $7.700.</p>
+<p>Những gì có thể nói chắc hơn là:</p>
+<p>CFG giảm mạnh hơn nhiều so với thị trường chung và nhóm RWA trong cùng khoảng thời gian.</p>
+<p>AUM của các quỹ Centrifuge không xuất hiện cú giảm tương ứng.</p>
+<p>Ngay trước cửa sổ đó, CP172 thay đổi căn bản câu hỏi kinh tế của người giữ CFG.</p>
+<p>Và khi đi kiểm tra nền kinh tế của token, một sự bất đối xứng rõ ràng lộ ra:</p>
+<p><strong>buyback từ quỹ quan sát được: chưa từng chạy.</strong></p>
+<p><strong>inflation: có thật, khoảng 3% mỗi năm.</strong></p>
+<p>BlockPinned cũng tìm một nguyên nhân cạnh tranh trong cùng giai đoạn — delist, sự cố, thông báo lớn từ sàn hay một tin riêng khác của Centrifuge. Không thấy sự kiện nào nổi bật tương đương. Những thảo luận công khai quanh CFG lúc đó gần như đều xoay quanh CP172. <em>(Độ phủ của phép quét này nằm ở Phần kiểm&nbsp;chứng.)</em></p>
+<p>Vì vậy, CP172 hiện là <strong>ứng viên giải thích mạnh nhất BlockPinned tìm thấy</strong> cho việc thị trường định giá lại CFG. Không phải vì đề xuất chắc chắn xấu, mà vì nó buộc thị trường trả lời ngay một câu hỏi trước đó còn có thể bỏ qua: <strong>CFG thực sự đáng giá dựa trên quyền kinh tế nào?</strong></p>
+<hr>
+<h2 id="bon-cau-hoi-centrifuge-van-chua-tra-loi">Bốn câu hỏi Centrifuge vẫn chưa trả lời</h2>
+<p>Bài toán hiện chưa đóng.</p>
+<p>Có ít nhất bốn thông tin mà nếu Centrifuge công bố thêm, cách nhìn CP172 có thể thay đổi đáng kể.</p>
+<p><strong>1. Valuation của công ty</strong></p>
+<p>Nếu có một mức định giá rõ ràng, người giữ CFG mới có thể biết một cổ phần mình nhận về đang đại diện cho bao nhiêu giá trị.</p>
+<p><strong>2. Cap table sau chuyển đổi</strong></p>
+<p>Cần biết tổng số cổ phần, ai khác sở hữu công ty và converters thực sự được chia bao nhiêu phần trăm.</p>
+<p><strong>3. Báo cáo tài chính</strong></p>
+<p>Management fee ước tính khoảng $5,43 triệu chưa cho biết công ty có lãi bao nhiêu. Không có chi phí thì chưa thể đi tới earnings.</p>
+<p><strong>4. Số phận CFG không chuyển đổi</strong></p>
+<p>Đây có thể là câu quan trọng nhất.</p>
+<p>Nếu một người không hoặc không thể chuyển đổi, token họ giữ sau đó còn có utility, governance hay một đường value capture nào hay không?</p>
+<p>Tính tới lúc đo, CP172 chưa trả lời đầy đủ.</p>
+<p>Cho tới khi bốn khoảng trống này được lấp, &quot;1 đổi 1&quot; vẫn chỉ là một tỷ lệ số lượng.</p>
+<p>Chưa phải một mức giá.</p>
+<hr>
+<h2 id="phan-kiem-chung-cach-tu-kiem">Phần kiểm&nbsp;chứng — cách tự&nbsp;kiểm</h2>
+<p>Các số on-chain trong bài được neo tại Ethereum block <strong>25.788.346</strong> (16h45 ngày 19/08/2026 giờ Việt Nam, 09:45:59Z), đọc qua node lưu trữ. Giá, phí và khối lượng lấy từ nguồn tổng hợp bên thứ ba, <strong>không neo block</strong> — nhãn suy luận, đã đọc lại sát giờ đăng. Nhóm so sánh RWA (5 token) và ngưỡng phân xử — rơi sâu hơn trung vị nhóm <strong>trên 5 điểm phần trăm</strong> mới được gọi là chuyện riêng của token — đều được ghi vào sổ việc <strong>trước</strong> khi đo.</p>
+<p>Phép quét nguyên nhân cạnh tranh phủ ba kênh trong cửa sổ 16–19/08: <strong>80 thông báo Binance · 90 thông báo Upbit · 25&nbsp;bài gần nhất trên X</strong> — mỗi kênh kèm một phép kiểm&nbsp;chứng minh bộ lọc không mù (nó phải thấy lại một sự kiện đã biết chắc chắn có). Không kênh nào có delist, sự cố hay thông báo lớn nào khác; 25/25&nbsp;bài trên X đều nói về CP172.</p>
+<p>Để kiểm con số buyback bằng 0, BlockPinned dựng lại toàn bộ lịch sử chuyển khoản của CFG và đối chiếu tổng số dư với <code>totalSupply()</code>. Kết quả lệch <strong>0 wei</strong>.</p>
+<p>Ai muốn tự&nbsp;kiểm nhanh quyền tạo token: hai lệnh, không cần khoá API — kèm control chứng minh phép đọc phân biệt được:</p>
+<pre class="l-bash"><code># InflationMinter có quyền tạo token? (→ 1)
+cast call 0xcccCCCcCCC33D538DBC2EE4fEab0a7A1FF4e8A94 \
+  &quot;wards(address)(uint256)&quot; 0x50a168cd6957e07b6de6c1a99b2f940475f70def \
+  --rpc-url https://eth.drpc.org
+# Địa chỉ bịa thì sao? (→ 0 — nếu cũng ra 1 thì phép đọc này vô nghĩa)
+cast call 0xcccCCCcCCC33D538DBC2EE4fEab0a7A1FF4e8A94 \
+  &quot;wards(address)(uint256)&quot; 0x000000000000000000000000000000000000dEaD \
+  --rpc-url https://eth.drpc.org</code></pre>
+<p>Các tham số của InflationMinter, quyền tạo CFG, lịch sử mint/burn và các phép kiểm chi tiết được giữ trong claim ledger đi kèm bài.</p>
+<p>Bài cần được viết lại nếu xuất hiện một trong các dữ kiện sau:</p>
+<ul><li>tìm được một giao dịch mà quỹ thực sự dùng tài sản khác để mua CFG trên thị trường;</li><li>rate, period hoặc target của InflationMinter có thể được sửa trực tiếp theo cách hồ&nbsp;sơ hiện chưa ghi nhận;</li><li>xuất hiện một sự kiện khác trong cửa sổ giá giảm có sức giải thích tốt hơn CP172;</li><li>Centrifuge công bố valuation, cap table, báo cáo tài chính hoặc cơ chế rõ ràng cho CFG không chuyển đổi.</li></ul>
+<hr>
+<p>CFG mất 18% trong lúc thị trường gần như đứng yên.</p>
+<p>Điều đáng chú ý nhất BlockPinned tìm thấy ngay trước đó không phải một cú sập nào trong các chỉ số kinh doanh đo được của Centrifuge.</p>
+<p>Đó là một đề xuất buộc holder phải chọn giữa <strong>một token mà buyback từ quỹ chưa từng được quan sát chạy</strong> và <strong>một cổ phần chưa có đủ dữ&nbsp;liệu để định giá</strong>.</p>
+<p>CP172 chưa cho biết lựa chọn nào tốt hơn.</p>
+<p>Nhưng nó đã khiến câu hỏi <strong>&quot;CFG thực sự đáng giá vì điều gì?&quot;</strong> không thể tiếp tục bị trì hoãn.</p>
+<p><em>Không phải lời khuyên đầu tư. Số đo tại thời điểm ghi trong bài và có thể đã thay đổi.</em></p>
+</section></main>
 <div id="ch-tip"></div>
 <footer><div class="khung"><p>Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá. Không phải lời khuyên đầu tư. · <a href="https://x.com/blockpinned">@blockpinned</a></p></div></footer>
 <script>

@@ -1,0 +1,96 @@
+{
+ "claims": [
+  {
+   "id": "C1",
+   "text": "Tại block 25.788.346, đúng hai địa chỉ có quyền tạo token trên hợp đồng CFG 0xccc…8A94: 0x7ed4…368f (Root) và 0x50a1…0def (InflationMinter). Dựng từ toàn bộ 7 sự kiện cấp quyền và 5 sự kiện thu quyền toàn lịch sử, xác nhận từng địa chỉ bằng wards().",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Ethereum block 25.788.346 (2026-08-19T09:45:59Z), node lưu trữ. Kiểm chống mù: địa chỉ bịa trả 0 chứ không lỗi — hàm tồn tại và phân biệt được. Đo lại 20/08 trước khi đăng: wards(Root)=1, wards(InflationMinter)=1, wards(địa chỉ bịa)=0, không đổi.",
+   "falsifier": "wards() trả 1 cho một địa chỉ thứ ba, hoặc một giao dịch tạo token mà người gọi ngoài hai địa chỉ trên.",
+   "khong_do_lai": "Chữ 'đúng hai' phải dựng từ toàn bộ sự kiện cấp/thu quyền rồi xác nhận từng địa chỉ tại block neo — một lời gọi đơn lẻ chỉ kiểm được một địa chỉ, không kiểm được số đếm.",
+   "log": [
+    {
+     "ngay": "2026-08-19",
+     "ghi": "Quyền đọc tại một block; quyền có thể được cấp hoặc thu hồi sau đó và phải đọc lại.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C2",
+   "text": "InflationMinter có period = 604.800 giây (7 ngày), rate = 566.665.722.130.821 trên nền 1e18 mỗi period, target là một địa chỉ cố định; cả ba immutable. Tốc độ lãi kép quy năm 3,000065%. Hàm mint() không mang modifier kiểm tra quyền — bất kỳ ai gọi được, token luôn về target.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "eth_call trực tiếp tại block 25.788.346; immutable và việc thiếu modifier đọc từ source đã verify trên Etherscan. Bẫy đã né: dòng khai trong source ghi period = 1 days nhưng constructor ghi đè — tham số phải ĐỌC bằng eth_call, không đọc từ dòng khai.",
+   "falsifier": "Một giao dịch sửa được rate, period hoặc target của hợp đồng hiện tại; hoặc một lời gọi mint() bị từ chối vì người gọi không có quyền.",
+   "khong_do_lai": "Tham số đọc bằng eth_call tại block neo; tính immutable phải đọc từ source, không suy được từ việc giá trị chưa từng đổi.",
+   "log": [
+    {
+     "ngay": "2026-08-19",
+     "ghi": "Lãi ĐƠN ra 2,9581%/năm — công thức _rpow trong source là lãi KÉP; khai cách gộp để hai người đo không cãi nhau vì hai cách tính.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C3",
+   "text": "Toàn bộ lịch sử tới block đo có đúng hai lượt phát hành lạm phát: 04/06/2026 (13 nhịp, 5.115.459,22 CFG) và 03/08/2026 (8 nhịp, 3.166.749,05 CFG). Lượt 03/08 tái lập tới từng wei bằng công thức lãi kép chép từ source: 3.166.749.050.595.280.967.692.756 wei.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Quét event Mint từ block 0 tới 25.788.346, trang cuối ngắn hơn giới hạn mỗi trang của công cụ — tức đã đọc tới hết, không bị cắt. Kiểm chống mù: tính với 9 nhịp thay vì 8 KHÔNG khớp — công thức phân biệt được. Đo lại 20/08 trước khi đăng: totalSupply không đổi tới wei — chưa có lượt phát hành thứ ba.",
+   "falsifier": "Một lượt phát hành lạm phát thứ ba, hoặc tổng hai lượt không khớp công thức tái lập.",
+   "khong_do_lai": "Chữ 'đúng hai lượt' phải quét event từ block 0 và chạm trang cuối ngắn hơn giới hạn mỗi trang; một lời gọi tại một block chỉ đọc được trạng thái, không đọc được số lượt.",
+   "log": [
+    {
+     "ngay": "2026-08-20",
+     "ghi": "Tại block đo còn 3 nhịp (1.191.235,87 CFG) đủ điều kiện phát hành mà chưa ai gọi — con số này tăng theo tuần và phải đọc lại khi trích.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C4",
+   "text": "Từ block đầu tiên của token tới block 25.788.346, ví treasury 0xD052…93Cb có 0 lượt mua lại token trên thị trường và 0 lượt đốt. Toàn bộ 2.080 lượt đốt có thật của token phát ra từ hợp đồng chuyển đổi 0xacf3…3069 — thao tác kỹ thuật của migration, không phải mua lại. Dòng 72.043.110 CFG 'từ một hợp đồng' vào treasury đến từ chính địa chỉ nhận lượt tạo token đầu tiên 115.000.000 CFG — ống phân phối, không phải sàn.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Sổ số dư dựng lại từ 335.808 dòng chuyển khoản, tổng bằng totalSupply() lệch 0 wei; riêng ví treasury, vào trừ ra bằng balanceOf lệch 0 wei. Kiểm chống mù: phép quét thấy lại lượt tạo 59.808.601,09 CFG ngày 04/06 đã biết trước. Đo lại 20/08: balance treasury không đổi tới wei.",
+   "falsifier": "Một giao dịch token vào ví treasury từ hợp đồng sàn, có phía đối ứng trả bằng tài sản khác.",
+   "khong_do_lai": "Phải dựng lại toàn bộ sổ số dư rồi khép tổng với totalSupply() — sót một dòng là lệch ngay; không thu gọn được thành một lời gọi.",
+   "log": [
+    {
+     "ngay": "2026-08-19",
+     "ghi": "Câu này nói về ví treasury trong hồ sơ theo dõi, không phải mọi ví liên quan tới công ty — danh tính ví treasury là suy luận từ dòng tiền governance, chưa có chữ ký xác nhận.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C5",
+   "text": "Cửa sổ 18/08 07:00Z → 19/08 10:02Z: CFG $0,165347 → $0,135544, giảm 18,02%, vượt trung vị nhóm RWA 5 token 14,94 điểm phần trăm; BTC +0,15%, ETH +0,83%; TVL Centrifuge đi ngang ($1,6357B ngày 15/08 → $1,6341B ngày 19/08).",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Giá từ nguồn tổng hợp bên thứ ba, KHÔNG neo block — nhãn suy luận. Nhóm so sánh 5 token RWA và ngưỡng phân xử ≥5 điểm phần trăm đăng ký ở sổ việc TRƯỚC khi đo. Control định danh: id nguồn giá có platforms.ethereum đúng bằng địa chỉ hợp đồng đã pin. Đọc lại 20/08 sát giờ đăng: giá $0,134991 (−0,41%), TVL $1,634B — không đổi cỡ.",
+   "falsifier": "Cùng cửa sổ, cùng nguồn giá mà trung vị nhóm RWA lệch tới mức phần vượt trội dưới 5 điểm phần trăm.",
+   "khong_do_lai": "Nguồn giá không tất định — mỗi lượt đọc gắn với sha256 của payload lượt đó; đo lại phải đọc cùng cửa sổ giờ, cùng nguồn, nhiều lượt.",
+   "log": [
+    {
+     "ngay": "2026-08-20",
+     "ghi": "Số trôi thời gian thực; mọi con số quy đô-la trong bài neo 'giá lúc đo' và đã đọc lại sát giờ đăng.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C6",
+   "text": "CP172 đăng 17/08/2026 19:11:10Z, khoảng 12 giờ trước mốc bắt đầu cửa sổ giá được đo. Điều khoản đã công bố: 1 CFG = 1 share, trả bằng chính token, pháp nhân Cayman, ngưỡng 100.000 CFG vào thẳng sổ cổ đông, 'relative to other converters' (trích nguyên văn), impacts/modifies: cp171. Cái CHƯA có: định giá · cap table · báo cáo tài chính · quyền cổ đông · thị trường thứ cấp · danh sách quốc gia loại trừ · số phận CFG không chuyển đổi. Raw thread: 0 hit 'forced'/'must sell' — đề xuất KHÔNG nói người không đổi buộc phải bán.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Raw JSON topic 7525 đọc 19/08, pin kèm sha256. Kiểm chống mù: cùng phép đọc thấy lại câu 'relative to other converters' đã biết chắc có. Đọc lại 20/08 trước khi đăng, đủ 37/37 post: đội ngũ chỉ lặp lại 'sẽ trả lời gộp' lần hai — 0/4 điều trống được trả lời.",
+   "falsifier": "Đội ngũ bổ sung điều khoản trả lời bất kỳ mục nào trong danh sách CHƯA CÓ — bài phải cập nhật ngay. Cửa sổ lấy ý kiến đóng khoảng 31/08/2026: mốc phải đọc lại.",
+   "khong_do_lai": "Nội dung diễn đàn là nguồn ngoài chuỗi, sửa/xoá được — đối chiếu bằng raw JSON đã pin kèm sha256, không bằng trang web hiện tại.",
+   "log": [
+    {
+     "ngay": "2026-08-20",
+     "ghi": "Vế 'CP172 là nguyên nhân cú giảm' KHÔNG nằm trong claim nào — toàn bài giữ nó ở mức ứng viên giải thích mạnh nhất, nhãn suy luận; nhân quả giá không đo được bằng phép đếm nguồn.",
+     "nguon": ""
+    }
+   ],
+   "han": "2026-08-31",
+   "han_ghi": "Cửa sổ lấy ý kiến CP172 đóng khoảng ngày này. Tới hạn phải đọc lại topic 7525: điều khoản bổ sung (định giá · cap table · báo cáo tài chính · số phận token không chuyển đổi) và ghi kết quả tại trang này — kể cả khi đội ngũ vẫn im lặng."
+  }
+ ]
+}

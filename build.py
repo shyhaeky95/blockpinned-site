@@ -189,9 +189,23 @@ LOGO_TOKEN = {
     # lý do đã ghi ở HYPE: `kich_thuoc_png()` đọc IHDR và NỔ với mọi thứ không phải PNG.
     "PUMP":   ("token-pump.png",   "coingecko 67164/pump.jpg → png",           "2026-08-14"),
     "SKY":    ("token-sky.png",    "coingecko 39925/sky.jpg → png",            "2026-08-15"),
+    # 🔴 Bản gốc là JPEG (coin id `centrifuge-2`, ảnh 55913), đổi sang PNG bằng `sips`
+    # lúc tải — cùng lý do đã ghi ở HYPE/PUMP/SKY: `kich_thuoc_png()` đọc IHDR và NỔ
+    # với mọi thứ không phải PNG.
+    "CFG":    ("token-cfg.png",    "coingecko 55913/centrifuge.jpg → png",     "2026-08-20"),
 }
 
 NGUON_ASSET = {
+    # bài CFG 20/08 — nguồn `template/card-cfg-dieu-gi-dung-sau-cu-sup.html`, dựng bằng
+    # `template/render_card_v2.py` qua pipeline editorial (`card_editorial.py new` → ruột
+    # tự dựng: hai vế nối bằng con nhộng "1 ĐỔI 1"). Outsider test PASS bởi độc giả mù
+    # (independent-reader), bắt 1 vấp đã sửa: nhãn vế trái phải là "QUỸ MUA LẠI TOKEN"
+    # thì "0 lần" mới khớp lần đọc đầu.
+    # 🔴 CẤM gọi mốc giá 18/08 07:00Z là "đỉnh" (user chốt 20/08 — dùng "mốc bắt đầu
+    #    cửa sổ giảm/đo"); CẤM nói cổ phần "không bán được" — đúng chữ là "thị trường
+    #    bán lại: chưa công bố" (thanh khoản, không phải phán quyết pháp lý); "0 lần"
+    #    phải đứng cạnh phạm vi "quỹ mua lại · 506 ngày" — không nới thành toàn hệ.
+    "card-cfg-dieu-gi-dung-sau-cu-sup.png": "png",
     # bài BSC 19/08 — nguồn `template/card-bsc-ban-10000-do-nhan-ve-1-58.html`, dựng bằng
     # `template/render_card_v2.py`. Khuôn xác định bằng `template/khuon_card.py` (chép từ
     # card HYPE 18/08) — lượt đầu của card này đi từ canvas trắng `card_editorial.py new`
@@ -2325,7 +2339,7 @@ def font_face(goc: str) -> str:
 # một lượt gõ.
 TOKEN_TEN = {"UNI": "Uniswap", "LDO": "Lido", "HYPE": "Hyperliquid", "PENDLE": "Pendle",
              "CAKE": "PancakeSwap", "MORPHO": "Morpho", "PUMP": "pump.fun",
-             "SKY": "Sky", "ETHFI": "ether.fi"}
+             "SKY": "Sky", "ETHFI": "ether.fi", "CFG": "Centrifuge"}
 
 # Tủ kính hiện mở cho ĐÚNG MỘT token, khai ở đây; toàn bộ nội dung trang sinh từ dữ
 # liệu, nên đổi dòng này là trang tự dựng lại cho token khác. Kèm SÀN: dưới 3 bài thì
