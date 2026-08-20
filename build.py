@@ -178,6 +178,7 @@ LOGO_TOKEN = {
     # thứ không phải PNG, nên để nguyên .jpeg là chặn build ở lượt sau.
     "ETHFI":  ("token-ethfi.png",  "coingecko 35958/etherfi.jpeg → png",       "2026-08-17"),
     "UNI":    ("token-uni.png",    "coingecko 12504/uniswap-logo.png",         "2026-08-10"),
+    "AAVE":   ("token-aave.png",   "coingecko 12645/aave-token-round.png",     "2026-08-20"),
     "CAKE":   ("token-cake.png",   "coingecko 12632/pancakeswap-cake-logo",    "2026-08-10"),
     "LDO":    ("token-ldo.png",    "coingecko 13573/Lido_DAO.png",             "2026-08-10"),
     "PENDLE": ("token-pendle.png", "coingecko 15069/Pendle_Logo_Normal-03",    "2026-08-10"),
@@ -343,6 +344,19 @@ NGUON_ASSET = {
     # đây: tên lệch thì `template/out/png/<tên>` không tồn tại và phép so byte ngay dưới
     # BỎ QUA TRONG IM LẶNG. Hậu tố `-muc` là biến thể nền mực, user chốt 06/08.
     "card-rh-burn-cham-mot-tuan-muc.png": "png",
+    # bài AAVE 20/08 — nguồn `template/card-2026-08-20-horizon-tran-collateral.html`,
+    # dựng bằng `template/render_card_v2.py` qua pipeline editorial (sidecar
+    # `template/card_specs/card-2026-08-20-horizon-tran-collateral.json`).
+    # Ba vòng render, ghi lại vì mỗi vòng chữa một LOẠI lỗi khác nhau:
+    # ⒜ bản 1 vẽ SAI BIẾN — hai đường ray cùng chiều dài nên mắt đọc thành "cùng sức
+    #    chứa, chưa ai dùng", trong khi ý là bản thân cái trần của ACRED chỉ bằng 1 đơn vị;
+    # ⒝ bản 2 bỏ ray, chuyển sang hai ô cùng khổ cùng cỡ chữ cùng nhãn "TRẦN COLLATERAL"
+    #    — phép so mới là so CÙNG một đại lượng, và 30.000.000 đặt cạnh 1 tự nói;
+    # ⒞ bản 3 theo user: bỏ "Đã dùng 0" khỏi ô ACRED vì nó kéo người đọc về kết luận cũ
+    #    "yield cao mà không ai dùng" — trọng tâm phải là cap = 1 DO CẤU HÌNH.
+    # 🔴 Câu chân là câu quan trọng nhất của ảnh, đừng rút gọn: "Các trần này là tham số
+    # cấu hình — không phải giới hạn tự nhiên của tài sản."
+    "card-2026-08-20-horizon-tran-collateral.png": "png",
 }
 
 # Ràng buộc NGÔN NGỮ của thân bài: mặt chữ phải dựng đủ dấu tiếng Việt — đó là điều
@@ -2339,7 +2353,8 @@ def font_face(goc: str) -> str:
 # một lượt gõ.
 TOKEN_TEN = {"UNI": "Uniswap", "LDO": "Lido", "HYPE": "Hyperliquid", "PENDLE": "Pendle",
              "CAKE": "PancakeSwap", "MORPHO": "Morpho", "PUMP": "pump.fun",
-             "SKY": "Sky", "ETHFI": "ether.fi", "CFG": "Centrifuge"}
+             "SKY": "Sky", "ETHFI": "ether.fi", "CFG": "Centrifuge",
+             "AAVE": "Aave"}
 
 # Tủ kính hiện mở cho ĐÚNG MỘT token, khai ở đây; toàn bộ nội dung trang sinh từ dữ
 # liệu, nên đổi dòng này là trang tự dựng lại cho token khác. Kèm SÀN: dưới 3 bài thì
@@ -2440,8 +2455,16 @@ def doc_primers() -> list[dict]:
         if not body.startswith("# "):
             raise LoiCong(f"primer phải bắt đầu bằng đúng một H1 — {o}")
         h1, body = body.split("\n", 1)
-        if h1[2:].strip() != cfg["title"]:
-            raise LoiCong(f"title primer không trùng H1 trong draft — {o}")
+        mat_chu = _tieu_de_h1(cfg)
+        if h1[2:].strip() != mat_chu:
+            nguon = "tieu_de_ngan" if (cfg.get("tieu_de_ngan") or "").strip() else "title"
+            raise LoiCong(
+                f"H1 trong draft primer phải trùng chuỗi đi ra mặt chữ (đang lấy từ "
+                f"'{nguon}': {mat_chu!r}), đọc được {h1[2:].strip()!r} — {o}")
+        # Cổng 15 — trước 20/08 tuyến primer KHÔNG gọi cổng này, nên trang primer là
+        # trang duy nhất lọt qua trần 80: H1 của SKY dài 100 ký tự mà build vẫn PASS
+        # 16/16. Lỗ không nằm ở ngưỡng, nằm ở chỗ cổng chỉ được cắm vào vòng đọc BÀI.
+        cong_tieu_de(cfg, o)
         body = body.lstrip()
         boundary = "# 🔎 Lớp kiểm chứng"
         if body.count(boundary) != 1:

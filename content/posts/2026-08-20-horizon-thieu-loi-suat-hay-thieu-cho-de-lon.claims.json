@@ -1,0 +1,94 @@
+{
+ "claims": [
+  {
+   "id": "C1",
+   "text": "Chi phí vay GHO ở thị trường Aave Horizon là 3,0000%/năm và không đổi trong suốt cửa sổ đo: 61 mẫu theo ngày từ block 25.362.242 (21/06) tới 25.792.601 (20/08) đều trả đúng một giá trị, biên độ 0 điểm phần trăm.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Đọc currentVariableBorrowRate từ getReserveData(GHO) trên pool Horizon 0xAe05Cd22…332C8, 61 block theo ngày, node lưu trữ. Kiểm chống mù: cùng phép đọc cho RLUSD và USDC trả dải thay đổi (1,76–3,87% và 4,70–5,55%) — tức đường đọc phân biệt được rate động với rate cố định, con số phẳng của GHO không phải do công cụ. Kiểm chéo độc lập: cùng giá trị 3,0000% đo tại block 25.608.000 bằng một script khác, cách 184.601 block.",
+   "falsifier": "Một mẫu ngày bất kỳ trong cửa sổ trả giá trị khác 3,0000%, hoặc lãi vay GHO rời khỏi mức này sau ngày đăng.",
+   "khong_do_lai": "Chữ 'không đổi trong cửa sổ' phải dựng từ chuỗi mẫu theo ngày; một lời gọi tại một block chỉ chứng minh giá trị tại block đó, không chứng minh nó phẳng.",
+   "log": [
+    {
+     "ngay": "2026-08-20",
+     "ghi": "Bản đầu so mức tăng NAV 30 ngày với lãi vay tại MỘT điểm. Phép so đó chỉ đứng nếu lãi vay không nhảy trong cửa sổ — nên phải đo chuỗi trước khi được phép so.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C2",
+   "text": "Trong cửa sổ 30 ngày block 25.577.369 → 25.792.601, ba tài sản thế chấp có mức tăng NAV quy năm 3,7292% (USTB), 3,5827% (JTRSY) và 3,1722% (USYC) — cả ba đều cao hơn chi phí vay GHO. Cả ba có hình dạng lãi tích luỹ: không ngày nào NAV giảm trong 30 bước ngày, và hai cửa sổ 30 ngày độc lập lệch không quá 0,25 điểm phần trăm.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Giá đọc bằng getAssetPrice của oracle chính Aave (USD, 8 chữ số thập phân) tại từng block, cùng một phép tính cho cả sáu tài sản — không lấy con số lợi suất do quỹ tự công bố. Mẫu 22 ngày tăng / 8 ngày đứng trùng khít số ngày làm việc trong 30 ngày lịch. Kiểm chống mù: cùng đường đọc cho ACRED và USCC trả ra ngày NAV giảm (3 và 9 ngày) — tức phép thử phân biệt được lãi tích luỹ với biến động giá thị trường.",
+   "falsifier": "Một trong ba tài sản xuất hiện ngày NAV giảm trong cửa sổ đo, hoặc hai cửa sổ độc lập cho kết quả lệch quá 0,25 điểm phần trăm, hoặc mức tăng của một trong ba rơi xuống dưới chi phí vay GHO.",
+   "khong_do_lai": "Không được gọi con số của ACRED, USCC hay JAAA là lợi suất: ACRED có 3 ngày NAV giảm và hai cửa sổ lệch 3,41 điểm phần trăm, USCC có 9 ngày giảm. Mức tăng NAV 30 ngày của một quỹ tín dụng có thể đến từ biến động giá chứ không chỉ từ lãi tích luỹ.",
+   "log": [
+    {
+     "ngay": "2026-08-20",
+     "ghi": "Bản đầu gọi cả sáu con số là 'lợi suất' và hiệu với lãi vay là 'carry'. Một lượt phản biện ngoài chặn ở tầng khái niệm; đo lại thì đúng — con số cao nhất bảng là con số không đủ tư cách gọi tên đó.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C3",
+   "text": "Dư nợ của Horizon giảm từ $152.210.256 xuống $113.435.537 trong cửa sổ block 25.433.938 (01/07) → 25.792.601 (20/08), tức −25,47%. Trong cùng khoảng đó, 21 trên 26 địa chỉ có dư nợ ở đầu kỳ vẫn còn dư nợ ở cuối kỳ; tổng số ví đi vay giữ nguyên 26.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Dư nợ USD dựng từ variableDebtToken.totalSupply của cả 11 reserve nhân giá oracle Aave tại từng block, 61 mẫu ngày. Tập ví dựng bằng cách quét toàn bộ sự kiện chuyển khoản của các debt token từ block tạo 23.132.230, rồi đọc số dư từng ứng viên tại hai block. Kiểm đóng sổ: tổng số dư của mọi ứng viên bằng đúng totalSupply — nơi chỉ số lãi chưa từng chạy thì lệch đúng 0 wei (6/6 token), nơi chỉ số đã chạy thì lệch không quá 1 wei mỗi ví (6/6 token).",
+   "falsifier": "Dư nợ đo lại tại hai block đó cho tỉ lệ khác −25,47%, hoặc giao tập địa chỉ đầu–cuối nhỏ hơn hẳn 21.",
+   "khong_do_lai": "Con số 21/26 là câu về SỐ ĐỊA CHỈ, không phải về tiền: phần giá trị mà 5 ví rời đi mang theo chưa được đo, nên không được viết 'phần lớn tiền ở lại'.",
+   "log": [
+    {
+     "ngay": "2026-08-20",
+     "ghi": "Bản đầu suy 'người ở lại' từ việc đếm số vị thế ở hai đầu. Đếm ảnh chụp không theo được danh tính — phải lấy giao tập địa chỉ mới nói được câu đó.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C4",
+   "text": "Tại block 25.792.601, thị trường Horizon đang giữ 29.999.999 mGLOBAL trên hạn mức cấp vốn 30.000.000 — thiếu đúng một đơn vị là chạm hạn mức. Chuỗi mẫu theo ngày cho thấy nó chạm đúng 30.000.000 vào 25/07 và giữ nguyên tới ngày đo.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Số đã gửi đọc từ aToken.totalSupply; hạn mức đọc từ bit 116–151 của trường configuration trong getReserveData. Kiểm chống mù cho cách giải bitmap: trường decimals nằm ở bit 48–55 của cùng con số phải khớp decimals() đọc thẳng từ token — khớp 11/11 reserve. Giải sai vị trí bit thì mọi trường sai mà không lỗi nào bắn ra.",
+   "falsifier": "Số mGLOBAL đã gửi rời khỏi mức sát hạn mức, hoặc hạn mức 30.000.000 bị thay đổi sau ngày đăng.",
+   "khong_do_lai": "Việc một reserve dùng hết hạn mức KHÔNG chứng minh có nhu cầu gửi thêm đang xếp hàng phía sau. Muốn nói điều đó phải thấy một giao dịch gửi bị từ chối vì hạn mức, hoặc thấy hạn mức được nâng rồi phần mới được lấp ngay.",
+   "log": [
+    {
+     "ngay": "2026-08-20",
+     "ghi": "Câu 'hình dạng của cầu ép vào hạn mức' đã bị hạ xuống 'đã dùng hết capacity được cho phép' sau một lượt phản biện ngoài — dữ liệu chỉ đỡ được vế thứ hai.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C5",
+   "text": "Tại block 25.792.601, ACRED có hạn mức cấp vốn bằng 1 đơn vị — khoảng $1.110 theo giá oracle — trong khi reserve vẫn ở trạng thái hoạt động, không đóng băng, không tạm dừng, LTV 66% và ngưỡng thanh lý 76%. Hạn mức này không đổi ở cả năm mốc đo trải từ 21/06 tới 20/08. ACRED cũng chưa từng phát sinh một đơn vị thế chấp nào: aToken của nó không có một sự kiện chuyển khoản nào trong toàn bộ lịch sử.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Hạn mức, LTV, ngưỡng thanh lý và ba cờ trạng thái đọc từ trường configuration tại năm block; cách giải bitmap được kiểm bằng trường decimals khớp 11/11. Số sự kiện chuyển khoản quét từ block tạo 23.132.230. Kiểm chống mù: cùng đường quét trả về hàng nghìn sự kiện cho các reserve khác (RLUSD 15.393, USDC 3.914) — tức số 0 của ACRED là câu về thế giới, không phải về công cụ.",
+   "falsifier": "Hạn mức cấp vốn của ACRED được nâng lên, hoặc xuất hiện một sự kiện đúc aToken ACRED đầu tiên.",
+   "khong_do_lai": "Số 0 tiền gửi của ACRED KHÔNG được đọc thành tín hiệu nhu cầu. Hạn mức bằng 1 đơn vị làm cho việc gửi vào gần như không thể, nên con số 0 nói về cấu hình chứ không nói về ý muốn của người dùng.",
+   "log": [
+    {
+     "ngay": "2026-08-20",
+     "ghi": "Bản đầu định dùng '0 tiền gửi' làm bằng chứng rằng nhu cầu không phản ứng với chênh lệch lợi suất. Một lượt phản biện ngoài hỏi '0 còn nghĩa gì khác' — đọc tham số ra hạn mức bằng 1, và câu đó bị bỏ.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C6",
+   "text": "Hạn mức cấp vốn ở Horizon là tham số cấu hình đã từng được thay đổi: trong cửa sổ 21/06 → 20/08, 5 trên 11 reserve có hạn mức bị sửa — USCC 15.000.000 → 7.000.000 → 3.000.000, USYC 10.300.000 → 5.000.000, JTRSY 10.000.000 → 5.000.000, mGLOBAL 50.000.000 → 30.000.000, và JAAA được nâng 22.000.000 → 30.000.000.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Đọc trường configuration tại năm block trải cửa sổ (25.362.242 · 25.433.938 · 25.505.000 · 25.577.369 · 25.792.601), cùng cách giải bitmap đã kiểm bằng trường decimals khớp 11/11.",
+   "falsifier": "Đọc lại năm mốc đó cho chuỗi hạn mức khác, hoặc số reserve bị sửa hạn mức khác 5.",
+   "khong_do_lai": "Việc hạn mức bị cắt và tiền gửi rút ra xảy ra trong cùng một khoảng KHÔNG chứng minh cái nào gây ra cái nào — block của lệnh đổi hạn mức chưa được pin, nên chưa biết cắt trước hay rút trước.",
+   "log": [
+    {
+     "ngay": "2026-08-20",
+     "ghi": "Năm mốc thay vì hai đầu — nhờ mốc giữa 15/07 mới thấy USCC bị cắt hai bậc chứ không phải một.",
+     "nguon": ""
+    }
+   ]
+  }
+ ]
+}
