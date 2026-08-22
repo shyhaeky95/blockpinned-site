@@ -2,34 +2,18 @@
   "id": "sky",
   "token": "SKY",
   "name": "Sky",
-  "title": "Hiểu SKY: cỗ máy phía sau stablecoin $10 tỷ",
+  "title": "SKY kiếm tiền như thế nào — và token SKY nhận gì?",
   "description": "Sky kiếm tiền ở đâu, tiền đi đâu, và SKY nằm ở đâu trong hệ thống?",
   "pin": "Ethereum block 25.700.475 · 07/08/2026 14:23:23Z",
-  "edition": "v4.2 · 20/08/2026",
+  "edition": "v6.0 · 22/08/2026",
   "art_direction": "machine-valves",
-  "lastmod": "2026-08-20",
+  "lastmod": "2026-08-22",
   "draft": "drafts/2026-08-08-sky-primer-v2.md",
-  "body_sha256": "53fc95d6d1e95ec666034f064d77d8c0eeb6675e7fb6a98977221db00d375d19",
+  "body_sha256": "03bb1c71d854b84bd2822521921fb9844b15d8f51b20d368920c0b1721503589",
   "start_marker": "<!-- THÂN BÀI: BẮT ĐẦU",
   "end_marker": "<!-- THÂN BÀI: HẾT -->",
-  "recap_heading": "## Đứng lùi ra, Sky hiện là bức tranh gì?",
-  "web_replacements": [
-    {
-      "from": "nấc",
-      "to": "tầng",
-      "count": 5
-    },
-    {
-      "from": "mức trần",
-      "to": "giới hạn",
-      "count": 1
-    },
-    {
-      "from": "trần",
-      "to": "mức tối đa",
-      "count": 2
-    }
-  ],
+  "recap_heading": "## 12. Kể lại SKY trong 30 giây",
+  "web_replacements": [],
   "source_claims": [
     {
       "id": "q2-accounts",
@@ -54,20 +38,20 @@
   ],
   "placements": [
     {
-      "visual": "sky-waterfall-q2",
-      "after": "**Gross Protocol Revenue $107,35M → khoảng $67,26M chi phí → Net Protocol Revenue $40,09M.**"
+      "visual": "sky-system-map",
+      "after": "Phần còn lại của bài chỉ là phóng to bốn tầng đó."
     },
     {
-      "visual": "sky-system-map",
-      "after": "Mỗi nấc đều là một cái van riêng. Business chạy tốt ở nấc ① **không** tự động chảy xuống nấc ④ — và đó là toàn bộ câu chuyện của token này."
+      "visual": "sky-waterfall-q2",
+      "after": "**Khoảng 63 xu trong mỗi đô doanh thu gộp đã được dùng hết trước khi Sky chạm tới Net Protocol Revenue.** Biên còn lại quanh **37%**."
     },
     {
       "visual": "sky-settlement-timeline",
-      "after": "Monthly Settlement Cycle trả lời câu thứ hai. **Nó là một cơ chế chốt sổ, không phải một mảng kinh doanh.**"
+      "after": "Độ trễ không đều — sáu kỳ gần nhất chạy từ khoảng **4 tới 33 ngày**. Hệ quả: **có tháng hứng một kỳ settlement, có tháng hứng hai.** Một tháng trông mạnh gần gấp đôi tháng sau nó có thể chỉ là một tháng chứa hai lần chốt sổ. *(Chuỗi sáu kỳ gần nhất: lớp kiểm chứng.)*"
     },
     {
       "visual": "sky-capture-status",
-      "after": "🔴 **Đọc bảng này theo CỘT PHẢI, đừng theo cột trái.** Đếm số dòng ra \"năm đường value về token\" là đếm **thiết kế**. Tại lần đo gần nhất có **ba** dòng đang chảy — và **cả ba** đều không phải \"chia lợi nhuận\": hai dòng lấy token từ kho, dòng thứ ba trả bằng USDS **đúc lúc trả**."
+      "after": "| **người chỉ giữ SKY, không stake** | không có đường trực tiếp; chỉ hưởng gián tiếp qua lực mua của buyback |"
     }
   ],
   "visuals": [
@@ -262,7 +246,7 @@
       "type": "distribution",
       "eyebrow": "PROVE · ĐỌC CỘT PHẢI",
       "title": "Năm đường trong thiết kế, ba đường đang chảy",
-      "aria": "Trong năm đường value capture được liệt kê, ba đường đang chạy, một đường có trong thiết kế nhưng chưa mở, và một đường chỉ tác động gián tiếp tới người giữ token.",
+      "aria": "Trong năm đường value capture được liệt kê, ba đường đang chạy, một đường có quy định đã hiệu lực từ 17/08 nhưng tổng cung chưa giảm, và một đường chỉ tác động gián tiếp tới người giữ token.",
       "caption": "Đơn vị là số đường trong bảng capture. Đây là phân loại trạng thái, không phải tỷ trọng economics hay doanh thu. Trạng thái đọc ở block 25.795.066; các con số economics của bài vẫn ghim ở block 25.700.475.",
       "public_scope": "Trạng thái tại block 25.795.066 · 20/08/2026",
       "claims": [
@@ -278,9 +262,9 @@
           "tone": "good"
         },
         {
-          "label": "có thiết kế, chưa mở",
+          "label": "có thiết kế, chưa thấy hiệu lực",
           "count": 1,
-          "note": "chế độ 2 chưa bật",
+          "note": "nhánh \"đốt\": quy định hiệu lực từ 17/08, cung chưa giảm một wei",
           "tone": "bad"
         },
         {
@@ -292,5 +276,5 @@
       ]
     }
   ],
-  "tieu_de_ngan": "SKY hoạt động như thế nào?"
+  "tieu_de_ngan": "SKY kiếm tiền như thế nào — và token SKY nhận gì?"
 }
