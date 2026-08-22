@@ -34,13 +34,17 @@
           "ngay": "2026-08-17",
           "ghi": "Ghi trước khi bước đồng bộ giữa hai contract xảy ra lần nào.",
           "nguon": "https://x.com/blockpinned/status/2089284497238110414"
+        },
+        {
+          "ngay": "2026-08-22",
+          "ghi": "Đọc giữa cửa tại block 25.811.745: event phân bổ vẫn chưa phát lần nào, 0 trong cả cửa. CHƯA chốt — câu đã ghi trước nói tới hết 24/08T23:59Z, nên nó chỉ được chấm sau mốc đó. Ghi lại đây để thấy đã đo, không phải để tính là đúng sớm."
         }
       ]
     },
     {
       "id": "C3",
       "text": "Dự đoán có điều kiện: nếu contract phân bổ đồng bộ được với sổ doanh thu trong cửa 17 tới 24/08, thì ngân sách mua sau lượt đồng bộ đó vẫn nhỏ hơn hoặc bằng 0.",
-      "status": "ĐANG ĐỨNG",
+      "status": "ĐÃ XÁC NHẬN",
       "ghim": "Ghi trước trên X lúc 2026-08-17. Nền: tốc độ doanh thu 30 ngày 40,0172 stETH mỗi ngày; ở giá 1.909,33 USD đọc tại block 25.773.271 thành 76.406 USD mỗi ngày, dưới mức sàn 109.589 USD mỗi ngày của công thức.",
       "falsifier": "Nếu bước đồng bộ xảy ra và ngân sách mua sau lượt đó lớn hơn 0, dự đoán này sai. Nếu bước đồng bộ không xảy ra trong cửa, claim không được tính là đúng hay sai vì điều kiện chấm chưa xảy ra.",
       "khong_do_lai": "Đây là dự đoán có điều kiện về trạng thái sau một giao dịch chưa xảy ra; chỉ phân định được bằng cách đọc ngân sách mua tại block ngay sau lượt đồng bộ.",
@@ -49,20 +53,27 @@
       "ghi_truoc": {
         "ngay": "2026-08-17",
         "noi": "https://x.com/blockpinned/status/2089284497238110414 và trang này",
-        "so": "nếu đồng bộ xảy ra trong cửa, ngân sách mua vẫn nhỏ hơn hoặc bằng 0"
+        "so": "nếu đồng bộ xảy ra trong cửa, ngân sách mua vẫn nhỏ hơn hoặc bằng 0",
+        "ket_qua": "Đúng. Điều kiện chấm đã xảy ra: ngày 21/08, một địa chỉ ngoài DAO gọi hàm phân bổ hai lần — Ethereum block 25.803.732 lúc 13:12:47Z và block 25.803.734 lúc 13:13:11Z, cách nhau 24 giây. Mỗi lượt phát một event chốt sổ kèm một event bỏ qua phân bổ, nên không đồng nào được mua. Đọc ngân sách mua tại block 25.803.735, tức block liền sau lượt đồng bộ cuối: âm 374.848,060795 USD — nhỏ hơn 0, đúng như đã ghi trước. Con số đó tái lập được từ chính công thức bài đã in: doanh thu ghi nhận 565.371,878410 USD trừ phần dự trữ 12 ngày là 1.315.068 USD, rồi nhân 50%. Đọc lại ngày 22/08, tại block 25.811.745, vẫn đúng con số đó, không đổi một wei.",
+        "ai_phan_dinh": "phép đo của tôi trên sổ cái Ethereum: đếm log của contract phân bổ trong cửa từ block liền sau block ghim của bài tới block 25.811.745, rồi gọi trạng thái ngân sách tại đúng block liền sau lượt đồng bộ cuối và đọc lại một lần nữa tại block 25.811.745. Lượt gọi trạng thái có phép chặn riêng: kết quả rỗng hoặc lỗi phải nổ chứ không được đọc thành 0, vì chính getter này từng trả rỗng 2 trên 4 lượt do node chập chờn",
+        "ngay_ket": "2026-08-22"
       },
       "log": [
         {
           "ngay": "2026-08-17",
           "ghi": "Ghi trước ở dạng có điều kiện, để một kết cục ngoài điều kiện không bị gán thành thất bại giả. Bản trước của bài này từng mang một bộ dự đoán mà kết cục thật nằm ngoài mọi nhánh đã liệt kê; bộ đó bị bỏ trước khi đăng.",
           "nguon": "https://x.com/blockpinned/status/2089284497238110414"
+        },
+        {
+          "ngay": "2026-08-22",
+          "ghi": "Điều kiện chấm xảy ra ngày 21/08 và claim đứng: ngân sách mua sau lượt đồng bộ là âm 374.848,060795 USD. Ghi thêm cho đủ — tới block 25.811.745, contract phân bổ vẫn chưa đọc vòng doanh thu ngày 22/08, nên con số này còn đổi ở lượt đồng bộ kế tiếp. Câu đã ghi trước chỉ nói về ngân sách sau lượt đồng bộ TRONG cửa, và lượt đó đã có."
         }
       ]
     },
     {
       "id": "C4",
       "text": "Dự đoán ghi trước: sổ doanh thu nhận thêm ít nhất 6 vòng ghi nhận nữa trong 8 ngày từ 17 tới 24/08, tức bước quy đổi tiếp tục diễn ra gần như mỗi ngày.",
-      "status": "ĐANG ĐỨNG",
+      "status": "ĐÃ XÁC NHẬN",
       "ghim": "Ghi trước trên X lúc 2026-08-17. Nền: hai vòng đầu tiên xảy ra ngày 15 và 16/08, mỗi vòng gồm một lượt ghi nhận stETH và một giao dịch quy đổi riêng gửi sau đó.",
       "falsifier": "Nếu tới hết 2026-08-24T23:59:00Z sổ doanh thu nhận thêm ít hơn 6 vòng, dự đoán này sai. Đếm theo số lượt quy đổi vào sổ, không đếm theo số lượt rebase.",
       "khong_do_lai": "Phải đếm log trong một cửa sổ thời gian trên contract nhận doanh thu, không đọc được bằng một lời gọi trạng thái tại một block.",
@@ -71,13 +82,20 @@
       "ghi_truoc": {
         "ngay": "2026-08-17",
         "noi": "https://x.com/blockpinned/status/2089284497238110414 và trang này",
-        "so": "ít nhất 6 vòng ghi nhận doanh thu nữa trong 17 tới 24/08"
+        "so": "ít nhất 6 vòng ghi nhận doanh thu nữa trong 17 tới 24/08",
+        "ket_qua": "Đúng. Sổ doanh thu nhận 6 vòng quy đổi trong cửa, chạm đúng ngưỡng đã ghi trước, và vòng thứ 6 rơi ngày 22/08 lúc 13:17:47Z tại block 25.810.933 — sớm hơn hạn 2 ngày 10 giờ 41 phút. Sáu vòng lần lượt ngày 17, 18, 19, 20, 21 và 22/08, cộng lại 244,119024538845225 stETH, tương đương 524.460,93 USD theo giá ghi trong chính các event đó. Khoảng cách giữa hai vòng liền nhau nằm trong 24,08 đến 24,18 giờ, và giờ trong ngày trôi dần từ 12:41Z tới 13:17Z. Đó là mô tả sáu vòng đã đo, không phải một nhịp đã được chứng minh.",
+        "ai_phan_dinh": "phép đo của tôi trên sổ cái Ethereum tại block 25.811.745, đếm log quy đổi của contract nhận doanh thu trong cửa từ block liền sau block ghim 25.771.902, kèm hai phép kiểm. Một: cùng câu truy vấn chạy trong cửa TRƯỚC block ghim phải trả về đúng 2 vòng mà bài đã đăng — ra 2. Hai: một phép khép sổ đi đường khác — nền 145.443,549058714262330342 USD cộng tổng các vòng, tính bằng số nguyên chứ không chia thành số thực, khớp getter cộng dồn của chính contract tới 0 wei ở cả hai block mốc 25.803.735 và 25.811.745; nếu phép đếm log sót hoặc đếm trùng một vòng thì phần dư đã khác 0",
+        "ngay_ket": "2026-08-22"
       },
       "log": [
         {
           "ngay": "2026-08-17",
           "ghi": "Ghi trước dựa trên hai mẫu, và hai mẫu chưa đủ để gọi là một nhịp — điều đó được nói thẳng trong bài.",
           "nguon": "https://x.com/blockpinned/status/2089284497238110414"
+        },
+        {
+          "ngay": "2026-08-22",
+          "ghi": "Vòng thứ 6 rơi 22/08 lúc 13:17:47Z, chạm ngưỡng sớm hơn hạn hơn hai ngày. Phép đếm được khép sổ bằng một đường độc lập — tổng các vòng cộng vào nền khớp bộ đếm của contract tới 0 wei — nên nó không phải một con số đếm suông."
         }
       ]
     }

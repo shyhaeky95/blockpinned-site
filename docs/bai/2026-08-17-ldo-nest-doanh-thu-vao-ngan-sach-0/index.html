@@ -2268,7 +2268,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     </div><div class="case-path" role="img" aria-label="Tuyến bằng chứng: đối tượng, điều bác bỏ, trạng thái hiện tại">
       <div class="case-step file"><span>01 · ĐỐI TƯỢNG</span><strong>LDO</strong><small>hồ&nbsp;sơ được ghim theo token</small></div><i aria-hidden="true">→</i>
       <div class="case-step test"><span>02 · TỰ&nbsp;KIỂM</span><strong>4</strong><small>điều&nbsp;bác&nbsp;bỏ viết cùng claim</small></div><i aria-hidden="true">→</i>
-      <div class="case-step state song"><span>03 · SỔ SỐNG</span><strong>4 mốc</strong><small>lịch sử đổi trạng thái công khai</small></div>
+      <div class="case-step state song"><span>03 · SỔ SỐNG</span><strong>7 mốc</strong><small>lịch sử đổi trạng thái công khai</small></div>
     </div></div>
 
 </section><nav class="article-map" aria-label="Điều hướng trong bài"><span>Đọc theo bằng&nbsp;chứng</span><a href="#so-claim">Sổ claim</a><a href="#hai-vong-ghi-nhan-doanh-thu-dau-tien">Hai vòng ghi nhận doanh thu đầu tiên</a><a href="#nhung-tien-dung-o-contract-nguon">Nhưng tiền dừng ở contract nguồn</a><a href="#va-ke-ca-khi-buoc-dong-bo-chay-cong-thuc-van-chua-cho-ngan-s">Và kể cả khi bước đồng bộ chạy, công thức vẫn chưa cho ngân sách dương</a></nav><section class="article-ledger" aria-labelledby="so-claim-title">
@@ -2276,8 +2276,8 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   <summary>
     <span class="case-ledger-title"><span>Sổ claim của bài</span><b id="so-claim-title">4 khẳng&nbsp;định</b><small>đổi trạng thái tại chỗ · không xoá</small></span>
     <span class="case-ledger-viz">
-      <span class="case-ledger-bar" role="img" aria-label="4 vẫn đứng vững"><i class="song" style="--n:4"></i></span>
-      <span class="case-ledger-legend"><i><span class="dot song"></span><b>4</b> vẫn đứng&nbsp;vững</i></span>
+      <span class="case-ledger-bar" role="img" aria-label="2 xác nhận, 2 vẫn đứng vững"><i class="xac" style="--n:2"></i><i class="song" style="--n:2"></i></span>
+      <span class="case-ledger-legend"><i><span class="dot xac"></span><b>2</b> xác nhận</i><i><span class="dot song"></span><b>2</b> vẫn đứng&nbsp;vững</i></span>
     </span>
     <span class="mo">mở 4&nbsp;claim</span>
   </summary>
@@ -2310,11 +2310,11 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Nếu event phân bổ được phát ở bất kỳ block nào tới hết 2026-08-24T23:59:00Z, dự đoán này sai. Không dời hạn sau khi đã thấy giao dịch.</p>
   </div>
 <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Đây là dự đoán về một sự kiện chưa xảy ra; phân&nbsp;định bằng cách đếm log của contract trong cửa sổ thời gian, không bằng một giá trị hợp đồng đọc tại một block.</p>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Ghi&nbsp;trước khi bước đồng bộ giữa hai contract xảy ra lần nào. <a href="https://x.com/blockpinned/status/2089284497238110414">nguồn</a></span></li></ol></details>
-</article><article class="case-claim song" id="C3" data-article-claim data-st="song">
+  <details class="case-log"><summary>Lịch sử · 2 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Ghi&nbsp;trước khi bước đồng bộ giữa hai contract xảy ra lần nào. <a href="https://x.com/blockpinned/status/2089284497238110414">nguồn</a></span></li><li><span class="case-log-date">2026-08-22</span><span>Đọc giữa cửa tại block&nbsp;25.811.745: event phân bổ vẫn chưa phát lần nào, 0 trong cả cửa. CHƯA chốt — câu đã ghi&nbsp;trước nói tới hết 24/08T23:59Z, nên nó chỉ được chấm sau mốc đó. Ghi lại đây để thấy đã đo, không phải để tính là đúng sớm.</span></li></ol></details>
+</article><article class="case-claim xac" id="C3" data-article-claim data-st="xac">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C3">C3</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
+    <span class="case-claim-status xac"><i aria-hidden="true"></i>ĐÃ XÁC NHẬN</span>
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Dự đoán có điều kiện: nếu contract phân bổ đồng bộ được với sổ doanh thu trong cửa 17 tới 24/08, thì ngân sách mua sau lượt đồng bộ đó vẫn nhỏ hơn hoặc bằng 0.</p>
@@ -2324,11 +2324,11 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Nếu bước đồng bộ xảy ra và ngân sách mua sau lượt đó lớn hơn 0, dự đoán này sai. Nếu bước đồng bộ không xảy ra trong cửa, claim không được tính là đúng hay sai vì điều kiện chấm chưa xảy ra.</p>
   </div>
 <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Đây là dự đoán có điều kiện về trạng thái sau một giao dịch chưa xảy ra; chỉ phân&nbsp;định được bằng cách đọc ngân sách mua tại block ngay sau lượt đồng bộ.</p>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Ghi&nbsp;trước ở dạng có điều kiện, để một kết cục ngoài điều kiện không bị gán thành thất bại giả. Bản trước của bài này từng mang một bộ dự đoán mà kết cục thật nằm ngoài mọi nhánh đã liệt kê; bộ đó bị bỏ trước khi đăng. <a href="https://x.com/blockpinned/status/2089284497238110414">nguồn</a></span></li></ol></details>
-</article><article class="case-claim song" id="C4" data-article-claim data-st="song">
+  <details class="case-log"><summary>Lịch sử · 2 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Ghi&nbsp;trước ở dạng có điều kiện, để một kết cục ngoài điều kiện không bị gán thành thất bại giả. Bản trước của bài này từng mang một bộ dự đoán mà kết cục thật nằm ngoài mọi nhánh đã liệt kê; bộ đó bị bỏ trước khi đăng. <a href="https://x.com/blockpinned/status/2089284497238110414">nguồn</a></span></li><li><span class="case-log-date">2026-08-22</span><span>Điều kiện chấm xảy ra ngày 21/08 và claim đứng: ngân sách mua sau lượt đồng bộ là âm 374.848,060795&nbsp;USD. Ghi thêm cho đủ — tới block&nbsp;25.811.745, contract phân bổ vẫn chưa đọc vòng doanh thu ngày 22/08, nên con số này còn đổi ở lượt đồng bộ kế tiếp. Câu đã ghi&nbsp;trước chỉ nói về ngân sách sau lượt đồng bộ TRONG cửa, và lượt đó đã có.</span></li></ol></details>
+</article><article class="case-claim xac" id="C4" data-article-claim data-st="xac">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C4">C4</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
+    <span class="case-claim-status xac"><i aria-hidden="true"></i>ĐÃ XÁC NHẬN</span>
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Dự đoán ghi&nbsp;trước: sổ doanh thu nhận thêm ít nhất 6 vòng ghi nhận nữa trong 8&nbsp;ngày từ 17 tới 24/08, tức bước quy đổi tiếp tục diễn ra gần như mỗi ngày.</p>
@@ -2338,7 +2338,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Nếu tới hết 2026-08-24T23:59:00Z sổ doanh thu nhận thêm ít hơn 6 vòng, dự đoán này sai. Đếm theo số lượt quy đổi vào sổ, không đếm theo số lượt rebase.</p>
   </div>
 <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Phải đếm log trong một cửa sổ thời gian trên contract nhận doanh thu, không đọc được bằng một lời gọi trạng thái tại một block.</p>
-  <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Ghi&nbsp;trước dựa trên hai mẫu, và hai mẫu chưa đủ để gọi là một nhịp — điều đó được nói thẳng trong bài. <a href="https://x.com/blockpinned/status/2089284497238110414">nguồn</a></span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 2 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Ghi&nbsp;trước dựa trên hai mẫu, và hai mẫu chưa đủ để gọi là một nhịp — điều đó được nói thẳng trong bài. <a href="https://x.com/blockpinned/status/2089284497238110414">nguồn</a></span></li><li><span class="case-log-date">2026-08-22</span><span>Vòng thứ 6 rơi 22/08 lúc 13:17:47Z, chạm ngưỡng sớm hơn hạn hơn hai ngày. Phép đếm được khép sổ bằng một đường độc lập — tổng các vòng cộng vào nền khớp bộ đếm của contract tới 0 wei — nên nó không phải một con số đếm suông.</span></li></ol></details>
 </article></div>
   </div>
 </details>
@@ -2362,7 +2362,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <h2 id="va-ke-ca-khi-buoc-dong-bo-chay-cong-thuc-van-chua-cho-ngan-s">Và kể cả khi bước đồng bộ chạy, công thức vẫn chưa cho ngân sách dương</h2>
 <p>Tiền mua mỗi ngày bằng <strong>( doanh thu mỗi ngày − 109.589&nbsp;USD ) × 50%</strong>, với giới hạn tối đa <strong>50 nghìn USD mỗi ngày</strong> và <strong>10 triệu USD mỗi năm</strong>. Mốc 109.589&nbsp;USD mỗi ngày tương đương một mức sàn <strong>40,0 triệu USD mỗi năm</strong>.</p>
 <p>Tốc độ doanh thu 30&nbsp;ngày là <strong>40,0172 stETH mỗi ngày</strong>. Ở giá <strong>1.909,33&nbsp;USD</strong> đọc tại block&nbsp;25.773.271, con số đó thành <strong>76.406&nbsp;USD mỗi ngày</strong>, tức khoảng <strong>27,9 triệu USD mỗi năm</strong> — dưới mức sàn. Với đầu vào này, phần vượt của phép tính bằng 0, nên tiền mua cũng bằng 0.</p>
-<p>Giữ nguyên tốc độ doanh thu 30&nbsp;ngày, mức giá làm công thức bắt đầu cho ngân sách dương là <strong>2.738,55&nbsp;USD mỗi stETH</strong>, khoảng <strong>+43%</strong> so với mức giá dùng trong phép đo. Đây không phải một dự báo giá; nó là mức hoà vốn của công thức khi tốc độ doanh thu không đổi. Văn bản đề xuất gốc nêu mốc khoảng 2.700&nbsp;USD; con số suy ra từ tham số on-chain là 2.738,55&nbsp;USD, lệch <strong>1,43%</strong>. Cùng giả định đó, mức tương ứng với giới hạn 10 triệu USD mỗi năm là <strong>4.107,82&nbsp;USD</strong>.</p>
+<p>Nếu tốc độ doanh thu giữ nguyên ở mức đo được trong cửa sổ 30&nbsp;ngày gần nhất, mức giá làm <strong>phần vượt của mỗi lượt bằng 0</strong> là <strong>2.738,55&nbsp;USD mỗi stETH</strong>, khoảng <strong>+43%</strong> so với mức giá dùng trong phép đo. Ở đúng mức đó, phần thiếu đã tích lại chỉ <strong>ngừng lớn thêm</strong> — nó không làm ngân sách mua thành dương, vì phần đã tích vẫn phải được bù hết trước. Đây không phải một dự báo giá; nó là mức hoà vốn của <strong>dòng</strong> doanh thu so với mức sàn. Văn bản đề xuất gốc nêu mốc khoảng 2.700&nbsp;USD; con số suy ra từ tham số on-chain là 2.738,55&nbsp;USD, lệch <strong>1,43%</strong>. Cùng giả định đó, mức tương ứng với giới hạn 10 triệu USD mỗi năm là <strong>4.107,82&nbsp;USD</strong>.</p>
 <p>Điều kiện &quot;giữ nguyên tốc độ doanh thu&quot; là bắt buộc phải đọc kèm: doanh thu stETH mỗi ngày tăng cũng đưa cơ chế qua mức sàn mà giá không cần nhúc nhích.</p>
 <h2 id="hai-cho-de-hieu-nham">Hai chỗ dễ hiểu nhầm</h2>
 <p>Kho DAO của Lido <strong>vẫn đang nhận LDO thật</strong> — nhưng qua một chương trình mua khác, chi stETH trực tiếp, không đi qua cơ chế này.</p>
@@ -2384,6 +2384,11 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
 <p>Nếu gọi bốn giá trị trên tại đúng block&nbsp;25.771.902 mà ngân sách mua khác 0, hoặc tổng doanh thu contract phân bổ ghi nhận khác 0, hoặc đếm log của contract phân bổ ra một event phân bổ, thì phần trung tâm của bài phải rút.</p>
 <p>Nếu cộng hai vòng doanh thu không ra đúng 145.443,549059&nbsp;USD, hoặc hai vòng đó không phải hai vòng đầu tiên trong toàn bộ log của contract nguồn, phần đo doanh thu phải rút.</p>
 <p>Nếu tốc độ doanh thu 30&nbsp;ngày đo lại khác 40,0172 stETH mỗi ngày, hai mức 2.738,55 và 4.107,82&nbsp;USD mỗi stETH đổi theo — chúng là hệ quả của tốc độ đó chia vào mức sàn, không phải hai con số độc lập.</p>
+<h2 id="dinh-chinh-22-08">Đính chính — 22/08</h2>
+<p>Bản đăng ngày 17/08 viết: <em>&quot;mức giá làm công thức bắt đầu cho ngân sách dương là 2.738,55&nbsp;USD mỗi stETH&quot;</em>. Câu đó dẫn sai. Nó được sửa ở trên, và câu cũ giữ nguyên tại đây.</p>
+<p>Cơ chế có hai đại lượng khác nhau. <strong>Phần vượt của mỗi lượt</strong> là một dòng, tính lại mỗi lần chốt sổ. <strong>Ngân sách mua</strong> là một kho cộng dồn, âm được, và số âm nằm lại trong bộ nhớ contract. Mức 2.738,55&nbsp;USD làm <strong>dòng</strong> bằng 0. Nó không làm <strong>kho</strong> thành dương: phần đã tích vẫn phải được bù hết trước, và ở đúng mức giá đó thì không có gì để bù.</p>
+<p>Ngày 21/08, chuyện này thành quan sát thay vì suy luận. Một địa chỉ ngoài DAO gọi hàm phân bổ hai lần, và ngân sách mua được ghi vào bộ nhớ contract: <strong>âm 374.848,060795&nbsp;USD</strong>.</p>
+<p>Chỗ thứ hai do một người đọc chưa xem bài tìm ra. Cụm <em>&quot;Giữ nguyên tốc độ doanh thu 30&nbsp;ngày&quot;</em> bị hiểu thành <em>&quot;phải giữ trong 30&nbsp;ngày&quot;</em>. Con số 30&nbsp;ngày ở đó là <strong>cửa sổ đo</strong> tốc độ doanh thu, không phải một điều kiện thời lượng. Câu đã viết lại cho hết chỗ hiểu hai nghĩa.</p>
 <p>Bài này <strong>không</strong> nói cơ chế hỏng, và <strong>không</strong> nói Lido ngừng mua LDO. Nó nói đúng một chuyện: tới các block ghim, đường doanh thu chưa tạo ra đồng ngân sách mua nào.</p>
 <p>Sai ở đâu, BlockPinned sửa ngay tại đó.</p>
 <p><em>Không phải lời khuyên đầu tư.</em></p>

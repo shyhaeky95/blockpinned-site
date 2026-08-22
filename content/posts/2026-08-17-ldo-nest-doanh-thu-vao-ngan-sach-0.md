@@ -43,7 +43,7 @@ Tiền mua mỗi ngày bằng **( doanh thu mỗi ngày − 109.589 USD ) × 50%
 
 Tốc độ doanh thu 30 ngày là **40,0172 stETH mỗi ngày**. Ở giá **1.909,33 USD** đọc tại block 25.773.271, con số đó thành **76.406 USD mỗi ngày**, tức khoảng **27,9 triệu USD mỗi năm** — dưới mức sàn. Với đầu vào này, phần vượt của phép tính bằng 0, nên tiền mua cũng bằng 0.
 
-Giữ nguyên tốc độ doanh thu 30 ngày, mức giá làm công thức bắt đầu cho ngân sách dương là **2.738,55 USD mỗi stETH**, khoảng **+43%** so với mức giá dùng trong phép đo. Đây không phải một dự báo giá; nó là mức hoà vốn của công thức khi tốc độ doanh thu không đổi. Văn bản đề xuất gốc nêu mốc khoảng 2.700 USD; con số suy ra từ tham số on-chain là 2.738,55 USD, lệch **1,43%**. Cùng giả định đó, mức tương ứng với giới hạn 10 triệu USD mỗi năm là **4.107,82 USD**.
+Nếu tốc độ doanh thu giữ nguyên ở mức đo được trong cửa sổ 30 ngày gần nhất, mức giá làm **phần vượt của mỗi lượt bằng 0** là **2.738,55 USD mỗi stETH**, khoảng **+43%** so với mức giá dùng trong phép đo. Ở đúng mức đó, phần thiếu đã tích lại chỉ **ngừng lớn thêm** — nó không làm ngân sách mua thành dương, vì phần đã tích vẫn phải được bù hết trước. Đây không phải một dự báo giá; nó là mức hoà vốn của **dòng** doanh thu so với mức sàn. Văn bản đề xuất gốc nêu mốc khoảng 2.700 USD; con số suy ra từ tham số on-chain là 2.738,55 USD, lệch **1,43%**. Cùng giả định đó, mức tương ứng với giới hạn 10 triệu USD mỗi năm là **4.107,82 USD**.
 
 Điều kiện "giữ nguyên tốc độ doanh thu" là bắt buộc phải đọc kèm: doanh thu stETH mỗi ngày tăng cũng đưa cơ chế qua mức sàn mà giá không cần nhúc nhích.
 
@@ -91,6 +91,16 @@ Nếu gọi bốn giá trị trên tại đúng block 25.771.902 mà ngân sách
 Nếu cộng hai vòng doanh thu không ra đúng 145.443,549059 USD, hoặc hai vòng đó không phải hai vòng đầu tiên trong toàn bộ log của contract nguồn, phần đo doanh thu phải rút.
 
 Nếu tốc độ doanh thu 30 ngày đo lại khác 40,0172 stETH mỗi ngày, hai mức 2.738,55 và 4.107,82 USD mỗi stETH đổi theo — chúng là hệ quả của tốc độ đó chia vào mức sàn, không phải hai con số độc lập.
+
+## Đính chính — 22/08
+
+Bản đăng ngày 17/08 viết: *"mức giá làm công thức bắt đầu cho ngân sách dương là 2.738,55 USD mỗi stETH"*. Câu đó dẫn sai. Nó được sửa ở trên, và câu cũ giữ nguyên tại đây.
+
+Cơ chế có hai đại lượng khác nhau. **Phần vượt của mỗi lượt** là một dòng, tính lại mỗi lần chốt sổ. **Ngân sách mua** là một kho cộng dồn, âm được, và số âm nằm lại trong bộ nhớ contract. Mức 2.738,55 USD làm **dòng** bằng 0. Nó không làm **kho** thành dương: phần đã tích vẫn phải được bù hết trước, và ở đúng mức giá đó thì không có gì để bù.
+
+Ngày 21/08, chuyện này thành quan sát thay vì suy luận. Một địa chỉ ngoài DAO gọi hàm phân bổ hai lần, và ngân sách mua được ghi vào bộ nhớ contract: **âm 374.848,060795 USD**.
+
+Chỗ thứ hai do một người đọc chưa xem bài tìm ra. Cụm *"Giữ nguyên tốc độ doanh thu 30 ngày"* bị hiểu thành *"phải giữ trong 30 ngày"*. Con số 30 ngày ở đó là **cửa sổ đo** tốc độ doanh thu, không phải một điều kiện thời lượng. Câu đã viết lại cho hết chỗ hiểu hai nghĩa.
 
 Bài này **không** nói cơ chế hỏng, và **không** nói Lido ngừng mua LDO. Nó nói đúng một chuyện: tới các block ghim, đường doanh thu chưa tạo ra đồng ngân sách mua nào.
 
