@@ -500,13 +500,25 @@ CA = [
     ("⑰ PRIMER · snapshot dính lại vai card-grid phải NỔ",
      lambda r: sua_builder(r, 'f"report-{panel}"', 'kind'),
      "recap/report Primer sai ranh giới"),
+    # 🔴 VÁ 22/08 — HAI CA NÀY TỪNG BÁM VÀO NỘI DUNG MỘT BÀI CỤ THỂ, và ngày Primer
+    # SKY lên v6.0 (thân bài sạch emoji trạng thái) thì cả hai **rỗng nghĩa**: tắt bộ
+    # gỡ mà không có gì để gỡ thì cổng không có gì để cắn ⇒ 90/90 tụt xuống 88/90.
+    # May là nó rỗng theo hướng KÊU TO. Nhưng phép sửa KHÔNG phải cắm emoji ngược vào
+    # bài — đó là viết nội dung phục vụ fixture, đúng thứ docstring file này tố cáo.
+    # ⇒ Ca nay **tự mang mồi**: bẻ bộ gỡ VÀ chèn dấu, nên nó thử CỔNG chứ không thử
+    # xem hôm nay bài có tình cờ chứa dấu nào không.
     ("⑰ PRIMER · tam giác cảnh báo lọt lại mặt đọc phải NỔ",
-     lambda r: sua_builder(r, '("🔴", "🟢", "🔵", "⚪", "⚠️", "⚠"):',
-                           '("🔴", "🟢", "🔵", "⚪"):'),
+     # hai vết bẻ: ⑴ bỏ ⚠️ khỏi bộ gỡ ⑵ chèn một ⚠️ để bộ gỡ có cơ hội bỏ sót.
+     # Cổng ở `build.py` giữ NGUYÊN tuple của nó (không có dấu `:` cuối) nên vẫn soi ⚠️.
+     lambda r: (sua_builder(r, '("🔴", "🟢", "🔵", "⚪", "⚠️", "⚠"):',
+                            '("🔴", "🟢", "🔵", "⚪"):'),
+                sua_builder(r, 'story = _bo_cham_trang_thai_primer(story)',
+                            'story = _bo_cham_trang_thai_primer(story + "<p>⚠️ mồi</p>")')),
      "còn emoji trạng thái trong mặt đọc"),
     ("⑰ PRIMER · emoji trạng thái lọt lại mặt đọc phải NỔ",
+     # bỏ hẳn lượt gọi bộ gỡ, và chèn mồi ngay tại chỗ nó vừa bị bỏ.
      lambda r: sua_builder(r, 'story = _bo_cham_trang_thai_primer(story)',
-                           'story = story'),
+                           'story = story + "<p>🔴 mồi</p>"'),
      "còn emoji trạng thái trong mặt đọc"),
     ("⑰ PRIMER · con trỏ desk lọt ra caption public phải NỔ",
      lambda r: sua_builder(
