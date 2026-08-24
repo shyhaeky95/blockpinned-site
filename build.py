@@ -3043,6 +3043,13 @@ def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None,
                       f"thẻ og:image sẽ trỏ vào hư không và link dán ra ngoài mất ảnh")
     w, h = kich_thuoc_png(p_anh)
     url = BASE + m.get("duong", "/")
+    preview_title = str(m.get("tieu_de_og", tieu_de))
+    preview_desc = str(m.get("mo_ta", ""))
+    image_version = str(m.get("anh_phien", "")).strip()
+    if image_version and not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", image_version):
+        raise LoiCong(f"anh_phien không hợp lệ ({image_version!r})")
+    image_url = f"{BASE}/anh/{anh}" + (f"?v={image_version}" if image_version else "")
+    image_alt = str(m.get("anh_alt", preview_title)).strip()
     tieng_anh = lang.lower().startswith("en")
     og_locale = "en_US" if tieng_anh else "vi_VN"
     # `canonical` vẫn trỏ URL THẬT trong bản thử — đó là điều đúng: nó nói với máy tìm
@@ -3057,13 +3064,23 @@ def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None,
 <meta property="og:site_name" content="BlockPinned">
 <meta property="og:locale" content="{og_locale}">
 <meta property="og:type" content="{m.get('loai', 'website')}">
-<meta property="og:title" content="{ihtml.escape(m.get('tieu_de_og', tieu_de), quote=True)}">
-<meta property="og:description" content="{ihtml.escape(m.get('mo_ta', ''), quote=True)}">
+<meta property="og:title" content="{ihtml.escape(preview_title, quote=True)}">
+<meta property="og:description" content="{ihtml.escape(preview_desc, quote=True)}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="{BASE}/anh/{anh}">
+<meta property="og:image" content="{image_url}">
+<meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="{w}">
 <meta property="og:image:height" content="{h}">
-<meta name="twitter:card" content="summary_large_image">"""
+<meta property="og:image:alt" content="{ihtml.escape(image_alt, quote=True)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@blockpinned">
+<meta name="twitter:title" content="{ihtml.escape(preview_title, quote=True)}">
+<meta name="twitter:description" content="{ihtml.escape(preview_desc, quote=True)}">
+<meta name="twitter:image" content="{image_url}">
+<meta name="twitter:image:alt" content="{ihtml.escape(image_alt, quote=True)}">"""
+    for field in ("twitter:title", "twitter:description", "twitter:image", "twitter:image:alt"):
+        if f'name="{field}"' not in xt:
+            raise LoiCong(f"thẻ xem trước X thiếu {field}")
     g = goc or "."
     # Cùng luật với `noidx` ngay trên: nhánh TẮT phải ra chuỗi rỗng TUYỆT ĐỐI.
     dai = "\n" + DAI_BAN_THU if BAN_THU else ""
@@ -5230,6 +5247,7 @@ def xuat_fact_en(f: dict, t: dict) -> str | None:
         str(en["title"]), _fact_en_v3(f), t, "../..", mat="page-en", lang="en",
         meta={"mo_ta": str(en["mo_ta"]).strip(), "duong": f"/en/{slug_}/",
               "anh": str(en["image"]), "loai": "article",
+              "anh_phien": "x-card",
               "tieu_de_og": str(en["og_title"])})
     (d / "index.html").write_text(html, encoding="utf-8")
     return f"en/{slug_}/"

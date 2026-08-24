@@ -209,6 +209,11 @@ CA = [
      lambda r: sua_md(r, lambda s: re.sub(r"^anh: .*$", "anh: khong-ton-tai.png", s,
                                           count=1, flags=re.M)),
      "không tồn tại"),
+    ("⑦ XEM TRƯỚC X · thiếu twitter:image phải NỔ",
+     lambda r: sua_builder(r,
+         '<meta name="twitter:image" content="{image_url}">',
+         '<meta name="twitter:image-hong" content="{image_url}">'),
+     "thẻ xem trước X thiếu twitter:image"),
     # ⑧ ĐO LẠI — thêm 30/07. Một nút hỏng TỆ HƠN không có nút: nó hứa người đọc tự kiểm
     # được rồi trả về số 0 hoặc không gì, và số 0 đó bị đọc thành dữ kiện về chain.
     ("⑧ ĐO LẠI · thiếu trường bắt buộc",
