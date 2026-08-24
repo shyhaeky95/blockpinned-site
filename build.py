@@ -197,6 +197,19 @@ LOGO_TOKEN = {
 }
 
 NGUON_ASSET = {
+    # bài LDO 24/08 — nguồn `template/card-ldo-tien-vao-ngan-sach-am-them.html`, dựng
+    # bằng `template/render_card_v2.py` qua canvas `card_editorial.py new` (vỏ
+    # editorial-v2, 15/15 dấu). Card đi qua BỐN vòng, cả bốn bị bác bằng ẢNH trong khi
+    # cổng máy báo xanh: ⑴ trống 40% nửa dưới ⑵ tràn 144px ⑶ nhãn "Ngân sách mua LDO"
+    # dùng HAI lần cho hai đại lượng khác nhau (biến động 3 ngày và số dư hiện tại)
+    # ⑷ cụm đỏ vẫn đọc được thành số dư.
+    # 🔴 Vì sao con số đỏ KHÔNG mang dấu trừ: nhãn đã chở chữ "GIẢM", giữ cả hai là
+    #    phủ định kép — và chính dấu trừ là thứ làm nó đọc thành số dư. Chiều do ba
+    #    thứ cùng nói: chữ "giảm", mũi tên đỏ chạy trái, và màu đỏ.
+    # 🔴 Bề rộng hai mũi tên tỉ lệ với chính hai con số và phải tính CẢ mũi nhọn:
+    #    (330+22) đối (89+22) = 3,171 so với 201.494 : 63.636 = 3,166. Bỏ mũi nhọn ra
+    #    khỏi phép tính thì lệch 0,74% — đã xảy ra thật ở vòng ③.
+    "card-ldo-tien-vao-ngan-sach-am-them.png": "png",
     # Fact F-19 24/08 — nguồn `template/card-uni-tvl-token-trung-ten.html`, dựng bằng
     # `template/render_card_v2.py` qua canvas `card_editorial.py new` (vỏ editorial-v2,
     # 15/15 dấu). Card đi qua BA vòng: bản 1 nhiều chữ, bản 2 lấy token trùng tên làm

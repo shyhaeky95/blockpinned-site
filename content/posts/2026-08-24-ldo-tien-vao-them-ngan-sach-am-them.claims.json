@@ -1,0 +1,113 @@
+{
+ "claims": [
+  {
+   "id": "C1",
+   "text": "Tại Ethereum block 25.825.413, ngân sách dùng để mua LDO của contract phân bổ 0xaa568141c051f2d1132b110f8391f18d48e8d889 bằng −438.484,488487 USD, tổng doanh thu đã ghi nhận bằng 766.866,023026 USD, và số sự kiện mua trong toàn bộ lịch sử contract bằng 0.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Đọc budgetUSD() và lastTotalRevenueUSD() tại block 25.825.413 (2026-08-24T13:43:47Z). Đếm log Allocated(address,address,uint256,uint256) của contract từ block 25.700.000 tới block ghim: 0. Đọc lại toàn bộ một lượt nữa tại block 25.825.714 (14:43:59Z) — không đổi. Control dương: đọc lại hai block đã in ở bài trước, 25.803.735 và 25.811.745, tái lập nguyên văn −374.848,060795 và 565.371,878410.",
+   "falsifier": "Gọi hai getter đó tại đúng block 25.825.413 mà ra số khác, hoặc đếm log Allocated toàn thời gian ra khác 0.",
+   "khong_do_lai": "Getter `budgetUSD()` trả số nguyên CÓ DẤU 256 bit. Nút đo lại của trang giải mỗi word bằng BigInt không đổi bù hai, nên một giá trị âm sẽ hiện thành một con số cỡ 1,16e77 — sai và gây hiểu nhầm. Đọc bằng lệnh eth_call rồi tự trừ 2^256 khi bit cao bằng 1.",
+   "log": [
+    {
+     "ngay": "2026-08-24",
+     "ghi": "Đo tại block 25.825.413, đọc lại toàn bộ tại block 25.825.714 lúc 21h43 giờ Việt Nam ngay trước khi đăng — không đổi. Control dương: hai block đã in ở bài 17/08 tái lập nguyên văn.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C2",
+   "text": "Giữa block 25.803.735 và block 25.824.703, tổng doanh thu ghi nhận của contract phân bổ tăng 201.494,144615 USD trong khi ngân sách mua LDO giảm 63.636,427692 USD.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Bốn lời gọi: budgetUSD() và lastTotalRevenueUSD() tại block 25.803.735 (ngay sau lượt chốt sổ thứ hai) và tại block 25.824.703 (ngay sau lượt thứ ba). 565.371,878410 → 766.866,023026 và −374.848,060795 → −438.484,488487.",
+   "falsifier": "Đọc bốn giá trị tại hai block đó mà hai hiệu số không ra đúng hai con số trên.",
+   "khong_do_lai": "Đây là HIỆU giữa hai block lịch sử. Nút đo lại chỉ gọi được tại block mới nhất, nên nó không dựng lại được phép trừ này; và budgetUSD() còn vướng vấn đề số có dấu nói ở C1.",
+   "log": [
+    {
+     "ngay": "2026-08-24",
+     "ghi": "Hiệu này chỉ đo được sau lượt chốt sổ thứ ba ngày 24/08. Trước đó bài chỉ có một mốc, nên không có phép trừ nào để làm.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C3",
+   "text": "Con số −438.484,488487 USD tái lập được từ công thức của chính contract: một nửa của hiệu giữa doanh thu đã ghi nhận 766.866,023026 USD và 15 ngày phí dự trữ ở mức 109.589 USD mỗi ngày.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "0,5 × (766.866,023026 − 15 × 109.589) = −438.484,488487, lệch 0 so với giá trị đọc trên chuỗi. Số ngày suy từ chính contract: reserveAnchorTS() 1787616000 trừ activationTS() 1786320000 bằng 1.296.000 giây, đúng 15 ngày. Tỷ lệ chia lấy từ surplusShareBP() = 5000.",
+   "falsifier": "Phép tính đó ra số khác con số đọc trên chuỗi, hoặc ba tham số đầu vào đọc tại block ghim khác giá trị đã nêu.",
+   "khong_do_lai": "Đây là một phép kiểm số học trên ba giá trị đã đọc, không phải một lời gọi contract đơn lẻ.",
+   "log": [
+    {
+     "ngay": "2026-08-24",
+     "ghi": "Bản đầu của bài lấy số ngày phí dự trữ theo lịch (14,47 ngày). Sai: contract tính theo ngày tròn và làm tròn LÊN, nên phải là 15. Số ngày nay suy từ chính hai getter của contract chứ không tính tay.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C4",
+   "text": "Ba giao dịch phát ra sự kiện chốt sổ của contract phân bổ, tại block 25.803.732, 25.803.734 và 25.824.702, đều có trường from bằng 0x64c0ff5c25925acb33d68f79ad728fd63361ffce, và địa chỉ đó không có mã contract.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Lấy log Checkpoint(uint256,uint256,int256,int256) của contract phân bổ, rồi eth_getTransactionByHash từng hash: cả ba trả cùng một from và cùng chữ ký hàm 0xabaa9916, tức allocate(). eth_getCode của địa chỉ đó trả 0x, tức 0 byte.",
+   "falsifier": "Một trong ba giao dịch có from khác, hoặc eth_getCode của địa chỉ đó trả về khác rỗng.",
+   "khong_do_lai": "Phải đọc trường from của giao dịch và mã tại một địa chỉ; nút đo lại chỉ chạy được eth_call trả về một số.",
+   "log": [
+    {
+     "ngay": "2026-08-24",
+     "ghi": "Ba lượt gọi ban đầu tưởng là hai; lượt thứ ba xảy ra 11:21:35Z ngày 24/08, sau khi bản thảo đã viết xong, và bị bắt ở lượt đo lại pin bắt buộc trước khi dựng trang.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C5",
+   "text": "Tại block 25.825.413, sàn giá stETH của contract phân bổ đọc ra 0, tức cơ chế không có cổng giá.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "minStEthPriceUSD() trả 0 tại block ghim. Kiểm chống mù: cùng contract, cùng đường đọc, các getter khác trả khác 0 — reserveDailyRateUSD() 109.589, dailyCapUSD() 50.000, yearlyCapUSD() 10.000.000 — nên số 0 là con số contract thật sự trả về, không phải dấu hiệu công cụ hỏng.",
+   "falsifier": "Gọi minStEthPriceUSD() trên contract phân bổ tại đúng block 25.825.413 mà trả về khác 0 thì câu 'cơ chế không có cổng giá' sai, và mọi đoạn nói cơ chế chỉ trừ phí dự trữ phải viết lại.",
+   "do_lai": {
+    "chain": "ethereum",
+    "to": "0xaa568141c051f2d1132b110f8391f18d48e8d889",
+    "ky": "minStEthPriceUSD()",
+    "tham_so": [],
+    "cong_thuc": {
+     "tu": 0,
+     "thap_phan": 18
+    },
+    "don_vi": "USD",
+    "chu_so": 2,
+    "so_ghim": 0.0
+   },
+   "log": [
+    {
+     "ngay": "2026-08-24",
+     "ghi": "Bản đầu mô tả số 0 này bằng một cụm mà cổng ngôn ngữ của trang đã khai tử — cụm đó giả định có một mức giá đúng mà bài không đo được. Đã đổi thành: con số contract thật sự trả về.",
+     "nguon": ""
+    }
+   ]
+  },
+  {
+   "id": "C6",
+   "text": "Dự đoán ghi trước: tới hết 2026-09-24, số sự kiện mua trên contract phân bổ 0xaa568141c051f2d1132b110f8391f18d48e8d889 vẫn bằng 0.",
+   "status": "ĐANG ĐỨNG",
+   "ghim": "Nền tại block 25.825.413: log Allocated toàn thời gian bằng 0, ngân sách mua ở −438.484,488487 USD, và hàm allocate() ai gọi cũng được nên dự đoán này không dựa vào việc không ai bấm.",
+   "falsifier": "Một sự kiện Allocated phát ra ở bất kỳ block nào tới hết 2026-09-24T23:59:00Z thì dự đoán này sai. Không dời hạn sau khi đã thấy giao dịch.",
+   "han": "2026-09-24",
+   "han_ghi": "Ngày này phân định việc contract có mua đồng LDO đầu tiên trong cửa 24/08 tới 24/09 hay không; phải ghi kết quả tại trang này kể cả khi dự đoán sai.",
+   "ghi_truoc": {
+    "ngay": "2026-08-24",
+    "noi": "trang bài này trên blockpinned.com, mục sổ claim — ghi cùng ngày đăng 24/08/2026",
+    "so": "số sự kiện mua vẫn bằng 0 tới hết 2026-09-24"
+   },
+   "khong_do_lai": "Đây là dự đoán về một sự kiện chưa xảy ra; phân định bằng cách đếm log trong cửa sổ thời gian, không bằng một giá trị đọc tại một block.",
+   "log": [
+    {
+     "ngay": "2026-08-24",
+     "ghi": "Ghi trước ngày đăng, khi số sự kiện mua đang bằng 0 và ngân sách đang ở −438.484,488487 USD.",
+     "nguon": ""
+    }
+   ]
+  }
+ ]
+}
