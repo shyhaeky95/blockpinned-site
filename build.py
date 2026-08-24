@@ -197,6 +197,18 @@ LOGO_TOKEN = {
 }
 
 NGUON_ASSET = {
+    # Fact F-19 24/08 — nguồn `template/card-uni-tvl-token-trung-ten.html`, dựng bằng
+    # `template/render_card_v2.py` qua canvas `card_editorial.py new` (vỏ editorial-v2,
+    # 15/15 dấu). Card đi qua BA vòng: bản 1 nhiều chữ, bản 2 lấy token trùng tên làm
+    # trục — user bác cả hai ("ko nên lấy SAND làm chính, lấy việc TVL ảo mà nhiều bên
+    # đang trích sai"), bản 3 để con số bị trích làm tiêu đề và cắt còn bốn tầng.
+    # 🔴 CẤM viết trên card rằng nguồn giá "lấy giá của SAND thật" — cơ chế đó là
+    #    INFERRED (`UNI/FACTS.md §60.3`), card chỉ được chở phần quan sát được: hai
+    #    nguồn giá cho CÙNG một địa chỉ lệch nhau ~2,5e8 lần. CẤM gọi 22 USD là "giá
+    #    thật" hay "giá thanh lý" — khối lượng 24 giờ của token đó cỡ 1 USD.
+    # 🔴 Cổng tràn của render_card_v2 ĐÃ IN "qua" cho một bản mà ảnh thật bị dải chân
+    #    đỏ cắt mất dòng cuối; nghiệm thu bản này bằng cách MỞ ẢNH, không đọc dòng PASS.
+    "card-uni-tvl-token-trung-ten.png": "png",
     # bài CFG 20/08 — nguồn `template/card-cfg-dieu-gi-dung-sau-cu-sup.html`, dựng bằng
     # `template/render_card_v2.py` qua pipeline editorial. Bản 1 (hai vế "0 lần / chưa
     # có giá" nối con nhộng 1 ĐỔI 1) bị user BÁC cùng ngày: "nhét 3 câu chuyện cùng lúc,

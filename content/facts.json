@@ -334,6 +334,63 @@
     "telegram_doi_chieu": "/58 chữ 2.505 ký tự — so với bản xuất KHỚP TUYỆT ĐỐI 2.505/2.505 sau chuẩn hoá khoảng trắng, tức phủ 100% thân tin. 10/10 mỏ neo có mặt (640 · 0,19970 · 0,159746 · 7 ví · 36 lượt · 29.792.362 · 29.946.913 · 0,2% · 409801 · 166841f7); 0 dấu '**', 0 '##', 0 dấu ống.",
     "web": "https://blockpinned.com/facts/#uniswap-tra-thuong-cho-nguoi-la"
    }
+  },
+  {
+   "id": "uni-tvl-6ty-token-trung-ten",
+   "ngay": "2026-08-24",
+   "cau": "Từ hôm qua, nhiều nơi dẫn lại một con số: Uniswap v4 vừa lập đỉnh, gần 6,6 tỷ USD nằm trong các bể thanh khoản của nó. 87% con số đó nằm trên BNB Chain, và đo lại thì 99% giá trị ở đó đến từ một token cũng mang tên SAND — không phải SAND của The Sandbox, mà một token trùng tên phát hành gần 12 nghìn tỷ đơn vị. Bảng giá đang định nó ở mức 0,0447 USD, trong khi thị trường của chính token đó quote thấp hơn khoảng 252 triệu lần.",
+   "so": "Cùng một số dư 125,41 tỷ đơn vị: mark theo bảng giá ra 5,60 tỷ USD, mark theo market quote ra 22 USD.",
+   "block": "BNB Chain block 117.739.591 · 10h56 ngày 24/08/2026 giờ VN (03:56Z); hai mức giá đọc lại 11h08 (04:08Z)",
+   "lenh": "curl -sS https://bsc-dataseed.bnbchain.org -H 'content-type: application/json' -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"eth_call\",\"params\":[{\"to\":\"0xac531eb26ca1d21b85126de8fb87e80e09002dcf\",\"data\":\"0x70a0823100000000000000000000000028e2ea090877bf75740558f6bfb36a5ffee9e9df\"},\"latest\"]}'",
+   "chan": "Đây không phải chuyện trang dữ liệu bịa số — chính họ có cơ chế loại token bị gán sai giá, và trường hợp này chưa được loại lúc BlockPinned đo.",
+   "khoang_cach": {
+    "tin": "Một dòng TVL trên dashboard là số tiền thật đang nằm trong giao thức",
+    "o_dau": "Hỏi cùng một địa chỉ token ở hai nguồn giá: một nguồn trả 0,0447 USD, nguồn kia trả 0,0000000001774 USD — còn số dư trong kho thanh khoản thì đọc trực tiếp từ sổ cái công khai"
+   },
+   "card": {
+    "kicker": "UNISWAP V4",
+    "figure": "22 USD",
+    "label": "CÙNG SỐ DƯ, MARK THEO MARKET QUOTE",
+    "readout": "balanceOf(PoolManager) → 125.410.226.751,92",
+    "he_qua": "SAI GIÁ → SAI TVL",
+    "anchor": "BNB CHAIN · BLOCK 117.739.591 · 24/08/2026 · 03:56Z",
+    "kiem": [
+     {
+      "file": "data/verify_fact_uni_tvl_2026-08-24.json",
+      "duong": "so_du_khop_ban_da_dang",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact_uni_tvl_2026-08-24.json",
+      "duong": "symbol_doc_tu_contract_la_SAND",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact_uni_tvl_2026-08-24.json",
+      "duong": "totalSupply_gap_hon_600000_lan_ban_binance_peg",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact_uni_tvl_2026-08-24.json",
+      "duong": "hai_nguon_gia_lech_hon_1e8_lan",
+      "bang": true
+     },
+     {
+      "file": "data/verify_fact_uni_tvl_2026-08-24.json",
+      "duong": "control_am_dia_chi_bia_phai_rong",
+      "bang": true
+     }
+    ],
+    "bien_the": "muc"
+   },
+   "dang": {
+    "x": "https://x.com/blockpinned/status/2091749306596499746",
+    "x_reply": "https://x.com/blockpinned/status/2091749311826776387",
+    "telegram": "https://t.me/blockpinned/87",
+    "luc": "2026-08-24 · giờ VN",
+    "anh": "card-uni-tvl-token-trung-ten.png",
+    "doi_chieu": "Telegram khớp 3.043/3.043 ký tự sau chuẩn hoá khoảng trắng — phủ 100% thân tin. oEmbed X chỉ phủ 36,7% bài chính và 7,3% reply (200 ký tự đầu của cả hai khớp nguyên văn), nên câu \"bản đăng khớp bản xuất\" chỉ đứng nhờ Telegram, không nhờ X — RULES §2b ĐỘ PHỦ."
+   }
   }
  ]
 }
