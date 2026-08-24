@@ -8,6 +8,7 @@ mau: 🟡
 ghim: Ba lượt gọi hàm phân bổ đọc tại Ethereum block 25.803.732, 25.803.734 và 25.824.702 — tức 20h12 và 20h13 ngày 21/08, rồi 18h21 ngày 24/08/2026 giờ Việt Nam (13:12:47Z · 13:13:11Z · 11:21:35Z). Trạng thái hợp đồng, tham số và nhịp doanh thu đọc tại block 25.825.413, tức 20h43 ngày 24/08 giờ Việt Nam (13:43:47Z).
 mo_ta: Cơ chế buyback LDO của Lido ghi nhận thêm 201.494 USD doanh thu trong ba ngày, nhưng ngân sách dùng để mua LDO vẫn đi từ âm 374.848 xuống âm 438.484 USD, và số lượt mua vẫn bằng 0.
 anh: card-ldo-tien-vao-ngan-sach-am-them.png
+kenh_x: https://x.com/blockpinned/status/2091907493190615157
 doc_lai: Mốc hoà vốn không phải hằng số — nó bằng phí dự trữ mỗi ngày chia cho nhịp doanh thu, nên nhịp doanh thu đổi thì mốc đổi theo, và đổi cả hai chiều. Bài BlockPinned ngày 17/08 in mốc 2.738,55 USD; bản đo ngày 23/08 ra 2.698,82; tại block ghim của bài này nó là 2.720,91. Ba con số, một công thức, không tham số hợp đồng nào đổi.
 ---
 
