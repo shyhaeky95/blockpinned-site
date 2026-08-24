@@ -5,8 +5,8 @@
    "type": "opposite-direction",
    "eyebrow": "CÙNG BA GIAI ĐOẠN · HAI ĐƠN VỊ",
    "title": "Thị phần đi xuống. Phí đi lên.",
-   "aria": "Qua ba giai đoạn A, B và C, thị phần volume của PancakeSwap trên BSC giảm từ 74,0 xuống 44,4 rồi 36,4 phần trăm; phí PancakeSwap mỗi ngày đi từ 202.808 xuống 155.398 rồi tăng lên 479.026 đô. Hai hàng dùng hai thang đo riêng.",
-   "caption": "Trung vị theo ngày, 27/06–08/08/2026. Hai hàng khác đơn vị; không đọc khoảng cách hình học như một tỷ lệ chung. @BLOCKPINNED",
+   "aria": "Qua ba giai đoạn A, B và C, thị phần volume của PancakeSwap trên BSC giảm từ 76,1 xuống 60,4 rồi 57,7 phần trăm; phí PancakeSwap mỗi ngày đi từ 202.808 xuống 155.398 rồi tăng lên 479.026 đô. Hai hàng dùng hai thang đo riêng.",
+   "caption": "Trung vị theo ngày, 27/06–08/08/2026, đọc lại 24/08 sau khi nguồn tính lại lịch sử. Hai hàng khác đơn vị; không đọc khoảng cách hình học như một tỷ lệ chung. @BLOCKPINNED",
    "claims": [
     "C1"
    ],
@@ -28,20 +28,20 @@
     {
      "label": "THỊ PHẦN VOLUME",
      "note": "PancakeSwap / toàn BSC",
-     "summary": "−37,6 điểm · A → C",
+     "summary": "−18,3 điểm · A → C",
      "tone": "bad",
      "values": [
       {
-       "value": 74.0,
-       "hien": "74,0%"
+       "value": 76.1,
+       "hien": "76,1%"
       },
       {
-       "value": 44.4,
-       "hien": "44,4%"
+       "value": 60.4,
+       "hien": "60,4%"
       },
       {
-       "value": 36.4,
-       "hien": "36,4%"
+       "value": 57.7,
+       "hien": "57,7%"
       }
      ]
     },
@@ -126,14 +126,18 @@
  "claims": [
   {
    "id": "C1",
-   "text": "Trong sáu tuần từ 27/06 đến 08/08/2026, thị phần volume của PancakeSwap trên BSC đi một mạch xuống qua ba giai đoạn: 74,0% rồi 44,4% rồi 36,4%, tính bằng trung vị theo ngày. Cùng ba giai đoạn đó, phí giao dịch ghi nhận trên sàn đi 202.808 đô rồi 155.398 đô rồi 479.026 đô mỗi ngày, tức giai đoạn cuối gấp 3,08 lần giai đoạn giữa.",
-   "status": "ĐANG ĐỨNG",
-   "ghim": "DefiLlama dimension API, chuỗi ngày đã pin kèm sha256 trong artifact CAKE/cache/defillama/llama_{dexs,fees}_bsc_2026-08-10.json.gz · trung vị theo ngày, không phải tổng · ranh giới 12/07 là ngày volume cả chain lần đầu vượt 1 tỷ đô, 30/07 là ngày phí nhảy từ 200.030 lên 447.400 · hai ngày 09/08 và 10/08 bị loại vì nguồn trả 0 cho nhánh AMM",
-   "falsifier": "Lấy lại chuỗi dailyVolume và dailyFees của chain BSC có breakdown theo protocol, cộng mọi khoá chứa chữ PancakeSwap, rồi tính trung vị theo ngày cho ba cửa sổ 27/06–11/07, 12/07–29/07, 30/07–08/08. Ra thị phần không phải 74,0 rồi 44,4 rồi 36,4 phần trăm, hoặc phí không phải 202.808 rồi 155.398 rồi 479.026 đô, thì bảng ba giai đoạn sai. Chú ý phải loại hai ngày cuối chuỗi: ngày nào nhánh AMM trả 0 đồng phí trong khi cột volume vẫn có số thì ngày đó nguồn chưa chốt.",
+   "text": "Trong sáu tuần từ 27/06 đến 08/08/2026, thị phần volume của PancakeSwap trên BSC đi một mạch xuống qua ba giai đoạn: 76,1% rồi 60,4% rồi 57,7%, tính bằng trung vị theo ngày. Cùng ba giai đoạn đó, phí giao dịch ghi nhận trên sàn đi 202.808 đô rồi 155.398 đô rồi 479.026 đô mỗi ngày, tức giai đoạn cuối gấp 3,08 lần giai đoạn giữa. 🔴 Ba con số thị phần ở bản đăng ngày 10/08 là 74,0 rồi 44,4 rồi 36,4 phần trăm; chúng đã được sửa ngày 24/08 vì nhà cung cấp dữ liệu tính lại lịch sử của MẪU SỐ. Phần phí không đổi một đồng nào giữa hai lần đọc.",
+   "status": "ĐÃ SỬA",
+   "ghim": "DefiLlama dimension API, chuỗi ngày đã pin kèm sha256 hai lần: bản 10/08 ở CAKE/cache/defillama/llama_{dexs,fees}_bsc_2026-08-10.json.gz và bản 24/08 ở llama_{dexs,fees}_bsc_2026-08-24.json.gz (sha256 7597ba1c75751203b090879d8a79efda2a7187410feea4d8ba09041058275285 và 3e848a3dfe357d814c69b4c396e6eb8c83f34581ea15a076510ace943dd0a3fe) · trung vị theo ngày, không phải tổng · ranh giới 12/07 là ngày volume cả chain lần đầu vượt 1 tỷ đô, 30/07 là ngày phí nhảy từ 200.030 lên 447.400 · hai ngày 09/08 và 10/08 bị loại vì nguồn trả 0 cho nhánh AMM · con số thị phần dựa trên MẪU SỐ do bên thứ ba dựng và bên đó đã chứng minh được là sửa ngược, nên nó là số một-đường-đo, không phải số neo",
+   "falsifier": "Lấy lại chuỗi dailyVolume và dailyFees của chain BSC có breakdown theo protocol, cộng mọi khoá chứa chữ PancakeSwap, rồi tính trung vị theo ngày cho ba cửa sổ 27/06–11/07, 12/07–29/07, 30/07–08/08. Ra phí không phải 202.808 rồi 155.398 rồi 479.026 đô thì vế phí sai — vế này đo được là bất biến qua hai lần đọc cách 14 ngày, khớp từng đồng ở 44/44 ngày. Vế thị phần thì KHÔNG dùng phép thử đó làm chuẩn được nữa: mẫu số là tổng của cả chain, và nó đã đổi 27,4% giữa hai lần đọc. Muốn bác vế thị phần thì phải dựng một đường đo tổng volume DEX của cả BSC ĐỘC LẬP với DefiLlama, và điều kiện để đường đó có nghĩa là nó phải thấy lại được chuỗi volume PancakeSwap đã biết. Chú ý phải loại hai ngày cuối chuỗi: ngày nào nhánh AMM trả 0 thì bỏ khỏi mọi câu về phí.",
    "log": [
     {
      "ngay": "2026-08-10",
      "ghi": "Đo lần đầu bằng hai cửa sổ và ra câu thị phần giảm từ khoảng 45% xuống 35%. Soát lại bằng trung vị thì cửa sổ nền đã nằm trong sóng khối lượng rồi, và trung vị hai cửa sổ đó là 34,9% với 37,0%, tức gần như không đổi. Chia lại thành ba giai đoạn mới ra bảng hiện tại."
+    },
+    {
+     "ngay": "2026-08-24",
+     "ghi": "Bài đã tự đăng ký điều kiện này trong ô Đọc lại: ba giai đoạn giữ nguyên với điều kiện DefiLlama không tính lại lịch sử. Điều kiện đã nổ. Đọc lại đúng những ngày cũ vào 24/08, tổng volume DEX cả BSC trong cửa sổ 12/07–09/08 thấp hơn bản đọc 10/08 là 10,34 tỷ đô, tức 27,4%; ba nguồn bị sửa: Native Swap giảm 98,2%, GMGN về 0, Flap sh giảm 71,0%. Số protocol mỗi ngày không đổi nên đây là sửa giá trị chứ không phải bỏ nguồn. Vì thị phần là một phép chia, mẫu số đổi thì thương đổi: 74,0/44,4/36,4 thành 76,1/60,4/57,7. Chạy đúng đoạn tính của bài lên bản raw đã lưu ngày 10/08 ra lại con số cũ tới từng chữ số, nên phép tính không đổi, dữ liệu nguồn đổi. Số của chính PancakeSwap khớp từng đồng ở 44/44 ngày, và ở cấp toàn giao thức sáu tháng đủ 01–06/2026 lệch 0,0%. Hướng của bài giữ nguyên, độ lớn mất hơn một nửa: mất 18,3 điểm thay vì 37,6."
     }
    ]
   },

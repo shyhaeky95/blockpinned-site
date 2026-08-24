@@ -1,20 +1,32 @@
 ---
-title: PancakeSwap mất gần một nửa thị phần BSC trong sáu tuần, nhưng phí giao dịch trên sàn tăng 3,1 lần vì volume dời sang pool có mức phí cao gấp 100 lần
-tieu_de_ngan: PancakeSwap mất gần nửa thị phần BSC, nhưng phí giao dịch lại tăng 3,1 lần
+title: PancakeSwap mất một phần tư thị phần BSC trong sáu tuần, nhưng phí giao dịch trên sàn tăng 3,1 lần vì volume dời sang pool có mức phí cao gấp 100 lần
+tieu_de_ngan: PancakeSwap mất một phần tư thị phần BSC, nhưng phí giao dịch lại tăng 3,1 lần
 token: CAKE
 date: 2026-08-10
 mau: 🟡
 ghim: BSC block 115.070.912 (10/08/2026 14h22 giờ Việt Nam) — ví đốt 0xceba60280fb0ecd9a5a26a1552b90944770a4a0e giữ 59.637.099,55 CAKE chưa đốt, trong đó 599.032,72 là tiền phí của tuần đang chạy. Chuỗi cycle tuần pin tại block 115.047.719; phí pool TUT/WBNB đo trong cửa sổ block 114.861.872 đến 115.053.819; allocPoint đọc tại block 115.053.639
-mo_ta: Thị phần volume của PancakeSwap trên BSC đi từ 74,0% xuống 36,4% qua ba giai đoạn, trong khi phí thu được tăng 3,1 lần. Phần tới được CAKE chỉ tăng 1,4 lần.
+mo_ta: Thị phần volume của PancakeSwap trên BSC đi từ 76,1% xuống 57,7% qua ba giai đoạn, trong khi phí thu được tăng 3,1 lần. Phần tới được CAKE chỉ tăng 1,4 lần. Đã đính chính 24/08.
 anh: card-cake-thi-phan-phi-muc.png
 kenh_x: https://x.com/blockpinned/status/2086712976091046317
-doc_lai: Số của tuần đang chạy trôi cho tới lúc lệnh đốt tuần thực thi, nên nó là mức sàn chứ không phải con số cuối. Ba giai đoạn đã đóng thì giữ nguyên, với điều kiện DefiLlama không tính lại lịch sử và Dune không sửa bảng dex.trades. Giá CAKE và BNB là ảnh chụp theo giờ đã ghi.
+doc_lai: Điều kiện tôi ghi ở đây khi đăng — "với điều kiện DefiLlama không tính lại lịch sử" — ĐÃ NỔ ngày 24/08, và ba con số thị phần đã được sửa theo bản đọc mới; xem khối đính chính ở đầu bài. Số phí và số CAKE đốt không đổi. Số của tuần đang chạy trôi cho tới lúc lệnh đốt tuần thực thi, nên nó là mức sàn chứ không phải con số cuối. Giá CAKE và BNB là ảnh chụp theo giờ đã ghi.
 reading_layout: centered
 ---
 
-**Thị phần volume của PancakeSwap trên BSC đi một mạch từ 74,0% xuống 36,4% qua ba giai đoạn của sáu tuần. Cùng lúc đó, phí giao dịch tạo ra trên sàn tăng 3,1 lần. Hai đường này không mâu thuẫn: volume dời từ pool mức phí 0,01% sang pool mức phí 0,25% và 1%.**
+**Thị phần volume của PancakeSwap trên BSC đi một mạch từ 76,1% xuống 57,7% qua ba giai đoạn của sáu tuần. Cùng lúc đó, phí giao dịch tạo ra trên sàn tăng 3,1 lần. Hai đường này không mâu thuẫn: volume dời từ pool mức phí 0,01% sang pool mức phí 0,25% và 1%.**
 
 Nhưng phần tới được token thì không tăng theo kịp. Gross fee tăng 3,1 lần, lượng CAKE bị đốt từ nguồn phí chỉ tăng 1,4 lần, và tỷ lệ chuyển hoá giữa hai đại lượng đó rơi từ khoảng 47% xuống 21%.
+
+> **ĐÍNH CHÍNH — 24/08/2026.** Khi đăng bài này tôi viết trong ô *Đọc lại*: ba giai đoạn giữ nguyên **"với điều kiện DefiLlama không tính lại lịch sử"**. Điều kiện đó đã nổ, nên đây là phần thi hành nó.
+>
+> Đọc lại đúng những ngày cũ vào 24/08: tổng volume DEX của cả BSC trong cửa sổ 12/07–09/08 thấp hơn bản đọc ngày 10/08 **10,34 tỷ đô, tức 27,4%**. Ba nguồn bị nhà cung cấp tính lại — `Native Swap` giảm 98,2%, `GMGN` về 0, `Flap sh` giảm 71,0%. Số nguồn mỗi ngày không đổi, nên đây là sửa **giá trị**, không phải bỏ nguồn.
+>
+> Thị phần là một phép chia, mẫu số đổi thì thương đổi. Ba con số **74,0 → 44,4 → 36,4%** của bản gốc nay đọc ra **76,1 → 60,4 → 57,7%**. Tôi đã sửa chúng trong bài, kể cả tiêu đề. **Hướng giữ nguyên** — thị phần vẫn giảm qua cả ba giai đoạn — nhưng độ lớn mất hơn một nửa: **18,3 điểm thay vì 37,6**.
+>
+> **Số của chính PancakeSwap thì không đổi một đồng.** Volume và phí của sàn khớp từng đồng ở cả **44/44 ngày** giữa hai lần đọc; ở cấp toàn giao thức, sáu tháng đầy đủ 01–06/2026 lệch **0,0%**. Nên phần còn lại của bài — phí 202.808 đô rồi 155.398 đô rồi 479.026 đô, phí trên mỗi đô volume 4,07 bps rồi 3,47 bps rồi 7,36 bps, v2 đứng yên 25,5–26,5 bps, tỷ trọng mức phí, lượng CAKE đốt, tỷ lệ chuyển hoá — dựng lại được nguyên vẹn hôm nay.
+>
+> Cách tự kiểm câu vừa rồi: bản dữ liệu thô ngày 10/08 đã được lưu và băm sha256 từ lúc đăng. Chạy đúng đoạn tính của bài lên bản lưu đó ra lại **74,0%** rồi **44,4%** rồi **36,4%** tới từng chữ số. Phép tính không đổi; dữ liệu nguồn đổi.
+>
+> Điều tôi **chưa** làm được: hiện chỉ có một đường đo tổng volume DEX của cả BSC, và chính đường đó vừa tự sửa mình. Nên con số thị phần mới cũng là số một-đường-đo, không phải số neo — đọc nó với đúng trọng lượng đó.
 
 {{visual:thi-phan-phi-nguoc-huong}}
 
@@ -24,17 +36,17 @@ Trung vị chứ không phải tổng, để một ngày đột biến không k�
 
 | trung vị/ngày | A. trước (27/06–11/07) | B. sóng khối lượng (12/07–29/07) | C. sóng phí (30/07–08/08) |
 |---|---:|---:|---:|
-| volume DEX cả chain BSC | 674 triệu đô | **1,02 tỷ** (+51%) | **1,77 tỷ** |
+| volume DEX cả chain BSC | 657 triệu đô | **809 triệu** (+23%) | **1,18 tỷ** |
 | volume PancakeSwap | 491 triệu đô | **477 triệu** (−3%) | 630 triệu |
-| **thị phần PancakeSwap** | **74,0%** | **44,4%** | **36,4%** |
+| **thị phần PancakeSwap** | **76,1%** | **60,4%** | **57,7%** |
 | phí PancakeSwap | 202.808 đô | **155.398** (−23%) | **479.026** (×3,08 so với B) |
 | phí trên mỗi đô volume | 4,07 bps | 3,47 bps | **7,36 bps** |
 
 Ranh giới không chọn cho đẹp. **12/07** là ngày volume cả chain lần đầu vượt 1 tỷ đô. **30/07** là ngày phí PancakeSwap nhảy từ 200.030 lên 447.400 trong một ngày rồi ở lại mức đó.
 
-Giai đoạn B là ca sạch nhất của cả bài: volume cả chain tăng 51% mà phí PancakeSwap **giảm** 23%. Một đợt sóng đi qua nhà mà không để lại đồng nào.
+Giai đoạn B là ca sạch nhất của cả bài: volume cả chain tăng 23% mà phí PancakeSwap **giảm** 23%. Một đợt sóng đi qua nhà mà không để lại đồng nào.
 
-Dải đầy đủ, không phải trung vị — thị phần **63,9–77,5%** rồi **17,5–76,9%** rồi **30,2–59,3%**; phí mỗi ngày **120.793–250.783** rồi **102.419–257.428** rồi **409.740–1.294.920**.
+Dải đầy đủ, không phải trung vị — thị phần **67,1–78,4%** rồi **31,5–78,3%** rồi **34,9–68,9%**; phí mỗi ngày **120.793–250.783** rồi **102.419–257.428** rồi **409.740–1.294.920**.
 
 Ranh giới ba giai đoạn chia theo volume và phí của cả chain, **không** theo một phép phân loại token nào. Bài không đo bao nhiêu phần trăm của đợt này là token meme.
 
