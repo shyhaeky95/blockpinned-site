@@ -209,6 +209,9 @@ NGUON_ASSET = {
     # 🔴 Cổng tràn của render_card_v2 ĐÃ IN "qua" cho một bản mà ảnh thật bị dải chân
     #    đỏ cắt mất dòng cuối; nghiệm thu bản này bằng cách MỞ ẢNH, không đọc dòng PASS.
     "card-uni-tvl-token-trung-ten.png": "png",
+    # English evidence receipt của cùng Fact F-19. Nguồn là một card RIÊNG để link
+    # dán vào thread tiếng Anh không hiện bìa tiếng Việt; số vẫn lấy từ cùng snapshot.
+    "card-uni-v4-tvl-price-mismatch-en.png": "png",
     # bài CFG 20/08 — nguồn `template/card-cfg-dieu-gi-dung-sau-cu-sup.html`, dựng bằng
     # `template/render_card_v2.py` qua pipeline editorial. Bản 1 (hai vế "0 lần / chưa
     # có giá" nối con nhộng 1 ĐỔI 1) bị user BÁC cùng ngày: "nhét 3 câu chuyện cùng lúc,
@@ -2874,29 +2877,36 @@ JS_HIEU_UNG = """
 """
 
 
-def dieu_huong(goc: str, dang: str) -> str:
+def dieu_huong(goc: str, dang: str, lang: str = "vi") -> str:
     """Thanh điều hướng. `dang` là mục đang mở — nó KHÔNG được là một link tự trỏ."""
     g = goc or "."
+    tieng_anh = lang.lower().startswith("en")
+    nhan_en = {"": "Home", "bai/": "Articles", "token/": "Token",
+               "track-record/": "Track record", "facts/": "Facts"}
     ra = []
     for duong, nhan in MUC_DIEU_HUONG:
         if duong and not CO_TRANG.get(duong):
             continue
+        if tieng_anh:
+            nhan = nhan_en[duong]
         lop = ' class="tai"' if duong == dang else ""
         ra.append(f'<a href="{g}/{duong}"{lop}>{nhan}</a>')
+    aria = "Main navigation" if tieng_anh else "Điều hướng chính"
+    doi_nen = "Toggle light and dark mode" if tieng_anh else "Đổi nền sáng tối"
     if BO_CUC == "d2":
         return ('<nav class="dieu">' + "".join(ra)
                 + '<button class="nut-nen" id="nut-nen" type="button" '
-                  'title="Đổi nền sáng/tối" aria-label="Đổi nền sáng/tối">☀ / ☾</button></nav>')
+                  f'title="{doi_nen}" aria-label="{doi_nen}">☀ / ☾</button></nav>')
     # v3: nút đổi nền RA NGOÀI <nav>, và thêm nút mở menu ở khổ hẹp. Hai thứ này là
     # cấu trúc chứ không phải trang trí — `v3.css` neo `.nut-menu` và `.nut-nen` vào
     # lưới của `.dau`, còn `v3.js` tìm `.nut-menu` bằng `aria-controls` trỏ `#site-nav`.
     # Để nút nền nằm trong nav như D2 thì ở khổ hẹp nó bị gập theo menu và mất luôn.
     return ('<button class="nut-menu" type="button" aria-controls="site-nav" '
             'aria-expanded="false">Menu <span>↘</span></button>'
-            '<nav class="dieu" id="site-nav" aria-label="Điều hướng chính">'
+            f'<nav class="dieu" id="site-nav" aria-label="{aria}">'
             + "".join(ra) + '</nav>'
             '<button id="nut-nen" class="nut-nen" type="button" '
-            'aria-label="Đổi nền sáng tối" aria-pressed="false">◐</button>')
+            f'aria-label="{doi_nen}" aria-pressed="false">◐</button>')
 
 
 def kich_thuoc_png(p: pathlib.Path) -> tuple:
@@ -3033,6 +3043,8 @@ def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None,
                       f"thẻ og:image sẽ trỏ vào hư không và link dán ra ngoài mất ảnh")
     w, h = kich_thuoc_png(p_anh)
     url = BASE + m.get("duong", "/")
+    tieng_anh = lang.lower().startswith("en")
+    og_locale = "en_US" if tieng_anh else "vi_VN"
     # `canonical` vẫn trỏ URL THẬT trong bản thử — đó là điều đúng: nó nói với máy tìm
     # kiếm rằng bản phục vụ mới là bản chính. `noindex` đi kèm để không ai phải tin
     # vào mỗi một tín hiệu.
@@ -3043,7 +3055,7 @@ def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None,
     xt = f"""<meta name="description" content="{ihtml.escape(m.get('mo_ta', ''), quote=True)}">{noidx}
 <link rel="canonical" href="{url}">
 <meta property="og:site_name" content="BlockPinned">
-<meta property="og:locale" content="vi_VN">
+<meta property="og:locale" content="{og_locale}">
 <meta property="og:type" content="{m.get('loai', 'website')}">
 <meta property="og:title" content="{ihtml.escape(m.get('tieu_de_og', tieu_de), quote=True)}">
 <meta property="og:description" content="{ihtml.escape(m.get('mo_ta', ''), quote=True)}">
@@ -3071,13 +3083,12 @@ def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None,
 <header class="dau"><div class="khung">
   <span class="mark">{MARK_SVG}</span>
   <a class="ten" href="{goc or '.'}/">Block<span>Pinned</span></a>
-  <span class="tag">số nào cũng truy ngược được</span>
-  {dieu_huong(goc, muc)}
+  <span class="tag">{'every number is traceable' if tieng_anh else 'số nào cũng truy ngược được'}</span>
+  {dieu_huong(goc, muc, lang)}
 </div></header>
 <main class="khung">{than}</main>
 <footer><div class="khung">
-  Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá.<br>
-  Không phải lời khuyên đầu tư. ·
+  {'Canonical record. Corrections are made in place, never deleted.<br>Not investment advice. ·' if tieng_anh else 'Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá.<br>Không phải lời khuyên đầu tư. ·'}
   <a href="https://x.com/blockpinned">@blockpinned</a>
 </div></footer>
 <script>{JS_DO_LAI}</script>
@@ -3105,12 +3116,11 @@ def trang(tieu_de: str, than: str, t: dict, goc: str = "", meta: dict = None,
 <header class="dau"><div class="khung">
   <span class="mark">{MARK_SVG}</span>
   <a class="ten" href="{goc or '.'}/">Block<span>Pinned</span></a>
-  {dieu_huong(goc, muc)}
+  {dieu_huong(goc, muc, lang)}
 </div></header>
 <main class="khung">{than}</main>
 <div id="ch-tip"></div>
-<footer><div class="khung"><p>Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá. \
-Không phải lời khuyên đầu tư. · <a href="https://x.com/blockpinned">@blockpinned</a></p></div></footer>
+<footer><div class="khung"><p>{'Canonical record. Corrections are made in place, never deleted. Not investment advice.' if tieng_anh else 'Bản chuẩn của mọi bài. Sửa tại chỗ, không xoá. Không phải lời khuyên đầu tư.'} · <a href="https://x.com/blockpinned">@blockpinned</a></p></div></footer>
 <script>{JS_DO_LAI}</script>
 <script>{than_js()}</script>
 </body></html>"""
@@ -5082,6 +5092,149 @@ TRANG_THAI_EN = {"ĐÃ XÁC NHẬN": "CONFIRMED", "ĐANG ĐỨNG": "STANDING",
                  "ĐÃ SỬA": "CORRECTED", "BỊ BÁC": "REFUTED"}
 
 
+# ── BIÊN LAI EN CHO FACT ─────────────────────────────────────────────────────
+# Bài dài đã có `/en/<slug>/`; Fact trước đây chỉ có một anchor trong `/facts/`.
+# Khi seed vào một thread tiếng Anh, anchor đó đặt toàn bộ bằng chứng sau tường ngôn
+# ngữ. Khối opt-in dưới đây sinh một tài liệu KHÁC LOẠI — evidence receipt — không
+# giả làm bản dịch của cả facts hub và không đẻ một bài dài tiếng Việt làm vật đệm.
+
+def _so_fact_en(txt: str) -> set:
+    """Bóc số có ít nhất hai chữ số để canh bề mặt EN với nguồn Fact tiếng Việt.
+
+    Dấu chấm/phẩy chỉ là định dạng locale: `5.69` và `5,69` phải khớp. Trần hai chữ
+    số bắt cả `87%`/`99%` mà `_so_trong()` của bài dài cố ý bỏ để tránh nhiễu.
+    """
+    ra = set()
+    for m in re.finditer(r"\d[\d.,]*\d|\d", txt):
+        n = m.group().replace(",", "").replace(".", "")
+        if len(n) >= 2:
+            ra.add(n)
+    return ra
+
+
+def _chuoi_fact_en(x, bo_qua: frozenset = frozenset({"slug", "url", "image"})) -> list:
+    """Lấy text sẽ đi ra mặt trang, không lấy URL/slug (số trong path không là claim)."""
+    if isinstance(x, str):
+        return [x]
+    if isinstance(x, list):
+        return [s for v in x for s in _chuoi_fact_en(v, bo_qua)]
+    if isinstance(x, dict):
+        return [s for k, v in x.items() if k not in bo_qua for s in _chuoi_fact_en(v, bo_qua)]
+    return []
+
+
+def cong_fact_en(f: dict, o: str) -> None:
+    """Cổng cho khối `en` opt-in của một Fact: đủ mặt, URL sạch, số không tự nở."""
+    en = f.get("en")
+    if en is None:
+        return
+    if not isinstance(en, dict):
+        raise LoiCong(f"{o}.en phải là object")
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(f.get("ngay", ""))):
+        raise LoiCong(f"{o} có biên lai EN nhưng thiếu ngày ISO YYYY-MM-DD")
+    bat_buoc = ("slug", "title", "og_title", "mo_ta", "intro", "claim", "pin",
+                "falsifier", "image")
+    thieu = [k for k in bat_buoc if not str(en.get(k, "")).strip()]
+    if thieu:
+        raise LoiCong(f"{o}.en thiếu trường bắt buộc: {', '.join(thieu)}")
+    slug_ = str(en["slug"]).strip()
+    if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug_):
+        raise LoiCong(f"{o}.en.slug không hợp lệ ({slug_!r})")
+    if not 60 <= len(str(en["mo_ta"]).strip()) <= 200:
+        raise LoiCong(f"{o}.en.mo_ta phải dài 60–200 ký tự")
+    headline_metric = en.get("headline_metric")
+    if (not isinstance(headline_metric, dict)
+            or not str(headline_metric.get("label", "")).strip()
+            or not str(headline_metric.get("value", "")).strip()
+            or not str(headline_metric.get("note", "")).strip()):
+        raise LoiCong(f"{o}.en.headline_metric phải có label/value/note")
+    metrics = en.get("metrics")
+    if (not isinstance(metrics, list) or len(metrics) != 3
+            or any(not isinstance(x, dict) or not str(x.get("label", "")).strip()
+                   or not str(x.get("value", "")).strip() or not str(x.get("note", "")).strip()
+                   for x in metrics)):
+        raise LoiCong(f"{o}.en.metrics phải có đúng 3 ô label/value/note")
+    limits = en.get("limits")
+    if not isinstance(limits, list) or len(limits) < 3 or any(not str(x).strip() for x in limits):
+        raise LoiCong(f"{o}.en.limits phải có ít nhất 3 giới hạn không rỗng")
+    sources = en.get("sources")
+    if (not isinstance(sources, list) or len(sources) < 2
+            or any(not isinstance(x, dict) or not str(x.get("label", "")).strip()
+                   or not re.fullmatch(r"https://[^\s]+", str(x.get("url", "")).strip())
+                   for x in sources)):
+        raise LoiCong(f"{o}.en.sources phải có ít nhất 2 nguồn label + URL https")
+    # Số EN chỉ được định dạng lại, không được sinh thêm. Đây là cổng bắt đúng lỗi
+    # nguy hiểm của một mặt ngôn ngữ thứ hai: câu trông trôi chảy nhưng mang số khác.
+    vn = json.dumps({k: v for k, v in f.items() if k != "en"}, ensure_ascii=False)
+    en_txt = " ".join(_chuoi_fact_en(en))
+    la = _so_fact_en(en_txt) - _so_fact_en(vn)
+    if la:
+        raise LoiCong(f"{o}.en mang số KHÔNG có ở Fact nguồn: {sorted(la)}")
+
+
+def _fact_en_v3(f: dict) -> str:
+    esc, en = ihtml.escape, f["en"]
+    hm = en["headline_metric"]
+    m = en["metrics"]
+    steps = "".join(
+        f'<div class="case-step {"file" if i == 0 else "test" if i == 1 else "state xac"}">'
+        f'<span>0{i + 1} · {esc(x["label"])}</span><strong>{esc(x["value"])}</strong>'
+        f'<small>{esc(x["note"])}</small></div>'
+        + ('<i aria-hidden="true">→</i>' if i < 2 else "")
+        for i, x in enumerate(m))
+    limits = "".join(f"<li>{esc(str(x))}</li>" for x in en["limits"])
+    sources = "".join(
+        f'<li><a href="{esc(str(x["url"]), quote=True)}">{esc(str(x["label"]))}</a></li>'
+        for x in en["sources"])
+    command = esc(str(f["lenh"]))
+    fid = esc(str(f["id"]), quote=True)
+    return f'''<section class="hero hero-article receipt-hero">
+  <span class="ghost-num" aria-hidden="true">TVL</span>
+  <span class="hero-code" aria-hidden="true">EVIDENCE RECEIPT · FACT F-19</span>
+  <div class="article-path" aria-label="Article location"><a href="../../">BlockPinned</a><span>/</span><b>Evidence receipt</b><span>/</span><b>UNI</b><i><span class="dot xac"></span>verified snapshot</i></div>
+  <p class="eyebrow"><span>English evidence layer</span><span class="im">{esc(str(f['ngay']))}</span></p>
+  <h1 class="display">{esc(str(en['title']))}</h1>
+  <p class="subline">{esc(str(en['intro']))}</p>
+  <div class="article-verdict">
+    <div class="heronum article-ratio fact-headline-metric"><p class="l">{esc(hm['label'])}</p><p class="v">{esc(hm['value'])}</p><p class="d">{esc(hm['note'])}</p></div>
+    <div class="case-path" role="img" aria-label="On-chain concentration, PoolManager balance and same-address market quote">{steps}</div>
+  </div>
+</section>
+<nav class="article-map" aria-label="Article sections"><span>Evidence first</span><a href="#fact-claim">Claim</a><a href="#how-to-check">How to check</a><a href="#limits">Limits</a><a href="#sources">Sources</a></nav>
+<section class="article-ledger" aria-labelledby="fact-claim-title">
+  <article class="case-claim xac" id="fact-claim" data-article-claim data-st="xac">
+    <header class="case-claim-head"><span class="case-claim-id">F-19</span><span class="case-claim-status xac"><i aria-hidden="true"></i>VERIFIED SNAPSHOT</span><span class="case-claim-actions"></span></header>
+    <p class="case-claim-text" id="fact-claim-title">{esc(str(en['claim']))}</p>
+    <div class="case-claim-evidence"><p class="case-pin"><span>PINNED AT</span>{esc(str(en['pin']))}</p><p class="case-falsifier"><span>WHAT WOULD FALSIFY THIS CLAIM</span>{esc(str(en['falsifier']))}</p></div>
+  </article>
+</section>
+<section class="than article-body receipt-body">
+  <div class="article-meta"><span><b>FACT</b>F-19</span><span><b>DATE</b>{esc(str(f['ngay']))}</span><span class="article-meta-link"><a href="../../facts/#{fid}">Vietnamese Fact + live command →</a></span></div>
+  <h2 id="how-to-check">How to check</h2>
+  <p>The command below reads the token balance held by Uniswap v4's BNB Chain PoolManager. It uses <code>latest</code>; compare a current read with the pinned snapshot above rather than treating a later balance as the historical value.</p>
+  <ul class="receipt-checks"><li><b>Read the PoolManager balance</b> — <code>{command}</code></li></ul>
+  <h2 id="limits">What this does not cover</h2><ul>{limits}</ul>
+  <h2 id="sources">Sources</h2><ul>{sources}</ul>
+  <p class="receipt-policy">Corrections are made in place and never deleted. This is a measurement note, not investment advice.</p>
+</section>'''
+
+
+def xuat_fact_en(f: dict, t: dict) -> str | None:
+    en = f.get("en")
+    if not en:
+        return None
+    slug_ = str(en["slug"]).strip()
+    d = OUT / "en" / slug_
+    d.mkdir(parents=True, exist_ok=True)
+    html = trang(
+        str(en["title"]), _fact_en_v3(f), t, "../..", mat="page-en", lang="en",
+        meta={"mo_ta": str(en["mo_ta"]).strip(), "duong": f"/en/{slug_}/",
+              "anh": str(en["image"]), "loai": "article",
+              "tieu_de_og": str(en["og_title"])})
+    (d / "index.html").write_text(html, encoding="utf-8")
+    return f"en/{slug_}/"
+
+
 # ═════════════════════════════════════════════════ TRANG CHỦ, BỐ CỤC v3
 # Khu này khác hẳn nhóm mặt ①. Ở đó ba builder codex đọc thẳng bản production nên nội
 # dung đã có chủ; ở đây `fold-home.tpl.html` chỉ có HAI marker và mọi thứ còn lại là
@@ -5728,6 +5881,8 @@ def main() -> None:
     gt = [c for _, _, c in moi_claim if c.get("ghi_truoc")]
     facts = doc_facts()
     cong_facts(facts)          # cổng ⑪ chạy TRƯỚC khi dựng, kể cả khi danh sách rỗng
+    for i, f in enumerate(facts, 1):
+        cong_fact_en(f, f"content/facts.json[{i}]")
     fm_i, body_i = front((CONTENT / "index.md").read_text(encoding="utf-8"), "content/index.md")
     cong_ngon_ngu(body_i, "content/index.md")
     cong_ngoi_xung(body_i, "content/index.md")
@@ -5892,6 +6047,15 @@ def main() -> None:
             encoding="utf-8")
         print(f"  ✓ facts/  ·  {len(facts)} fact")
 
+    # Biên lai EN là opt-in theo từng Fact. Nó đứng cạnh `/en/` của bài dài nhưng
+    # không có trang mục lục riêng: permalink sinh ra để dán trực tiếp vào đối thoại.
+    fact_en_paths = []
+    for f in facts:
+        p_en = xuat_fact_en(f, t)
+        if p_en:
+            fact_en_paths.append((p_en, str(f["ngay"])))
+            print(f"  ✓ {p_en}  ·  biên lai EN của Fact")
+
     # ── sitemap + robots: điều kiện để máy tìm THẤY trang ────────────────────────
     # Thiếu hai file này thì site vẫn sống, chỉ là không ai tìm ra — đúng loại hỏng
     # KHÔNG báo lỗi. lastmod lấy từ ngày bài, không lấy giờ chạy, để hai lần dựng cùng
@@ -5905,6 +6069,7 @@ def main() -> None:
     # bóng của trang thật — hai URL cùng nội dung, và cái thắng có thể là cái sai.
     if facts:
         loc.append((f"{BASE}/facts/", max(str(f.get("ngay", "")) or ngay_moi for f in facts)))
+    loc += [(f"{BASE}/{p}", d) for p, d in fact_en_paths]
     loc.append((f"{BASE}/token/", ngay_moi))
     loc += [(f'{BASE}/{p["_path"]}', str(p["lastmod"])) for p in primers]
     if CO_TRANG[TU_KINH_DUONG]:

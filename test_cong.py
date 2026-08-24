@@ -97,6 +97,33 @@ FACT_MAU = {
     "nguon": "ENA/FACTS.md:12",
 }
 
+FACT_EN_MAU = {
+    "slug": "ena-supply-snapshot",
+    "title": "ENA supply at block 25,571,508",
+    "og_title": "ENA supply at block 25,571,508",
+    "mo_ta": "An English evidence receipt for the ENA supply snapshot, with the pinned block, current-state command, falsifier and explicit measurement limits.",
+    "intro": "This receipt separates the pinned snapshot from a later current-state read.",
+    "headline_metric": {
+        "label": "supply",
+        "value": "15,000,000,000",
+        "note": "ENA at the snapshot",
+    },
+    "metrics": [
+        {"label": "supply", "value": "15,000,000,000", "note": "ENA at the snapshot"},
+        {"label": "block", "value": "25,571,508", "note": "pinned on 2026-07-31"},
+        {"label": "raw", "value": "15e27", "note": "base units"},
+    ],
+    "claim": "ENA supply was 15,000,000,000 at block 25,571,508 on 2026-07-31.",
+    "pin": "Block 25,571,508 · 2026-07-31",
+    "falsifier": "Withdraw the claim if the pinned call returns a different supply.",
+    "limits": ["Snapshot only.", "The command can read a later state.", "No price claim."],
+    "sources": [
+        {"label": "Source A", "url": "https://example.com/a"},
+        {"label": "Source B", "url": "https://example.com/b"},
+    ],
+    "image": "avatar-800.png",
+}
+
 
 def sua_facts(root, fn, nhan_doi=False):
     f = json.loads(json.dumps(FACT_MAU))
@@ -104,6 +131,13 @@ def sua_facts(root, fn, nhan_doi=False):
     ds = [f, json.loads(json.dumps(FACT_MAU))] if nhan_doi else [f]
     (root / "site" / "content" / "facts.json").write_text(
         json.dumps({"facts": ds}, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def sua_fact_en(root, fn):
+    def sua(f):
+        f["en"] = json.loads(json.dumps(FACT_EN_MAU))
+        fn(f["en"])
+    sua_facts(root, sua)
 
 
 def sua_builder(root, cu, moi):
@@ -321,6 +355,20 @@ CA = [
          sua_facts(r, lambda f: f.update(cau=f["cau"] + "\n\n" + f["chan"])),
          sua_builder(r, "cau_web = cau_fact_web(f)", "cau_web = str(f['cau'])")),
      "lặp nguyên văn phần 'Fact này KHÔNG nói'"),
+    # ── BIÊN LAI EN CỦA FACT — opt-in, không đẻ bài dài làm vật đệm ────────────
+    ("⑪c FACT EN · thiếu headline metric phải NỔ",
+     lambda r: sua_fact_en(r, lambda en: en.pop("headline_metric")),
+     "headline_metric phải có label/value/note"),
+    ("⑪c FACT EN · thiếu trường bắt buộc phải NỔ",
+     lambda r: sua_fact_en(r, lambda en: en.pop("falsifier")),
+     "thiếu trường bắt buộc"),
+    ("⑪c FACT EN · số lạ không có ở Fact nguồn phải NỔ",
+     lambda r: sua_fact_en(r, lambda en: en.update(
+         claim=en["claim"] + " A separate total was 99,999.")),
+     "mang số KHÔNG có ở Fact nguồn"),
+    ("⑪c FACT EN · control DƯƠNG — biên lai đủ mặt phải BUILD ĐƯỢC",
+     lambda r: sua_fact_en(r, lambda en: None),
+     None),
 
     # ── BỐ CỤC v3 + lượt bóc <script> của cổng ⑪ (10/08) ─────────────────────────
     # Bốn ca dưới đi thành BỘ. Ca ① một mình không đủ: nó xanh cả khi cổng ⑪ đã chết

@@ -347,6 +347,10 @@
     "tin": "Một dòng TVL trên dashboard là số tiền thật đang nằm trong giao thức",
     "o_dau": "Hỏi cùng một địa chỉ token ở hai nguồn giá: một nguồn trả 0,0447 USD, nguồn kia trả 0,0000000001774 USD — còn số dư trong kho thanh khoản thì đọc trực tiếp từ sổ cái công khai"
    },
+   "evidence": {
+    "reported_tvl": "$5.69B",
+    "reported_date": "2026-08-23"
+   },
    "card": {
     "kicker": "UNISWAP V4",
     "figure": "22 USD",
@@ -390,6 +394,59 @@
     "luc": "2026-08-24 · giờ VN",
     "anh": "card-uni-tvl-token-trung-ten.png",
     "doi_chieu": "Telegram khớp 3.043/3.043 ký tự sau chuẩn hoá khoảng trắng — phủ 100% thân tin. oEmbed X chỉ phủ 36,7% bài chính và 7,3% reply (200 ký tự đầu của cả hai khớp nguyên văn), nên câu \"bản đăng khớp bản xuất\" chỉ đứng nhờ Telegram, không nhờ X — RULES §2b ĐỘ PHỦ."
+   },
+   "en": {
+    "slug": "uniswap-v4-tvl-price-mismatch",
+    "title": "Uniswap v4's $5.69B TVL print was dominated by one mispriced BNB Chain token",
+    "og_title": "Uniswap v4's $5.69B TVL print was dominated by one mispriced BNB Chain token",
+    "mo_ta": "A block-pinned English receipt for the Uniswap v4 TVL spike: one BNB Chain token balance marked at about $5.60B versus about $22 at a same-address quote.",
+    "intro": "This is the English evidence receipt for the Vietnamese Fact. It separates the reported TVL print from the on-chain token balance and from the third-party market quote used for comparison.",
+    "headline_metric": {
+     "label": "reported TVL",
+     "value": "$5.69B",
+     "note": "DefiLlama · 2026-08-23"
+    },
+    "metrics": [
+     {
+      "label": "BNB Chain share",
+      "value": "87%",
+      "note": "of the protocol total in the snapshot"
+     },
+     {
+      "label": "PoolManager balance",
+      "value": "125.41B",
+      "note": "units of the non-Sandbox SAND"
+     },
+     {
+      "label": "same-address quote",
+      "value": "≈$22",
+      "note": "for the same PoolManager balance"
+     }
+    ],
+    "claim": "DefiLlama's Uniswap v4 series showed $5.69B on 2026-08-23. In the 2026-08-24 snapshot, 87% of the protocol total sat on BNB Chain, and 99% of that chain's marked value came from token 0xac531eb26ca1d21b85126de8fb87e80e09002dcf. Its on-chain name and symbol are SAND, but it is not The Sandbox's BNB token. PoolManager held 125.41B units. At the data provider's $0.0447 mark, that balance was about $5.60B; at a same-address market quote, it was about $22—roughly 252 million× lower.",
+    "pin": "BNB Chain block 117,739,591 · 2026-08-24 03:56Z; both prices read again at 04:08Z",
+    "falsifier": "Withdraw this claim if the pinned block returns a different PoolManager balance, if the contract is the official BNB token for The Sandbox, or if the data-provider price was not assigned to this exact contract address.",
+    "limits": [
+     "The same-address quote is third-party evidence. It is not a claim that the full balance could be liquidated at that price.",
+     "This does not claim DefiLlama fabricated the data. Its adapter already maintains token blacklists for known pricing failures; this token was not on the BNB Chain list when measured.",
+     "Hook-contract balances were not enumerated. The comparison covers PoolManager, which accounted for nearly all of the reported BNB Chain value in this snapshot.",
+     "This is a snapshot. Provider history, price mappings and blacklists can change after publication."
+    ],
+    "sources": [
+     {
+      "label": "DefiLlama Uniswap v4 protocol series",
+      "url": "https://api.llama.fi/protocol/uniswap-v4"
+     },
+     {
+      "label": "GeckoTerminal data for the same BNB Chain token address",
+      "url": "https://api.geckoterminal.com/api/v2/networks/bsc/tokens/0xac531eb26ca1d21b85126de8fb87e80e09002dcf"
+     },
+     {
+      "label": "Published Vietnamese Fact",
+      "url": "https://blockpinned.com/facts/#uni-tvl-6ty-token-trung-ten"
+     }
+    ],
+    "image": "card-uni-v4-tvl-price-mismatch-en.png"
    }
   }
  ]
