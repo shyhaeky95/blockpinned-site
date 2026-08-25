@@ -18,7 +18,7 @@
     {
       "id": "C2",
       "text": "Dự đoán ghi trước: tới hết 2026-08-24, log phân bổ trên contract phân bổ 0xaa568141c051f2d1132b110f8391f18d48e8d889 vẫn chưa phát lần nào.",
-      "status": "ĐANG ĐỨNG",
+      "status": "ĐÃ XÁC NHẬN",
       "ghim": "Ghi trước trên X lúc 2026-08-17. Nền tại block 25.771.902: contract phân bổ có 14 log toàn thời gian, không log nào là event phân bổ, log mới nhất ở block 25.724.759, tức ngày 10/08.",
       "falsifier": "Nếu event phân bổ được phát ở bất kỳ block nào tới hết 2026-08-24T23:59:00Z, dự đoán này sai. Không dời hạn sau khi đã thấy giao dịch.",
       "khong_do_lai": "Đây là dự đoán về một sự kiện chưa xảy ra; phân định bằng cách đếm log của contract trong cửa sổ thời gian, không bằng một giá trị hợp đồng đọc tại một block.",
@@ -27,7 +27,10 @@
       "ghi_truoc": {
         "ngay": "2026-08-17",
         "noi": "https://x.com/blockpinned/status/2089284497238110414 và trang này",
-        "so": "log phân bổ vẫn chưa phát lần nào tới hết 2026-08-24"
+        "so": "log phân bổ vẫn chưa phát lần nào tới hết 2026-08-24",
+        "ket_qua": "Đúng. Cửa đóng ở block 25.828.478, block cuối cùng có mốc thời gian nằm trước hạn 2026-08-24T23:59:00Z, tức 06h59 ngày 25/08 giờ Việt Nam. Trong toàn bộ cửa từ block liền sau block ghim tới đó, contract phân bổ không phát một event phân bổ nào. Nó phát tổng cộng 9 log, và cả 9 đều gọi được tên: 3 lượt chốt sổ, 3 lượt bỏ qua phân bổ, 3 lượt ghi lại mốc dự trữ. Ba lượt bỏ qua ứng với ba lần một địa chỉ ngoài DAO gọi hàm phân bổ — hai lần ngày 21/08 và một lần lúc 18h21 ngày 24/08 giờ Việt Nam (11:21:35Z), block 25.824.702 — mỗi lần chốt sổ xong rồi dừng vì chưa có gì để mua. Số 0 này không phải một số 0 mù: nó ra từ phép liệt kê toàn bộ log của contract trong cửa rồi đối chiếu từng mã sự kiện với bảng sự kiện công bố kèm mã nguồn đã xác minh của chính contract, nên một chữ ký gõ sai sẽ làm phép kiểm nổ chứ không lặng lẽ trả về 0.",
+        "ai_phan_dinh": "phép đo của tôi trên sổ cái Ethereum: liệt kê toàn bộ log của contract phân bổ trong cửa từ block liền sau block ghim 25.771.902 tới block 25.828.478, rồi nhóm theo mã sự kiện. Ba phép kiểm đi kèm, cả ba đều nổ được. Một: cùng câu truy vấn chạy trong cửa trước block ghim phải trả về đúng 2 vòng quy đổi mà bài đã đăng, và nó ra 2. Hai: block cắt cửa phải có mốc thời gian trước hạn còn block liền sau phải vượt hạn — 25.828.478 ở 23:58:59Z, block kế ở 23:59:11Z. Ba: tổng các loại sự kiện đã gọi được tên phải bằng đúng tổng log đọc được, 9 bằng 9, và ba chữ ký sự kiện dùng để đếm phải khớp lại bảng sự kiện của chính contract. Phép kiểm thứ ba đã được thử ngược một lượt: sửa sai một ký tự trong chữ ký của event phân bổ thì phép đếm vẫn trả về 0, nhưng cổng nổ và kết quả bị hạ xuống chưa đủ số",
+        "ngay_ket": "2026-08-25"
       },
       "log": [
         {
@@ -38,6 +41,10 @@
         {
           "ngay": "2026-08-22",
           "ghi": "Đọc giữa cửa tại block 25.811.745: event phân bổ vẫn chưa phát lần nào, 0 trong cả cửa. CHƯA chốt — câu đã ghi trước nói tới hết 24/08T23:59Z, nên nó chỉ được chấm sau mốc đó. Ghi lại đây để thấy đã đo, không phải để tính là đúng sớm."
+        },
+        {
+          "ngay": "2026-08-25",
+          "ghi": "Chấm sau hạn. Cửa cắt tại block 25.828.478 chứ không cắt tại block mới nhất lúc chạy: nếu một event phân bổ phát ngày 25/08 thì nó nằm ngoài phạm vi câu đã ghi trước và không được tính vào. Phần sau hạn vẫn đọc để khỏi phải đoán — từ block 25.828.479 tới 25.829.223, contract phân bổ không phát log nào."
         }
       ]
     },
@@ -67,6 +74,10 @@
         {
           "ngay": "2026-08-22",
           "ghi": "Điều kiện chấm xảy ra ngày 21/08 và claim đứng: ngân sách mua sau lượt đồng bộ là âm 374.848,060795 USD. Ghi thêm cho đủ — tới block 25.811.745, contract phân bổ vẫn chưa đọc vòng doanh thu ngày 22/08, nên con số này còn đổi ở lượt đồng bộ kế tiếp. Câu đã ghi trước chỉ nói về ngân sách sau lượt đồng bộ TRONG cửa, và lượt đó đã có."
+        },
+        {
+          "ngay": "2026-08-25",
+          "ghi": "Chốt sổ cả cửa. Bước đồng bộ xảy ra ba lần chứ không phải hai: thêm một lần lúc 18h21 ngày 24/08 giờ Việt Nam (11:21:35Z), block 25.824.702. Ngân sách mua đọc tại block liền sau lượt cuối là âm 438.484,488487 USD, vẫn nhỏ hơn 0, nên câu đã ghi trước đứng ở cả ba lượt chứ không riêng lượt 21/08."
         }
       ]
     },
@@ -96,6 +107,10 @@
         {
           "ngay": "2026-08-22",
           "ghi": "Vòng thứ 6 rơi 22/08 lúc 13:17:47Z, chạm ngưỡng sớm hơn hạn hơn hai ngày. Phép đếm được khép sổ bằng một đường độc lập — tổng các vòng cộng vào nền khớp bộ đếm của contract tới 0 wei — nên nó không phải một con số đếm suông."
+        },
+        {
+          "ngay": "2026-08-25",
+          "ghi": "Chốt sổ cả cửa. Đếm hết tới hạn ra 8 vòng quy đổi chứ không phải 6 — hai vòng nữa rơi ngày 23 và 24/08. Ngưỡng đã ghi trước là ít nhất 6 nên hai vòng thêm không làm câu đó sai; ghi con số cuối ra đây vì trang này đã hứa ghi con số đếm được. Tám vòng cách nhau 23,25 tới 24,92 giờ, giờ trong ngày trải từ 12:32Z tới 13:27Z. Đó là mô tả tám vòng đã đo, không phải một nhịp đã được chứng minh."
         }
       ]
     }

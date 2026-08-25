@@ -2276,7 +2276,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     </div><div class="case-path" role="img" aria-label="Tuyến bằng chứng: đối tượng, điều bác bỏ, trạng thái hiện tại">
       <div class="case-step file"><span>01 · ĐỐI TƯỢNG</span><strong>LDO</strong><small>hồ&nbsp;sơ được ghim theo token</small></div><i aria-hidden="true">→</i>
       <div class="case-step test"><span>02 · TỰ&nbsp;KIỂM</span><strong>4</strong><small>điều&nbsp;bác&nbsp;bỏ viết cùng claim</small></div><i aria-hidden="true">→</i>
-      <div class="case-step state song"><span>03 · SỔ SỐNG</span><strong>7 mốc</strong><small>lịch sử đổi trạng thái công khai</small></div>
+      <div class="case-step state song"><span>03 · SỔ SỐNG</span><strong>10 mốc</strong><small>lịch sử đổi trạng thái công khai</small></div>
     </div></div>
 
 </section><nav class="article-map" aria-label="Điều hướng trong bài"><span>Đọc theo bằng&nbsp;chứng</span><a href="#so-claim">Sổ claim</a><a href="#hai-vong-ghi-nhan-doanh-thu-dau-tien">Hai vòng ghi nhận doanh thu đầu tiên</a><a href="#nhung-tien-dung-o-contract-nguon">Nhưng tiền dừng ở contract nguồn</a><a href="#va-ke-ca-khi-buoc-dong-bo-chay-cong-thuc-van-chua-cho-ngan-s">Và kể cả khi bước đồng bộ chạy, công thức vẫn chưa cho ngân sách dương</a></nav><section class="article-ledger" aria-labelledby="so-claim-title">
@@ -2284,8 +2284,8 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   <summary>
     <span class="case-ledger-title"><span>Sổ claim của bài</span><b id="so-claim-title">4 khẳng&nbsp;định</b><small>đổi trạng thái tại chỗ · không xoá</small></span>
     <span class="case-ledger-viz">
-      <span class="case-ledger-bar" role="img" aria-label="2 xác nhận, 2 vẫn đứng vững"><i class="xac" style="--n:2"></i><i class="song" style="--n:2"></i></span>
-      <span class="case-ledger-legend"><i><span class="dot xac"></span><b>2</b> xác nhận</i><i><span class="dot song"></span><b>2</b> vẫn đứng&nbsp;vững</i></span>
+      <span class="case-ledger-bar" role="img" aria-label="3 xác nhận, 1 vẫn đứng vững"><i class="xac" style="--n:3"></i><i class="song" style="--n:1"></i></span>
+      <span class="case-ledger-legend"><i><span class="dot xac"></span><b>3</b> xác nhận</i><i><span class="dot song"></span><b>1</b> vẫn đứng&nbsp;vững</i></span>
     </span>
     <span class="mo">mở 4&nbsp;claim</span>
   </summary>
@@ -2305,10 +2305,10 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
   </div>
 <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Claim gộp bốn lời gọi trạng thái trên hai contract khác nhau cộng một phép đếm log toàn thời gian, nên không thu gọn được thành một nút gọi hợp đồng duy nhất trên trình duyệt.</p>
   <details class="case-log"><summary>Lịch sử · 1 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Đăng ở dạng ảnh chụp tại block, không gọi là cơ chế hỏng. Hai chỗ chặn nằm trong thân bài: kho DAO vẫn nhận LDO qua một chương trình mua khác, và bộ máy mua của cơ chế này đã chạy thử trọn một vòng hôm 13/08 bằng vốn ngoài kho. <a href="https://x.com/blockpinned/status/2089284493974856166">nguồn</a></span></li></ol></details>
-</article><article class="case-claim song" id="C2" data-article-claim data-st="song">
+</article><article class="case-claim xac" id="C2" data-article-claim data-st="xac">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C2">C2</a>
-    <span class="case-claim-status song"><i aria-hidden="true"></i>VẪN ĐỨNG&nbsp;VỮNG</span>
+    <span class="case-claim-status xac"><i aria-hidden="true"></i>ĐÃ XÁC NHẬN</span>
     <span class="case-claim-actions"></span>
   </header>
   <p class="case-claim-text">Dự đoán ghi&nbsp;trước: tới hết 2026-08-24, log phân bổ trên contract phân bổ 0xaa568141c051f2d1132b110f8391f18d48e8d889 vẫn chưa phát lần nào.</p>
@@ -2318,7 +2318,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Nếu event phân bổ được phát ở bất kỳ block nào tới hết 2026-08-24T23:59:00Z, dự đoán này sai. Không dời hạn sau khi đã thấy giao dịch.</p>
   </div>
 <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Đây là dự đoán về một sự kiện chưa xảy ra; phân&nbsp;định bằng cách đếm log của contract trong cửa sổ thời gian, không bằng một giá trị hợp đồng đọc tại một block.</p>
-  <details class="case-log"><summary>Lịch sử · 2 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Ghi&nbsp;trước khi bước đồng bộ giữa hai contract xảy ra lần nào. <a href="https://x.com/blockpinned/status/2089284497238110414">nguồn</a></span></li><li><span class="case-log-date">2026-08-22</span><span>Đọc giữa cửa tại block&nbsp;25.811.745: event phân bổ vẫn chưa phát lần nào, 0 trong cả cửa. CHƯA chốt — câu đã ghi&nbsp;trước nói tới hết 24/08T23:59Z, nên nó chỉ được chấm sau mốc đó. Ghi lại đây để thấy đã đo, không phải để tính là đúng sớm.</span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 3 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Ghi&nbsp;trước khi bước đồng bộ giữa hai contract xảy ra lần nào. <a href="https://x.com/blockpinned/status/2089284497238110414">nguồn</a></span></li><li><span class="case-log-date">2026-08-22</span><span>Đọc giữa cửa tại block&nbsp;25.811.745: event phân bổ vẫn chưa phát lần nào, 0 trong cả cửa. CHƯA chốt — câu đã ghi&nbsp;trước nói tới hết 24/08T23:59Z, nên nó chỉ được chấm sau mốc đó. Ghi lại đây để thấy đã đo, không phải để tính là đúng sớm.</span></li><li><span class="case-log-date">2026-08-25</span><span>Chấm sau hạn. Cửa cắt tại block&nbsp;25.828.478 chứ không cắt tại block mới nhất lúc chạy: nếu một event phân bổ phát ngày 25/08 thì nó nằm ngoài phạm vi câu đã ghi&nbsp;trước và không được tính vào. Phần sau hạn vẫn đọc để khỏi phải đoán — từ block&nbsp;25.828.479 tới 25.829.223, contract phân bổ không phát log nào.</span></li></ol></details>
 </article><article class="case-claim xac" id="C3" data-article-claim data-st="xac">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C3">C3</a>
@@ -2332,7 +2332,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Nếu bước đồng bộ xảy ra và ngân sách mua sau lượt đó lớn hơn 0, dự đoán này sai. Nếu bước đồng bộ không xảy ra trong cửa, claim không được tính là đúng hay sai vì điều kiện chấm chưa xảy ra.</p>
   </div>
 <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Đây là dự đoán có điều kiện về trạng thái sau một giao dịch chưa xảy ra; chỉ phân&nbsp;định được bằng cách đọc ngân sách mua tại block ngay sau lượt đồng bộ.</p>
-  <details class="case-log"><summary>Lịch sử · 2 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Ghi&nbsp;trước ở dạng có điều kiện, để một kết cục ngoài điều kiện không bị gán thành thất bại giả. Bản trước của bài này từng mang một bộ dự đoán mà kết cục thật nằm ngoài mọi nhánh đã liệt kê; bộ đó bị bỏ trước khi đăng. <a href="https://x.com/blockpinned/status/2089284497238110414">nguồn</a></span></li><li><span class="case-log-date">2026-08-22</span><span>Điều kiện chấm xảy ra ngày 21/08 và claim đứng: ngân sách mua sau lượt đồng bộ là âm 374.848,060795&nbsp;USD. Ghi thêm cho đủ — tới block&nbsp;25.811.745, contract phân bổ vẫn chưa đọc vòng doanh thu ngày 22/08, nên con số này còn đổi ở lượt đồng bộ kế tiếp. Câu đã ghi&nbsp;trước chỉ nói về ngân sách sau lượt đồng bộ TRONG cửa, và lượt đó đã có.</span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 3 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Ghi&nbsp;trước ở dạng có điều kiện, để một kết cục ngoài điều kiện không bị gán thành thất bại giả. Bản trước của bài này từng mang một bộ dự đoán mà kết cục thật nằm ngoài mọi nhánh đã liệt kê; bộ đó bị bỏ trước khi đăng. <a href="https://x.com/blockpinned/status/2089284497238110414">nguồn</a></span></li><li><span class="case-log-date">2026-08-22</span><span>Điều kiện chấm xảy ra ngày 21/08 và claim đứng: ngân sách mua sau lượt đồng bộ là âm 374.848,060795&nbsp;USD. Ghi thêm cho đủ — tới block&nbsp;25.811.745, contract phân bổ vẫn chưa đọc vòng doanh thu ngày 22/08, nên con số này còn đổi ở lượt đồng bộ kế tiếp. Câu đã ghi&nbsp;trước chỉ nói về ngân sách sau lượt đồng bộ TRONG cửa, và lượt đó đã có.</span></li><li><span class="case-log-date">2026-08-25</span><span>Chốt sổ cả cửa. Bước đồng bộ xảy ra ba lần chứ không phải hai: thêm một lần lúc 18h21 ngày 24/08&nbsp;giờ Việt Nam (11:21:35Z), block&nbsp;25.824.702. Ngân sách mua đọc tại block liền sau lượt cuối là âm 438.484,488487&nbsp;USD, vẫn nhỏ hơn 0, nên câu đã ghi&nbsp;trước đứng ở cả ba lượt chứ không riêng lượt 21/08.</span></li></ol></details>
 </article><article class="case-claim xac" id="C4" data-article-claim data-st="xac">
   <header class="case-claim-head">
     <a class="case-claim-id" href="#C4">C4</a>
@@ -2346,7 +2346,7 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
     <p class="case-falsifier"><span>ĐIỀU GÌ BÁC&nbsp;BỎ CLAIM NÀY</span>Nếu tới hết 2026-08-24T23:59:00Z sổ doanh thu nhận thêm ít hơn 6 vòng, dự đoán này sai. Đếm theo số lượt quy đổi vào sổ, không đếm theo số lượt rebase.</p>
   </div>
 <p class="dong khongdo"><span class="nhan">KHÔNG ĐO LẠI ĐƯỢC TỪ TRÌNH DUYỆT</span>Phải đếm log trong một cửa sổ thời gian trên contract nhận doanh thu, không đọc được bằng một lời gọi trạng thái tại một block.</p>
-  <details class="case-log"><summary>Lịch sử · 2 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Ghi&nbsp;trước dựa trên hai mẫu, và hai mẫu chưa đủ để gọi là một nhịp — điều đó được nói thẳng trong bài. <a href="https://x.com/blockpinned/status/2089284497238110414">nguồn</a></span></li><li><span class="case-log-date">2026-08-22</span><span>Vòng thứ 6 rơi 22/08 lúc 13:17:47Z, chạm ngưỡng sớm hơn hạn hơn hai ngày. Phép đếm được khép sổ bằng một đường độc lập — tổng các vòng cộng vào nền khớp bộ đếm của contract tới 0 wei — nên nó không phải một con số đếm suông.</span></li></ol></details>
+  <details class="case-log"><summary>Lịch sử · 3 mốc</summary><ol><li><span class="case-log-date">2026-08-17</span><span>Ghi&nbsp;trước dựa trên hai mẫu, và hai mẫu chưa đủ để gọi là một nhịp — điều đó được nói thẳng trong bài. <a href="https://x.com/blockpinned/status/2089284497238110414">nguồn</a></span></li><li><span class="case-log-date">2026-08-22</span><span>Vòng thứ 6 rơi 22/08 lúc 13:17:47Z, chạm ngưỡng sớm hơn hạn hơn hai ngày. Phép đếm được khép sổ bằng một đường độc lập — tổng các vòng cộng vào nền khớp bộ đếm của contract tới 0 wei — nên nó không phải một con số đếm suông.</span></li><li><span class="case-log-date">2026-08-25</span><span>Chốt sổ cả cửa. Đếm hết tới hạn ra 8 vòng quy đổi chứ không phải 6 — hai vòng nữa rơi ngày 23 và 24/08. Ngưỡng đã ghi&nbsp;trước là ít nhất 6 nên hai vòng thêm không làm câu đó sai; ghi con số cuối ra đây vì trang này đã hứa ghi con số đếm được. Tám vòng cách nhau 23,25 tới 24,92&nbsp;giờ, giờ trong ngày trải từ 12:32Z tới 13:27Z. Đó là mô tả tám vòng đã đo, không phải một nhịp đã được chứng minh.</span></li></ol></details>
 </article></div>
   </div>
 </details>
