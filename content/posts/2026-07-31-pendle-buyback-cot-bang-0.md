@@ -4,7 +4,7 @@ token: PENDLE
 date: 2026-07-31
 mau: 🟡
 ghim: Ethereum · block #25.650.178 (31/07/2026 03:34:35 UTC) · cửa sổ #25.553.408 → #25.650.178 · trang dữ liệu Pendle đọc cùng lúc
-mo_ta: Cột buyback của Pendle trả 0 cho hai kỳ gần nhất. Trên chain, hợp đồng buyback giữ 144.388,02 PENDLE vào qua 65 giao dịch và chưa chuyển ra — hai con số nhìn hai chặng khác nhau.
+mo_ta: Cột buyback của Pendle trả 0 trong khi hợp đồng giữ 144.388,02 PENDLE vào qua 65 giao dịch. Phần 17,56% để ngỏ khi đăng đã đo xong 27/08: nối được 100%.
 anh: card-pendle-buyback.png
 kenh_x: https://x.com/blockpinned/status/2083065438943244720
 ---
@@ -12,6 +12,16 @@ kenh_x: https://x.com/blockpinned/status/2083065438943244720
 **Trang dữ liệu của Pendle: buyback kỳ gần nhất = 0.**
 
 **Hợp đồng buyback trên chain: 144.388 PENDLE.**
+
+> **ĐÃ ĐO XONG — 27/08/2026.** Bài này để ngỏ một phần: **17,56%** lượng PENDLE không nối được về một lượt swap, và tôi viết rằng *nhiều khả năng* vì danh sách loại pool chưa phủ hết — **nhưng "nhiều khả năng" không phải một phép đo**. Hôm nay là phép đo.
+>
+> Mở lại cả 65 giao dịch với danh sách phủ đủ: nối được **144.388,016375 PENDLE — 100%**, đủ **65 trên 65** giao dịch. Phần 17,56% kia đúng là **thiếu bề rộng của bộ lọc**, không phải tiền đến từ nơi khác.
+>
+> **Con số 82,44% không sai.** Nó là mức sàn đúng của một bộ lọc bốn loại, và bài đã ghi rõ nó là mức sàn. Cái đổi là mức sàn ấy nay chạm hết: toàn phần.
+>
+> Ba lớp làm nên 100%: pool phát sự kiện swap tiêu chuẩn **82,44%**, một địa chỉ chưa xác định được danh tính thêm **6,19 điểm**, và một bộ định tuyến gom lệnh thêm **11,37 điểm**. Lớp thứ ba là bộ định tuyến chứ không phải pool, nên bằng chứng ở đó đọc gián tiếp hơn một bước.
+>
+> Bảng **đủ 64 dòng** không nối được của vòng lọc hẹp — bản đăng đầu chỉ chở 10 dòng và tự ghi điều đó — nay nằm trong trang dữ liệu.
 
 Hai con số này không mâu thuẫn. Chúng đang nhìn hai chặng khác nhau của cùng một đường tiền — và nếu chỉ đọc con số đầu, bạn sẽ kết luận sai về con số thứ hai.
 

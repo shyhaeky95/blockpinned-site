@@ -39,6 +39,10 @@ BAI = "bai/2026-07-27-defillama-uniswap-v4/index.html"
 RONG = 500
 KHUNG = [("dau", BAI, 1740, None),
          ("soclaim", BAI, 1900, "article-ledger"),  # cắt riêng sổ claim WOW, không cuộn theo neo
+         # 🔴 25/08: bài PUMP nguồn-thu-thứ-hai chở BẢNG NĂM CỘT — khuôn bài đại diện
+         #    ở trên không có bảng nào rộng như vậy, nên nó KHÔNG đại diện cho ca này.
+         #    Trang nào mang một hình dạng chưa từng đo thì phải có khung riêng.
+         ("bangpump", "bai/2026-08-25-pump-nguon-thu-thu-hai/index.html", 1900, None),
          ("chu", "index.html", 1180, None),
          ("bai", "bai/index.html", 1500, None),
          # 🔴 06/08: MỌI trang phục vụ đều phải nằm ở đây. Trang nào không có trong

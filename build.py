@@ -210,6 +210,18 @@ NGUON_ASSET = {
     #    (330+22) đối (89+22) = 3,171 so với 201.494 : 63.636 = 3,166. Bỏ mũi nhọn ra
     #    khỏi phép tính thì lệch 0,74% — đã xảy ra thật ở vòng ③.
     "card-ldo-tien-vao-ngan-sach-am-them.png": "png",
+    # bài PUMP 25/08 — nguồn `template/card-pump-nguon-thu-thu-hai.html`, dựng bằng
+    # `template/render_card_v2.py` qua canvas `card_editorial.py new` (vỏ editorial-v2,
+    # 15/15 dấu). Ruột là HAI THANH CÙNG THANG cho HAI MỐC THỜI GIAN của MỘT mảng
+    # doanh thu; thanh trên RỖNG và chỉ mang một chữ số 0 nằm trong lòng nó.
+    # 🔴 Khoảng RỖNG là hình ảnh chính: mảng này trước đây KHÔNG TỒN TẠI, chứ không
+    #    phải nhỏ. Vì vậy số 0 nằm TRONG lòng thanh rỗng, không đặt ở ngoài.
+    # 🔴 Card đầu tiên của bài neo mốc dưới vào 08/2026 với nhãn "hôm nay" — SAI, tháng
+    #    đó mới 24/31 ngày. Mốc dưới phải là THÁNG ĐÓNG SỔ gần nhất (07/2026), vì thanh
+    #    đọc ra "một tháng" chứ không đọc ra "cộng dồn tới hôm nay".
+    # 🔴 Bản trục cũ (`card-pump-dem-coin-hay-dem-do-la.html`) bị user bác cả trục:
+    #    neo 76% vào 95,7% làm card đọc ra bearish, trong khi mốc so đúng là 0.
+    "card-pump-nguon-thu-thu-hai.png": "png",
     # Fact F-19 24/08 — nguồn `template/card-uni-tvl-token-trung-ten.html`, dựng bằng
     # `template/render_card_v2.py` qua canvas `card_editorial.py new` (vỏ editorial-v2,
     # 15/15 dấu). Card đi qua BA vòng: bản 1 nhiều chữ, bản 2 lấy token trùng tên làm
@@ -407,6 +419,7 @@ HIEN_VAT = {
     "verify_post07_2026-07-31.json": "bài PENDLE 31/07 — 9/9 kiểm sau đăng",
     "pendle_buy_source_2026-07-31.json": "bài PENDLE 31/07 — 65 tx hash + chi tiết từng tx",
     "pendle_buy_tie_2026-07-31.json": "bài PENDLE 31/07 — lượt nối swap→hợp đồng, 82,44%",
+    "pendle_buy_tie_2026-08-27.json": "bài PENDLE 31/07, đo lại 27/08 — nối đủ 65 giao dịch, 100%, kèm cả 64 dòng trượt của vòng lọc hẹp",
 }
 
 TEN_CONG = ["ngôn ngữ", "cấu trúc", "claim", "ngôi xưng", "đánh dấu",
