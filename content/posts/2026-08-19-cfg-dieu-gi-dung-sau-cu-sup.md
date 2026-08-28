@@ -9,7 +9,7 @@ ghim: Số on-chain đo tại Ethereum block 25.788.346, tức 16h45 ngày 19/08
 mo_ta: CFG rơi 18% trong 27 giờ khi thị trường gần như đứng yên. Nửa ngày trước đó, chính đội ngũ đề xuất đổi token lấy cổ phần — 1 đổi 1, nhưng chưa nói mỗi cổ phần đáng bao nhiêu.
 anh: card-cfg-dieu-gi-dung-sau-cu-sup.png
 kenh_x: https://x.com/blockpinned/status/2090341178466275605
-doc_lai: Vế nhân quả giữ ở mức suy luận toàn bài — CP172 là ứng viên giải thích mạnh nhất desk tìm thấy, không phải nguyên nhân đã chứng minh; 97,8% khối lượng CFG chạy trên sàn tập trung nên lệnh bán không để lại dấu vết trên chuỗi. Giá và phí trôi thời gian thực, mọi con số quy đô-la phải đọc lại sát giờ đăng. Điều khoản CP172 có thể được bổ sung bất cứ lúc nào — cửa sổ lấy ý kiến đóng khoảng 31/08, tới đó bài phải kiểm lại, đặc biệt bốn điều còn trống: định giá, cap table, báo cáo tài chính, số phận token không chuyển đổi. Đề xuất KHÔNG bắt người không đổi phải bán — mục Optionality (có từ version 1; bản đầu của bài đọc sót, đã sửa 20/08, xem C6) cho giữ hoặc bán và hứa hỗ trợ thanh khoản TRONG cửa sổ chuyển đổi; khoảng trống thật là kinh tế của CFG giữ lại SAU cửa sổ và số phận CFG bị nộp lại. Quyền hạn hợp đồng đọc tại một block; quyền có thể được cấp hoặc thu hồi sau đó và phải đọc lại.
+doc_lai: Vế nhân quả giữ ở mức suy luận toàn bài — CP172 là ứng viên giải thích mạnh nhất desk tìm thấy, không phải nguyên nhân đã chứng minh; 97,8% khối lượng CFG chạy trên sàn tập trung nên lệnh bán không để lại dấu vết trên chuỗi. Giá và phí trôi thời gian thực, mọi con số quy đô-la phải đọc lại sát giờ đăng. Điều khoản CP172 có thể được bổ sung bất cứ lúc nào — cửa sổ lấy ý kiến đóng khoảng 31/08, tới đó bài phải kiểm lại, đặc biệt các điều còn trống. Cập nhật 28/08: bản FAQ ngày 26/08 đã trả lời phần kinh tế của CFG sau cửa sổ chuyển đổi; ba điều vẫn trống là định giá, cap table và báo cáo tài chính. Đề xuất KHÔNG bắt người không đổi phải bán — mục Optionality (có từ version 1; bản đầu của bài đọc sót, đã sửa 20/08, xem C6) cho giữ hoặc bán và hứa hỗ trợ thanh khoản TRONG cửa sổ chuyển đổi; khoảng trống thật là kinh tế của CFG giữ lại SAU cửa sổ và số phận CFG bị nộp lại. Quyền hạn hợp đồng đọc tại một block; quyền có thể được cấp hoặc thu hồi sau đó và phải đọc lại.
 ---
 
 Trong khoảng 27 giờ từ chiều 18/08 đến chiều 19/08 (giờ Việt Nam), **CFG mất 18%**.
@@ -242,6 +242,8 @@ Vì vậy, CP172 hiện là **ứng viên giải thích mạnh nhất BlockPinne
 
 ## Bốn câu hỏi Centrifuge vẫn chưa trả lời
 
+*Cập nhật 28/08/2026: Centrifuge đã trả lời một phần bốn câu này — xem cuối mục.*
+
 Bài toán hiện chưa đóng.
 
 Có ít nhất bốn thông tin mà nếu Centrifuge công bố thêm, cách nhìn CP172 có thể thay đổi đáng kể.
@@ -264,11 +266,27 @@ Management fee ước tính khoảng $5,43 triệu chưa cho biết công ty có
 
 CP172 đã nói phần dễ: người không đổi được giữ hoặc bán, và thanh khoản được hỗ trợ trong cửa sổ chuyển đổi. Phần chưa nói mới là phần định giá được: sau khi cửa sổ đóng, CFG giữ lại còn utility, governance hay một đường nhận giá trị nào không? Lạm phát 3% tiếp tục chạy hay bị thay? Và CFG bị nộp lại để lấy cổ phần sẽ bị đốt hay công ty giữ?
 
-Tính tới lúc đo, CP172 chưa trả lời những câu này.
+Tính tới lúc đo, CP172 chưa trả lời những câu này. Bản FAQ ngày 26/08 đã trả lời câu thứ tư — xem cuối mục.
 
 Cho tới khi bốn khoảng trống này được lấp, "1 đổi 1" vẫn chỉ là một tỷ lệ số lượng.
 
 Chưa phải một mức giá.
+
+**Cập nhật 28/08/2026**
+
+Ngày 26/08, Centrifuge công bố một bản FAQ cho CP172.
+
+Ba câu đầu vẫn chưa có trả lời: định giá công ty, cap table, báo cáo tài chính. FAQ nói sẽ đưa những thứ này ở khâu đăng ký mua cổ phần — tức sau khi bỏ phiếu.
+
+Câu thứ tư, câu mục này gọi là quan trọng nhất, thì có.
+
+Sau khi cửa sổ chuyển đổi đóng, Centrifuge sẽ ngừng chi tiền nuôi thanh khoản của token — nguyên văn **"wind down funding public token liquidity"**, gồm phí niêm yết sàn, các khoản cho market maker vay, và hạ tầng quanh đó.
+
+Lạm phát 3% sẽ dừng, nhưng chỉ **"once the conversion is complete"** — một khi việc chuyển đổi hoàn tất. Chuyển đổi không xong thì nó chạy tiếp.
+
+Còn CFG nộp lại để nhận cổ phần bị đốt hay công ty giữ, FAQ nói đề xuất chưa xử lý chuyện đó, và họ đang cân nhắc một cơ chế đốt.
+
+Riêng câu kết ngay trên, FAQ viết gần như đúng như vậy: tỷ lệ một đổi một là **"a mechanical conversion factor"** — một hệ số quy đổi máy móc — và nó **"does not represent an independent valuation of the company or the shares"**, không đại diện cho một định giá độc lập của công ty hay của cổ phần.
 
 ## Phần kiểm chứng — cách tự kiểm
 
