@@ -9,7 +9,7 @@ ghim: Ba lượt gọi hàm phân bổ đọc tại Ethereum block 25.803.732, 2
 mo_ta: Cơ chế buyback LDO của Lido ghi nhận thêm 201.494 USD doanh thu trong ba ngày, nhưng ngân sách dùng để mua LDO vẫn đi từ âm 374.848 xuống âm 438.484 USD, và số lượt mua vẫn bằng 0.
 anh: card-ldo-tien-vao-ngan-sach-am-them.png
 kenh_x: https://x.com/blockpinned/status/2091907493190615157
-doc_lai: Mốc hoà vốn không phải hằng số — nó bằng phí dự trữ mỗi ngày chia cho nhịp doanh thu, nên nhịp doanh thu đổi thì mốc đổi theo, và đổi cả hai chiều. Bài BlockPinned ngày 17/08 in mốc 2.738,55 USD; bản đo ngày 23/08 ra 2.698,82; tại block ghim của bài này nó là 2.720,91. Ba con số, một công thức, không tham số hợp đồng nào đổi.
+doc_lai: Mốc hoà vốn không phải hằng số — nó bằng phí dự trữ mỗi ngày chia cho nhịp doanh thu, nên nhịp doanh thu đổi thì mốc đổi theo, và đổi cả hai chiều. Bài BlockPinned ngày 17/08 in mốc 2.738,55 USD; bản đo ngày 23/08 ra 2.698,82; tại block ghim của bài này nó là 2.720,91. Ba con số, một công thức, không tham số hợp đồng nào đổi. Cập nhật 07/09: DAO đã nạp 41 stETH vào hợp đồng phân bổ ngày 28/08 mà cỗ máy vẫn không mua — ngân sách xuống −508.751,79 USD tại block 25.923.188; khoản nạp không đi vào ngân sách, và mọi số của khối cập nhật đọc tại block đó, trôi tiếp sau đấy.
 ---
 
 **Ba ngày qua, cỗ máy buyback LDO của Lido nhận thêm 201.494 USD doanh thu staking. Tiền vào thật, vào đúng sổ của nó. Nhưng thay vì có thêm tiền mua LDO, ngân sách của cỗ máy lùi thêm 63.636 USD — xuống âm 438.484 USD.**
@@ -70,6 +70,8 @@ Giữ nhịp doanh thu như hiện tại:
 
 ## Cỗ máy đã được gọi ba lần. Số LDO mua được: 0.
 
+*Cập nhật 07/09/2026: nay là mười một lượt gọi, và tiền đã được nạp vào — xem cuối bài.*
+
 Và đây không chỉ là phép tính trên giấy.
 
 Lúc 18 giờ 21 phút 35 giây ngày 24/08 giờ Việt Nam (11:21:35Z), block 25.824.702, một địa chỉ gọi hàm `allocate()` của cơ chế. Đây là lần thứ ba trong bốn ngày; hai lần trước là 20h12 phút 47 giây và 20h13 phút 11 giây ngày 21/08, cách nhau 24 giây.
@@ -97,6 +99,26 @@ Bài này **không** nói các tham số là bất biến, và cũng không nói
 Nếu gọi hai giá trị trạng thái của hợp đồng phân bổ tại đúng block 25.825.413 mà ngân sách khác −438.484,488487 USD hoặc doanh thu khác 766.866,023026, hoặc đếm log toàn thời gian ra một sự kiện mua, thì phần trung tâm của bài phải rút.
 
 Nếu nhịp doanh thu đo lại khác 40,2765 stETH mỗi ngày thì mốc hoà vốn và cả bảng số ngày đổi theo — chúng là hệ quả của nhịp đó chia vào phí dự trữ, không phải những con số độc lập.
+
+**Cập nhật 07/09/2026**
+
+Ngày **28/08** lúc 17h32 giờ Việt Nam (10:32:47Z), DAO chuyển **41 stETH** vào chính hợp đồng phân bổ nói trong bài, qua EasyTrack motion **#1129**. Đề xuất NEST vốn đặt một điều kiện: cỗ máy **phải được cấp vốn** thì mới vận hành được — nguyên văn *"NEST must be explicitly funded in order to be operational"*. Điều kiện đó nay đã xong.
+
+Cỗ máy vẫn không mua.
+
+Từ lúc tiền vào tới hôm nay nó được gọi thêm **tám lần**, cả tám đều kết thúc bằng một sự kiện bỏ qua phân bổ. Đếm từ ngày bật cơ chế: **11 lượt chốt sổ, 11 lần bỏ qua, 0 lượt mua**.
+
+Lý do đúng bằng thứ mục *"2.700 USD không phải mốc bắt đầu mua"* đã nói, chỉ là nay nhìn thấy được: **tiền nằm trong hợp đồng và ngân sách được phép chi là hai ô sổ khác nhau.** Tại đúng block mà 41 stETH chạm tài khoản, ngân sách vẫn ghi **−438.484,49 USD** — đúng con số bài này đăng, không nhúc nhích một xu.
+
+Tới block **25.923.188** (11h47 ngày 07/09 giờ Việt Nam, 04:47:59Z), ngân sách là **−508.751,79 USD**, tức sâu thêm **70.267,30 USD** so với block ghim của bài.
+
+Bốn ngày gần nhất tái lập được y hệt phép tính ở đầu bài: doanh thu ghi nhận **397.990,21 USD**, phí dự trữ bốn ngày **438.356,00 USD** — thiếu **40.365,79**, chia đôi, và đúng **20.182,90 USD** cộng thêm vào khoản nợ.
+
+**Khoản 41 stETH có được tính vào ngân sách không? Không — và chỗ này kiểm được, không cần tin ai.** Đọc `budgetUSD()` tại từng block có sự kiện chốt sổ, rồi suy ngược: phần phí dự trữ mỗi bước phải bằng **doanh thu mới trừ hai lần mức thay đổi của ngân sách**, và chia cho 109.589 USD phải ra một **số ngày nguyên**. Cả mười bước đều ra số nguyên — 3, rồi 7, rồi 1 cho mỗi lượt sau đó. Nếu giá trị của 41 stETH có lọt vào một bước nào, số ngày của bước đó sẽ lệch khỏi số nguyên: cộng thử vào bước 31/08 thì nó thành **7,9347**.
+
+**Một chỗ phải nói rõ, vì bài này đăng sau nó mà không nhắc.** Ngày **13/08**, chính bộ contract của cơ chế đã chạy trọn một vòng mua trong 4 phút 36 giây: **1,001 stETH** đổi lấy **6.354,459577 LDO** về treasury. Vòng đó đi bằng vốn của một địa chỉ **ngoài** treasury và **không** đi qua ngân sách, nên nó không phát ra sự kiện mua nào trên hợp đồng phân bổ. Con số 0 ở mục trên vẫn đúng nguyên văn — nó đếm sự kiện trên hợp đồng phân bổ — nhưng đọc thành *"cơ chế chưa bao giờ mua nổi một đồng LDO"* thì sai.
+
+**C6 vẫn đứng.** Dự đoán ghi trước của bài — tới hết 24/09 số sự kiện mua vẫn bằng 0 — chưa tới hạn, và tại block đọc hôm nay nó vẫn đúng. Ngày phân định không đổi.
 
 ## Phần kiểm chứng — cách tự kiểm
 

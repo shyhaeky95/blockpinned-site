@@ -106,6 +106,11 @@
      "ngay": "2026-08-24",
      "ghi": "Ghi trước ngày đăng, khi số sự kiện mua đang bằng 0 và ngân sách đang ở −438.484,488487 USD.",
      "nguon": ""
+    },
+    {
+     "ngay": "2026-09-07",
+     "ghi": "Đọc giữa chừng, chưa tới hạn: tại block 25.923.188 (04:47:59Z) số sự kiện Allocated vẫn bằng 0 — 11 lượt chốt sổ, 11 lần bỏ qua kể từ khi bật cơ chế, 8 lượt trong số đó sau khi DAO nạp 41 stETH ngày 28/08. Ngân sách −508.751,79 USD. Dự đoán VẪN ĐỨNG; ngày phân định giữ nguyên 24/09.",
+     "nguon": "https://x.com/blockpinned/status/2096847382831141341"
     }
    ]
   }
