@@ -197,6 +197,11 @@ LOGO_TOKEN = {
 }
 
 NGUON_ASSET = {
+    # bài PUMP 11/09 — nguồn `template/card-pump-50-phan-tram-burn-giam-36.html`,
+    # dựng bằng `template/render_card_v2.py` qua canvas `card_editorial.py new`
+    # (vỏ editorial-v2, 15/15 dấu). Dấu không-bằng tách hai đại lượng: cấu hình
+    # chia phí tại mốc đo và thay đổi nhịp burn giữa hai cửa sổ.
+    "card-pump-50-phan-tram-burn-giam-36.png": "png",
     # bài LDO 24/08 — nguồn `template/card-ldo-tien-vao-ngan-sach-am-them.html`, dựng
     # bằng `template/render_card_v2.py` qua canvas `card_editorial.py new` (vỏ
     # editorial-v2, 15/15 dấu). Card đi qua BỐN vòng, cả bốn bị bác bằng ẢNH trong khi

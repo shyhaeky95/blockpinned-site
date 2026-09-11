@@ -1,0 +1,74 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Tại giao dịch ở Solana slot 445.934.392, phí gộp 3.966.585 lamports được tách thành 1.983.293 lamports cho ví phí thường và 1.983.292 lamports cho buyback vault; phần buyback bằng 49,999987395%.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Solana slot 445.934.392 · blockTime 2026-09-10 16:54:20Z · TradeEvent và thay đổi số dư của cùng giao dịch",
+      "falsifier": "Decode lại đúng giao dịch đã ghim: claim sai nếu ba số không đóng về nhau, hoặc buyback_fee_basis_points khác 5000 tại mốc đó.",
+      "log": [
+        {
+          "ngay": "2026-09-11",
+          "ghi": "Ghi claim từ TradeEvent và balance delta của cùng một giao dịch; phạm vi không đại diện cho mọi giao dịch trong giai đoạn.",
+          "nguon": null
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "Trong cửa sổ 09/09 00:00–01:00Z, tám buyback vault nhận 247.162.620.490 trên tổng 494.325.296.603 lamports phí gộp, bằng 49,999994374%; đủ 16/16 địa chỉ cấu hình có dòng.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Solana · cửa sổ 2026-09-09 00:00:00Z → 01:00:00Z · tám ví phí thường và tám buyback vault",
+      "falsifier": "Chạy lại cùng SQL, tập địa chỉ và hai đầu thời gian: claim sai nếu tỉ lệ lệch ngoài ±2 điểm phần trăm hoặc một địa chỉ không có dòng.",
+      "log": [
+        {
+          "ngay": "2026-09-11",
+          "ghi": "Ghi claim từ tổng inflow một giờ của đúng 16 địa chỉ trong cấu hình; đây không phải bản replay toàn bộ giai đoạn.",
+          "nguon": null
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "text": "Bảy ngày kết thúc 09/09/2026, nhịp burn là 144.097.375,50 PUMP/ngày; trung bình 30 ngày kết thúc cùng mốc là 225.578.810,86, tức thấp hơn 36,1%.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "tokens_solana.transfers · action burn và burnChecked · hai cửa sổ cùng kết thúc 2026-09-09 23:59:59Z",
+      "falsifier": "Cộng lại sổ burn với đúng hai cửa sổ và hai đầu thời gian: claim sai nếu một trong hai kết quả lệch quá 0,01% so với giá trị đã ghi.",
+      "log": [
+        {
+          "ngay": "2026-09-11",
+          "ghi": "Ghi claim từ sổ burn on-chain; cửa sổ bảy ngày nằm trong cửa sổ 30 ngày và không phải một giai đoạn độc lập.",
+          "nguon": null
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "text": "Tới 23:59:58Z ngày 09/09/2026, các giao dịch DEX đo được cho thấy chương trình đã chi ít nhất 446.540.728,31 USD để mua 164.164.054.283,05 PUMP; lượng mua bằng 99,4103% lượng burn trong cùng sổ.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "dex_solana.trades · các ví buyback đã ghim · biên sổ 2026-09-09 23:59:58Z · không bao gồm OTC nếu có",
+      "falsifier": "Cộng lại amount_usd, lượng PUMP mua và sổ burn với cùng tập ví, hai giai đoạn và điểm dừng: claim sai nếu một kết quả lệch quá 0,01%.",
+      "log": [
+        {
+          "ngay": "2026-09-11",
+          "ghi": "Ghi claim ở phạm vi giao dịch DEX nhìn thấy được; con số ít nhất là mức đã ghi và không được dùng để giải thích riêng cửa sổ burn gần nhất.",
+          "nguon": null
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "text": "Tại slot 445.942.667, cấu hình buyback 5000 điểm cơ bản do Squads multisig ba trên bốn, timelock bằng 0 kiểm soát; lịch sử thấy hai lần đổi 10000 rồi 5000 trong ngày 28/04/2026.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Solana slot 445.942.667 · account Global, programData và Squads multisig · lịch sử instruction ngày 2026-04-28",
+      "falsifier": "Decode lại account hiện tại, derive vault và đọc lịch sử instruction: claim sai nếu threshold, timelock, BPS hoặc chuỗi cập nhật khác giá trị đã ghi.",
+      "log": [
+        {
+          "ngay": "2026-09-11",
+          "ghi": "Ghi claim từ state tại slot đã ghim và lịch sử instruction; đây là quyền quản trị tại mốc đo, không phải cam kết bất biến.",
+          "nguon": null
+        }
+      ]
+    }
+  ]
+}
