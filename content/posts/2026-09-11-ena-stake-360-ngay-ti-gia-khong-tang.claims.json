@@ -1,0 +1,55 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "text": "sENA.convertToAssets(1e18) bằng 1,018269352422694832 ENA tại cả 13 mốc tháng từ block 23.225.778 tới block 25.804.000, phủ đúng 360 ngày.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ethereum · sENA 0x8bE3460A480c80728a8C4D7a5D5303c85ba7B3b9 · 13 mốc tháng · block 23.225.778 tới 25.804.000 · 2025-08-26 tới 2026-08-21",
+      "falsifier": "Gọi lại cùng contract, cùng calldata và đúng block tag: claim sai nếu bất kỳ một trong 13 mốc trả giá trị khác 1018269352422694832 wei ENA.",
+      "log": [{"ngay": "2026-09-11", "ghi": "Ghi claim ở phạm vi 13 mốc tháng đã đo; đây không phải phát biểu về mọi block giữa hai đầu cửa sổ.", "nguon": null}]
+    },
+    {
+      "id": "C2",
+      "text": "Trong cùng cửa sổ 360 ngày, sENA có 0 event RewardsReceived; tỉ giá đầu bằng tỉ giá cuối, nên APY on-chain đo được của sENA bằng 0,0000%.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ethereum · sENA · block 23.225.778 tới 25.804.000 · tỉ giá tại 13 mốc + quét RewardsReceived trên toàn cửa sổ",
+      "falsifier": "Claim sai nếu quét log ra ít nhất một RewardsReceived hợp lệ trên sENA, hoặc tỉ giá đầu và cuối khác nhau khi đọc đúng block tag.",
+      "log": [{"ngay": "2026-09-11", "ghi": "Số 0 không đứng một mình: claim dùng đồng thời log toàn cửa sổ và tỉ giá share ở 13 mốc.", "nguon": null}]
+    },
+    {
+      "id": "C3",
+      "text": "Cùng phép đo trên sUSDe cho tỉ giá 1,1918154 lên 1,2443953, tăng 4,4118% trong 360 ngày, tương đương APY 4,4744%; 1.076 event RewardsReceived chuyển tổng 157.063.738,58 USDe vào vault.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ethereum · sUSDe · block 23.225.778 tới 25.804.000 · tỉ giá tại hai đầu + 1.076 RewardsReceived trên toàn cửa sổ",
+      "falsifier": "Claim sai nếu một trong hai đường — tỉ giá hoặc event — không tái lập được, hoặc hai đường không còn cùng chỉ hướng phần thưởng đi vào sUSDe.",
+      "log": [{"ngay": "2026-09-11", "ghi": "Đối chứng dương cho cùng đường đọc: sUSDe có cả tỉ giá tăng và RewardsReceived trong đúng cửa sổ dùng cho sENA.", "nguon": null}]
+    },
+    {
+      "id": "C4",
+      "text": "Safe 0xdedc…fe96 gửi 645.000.000 ENA vào sENA qua hai lệnh deposit, nhận tổng 633.427.686,363532416353301107 sENA; tỉ giá ở block trước và block chứa mỗi tx bằng nhau.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ethereum · Safe 0xdedc15fa923d4e147875c63c0a97f85f178dfe96 · tx 0xeead…1100 tại block 23.734.992 + tx 0x57a2…3a70 tại block 24.994.185",
+      "falsifier": "Claim sai nếu calldata không gọi deposit, receipt không mint lượng share tương ứng, hoặc convertToAssets(1e18) khác nhau ở cặp block trước/sau.",
+      "log": [
+        {"ngay": "2026-09-11", "ghi": "Tx nạp 375.000.000 ENA và receipt mint 368.271.910,676472335089129713 sENA cho Safe.", "nguon": "https://etherscan.io/tx/0xeead913589bf23fc2f6ec18c982f90190a6b8a5787c061cc90bfea1465e61100"},
+        {"ngay": "2026-09-11", "ghi": "Tx nạp 270.000.000 ENA và receipt mint 265.155.775,687060081264171394 sENA cho Safe.", "nguon": "https://etherscan.io/tx/0x57a2e397c0baefdb3b30e922b75a9e5eb6cf6f194cdeff90dd14f3ea8c2d3a70"}
+      ]
+    },
+    {
+      "id": "C5",
+      "text": "Tính tới block 25.804.000, ENA totalSupply bằng 15.000.000.000 tại cả 13 mốc và có 0 Transfer tới địa chỉ 0 trong phép quét từ block 0; đường burn chuẩn ERC-20 không xuất hiện trong phạm vi đo.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ethereum · ENA 0x57e114B691Db790C35207b2e685D4A43181e6061 · totalSupply tại 13 mốc + Transfer tới 0x0000000000000000000000000000000000000000 từ block 0 tới 25.804.000",
+      "falsifier": "Claim sai nếu một mốc supply khác 15 tỷ hoặc một log Transfer tới địa chỉ 0 hợp lệ xuất hiện trong phạm vi quét.",
+      "log": [{"ngay": "2026-09-11", "ghi": "Claim chỉ nói đường burn chuẩn ERC-20; chuyển tới dead address khác là một câu hỏi khác.", "nguon": null}]
+    },
+    {
+      "id": "C6",
+      "text": "Bảy địa chỉ protocol đã biết ngoài Safe nạp ENA vào sENA nhận 0 ENA từ block 23.225.778 tới block 25.804.000; kết quả chỉ áp dụng cho đúng tập bảy địa chỉ đã công bố.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ethereum · ENA Transfer vào 0x71e4…3a87, 0x2b5a…d4d5, 0x3b0a…1862, 0xa075…c344, 0xe8dc…7c94, 0x74ab…8d29, 0xf2fa…b439 · block 23.225.778 tới 25.804.000",
+      "falsifier": "Claim sai nếu một Transfer ENA hợp lệ đi vào một trong bảy địa chỉ ở đúng cửa sổ, hoặc tập địa chỉ thực tế khác tập đã công bố.",
+      "log": [{"ngay": "2026-09-11", "ghi": "Tập bảy địa chỉ được liệt kê và link riêng trong phần tự kiểm; phủ định không mở rộng sang địa chỉ chưa được nhận diện.", "nguon": null}]
+    }
+  ]
+}

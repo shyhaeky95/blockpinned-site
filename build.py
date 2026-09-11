@@ -177,6 +177,7 @@ LOGO_TOKEN = {
     # tải — cùng lý do đã ghi ở HYPE và PUMP: `kich_thuoc_png()` đọc IHDR và NỔ với mọi
     # thứ không phải PNG, nên để nguyên .jpeg là chặn build ở lượt sau.
     "ETHFI":  ("token-ethfi.png",  "coingecko 35958/etherfi.jpeg → png",       "2026-08-17"),
+    "ENA":    ("token-ena.png",    "coingecko 36530/ethena.png",                  "2026-09-11"),
     "UNI":    ("token-uni.png",    "coingecko 12504/uniswap-logo.png",         "2026-08-10"),
     "AAVE":   ("token-aave.png",   "coingecko 12645/aave-token-round.png",     "2026-08-20"),
     "CAKE":   ("token-cake.png",   "coingecko 12632/pancakeswap-cake-logo",    "2026-08-10"),
@@ -197,6 +198,11 @@ LOGO_TOKEN = {
 }
 
 NGUON_ASSET = {
+    # bài ENA 11/09 — nguồn `template/card-ena-stake-360-ngay-ti-gia-khong-tang.html`,
+    # dựng bằng `template/render_card_v2.py` qua canvas `card_editorial.py new`
+    # (vỏ editorial-v2, 15/15 dấu). 13 điểm sENA cùng nằm trên một đường ngang;
+    # chân ảnh ghi rõ phép đo không đại diện cho mọi block giữa hai mốc.
+    "card-ena-stake-360-ngay-ti-gia-khong-tang.png": "png",
     # bài PUMP 11/09 — nguồn `template/card-pump-50-phan-tram-burn-giam-36.html`,
     # dựng bằng `template/render_card_v2.py` qua canvas `card_editorial.py new`
     # (vỏ editorial-v2, 15/15 dấu). Dấu không-bằng tách hai đại lượng: cấu hình
@@ -2399,7 +2405,7 @@ def font_face(goc: str) -> str:
 # một lượt gõ.
 TOKEN_TEN = {"UNI": "Uniswap", "LDO": "Lido", "HYPE": "Hyperliquid", "PENDLE": "Pendle",
              "CAKE": "PancakeSwap", "MORPHO": "Morpho", "PUMP": "pump.fun",
-             "SKY": "Sky", "ETHFI": "ether.fi", "CFG": "Centrifuge",
+             "SKY": "Sky", "ETHFI": "ether.fi", "ENA": "Ethena", "CFG": "Centrifuge",
              "AAVE": "Aave"}
 
 # Tủ kính hiện mở cho ĐÚNG MỘT token, khai ở đây; toàn bộ nội dung trang sinh từ dữ
