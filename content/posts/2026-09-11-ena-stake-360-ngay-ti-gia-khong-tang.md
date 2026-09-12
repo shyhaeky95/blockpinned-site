@@ -5,6 +5,7 @@ phu_de: Vault có hơn một tỷ ENA không đồng nghĩa người stake đang
 reading_layout: centered
 token: ENA
 date: 2026-09-11
+gio: "22:43"
 mau: 🟡
 ghim: 13 mốc tháng trên Ethereum, từ block 23.225.778 (26/08/2025) tới block 25.804.000 (21/08/2026); cửa sổ đúng 360 ngày.
 mo_ta: Tại 13 mốc tháng, convertToAssets(1e18) của sENA cùng trả 1,018269352422694832 ENA; trong toàn cửa sổ, vault phát 0 RewardsReceived. Lợi suất tích luỹ trong tỉ giá vault là 0,0000%.
