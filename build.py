@@ -198,6 +198,11 @@ LOGO_TOKEN = {
 }
 
 NGUON_ASSET = {
+    # bài MORPHO 13/09 — nguồn `template/card-morpho-72-phan-tram-phieu-qua-ban.html`,
+    # dựng bằng `template/render_card_v2.py` qua canvas `card_editorial.py new`
+    # (vỏ editorial-v2, 15/15 dấu). Đường nối bị cắt tách tầng vote Snapshot
+    # 72,5% khỏi quyền ký 5/9 của Safe; hai số không cùng một loại quyền lực.
+    "card-morpho-72-phan-tram-phieu-qua-ban.png": "png",
     # bài ENA 11/09 — nguồn `template/card-ena-stake-360-ngay-ti-gia-khong-tang.html`,
     # dựng bằng `template/render_card_v2.py` qua canvas `card_editorial.py new`
     # (vỏ editorial-v2, 15/15 dấu). 13 điểm sENA cùng nằm trên một đường ngang;

@@ -1,0 +1,74 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Trong 138 proposal đã đóng của space morpho.eth từ 15/10/2022 tới 01/07/2026, 100 lượt có một địa chỉ giữ hơn 50% số phiếu đã bỏ; top-1 share có trung vị 59,8676%, thấp nhất 20,1499% và cao nhất 96,7279%.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Snapshot Hub API · morpho.eth · 138 proposal closed · MIP1 15/10/2022 tới MIP132 01/07/2026 · dữ liệu đọc 11/08/2026",
+      "falsifier": "Claim sai nếu lấy đúng tập 138 proposal, cộng vp từng phiếu và chia top-1 cho tổng phiếu mà số lượt trên 50% khác 100, hoặc một trong ba thống kê phân phối lệch ngoài sai số làm tròn 0,0001 điểm phần trăm.",
+      "log": [
+        {
+          "ngay": "2026-09-13",
+          "ghi": "Khoá phạm vi ở tập kết thúc 01/07/2026; không gọi đây là toàn bộ proposal tới ngày đăng. Tổng vp khớp scores_total API ở cả 138 lượt.",
+          "nguon": "https://snapshot.box/#/s:morpho.eth"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "Trung vị top-1 share của 12 proposal đầu là 60,3%, còn 12 proposal mới nhất trong cùng tập là 59,0%; phép đo không cho thấy mức tập trung voting power cải thiện rõ theo thời gian.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Snapshot Hub API · morpho.eth · hai nhóm 12 proposal ở hai đầu tập cố định 15/10/2022 tới 01/07/2026",
+      "falsifier": "Claim sai nếu sắp đúng 138 proposal theo thời điểm rồi tính lại trung vị của hai nhóm 12 mà một trong hai kết quả không làm tròn về 60,3% và 59,0%, hoặc nếu dùng một tiêu chí xu hướng khác cho kết luận ngược.",
+      "log": [
+        {
+          "ngay": "2026-09-13",
+          "ghi": "Câu kết chỉ áp cho hai nhóm 12 đã đăng ký; không khẳng định mọi đoạn con trong gần bốn năm đều phẳng. Số 59,0% tái lập trực tiếp từ median 0,5904962274; sai số trong bản hồ sơ cũ đã được đính chính trước khi phát hành.",
+          "nguon": "https://snapshot.box/#/s:morpho.eth"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "text": "Khi chia scores_total cho mẫu số circulating desk 654,773 triệu MORPHO, turnout trung vị của 138 proposal là 0,626%; MIP131 ở 0,663% và xếp 75/138 từ thấp lên.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Snapshot Hub API · 138 proposal; mẫu số circulating desk 654.773.000 MORPHO ghi nhận 18/07/2026, không neo block và không phải supply lịch sử từng proposal",
+      "falsifier": "Claim sai nếu cùng scores_total và cùng mẫu số 654.773.000 không tái lập được trung vị 0,626241% hoặc MIP131 0,663% và hạng 75/138; cách đọc thay đổi nếu thay mẫu số supply.",
+      "log": [
+        {
+          "ngay": "2026-09-13",
+          "ghi": "Claim turnout chỉ là bậc độ lớn. Riêng MIP131 thành 1,329% theo unlocked 326,755 triệu hoặc 0,434% theo 1 tỷ canonical; bài in cả ba định nghĩa.",
+          "nguon": "https://snapshot.box/#/s:morpho.eth"
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "text": "Ít nhất một trong 23 khoá signer đã bỏ phiếu ở 43/138 proposal; signer share có trung vị 0,02046% trong nhóm 43, nhưng 12 lượt có signer đứng top-1 và quá bán, cao nhất 92,26%.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Snapshot Hub API · tập voter 138 proposal đối chiếu với 23 địa chỉ signer đọc on-chain tại Ethereum block 25.608.961",
+      "falsifier": "Claim sai nếu đối chiếu đúng hai tập mà số proposal có signer khác 43, số lượt signer top-1 và quá bán khác 12, hoặc signer share lớn nhất không làm tròn về 92,26%.",
+      "log": [
+        {
+          "ngay": "2026-09-13",
+          "ghi": "Không gán danh tính cho signer hoặc voter; kết quả không được kể thành signer luôn điều khiển governance.",
+          "nguon": null
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "text": "Tại Ethereum block 25.608.961, Safe quản trị 0xcBa2…f9AFa có 9 owner, threshold 5, 0 module, 0 guard và phiên bản 1.3.0; trong bề mặt đã đo không có cơ chế on-chain buộc Safe thi hành kết quả Snapshot.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ethereum · block 25.608.961 · Safe 0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa · getOwners/getThreshold/getModules/guard/VERSION",
+      "falsifier": "Claim sai nếu gọi archive tại đúng block trả tập owner, threshold, module, guard hoặc phiên bản khác; hoặc nếu tìm được một đường on-chain ngoài bề mặt đã đo có tác dụng bắt buộc Safe thi hành kết quả Snapshot.",
+      "log": [
+        {
+          "ngay": "2026-09-13",
+          "ghi": "Tách quyền bỏ phiếu khỏi quyền ký giao dịch. Trạng thái Safe là ảnh chụp tại block, không phải phát biểu thì hiện tại.",
+          "nguon": "https://etherscan.io/address/0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa"
+        }
+      ]
+    }
+  ]
+}
