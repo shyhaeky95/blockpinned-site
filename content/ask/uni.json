@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "token": "UNI",
+  "project": "Uniswap",
+  "questions": [
+    {
+      "question_id": "uni-burn-vs-earned",
+      "question": "Burn tăng có đồng nghĩa UNI đang kiếm được nhiều hơn không?",
+      "short_answer": "Không tự động. Burn là đầu ra của nhịp đấu giá và không phải số earned trong cùng cửa sổ. Phép phân biệt hai đại lượng đã được xác minh; tổng earned USD đủ coverage vẫn chưa giải quyết.",
+      "answer": [
+        "Người tham gia đấu giá mua đúng ngưỡng UNI và đốt trong cùng giao dịch để nhận tài sản trong hũ. Vì ngưỡng được đặt bằng UNI, số UNI bị đốt phản ứng với giá UNI; giá trị burn bằng USD chủ yếu phản ánh giá trị hũ được đem ra đấu giá.",
+        "Cầu earned → hũ → burn chưa khép đủ theo mọi version, chain và currency. Vì vậy burn tăng là tín hiệu về đầu ra của cơ chế, nhưng chưa đủ để gọi là mức doanh thu hiện tại hoặc doanh thu cùng ngày."
+      ],
+      "status": "VERIFIED",
+      "status_note": "Đã xác minh phép phân biệt burn và earned; phần định lượng earned đầy đủ vẫn UNRESOLVED.",
+      "data_through": "2026-09-08",
+      "evidence": [
+        {
+          "label": "Hai cửa sổ đấu giá",
+          "note": "Từ 27/07–18/08 và 01/09–08/09, giá UNI trung bình tăng 1,645× trong khi tỷ số burn USD / giá trị hũ lần lượt là 1,327 và 1,275."
+        },
+        {
+          "label": "Khoảng trống coverage",
+          "note": "Earned USD đầy đủ chưa khép vì coverage currency và version chưa hoàn chỉnh; burn không được dùng thay cho earned cùng cửa sổ."
+        }
+      ],
+      "falsifier": "Khép đủ earned theo version, chain và currency trên các cửa sổ khớp thời gian. Nếu earned và burn đi một-một trong cùng cửa sổ, không còn độ trễ hay khoảng trống coverage đáng kể, câu trả lời này phải viết lại.",
+      "created_at": "2026-09-14",
+      "updated_at": "2026-09-14",
+      "tags": ["burn", "earned", "auction"],
+      "approval": {
+        "status": "approved",
+        "approved_at": "2026-09-14",
+        "approved_by": "user"
+      }
+    },
+    {
+      "question_id": "uni-robinhood-august-burn",
+      "question": "Robinhood đóng góp thế nào vào burn tháng 8 của UNI?",
+      "short_answer": "Robinhood Chain tạo 834.000 UNI burn trong tháng 8 và chiếm 97,4% phần tăng ròng so với tháng 7. Tất cả nguồn còn lại cộng lại chỉ tăng ròng 22.000 UNI.",
+      "answer": [
+        "Burn theo nguồn tăng từ 1.220.000 UNI trong tháng 7 lên 2.076.000 UNI trong tháng 8. Robinhood đi từ 0 lên 834.000 UNI, còn tổng thay đổi của mọi nguồn khác là +22.000 UNI.",
+        "Đây là attribution theo nguồn burn đã quan sát, không phải attribution cho một nhóm pool hay một loại người dùng bên trong Robinhood. Phần phân rã đó vẫn chưa giải quyết."
+      ],
+      "status": "VERIFIED",
+      "status_note": "Burn theo nguồn được đối chiếu on-chain; attribution bên trong Robinhood vẫn UNRESOLVED.",
+      "data_through": "2026-08-31",
+      "evidence": [
+        {
+          "label": "Waterfall tháng 7 → tháng 8",
+          "note": "Robinhood: 0 → 834.000 UNI; toàn hệ: 1.220.000 → 2.076.000 UNI; mọi nguồn ngoài Robinhood cộng lại: +22.000 UNI."
+        },
+        {
+          "label": "Đối chiếu nguồn",
+          "note": "Tổng burn và từng nguồn được đối chiếu bằng bốn control; burn theo version hoặc theo nhóm pool không được suy ra từ bảng này."
+        }
+      ],
+      "falsifier": "Dựng lại toàn bộ receipt cầu và sự kiện kích hoạt trong tháng 7–8. Nếu một receipt bị gán sai nguồn hoặc tổng theo nguồn không còn khớp tổng burn on-chain, attribution này phải sửa.",
+      "created_at": "2026-09-14",
+      "updated_at": "2026-09-14",
+      "tags": ["burn", "robinhood", "attribution"],
+      "approval": {
+        "status": "approved",
+        "approved_at": "2026-09-14",
+        "approved_by": "user"
+      }
+    },
+    {
+      "question_id": "uni-burn-per-billion-volume",
+      "question": "Với $1B volume, UNI hiện ghi nhận mức burn tương ứng bao nhiêu?",
+      "short_answer": "Trong tháng 8/2026, mức tương ứng là khoảng $154.430 cho mỗi $1B volume nếu ghi burn theo ngày tới L1, hoặc $171.020 nếu ghi theo ngày kích hoạt Firepit.",
+      "answer": [
+        "Theo ngày tới L1, tử số burn là $8.341.483 trên $54,016B volume, tương đương 154,43 ppm hay khoảng $154.430 cho mỗi $1B. Theo ngày kích hoạt Firepit, tử số là $9.237.582 trên cùng mẫu số, tương đương 171,02 ppm hay khoảng $171.020 cho mỗi $1B.",
+        "Hai số dùng cùng trạng thái kinh tế nhưng khác quy ước ghi ngày. Ngày kích hoạt gần lúc phí phát sinh hơn ngày tới L1, song vẫn chưa phải thời điểm phí được tạo ra."
+      ],
+      "status": "INFERRED",
+      "status_note": "Tử số burn dùng ledger on-chain; mẫu số volume dùng nguồn tổng hợp và quy ước thời gian còn tạo một dải kết quả.",
+      "data_through": "2026-08-31",
+      "evidence": [
+        {
+          "label": "Ledger burn + giá theo ngày",
+          "note": "Tháng 8: $8.341.483 theo ngày tới L1 và $9.237.582 theo ngày kích hoạt Firepit."
+        },
+        {
+          "label": "Mẫu số volume",
+          "note": "$54,016B volume Uniswap tháng 8 từ một nguồn tổng hợp; đây là lý do câu trả lời giữ nhãn INFERRED."
+        },
+        {
+          "label": "Hai convention thời gian",
+          "note": "Ngày tới L1 và ngày kích hoạt Firepit không phải cùng một mốc; cả hai đều có thể lệch ngày phát sinh phí."
+        }
+      ],
+      "falsifier": "Đối chiếu volume bằng một đường độc lập và gắn burn về đúng ngày phát sinh phí. Nếu mẫu số hoặc phép gắn ngày làm cả hai mức rời đáng kể khỏi dải $154.430–$171.020 mỗi $1B, câu trả lời phải cập nhật.",
+      "created_at": "2026-09-14",
+      "updated_at": "2026-09-14",
+      "tags": ["burn", "volume", "capture-rate"],
+      "approval": {
+        "status": "approved",
+        "approved_at": "2026-09-14",
+        "approved_by": "user"
+      }
+    },
+    {
+      "question_id": "uni-v4-protocol-fee-payer",
+      "question": "Ai thực sự trả protocol fee trên Uniswap v4?",
+      "short_answer": "Người swap trả protocol fee v4 như phần cộng thêm vào pool fee; phần pool fee của LP không bị trừ đi. Điều này không có nghĩa mọi pool v4 đều đang thu protocol fee.",
+      "answer": [
+        "Tại Ethereum block 25.643.032, các mức protocol fee quan sát được cộng lên trên pool fee. Ví dụ, pool fee 0,30% cùng protocol fee tạo tổng phí 0,3499% cho người swap.",
+        "Cấu hình có ngoại lệ. Bốn pool dùng hook DualPool trong mẫu ngày 30/07 trả protocol fee bằng 0; cùng bộ trường nhưng bỏ hook thì adapter trả mức của pool không hook tương ứng."
+      ],
+      "status": "VERIFIED",
+      "status_note": "Cơ chế cộng phí và control theo pool đã được đo tại block ghim; trạng thái cấu hình có thể đổi sau mốc đó.",
+      "data_through": "2026-07-30",
+      "evidence": [
+        {
+          "label": "C1 · phí được cộng vào tổng người swap trả",
+          "note": "5.413 lượt swap trong đoạn 400 block; bốn mức phí chuẩn đều cho tổng lớn hơn pool fee tương ứng.",
+          "href": "/bai/2026-07-30-uni-v4-ai-dang-tra-protocol-fee/#C1"
+        },
+        {
+          "label": "C2 · control hook DualPool",
+          "note": "Bốn pool dùng hook trả 0; đối chứng bỏ hook trả mức của pool không hook tương ứng.",
+          "href": "/bai/2026-07-30-uni-v4-ai-dang-tra-protocol-fee/#C2"
+        }
+      ],
+      "falsifier": "Gọi lại getFee cho các PoolKey tại block ghim. Nếu adapter trả protocol fee bằng 0 cho nhóm được ghi nhận có phí, hoặc phần LP nhận bị giảm thay vì protocol fee được cộng thêm, kết luận phải hạ hoặc sửa.",
+      "created_at": "2026-09-14",
+      "updated_at": "2026-09-14",
+      "tags": ["v4", "protocol-fee", "fee-incidence"],
+      "approval": {
+        "status": "approved",
+        "approved_at": "2026-09-14",
+        "approved_by": "user"
+      }
+    }
+  ]
+}

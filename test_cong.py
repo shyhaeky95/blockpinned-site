@@ -19,6 +19,7 @@ PENDLE_CJ = "content/posts/2026-07-31-pendle-buyback-cot-bang-0.claims.json"
 HYPE_CJ = "content/posts/2026-08-12-hype-thi-phan-13-hay-70.claims.json"
 CAKE_CJ = "content/posts/2026-08-10-cake-mat-thi-phan-ma-thu-nhieu-phi-hon.claims.json"
 SKY_PRIMER = "content/primers/sky.json"
+ASK_UNI = "content/ask/uni.json"
 
 
 def sua_md(root, fn):
@@ -38,6 +39,10 @@ def sua_json_bai(root, path, fn):
     d = json.loads(p.read_text(encoding="utf-8"))
     fn(d)
     p.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def sua_ask(root, fn):
+    sua_json_bai(root, ASK_UNI, lambda d: fn(d["questions"]))
 
 
 def sua_primer_h1(root, moi):
@@ -583,6 +588,18 @@ CA = [
      lambda r: sua_builder(r, '<details class="primer-verify" id="lop-kiem-chung">',
                            '<details class="primer-verify" id="lop-kiem-chung" open>'),
      "VERIFY primer phải đóng mặc định"),
+    ("⑱ ASK · candidate trong cây public phải NỔ",
+     lambda r: sua_ask(r, lambda qs: qs[0]["approval"].update(status="candidate")),
+     "public Ask chỉ nhận câu đã APPROVED"),
+    ("⑱ ASK · action layer riêng tư phải NỔ",
+     lambda r: sua_ask(r, lambda qs: qs[0].update(short_answer=qs[0]["short_answer"] + " ADD")),
+     "lộ FV/action layer riêng tư"),
+    ("⑱ ASK · renderer làm rơi section phải NỔ",
+     lambda r: sua_builder(r, 'class="ask-bp"', 'class="ask-bp-hong"'),
+     "Ask BlockPinned thiếu"),
+    ("⑱ ASK · ô nhập tự do phải NỔ",
+     lambda r: sua_builder(r, '<div class="ask-bp-list">', '<input><div class="ask-bp-list">'),
+     "không được có ô nhập tự do"),
 ]
 
 # Ca nào cần cờ riêng thì khai ở đây, không nhét thêm cột vào mọi tuple cũ:
@@ -606,7 +623,10 @@ def main():
     for ten, be, mong, *_ in CA:
         with tempfile.TemporaryDirectory() as td:
             root = pathlib.Path(td)
-            shutil.copytree(SITE, root / "site")
+            # `out/` là sản phẩm của một lượt build, không phải fixture. Chép nó vào
+            # ca thử khiến guard "không xoá nhầm thư mục" nổ trước gate đang được ép.
+            shutil.copytree(SITE, root / "site",
+                            ignore=shutil.ignore_patterns("out", "__pycache__"))
             vat_chat_primers(root)
             # check_language.py nằm ở ../template trong kho gốc, và NGAY CẠNH
             # build.py trong repo mirror công khai. Neo cứng một chỗ thì bộ thử

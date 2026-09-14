@@ -1888,6 +1888,36 @@ html.chuyen .uni-vault.is-visible .uni-ring{animation:uni-ring-lock .72s cubic-b
 @keyframes uni-volume{from{transform:scaleX(0);opacity:.2}to{transform:scaleX(1);opacity:1}}
 @keyframes uni-ring-lock{from{transform:rotate(-48deg) scale(.82);opacity:.15}to{transform:rotate(-28deg) scale(1);opacity:1}}
 
+.ask-bp{margin:clamp(50px,7vw,82px) 0 0;padding-top:32px;border-top:1px solid var(--line)}
+.ask-bp-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.72fr);gap:30px;align-items:end;margin-bottom:26px}
+.ask-bp-head h2{margin:5px 0 0;font:780 clamp(30px,4vw,46px)/1 var(--display);letter-spacing:-.045em}
+.ask-bp-head>p{max-width:52ch;margin:0;font:500 13px/1.7 var(--body);color:var(--muted)}
+.ask-bp-list{border-top:1px solid var(--line)}
+.ask-bp-item{--ask-state:var(--c-xn);scroll-margin-top:76px;border-bottom:1px solid var(--line);background:transparent;transition:background .2s,border-color .2s}
+.ask-bp-item.inferred{--ask-state:var(--c-sua)}.ask-bp-item.unresolved{--ask-state:var(--faint)}
+.ask-bp-item>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:42px minmax(0,1fr) auto 34px;gap:16px;align-items:center;padding:23px 10px}
+.ask-bp-item>summary::-webkit-details-marker{display:none}.ask-bp-item>summary:hover{background:color-mix(in srgb,var(--ask-state) 4%,transparent)}
+.ask-bp-no{font:750 9px/1 var(--mono);color:var(--faint)}
+.ask-bp-question{font:710 clamp(16px,1.8vw,20px)/1.4 var(--display);letter-spacing:-.015em}
+.ask-bp-meta{display:grid;justify-items:end;gap:6px}.ask-bp-meta b{font:800 8px/1 var(--mono);letter-spacing:.13em;color:var(--ask-state)}
+.ask-bp-meta small{font:600 8.5px/1 var(--mono);color:var(--faint)}
+.ask-bp-arrow{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;font:650 11px/1 var(--mono);color:var(--ask-state);transition:transform .24s,border-color .24s}
+.ask-bp-item[open]{background:linear-gradient(145deg,color-mix(in srgb,var(--ask-state) 4%,var(--card)),var(--card))}
+.ask-bp-item[open] .ask-bp-arrow{transform:rotate(180deg);border-color:color-mix(in srgb,var(--ask-state) 45%,var(--line))}
+.ask-bp-item:target{box-shadow:inset 3px 0 var(--ask-state)}
+.ask-bp-answer{padding:0 60px 30px 68px}.ask-bp-short{max-width:64ch;margin:0 0 22px;font:680 clamp(17px,2vw,21px)/1.5 var(--display);letter-spacing:-.015em}
+.ask-bp-body{max-width:72ch}.ask-bp-body p{margin:0 0 12px;font:500 14px/1.75 var(--body);color:var(--muted)}
+.ask-bp-status{max-width:780px;display:grid;grid-template-columns:auto auto minmax(220px,1fr);gap:18px;align-items:start;margin:24px 0;padding:17px 18px;border:1px solid var(--line);border-radius:12px;background:var(--bg2)}
+.ask-bp-status>span{display:grid;gap:7px}.ask-bp-status small{font:750 7.5px/1 var(--mono);letter-spacing:.13em;color:var(--faint)}.ask-bp-status b{font:800 10px/1.2 var(--mono);color:var(--ask-state)}
+.ask-bp-status>p{margin:0;padding-left:18px;border-left:1px solid var(--line);font:500 11.5px/1.6 var(--body);color:var(--muted)}
+.ask-bp-evidence{max-width:780px;margin-top:24px}.ask-bp-evidence h3{margin:0 0 11px;font:800 8px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.ask-bp-evidence ol{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}.ask-bp-evidence li{display:grid;grid-template-columns:minmax(175px,.7fr) minmax(0,1.3fr);gap:18px;padding:13px 0;border-bottom:1px solid var(--line-soft)}
+.ask-bp-evidence strong,.ask-bp-evidence a{font:700 10px/1.5 var(--mono);color:var(--ink)}.ask-bp-evidence a i{margin-left:5px;font-style:normal;color:var(--accent)}
+.ask-bp-evidence li>span{font:500 11.5px/1.6 var(--body);color:var(--muted)}
+.ask-bp-falsifier{max-width:780px;margin:23px 0 0;padding:17px 18px;border-left:3px solid var(--accent);background:color-mix(in srgb,var(--accent) 5%,var(--bg2));font:500 12.5px/1.7 var(--body);color:var(--muted)}
+.ask-bp-falsifier span{display:block;margin-bottom:8px;font:800 7.5px/1.3 var(--mono);letter-spacing:.14em;color:var(--accent)}
+.ask-bp-updated{margin:15px 0 0;font:600 8.5px/1.4 var(--mono);color:var(--faint)}
+
 .uni-coverage{display:grid;grid-template-columns:minmax(250px,1.35fr) repeat(3,minmax(0,.65fr));margin:46px 0 62px;border:1px solid var(--line);border-radius:20px;
   overflow:hidden;background:var(--card);box-shadow:var(--bong)}
 .uni-coverage-copy{padding:28px 30px;display:flex;flex-direction:column;justify-content:center;background:var(--bg2)}
@@ -2014,6 +2044,10 @@ html.chuyen .uni-claim.is-visible .tt-hop{animation:uni-claim-in .58s cubic-bezi
   .uni-title-lockup{grid-template-columns:62px minmax(0,1fr);gap:16px}.uni-title-lockup img{width:62px;height:62px;border-radius:18px}
   .uni-title-lockup h1{font-size:clamp(34px,7vw,42px)}.uni-vault-total{padding:28px 24px}.uni-ring{width:108px;height:108px}.uni-ring::before{width:72px;height:72px}.uni-ring b{font-size:36px}
   .uni-vault-state{padding:28px 24px 25px}.uni-vault-rule{align-items:flex-start;flex-wrap:wrap;padding:15px 20px}.uni-vault-rule i{display:none}
+  .ask-bp{margin-top:48px}.ask-bp-head{grid-template-columns:1fr;gap:15px}.ask-bp-head>p{font-size:12.5px}.ask-bp-item>summary{grid-template-columns:28px minmax(0,1fr) 30px;gap:11px;padding:20px 4px}
+  .ask-bp-meta{grid-column:2;grid-row:2;justify-items:start;display:flex;gap:9px;align-items:center}.ask-bp-arrow{grid-column:3;grid-row:1/3}.ask-bp-answer{padding:0 8px 27px 39px}
+  .ask-bp-status{grid-template-columns:1fr 1fr}.ask-bp-status>p{grid-column:1/-1;padding:13px 0 0;border-left:0;border-top:1px solid var(--line)}
+  .ask-bp-evidence li{grid-template-columns:1fr;gap:5px}.ask-bp-falsifier{padding:15px}
   .uni-coverage{grid-template-columns:1fr;margin-block:38px 52px}.uni-coverage-copy{grid-column:auto;min-height:145px}.uni-coverage article{min-height:120px;border-left:0;border-top:1px solid var(--line)}
   .uni-tools{top:54px;grid-template-columns:1fr;margin-inline:-4px}.uni-search{height:44px}.uni-filters{padding-bottom:1px}.uni-open-tools{display:none}
   .uni-ledger-head{align-items:start}.uni-claims{padding-left:0}.uni-claims::before,.uni-claim-index{display:none}.uni-claim{margin-inline:-4px;border-radius:17px}
@@ -2285,6 +2319,81 @@ dialog.quick-find[open]{animation:quick-dialog-in .32s cubic-bezier(.2,.8,.2,1) 
       </section>
     </div>
   </section>
+
+  <section class="ask-bp" id="ask-blockpinned" aria-labelledby="ask-bp-title">
+  <header class="ask-bp-head"><div><p class="section-code">ASK BLOCKPINNED · APPROVED ANSWERS</p>
+    <h2 id="ask-bp-title">Những câu đáng hỏi về UNI</h2></div>
+    <p>Chọn một câu để mở câu trả lời đã kiểm&nbsp;chứng. Không có AI trả lời theo lượt; mỗi câu giữ nguyên nguồn, độ mới và điều có thể làm nó đổi.</p></header>
+  <div class="ask-bp-list"><details class="ask-bp-item verified" id="ask-uni-burn-vs-earned"
+  data-ask-question data-question-id="uni-burn-vs-earned" data-ask-status="VERIFIED">
+  <summary><span class="ask-bp-no" aria-hidden="true">01</span>
+    <span class="ask-bp-question">Burn tăng có đồng nghĩa UNI đang kiếm được nhiều hơn không?</span>
+    <span class="ask-bp-meta"><b>VERIFIED</b><small>Dữ&nbsp;liệu tới 08/09/2026</small></span>
+    <span class="ask-bp-arrow" aria-hidden="true">↓</span></summary>
+  <div class="ask-bp-answer">
+    <p class="ask-bp-short">Không tự động. Burn là đầu ra của nhịp đấu giá và không phải số earned trong cùng cửa sổ. Phép phân biệt hai đại lượng đã được xác minh; tổng earned USD đủ coverage vẫn chưa giải quyết.</p>
+    <div class="ask-bp-body"><p>Người tham gia đấu giá mua đúng ngưỡng UNI và đốt trong cùng giao dịch để nhận tài sản trong hũ. Vì ngưỡng được đặt bằng UNI, số UNI bị đốt phản ứng với giá UNI; giá trị burn bằng USD chủ yếu phản ánh giá trị hũ được đem ra đấu giá.</p><p>Cầu earned → hũ → burn chưa khép đủ theo mọi version, chain và currency. Vì vậy burn tăng là tín hiệu về đầu ra của cơ chế, nhưng chưa đủ để gọi là mức doanh thu hiện tại hoặc doanh thu cùng ngày.</p></div>
+    <div class="ask-bp-status"><span><small>EPISTEMIC STATUS</small><b>VERIFIED</b></span>
+      <span><small>DATA THROUGH</small><b>08/09/2026</b></span>
+      <p>Đã xác minh phép phân biệt burn và earned; phần định lượng earned đầy đủ vẫn UNRESOLVED.</p></div>
+    <section class="ask-bp-evidence" aria-label="Bằng chứng cho câu hỏi 1">
+      <h3>Evidence</h3><ol><li><strong>Hai cửa sổ đấu giá</strong><span>Từ 27/07–18/08 và 01/09–08/09, giá UNI trung bình tăng 1,645× trong khi tỷ số burn USD / giá trị hũ lần lượt là 1,327 và 1,275.</span></li><li><strong>Khoảng trống coverage</strong><span>Earned USD đầy đủ chưa khép vì coverage currency và version chưa hoàn chỉnh; burn không được dùng thay cho earned cùng cửa sổ.</span></li></ol></section>
+    <p class="ask-bp-falsifier"><span>ĐIỀU GÌ SẼ LÀM CÂU TRẢ LỜI NÀY ĐỔI</span>Khép đủ earned theo version, chain và currency trên các cửa sổ khớp thời gian. Nếu earned và burn đi một-một trong cùng cửa sổ, không còn độ trễ hay khoảng trống coverage đáng kể, câu trả lời này phải viết lại.</p>
+    <p class="ask-bp-updated">Tạo 14/09/2026 · cập nhật 14/09/2026</p>
+  </div>
+</details><details class="ask-bp-item verified" id="ask-uni-robinhood-august-burn"
+  data-ask-question data-question-id="uni-robinhood-august-burn" data-ask-status="VERIFIED">
+  <summary><span class="ask-bp-no" aria-hidden="true">02</span>
+    <span class="ask-bp-question">Robinhood đóng góp thế nào vào burn tháng 8 của UNI?</span>
+    <span class="ask-bp-meta"><b>VERIFIED</b><small>Dữ&nbsp;liệu tới 31/08/2026</small></span>
+    <span class="ask-bp-arrow" aria-hidden="true">↓</span></summary>
+  <div class="ask-bp-answer">
+    <p class="ask-bp-short">Robinhood Chain tạo 834.000&nbsp;UNI burn trong tháng 8 và chiếm 97,4% phần tăng ròng so với tháng 7. Tất cả nguồn còn lại cộng lại chỉ tăng ròng 22.000&nbsp;UNI.</p>
+    <div class="ask-bp-body"><p>Burn theo nguồn tăng từ 1.220.000&nbsp;UNI trong tháng 7 lên 2.076.000&nbsp;UNI trong tháng 8. Robinhood đi từ 0 lên 834.000&nbsp;UNI, còn tổng thay đổi của mọi nguồn khác là +22.000&nbsp;UNI.</p><p>Đây là attribution theo nguồn burn đã quan sát, không phải attribution cho một nhóm pool hay một loại người dùng bên trong Robinhood. Phần phân rã đó vẫn chưa giải quyết.</p></div>
+    <div class="ask-bp-status"><span><small>EPISTEMIC STATUS</small><b>VERIFIED</b></span>
+      <span><small>DATA THROUGH</small><b>31/08/2026</b></span>
+      <p>Burn theo nguồn được đối chiếu on-chain; attribution bên trong Robinhood vẫn UNRESOLVED.</p></div>
+    <section class="ask-bp-evidence" aria-label="Bằng chứng cho câu hỏi 2">
+      <h3>Evidence</h3><ol><li><strong>Waterfall tháng 7 → tháng 8</strong><span>Robinhood: 0 → 834.000&nbsp;UNI; toàn hệ: 1.220.000 → 2.076.000&nbsp;UNI; mọi nguồn ngoài Robinhood cộng lại: +22.000&nbsp;UNI.</span></li><li><strong>Đối chiếu nguồn</strong><span>Tổng burn và từng nguồn được đối chiếu bằng bốn control; burn theo version hoặc theo nhóm pool không được suy ra từ bảng này.</span></li></ol></section>
+    <p class="ask-bp-falsifier"><span>ĐIỀU GÌ SẼ LÀM CÂU TRẢ LỜI NÀY ĐỔI</span>Dựng lại toàn bộ receipt cầu và sự kiện kích hoạt trong tháng 7–8. Nếu một receipt bị gán sai nguồn hoặc tổng theo nguồn không còn khớp tổng burn on-chain, attribution này phải sửa.</p>
+    <p class="ask-bp-updated">Tạo 14/09/2026 · cập nhật 14/09/2026</p>
+  </div>
+</details><details class="ask-bp-item inferred" id="ask-uni-burn-per-billion-volume"
+  data-ask-question data-question-id="uni-burn-per-billion-volume" data-ask-status="INFERRED">
+  <summary><span class="ask-bp-no" aria-hidden="true">03</span>
+    <span class="ask-bp-question">Với $1B volume, UNI hiện ghi nhận mức burn tương ứng bao nhiêu?</span>
+    <span class="ask-bp-meta"><b>INFERRED</b><small>Dữ&nbsp;liệu tới 31/08/2026</small></span>
+    <span class="ask-bp-arrow" aria-hidden="true">↓</span></summary>
+  <div class="ask-bp-answer">
+    <p class="ask-bp-short">Trong tháng 8/2026, mức tương ứng là khoảng $154.430 cho mỗi $1B volume nếu ghi burn theo ngày tới L1, hoặc $171.020 nếu ghi theo ngày kích hoạt Firepit.</p>
+    <div class="ask-bp-body"><p>Theo ngày tới L1, tử số burn là $8.341.483 trên $54,016B volume, tương đương 154,43 ppm hay khoảng $154.430 cho mỗi $1B. Theo ngày kích hoạt Firepit, tử số là $9.237.582 trên cùng mẫu số, tương đương 171,02 ppm hay khoảng $171.020 cho mỗi $1B.</p><p>Hai số dùng cùng trạng thái kinh tế nhưng khác quy ước ghi ngày. Ngày kích hoạt gần lúc phí phát sinh hơn ngày tới L1, song vẫn chưa phải thời điểm phí được tạo ra.</p></div>
+    <div class="ask-bp-status"><span><small>EPISTEMIC STATUS</small><b>INFERRED</b></span>
+      <span><small>DATA THROUGH</small><b>31/08/2026</b></span>
+      <p>Tử số burn dùng ledger on-chain; mẫu số volume dùng nguồn tổng hợp và quy ước thời gian còn tạo một dải kết quả.</p></div>
+    <section class="ask-bp-evidence" aria-label="Bằng chứng cho câu hỏi 3">
+      <h3>Evidence</h3><ol><li><strong>Ledger burn + giá theo ngày</strong><span>Tháng 8: $8.341.483 theo ngày tới L1 và $9.237.582 theo ngày kích hoạt Firepit.</span></li><li><strong>Mẫu số volume</strong><span>$54,016B volume Uniswap tháng 8 từ một nguồn tổng hợp; đây là lý do câu trả lời giữ nhãn INFERRED.</span></li><li><strong>Hai convention thời gian</strong><span>Ngày tới L1 và ngày kích hoạt Firepit không phải cùng một mốc; cả hai đều có thể lệch ngày phát sinh phí.</span></li></ol></section>
+    <p class="ask-bp-falsifier"><span>ĐIỀU GÌ SẼ LÀM CÂU TRẢ LỜI NÀY ĐỔI</span>Đối chiếu volume bằng một đường độc lập và gắn burn về đúng ngày phát sinh phí. Nếu mẫu số hoặc phép gắn ngày làm cả hai mức rời đáng kể khỏi dải $154.430–$171.020 mỗi $1B, câu trả lời phải cập nhật.</p>
+    <p class="ask-bp-updated">Tạo 14/09/2026 · cập nhật 14/09/2026</p>
+  </div>
+</details><details class="ask-bp-item verified" id="ask-uni-v4-protocol-fee-payer"
+  data-ask-question data-question-id="uni-v4-protocol-fee-payer" data-ask-status="VERIFIED">
+  <summary><span class="ask-bp-no" aria-hidden="true">04</span>
+    <span class="ask-bp-question">Ai thực sự trả protocol fee trên Uniswap v4?</span>
+    <span class="ask-bp-meta"><b>VERIFIED</b><small>Dữ&nbsp;liệu tới 30/07/2026</small></span>
+    <span class="ask-bp-arrow" aria-hidden="true">↓</span></summary>
+  <div class="ask-bp-answer">
+    <p class="ask-bp-short">Người swap trả protocol fee v4 như phần cộng thêm vào pool fee; phần pool fee của LP không bị trừ đi. Điều này không có nghĩa mọi pool v4 đều đang thu protocol fee.</p>
+    <div class="ask-bp-body"><p>Tại Ethereum block&nbsp;25.643.032, các mức protocol fee quan sát được cộng lên trên pool fee. Ví dụ, pool fee 0,30% cùng protocol fee tạo tổng phí 0,3499% cho người swap.</p><p>Cấu hình có ngoại lệ. Bốn pool dùng hook DualPool trong mẫu ngày 30/07 trả protocol fee bằng 0; cùng bộ trường nhưng bỏ hook thì adapter trả mức của pool không hook tương ứng.</p></div>
+    <div class="ask-bp-status"><span><small>EPISTEMIC STATUS</small><b>VERIFIED</b></span>
+      <span><small>DATA THROUGH</small><b>30/07/2026</b></span>
+      <p>Cơ chế cộng phí và control theo pool đã được đo tại block ghim; trạng thái cấu hình có thể đổi sau mốc đó.</p></div>
+    <section class="ask-bp-evidence" aria-label="Bằng chứng cho câu hỏi 4">
+      <h3>Evidence</h3><ol><li><a href="/bai/2026-07-30-uni-v4-ai-dang-tra-protocol-fee/#C1">C1 · phí được cộng vào tổng người swap trả<i aria-hidden="true">↗</i></a><span>5.413 lượt swap trong đoạn 400 block; bốn mức phí chuẩn đều cho tổng lớn hơn pool fee tương ứng.</span></li><li><a href="/bai/2026-07-30-uni-v4-ai-dang-tra-protocol-fee/#C2">C2 · control hook DualPool<i aria-hidden="true">↗</i></a><span>Bốn pool dùng hook trả 0; đối chứng bỏ hook trả mức của pool không hook tương ứng.</span></li></ol></section>
+    <p class="ask-bp-falsifier"><span>ĐIỀU GÌ SẼ LÀM CÂU TRẢ LỜI NÀY ĐỔI</span>Gọi lại getFee cho các PoolKey tại block ghim. Nếu adapter trả protocol fee bằng 0 cho nhóm được ghi nhận có phí, hoặc phần LP nhận bị giảm thay vì protocol fee được cộng thêm, kết luận phải hạ hoặc sửa.</p>
+    <p class="ask-bp-updated">Tạo 14/09/2026 · cập nhật 14/09/2026</p>
+  </div>
+</details></div>
+</section>
 
   <section class="khu-bai uni-articles article-priority" data-hien aria-labelledby="bai"><div class="khu-dau"><div class="bai-heading"><p class="section-code">READING DESK · 5 INVESTIGATIONS</p><h2 id="bai">Bài điều&nbsp;tra về UNI</h2><p>Bắt đầu từ bài gốc để thấy câu hỏi, đường đo và giới hạn trước khi mở từng claim.</p></div><a class="bai-archive-link" href="../../bai/#token-uni"><span>Xem tất cả</span><b>5&nbsp;bài&nbsp;viết</b><i aria-hidden="true">↗</i></a></div><div class="article-preview-grid"><a class="bai bai-lead" href="../../bai/2026-08-06-uni-burn-cham-gan-mot-tuan/"><span class="bai-top"><span class="d">🟡 06/08/2026</span><span class="bai-token">UNI</span></span><span class="t">Biểu đồ UNI burn trên Ethereum đang chậm gần một tuần so với Robinhood Chain</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">5&nbsp;claim — 5 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="../../bai/2026-07-31-uni-100usd-phi-swap/"><span class="bai-top"><span class="d">🔴 31/07/2026</span><span class="bai-token">UNI</span></span><span class="t">Mỗi $100 phí swap trên Robinhood Chain, Uniswap ghi nhận $14,64</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">5&nbsp;claim — 5 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="../../bai/2026-07-30-uni-v4-ai-dang-tra-protocol-fee/"><span class="bai-top"><span class="d">🔴 30/07/2026</span><span class="bai-token">UNI</span></span><span class="t">Ai đang trả protocol fee của Uniswap v4, và pool nào vẫn đang trả 0</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:100.00%"></span></span><span class="bai-foot"><span class="s">4&nbsp;claim — 4 vẫn đứng&nbsp;vững</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="../../bai/2026-07-28-uni-v4-cong-tac-bat-tien-chay/"><span class="bai-top"><span class="d">🟡 28/07/2026</span><span class="bai-token">UNI</span></span><span class="t">Uniswap bật thu phí v4 — chỉ số giảm 53% sau một đêm, và nó không phải bộ đếm</span><span class="mini" aria-hidden="true"><span class="seg song" style="width:75.00%"></span><span class="seg bac" style="width:25.00%"></span></span><span class="bai-foot"><span class="s">4&nbsp;claim — 3 vẫn đứng&nbsp;vững · 1 đã bị bác&nbsp;bỏ</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a><a class="bai" href="../../bai/2026-07-27-defillama-uniswap-v4/"><span class="bai-top"><span class="d">🟢 27/07/2026</span><span class="bai-token">UNI</span></span><span class="t">DefiLlama báo phí Uniswap v4 cao hơn 3,9&nbsp;lần — và bản sửa mới chỉ chạy một chiều</span><span class="mini" aria-hidden="true"><span class="seg xac" style="width:16.67%"></span><span class="seg sua" style="width:66.67%"></span><span class="seg bac" style="width:16.67%"></span></span><span class="bai-foot"><span class="s">6&nbsp;claim — 1 xác nhận · 4 đã sửa · 1 đã bị bác&nbsp;bỏ</span><span class="bai-go">Đọc bài <i aria-hidden="true">↗</i></span></span></a></div><p class="article-preview-note">Đang giới thiệu 5&nbsp;/&nbsp;5&nbsp;bài&nbsp;viết · danh mục đầy đủ có tìm kiếm và lọc theo token</p></section>
 
@@ -3142,6 +3251,31 @@ document.querySelectorAll("button.dolai").forEach(function (b) {
     });
     selectArchiveFilter(requestedButton ? requestedToken.toLowerCase() : "all", false);
   }
+
+  // Ask V0 has no inference or analytics client. The stable event is only a hook:
+  // a later first-party listener can count opens without changing the corpus/DOM ids.
+  var askItems = Array.prototype.slice.call(document.querySelectorAll("[data-ask-question]"));
+  function openAskHash() {
+    if (!location.hash || location.hash.indexOf("#ask-") !== 0) return;
+    var item;
+    try { item = document.querySelector(location.hash); } catch (ignore) { return; }
+    if (item && item.matches("[data-ask-question]")) item.open = true;
+  }
+  askItems.forEach(function (item) {
+    var summary = item.querySelector("summary");
+    if (!summary) return;
+    summary.addEventListener("click", function () {
+      requestAnimationFrame(function () {
+        if (!item.open) return;
+        history.replaceState(null, "", location.pathname + location.search + "#" + item.id);
+        document.dispatchEvent(new CustomEvent("blockpinned:ask-open", {
+          detail: { questionId: item.dataset.questionId }
+        }));
+      });
+    });
+  });
+  openAskHash();
+  addEventListener("hashchange", openAskHash);
 
   // UNI profile: one evidence vault, with local search and non-destructive lenses.
   var uniClaims = Array.prototype.slice.call(document.querySelectorAll("[data-uni-claim]"));

@@ -4011,6 +4011,110 @@ def vn_ngay(iso: str) -> str:
     return f"{iso[8:10]}/{iso[5:7]}/{iso[0:4]}"
 
 
+def doc_ask(ma: str) -> list[dict]:
+    """Đọc corpus Ask đã duyệt; candidate không bao giờ nằm trong cây publish.
+
+    FAQ tổng hợp nhiều claim nên không được giả làm một claim mới trong ledger. Nó
+    giữ nhãn nhận thức + freshness riêng, còn evidence trỏ về phép đo/bài gốc. Schema
+    đóng cố ý: thêm field action/FV không thể lọt qua bằng cách đặt một tên mới.
+    """
+    p = CONTENT / "ask" / f"{ma.lower()}.json"
+    if not p.is_file():
+        return []
+    o = f"content/ask/{p.name}"
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as e:
+        raise LoiCong(f"Ask JSON hỏng — {o}: {e}") from e
+    if not isinstance(d, dict):
+        raise LoiCong(f"Ask collection phải là object — {o}")
+    top = {"schema_version", "token", "project", "questions"}
+    if set(d) != top or d.get("schema_version") != 1:
+        raise LoiCong(f"Ask collection sai schema_version hoặc field — {o}")
+    if d.get("token") != ma or not str(d.get("project", "")).strip():
+        raise LoiCong(f"Ask collection sai token/project — {o}")
+    qs = d.get("questions")
+    if not isinstance(qs, list) or not 3 <= len(qs) <= 6:
+        raise LoiCong(f"Ask V0 cần 3–6 câu đã duyệt — {o}")
+
+    faq_fields = {"question_id", "question", "short_answer", "answer", "status",
+                  "status_note", "data_through", "evidence", "falsifier", "created_at",
+                  "updated_at", "tags", "approval"}
+    evidence_fields = {"label", "note", "href"}
+    approval_fields = {"status", "approved_at", "approved_by"}
+    statuses = {"VERIFIED", "INFERRED", "UNRESOLVED"}
+    ids, public_text = set(), [str(d["project"])]
+    private = re.compile(
+        r"(?i)(?:\b(?:ADD|HOLD|MOS|FV|P_ADD|sizing|hurdle|price target|fair[_ -]?(?:value|bull|base|bear))\b"
+        r"|/Users/|(?:UNI|MORPHO|SKY)/(?:(?:FACTS|CONTEXT|MEMO|NEXT)\.md)|(?:UNI|OPS)-T-[A-Z0-9-]+)"
+    )
+    for i, q in enumerate(qs, 1):
+        qo = f"{o}.questions[{i}]"
+        if not isinstance(q, dict) or set(q) != faq_fields:
+            raise LoiCong(f"Ask FAQ có field lạ hoặc thiếu field — {qo}")
+        scalar = ("question_id", "question", "short_answer", "status", "status_note",
+                  "data_through", "falsifier", "created_at", "updated_at")
+        missing = [k for k in scalar if not isinstance(q.get(k), str) or not q[k].strip()]
+        if missing:
+            raise LoiCong(f"Ask FAQ thiếu {missing} — {qo}")
+        qid = q["question_id"]
+        if (not re.fullmatch(rf"{ma.lower()}-[a-z0-9-]+", qid)
+                or qid in ids):
+            raise LoiCong(f"Ask question_id sai dạng hoặc trùng — {qo}: {qid!r}")
+        ids.add(qid)
+        if q["status"] not in statuses:
+            raise LoiCong(f"Ask epistemic status không hợp lệ — {qo}: {q['status']!r}")
+        answer, tags, evidence = q["answer"], q["tags"], q["evidence"]
+        if (not isinstance(answer, list) or not answer
+                or not all(isinstance(x, str) and x.strip() for x in answer)):
+            raise LoiCong(f"Ask answer phải là list đoạn văn không rỗng — {qo}")
+        if (not isinstance(tags, list) or not tags
+                or not all(isinstance(x, str) and re.fullmatch(r"[a-z0-9-]+", x) for x in tags)):
+            raise LoiCong(f"Ask tags phải là slug không rỗng — {qo}")
+        if not isinstance(evidence, list) or not evidence:
+            raise LoiCong(f"Ask FAQ thiếu evidence — {qo}")
+        for j, ev in enumerate(evidence, 1):
+            eo = f"{qo}.evidence[{j}]"
+            if not isinstance(ev, dict) or not set(ev) <= evidence_fields or not {"label", "note"} <= set(ev):
+                raise LoiCong(f"Ask evidence sai field — {eo}")
+            if not all(isinstance(ev.get(k), str) and ev[k].strip() for k in ("label", "note")):
+                raise LoiCong(f"Ask evidence thiếu label/note — {eo}")
+            href = ev.get("href", "")
+            if href and not (isinstance(href, str) and
+                             (href.startswith("/bai/") or href.startswith("https://"))):
+                raise LoiCong(f"Ask evidence href phải là bài public hoặc HTTPS — {eo}")
+            public_text.extend((ev["label"], ev["note"], href))
+        approval = q["approval"]
+        if not isinstance(approval, dict) or set(approval) != approval_fields:
+            raise LoiCong(f"Ask approval sai schema — {qo}")
+        if approval.get("status") != "approved":
+            raise LoiCong(f"public Ask chỉ nhận câu đã APPROVED — {qo}")
+        if not all(isinstance(approval.get(k), str) and approval[k].strip()
+                   for k in ("approved_at", "approved_by")):
+            raise LoiCong(f"Ask approval thiếu approved_at/approved_by — {qo}")
+        dates = {}
+        for key, value in (("data_through", q["data_through"]),
+                           ("created_at", q["created_at"]),
+                           ("updated_at", q["updated_at"]),
+                           ("approved_at", approval["approved_at"])):
+            try:
+                dates[key] = datetime.date.fromisoformat(value)
+            except ValueError as e:
+                raise LoiCong(f"Ask {key} phải là ngày ISO — {qo}") from e
+        if dates["updated_at"] < dates["created_at"] or dates["data_through"] > dates["updated_at"]:
+            raise LoiCong(f"Ask timeline ngược — {qo}")
+        public_text.extend((q["question"], q["short_answer"], q["status_note"],
+                            q["falsifier"], *answer, *tags))
+
+    txt = "\n".join(public_text)
+    hit = private.search(txt)
+    if hit:
+        raise LoiCong(f"Ask làm lộ FV/action layer riêng tư ({hit.group(0)!r}) — {o}")
+    cong_ngon_ngu(txt, o)
+    cong_ngoi_xung(txt, o)
+    return qs
+
+
 def doc_facts() -> list:
     """Đọc `content/facts.json` — đơn vị đăng thứ hai (`brief-chien-luoc-dang-x.md §0b`).
 
@@ -4548,7 +4652,47 @@ def trang_muc_bai(bai: list) -> str:
 </section>'''
 
 
-def trang_token(ma: str, bai_t: list, claims_t: list) -> str:
+def khoi_ask(ma: str, qs: list[dict]) -> str:
+    """Ask V0: câu đã duyệt mở tại chỗ; không input và không lượt inference."""
+    rows = []
+    for i, q in enumerate(qs, 1):
+        evs = []
+        for ev in q["evidence"]:
+            label = ihtml.escape(ev["label"])
+            if ev.get("href"):
+                label = f'<a href="{ihtml.escape(ev["href"], quote=True)}">{label}<i aria-hidden="true">↗</i></a>'
+            else:
+                label = f"<strong>{label}</strong>"
+            evs.append(f'<li>{label}<span>{ihtml.escape(ev["note"])}</span></li>')
+        body = "".join(f"<p>{ihtml.escape(x)}</p>" for x in q["answer"])
+        st = q["status"].lower()
+        rows.append(f'''<details class="ask-bp-item {st}" id="ask-{q["question_id"]}"
+  data-ask-question data-question-id="{q["question_id"]}" data-ask-status="{q["status"]}">
+  <summary><span class="ask-bp-no" aria-hidden="true">{i:02d}</span>
+    <span class="ask-bp-question">{ihtml.escape(q["question"])}</span>
+    <span class="ask-bp-meta"><b>{q["status"]}</b><small>Dữ liệu tới {vn_ngay(q["data_through"])}</small></span>
+    <span class="ask-bp-arrow" aria-hidden="true">↓</span></summary>
+  <div class="ask-bp-answer">
+    <p class="ask-bp-short">{ihtml.escape(q["short_answer"])}</p>
+    <div class="ask-bp-body">{body}</div>
+    <div class="ask-bp-status"><span><small>EPISTEMIC STATUS</small><b>{q["status"]}</b></span>
+      <span><small>DATA THROUGH</small><b>{vn_ngay(q["data_through"])}</b></span>
+      <p>{ihtml.escape(q["status_note"])}</p></div>
+    <section class="ask-bp-evidence" aria-label="Bằng chứng cho câu hỏi {i}">
+      <h3>Evidence</h3><ol>{''.join(evs)}</ol></section>
+    <p class="ask-bp-falsifier"><span>ĐIỀU GÌ SẼ LÀM CÂU TRẢ LỜI NÀY ĐỔI</span>{ihtml.escape(q["falsifier"])}</p>
+    <p class="ask-bp-updated">Tạo {vn_ngay(q["created_at"])} · cập nhật {vn_ngay(q["updated_at"])}</p>
+  </div>
+</details>''')
+    return f'''<section class="ask-bp" id="ask-blockpinned" aria-labelledby="ask-bp-title">
+  <header class="ask-bp-head"><div><p class="section-code">ASK BLOCKPINNED · APPROVED ANSWERS</p>
+    <h2 id="ask-bp-title">Những câu đáng hỏi về {ma}</h2></div>
+    <p>Chọn một câu để mở câu trả lời đã kiểm chứng. Không có AI trả lời theo lượt; mỗi câu giữ nguyên nguồn, độ mới và điều có thể làm nó đổi.</p></header>
+  <div class="ask-bp-list">{''.join(rows)}</div>
+</section>'''
+
+
+def trang_token(ma: str, bai_t: list, claims_t: list, ask: list[dict]) -> str:
     """TỦ KÍNH một token: mọi khẳng định đã đăng về nó, gom về một trang.
 
     Vì sao trang này tồn tại: bài sống theo NGÀY, hồ sơ sống theo ĐỐI TƯỢNG. Người
@@ -4662,6 +4806,8 @@ kèm mốc đo, nguồn, điều có thể làm kết luận thay đổi và tr�
       </section>
     </div>
   </section>
+
+  {khoi_ask(ma, ask)}
 
   {khoi_bai}
 
@@ -5727,8 +5873,8 @@ def cong_bo_cuc(html_chu: str, html_token: str, so_bai: int, so_token: int) -> N
             raise LoiCong("mục token D2 thiếu lưới cua hoặc mất token")
 
 
-def cong_bai_token(html_tu: str, so_bai: int) -> None:
-    """Bài gốc trên hồ sơ token phải đứng trước tủ claim, không chìm ở chân trang."""
+def cong_bai_token(html_tu: str, so_bai: int, so_ask: int) -> None:
+    """Ask và bài gốc phải giữ đúng thứ tự trên hồ sơ token."""
     if BO_CUC != "v3":
         return
     moc_bai = 'class="khu-bai uni-articles article-priority"'
@@ -5736,8 +5882,20 @@ def cong_bai_token(html_tu: str, so_bai: int) -> None:
             or len(re.findall(r'<a class="bai(?: bai-lead)?" href=', html_tu)) != min(6, so_bai)
             or 'class="bai-archive-link" href="../../bai/#token-' not in html_tu):
         raise LoiCong("preview bài token v3 thiếu cấu trúc, sai số thẻ hoặc mất lối vào kho bài")
-    if html_tu.index(moc_bai) > html_tu.index('class="uni-coverage"'):
-        raise LoiCong("mục bài token v3 đã tụt xuống sau tủ claim — phải đứng ngay sau phần mở đầu")
+    ask_start = html_tu.find('class="ask-bp"')
+    ask_end = html_tu.find(moc_bai)
+    if (not 3 <= so_ask <= 6 or ask_start < 0
+            or html_tu.count(" data-ask-question") != so_ask
+            or html_tu.count(' data-question-id="uni-') != so_ask
+            or html_tu.count(' data-ask-status="') != so_ask
+            or html_tu.count('class="ask-bp-evidence"') != so_ask
+            or html_tu.count('class="ask-bp-falsifier"') != so_ask):
+        raise LoiCong("Ask BlockPinned thiếu 3–6 câu hoặc làm rơi status/evidence/falsifier")
+    if "<input" in html_tu[ask_start:ask_end].lower():
+        raise LoiCong("Ask BlockPinned V0 không được có ô nhập tự do")
+    if not (html_tu.index('class="uni-vault"') < ask_start < ask_end
+            < html_tu.index('class="uni-coverage"')):
+        raise LoiCong("Ask BlockPinned phải đứng sau evidence vault và trước investigations")
 
 
 def cong_muc_bai(html_bai: str, so_bai: int, so_token: int) -> None:
@@ -5801,6 +5959,7 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     lap_asset()
     primers = doc_primers()
+    ask_uni = doc_ask(TU_KINH)
 
     # 🔴 Thanh điều hướng dựng TRƯỚC trang đầu tiên, nên phải biết trước trang nào sẽ có.
     # Bản đầu định đọc sau vòng lặp — nhưng trang bài được ghi TRONG vòng lặp, tức nó sẽ
@@ -6042,15 +6201,15 @@ def main() -> None:
         d_tk.mkdir(parents=True, exist_ok=True)
         html_tu = trang(
             f"{TOKEN_TEN[TU_KINH]} — hồ sơ {TU_KINH} — BlockPinned",
-            trang_token(TU_KINH, bai_tk, claims_tk), t, "../..", muc=TU_KINH_DUONG, mat="page-token-uni",
+            trang_token(TU_KINH, bai_tk, claims_tk, ask_uni), t, "../..", muc=TU_KINH_DUONG, mat="page-token-uni",
             meta={"mo_ta": f"Mọi khẳng định BlockPinned đã đăng về {TOKEN_TEN[TU_KINH]}: "
                            f"{len(claims_tk)} câu trên {len(bai_tk)} bài, mỗi câu ghim tại "
                            f"block đã đo, kèm điều gì sẽ bác bỏ nó và trạng thái hiện tại.",
                   "duong": f"/{TU_KINH_DUONG}", "anh": "card-uni-100usd.png", "loai": "website",
                   "tieu_de_og": f"{TOKEN_TEN[TU_KINH]} — mọi con số đã ghim, và câu nào còn đứng"})
-        cong_bai_token(html_tu, len(bai_tk))
+        cong_bai_token(html_tu, len(bai_tk), len(ask_uni))
         (d_tk / "index.html").write_text(html_tu, encoding="utf-8")
-        print(f"  ✓ {TU_KINH_DUONG}  ·  {len(claims_tk)} khẳng định trên {len(bai_tk)} bài")
+        print(f"  ✓ {TU_KINH_DUONG}  ·  {len(claims_tk)} khẳng định · {len(ask_uni)} câu Ask · {len(bai_tk)} bài")
     elif len(bai_tk) >= TU_KINH_SAN:
         raise LoiCong(f"{TU_KINH} có {len(bai_tk)} bài (đủ sàn) mà mục Token lại tắt — "
                       f"lượt quét front matter và lượt dựng không đồng ý với nhau")

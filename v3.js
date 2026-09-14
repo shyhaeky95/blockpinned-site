@@ -765,6 +765,31 @@
     selectArchiveFilter(requestedButton ? requestedToken.toLowerCase() : "all", false);
   }
 
+  // Ask V0 has no inference or analytics client. The stable event is only a hook:
+  // a later first-party listener can count opens without changing the corpus/DOM ids.
+  var askItems = Array.prototype.slice.call(document.querySelectorAll("[data-ask-question]"));
+  function openAskHash() {
+    if (!location.hash || location.hash.indexOf("#ask-") !== 0) return;
+    var item;
+    try { item = document.querySelector(location.hash); } catch (ignore) { return; }
+    if (item && item.matches("[data-ask-question]")) item.open = true;
+  }
+  askItems.forEach(function (item) {
+    var summary = item.querySelector("summary");
+    if (!summary) return;
+    summary.addEventListener("click", function () {
+      requestAnimationFrame(function () {
+        if (!item.open) return;
+        history.replaceState(null, "", location.pathname + location.search + "#" + item.id);
+        document.dispatchEvent(new CustomEvent("blockpinned:ask-open", {
+          detail: { questionId: item.dataset.questionId }
+        }));
+      });
+    });
+  });
+  openAskHash();
+  addEventListener("hashchange", openAskHash);
+
   // UNI profile: one evidence vault, with local search and non-destructive lenses.
   var uniClaims = Array.prototype.slice.call(document.querySelectorAll("[data-uni-claim]"));
   var uniFilters = document.querySelectorAll("[data-uni-filter]");
