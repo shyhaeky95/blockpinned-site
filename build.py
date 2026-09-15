@@ -195,9 +195,17 @@ LOGO_TOKEN = {
     # lúc tải — cùng lý do đã ghi ở HYPE/PUMP/SKY: `kich_thuoc_png()` đọc IHDR và NỔ
     # với mọi thứ không phải PNG.
     "CFG":    ("token-cfg.png",    "coingecko 55913/centrifuge.jpg → png",     "2026-08-20"),
+    # 🔴 Bản gốc là JPEG (coin id `quant-network`, ảnh 3370), đổi sang PNG bằng `sips`
+    # lúc tải — cùng lý do đã ghi ở HYPE/PUMP/SKY/CFG.
+    "QNT":    ("token-qnt.png",    "coingecko 3370/5ZOu7brX_400x400.jpg → png", "2026-09-15"),
 }
 
 NGUON_ASSET = {
+    # bài QNT 15/09 — nguồn `template/card-qnt-tran-mint-mot-chu-ky.html`, dựng bằng
+    # `template/render_card_v2.py` qua canvas `card_editorial.py new` (vỏ editorial-v2,
+    # 15/15 dấu). Một câu trích của tài liệu công bố đứng trên một con số của contract;
+    # không vẽ quan hệ nào khác vì phép so ở đây chỉ có hai vế.
+    "card-qnt-tran-mint-mot-chu-ky.png": "png",
     # bài MORPHO 13/09 — nguồn `template/card-morpho-72-phan-tram-phieu-qua-ban.html`,
     # dựng bằng `template/render_card_v2.py` qua canvas `card_editorial.py new`
     # (vỏ editorial-v2, 15/15 dấu). Đường nối bị cắt tách tầng vote Snapshot
@@ -2411,7 +2419,7 @@ def font_face(goc: str) -> str:
 TOKEN_TEN = {"UNI": "Uniswap", "LDO": "Lido", "HYPE": "Hyperliquid", "PENDLE": "Pendle",
              "CAKE": "PancakeSwap", "MORPHO": "Morpho", "PUMP": "pump.fun",
              "SKY": "Sky", "ETHFI": "ether.fi", "ENA": "Ethena", "CFG": "Centrifuge",
-             "AAVE": "Aave"}
+             "AAVE": "Aave", "QNT": "Quant"}
 
 # Tủ kính hiện mở cho ĐÚNG MỘT token, khai ở đây; toàn bộ nội dung trang sinh từ dữ
 # liệu, nên đổi dòng này là trang tự dựng lại cho token khác. Kèm SÀN: dưới 3 bài thì

@@ -1,0 +1,74 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Contract crowdsale của QNT (0x398e41ac3d5972b4bac2320cd130c7a25ca446f7) còn hai đường onlyOwner dẫn tới token.mint(), với tổng phần chưa dùng 27.502.628,462 QNT — bằng 184,81% con số max supply 14.881.364 mà thị trường và tài liệu MiCA dùng.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Source verified + state tại Ethereum block 25.800.559 (21/08/2026); nhánh presale còn 6.466.887,494 QNT, nhánh bán thường còn 21.035.740,968 QNT",
+      "falsifier": "Claim sai nếu đọc lại PRESALETOKENMAXSALES, regularTokenMaxSales, totalPresaleTokensSold và lượng đã giao tại block đã ghim mà tổng phần chưa dùng khác 27.502.628,462 QNT ngoài sai số làm tròn, hoặc nếu một trong hai đường có thêm điều kiện ngoài onlyOwner chặn nó lại.",
+      "log": [
+        {
+          "ngay": "2026-09-15",
+          "ghi": "Phần 6.466.887,494 QNT nằm trong cả hai hạn mức vì endPresale() cộng phần presale chưa bán sang hạn mức bán thường mà không trừ hạn mức presale; hai cap được kiểm độc lập trong code nên tổng là giới hạn kỹ thuật, không phải phép cộng trùng.",
+          "nguon": "https://etherscan.io/address/0x398e41ac3d5972b4bac2320cd130c7a25ca446f7#code"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "Tại Ethereum block 25.983.552, gọi eth_call với from = address đang giữ crowdsale.owner(): recordPresalePurchase với 1 QNT và với 6.000.000 QNT thực thi được, transferTokens() và enableSale() thực thi được, còn 9.000.000 QNT revert vì vượt hạn mức; cùng lời gọi đầu tiên phát từ một address khác thì revert.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ethereum block 25.983.552 · 2026-09-15T14:46:47Z · eth_call đặt from tuỳ ý, không broadcast, không đổi state",
+      "falsifier": "Claim sai nếu tại đúng block đó, lời gọi từ owner revert, hoặc lời gọi từ một address bất kỳ khác KHÔNG revert (khi ấy onlyOwner không được kiểm và mọi kết quả dương vô nghĩa), hoặc 9.000.000 QNT không revert (khi ấy phép thử không chạm logic hạn mức).",
+      "log": [
+        {
+          "ngay": "2026-09-15",
+          "ghi": "Control âm là trụ của phép đo, không phải các dòng thực thi được. Bốn control PASS 4/4 trong lượt đọc 15/09, lặp lại kết quả lượt 21/08 tại block 25.800.559.",
+          "nguon": "https://etherscan.io/address/0x398e41ac3d5972b4bac2320cd130c7a25ca446f7#readContract"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "text": "Address giữ crowdsale.owner() (0xf5e38bbedc78efea055e0c56035adb320e64c4bc) có eth_getCode dài 0 byte, nonce 817 tại block 25.983.552 và 777 tại block 6.988.615, và không ký giao dịch nào sau block 7.918.253 (08/06/2019) — im 2.656 ngày tính tới block đã ghim.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Ethereum block 25.983.552 · nonce đọc theo block, không phải latest · danh sách giao dịch lọc from = chính address đó",
+      "falsifier": "Claim sai nếu nonce tại block đã ghim lớn hơn 817, nếu tồn tại một giao dịch có from bằng address đó sau block 7.918.253, hoặc nếu eth_getCode trả về khác 0x. Phép đo cũng bị bác nếu quét trọn lịch sử mà không thấy lại đúng giao dịch gửi cuối 0x6fe94d15… — khi ấy danh sách đang rỗng vì hỏng, không vì im.",
+      "log": [
+        {
+          "ngay": "2026-09-15",
+          "ghi": "Khoảng im lặng không làm phần chưa dùng của hai đường mint nhỏ đi; nó đổi câu hỏi từ ý định sang custody. Ai đang cầm khoá là câu chưa có câu trả lời công khai, và hồ sơ không đặt tên cho address này.",
+          "nguon": "https://etherscan.io/address/0xf5e38bbedc78efea055e0c56035adb320e64c4bc"
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "text": "Bản whitepaper MiCA cho QNT do Bitstamp Europe soạn, công bố 15/06/2026, chứa nguyên văn câu: \"The maximum supply of QNT is capped at 14,881,364 tokens, and no additional tokens can be created beyond this limit.\"",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "Bản tải 2026-09-15T15:12Z từ assets.bitstamp.net/docs/whitepaper/Quant_2026_05_13.xhtml · 2.057.621 byte · sha256 29e0773f87f61b865d048846cd8f1879b9cf95286ff54e0d6673f61a1afa15da",
+      "falsifier": "Claim sai nếu bản tài liệu tại URL đó không chứa câu trên, hoặc nếu bản đã ghim có sha256 khác con số trên. Tài liệu có thể được thay sau ngày đăng; khi đó claim chỉ còn đúng cho bản đã ghim.",
+      "log": [
+        {
+          "ngay": "2026-09-15",
+          "ghi": "Tài liệu do nhà cung cấp dịch vụ soạn theo MiCA, không phải do issuer tự soạn, nên câu trích thuộc về tài liệu chứ không phải một phát ngôn của công ty. Cùng tài liệu cũng mô tả onlyCrowdsale modifier của hàm mint.",
+          "nguon": "https://assets.bitstamp.net/docs/whitepaper/Quant_2026_05_13.xhtml"
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "text": "Con số 14.881.364 không phải một hạn mức trong code: cung phát hành dựng từ 608 log mint là 24.431.259,0318 QNT, trừ 9.550.880,5019 QNT đang nằm ở chính địa chỉ token contract ra 14.880.378,53 QNT, lệch 0,0066% so với 14.881.364. Hằng số duy nhất ở tầng tổng cung trong code là 45.467.000.",
+      "status": "ĐANG ĐỨNG",
+      "ghim": "608 log Transfer từ địa chỉ 0 trong năm 2018; balanceOf(token contract) tại block neo 25.578.263 và 25.800.559",
+      "falsifier": "Claim sai nếu tổng 608 log mint khác 24.431.259,0318 QNT, nếu balanceOf của chính địa chỉ token khác 9.550.880,5019 QNT tại block đã ghim, hoặc nếu tồn tại trong code một hạn mức nào cưỡng chế đúng con số 14.881.364.",
+      "log": [
+        {
+          "ngay": "2026-09-15",
+          "ghi": "totalSupply() trả về hằng số 45.467.000 và không cộng trừ theo mint hay burn; chênh 985,47 QNT giữa phép trừ và con số thị trường đã được đóng ở hồ sơ trước.",
+          "nguon": "https://etherscan.io/token/0x4a220e6096b25eadb88358cb44068a3248254675"
+        }
+      ]
+    }
+  ]
+}
